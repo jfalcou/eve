@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['values_0',['Preloaded values',['../group__eve__core__compress_ga8e545371fd605df1555e4cd0b2f62374.html#autotoc_md16',1,'']]],
-  ['variable_20template_1',['variable template',['../group__eve__arch_gab707570aa2d35678c5cd5c686a994d57.html#autotoc_md2',1,'Helper variable template'],['../structeve_1_1fundamental__cardinal.html#autotoc_md5',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md30',1,'Helper variable template']]],
+  ['values_0',['Preloaded values',['../group__eve__core__compress.html#autotoc_md16',1,'']]],
+  ['variable_20template_1',['variable template',['../group__eve__arch.html#autotoc_md2',1,'Helper variable template'],['../structeve_1_1fundamental__cardinal.html#autotoc_md5',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md30',1,'Helper variable template']]],
   ['vector_20engine_2',['The Expressive Vector Engine',['../index.html',1,'']]],
   ['version_202021_2010_200_3',['Version 2021.10.0',['../changelog.html#autotoc_md47',1,'']]],
   ['version_202022_2003_200_4',['Version 2022.03.0',['../changelog.html#autotoc_md44',1,'']]],

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -128,9 +130,9 @@ $(function(){initNavTree('group__eve__core__internal.html','',''); });
 <div class="textblock"><p>Operations related to classical IEEE functions and the floating representation of real numbers</p>
 <p>most of the standard function are present, but their names and calls can slightly change.</p>
 <ul>
-<li><a class="el" href="group__eve__core__internal_ga6b68a3922d5bb6703692878a71fbcba8.html#ga6b68a3922d5bb6703692878a71fbcba8" title="eve::ifrexp">ifrexp</a> and <a class="el" href="group__eve__core__internal_ga9c9331b06eb7ef928d07ca337cd39b6a.html#ga9c9331b06eb7ef928d07ca337cd39b6a" title="eve::frexp">frexp</a> are similar to <span class="tt">std:<a class="el" href="group__eve__core__internal_ga9c9331b06eb7ef928d07ca337cd39b6a.html#ga9c9331b06eb7ef928d07ca337cd39b6a" title="elementwise_callable computing the ieee pair of mantissa and exponent of a floating value,">frexp</a></span>, but return a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> of two values mantissa and exponent. For <a class="el" href="group__eve__core__internal_ga6b68a3922d5bb6703692878a71fbcba8.html#ga6b68a3922d5bb6703692878a71fbcba8" title="eve::ifrexp">ifrexp</a> the exponent is and integral value, but for <a class="el" href="group__eve__core__internal_ga9c9331b06eb7ef928d07ca337cd39b6a.html#ga9c9331b06eb7ef928d07ca337cd39b6a" title="eve::frexp">frexp</a> it is a floating value.</li>
-<li><a class="el" href="group__eve__core__internal_ga33c3958f43208dc6ffa54acdd33cf8c0.html#ga33c3958f43208dc6ffa54acdd33cf8c0" title="eve::mantissa">mantissa</a> and <a class="el" href="group__eve__core__internal_ga0c0d48cc3ee880fde5b8ec3e874933d0.html#ga0c0d48cc3ee880fde5b8ec3e874933d0" title="eve::exponent">exponent</a> also exists individually but <b>TAKE CARE</b> they are not equal to the pair returned by <span class="tt"><a class="el" href="group__eve__core__internal_ga6b68a3922d5bb6703692878a71fbcba8.html#ga6b68a3922d5bb6703692878a71fbcba8" title="Computes the elementwise ieee pair of mantissa and exponent of the floating value,...">ifrexp</a></span></li>
-<li><a class="el" href="group__eve__core__internal_ga3b419a68a0b99756c3138528b7db9941.html#ga3b419a68a0b99756c3138528b7db9941" title="eve::nextafter">nextafter</a> comes along <a class="el" href="group__eve__core__internal_gad1c0d7b11ba73f9ea7f39864166d7fb4.html#gad1c0d7b11ba73f9ea7f39864166d7fb4" title="eve::next">next</a> and <a class="el" href="group__eve__core__internal_ga5e851835c26e1c3583bf12fe2eea6c23.html#ga5e851835c26e1c3583bf12fe2eea6c23" title="eve::prev">prev</a> that can take a second scalar integral parameter say <span class="tt">n</span> which indicates one want the nth representable value that follows (resp. precedes) the first parameter.</li>
+<li><a class="el" href="#ga6b68a3922d5bb6703692878a71fbcba8" title="eve::ifrexp">ifrexp</a> and <a class="el" href="#ga9c9331b06eb7ef928d07ca337cd39b6a" title="eve::frexp">frexp</a> are similar to <span class="tt">std:<a class="el" href="#ga9c9331b06eb7ef928d07ca337cd39b6a" title="elementwise_callable computing the ieee pair of mantissa and exponent of a floating value,">frexp</a></span>, but return a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> of two values mantissa and exponent. For <a class="el" href="#ga6b68a3922d5bb6703692878a71fbcba8" title="eve::ifrexp">ifrexp</a> the exponent is and integral value, but for <a class="el" href="#ga9c9331b06eb7ef928d07ca337cd39b6a" title="eve::frexp">frexp</a> it is a floating value.</li>
+<li><a class="el" href="#ga33c3958f43208dc6ffa54acdd33cf8c0" title="eve::mantissa">mantissa</a> and <a class="el" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0" title="eve::exponent">exponent</a> also exists individually but <b>TAKE CARE</b> they are not equal to the pair returned by <span class="tt"><a class="el" href="#ga6b68a3922d5bb6703692878a71fbcba8" title="Computes the elementwise ieee pair of mantissa and exponent of the floating value,...">ifrexp</a></span></li>
+<li><a class="el" href="#ga3b419a68a0b99756c3138528b7db9941" title="eve::nextafter">nextafter</a> comes along <a class="el" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4" title="eve::next">next</a> and <a class="el" href="#ga5e851835c26e1c3583bf12fe2eea6c23" title="eve::prev">prev</a> that can take a second scalar integral parameter say <span class="tt">n</span> which indicates one want the nth representable value that follows (resp. precedes) the first parameter.</li>
 </ul>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -139,39 +141,1248 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gae174caf55fb3f276410b94f3b7c5dbfb" id="r_gae174caf55fb3f276410b94f3b7c5dbfb"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_gae174caf55fb3f276410b94f3b7c5dbfb.html#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;bitofsign_t&gt;</td></tr>
+<tr class="memitem:gae174caf55fb3f276410b94f3b7c5dbfb" id="r_gae174caf55fb3f276410b94f3b7c5dbfb"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;bitofsign_t&gt;</td></tr>
 <tr class="memdesc:gae174caf55fb3f276410b94f3b7c5dbfb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the bit of sign.  <br /></td></tr>
-<tr class="memitem:ga0c0d48cc3ee880fde5b8ec3e874933d0" id="r_ga0c0d48cc3ee880fde5b8ec3e874933d0"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga0c0d48cc3ee880fde5b8ec3e874933d0.html#ga0c0d48cc3ee880fde5b8ec3e874933d0">eve::exponent</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;exponent_t&gt;</td></tr>
+<tr class="memitem:ga0c0d48cc3ee880fde5b8ec3e874933d0" id="r_ga0c0d48cc3ee880fde5b8ec3e874933d0"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">eve::exponent</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;exponent_t&gt;</td></tr>
 <tr class="memdesc:ga0c0d48cc3ee880fde5b8ec3e874933d0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the integral IEEE exponent of the floating value.  <br /></td></tr>
-<tr class="memitem:ga114b52fbcd864d4005d819c0e1cde554" id="r_ga114b52fbcd864d4005d819c0e1cde554"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga114b52fbcd864d4005d819c0e1cde554.html#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;flush_denormal_t&gt;</td></tr>
+<tr class="memitem:ga114b52fbcd864d4005d819c0e1cde554" id="r_ga114b52fbcd864d4005d819c0e1cde554"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;flush_denormal_t&gt;</td></tr>
 <tr class="memdesc:ga114b52fbcd864d4005d819c0e1cde554"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing flushing denormal values to 0.  <br /></td></tr>
-<tr class="memitem:ga9c9331b06eb7ef928d07ca337cd39b6a" id="r_ga9c9331b06eb7ef928d07ca337cd39b6a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga9c9331b06eb7ef928d07ca337cd39b6a.html#ga9c9331b06eb7ef928d07ca337cd39b6a">eve::frexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;frexp_t&gt;</td></tr>
+<tr class="memitem:ga9c9331b06eb7ef928d07ca337cd39b6a" id="r_ga9c9331b06eb7ef928d07ca337cd39b6a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">eve::frexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;frexp_t&gt;</td></tr>
 <tr class="memdesc:ga9c9331b06eb7ef928d07ca337cd39b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> computing the ieee pair of mantissa and exponent of a floating value,  <br /></td></tr>
-<tr class="memitem:ga6b68a3922d5bb6703692878a71fbcba8" id="r_ga6b68a3922d5bb6703692878a71fbcba8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga6b68a3922d5bb6703692878a71fbcba8.html#ga6b68a3922d5bb6703692878a71fbcba8">eve::ifrexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ifrexp_t&gt;</td></tr>
+<tr class="memitem:ga6b68a3922d5bb6703692878a71fbcba8" id="r_ga6b68a3922d5bb6703692878a71fbcba8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6b68a3922d5bb6703692878a71fbcba8">eve::ifrexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ifrexp_t&gt;</td></tr>
 <tr class="memdesc:ga6b68a3922d5bb6703692878a71fbcba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> ieee pair of mantissa and exponent of the floating value,.  <br /></td></tr>
-<tr class="memitem:ga7f152bb26aee4fe8157db6c9ec25a64c" id="r_ga7f152bb26aee4fe8157db6c9ec25a64c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga7f152bb26aee4fe8157db6c9ec25a64c.html#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ilogb_t&gt;</td></tr>
+<tr class="memitem:ga7f152bb26aee4fe8157db6c9ec25a64c" id="r_ga7f152bb26aee4fe8157db6c9ec25a64c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ilogb_t&gt;</td></tr>
 <tr class="memdesc:ga7f152bb26aee4fe8157db6c9ec25a64c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the integral IEEE ilogb of the floating value.  <br /></td></tr>
-<tr class="memitem:ga9d262f5be47d761c18d548c04cda7c8f" id="r_ga9d262f5be47d761c18d548c04cda7c8f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga9d262f5be47d761c18d548c04cda7c8f.html#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ldexp_t&gt;</td></tr>
+<tr class="memitem:ga9d262f5be47d761c18d548c04cda7c8f" id="r_ga9d262f5be47d761c18d548c04cda7c8f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ldexp_t&gt;</td></tr>
 <tr class="memdesc:ga9d262f5be47d761c18d548c04cda7c8f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">callable</a></span> computing \(\textstyle x 2^n\).  <br /></td></tr>
-<tr class="memitem:ga33c3958f43208dc6ffa54acdd33cf8c0" id="r_ga33c3958f43208dc6ffa54acdd33cf8c0"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga33c3958f43208dc6ffa54acdd33cf8c0.html#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;mantissa_t&gt;</td></tr>
+<tr class="memitem:ga33c3958f43208dc6ffa54acdd33cf8c0" id="r_ga33c3958f43208dc6ffa54acdd33cf8c0"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;mantissa_t&gt;</td></tr>
 <tr class="memdesc:ga33c3958f43208dc6ffa54acdd33cf8c0"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the IEEE mantissa of the floating value.  <br /></td></tr>
-<tr class="memitem:ga6a445739414b920ec65978c6bbc5b315" id="r_ga6a445739414b920ec65978c6bbc5b315"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nb_values_t&gt;</td></tr>
+<tr class="memitem:ga6a445739414b920ec65978c6bbc5b315" id="r_ga6a445739414b920ec65978c6bbc5b315"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nb_values_t&gt;</td></tr>
 <tr class="memdesc:ga6a445739414b920ec65978c6bbc5b315"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the number of values representable in the type between the <a class="el" href="concepteve_1_1value.html" title="eve::value">arguments</a>.  <br /></td></tr>
-<tr class="memitem:gad1c0d7b11ba73f9ea7f39864166d7fb4" id="r_gad1c0d7b11ba73f9ea7f39864166d7fb4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_gad1c0d7b11ba73f9ea7f39864166d7fb4.html#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;next_t&gt;</td></tr>
+<tr class="memitem:gad1c0d7b11ba73f9ea7f39864166d7fb4" id="r_gad1c0d7b11ba73f9ea7f39864166d7fb4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;next_t&gt;</td></tr>
 <tr class="memdesc:gad1c0d7b11ba73f9ea7f39864166d7fb4"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the nth next representable element  <br /></td></tr>
-<tr class="memitem:ga3b419a68a0b99756c3138528b7db9941" id="r_ga3b419a68a0b99756c3138528b7db9941"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga3b419a68a0b99756c3138528b7db9941.html#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextafter_t&gt;</td></tr>
+<tr class="memitem:ga3b419a68a0b99756c3138528b7db9941" id="r_ga3b419a68a0b99756c3138528b7db9941"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextafter_t&gt;</td></tr>
 <tr class="memdesc:ga3b419a68a0b99756c3138528b7db9941"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the next representable element in the second parameter direction.  <br /></td></tr>
-<tr class="memitem:gac2a2df9c3159d70e5e580c008fdeb66c" id="r_gac2a2df9c3159d70e5e580c008fdeb66c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_gac2a2df9c3159d70e5e580c008fdeb66c.html#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextint_t&gt;</td></tr>
+<tr class="memitem:gac2a2df9c3159d70e5e580c008fdeb66c" id="r_gac2a2df9c3159d70e5e580c008fdeb66c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextint_t&gt;</td></tr>
 <tr class="memdesc:gac2a2df9c3159d70e5e580c008fdeb66c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the next representable integer if it exists.  <br /></td></tr>
-<tr class="memitem:ga056f305b9a8385ae40ee917d661666f9" id="r_ga056f305b9a8385ae40ee917d661666f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga056f305b9a8385ae40ee917d661666f9.html#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;of_class_t&gt;</td></tr>
+<tr class="memitem:ga056f305b9a8385ae40ee917d661666f9" id="r_ga056f305b9a8385ae40ee917d661666f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;of_class_t&gt;</td></tr>
 <tr class="memdesc:ga056f305b9a8385ae40ee917d661666f9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing classification of elements of the input.  <br /></td></tr>
-<tr class="memitem:ga5e851835c26e1c3583bf12fe2eea6c23" id="r_ga5e851835c26e1c3583bf12fe2eea6c23"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga5e851835c26e1c3583bf12fe2eea6c23.html#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prev_t&gt;</td></tr>
+<tr class="memitem:ga5e851835c26e1c3583bf12fe2eea6c23" id="r_ga5e851835c26e1c3583bf12fe2eea6c23"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prev_t&gt;</td></tr>
 <tr class="memdesc:ga5e851835c26e1c3583bf12fe2eea6c23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the nth previous representable element.  <br /></td></tr>
-<tr class="memitem:ga3ad43aa378eecf62d5b437b320d45d84" id="r_ga3ad43aa378eecf62d5b437b320d45d84"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga3ad43aa378eecf62d5b437b320d45d84.html#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prevint_t&gt;</td></tr>
+<tr class="memitem:ga3ad43aa378eecf62d5b437b320d45d84" id="r_ga3ad43aa378eecf62d5b437b320d45d84"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prevint_t&gt;</td></tr>
 <tr class="memdesc:ga3ad43aa378eecf62d5b437b320d45d84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the previous representable integer if it exists.  <br /></td></tr>
-<tr class="memitem:ga5b73df953d6c6313eeae28925eb8f19c" id="r_ga5b73df953d6c6313eeae28925eb8f19c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__internal_ga5b73df953d6c6313eeae28925eb8f19c.html#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ulpdist_t&gt;</td></tr>
+<tr class="memitem:ga5b73df953d6c6313eeae28925eb8f19c" id="r_ga5b73df953d6c6313eeae28925eb8f19c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ulpdist_t&gt;</td></tr>
 <tr class="memdesc:ga5b73df953d6c6313eeae28925eb8f19c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the unit in the last place distance of its arguments. i.e. the number of representable values between these two divided by 2.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gae174caf55fb3f276410b94f3b7c5dbfb" name="gae174caf55fb3f276410b94f3b7c5dbfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae174caf55fb3f276410b94f3b7c5dbfb">&#9670;&#160;</a></span>bitofsign</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::bitofsign = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;bitofsign_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the bit of sign. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">bitofsign</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">bitofsign</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">bitofsign</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_gae174caf55fb3f276410b94f3b7c5dbfb"><div class="ttname"><a href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a></div><div class="ttdeci">constexpr auto bitofsign</div><div class="ttdoc">elementwise_callable object computing the bit of sign.</div><div class="ttdef"><b>Definition</b> bitofsign.hpp:82</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the bit of sign is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li><span class="tt"><a class="el" href="#gae174caf55fb3f276410b94f3b7c5dbfb" title="elementwise_callable object computing the bit of sign.">bitofsign</a></span> does NOT return a <a class="el" href="concepteve_1_1value.html" title="eve::value">logical value</a></li>
+<li>In particular, take care that for <a class="el" href="concepteve_1_1value.html" title="eve::value">floating real values</a> bitofsign does NOT return a <a class="el" href="concepteve_1_1value.html" title="eve::value">logical value</a> that can be tested, but <span class="tt"><a class="el" href="group__eve__core__constants.html#ga5551a5df5e64f90f6c9f498cc34f2b48" title="Computes the negative zero value.">mzero(as(x))</a></span> if <span class="tt">x</span> is negative and <span class="tt"><a class="el" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f" title="Computes the constant 0.">zero(as(x))</a></span> if <span class="tt">x</span> is positive, which both satisfy the <a class="el" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e" title="elementwise callable returning a logical true if and only if the element value is zero....">eve::is_eqz</a> predicate.</li>
+<li>If you want to test if the bit of sign is set <span class="tt"><a class="el" href="group__eve__core__predicates.html#gae28d45c4c5af89e0f3ad48191e63c80e" title="elementwise callable returning a logical true if and only if the element value is signed and has its ...">is_negative</a></span> is the right function to call.</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                            = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                            = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                            = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                  </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[wu0 != 0](wu0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[wu0 != 0](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[wi0 != 0](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[wi0 != 0](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga0c0d48cc3ee880fde5b8ec3e874933d0" name="ga0c0d48cc3ee880fde5b8ec3e874933d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">&#9670;&#160;</a></span>exponent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::exponent = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;exponent_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the integral IEEE exponent of the floating value. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">exponent</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">exponent</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gab99e44220c7f6c31754e4fbadec3403a"><div class="ttname"><a href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a></div><div class="ttdeci">constexpr auto raw</div><div class="ttdoc">Performs the operation minimally, trading accuracy for speed.</div><div class="ttdef"><b>Definition</b> core.hpp:95</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga0c0d48cc3ee880fde5b8ec3e874933d0"><div class="ttname"><a href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">eve::exponent</a></div><div class="ttdeci">constexpr auto exponent</div><div class="ttdoc">elementwise_callable object computing the integral IEEE exponent of the floating value.</div><div class="ttdef"><b>Definition</b> exponent.hpp:85</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the IEEE exponent is returned. In particular:<ul>
+<li><span class="tt"><a class="el" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63" title="Computes the infinity ieee value.">inf</a></span>, <span class="tt"><a class="el" href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4" title="Computes the -infinity ieee value.">minf</a></span> and <span class="tt"><a class="el" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56" title="Computes the IEEE quiet NaN constant.">nan</a></span> return <span class="tt"><a class="el" href="group__eve__core__constants.html#ga44e6675c343b28dca02c76705b40f854" title="Computes the greatest exponent of a floating point IEEE value.">maxexponent</a></span> plus 1</li>
+<li>zero returns zero 2 identical except that results for zero, nan and infinite inputs are unspecified</li>
+</ul>
+</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>The exponent \(e\) and mantissa \(m\) of a floating point entry \(x\) are related by \(x =  m\times 2^e\), with \(|m| \in \{0\} \cup [1, 2[\).</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                      </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exponent(wf0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">eve::exponent</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; exponent[raw](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0">eve::exponent</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga114b52fbcd864d4005d819c0e1cde554" name="ga114b52fbcd864d4005d819c0e1cde554"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga114b52fbcd864d4005d819c0e1cde554">&#9670;&#160;</a></span>flush_denormal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::flush_denormal = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;flush_denormal_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing flushing denormal values to 0. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">flush_denormal</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">flush_denormal</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">flush_denormal</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga114b52fbcd864d4005d819c0e1cde554"><div class="ttname"><a href="#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a></div><div class="ttdeci">constexpr auto flush_denormal</div><div class="ttdoc">elementwise_callable object computing flushing denormal values to 0.</div><div class="ttdef"><b>Definition</b> flush_denormal.hpp:68</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>denormal values are flushed to zero.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Subnormal_number">Wikipedia</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> spv  = <a class="code hl_variable" href="group__eve__core__constants.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
+<div class="line">  <span class="keyword">auto</span> maxd = <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(spv);</div>
+<div class="line">  <span class="keyword">auto</span> mind = <a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, spv, mind, maxd, -0.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                         = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; flush_denormal(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; flush_denormal[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; flush_denormal[wf0 != md](wf0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga114b52fbcd864d4005d819c0e1cde554">eve::flush_denormal</a>[wf0 != mind](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga7820cea96e7dff960d4b1ac9becbd84b"><div class="ttname"><a href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a></div><div class="ttdeci">constexpr auto mindenormal</div><div class="ttdoc">Computes the smallest denormal positive value.</div><div class="ttdef"><b>Definition</b> mindenormal.hpp:71</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_gadf2de69a7c166758ea2c4643e0fae62e"><div class="ttname"><a href="group__eve__core__constants.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a></div><div class="ttdeci">constexpr auto smallestposval</div><div class="ttdoc">Computes the smallest normal positive value.</div><div class="ttdef"><b>Definition</b> smallestposval.hpp:71</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga5e851835c26e1c3583bf12fe2eea6c23"><div class="ttname"><a href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a></div><div class="ttdeci">constexpr auto prev</div><div class="ttdoc">Computes the nth previous representable element.</div><div class="ttdef"><b>Definition</b> prev.hpp:102</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga9c9331b06eb7ef928d07ca337cd39b6a" name="ga9c9331b06eb7ef928d07ca337cd39b6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9c9331b06eb7ef928d07ca337cd39b6a">&#9670;&#160;</a></span>frexp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::frexp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;frexp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> computing the ieee pair of mantissa and exponent of a floating value, </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">frexp</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">frexp</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">frexp</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">frexp</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaf3483e5e000367c812b507ed46399367"><div class="ttname"><a href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a></div><div class="ttdeci">constexpr auto pedantic</div><div class="ttdoc">Follows the corner cases of the corresponding standard function.</div><div class="ttdef"><b>Definition</b> core.hpp:91</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga9c9331b06eb7ef928d07ca337cd39b6a"><div class="ttname"><a href="#ga9c9331b06eb7ef928d07ca337cd39b6a">eve::frexp</a></div><div class="ttdeci">constexpr auto frexp</div><div class="ttdoc">elementwise_callable computing the ieee pair of mantissa and exponent of a floating value,</div><div class="ttdef"><b>Definition</b> frexp.hpp:77</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>returns a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> <span class="tt">{m,e}</span> of values of the same type as <span class="tt">x</span>, which are related by \(x =  m\times 2^e\), with \(|m| \in [0.5, 1.5[\). However, the cases \(x = \pm\infty\) or is a Nan or a denormal are undefined.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>this option takes also properly care of the cases where \(x = \pm0, \pm\infty\) or is a Nan, where \(m=x\) and \(e=0\) and of the denormal cases.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/frexp">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                  = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                        </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; frexp(wf0)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">eve::frexp</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; frexp[pedantic](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9c9331b06eb7ef928d07ca337cd39b6a">eve::frexp</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6b68a3922d5bb6703692878a71fbcba8" name="ga6b68a3922d5bb6703692878a71fbcba8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b68a3922d5bb6703692878a71fbcba8">&#9670;&#160;</a></span>ifrexp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ifrexp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ifrexp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> ieee pair of mantissa and exponent of the floating value,. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6b68a3922d5bb6703692878a71fbcba8">ifrexp</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6b68a3922d5bb6703692878a71fbcba8">ifrexp</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga6b68a3922d5bb6703692878a71fbcba8"><div class="ttname"><a href="#ga6b68a3922d5bb6703692878a71fbcba8">eve::ifrexp</a></div><div class="ttdeci">constexpr auto ifrexp</div><div class="ttdoc">Computes the elementwise ieee pair of mantissa and exponent of the floating value,...</div><div class="ttdef"><b>Definition</b> ifrexp.hpp:70</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> ieee ifrexp of the floating value, returning a pair <span class="tt">{m,e}</span> of values <span class="tt">m</span> being of the same type as <span class="tt">x</span> and <span class="tt">e</span> of the associated integral type, which are related by \(x =  m\times 2^e\), with \(|m| \in [0.5, 1.5[\). However, the cases \(x = \pm\infty\) or is a Nan or a denormal are undefined.</li>
+<li>This call takes also properly care of the cases where \(x = \pm0, \pm\infty\) or is a Nan, where \(m=x\) and \(e=0\) and of the denormal cases.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                   = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                         </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ifrexp(wf0)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6b68a3922d5bb6703692878a71fbcba8">eve::ifrexp</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ifrexp[pedantic](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6b68a3922d5bb6703692878a71fbcba8">eve::ifrexp</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga7f152bb26aee4fe8157db6c9ec25a64c" name="ga7f152bb26aee4fe8157db6c9ec25a64c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7f152bb26aee4fe8157db6c9ec25a64c">&#9670;&#160;</a></span>ilogb</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ilogb = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ilogb_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the integral IEEE ilogb of the floating value. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">template</span> &lt; <span class="keywordtype">float</span>ing_value T&gt; <span class="keyword">constexpr</span> as_integer_t&lt;T&gt; <a class="code hl_variable" href="#ga7f152bb26aee4fe8157db6c9ec25a64c">ilogb</a>(T x)  <span class="keyword">noexcept</span>;</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga7f152bb26aee4fe8157db6c9ec25a64c"><div class="ttname"><a href="#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a></div><div class="ttdeci">constexpr auto ilogb</div><div class="ttdoc">elementwise_callable object computing the integral IEEE ilogb of the floating value.</div><div class="ttdef"><b>Definition</b> ilogb.hpp:69</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The spirit of the value of the std::ilogb is returned. In particular:</p><ul>
+<li><span class="tt"><a class="el" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f" title="Computes the constant 0.">zero</a></span> and <span class="tt"><a class="el" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56" title="Computes the IEEE quiet NaN constant.">nan</a></span> return <span class="tt"><a class="el" href="group__eve__core__constants.html#ga1fd45a655473cde0022e08497eba14c1" title="Computes the lowest representable value.">valmin</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;as_integer_t&lt;T&gt;&gt;())</span>.</li>
+<li><span class="tt"><a class="el" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63" title="Computes the infinity ieee value.">inf</a></span> and <span class="tt"><a class="el" href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4" title="Computes the -infinity ieee value.">minf</a> </span>return <span class="tt"><a class="el" href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083" title="Computes the greatest representable value.">valmax</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;as_integer_t&lt;T&gt;&gt;())</span>.</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wd = {0.0, -1.0, 8.0, 1.5, 2.0, 16.0, 15.3, 17.2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wd                      = &quot;</span> &lt;&lt; wd &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ilogb(wd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a>(wd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ilogb[ignore_last(2)](wd)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ilogb[wd != 2.0](wd)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga7f152bb26aee4fe8157db6c9ec25a64c">eve::ilogb</a>[wd != 2.0](wd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga9d262f5be47d761c18d548c04cda7c8f" name="ga9d262f5be47d761c18d548c04cda7c8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9d262f5be47d761c18d548c04cda7c8f">&#9670;&#160;</a></span>ldexp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ldexp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ldexp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">callable</a></span> computing \(\textstyle x 2^n\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">ldexp</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> N)                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">ldexp</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x), <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> N) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">ldexp</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> N)     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7">abs</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> N)                   <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:51</div></div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga67722c49041abeb17485c8961f961cd7"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7">eve::abs</a></div><div class="ttdeci">constexpr auto abs</div><div class="ttdoc">elementwise_callable object computing the absolute value of the parameter.</div><div class="ttdef"><b>Definition</b> abs.hpp:86</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga9d262f5be47d761c18d548c04cda7c8f"><div class="ttname"><a href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a></div><div class="ttdeci">constexpr auto ldexp</div><div class="ttdoc">strict_elementwise callable computing .</div><div class="ttdef"><b>Definition</b> ldexp.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">n</span>: <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral value argument</a>.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of \(\textstyle x 2^n\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>Takes extra care to handling limit values.<ul>
+<li>If <span class="tt">x</span> is \(\pm0\), it is returned, unmodified.</li>
+<li>If <span class="tt">x</span> is \(\pm\infty\), it is returned, unmodified.</li>
+<li>If <span class="tt">n</span> is 0, then <span class="tt">x</span> is returned, unmodified.</li>
+<li>If <span class="tt">x</span> is NaN, NaN is returned.</li>
+</ul>
+</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/math/ldexp">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                      = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                      = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                      = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp(wf0, wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>(wf0, wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp[ignore_last(2)](wf0, wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, 2*wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp[wf0 != 0](wf0, wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>[wf0 != 0](wf0, wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp(wf0, wi1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>(wf0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp[ignore_last(2)](wf0, wi1  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ldexp[wi1 != 2](wf0, wi1)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9d262f5be47d761c18d548c04cda7c8f">eve::ldexp</a>[wi1 != 2](wf0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga33c3958f43208dc6ffa54acdd33cf8c0" name="ga33c3958f43208dc6ffa54acdd33cf8c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga33c3958f43208dc6ffa54acdd33cf8c0">&#9670;&#160;</a></span>mantissa</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::mantissa = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;mantissa_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the IEEE mantissa of the floating value. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">mantissa</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">mantissa</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">mantissa</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">mantissa</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga33c3958f43208dc6ffa54acdd33cf8c0"><div class="ttname"><a href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a></div><div class="ttdeci">constexpr auto mantissa</div><div class="ttdoc">elementwise_callable object computing the IEEE mantissa of the floating value.</div><div class="ttdef"><b>Definition</b> mantissa.hpp:81</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">real argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the IEEE mantissa is returned. In particular:<ul>
+<li><span class="tt"><a class="el" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56" title="Computes the IEEE quiet NaN constant.">nan</a></span> returns nan</li>
+<li>\(\pm\infty\) returns \(\pm\1\).</li>
+<li>zero returns zero</li>
+</ul>
+</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>The results for zero and nan are unspecified.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>The <span class="tt"><a class="el" href="#ga0c0d48cc3ee880fde5b8ec3e874933d0" title="elementwise_callable object computing the integral IEEE exponent of the floating value.">exponent</a></span> \(e\) and <span class="tt"><a class="el" href="#ga33c3958f43208dc6ffa54acdd33cf8c0" title="elementwise_callable object computing the IEEE mantissa of the floating value.">mantissa</a></span> \(m\) of a floating point entry \(x\) are related by \(x =  m\times 2^e\), with \(|m| \in \{0, nan\} \cup [1, 2[\).</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                           = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                 </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; mantissa(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; mantissa[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; mantissa[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; mantissa[raw](wf0)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga33c3958f43208dc6ffa54acdd33cf8c0">eve::mantissa</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6a445739414b920ec65978c6bbc5b315" name="ga6a445739414b920ec65978c6bbc5b315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6a445739414b920ec65978c6bbc5b315">&#9670;&#160;</a></span>nb_values</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::nb_values = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nb_values_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the number of values representable in the type between the <a class="el" href="concepteve_1_1value.html" title="eve::value">arguments</a>. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6a445739414b920ec65978c6bbc5b315">nb_values</a>(<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6a445739414b920ec65978c6bbc5b315">nb_values</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6a445739414b920ec65978c6bbc5b315">nb_values</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga6a445739414b920ec65978c6bbc5b315"><div class="ttname"><a href="#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a></div><div class="ttdeci">constexpr auto nb_values</div><div class="ttdoc">elementwise_callable object computing the number of values representable in the type between the argu...</div><div class="ttdef"><b>Definition</b> nb_values.hpp:72</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>Returns the number of values representable in the type in the interval <span class="tt">[x, y[</span></li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+
+</div>
+</div>
+<a id="gad1c0d7b11ba73f9ea7f39864166d7fb4" name="gad1c0d7b11ba73f9ea7f39864166d7fb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">&#9670;&#160;</a></span>next</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::next = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;next_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the nth next representable element </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n)                       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/* any of the above overloads */</span>)                <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">saturated</a> ](<span class="comment">/* any of the above overloads */</span>)              <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">next</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                         <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaada98a0e92f1b86e9a3dd930ca345b13"><div class="ttname"><a href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a></div><div class="ttdeci">constexpr auto saturated</div><div class="ttdoc">Keeps the result inside the range of its type instead of wrapping or overflowing.</div><div class="ttdef"><b>Definition</b> core.hpp:104</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_gad1c0d7b11ba73f9ea7f39864166d7fb4"><div class="ttname"><a href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a></div><div class="ttdeci">constexpr auto next</div><div class="ttdoc">strict_elementwise_callable computing the nth next representable element</div><div class="ttdef"><b>Definition</b> next.hpp:107</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating argument</a>.</li>
+<li><span class="tt">n</span>: <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral value argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the least representable value greater than <span class="tt">x</span> is returned.</li>
+<li>the nth representable value greater than <span class="tt">x</span> is returned. If <span class="tt">n</span> is zero returns <span class="tt">x</span>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>if <span class="tt">x</span> is floating the call with mzero returns zero</li>
+<li>ensures that the input is never greater than the result of the call.</li>
+<li>works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite) the option has no influence on the two parameters calls</li>
+</ol>
+<p>If <span class="tt">n</span> is zero returns <span class="tt">x</span>.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {-0.0f, 2.0f, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 0.0f, 30.0f,<a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
+<div class="line">                   <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0 = {-1, 2, -3, -4, 327654, 32765, 32766, 32767 };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0 = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::hexfloat;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                       = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                       = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                       = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next(wf0, wi1)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>(wf0, 2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next[pedantic](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next[saturated ](wi0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a> ](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; next(wi0, wu0)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1c0d7b11ba73f9ea7f39864166d7fb4">eve::next</a>(wi0, wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga34b67924fa53bec83dfc96b51bd8fe56"><div class="ttname"><a href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a></div><div class="ttdeci">constexpr auto nan</div><div class="ttdoc">Computes the IEEE quiet NaN constant.</div><div class="ttdef"><b>Definition</b> nan.hpp:67</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga8a568ccc9a870bc971851209c836bc63"><div class="ttname"><a href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a></div><div class="ttdeci">constexpr auto inf</div><div class="ttdoc">Computes the infinity ieee value.</div><div class="ttdef"><b>Definition</b> inf.hpp:67</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga3b419a68a0b99756c3138528b7db9941" name="ga3b419a68a0b99756c3138528b7db9941"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3b419a68a0b99756c3138528b7db9941">&#9670;&#160;</a></span>nextafter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::nextafter = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextafter_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the next representable element in the second parameter direction. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">nextafter</a>(<a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">eve::value</a> <span class="keyword">auto</span> ... xs)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">nextafter</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">nextafter</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">nextafter</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/* any of the above overloads */</span>)                <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga3b419a68a0b99756c3138528b7db9941"><div class="ttname"><a href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a></div><div class="ttdeci">constexpr auto nextafter</div><div class="ttdoc">elementwise_callable object computing the next representable element in the second parameter directio...</div><div class="ttdef"><b>Definition</b> nextafter.hpp:76</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">arguments</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the next representable value after <span class="tt">x</span> in the <span class="tt">y</span> direction is returned. If <span class="tt">y == x</span> returns <span class="tt">x</span>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>Provides a version of <span class="tt"><a class="el" href="#ga3b419a68a0b99756c3138528b7db9941" title="elementwise_callable object computing the next representable element in the second parameter directio...">nextafter</a></span> for which floating plus zero and minus zero are distinct.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                 = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                 = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                       </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter(wf0, wf1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter[ignore_last(2)](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter[wf0 != 0](wf0, wf1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>[wf0 != 0](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter[pedantic](wf0, wf1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter(wu0, wu1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>(wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextafter(wi0, wi1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3b419a68a0b99756c3138528b7db9941">eve::nextafter</a>(wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gac2a2df9c3159d70e5e580c008fdeb66c" name="gac2a2df9c3159d70e5e580c008fdeb66c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac2a2df9c3159d70e5e580c008fdeb66c">&#9670;&#160;</a></span>nextint</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::nextint = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;nextint_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the next representable integer if it exists. </p>
+<p>This function is equivalent to <a class="el" href="group__eve__core__arithmetic.html#ga286feea728eff1a17edeb307b2aeab54" title="eve::inc">inc</a> for integral types. For floating point types, it will skip over the non-representable values between the input and the next representable integer.</p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">nextint</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">nextint</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">nextint</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                         <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">saturated</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_gac2a2df9c3159d70e5e580c008fdeb66c"><div class="ttname"><a href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a></div><div class="ttdeci">constexpr auto nextint</div><div class="ttdoc">Computes the next representable integer if it exists.</div><div class="ttdef"><b>Definition</b> nextint.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the smallest representable integer value greater than <span class="tt">x</span> is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>same as 1. but -inf returns nan.</li>
+<li>ensures that the input is never greater than the result of the call. (It can be equal for maximal representable value)</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, eve::fixed&lt;8&gt;</a>&gt; w{</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-0.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(0.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(32768.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-32768.0f),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- w                     = &quot;</span> &lt;&lt; w &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint(w)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>(w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[saturated](w) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[raw](w)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt; iw{0, 1, 32767, -32768};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- iw                     = &quot;</span> &lt;&lt; iw &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint(iw)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>(iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[saturated](iw) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[raw](iw)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga85073f11abb76d43faf07742435ea083"><div class="ttname"><a href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the greatest representable value.</div><div class="ttdef"><b>Definition</b> valmax.hpp:67</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_gacb2fe7bcb76509497ca32681494e30d4"><div class="ttname"><a href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4">eve::minf</a></div><div class="ttdeci">constexpr auto minf</div><div class="ttdoc">Computes the -infinity ieee value.</div><div class="ttdef"><b>Definition</b> minf.hpp:67</div></div>
+<div class="ttc" id="astructeve_1_1float16__t_html"><div class="ttname"><a href="structeve_1_1float16__t.html">eve::float16_t</a></div><div class="ttdoc">IEEE 754 binary16 floating-point type.</div><div class="ttdef"><b>Definition</b> float16.hpp:189</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga056f305b9a8385ae40ee917d661666f9" name="ga056f305b9a8385ae40ee917d661666f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga056f305b9a8385ae40ee917d661666f9">&#9670;&#160;</a></span>of_class</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::of_class = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;of_class_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> object computing classification of elements of the input. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;std::u<span class="keywordtype">int</span>8_t I, eve::<span class="keywordtype">float</span>ing_value T&gt;</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">of_class</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, fp_class&lt;I&gt; i) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga056f305b9a8385ae40ee917d661666f9"><div class="ttname"><a href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a></div><div class="ttdeci">constexpr auto of_class</div><div class="ttdoc">strict_elementwise_callable object computing classification of elements of the input.</div><div class="ttdef"><b>Definition</b> of_class.hpp:88</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">i</span>: combination of floating point classes to check</li>
+</ul>
+<p><b>Return value</b></p>
+<p>the elementwise logical result of the classification.</p>
+<dl class="section note"><dt>Note</dt><dd>The <span class="tt">i</span>parameter can be constructed easily by using the values <span class="tt">qnan</span>, <span class="tt">poszero</span>, <span class="tt">negzero</span>, <span class="tt">posinf</span>,<span class="tt">neginf</span>, <span class="tt">denorn</span>,<span class="tt">neg</span>, <span class="tt">snan</span> defined in the namespace <span class="tt"><a class="el" href="namespaceeve.html" title="EVE Main Namespace.">eve</a></span> and the <span class="tt">|</span> operator (see the example below).</dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadCenter">name  </th><th class="markdownTableHeadCenter">meaning  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">qnan  </td><td class="markdownTableBodyCenter">quiet NaN  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">poszero  </td><td class="markdownTableBodyCenter">positive zero  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">negzero  </td><td class="markdownTableBodyCenter">negative zero  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">posinf  </td><td class="markdownTableBodyCenter">positive infinite  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">neginf  </td><td class="markdownTableBodyCenter">negative infinite  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">denorm  </td><td class="markdownTableBodyCenter">denormal number  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyCenter">neg  </td><td class="markdownTableBodyCenter">negative finite  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyCenter">snan  </td><td class="markdownTableBodyCenter">signaling NaN  </td></tr>
+</table>
+<p>Actually snan and qnan are not distinguished in simd wide.</p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Subnormal_number">Wikipedia; Subnormal numbers</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">inf</a>  = <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
+<div class="line">  <span class="keyword">auto</span> mind = <a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">nan</a>  = <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>());</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, -2.0, <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">nan</a>, <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">inf</a>, mind, <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">inf</a>, -0.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                         = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::qnan   )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::qnan   ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::poszero)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::poszero) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::negzero)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::negzero) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::posinf )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::posinf ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::neginf )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::neginf ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::denorm )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::denorm ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::neg    )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::neg    ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::snan   )                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::snan   ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; of_class(wf0, eve::poszero|eve::negzero|eve::posinf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga056f305b9a8385ae40ee917d661666f9">eve::of_class</a>(wf0, eve::poszero|eve::negzero|eve::posinf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga5e851835c26e1c3583bf12fe2eea6c23" name="ga5e851835c26e1c3583bf12fe2eea6c23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5e851835c26e1c3583bf12fe2eea6c23">&#9670;&#160;</a></span>prev</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::prev = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prev_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the nth previous representable element. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n)                       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/* any of the above overloads */</span>)                <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">saturated</a> ](<span class="comment">/* any of the above overloads */</span>)              <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">prev</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                         <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating argument</a>.</li>
+<li><span class="tt">n</span>: <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral value argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the greatest representable value less than <span class="tt">x</span> is returned.</li>
+<li>the nth representable value less than <span class="tt">x</span> is returned. If <span class="tt">n</span> is zero returns <span class="tt">x</span>.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>if <span class="tt">x</span> is floating zero and mzero are considered distinct.</li>
+<li>ensures that the input is never less than the result of the call.</li>
+<li>works only if inputs are normal numbers (this excludes floating zeroes, denormals or not finite). the option has no influence on the two parameters calls</li>
+</ol>
+<p>If <span class="tt">n</span> is zero returns <span class="tt">x</span>.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {-0.0f, 2.0f, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), 0.0f, 30.0f,<a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()),</div>
+<div class="line">                   <a class="code hl_variable" href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()), <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0 = {-1, 2, -3, -4,  -32765, -32766, -32767, -32768 };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0 = {0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                       = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                       = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                       = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev(wf0, wi1)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(wf0, wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev[pedantic](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev[saturated ](wi0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a> ](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prev(wi0, wu0)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5e851835c26e1c3583bf12fe2eea6c23">eve::prev</a>(wi0, wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga3ad43aa378eecf62d5b437b320d45d84" name="ga3ad43aa378eecf62d5b437b320d45d84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3ad43aa378eecf62d5b437b320d45d84">&#9670;&#160;</a></span>prevint</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::prevint = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;prevint_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the previous representable integer if it exists. </p>
+<p>This function is equivalent to <a class="el" href="group__eve__core__arithmetic.html#ga44e2186aecde5f17445b39043094d85d" title="eve::dec">dec</a> for integral types. For floating point types, it will skip over the non-representable values between the input and the previous representable integer.</p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">prevint</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                              <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">prevint</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">prevint</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Exclusive Semantic options - Only one of those can be set at once</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                         <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">saturated</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga3ad43aa378eecf62d5b437b320d45d84"><div class="ttname"><a href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a></div><div class="ttdeci">constexpr auto prevint</div><div class="ttdoc">Computes the previous representable integer if it exists.</div><div class="ttdef"><b>Definition</b> prevint.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The greatest representable integer value less than <span class="tt">x</span> is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>same as 1. but inf returns nan.</li>
+<li>ensures that the input is never less than the result of the call. (It can be equal for minimal representable value)</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, eve::fixed&lt;8&gt;</a>&gt; w{</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-0.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(0.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(32768.0f),</div>
+<div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-32768.0f),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#gacb2fe7bcb76509497ca32681494e30d4">eve::minf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__core__constants.html#ga1fd45a655473cde0022e08497eba14c1">eve::valmin</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;eve::float16_t&gt;</a>{}),</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- w                     = &quot;</span> &lt;&lt; w &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint(w)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>(w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[saturated](w) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[raw](w)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt; iw{0, 1, 32767, -32768};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- iw                     = &quot;</span> &lt;&lt; iw &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint(iw)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>(iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[saturated](iw) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[raw](iw)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga1fd45a655473cde0022e08497eba14c1"><div class="ttname"><a href="group__eve__core__constants.html#ga1fd45a655473cde0022e08497eba14c1">eve::valmin</a></div><div class="ttdeci">constexpr auto valmin</div><div class="ttdoc">Computes the lowest representable value.</div><div class="ttdef"><b>Definition</b> valmin.hpp:67</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga5b73df953d6c6313eeae28925eb8f19c" name="ga5b73df953d6c6313eeae28925eb8f19c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b73df953d6c6313eeae28925eb8f19c">&#9670;&#160;</a></span>ulpdist</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ulpdist = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ulpdist_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the unit in the last place distance of its arguments. i.e. the number of representable values between these two divided by 2. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">ulpdist</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">ulpdist</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c][<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">ulpdist</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga5b73df953d6c6313eeae28925eb8f19c"><div class="ttname"><a href="#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a></div><div class="ttdeci">constexpr auto ulpdist</div><div class="ttdoc">Computes the unit in the last place distance of its arguments. i.e. the number of representable value...</div><div class="ttdef"><b>Definition</b> ulpdist.hpp:78</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">arguments</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> the 'units in the last place' distance between <span class="tt">x</span> and <span class="tt">y</span>.<ul>
+<li>if <a class="el" href="group__eve__core__predicates.html#ga708d743aa5bd73579b85d7cbe23fcb51" title="elementwise callable returning a logical true if and only no parameter is NaN.">is_ordered(x,y)</a>, <a class="el" href="#ga6a445739414b920ec65978c6bbc5b315" title="elementwise_callable object computing the number of values representable in the type between the argu...">nb_values(x,y)</a>/2.0 is returned</li>
+<li>otherwise a <span class="tt">Nan</span> is returned</li>
+</ul>
+</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                               = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                     </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ulpdist(wf0, wf1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ulpdist[ignore_last(2)](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ulpdist[wf0 != -2.0f](wf0, wf1)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5b73df953d6c6313eeae28925eb8f19c">eve::ulpdist</a>[wf0 != -2.0f](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

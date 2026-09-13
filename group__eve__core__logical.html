@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -126,37 +128,686 @@ $(function(){initNavTree('group__eve__core__logical.html','',''); });
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Logical operations</p>
-<p><a class="el" href="group__eve__core__logical_ga2d5530893d21e4e04802f96fd85309df.html#ga2d5530893d21e4e04802f96fd85309df" title="eve::swap_if">swap_if</a>, <a class="el" href="group__eve__core__logical_gac4b0a0de4e227615b5514f739e478a50.html#gac4b0a0de4e227615b5514f739e478a50" title="eve::logical_and">logical_and</a>, <a class="el" href="group__eve__core__logical_gaa46d435f0a6b06b058e106e37cc1cb29.html#gaa46d435f0a6b06b058e106e37cc1cb29" title="eve::logical_andnot">logical_andnot</a>, <a class="el" href="group__eve__core__logical_ga5da44a758a10d4d4419fd3df1a4f90e6.html#ga5da44a758a10d4d4419fd3df1a4f90e6" title="eve::logical_not">logical_not</a>, <a class="el" href="group__eve__core__logical_gadaf632f20d2d6fc4e406459acbf53bb2.html#gadaf632f20d2d6fc4e406459acbf53bb2" title="eve::logical_notand">logical_notand</a>, <a class="el" href="group__eve__core__logical_ga0a6fef84dca69e378253433e2b31f647.html#ga0a6fef84dca69e378253433e2b31f647" title="eve::logical_notor">logical_notor</a>, <a class="el" href="group__eve__core__logical_ga4a287385b8f9c1d91c1523bc36ef35a6.html#ga4a287385b8f9c1d91c1523bc36ef35a6" title="eve::logical_or">logical_or</a>, <a class="el" href="group__eve__core__logical_gac904b8dce17c980bd3542af1cd6cb875.html#gac904b8dce17c980bd3542af1cd6cb875" title="eve::logical_ornot">logical_ornot</a>, <a class="el" href="group__eve__core__logical_ga427432fa10542d6737316973309004e4.html#ga427432fa10542d6737316973309004e4" title="eve::replace_ignored">replace_ignored</a>.</p>
+<p><a class="el" href="#ga2d5530893d21e4e04802f96fd85309df" title="eve::swap_if">swap_if</a>, <a class="el" href="#gac4b0a0de4e227615b5514f739e478a50" title="eve::logical_and">logical_and</a>, <a class="el" href="#gaa46d435f0a6b06b058e106e37cc1cb29" title="eve::logical_andnot">logical_andnot</a>, <a class="el" href="#ga5da44a758a10d4d4419fd3df1a4f90e6" title="eve::logical_not">logical_not</a>, <a class="el" href="#gadaf632f20d2d6fc4e406459acbf53bb2" title="eve::logical_notand">logical_notand</a>, <a class="el" href="#ga0a6fef84dca69e378253433e2b31f647" title="eve::logical_notor">logical_notor</a>, <a class="el" href="#ga4a287385b8f9c1d91c1523bc36ef35a6" title="eve::logical_or">logical_or</a>, <a class="el" href="#gac904b8dce17c980bd3542af1cd6cb875" title="eve::logical_ornot">logical_ornot</a>, <a class="el" href="#ga427432fa10542d6737316973309004e4" title="eve::replace_ignored">replace_ignored</a>.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga2d5530893d21e4e04802f96fd85309df" id="r_ga2d5530893d21e4e04802f96fd85309df"><td class="memTemplParams" colspan="2">template&lt;logical_value Mask, value Value&gt; </td></tr>
-<tr class="memitem:ga2d5530893d21e4e04802f96fd85309df template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga2d5530893d21e4e04802f96fd85309df.html#ga2d5530893d21e4e04802f96fd85309df">eve::swap_if</a> (Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</td></tr>
+<tr class="memitem:ga2d5530893d21e4e04802f96fd85309df template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ga2d5530893d21e4e04802f96fd85309df">eve::swap_if</a> (Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:ga2d5530893d21e4e04802f96fd85309df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional swap.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga4883faa71d1b0e8eaea97fe7cc00b0a8" id="r_ga4883faa71d1b0e8eaea97fe7cc00b0a8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga4883faa71d1b0e8eaea97fe7cc00b0a8.html#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;if_else_t&gt;</td></tr>
+<tr class="memitem:ga4883faa71d1b0e8eaea97fe7cc00b0a8" id="r_ga4883faa71d1b0e8eaea97fe7cc00b0a8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;if_else_t&gt;</td></tr>
 <tr class="memdesc:ga4883faa71d1b0e8eaea97fe7cc00b0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Select value based on conditional mask or values.  <br /></td></tr>
-<tr class="memitem:gac4b0a0de4e227615b5514f739e478a50" id="r_gac4b0a0de4e227615b5514f739e478a50"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_gac4b0a0de4e227615b5514f739e478a50.html#gac4b0a0de4e227615b5514f739e478a50">eve::logical_and</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_and_t&gt;</td></tr>
+<tr class="memitem:gac4b0a0de4e227615b5514f739e478a50" id="r_gac4b0a0de4e227615b5514f739e478a50"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gac4b0a0de4e227615b5514f739e478a50">eve::logical_and</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_and_t&gt;</td></tr>
 <tr class="memdesc:gac4b0a0de4e227615b5514f739e478a50"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the logical AND of its arguments.  <br /></td></tr>
-<tr class="memitem:gaa46d435f0a6b06b058e106e37cc1cb29" id="r_gaa46d435f0a6b06b058e106e37cc1cb29"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_gaa46d435f0a6b06b058e106e37cc1cb29.html#gaa46d435f0a6b06b058e106e37cc1cb29">eve::logical_andnot</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_andnot_t&gt;</td></tr>
+<tr class="memitem:gaa46d435f0a6b06b058e106e37cc1cb29" id="r_gaa46d435f0a6b06b058e106e37cc1cb29"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa46d435f0a6b06b058e106e37cc1cb29">eve::logical_andnot</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_andnot_t&gt;</td></tr>
 <tr class="memdesc:gaa46d435f0a6b06b058e106e37cc1cb29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical ANDNOT of its arguments.  <br /></td></tr>
-<tr class="memitem:ga5da44a758a10d4d4419fd3df1a4f90e6" id="r_ga5da44a758a10d4d4419fd3df1a4f90e6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga5da44a758a10d4d4419fd3df1a4f90e6.html#ga5da44a758a10d4d4419fd3df1a4f90e6">eve::logical_not</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_not_t&gt;</td></tr>
+<tr class="memitem:ga5da44a758a10d4d4419fd3df1a4f90e6" id="r_ga5da44a758a10d4d4419fd3df1a4f90e6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga5da44a758a10d4d4419fd3df1a4f90e6">eve::logical_not</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_not_t&gt;</td></tr>
 <tr class="memdesc:ga5da44a758a10d4d4419fd3df1a4f90e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical NOT of its argument.  <br /></td></tr>
-<tr class="memitem:gadaf632f20d2d6fc4e406459acbf53bb2" id="r_gadaf632f20d2d6fc4e406459acbf53bb2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_gadaf632f20d2d6fc4e406459acbf53bb2.html#gadaf632f20d2d6fc4e406459acbf53bb2">eve::logical_notand</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notand_t&gt;</td></tr>
+<tr class="memitem:gadaf632f20d2d6fc4e406459acbf53bb2" id="r_gadaf632f20d2d6fc4e406459acbf53bb2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gadaf632f20d2d6fc4e406459acbf53bb2">eve::logical_notand</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notand_t&gt;</td></tr>
 <tr class="memdesc:gadaf632f20d2d6fc4e406459acbf53bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical NOTAND of its arguments.  <br /></td></tr>
-<tr class="memitem:ga0a6fef84dca69e378253433e2b31f647" id="r_ga0a6fef84dca69e378253433e2b31f647"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga0a6fef84dca69e378253433e2b31f647.html#ga0a6fef84dca69e378253433e2b31f647">eve::logical_notor</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notor_t&gt;</td></tr>
+<tr class="memitem:ga0a6fef84dca69e378253433e2b31f647" id="r_ga0a6fef84dca69e378253433e2b31f647"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0a6fef84dca69e378253433e2b31f647">eve::logical_notor</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notor_t&gt;</td></tr>
 <tr class="memdesc:ga0a6fef84dca69e378253433e2b31f647"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical NOTOR of its arguments.  <br /></td></tr>
-<tr class="memitem:ga4a287385b8f9c1d91c1523bc36ef35a6" id="r_ga4a287385b8f9c1d91c1523bc36ef35a6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga4a287385b8f9c1d91c1523bc36ef35a6.html#ga4a287385b8f9c1d91c1523bc36ef35a6">eve::logical_or</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_or_t&gt;</td></tr>
+<tr class="memitem:ga4a287385b8f9c1d91c1523bc36ef35a6" id="r_ga4a287385b8f9c1d91c1523bc36ef35a6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga4a287385b8f9c1d91c1523bc36ef35a6">eve::logical_or</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_or_t&gt;</td></tr>
 <tr class="memdesc:ga4a287385b8f9c1d91c1523bc36ef35a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical OR of its arguments.  <br /></td></tr>
-<tr class="memitem:gac904b8dce17c980bd3542af1cd6cb875" id="r_gac904b8dce17c980bd3542af1cd6cb875"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_gac904b8dce17c980bd3542af1cd6cb875.html#gac904b8dce17c980bd3542af1cd6cb875">eve::logical_ornot</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_ornot_t&gt;</td></tr>
+<tr class="memitem:gac904b8dce17c980bd3542af1cd6cb875" id="r_gac904b8dce17c980bd3542af1cd6cb875"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gac904b8dce17c980bd3542af1cd6cb875">eve::logical_ornot</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_ornot_t&gt;</td></tr>
 <tr class="memdesc:gac904b8dce17c980bd3542af1cd6cb875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical ORNOT of its arguments.  <br /></td></tr>
-<tr class="memitem:ga4681644b17aaa0a3ca3d0f6967d8513e" id="r_ga4681644b17aaa0a3ca3d0f6967d8513e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga4681644b17aaa0a3ca3d0f6967d8513e.html#ga4681644b17aaa0a3ca3d0f6967d8513e">eve::logical_xor</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_xor_t&gt;</td></tr>
+<tr class="memitem:ga4681644b17aaa0a3ca3d0f6967d8513e" id="r_ga4681644b17aaa0a3ca3d0f6967d8513e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga4681644b17aaa0a3ca3d0f6967d8513e">eve::logical_xor</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_xor_t&gt;</td></tr>
 <tr class="memdesc:ga4681644b17aaa0a3ca3d0f6967d8513e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the logical XOR of its arguments.  <br /></td></tr>
-<tr class="memitem:ga427432fa10542d6737316973309004e4" id="r_ga427432fa10542d6737316973309004e4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__logical_ga427432fa10542d6737316973309004e4.html#ga427432fa10542d6737316973309004e4">eve::replace_ignored</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;replace_ignored_t&gt;</td></tr>
+<tr class="memitem:ga427432fa10542d6737316973309004e4" id="r_ga427432fa10542d6737316973309004e4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga427432fa10542d6737316973309004e4">eve::replace_ignored</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;replace_ignored_t&gt;</td></tr>
 <tr class="memdesc:ga427432fa10542d6737316973309004e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A small helper to replace ignored values.  <br /></td></tr>
 </table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="ga2d5530893d21e4e04802f96fd85309df" name="ga2d5530893d21e4e04802f96fd85309df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d5530893d21e4e04802f96fd85309df">&#9670;&#160;</a></span>swap_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;logical_value Mask, value Value&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eve::swap_if </td>
+          <td>(</td>
+          <td class="paramtype">Mask const &amp;</td>          <td class="paramname"><span class="paramname"><em>mask</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Value &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Value &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Conditional swap. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/core.hpp&gt;</span></p>
+<p>Swaps the <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD values</a> <span class="tt">lhs</span> and <span class="tt">rhs</span> wherever <span class="tt">mask</span> evaluates to <span class="tt">true</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mask</td><td>Mask to apply over the swap operation. </td></tr>
+    <tr><td class="paramname">lhs,rhs</td><td>Values to swap.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; a = {1.2f, 3.4f, 5.6f, 7.8f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; b = {0.1f,1e-2f,1e-3f,1e-4f};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Before swap_if(a &lt; 4.f,a,b)\n&quot;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a                    = &quot;</span> &lt;&lt; a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- b                    = &quot;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- a &lt; 4.f              = &quot;</span> &lt;&lt; (a &lt; 4.f) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">            <a class="code hl_function" href="#ga2d5530893d21e4e04802f96fd85309df">eve::swap_if</a>(a &lt; 4.f,a,b);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;After swap_if(a &lt; 4.f,a,b)\n&quot;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; a                    = &quot;</span> &lt;&lt; a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; b                    = &quot;</span> &lt;&lt; b &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga2d5530893d21e4e04802f96fd85309df"><div class="ttname"><a href="#ga2d5530893d21e4e04802f96fd85309df">eve::swap_if</a></div><div class="ttdeci">void swap_if(Mask const &amp;mask, Value &amp;lhs, Value &amp;rhs) noexcept</div><div class="ttdoc">Conditional swap.</div><div class="ttdef"><b>Definition</b> swap_if.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga4883faa71d1b0e8eaea97fe7cc00b0a8" name="ga4883faa71d1b0e8eaea97fe7cc00b0a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">&#9670;&#160;</a></span>if_else</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::if_else = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;if_else_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Select value based on conditional mask or values. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::value U, eve::value V&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(<span class="keywordtype">bool</span> mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::value M, eve::value U, eve::value V&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(M mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::value M, eve::generator U, eve::value V&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(M mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::value M, eve::value U, eve::generator V&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(M mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::conditional_expr C, eve::value U, eve::value V &gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(C mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::conditional_expr C, eve::generator U, eve::value V &gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(C mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::conditional_expr C, eve::value U, eve::generator V &gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">if_else</a>(C mask, U t, V f) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga4883faa71d1b0e8eaea97fe7cc00b0a8"><div class="ttname"><a href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a></div><div class="ttdeci">constexpr auto if_else</div><div class="ttdoc">Select value based on conditional mask or values.</div><div class="ttdef"><b>Definition</b> if_else.hpp:197</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">mask</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical value</a> or <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">condition</a> to use as mask.</li>
+<li><span class="tt">t</span>: Value or constant to use where <span class="tt">mask</span> evaluates to <span class="tt">true</span>.</li>
+<li><span class="tt">f</span>: Value or constant to use where <span class="tt">mask</span> evaluates to <span class="tt">false</span>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The call <span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t, f)</a></span> performs an <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> selection between the elements of <span class="tt">t</span> and <span class="tt">f</span> according to the value of the elements of <span class="tt">mask</span>.</p>
+<p><b>Possible optimizations</b></p>
+<p>The following calls, where <span class="tt">t</span> and <span class="tt">f</span> are values, are optimized so the constant are not evaluated:</p><ul>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t            , eve::allbits)</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t            , eve::one    )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t            , eve::mone   )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t            , eve::zero   )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::allbits , f           )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::one     , f           )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::mone    , f           )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::zero    , f           )</a></span></li>
+</ul>
+<p>In addition, the following calls, where <span class="tt">t</span> and <span class="tt">f</span> are unsigned values, are optimized so the constant are not evaluated:</p><ul>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t          , eve::valmax)</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, t          , eve::valmin)</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::valmax, f          )</a></span></li>
+<li><span class="tt"><a class="el" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">if_else(mask, eve::valmin, f          )</a></span></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                    = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                    = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                    = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                    = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                    = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                    = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                    = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                    = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                    = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                          </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; if_else(wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; if_else(wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; if_else(wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4883faa71d1b0e8eaea97fe7cc00b0a8">eve::if_else</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gac4b0a0de4e227615b5514f739e478a50" name="gac4b0a0de4e227615b5514f739e478a50"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac4b0a0de4e227615b5514f739e478a50">&#9670;&#160;</a></span>logical_and</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_and = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_and_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the logical AND of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac4b0a0de4e227615b5514f739e478a50">logical_and</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="agroup__eve__core__logical_html_gac4b0a0de4e227615b5514f739e478a50"><div class="ttname"><a href="#gac4b0a0de4e227615b5514f739e478a50">eve::logical_and</a></div><div class="ttdeci">constexpr auto logical_and</div><div class="ttdoc">strict_elementwise_callable computing the logical AND of its arguments.</div><div class="ttdef"><b>Definition</b> logical_and.hpp:70</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical AND of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#gac4b0a0de4e227615b5514f739e478a50" title="strict_elementwise_callable computing the logical AND of its arguments.">logical_and(x, y)</a></span> is semantically equivalent to <span class="tt">x &amp;&amp; y</span> if <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> and does not shortcut.</p>
+<dl class="section note"><dt>Note</dt><dd>Although the infix notation with <span class="tt">&amp;&amp;</span> is supported, the <span class="tt">&amp;&amp;</span> operator on standard scalar types is the original one and so will return bool instead of <a class="el" href="concepteve_1_1logical__value.html" title="The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...">eve::logical_value</a>.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                       = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                             </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_and(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac4b0a0de4e227615b5514f739e478a50">eve::logical_and</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_gaf7f045ef2ed35833e8c3dc0228de48b8"><div class="ttname"><a href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a></div><div class="ttdeci">constexpr auto maximum</div><div class="ttdoc">Computes the maximal value in a simd vector or valmin if the input is fully masked.</div><div class="ttdef"><b>Definition</b> maximum.hpp:83</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaa46d435f0a6b06b058e106e37cc1cb29" name="gaa46d435f0a6b06b058e106e37cc1cb29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa46d435f0a6b06b058e106e37cc1cb29">&#9670;&#160;</a></span>logical_andnot</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_andnot = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_andnot_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical ANDNOT of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa46d435f0a6b06b058e106e37cc1cb29">logical_andnot</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_gaa46d435f0a6b06b058e106e37cc1cb29"><div class="ttname"><a href="#gaa46d435f0a6b06b058e106e37cc1cb29">eve::logical_andnot</a></div><div class="ttdeci">constexpr auto logical_andnot</div><div class="ttdoc">Computes the logical ANDNOT of its arguments.</div><div class="ttdef"><b>Definition</b> logical_andnot.hpp:70</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical ANDNOT of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#gaa46d435f0a6b06b058e106e37cc1cb29" title="Computes the logical ANDNOT of its arguments.">logical_andnot(x, y)</a></span> is semantically equivalent to <span class="tt">x &amp;&amp; !y</span> if <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> and does not shortcut.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                                </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_andnot(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa46d435f0a6b06b058e106e37cc1cb29">eve::logical_andnot</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga5da44a758a10d4d4419fd3df1a4f90e6" name="ga5da44a758a10d4d4419fd3df1a4f90e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5da44a758a10d4d4419fd3df1a4f90e6">&#9670;&#160;</a></span>logical_not</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_not = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_not_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical NOT of its argument. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5da44a758a10d4d4419fd3df1a4f90e6">logical_not</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga5da44a758a10d4d4419fd3df1a4f90e6"><div class="ttname"><a href="#ga5da44a758a10d4d4419fd3df1a4f90e6">eve::logical_not</a></div><div class="ttdeci">constexpr auto logical_not</div><div class="ttdoc">Computes the logical NOT of its argument.</div><div class="ttdef"><b>Definition</b> logical_not.hpp:74</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The call <span class="tt"><a class="el" href="#ga5da44a758a10d4d4419fd3df1a4f90e6" title="Computes the logical NOT of its argument.">logical_not(x)</a></span> is semantically equivalent to <span class="tt"><a class="el" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e" title="elementwise callable returning a logical true if and only if the element value is zero....">is_eqz(x)</a></span>. Infix notation can be used with <span class="tt">!x</span>.</p>
+<dl class="section note"><dt>Note</dt><dd>Although the infix notation with <span class="tt">!</span> is supported, the <span class="tt">!</span> operator on standard scalar types is the original one and so will return bool instead of <a class="el" href="concepteve_1_1logical__value.html" title="The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...">eve::logical_value</a>.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                      </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_not(wu0 &lt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5da44a758a10d4d4419fd3df1a4f90e6">eve::logical_not</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gadaf632f20d2d6fc4e406459acbf53bb2" name="gadaf632f20d2d6fc4e406459acbf53bb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadaf632f20d2d6fc4e406459acbf53bb2">&#9670;&#160;</a></span>logical_notand</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_notand = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notand_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical NOTAND of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadaf632f20d2d6fc4e406459acbf53bb2">logical_notand</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_gadaf632f20d2d6fc4e406459acbf53bb2"><div class="ttname"><a href="#gadaf632f20d2d6fc4e406459acbf53bb2">eve::logical_notand</a></div><div class="ttdeci">constexpr auto logical_notand</div><div class="ttdoc">Computes the logical NOTAND of its arguments.</div><div class="ttdef"><b>Definition</b> logical_notand.hpp:68</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical NOTAND of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#gadaf632f20d2d6fc4e406459acbf53bb2" title="Computes the logical NOTAND of its arguments.">logical_notand(x, y)</a></span> is semantically equivalent to <span class="tt">!x &amp;&amp; y</span> if <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> and does not shortcut.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                                </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_notand(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadaf632f20d2d6fc4e406459acbf53bb2">eve::logical_notand</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga0a6fef84dca69e378253433e2b31f647" name="ga0a6fef84dca69e378253433e2b31f647"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a6fef84dca69e378253433e2b31f647">&#9670;&#160;</a></span>logical_notor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_notor = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_notor_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical NOTOR of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a6fef84dca69e378253433e2b31f647">logical_notor</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga0a6fef84dca69e378253433e2b31f647"><div class="ttname"><a href="#ga0a6fef84dca69e378253433e2b31f647">eve::logical_notor</a></div><div class="ttdeci">constexpr auto logical_notor</div><div class="ttdoc">Computes the logical NOTOR of its arguments.</div><div class="ttdef"><b>Definition</b> logical_notor.hpp:68</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical NOTOR of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#ga0a6fef84dca69e378253433e2b31f647" title="Computes the logical NOTOR of its arguments.">logical_notor(x, y)</a></span> is semantically equivalent to <span class="tt">!x || y</span> if <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> and does not shortcut.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                         = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                               </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_notor(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a6fef84dca69e378253433e2b31f647">eve::logical_notor</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga4a287385b8f9c1d91c1523bc36ef35a6" name="ga4a287385b8f9c1d91c1523bc36ef35a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a287385b8f9c1d91c1523bc36ef35a6">&#9670;&#160;</a></span>logical_or</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_or = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_or_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical OR of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4a287385b8f9c1d91c1523bc36ef35a6">logical_or</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga4a287385b8f9c1d91c1523bc36ef35a6"><div class="ttname"><a href="#ga4a287385b8f9c1d91c1523bc36ef35a6">eve::logical_or</a></div><div class="ttdeci">constexpr auto logical_or</div><div class="ttdoc">Computes the logical OR of its arguments.</div><div class="ttdef"><b>Definition</b> logical_or.hpp:72</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical_ rguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical OR of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#ga4a287385b8f9c1d91c1523bc36ef35a6" title="Computes the logical OR of its arguments.">logical_or(x, y)</a></span> is semantically equivalent to <span class="tt">x || y</span> if <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> and does not shortcut.</p>
+<dl class="section note"><dt>Note</dt><dd>Although the infix notation with <span class="tt">||</span> is supported, the <span class="tt">||</span> operator on standard scalar types is the original one and so will return bool instead of <a class="el" href="concepteve_1_1logical__value.html" title="The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...">eve::logical_value</a>.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                      = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                            </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_or(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4a287385b8f9c1d91c1523bc36ef35a6">eve::logical_or</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gac904b8dce17c980bd3542af1cd6cb875" name="gac904b8dce17c980bd3542af1cd6cb875"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac904b8dce17c980bd3542af1cd6cb875">&#9670;&#160;</a></span>logical_ornot</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_ornot = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_ornot_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical ORNOT of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gac904b8dce17c980bd3542af1cd6cb875">logical_ornot</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_gac904b8dce17c980bd3542af1cd6cb875"><div class="ttname"><a href="#gac904b8dce17c980bd3542af1cd6cb875">eve::logical_ornot</a></div><div class="ttdeci">constexpr auto logical_ornot</div><div class="ttdoc">Computes the logical ORNOT of its arguments.</div><div class="ttdef"><b>Definition</b> logical_ornot.hpp:68</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">logical arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical ORNOT of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<pre class="fragment">The call `logical_ornot(x, y)` is semantically equivalent to `x || !y`
+if `x` or  `y` is an  [simd value](@ref eve::simd_value) and  does not shortcut.
+</pre><h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                         = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                               </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_ornot(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac904b8dce17c980bd3542af1cd6cb875">eve::logical_ornot</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga4681644b17aaa0a3ca3d0f6967d8513e" name="ga4681644b17aaa0a3ca3d0f6967d8513e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4681644b17aaa0a3ca3d0f6967d8513e">&#9670;&#160;</a></span>logical_xor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical_xor = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;logical_xor_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the logical XOR of its arguments. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga4681644b17aaa0a3ca3d0f6967d8513e">logical_xor</a>(<span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> x, <span class="keyword">auto</span> <a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga4681644b17aaa0a3ca3d0f6967d8513e"><div class="ttname"><a href="#ga4681644b17aaa0a3ca3d0f6967d8513e">eve::logical_xor</a></div><div class="ttdeci">constexpr auto logical_xor</div><div class="ttdoc">Computes the logical XOR of its arguments.</div><div class="ttdef"><b>Definition</b> logical_xor.hpp:67</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns the logical XOR of the two parameters following the <a class="el" href="glossary_semantic.html#glossary_logical" title="Logical Functions">logical operations semantic</a>.</p>
+<p>The call <span class="tt"><a class="el" href="#ga4681644b17aaa0a3ca3d0f6967d8513e" title="Computes the logical XOR of its arguments.">logical_xor(x, y)</a></span> is semantically equivalent to <span class="tt">(x &amp;&amp; !y) || (!x &amp;&amp; y)</span>.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                      = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                            </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; logical_or(wu0 &lt;= maximum(wu0)/2, wu0 &gt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4a287385b8f9c1d91c1523bc36ef35a6">eve::logical_or</a>(wu0 &lt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2, wu0 &gt;= <a class="code hl_variable" href="group__eve__core__reduction.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga427432fa10542d6737316973309004e4" name="ga427432fa10542d6737316973309004e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga427432fa10542d6737316973309004e4">&#9670;&#160;</a></span>replace_ignored</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::replace_ignored = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;replace_ignored_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A small helper to replace ignored values. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>A convenience wrapper around if_else.</p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value T, relative_conditional_expr Ignore, value Other&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga427432fa10542d6737316973309004e4">replace_ignored</a>(T x, Ignore ignore, Other with);</div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value T, relative_conditional_expr Ignore, generator Other&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga427432fa10542d6737316973309004e4">replace_ignored</a>(T x, Ignore ignore, Other with);</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__logical_html_ga427432fa10542d6737316973309004e4"><div class="ttname"><a href="#ga427432fa10542d6737316973309004e4">eve::replace_ignored</a></div><div class="ttdeci">constexpr auto replace_ignored</div><div class="ttdoc">A small helper to replace ignored values.</div><div class="ttdef"><b>Definition</b> replace.hpp:71</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> - main value</li>
+<li><span class="tt">ignore</span> - selection</li>
+<li><span class="tt">with</span> - value to replace with</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Same as if_else. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

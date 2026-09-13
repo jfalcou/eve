@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1fundamental__cardinal.html','','structeve
   <div class="headertitle"><div class="title">eve::fundamental_cardinal&lt; Type, ABI &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__arch.html">Architecture related Types and Helpers</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Computes the fundamental cardinal of a given type.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/fundamental_cardinal.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Type, regular_abi ABI = eve::current_abi_type&gt;<br />
-struct eve::fundamental_cardinal&lt; Type, ABI &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/arch/fundamental_cardinal.hpp&gt;</span></p>
+struct eve::fundamental_cardinal&lt; Type, ABI &gt;</div><p>Computes the fundamental cardinal of a given type. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/arch/fundamental_cardinal.hpp&gt;</span></p>
 <p><a class="el" href="structeve_1_1fundamental__cardinal.html" title="Computes the fundamental cardinal of a given type.">eve::fundamental_cardinal</a> computes the cardinal of the smallest register able to store values of type <span class="tt">Type</span> for a given SIMD <span class="tt">ABI</span> with no uninitialized lanes.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

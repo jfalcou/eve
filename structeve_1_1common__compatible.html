@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,14 +123,10 @@ $(function(){initNavTree('structeve_1_1common__compatible.html','',''); });
   <div class="headertitle"><div class="title">eve::common_compatible&lt; Ts &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__traits.html">Type traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Computes the type compatible with a list of <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/common_compatible.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... Ts&gt;<br />
-struct eve::common_compatible&lt; Ts &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/common_compatible.hpp&gt;</span></p>
+struct eve::common_compatible&lt; Ts &gt;</div><p>Computes the type compatible with a list of <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/common_compatible.hpp&gt;</span></p>
 <p>If all <span class="tt">Ts...</span> are all identical to a given <span class="tt">T</span> and model <a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">eve::value</a>, provides the member typedef <span class="tt">type</span> which is defined as <span class="tt">T</span>.</p>
 <p>If <span class="tt">Ts...</span> contains a set of types modeling <a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...">eve::scalar_value</a> and a set of types modeling <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> all identical to a given <span class="tt">T</span>, provides the member typedef <span class="tt">type</span> which is defined as <span class="tt">T</span>.</p>
 <p>Otherwise, the program is ill-formed.</p>

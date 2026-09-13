@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -128,29 +130,698 @@ $(function(){initNavTree('group__eve__core__simd.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga0f764f21419f124e1e29c15718520a16" id="r_ga0f764f21419f124e1e29c15718520a16"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga0f764f21419f124e1e29c15718520a16.html#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;broadcast_t&gt;</td></tr>
+<tr class="memitem:ga0f764f21419f124e1e29c15718520a16" id="r_ga0f764f21419f124e1e29c15718520a16"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;broadcast_t&gt;</td></tr>
 <tr class="memdesc:ga0f764f21419f124e1e29c15718520a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the.  <br /></td></tr>
-<tr class="memitem:gaa40b2ed752ac083e7336bfcfb216545a" id="r_gaa40b2ed752ac083e7336bfcfb216545a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a">eve::combine</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;combine_t&gt;</td></tr>
+<tr class="memitem:gaa40b2ed752ac083e7336bfcfb216545a" id="r_gaa40b2ed752ac083e7336bfcfb216545a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa40b2ed752ac083e7336bfcfb216545a">eve::combine</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;combine_t&gt;</td></tr>
 <tr class="memdesc:gaa40b2ed752ac083e7336bfcfb216545a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines two SIMD values in a larger one.  <br /></td></tr>
-<tr class="memitem:ga3cbe6596b8e7ca4d4d0611ac642fcf39" id="r_ga3cbe6596b8e7ca4d4d0611ac642fcf39"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga3cbe6596b8e7ca4d4d0611ac642fcf39.html#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gather_t&gt;</td></tr>
+<tr class="memitem:ga3cbe6596b8e7ca4d4d0611ac642fcf39" id="r_ga3cbe6596b8e7ca4d4d0611ac642fcf39"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gather_t&gt;</td></tr>
 <tr class="memdesc:ga3cbe6596b8e7ca4d4d0611ac642fcf39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a SIMD value with values selected from a memory region at the given offsets.  <br /></td></tr>
-<tr class="memitem:ga517f6b01fca5124ed352087830a713d4" id="r_ga517f6b01fca5124ed352087830a713d4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga517f6b01fca5124ed352087830a713d4.html#ga517f6b01fca5124ed352087830a713d4">eve::has_equal_in</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;has_equal_in_t&gt;</td></tr>
-<tr class="memdesc:ga517f6b01fca5124ed352087830a713d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two simd_values: <span class="tt">x</span>, <span class="tt">match_against</span> returns a logical mask. The res[i] == <a class="el" href="group__eve__core__reduction_ga668c3edce7062da8ba1f66504d149f88.html#ga668c3edce7062da8ba1f66504d149f88" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a>(x[i] == match_against);.  <br /></td></tr>
-<tr class="memitem:ga48cbc739f85673ad20ccc29debcb2183" id="r_ga48cbc739f85673ad20ccc29debcb2183"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga48cbc739f85673ad20ccc29debcb2183.html#ga48cbc739f85673ad20ccc29debcb2183">eve::iterate_selected</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;iterate_selected_t&gt;</td></tr>
+<tr class="memitem:ga517f6b01fca5124ed352087830a713d4" id="r_ga517f6b01fca5124ed352087830a713d4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga517f6b01fca5124ed352087830a713d4">eve::has_equal_in</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;has_equal_in_t&gt;</td></tr>
+<tr class="memdesc:ga517f6b01fca5124ed352087830a713d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given two simd_values: <span class="tt">x</span>, <span class="tt">match_against</span> returns a logical mask. The res[i] == <a class="el" href="group__eve__core__reduction.html#ga668c3edce7062da8ba1f66504d149f88" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a>(x[i] == match_against);.  <br /></td></tr>
+<tr class="memitem:ga48cbc739f85673ad20ccc29debcb2183" id="r_ga48cbc739f85673ad20ccc29debcb2183"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga48cbc739f85673ad20ccc29debcb2183">eve::iterate_selected</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;iterate_selected_t&gt;</td></tr>
 <tr class="memdesc:ga48cbc739f85673ad20ccc29debcb2183"><td class="mdescLeft">&#160;</td><td class="mdescRight">a utility to do scalar iteration over all true elements in a <span class="tt">logical</span>.  <br /></td></tr>
-<tr class="memitem:gaabc7c256adcf53420136da7f6de66fb7" id="r_gaabc7c256adcf53420136da7f6de66fb7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_gaabc7c256adcf53420136da7f6de66fb7.html#gaabc7c256adcf53420136da7f6de66fb7">eve::scan</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scan_t&gt;</td></tr>
+<tr class="memitem:gaabc7c256adcf53420136da7f6de66fb7" id="r_gaabc7c256adcf53420136da7f6de66fb7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaabc7c256adcf53420136da7f6de66fb7">eve::scan</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scan_t&gt;</td></tr>
 <tr class="memdesc:gaabc7c256adcf53420136da7f6de66fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the generalized prefix sum over a <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a>.  <br /></td></tr>
-<tr class="memitem:gaa6b4303cb1ae3c602c51414ba1963161" id="r_gaa6b4303cb1ae3c602c51414ba1963161"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_gaa6b4303cb1ae3c602c51414ba1963161.html#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scatter_t&gt;</td></tr>
+<tr class="memitem:gaa6b4303cb1ae3c602c51414ba1963161" id="r_gaa6b4303cb1ae3c602c51414ba1963161"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scatter_t&gt;</td></tr>
 <tr class="memdesc:gaa6b4303cb1ae3c602c51414ba1963161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a SIMD register to memory using scattered indexes.  <br /></td></tr>
-<tr class="memitem:gafd1cf1dd690536fde5d1a726d437a976" id="r_gafd1cf1dd690536fde5d1a726d437a976"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_gafd1cf1dd690536fde5d1a726d437a976.html#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sort_t&gt;</td></tr>
+<tr class="memitem:gafd1cf1dd690536fde5d1a726d437a976" id="r_gafd1cf1dd690536fde5d1a726d437a976"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sort_t&gt;</td></tr>
 <tr class="memdesc:gafd1cf1dd690536fde5d1a726d437a976"><td class="mdescLeft">&#160;</td><td class="mdescRight">sorts a register in a accedning order according to a comparator.  <br /></td></tr>
-<tr class="memitem:ga35f397f99a9981ec14e2d162ce530ee9" id="r_ga35f397f99a9981ec14e2d162ce530ee9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga35f397f99a9981ec14e2d162ce530ee9.html#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;zip_t&gt;</td></tr>
+<tr class="memitem:ga35f397f99a9981ec14e2d162ce530ee9" id="r_ga35f397f99a9981ec14e2d162ce530ee9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;zip_t&gt;</td></tr>
 <tr class="memdesc:ga35f397f99a9981ec14e2d162ce530ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable for SoA value constructions.  <br /></td></tr>
-<tr class="memitem:ga843fbb36980a16f585f8e727da3a8f96" id="r_ga843fbb36980a16f585f8e727da3a8f96"><td class="memItemLeft">constexpr callable_broadcast_group_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga843fbb36980a16f585f8e727da3a8f96.html#ga843fbb36980a16f585f8e727da3a8f96">eve::broadcast_group</a> = {}</td></tr>
+<tr class="memitem:ga843fbb36980a16f585f8e727da3a8f96" id="r_ga843fbb36980a16f585f8e727da3a8f96"><td class="memItemLeft">constexpr callable_broadcast_group_&#160;</td><td class="memItemRight"><a class="el" href="#ga843fbb36980a16f585f8e727da3a8f96">eve::broadcast_group</a> = {}</td></tr>
 <tr class="memdesc:ga843fbb36980a16f585f8e727da3a8f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the TODO.  <br /></td></tr>
-<tr class="memitem:ga275315d7cc9b3cd8f5e063136d4990d1" id="r_ga275315d7cc9b3cd8f5e063136d4990d1"><td class="memItemLeft">constexpr callable_deinterleave_groups_shuffle_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__simd_ga275315d7cc9b3cd8f5e063136d4990d1.html#ga275315d7cc9b3cd8f5e063136d4990d1">eve::deinterleave_groups_shuffle</a> = {}</td></tr>
+<tr class="memitem:ga275315d7cc9b3cd8f5e063136d4990d1" id="r_ga275315d7cc9b3cd8f5e063136d4990d1"><td class="memItemLeft">constexpr callable_deinterleave_groups_shuffle_&#160;</td><td class="memItemRight"><a class="el" href="#ga275315d7cc9b3cd8f5e063136d4990d1">eve::deinterleave_groups_shuffle</a> = {}</td></tr>
 <tr class="memdesc:ga275315d7cc9b3cd8f5e063136d4990d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for a deinterleave groups shuffle.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga0f764f21419f124e1e29c15718520a16" name="ga0f764f21419f124e1e29c15718520a16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0f764f21419f124e1e29c15718520a16">&#9670;&#160;</a></span>broadcast</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::broadcast = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;broadcast_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::scalar_value T&gt; eve::as_wide_t&lt;T&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v) <span class="keyword">noexcept</span>;                            <span class="comment">// 1</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::scalar_value T, std::ptrdiff_t N&gt; as_wide_t&lt;T&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::simd_value T, std::<span class="keywordtype">size_t</span> I&gt; T <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, index_t&lt;I&gt; i) <span class="keyword">noexcept</span>;                 <span class="comment">// 3</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::simd_value T, std::<span class="keywordtype">size_t</span> I, std::ptrdiff_t N&gt;</div>
+<div class="line">  eve::as_wide_t&lt;T,fixed&lt;N&gt;&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, index_t&lt;I&gt; i, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;                      <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga0f764f21419f124e1e29c15718520a16"><div class="ttname"><a href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a></div><div class="ttdeci">constexpr auto broadcast</div><div class="ttdoc">Computes the.</div><div class="ttdef"><b>Definition</b> broadcast.hpp:79</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p><ul>
+<li><span class="tt">v</span>: A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">value</a>.</li>
+<li><span class="tt">i</span>: An eve::index instance indicating which lane of <span class="tt">x</span> to broadcast.</li>
+<li><span class="tt">sz</span>: An eve::lane instance indicating how many lanes to broadcast to.</li>
+</ul>
+<p><b>Return value</b></p><ol type="1">
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T&gt;{v}</span>.</li>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,<a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;&gt;{v}</span>.</li>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">T{v.get(I)}</span>.</li>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,<a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;&gt;{v.get(I)}</span>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft pf = {1.2f,0.34f,0.056f,0.0078f};</div>
+<div class="line">  wide_it pi = {-1, 2,-3, 4,-5, 6,-7, 8};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>( 7.6 ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(7.6, eve::lane&lt;8&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(pf, eve::index&lt;3&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">pi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(pi, eve::index&lt;5&gt;, eve::lane&lt;4&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__math__constants_html_gad32687fc782ada2bb223abb7722ac694"><div class="ttname"><a href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition</b> pi.hpp:79</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga843fbb36980a16f585f8e727da3a8f96" name="ga843fbb36980a16f585f8e727da3a8f96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga843fbb36980a16f585f8e727da3a8f96">&#9670;&#160;</a></span>broadcast_group</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_broadcast_group_ eve::broadcast_group = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the TODO. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt; eve::value T &gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga843fbb36980a16f585f8e727da3a8f96">broadcast_group</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga843fbb36980a16f585f8e727da3a8f96"><div class="ttname"><a href="#ga843fbb36980a16f585f8e727da3a8f96">eve::broadcast_group</a></div><div class="ttdeci">constexpr callable_broadcast_group_ broadcast_group</div><div class="ttdoc">Computes the TODO.</div><div class="ttdef"><b>Definition</b> broadcast_group.hpp:53</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The value of TODO is returned.</p>
+<h2 class="groupheader">Example </h2>
+<p>TODO </p>
+
+</div>
+</div>
+<a id="gaa40b2ed752ac083e7336bfcfb216545a" name="gaa40b2ed752ac083e7336bfcfb216545a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa40b2ed752ac083e7336bfcfb216545a">&#9670;&#160;</a></span>combine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::combine = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;combine_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Combines two SIMD values in a larger one. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value W&gt;</div>
+<div class="line">   <span class="keyword">typename</span> W::combined_type <a class="code hl_variable" href="#gaa40b2ed752ac083e7336bfcfb216545a">combine</a>(W a, W b) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_gaa40b2ed752ac083e7336bfcfb216545a"><div class="ttname"><a href="#gaa40b2ed752ac083e7336bfcfb216545a">eve::combine</a></div><div class="ttdeci">constexpr auto combine</div><div class="ttdoc">Combines two SIMD values in a larger one.</div><div class="ttdef"><b>Definition</b> combine.hpp:72</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">a</span>, <span class="tt">b</span>: two SIMD values of the same type and cardinal</li>
+</ul>
+<p><b>Return value</b></p>
+<ul>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> contains the parameters concatenation, thus producing a register of twice as many elements.</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft pf = {-1.0f, 2.0f, -3.0f, -32768.0f};</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> pf2 = <a class="code hl_variable" href="#gaa40b2ed752ac083e7336bfcfb216545a">eve::combine</a>(pf,pf);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;pf                  ---&gt; &quot;</span>  &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::combine(pf,pf) ---&gt; &quot;</span>  &lt;&lt; pf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga275315d7cc9b3cd8f5e063136d4990d1" name="ga275315d7cc9b3cd8f5e063136d4990d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga275315d7cc9b3cd8f5e063136d4990d1">&#9670;&#160;</a></span>deinterleave_groups_shuffle</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_deinterleave_groups_shuffle_ eve::deinterleave_groups_shuffle = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object for a deinterleave groups shuffle. </p>
+<p>deinterleaves elements from one or two registers</p>
+<p>Accepts either a register and a group size or two registers and a group size group is how many elements are treated as one chunk, example:</p>
+<p>01234567, group_size = 1 ==&gt; 02461235 0123 4567, group_size = 2 ==&gt; 01452367 </p>
+
+</div>
+</div>
+<a id="ga3cbe6596b8e7ca4d4d0611ac642fcf39" name="ga3cbe6596b8e7ca4d4d0611ac642fcf39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">&#9670;&#160;</a></span>gather</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::gather = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gather_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Load a SIMD value with values selected from a memory region at the given offsets. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_value T, <span class="keywordtype">int</span>egral_value U&gt;</div>
+<div class="line">  as_wide_as_t&lt;T, U&gt; <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">gather</a>(T <span class="keyword">const</span>* ptr, U idx) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_value T, <span class="keywordtype">int</span>egral_value U, <span class="keyword">typename</span> N&gt;</div>
+<div class="line">  as_wide_as_t&lt;T, U&gt; <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">gather</a>(<a class="code hl_struct" href="structeve_1_1aligned__ptr.html">aligned_ptr&lt;T, N&gt;</a> ptr, U idx) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga3cbe6596b8e7ca4d4d0611ac642fcf39"><div class="ttname"><a href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a></div><div class="ttdeci">constexpr auto gather</div><div class="ttdoc">Load a SIMD value with values selected from a memory region at the given offsets.</div><div class="ttdef"><b>Definition</b> gather.hpp:79</div></div>
+<div class="ttc" id="astructeve_1_1aligned__ptr_html"><div class="ttname"><a href="structeve_1_1aligned__ptr.html">eve::aligned_ptr</a></div><div class="ttdoc">Wrapper for non-owning aligned pointers.</div><div class="ttdef"><b>Definition</b> aligned_ptr.hpp:50</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">idx</span>: An instance of an <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral value</a>.</li>
+<li><span class="tt">ptr</span>: A pointer to the memory region to load from.</li>
+</ul>
+<p><b>Return value</b></p>
+<ul>
+<li>A <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a> equivalent to: <div class="fragment"><div class="line">as_wide_as_t&lt;T, U&gt; res = { ptr[idx[0]], ptr[idx[1]], ..., ptr[idx[N-1]] };</div>
+</div><!-- fragment --></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::vector&lt;int&gt; v{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; res = <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a>(v.data(), <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;{0, 2, 2, 11});</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;res -&gt; &quot;</span> &lt;&lt; res &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga517f6b01fca5124ed352087830a713d4" name="ga517f6b01fca5124ed352087830a713d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga517f6b01fca5124ed352087830a713d4">&#9670;&#160;</a></span>has_equal_in</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::has_equal_in = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;has_equal_in_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Given two simd_values: <span class="tt">x</span>, <span class="tt">match_against</span> returns a logical mask. The res[i] == <a class="el" href="group__eve__core__reduction.html#ga668c3edce7062da8ba1f66504d149f88" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a>(x[i] == match_against);. </p>
+<p>Optional last parameter allows to overwrite the equality from <span class="tt"><a class="el" href="group__eve__core__predicates.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></span> to an arbitrary simd binary predicate.</p>
+<p>We took the idea for the operation from: "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value T&gt;</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga517f6b01fca5124ed352087830a713d4">has_equal_in</a>(T x, T match_against) <span class="keyword">noexcept</span>;           <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value T, simd_value U, simd_predicate&lt;T, U&gt; Op&gt;</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga517f6b01fca5124ed352087830a713d4">has_equal_in</a>(T x, U match_against, Op op) <span class="keyword">noexcept</span>;    <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga517f6b01fca5124ed352087830a713d4"><div class="ttname"><a href="#ga517f6b01fca5124ed352087830a713d4">eve::has_equal_in</a></div><div class="ttdeci">constexpr auto has_equal_in</div><div class="ttdoc">Given two simd_values: x, match_against returns a logical mask. The res[i] == eve::any(x[i] == match_...</div><div class="ttdef"><b>Definition</b> has_equal_in.hpp:88</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p><ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">argument</a>.</li>
+<li><span class="tt">match_against</span> <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">argument</a>.</li>
+<li><span class="tt">op</span> : The binary predicate to use for the comparison.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>A <a class="el" href="concepteve_1_1logical__simd__value.html" title="eve::logical_simd_value">logical SIMD value</a> built as described previously.</li>
+<li>Same as 1. but uses a custom predicate instead of <span class="tt"><a class="el" href="group__eve__core__predicates.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0" title="elementwise callable returning a logical true if and only if the element values are equal.">eve::is_equal</a></span>.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_it x = {2, 1, 2, 4};</div>
+<div class="line">  wide_it y = {0, 2, 3, 1};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                  = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- y                  = &quot;</span> &lt;&lt; y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(x, y) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga517f6b01fca5124ed352087830a713d4">eve::has_equal_in</a>(x, y) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; has_equal_in(y, x) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga517f6b01fca5124ed352087830a713d4">eve::has_equal_in</a>(y, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga48cbc739f85673ad20ccc29debcb2183" name="ga48cbc739f85673ad20ccc29debcb2183"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga48cbc739f85673ad20ccc29debcb2183">&#9670;&#160;</a></span>iterate_selected</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::iterate_selected = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;iterate_selected_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a utility to do scalar iteration over all true elements in a <span class="tt">logical</span>. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algos.html#ga88ef9260535144b063fe9b0881c89cef" title="an algorithm to perform some scalar operation for every element, that matches a given SIMD predicate....">eve::algo::for_each_selected</a></dd></dl>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Sometimes (for example in parsing) you need to perform scalar operations for each element that matches a predicate. This is a low level utility to help you do that. The predicate for iteration should return <span class="tt">true</span> if you want to break, <span class="tt">false</span> otherwise.</p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="#ga48cbc739f85673ad20ccc29debcb2183">iterate_selected</a></div>
+<div class="line">                    [<a class="code hl_concept" href="concepteve_1_1relative__conditional__expr.html">relative_conditional_expr</a> <span class="keyword">auto</span> ignore]</div>
+<div class="line">    &lt;<a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L&gt;(L l, <a class="code hl_concept" href="concepteve_1_1irregular__predicate.html">irregular_predicate&lt;std::ptrdiff_t&gt;</a> <span class="keyword">auto</span>&amp;&amp; f) -&gt; <span class="keywordtype">bool</span>;              <span class="comment">// (1)</span></div>
+<div class="line">    &lt;<a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L&gt;(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> l, <a class="code hl_concept" href="concepteve_1_1irregular__predicate.html">irregular_predicate&lt;std::ptrdiff_t&gt;</a> <span class="keyword">auto</span>&amp;&amp; f) -&gt; <span class="keywordtype">bool</span>;    <span class="comment">// (2)</span></div>
+<div class="line">                          (<span class="keywordtype">bool</span> l, <a class="code hl_concept" href="concepteve_1_1irregular__predicate.html">irregular_predicate&lt;std::ptrdiff_t&gt;</a> <span class="keyword">auto</span>&amp;&amp; f) -&gt; <span class="keywordtype">bool</span>;           <span class="comment">// (3)</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1irregular__predicate_html"><div class="ttname"><a href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></div><div class="ttdoc">std::predicate but doesn&#39;t require regularity</div><div class="ttdef"><b>Definition</b> invocable.hpp:97</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition</b> conditional.hpp:52</div></div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga48cbc739f85673ad20ccc29debcb2183"><div class="ttname"><a href="#ga48cbc739f85673ad20ccc29debcb2183">eve::iterate_selected</a></div><div class="ttdeci">constexpr auto iterate_selected</div><div class="ttdoc">a utility to do scalar iteration over all true elements in a logical.</div><div class="ttdef"><b>Definition</b> iterate_selected.hpp:82</div></div>
+<div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition</b> top_bits.hpp:80</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>ignore - ignored elements are considered false</li>
+<li>l - logical value (either <a class="el" href="concepteve_1_1logical__simd__value.html" title="Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...">logical_simd_value</a>, <a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">top_bits</a> or just 1 bool).</li>
+<li>f - callback, that's invoked for every true index. Return false to break.</li>
+</ul>
+<p><b>Return value</b></p><ul>
+<li>true iff the user broke the execution (f returned true). </li>
+</ul>
+
+</div>
+</div>
+<a id="gaabc7c256adcf53420136da7f6de66fb7" name="gaabc7c256adcf53420136da7f6de66fb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaabc7c256adcf53420136da7f6de66fb7">&#9670;&#160;</a></span>scan</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::scan = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scan_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the generalized prefix sum over a <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a>. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;simd_value W<span class="keywordtype">id</span>e, eve::abelian_mono<span class="keywordtype">id</span>&lt;W<span class="keywordtype">id</span>e&gt; Op, eve::substitute_for&lt;W<span class="keywordtype">id</span>e&gt; Zero&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> Wide <a class="code hl_variable" href="#gaabc7c256adcf53420136da7f6de66fb7">scan</a>(Wide <span class="keyword">auto</span> x, Op op, Zero <a class="code hl_variable" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">zero</a>) <span class="keyword">noexcept</span>;                       <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;simd_value W<span class="keywordtype">id</span>e&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> Wide <a class="code hl_variable" href="#gaabc7c256adcf53420136da7f6de66fb7">scan</a>(Wide x) <span class="keyword">noexcept</span>;                                              <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_gab4ecebb6ef8d0c73695dee1eb7371e6f"><div class="ttname"><a href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f">eve::zero</a></div><div class="ttdeci">constexpr auto zero</div><div class="ttdoc">Computes the constant 0.</div><div class="ttdef"><b>Definition</b> zero.hpp:78</div></div>
+<div class="ttc" id="agroup__eve__core__simd_html_gaabc7c256adcf53420136da7f6de66fb7"><div class="ttname"><a href="#gaabc7c256adcf53420136da7f6de66fb7">eve::scan</a></div><div class="ttdeci">constexpr auto scan</div><div class="ttdoc">Computes the generalized prefix sum over a simd value.</div><div class="ttdef"><b>Definition</b> scan.hpp:82</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: An instance of an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a></li>
+<li><span class="tt">op</span>: The commutative and associative binary operation to apply.</li>
+<li><span class="tt"><a class="el" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f" title="Computes the constant 0.">zero</a></span>: The identity/neutral element used by the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>Returns the generalized prefix sum over <span class="tt">x</span> using the binary operation <span class="tt">op</span> and the identity element <span class="tt"><a class="el" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f" title="Computes the constant 0.">zero</a></span>.</li>
+<li>Equivalent to <span class="tt"><a class="el" href="#gaabc7c256adcf53420136da7f6de66fb7" title="Computes the generalized prefix sum over a simd value.">eve::scan(x, eve::add, eve::zero)</a></span>.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Given a binary operation <span class="tt">op</span>, a call to <span class="tt"><a class="el" href="#gaabc7c256adcf53420136da7f6de66fb7" title="Computes the generalized prefix sum over a simd value.">eve::scan</a></span> is defined only if <span class="tt">op</span> is associative, commutative, and pure.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x = {1.0, 2.0, 3.0, 4.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;x: &quot;</span> &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::scan(x): &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaabc7c256adcf53420136da7f6de66fb7">eve::scan</a>(x) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::scan(x, eve::mul, eve::one): &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaabc7c256adcf53420136da7f6de66fb7">eve::scan</a>(x, <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a>, <a class="code hl_variable" href="group__eve__core__constants.html#gac66f3d66fece21b4454e79500cc56f84">eve::one</a>) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga19c1e5e8e7a04678ee99fdc2bbff0e7b"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a></div><div class="ttdeci">constexpr auto mul</div><div class="ttdoc">tuple_callable computing the product of its arguments.</div><div class="ttdef"><b>Definition</b> mul.hpp:128</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_gac66f3d66fece21b4454e79500cc56f84"><div class="ttname"><a href="group__eve__core__constants.html#gac66f3d66fece21b4454e79500cc56f84">eve::one</a></div><div class="ttdeci">constexpr auto one</div><div class="ttdoc">Computes the constant .</div><div class="ttdef"><b>Definition</b> one.hpp:66</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaa6b4303cb1ae3c602c51414ba1963161" name="gaa6b4303cb1ae3c602c51414ba1963161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa6b4303cb1ae3c602c51414ba1963161">&#9670;&#160;</a></span>scatter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::scatter = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;scatter_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Store a SIMD register to memory using scattered indexes. </p>
+<p>Store each element of a given <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> <span class="tt">v</span>in different memory address computed form a base SIMD compatible iterator <span class="tt">ptr</span> and a <a class="el" href="concepteve_1_1integral__simd__value.html" title="eve::integral_simd_value">SIMD integral value</a> <span class="tt">idx</span> used as indexes.</p>
+<p>A call to <span class="tt"><a class="el" href="#gaa6b4303cb1ae3c602c51414ba1963161" title="Store a SIMD register to memory using scattered indexes.">eve::scatter(v,ptr,idx)</a></span> is semantically equivalent to:</p>
+<div class="fragment"><div class="line"><span class="keywordflow">for</span>(std::size_t i=0;i&lt;v.size();++i)</div>
+<div class="line">  ptr[idx.get(i)] = v.get(i);</div>
+</div><!-- fragment --><h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;simd_value T, <span class="keywordtype">int</span>egral_simd_value Idx, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keyword">requires</span>(T::size() == Idx::size())</div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gaa6b4303cb1ae3c602c51414ba1963161">scatter</a>(T <span class="keyword">const</span>&amp; v, Ptr ptr, Idx <span class="keyword">const</span>&amp; idx) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__simd_html_gaa6b4303cb1ae3c602c51414ba1963161"><div class="ttname"><a href="#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a></div><div class="ttdeci">constexpr auto scatter</div><div class="ttdoc">Store a SIMD register to memory using scattered indexes.</div><div class="ttdef"><b>Definition</b> scatter.hpp:90</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">v</span>: <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> to scatter</li>
+<li><span class="tt">ptr</span>: Base pointer to scatter to.</li>
+<li><span class="tt">idx</span>: <a class="el" href="concepteve_1_1integral__simd__value.html" title="eve::integral_simd_value">Integral simd value</a> containing the index to scatter to.</li>
+</ul>
+<h2 class="groupheader">Semantic Modifiers </h2>
+<ul>
+<li>Masked Call</li>
+</ul>
+<p><a class="el" href="#gaa6b4303cb1ae3c602c51414ba1963161" title="Store a SIMD register to memory using scattered indexes.">eve::scatter</a> can be masked using <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="eve::relative_conditional_expr">Relative conditionals</a> to skip scattering of certain elements.</p>
+<p>The call <span class="tt"><a class="el" href="#gaa6b4303cb1ae3c602c51414ba1963161" title="Store a SIMD register to memory using scattered indexes.">eve::scatter</a>[cond](v,p,i)</span> is semantically equivalent to:</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> m = cond.mask( <a class="code hl_struct" href="structeve_1_1as.html">as</a>&lt;as_logical_t&lt;T&gt;&gt;{} );</div>
+<div class="line"><span class="keywordflow">for</span>(std::size_t n=0;n&lt;v.size();++n)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span>(m.get(n)) <a class="code hl_variable" href="group__eve__memory.html#gad32771ddeb3886065ba659298a50e125">write</a>(v.get(n),p+idx.get(n));</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__memory_html_gad32771ddeb3886065ba659298a50e125"><div class="ttname"><a href="group__eve__memory.html#gad32771ddeb3886065ba659298a50e125">eve::write</a></div><div class="ttdeci">constexpr auto write</div><div class="ttdoc">Callable object writing a scalar value to memory.</div><div class="ttdef"><b>Definition</b> write.hpp:78</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+</div><!-- fragment --><h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">float</span> data[2*<a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>()] = {};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a>   indexes  = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 2*i; };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> values   = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.5f * (1+i); };</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_variable" href="#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a>(values, data, indexes);</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> e : data)</div>
+<div class="line">    std::cout &lt;&lt; e &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:443</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gafd1cf1dd690536fde5d1a726d437a976" name="gafd1cf1dd690536fde5d1a726d437a976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafd1cf1dd690536fde5d1a726d437a976">&#9670;&#160;</a></span>sort</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::sort = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sort_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>sorts a register in a accedning order according to a comparator. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Sorting algorithm, based on sorting networks.</p>
+<dl class="section note"><dt>Note</dt><dd>this sort is unstable.</dd></dl>
+<p>Also our implementation is not directly based on any specific one, people we are definitely not the first people to do this. Here is a list of previous work that was looked at.</p><ul>
+<li>A Novel Hybrid Quicksort Algorithm Vectorized using AVX-512 on Intel Skylake: arXiv:1704.08579</li>
+<li>damageboy (and his github) <a href="https://bits.houmus.org/2020-01-28/this-goes-to-eleven-pt1">https://bits.houmus.org/2020-01-28/this-goes-to-eleven-pt1</a></li>
+<li>Berenger Bramas A fast vectorized sorting implementation based on the ARM scalable vector extension <a href="https://www.researchgate.net/publication/351656348_A_fast_vectorized_sorting_implementation_based_on_the_ARM_scalable_vector_extension_SVE">https://www.researchgate.net/publication/351656348_A_fast_vectorized_sorting_implementation_based_on_the_ARM_scalable_vector_extension_SVE</a></li>
+<li>Intel x86-simd-sort <a href="https://github.com/intel/x86-simd-sort">https://github.com/intel/x86-simd-sort</a></li>
+<li>Google's: Vectorized and performance-portable Quicksort Mark Blacher, Joachim Giesen, Peter Sanders, Jan Wassenberg <a href="https://opensource.googleblog.com/2022/06/Vectorized%20and%?20performance%20portable%20Quicksort.html">https://opensource.googleblog.com/2022/06/Vectorized%20and%?20performance%20portable%20Quicksort.html</a></li>
+<li>A Question of Sorts <a href="http://seven-degrees-of-freedom.blogspot.com/2010/07/question-of-sorts.html">http://seven-degrees-of-freedom.blogspot.com/2010/07/question-of-sorts.html</a></li>
+<li>Kyle Hegeman (<span class="tt">@khegeman</span>) <a href="https://github.com/khegeman/floki">https://github.com/khegeman/floki</a></li>
+</ul>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">sort</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span>  x);                    <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">sort</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span>  x, ordering <span class="keyword">auto</span> less) <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__simd_html_gafd1cf1dd690536fde5d1a726d437a976"><div class="ttname"><a href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a></div><div class="ttdeci">constexpr auto sort</div><div class="ttdoc">sorts a register in a accedning order according to a comparator.</div><div class="ttdef"><b>Definition</b> sort.hpp:92</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> to sort</li>
+<li>less - simd strict weak ordering. Defaults to <a class="el" href="group__eve__core__predicates.html#ga7dd417908ae322f8f3ef9a16779ee63f" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">eve::is_less</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>sorted x.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> myless =  [](<span class="keyword">auto</span> z1, <span class="keyword">auto</span> z2){ <span class="keywordflow">return</span> z1 &gt; z2; };</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0               = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0               = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wf0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wf0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wf0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wu0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wu0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wu0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wi0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sort(wi0, myless) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gafd1cf1dd690536fde5d1a726d437a976">eve::sort</a>(wi0, myless)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga35f397f99a9981ec14e2d162ce530ee9" name="ga35f397f99a9981ec14e2d162ce530ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga35f397f99a9981ec14e2d162ce530ee9">&#9670;&#160;</a></span>zip</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::zip = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;zip_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable for SoA value constructions. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">zip</a>(<a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> <span class="keyword">auto</span>... parts)               <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> <span class="keyword">auto</span>... parts) <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">zip</a>()(<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> <span class="keyword">auto</span>... parts)               <span class="keyword">noexcept</span>; <span class="comment">//3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;Target&gt;</a> t, <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> <span class="keyword">auto</span>... parts)   <span class="keyword">noexcept</span>; <span class="comment">//4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition</b> scalar.hpp:138</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition</b> vectorized.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__simd_html_ga35f397f99a9981ec14e2d162ce530ee9"><div class="ttname"><a href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a></div><div class="ttdeci">constexpr auto zip</div><div class="ttdoc">Callable for SoA value constructions.</div><div class="ttdef"><b>Definition</b> zip.hpp:85</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">parts</span>: Variadic list of <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a> to zip together.</li>
+<li><span class="tt">t</span>: <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type to construct from <span class="tt">parts</span>.</li>
+</ul>
+<p><b>Return value</b></p><ol type="1">
+<li>a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> made from all the scalars passed as argument.</li>
+<li>a <span class="tt">Target</span> instance made from all the scalars passed as argument.</li>
+<li>a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> made from all the SIMD values passed as argument.</li>
+<li>a <span class="tt">Target</span> instance made from all the SIMD values passed as argument.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">struct </span>data_block : <a class="code hl_struct" href="structeve_1_1struct__support.html">eve::struct_support</a>&lt;data_block, float, std::int16_t,double&gt;</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">friend</span> std::ostream&amp; <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/group__kumi__utility.html#ga34969da06ac58348bc220ebf522233f1">operator&lt;&lt;</a>(std::ostream&amp; os, data_block <span class="keyword">const</span>&amp; d)</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keywordflow">return</span> os &lt;&lt; <span class="stringliteral">&quot;{&quot;</span> &lt;&lt; get&lt;0&gt;(d) &lt;&lt; <span class="stringliteral">&quot; x &quot;</span> &lt;&lt; get&lt;1&gt;(d) &lt;&lt; <span class="stringliteral">&quot; - &quot;</span> &lt;&lt; get&lt;2&gt;(d) &lt;&lt; <span class="stringliteral">&quot;}&quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>card_t = eve::cardinal_t&lt;eve::wide&lt;double&gt;&gt;;</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wd = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.25 * (i+1); };</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float       , card_t&gt;</a> wf = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.f/(1+i); };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, card_t&gt;</a> wi = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i+1; };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf0,wi,wd)                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(wf,wi,wd)  &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(eve::as&lt;data_block&gt;(),wf,wi,wd)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;data_block&gt;</a>(),wf,wi,wd)  &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__kumi__utility_html_ga34969da06ac58348bc220ebf522233f1"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__utility.html#ga34969da06ac58348bc220ebf522233f1">operator&lt;&lt;</a></div><div class="ttdeci">friend friend std::basic_ostream&lt; CharT, Traits &gt; &amp; operator&lt;&lt;(std::basic_ostream&lt; CharT, Traits &gt; &amp;os, field const &amp;w) noexcept</div></div>
+<div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition</b> product_type.hpp:148</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

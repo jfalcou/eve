@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -126,7 +128,8 @@ $(function(){initNavTree('group__eve__conditional.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Masking lanes from an <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> is a frequent operations. To simplify and optimize such code, <b>EVE</b> provides objects and functions to define conditions with a high-level of flexibility including: alternative value, index-based relative conditions and more.</p>
+<div class="textblock"><p>Types and operations to defines conditional mask expressions. </p>
+<p>Masking lanes from an <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> is a frequent operations. To simplify and optimize such code, <b>EVE</b> provides objects and functions to define conditions with a high-level of flexibility including: alternative value, index-based relative conditions and more.</p>
 <p><b>See also:</b> <a class="el" href="conditional.html" title="Conditional operations">Conditional operations</a></p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -155,16 +158,16 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga8265bd793db77b43d12988c1c297f00b" id="r_ga8265bd793db77b43d12988c1c297f00b"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
-<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__conditional_ga8265bd793db77b43d12988c1c297f00b.html#ga8265bd793db77b43d12988c1c297f00b">eve::drop_alternative</a> (C c)</td></tr>
+<tr class="memitem:ga8265bd793db77b43d12988c1c297f00b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga8265bd793db77b43d12988c1c297f00b">eve::drop_alternative</a> (C c)</td></tr>
 <tr class="memdesc:ga8265bd793db77b43d12988c1c297f00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a conditional without an alternative.  <br /></td></tr>
 <tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1" id="r_ga6b75905a0b2d6320cadb973c752a8cd1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </td></tr>
-<tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__conditional_ga6b75905a0b2d6320cadb973c752a8cd1.html#ga6b75905a0b2d6320cadb973c752a8cd1">eve::map_alternative</a> (C c, auto op)</td></tr>
+<tr class="memitem:ga6b75905a0b2d6320cadb973c752a8cd1 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6b75905a0b2d6320cadb973c752a8cd1">eve::map_alternative</a> (C c, auto op)</td></tr>
 <tr class="memdesc:ga6b75905a0b2d6320cadb973c752a8cd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a transformed conditional.  <br /></td></tr>
 <tr class="memitem:gaba39b1743e4775c0c19966dac6342762" id="r_gaba39b1743e4775c0c19966dac6342762"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C, typename Tgt&gt; </td></tr>
-<tr class="memitem:gaba39b1743e4775c0c19966dac6342762 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__conditional_gaba39b1743e4775c0c19966dac6342762.html#gaba39b1743e4775c0c19966dac6342762">eve::bit_cast_alternative</a> (C c, <a class="el" href="structeve_1_1as.html">as</a>&lt; Tgt &gt; tgt)</td></tr>
+<tr class="memitem:gaba39b1743e4775c0c19966dac6342762 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#gaba39b1743e4775c0c19966dac6342762">eve::bit_cast_alternative</a> (C c, <a class="el" href="structeve_1_1as.html">as</a>&lt; Tgt &gt; tgt)</td></tr>
 <tr class="memdesc:gaba39b1743e4775c0c19966dac6342762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a transformed conditional.  <br /></td></tr>
 <tr class="memitem:gab99c14f8c7e6cd5fc693a79c97bc89d8" id="r_gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C, typename T&gt; </td></tr>
-<tr class="memitem:gab99c14f8c7e6cd5fc693a79c97bc89d8 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__conditional_gab99c14f8c7e6cd5fc693a79c97bc89d8.html#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a> (C c, <a class="el" href="structeve_1_1as.html">eve::as</a>&lt; T &gt; tgt)</td></tr>
+<tr class="memitem:gab99c14f8c7e6cd5fc693a79c97bc89d8 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a> (C c, <a class="el" href="structeve_1_1as.html">eve::as</a>&lt; T &gt; tgt)</td></tr>
 <tr class="memdesc:gab99c14f8c7e6cd5fc693a79c97bc89d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the reverse of a given <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
@@ -176,6 +179,181 @@ constexpr <a class="el" href="structeve_1_1ignore__all__.html">ignore_all_</a>&#
 constexpr <a class="el" href="structeve_1_1ignore__none__.html">ignore_none_</a>&#160;</td><td class="memItemRight"><b>eve::ignore_none</b> = {}</td></tr>
 <tr class="memdesc:gae234dce7533ecc38fe2c70fd69383633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object representing the <a class="el" href="structeve_1_1ignore__none__.html" title="Conditional expression selecting all lanes from a eve::simd_value.">eve::ignore_none_</a> conditional expression. <br /></td></tr>
 </table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="gaba39b1743e4775c0c19966dac6342762" name="gaba39b1743e4775c0c19966dac6342762"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaba39b1743e4775c0c19966dac6342762">&#9670;&#160;</a></span>bit_cast_alternative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C, typename Tgt&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::bit_cast_alternative </td>
+          <td>(</td>
+          <td class="paramtype">C</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeve_1_1as.html">as</a>&lt; Tgt &gt;</td>          <td class="paramname"><span class="paramname"><em>tgt</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes a transformed conditional. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span></p>
+<p>Creates a <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> by bitcasting the alternative value of <span class="tt">c</span> to a new type, <span class="tt">Tgt</span>, if any is present.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td><a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> to transform </td></tr>
+    <tr><td class="paramname">tgt</td><td><a class="el" href="structeve_1_1as.html" title="eve::as">Target type</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> of the same kind that <span class="tt">c</span> which alternative value, if any is replaced by the bitcast of <span class="tt">c.alternative</span> to <span class="tt">Tgt</span> </dd></dl>
+
+</div>
+</div>
+<a id="ga8265bd793db77b43d12988c1c297f00b" name="ga8265bd793db77b43d12988c1c297f00b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8265bd793db77b43d12988c1c297f00b">&#9670;&#160;</a></span>drop_alternative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::drop_alternative </td>
+          <td>(</td>
+          <td class="paramtype">C</td>          <td class="paramname"><span class="paramname"><em>c</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a conditional without an alternative. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span></p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td><a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6b75905a0b2d6320cadb973c752a8cd1" name="ga6b75905a0b2d6320cadb973c752a8cd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6b75905a0b2d6320cadb973c752a8cd1">&#9670;&#160;</a></span>map_alternative()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::map_alternative </td>
+          <td>(</td>
+          <td class="paramtype">C</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">auto</td>          <td class="paramname"><span class="paramname"><em>op</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes a transformed conditional. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span></p>
+<p>Creates a <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> by applying an arbitrary operation <span class="tt">op</span> on <span class="tt">c</span>, thus modifying its alternate value if any is present.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td><a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> to transform </td></tr>
+    <tr><td class="paramname">op</td><td>Unary callable object to apply </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> of the same kind that <span class="tt">c</span> which alternative value, if any is replaced by <span class="tt">op(c.alternative)</span> </dd></dl>
+
+</div>
+</div>
+<a id="gab99c14f8c7e6cd5fc693a79c97bc89d8" name="gab99c14f8c7e6cd5fc693a79c97bc89d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">&#9670;&#160;</a></span>reverse_conditional()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a> C, typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::reverse_conditional </td>
+          <td>(</td>
+          <td class="paramtype">C</td>          <td class="paramname"><span class="paramname"><em>c</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structeve_1_1as.html">eve::as</a>&lt; T &gt;</td>          <td class="paramname"><span class="paramname"><em>tgt</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the reverse of a given <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span></p>
+<p>For a given <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> <span class="tt">c</span>, optimally computes the reverse <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a> for a given type <span class="tt">T</span>. For example, ignoring the first <span class="tt">N</span> lanes get reversed as ignoring the last <span class="tt">N</span> lanes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Condition to reverse </td></tr>
+    <tr><td class="paramname">tgt</td><td><a class="el" href="structeve_1_1as.html" title="eve::as">Wrapped type</a> of the expected output</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The exact semantic opposite of <span class="tt">c</span> with the same internal state.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/conditional.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga6ce7ac450593ee98fe8ca0d9cf65e4b4">eve::ignore_all</a> &lt;&lt; <span class="stringliteral">&quot; -&gt; &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_function" href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a>(<a class="code hl_variable" href="#ga6ce7ac450593ee98fe8ca0d9cf65e4b4">eve::ignore_all</a>, <a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(0)) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a> &lt;&lt; <span class="stringliteral">&quot; -&gt; &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_function" href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a>(<a class="code hl_variable" href="#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a>, <a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(0)) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(1) &lt;&lt; <span class="stringliteral">&quot; -&gt; &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_function" href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a>(<a class="code hl_struct" href="structeve_1_1keep__first.html">eve::keep_first</a>(1), <a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(0)) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1) &lt;&lt; <span class="stringliteral">&quot; -&gt; &quot;</span></div>
+<div class="line">            &lt;&lt; <a class="code hl_function" href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a>(<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(1), <a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(0)) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__conditional_html_ga6ce7ac450593ee98fe8ca0d9cf65e4b4"><div class="ttname"><a href="#ga6ce7ac450593ee98fe8ca0d9cf65e4b4">eve::ignore_all</a></div><div class="ttdeci">constexpr ignore_all_ ignore_all</div><div class="ttdoc">Object representing the eve::ignore_all_ conditional expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:209</div></div>
+<div class="ttc" id="agroup__eve__conditional_html_gab99c14f8c7e6cd5fc693a79c97bc89d8"><div class="ttname"><a href="#gab99c14f8c7e6cd5fc693a79c97bc89d8">eve::reverse_conditional</a></div><div class="ttdeci">constexpr auto reverse_conditional(C c, eve::as&lt; T &gt; tgt)</div><div class="ttdoc">Computes the reverse of a given eve::relative_conditional_expr.</div><div class="ttdef"><b>Definition</b> conditional.hpp:823</div></div>
+<div class="ttc" id="agroup__eve__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:273</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1keep__first_html"><div class="ttname"><a href="structeve_1_1keep__first.html">eve::keep_first</a></div><div class="ttdoc">Conditional expression selecting the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:283</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,13 +123,9 @@ $(function(){initNavTree('structrelaxed__range.html','',''); });
   <div class="headertitle"><div class="title">relaxed_range Struct Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__algo__concepts.html">Algorithms Concepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Any class that has <span class="tt">begin/end</span> and <span class="tt">end</span> is a <span class="tt"><a class="el" href="structrelaxed__sentinel__for.html" title="Two relaxed iterators form a valid relaxed range pair. preprocess_range has to be defined for the pai...">relaxed_sentinel_for</a></span> begin. User can customize <span class="tt">preprocess_range</span> for a <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> in case there is more information to get from there then would be from just <span class="tt">begin</span>/<span class="tt">end</span>.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/concepts/relaxed.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Example: <span class="tt">soa_vector::begin</span> is <span class="tt">unaligned</span> but the <span class="tt">preprocess_range</span> returns <span class="tt">aligned</span>.</p>
+<div class="textblock"><p>Any class that has <span class="tt">begin/end</span> and <span class="tt">end</span> is a <span class="tt"><a class="el" href="structrelaxed__sentinel__for.html" title="Two relaxed iterators form a valid relaxed range pair. preprocess_range has to be defined for the pai...">relaxed_sentinel_for</a></span> begin. User can customize <span class="tt">preprocess_range</span> for a <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> in case there is more information to get from there then would be from just <span class="tt">begin</span>/<span class="tt">end</span>. </p>
+<p>Example: <span class="tt">soa_vector::begin</span> is <span class="tt">unaligned</span> but the <span class="tt">preprocess_range</span> returns <span class="tt">aligned</span>.</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/concepts.hpp&gt;</span> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -120,17 +122,13 @@ $(function(){initNavTree('structeve_1_1algo_1_1ptr__iterator.html','','structeve
 <div class="header">
   <div class="summary">
 <a href="structeve_1_1algo_1_1ptr__iterator-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__algo__concepts.html">Algorithms Concepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>An eve iterator on top of pointer or aligned pointer.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/ptr_iterator.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Ptr, typename Cardinal&gt;<br />
-struct eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt;</div><p>This should not be created directly but rather constructed from preprocess_range.</p>
+struct eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt;</div><p>An eve iterator on top of pointer or aligned pointer. </p>
+<p>This should not be created directly but rather constructed from preprocess_range.</p>
 <p>When ptr is aligned, the alignment should match the cardinal.</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/ptr_iterator.hpp&gt;</span> </p>
 </div></div><!-- contents -->

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,10 +125,10 @@ $(function(){initNavTree('concepteve_1_1match__option.html','',''); });
 <div class="contents">
 
 <p>Checks if the type associated to a given Keyword in an Option pack is equal to Type.  
-</p>
-
-<p><code>#include &lt;eve/concept/options.hpp&gt;</code></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Checks if the type associated to a given Keyword in an Option pack is equal to Type. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;auto Keyword, <span class="keyword">typename</span> Opts,<span class="keyword">typename</span> Type&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1match__option.html">match_option</a> =  std::same_as&lt;Type, rbr::result::fetch_t&lt;Keyword,Opts&gt;&gt;</div>
 <div class="ttc" id="aconcepteve_1_1match__option_html"><div class="ttname"><a href="concepteve_1_1match__option.html">eve::match_option</a></div><div class="ttdoc">Checks if the type associated to a given Keyword in an Option pack is equal to Type.</div><div class="ttdef"><b>Definition</b> options.hpp:28</div></div>

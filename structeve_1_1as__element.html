@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,14 +126,10 @@ $(function(){initNavTree('structeve_1_1as__element.html','','structeve_1_1as__el
   <div class="headertitle"><div class="title">eve::as_element&lt; T &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__traits.html">Type traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Lightweight type-wrapper over element type.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/as_element.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-struct eve::as_element&lt; T &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/as.hpp&gt;</span></p>
+struct eve::as_element&lt; T &gt;</div><p>Lightweight type-wrapper over element type. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/as.hpp&gt;</span></p>
 <p><a class="el" href="structeve_1_1as__element.html" title="Lightweight type-wrapper over element type.">eve::as_element&lt;T&gt;</a> is a short-cut for <a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">eve::as&lt;eve::element_type_t&lt;T&gt;&gt;</a> designed to work with automatic type deduction.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

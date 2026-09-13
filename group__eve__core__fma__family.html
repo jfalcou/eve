@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -132,27 +134,905 @@ $(function(){initNavTree('group__eve__core__fma__family.html','',''); });
 <p>The implementation of these two properties can always be obtained calling the decorated pedantic version of these functions. (or the lower or upper versions, that must guarantee on ordering against the mathematical correct result)</p>
 <p>Take care that can be very expensive if the proper hardware capabilities are not present.</p>
 <p>By themselves the regular version of these function acts with mere operators * + and minus if the intrinsics are not at hand and if there is no possibility of mapping the std implementation</p>
-<p><a class="el" href="group__eve__core__fma__family_gad4cb975104900d0011e273b1c0cd8015.html#gad4cb975104900d0011e273b1c0cd8015" title="eve::fam">fam</a>, <a class="el" href="group__eve__core__fma__family_ga6dae56ba4247691094d46c4451e87012.html#ga6dae56ba4247691094d46c4451e87012" title="eve::fanm">fanm</a>, <a class="el" href="group__eve__core__fma__family_gae79b56378eacf4c4f3b3d7e128facb07.html#gae79b56378eacf4c4f3b3d7e128facb07" title="eve::fma">fma</a>, <a class="el" href="group__eve__core__fma__family_ga92b3e10cb0fda10eec419cb96378a5f5.html#ga92b3e10cb0fda10eec419cb96378a5f5" title="eve::fms">fms</a>, <a class="el" href="group__eve__core__fma__family_ga96c956f8bef9246e2652ca40c3e428d9.html#ga96c956f8bef9246e2652ca40c3e428d9" title="eve::fnma">fnma</a>, <a class="el" href="group__eve__core__fma__family_gab356e39b49a8aed2b5e5f02a2cc392cc.html#gab356e39b49a8aed2b5e5f02a2cc392cc" title="eve::fnms">fnms</a><a class="el" href="group__eve__core__fma__family_ga6387fe7304980f8112f867f5710af925.html#ga6387fe7304980f8112f867f5710af925" title="eve::fsm">fsm</a>, <a class="el" href="group__eve__core__fma__family_ga67d686700aac348f3d75484f38c63d4d.html#ga67d686700aac348f3d75484f38c63d4d" title="eve::fsnm">fsnm</a>.</p>
+<p><a class="el" href="#gad4cb975104900d0011e273b1c0cd8015" title="eve::fam">fam</a>, <a class="el" href="#ga6dae56ba4247691094d46c4451e87012" title="eve::fanm">fanm</a>, <a class="el" href="#gae79b56378eacf4c4f3b3d7e128facb07" title="eve::fma">fma</a>, <a class="el" href="#ga92b3e10cb0fda10eec419cb96378a5f5" title="eve::fms">fms</a>, <a class="el" href="#ga96c956f8bef9246e2652ca40c3e428d9" title="eve::fnma">fnma</a>, <a class="el" href="#gab356e39b49a8aed2b5e5f02a2cc392cc" title="eve::fnms">fnms</a><a class="el" href="#ga6387fe7304980f8112f867f5710af925" title="eve::fsm">fsm</a>, <a class="el" href="#ga67d686700aac348f3d75484f38c63d4d" title="eve::fsnm">fsnm</a>.</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gad4cb975104900d0011e273b1c0cd8015" id="r_gad4cb975104900d0011e273b1c0cd8015"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_gad4cb975104900d0011e273b1c0cd8015.html#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fam_t&gt;</td></tr>
+<tr class="memitem:gad4cb975104900d0011e273b1c0cd8015" id="r_gad4cb975104900d0011e273b1c0cd8015"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fam_t&gt;</td></tr>
 <tr class="memdesc:gad4cb975104900d0011e273b1c0cd8015"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused add multiply of its three parameters.  <br /></td></tr>
-<tr class="memitem:ga6dae56ba4247691094d46c4451e87012" id="r_ga6dae56ba4247691094d46c4451e87012"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_ga6dae56ba4247691094d46c4451e87012.html#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fanm_t&gt;</td></tr>
+<tr class="memitem:ga6dae56ba4247691094d46c4451e87012" id="r_ga6dae56ba4247691094d46c4451e87012"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fanm_t&gt;</td></tr>
 <tr class="memdesc:ga6dae56ba4247691094d46c4451e87012"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the fused add negate multiply of its three parameters.  <br /></td></tr>
-<tr class="memitem:gae79b56378eacf4c4f3b3d7e128facb07" id="r_gae79b56378eacf4c4f3b3d7e128facb07"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_gae79b56378eacf4c4f3b3d7e128facb07.html#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fma_t&gt;</td></tr>
+<tr class="memitem:gae79b56378eacf4c4f3b3d7e128facb07" id="r_gae79b56378eacf4c4f3b3d7e128facb07"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fma_t&gt;</td></tr>
 <tr class="memdesc:gae79b56378eacf4c4f3b3d7e128facb07"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused multiply add of its three parameters.  <br /></td></tr>
-<tr class="memitem:ga92b3e10cb0fda10eec419cb96378a5f5" id="r_ga92b3e10cb0fda10eec419cb96378a5f5"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_ga92b3e10cb0fda10eec419cb96378a5f5.html#ga92b3e10cb0fda10eec419cb96378a5f5">eve::fms</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fms_t&gt;</td></tr>
+<tr class="memitem:ga92b3e10cb0fda10eec419cb96378a5f5" id="r_ga92b3e10cb0fda10eec419cb96378a5f5"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga92b3e10cb0fda10eec419cb96378a5f5">eve::fms</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fms_t&gt;</td></tr>
 <tr class="memdesc:ga92b3e10cb0fda10eec419cb96378a5f5"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused multiply subtract of its three parameters.  <br /></td></tr>
-<tr class="memitem:ga96c956f8bef9246e2652ca40c3e428d9" id="r_ga96c956f8bef9246e2652ca40c3e428d9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_ga96c956f8bef9246e2652ca40c3e428d9.html#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnma_t&gt;</td></tr>
+<tr class="memitem:ga96c956f8bef9246e2652ca40c3e428d9" id="r_ga96c956f8bef9246e2652ca40c3e428d9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnma_t&gt;</td></tr>
 <tr class="memdesc:ga96c956f8bef9246e2652ca40c3e428d9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused negated multiply add of its three parameters.  <br /></td></tr>
-<tr class="memitem:gab356e39b49a8aed2b5e5f02a2cc392cc" id="r_gab356e39b49a8aed2b5e5f02a2cc392cc"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_gab356e39b49a8aed2b5e5f02a2cc392cc.html#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnms_t&gt;</td></tr>
+<tr class="memitem:gab356e39b49a8aed2b5e5f02a2cc392cc" id="r_gab356e39b49a8aed2b5e5f02a2cc392cc"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnms_t&gt;</td></tr>
 <tr class="memdesc:gab356e39b49a8aed2b5e5f02a2cc392cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused negated multiply subtract of its three parameters.  <br /></td></tr>
-<tr class="memitem:ga6387fe7304980f8112f867f5710af925" id="r_ga6387fe7304980f8112f867f5710af925"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_ga6387fe7304980f8112f867f5710af925.html#ga6387fe7304980f8112f867f5710af925">eve::fsm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsm_t&gt;</td></tr>
+<tr class="memitem:ga6387fe7304980f8112f867f5710af925" id="r_ga6387fe7304980f8112f867f5710af925"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsm_t&gt;</td></tr>
 <tr class="memdesc:ga6387fe7304980f8112f867f5710af925"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused subtract multiply of its three parameters.  <br /></td></tr>
-<tr class="memitem:ga67d686700aac348f3d75484f38c63d4d" id="r_ga67d686700aac348f3d75484f38c63d4d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__family_ga67d686700aac348f3d75484f38c63d4d.html#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsnm_t&gt;</td></tr>
+<tr class="memitem:ga67d686700aac348f3d75484f38c63d4d" id="r_ga67d686700aac348f3d75484f38c63d4d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsnm_t&gt;</td></tr>
 <tr class="memdesc:ga67d686700aac348f3d75484f38c63d4d"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> computing the fused negated subtract multiply of its three parameters.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gad4cb975104900d0011e273b1c0cd8015" name="gad4cb975104900d0011e273b1c0cd8015"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad4cb975104900d0011e273b1c0cd8015">&#9670;&#160;</a></span>fam</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fam = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fam_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused add multiply of its three parameters. </p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">fam</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">fam</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">fam</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">fam</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaf3483e5e000367c812b507ed46399367"><div class="ttname"><a href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a></div><div class="ttdeci">constexpr auto pedantic</div><div class="ttdoc">Follows the corner cases of the corresponding standard function.</div><div class="ttdef"><b>Definition</b> core.hpp:91</div></div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_gad4cb975104900d0011e273b1c0cd8015"><div class="ttname"><a href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a></div><div class="ttdeci">constexpr auto fam</div><div class="ttdoc">strict_elementwise_callable computing the fused add multiply of its three parameters.</div><div class="ttdef"><b>Definition</b> fam.hpp:86</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x+y*z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fam(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fam[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad4cb975104900d0011e273b1c0cd8015">eve::fam</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga148a16123e30a9eef8a38b0ac5d140e8"><div class="ttname"><a href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a></div><div class="ttdeci">constexpr auto strict</div><div class="ttdoc">Turns the guarantee of lower or upper into a strict inequality.</div><div class="ttdef"><b>Definition</b> core.hpp:105</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga4ff6300fe3143db3b73ebc48bbc6bc6c"><div class="ttname"><a href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a></div><div class="ttdeci">constexpr auto lower</div><div class="ttdoc">Guarantees a result no greater than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:103</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><div class="ttname"><a href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a></div><div class="ttdeci">constexpr auto upper</div><div class="ttdoc">Guarantees a result no smaller than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:102</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6dae56ba4247691094d46c4451e87012" name="ga6dae56ba4247691094d46c4451e87012"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6dae56ba4247691094d46c4451e87012">&#9670;&#160;</a></span>fanm</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fanm = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fanm_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the fused add negate multiply of its three parameters. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">fanm</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">fanm</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">fanm</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">fanm</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_ga6dae56ba4247691094d46c4451e87012"><div class="ttname"><a href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a></div><div class="ttdeci">constexpr auto fanm</div><div class="ttdoc">Computes the fused add negate multiply of its three parameters.</div><div class="ttdef"><b>Definition</b> fanm.hpp:85</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x-y*z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                 = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                 = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                 = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                 = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                 = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fanm[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6dae56ba4247691094d46c4451e87012">eve::fanm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gae79b56378eacf4c4f3b3d7e128facb07" name="gae79b56378eacf4c4f3b3d7e128facb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae79b56378eacf4c4f3b3d7e128facb07">&#9670;&#160;</a></span>fma</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fma = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fma_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused multiply add of its three parameters. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#gad99c93772514004f757c09fb54ac6b5f">add</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">lower</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                   <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#gad99c93772514004f757c09fb54ac6b5f">add</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">upper</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                   <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">lower</a>][srict](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)            <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">upper</a>][srict](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)            <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_gad99c93772514004f757c09fb54ac6b5f"><div class="ttname"><a href="group__eve__core__arithmetic.html#gad99c93772514004f757c09fb54ac6b5f">eve::add</a></div><div class="ttdeci">constexpr auto add</div><div class="ttdoc">tuple_callable computing the sum of its arguments.</div><div class="ttdef"><b>Definition</b> add.hpp:126</div></div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_gae79b56378eacf4c4f3b3d7e128facb07"><div class="ttname"><a href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a></div><div class="ttdeci">constexpr auto fma</div><div class="ttdoc">strict_elementwise_callable computing the fused multiply add of its three parameters.</div><div class="ttdef"><b>Definition</b> fma.hpp:100</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x*y+z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+<li>The operation is computed in a 'round toward \(-\infty\) mode. The result is guaranteed to be less or equal to the exact one (except for Nans). Combined with <span class="tt"><a class="el" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8" title="Turns the guarantee of lower or upper into a strict inequality.">strict</a></span> the option ensures generally faster computation, but strict inequality.</li>
+<li>The operation is computed in a 'round toward \(\infty\) mode. The result is guaranteed to be greater or equal to the exact one (except for Nans). Combined with <span class="tt"><a class="el" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8" title="Turns the guarantee of lower or upper into a strict inequality.">strict</a></span> the option ensures generally faster computation, but strict inequality.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="Guarantees a result no greater than the exact mathematical one.">lower</a></span>and <span class="tt"><a class="el" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="Guarantees a result no smaller than the exact mathematical one.">upper</a></span> can be associated with raw to provide a correct, faster but less accurate version</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga92b3e10cb0fda10eec419cb96378a5f5" name="ga92b3e10cb0fda10eec419cb96378a5f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga92b3e10cb0fda10eec419cb96378a5f5">&#9670;&#160;</a></span>fms</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fms = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fms_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused multiply subtract of its three parameters. </p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga92b3e10cb0fda10eec419cb96378a5f5">fms</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga92b3e10cb0fda10eec419cb96378a5f5">fms</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga92b3e10cb0fda10eec419cb96378a5f5">fms</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga92b3e10cb0fda10eec419cb96378a5f5">fms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga92b3e10cb0fda10eec419cb96378a5f5">fms</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_ga92b3e10cb0fda10eec419cb96378a5f5"><div class="ttname"><a href="#ga92b3e10cb0fda10eec419cb96378a5f5">eve::fms</a></div><div class="ttdeci">constexpr auto fms</div><div class="ttdoc">strict_elementwise_callable computing the fused multiply subtract of its three parameters.</div><div class="ttdef"><b>Definition</b> fms.hpp:80</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x*y-z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fma[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga96c956f8bef9246e2652ca40c3e428d9" name="ga96c956f8bef9246e2652ca40c3e428d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga96c956f8bef9246e2652ca40c3e428d9">&#9670;&#160;</a></span>fnma</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fnma = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnma_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused negated multiply add of its three parameters. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">fnma</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">fnma</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">fnma</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">fnma</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_ga96c956f8bef9246e2652ca40c3e428d9"><div class="ttname"><a href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a></div><div class="ttdeci">constexpr auto fnma</div><div class="ttdoc">strict_elementwise_callable computing the fused negated multiply add of its three parameters.</div><div class="ttdef"><b>Definition</b> fnma.hpp:90</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">-x*y+z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                 = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                 = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                 = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                 = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                 = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnma[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga96c956f8bef9246e2652ca40c3e428d9">eve::fnma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gab356e39b49a8aed2b5e5f02a2cc392cc" name="gab356e39b49a8aed2b5e5f02a2cc392cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab356e39b49a8aed2b5e5f02a2cc392cc">&#9670;&#160;</a></span>fnms</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fnms = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fnms_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused negated multiply subtract of its three parameters. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">fnms</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">fnms</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">fnms</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">fnms</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_gab356e39b49a8aed2b5e5f02a2cc392cc"><div class="ttname"><a href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a></div><div class="ttdeci">constexpr auto fnms</div><div class="ttdoc">strict_elementwise_callable computing the fused negated multiply subtract of its three parameters.</div><div class="ttdef"><b>Definition</b> fnms.hpp:88</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">-x*y-z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fam properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                 = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                 = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                 = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                 = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                 = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fnms[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab356e39b49a8aed2b5e5f02a2cc392cc">eve::fnms</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6387fe7304980f8112f867f5710af925" name="ga6387fe7304980f8112f867f5710af925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6387fe7304980f8112f867f5710af925">&#9670;&#160;</a></span>fsm</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fsm = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsm_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused subtract multiply of its three parameters. </p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">fsm</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">fsm</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">fsm</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">fsm</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_ga6387fe7304980f8112f867f5710af925"><div class="ttname"><a href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a></div><div class="ttdeci">constexpr auto fsm</div><div class="ttdoc">strict_elementwise_callable computing the fused subtract multiply of its three parameters.</div><div class="ttdef"><b>Definition</b> fsm.hpp:88</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">-x+y*z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fsm properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsm[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6387fe7304980f8112f867f5710af925">eve::fsm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga67d686700aac348f3d75484f38c63d4d" name="ga67d686700aac348f3d75484f38c63d4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67d686700aac348f3d75484f38c63d4d">&#9670;&#160;</a></span>fsnm</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fsnm = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;fsnm_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> computing the fused negated subtract multiply of its three parameters. </p>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">fsnm</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">fsnm</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">fsnm</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">fsnm</a>[promote](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> z)                 <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_ga67d686700aac348f3d75484f38c63d4d"><div class="ttname"><a href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a></div><div class="ttdeci">constexpr auto fsnm</div><div class="ttdoc">strict_elementwise_callable computing the fused negated subtract multiply of its three parameters.</div><div class="ttdef"><b>Definition</b> fsnm.hpp:89</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">-x-y*z</span> as if calculated to infinite precision and rounded once is returned, but only if the hardware is in capacity to do it at reasonable cost.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li><span class="tt"><a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a></span> option always ensures the full compliance to fsnm properties. This can be very expensive if the system has no hardware capability.</li>
+<li>The operation is performed as if the parameters where promoted to the common type of the three parameters.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/fma">C++ standard reference</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{0.0, -4.0, 1.0, -1.0, 2.0, -2.0, 3.0, -3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2{0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi2{0, 1, 2 ,3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu1{7u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu2{0u, 2u, 4u, 6u, 1u, 3u, 5u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                 = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                 = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                 = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                 = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                 = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                 = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu2                                 = &quot;</span> &lt;&lt; wu2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(wf0, wf1, wf2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[ignore_last(2)](wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[wf0 != 0](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[wf0 != 0](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[pedantic](wf0, wf1, wf2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[promote](wf0, wf1, wf2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[eve::promote](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(wu0, wu1, wu2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>(wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[ignore_last(2)](wu0, wu1, wu2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[wu0 != 0](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[wu0 != 0](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[pedantic](wu0, wu1, wu2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[promote](wu0, wu1, wu2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[eve::promote](wu0, wu1, wu2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[wi0 != 0](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[wi0 != 0](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[pedantic](wi0, wi1, wi2)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[promote](wi0, wi1, wi2)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[eve::promote](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm(wf0, wf1, wf2)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[lower](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[upper](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[lower][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20) &lt;&lt; <span class="stringliteral">&quot;-&gt; fsnm[upper][strict](wf0, wf1, wf2)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67d686700aac348f3d75484f38c63d4d">eve::fsnm</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>][<a class="code hl_variable" href="group__eve__core__decorators.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a>](wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

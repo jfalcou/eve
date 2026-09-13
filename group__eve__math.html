@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -119,17 +121,18 @@ $(function(){initNavTree('group__eve__math.html','',''); });
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Topics</a> &#124;
+<a href="#groups">Contents</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Mathematical functions <div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__functions.html">Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This module provides implementation for scalar and SIMD versions of mathematical functions, mainly libc++ ones.</p>
+<div class="textblock"><p>Current Mathematical functions. </p>
+<p>This module provides implementation for scalar and SIMD versions of mathematical functions, mainly libc++ ones.</p>
 <p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span> </div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-groups" class="groupheader"><a id="groups" name="groups"></a>
-Topics</h2></td></tr>
+Contents</h2></td></tr>
 <tr class="memitem:eve_5Fmath_5Fconstants" id="r_eve_5Fmath_5Fconstants"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__math__constants.html">Constants</a></td></tr>
 <tr class="memitem:eve_5Fcontfrac" id="r_eve_5Fcontfrac"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__contfrac.html">Continued Fractions</a></td></tr>
 <tr class="memitem:eve_5Fmath_5Fexp" id="r_eve_5Fmath_5Fexp"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__math__exp.html">Exponential</a></td></tr>
@@ -141,13 +144,366 @@ Topics</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga0a17ee24ca2ace0f07eb87e494bce229" id="r_ga0a17ee24ca2ace0f07eb87e494bce229"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__math_ga0a17ee24ca2ace0f07eb87e494bce229.html#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;horner_t&gt;</td></tr>
+<tr class="memitem:ga0a17ee24ca2ace0f07eb87e494bce229" id="r_ga0a17ee24ca2ace0f07eb87e494bce229"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;horner_t&gt;</td></tr>
 <tr class="memdesc:ga0a17ee24ca2ace0f07eb87e494bce229"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement the horner scheme to evaluate polynomials with coefficients in decreasing power order.  <br /></td></tr>
-<tr class="memitem:gadeb757d766fe37f677ad7b883fc9d7f2" id="r_gadeb757d766fe37f677ad7b883fc9d7f2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__math_gadeb757d766fe37f677ad7b883fc9d7f2.html#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reverse_horner_t&gt;</td></tr>
+<tr class="memitem:gadeb757d766fe37f677ad7b883fc9d7f2" id="r_gadeb757d766fe37f677ad7b883fc9d7f2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reverse_horner_t&gt;</td></tr>
 <tr class="memdesc:gadeb757d766fe37f677ad7b883fc9d7f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">implement the horner scheme to evaluate polynomials with coefficients in increasing power order  <br /></td></tr>
-<tr class="memitem:ga83b4389dc1cf741a8e892a29fe007a2c" id="r_ga83b4389dc1cf741a8e892a29fe007a2c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__math_ga83b4389dc1cf741a8e892a29fe007a2c.html#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebsum_t&gt;</td></tr>
+<tr class="memitem:ga83b4389dc1cf741a8e892a29fe007a2c" id="r_ga83b4389dc1cf741a8e892a29fe007a2c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebsum_t&gt;</td></tr>
 <tr class="memdesc:ga83b4389dc1cf741a8e892a29fe007a2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement the evaluation of tchebytchev polynomials with coefficients in increasing or decreasing power order.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga0a17ee24ca2ace0f07eb87e494bce229" name="ga0a17ee24ca2ace0f07eb87e494bce229"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a17ee24ca2ace0f07eb87e494bce229">&#9670;&#160;</a></span>horner</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::horner = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;horner_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implement the horner scheme to evaluate polynomials with coefficients in decreasing power order. </p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, the Horner scheme evaluates the polynom \(p\) at \(x\) by :</p>
+<p>\(\qquad\displaystyle p(x) = (((c_0x+c_1)x+ ... )x + c_{n-1})\)</p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> ...ci)                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, eve::coefficients <span class="keyword">auto</span> tci)            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/*any of the above overloads*/</span>)                     <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>[kahan](<span class="comment">/*any of the above overloads*/</span>)                        <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">horner</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a">widen</a>](<span class="comment">/*any of the above overloads*/</span>)                        <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga41df7824f33624e9f1febcb4c72bdd6a"><div class="ttname"><a href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a">eve::widen</a></div><div class="ttdeci">constexpr auto widen</div><div class="ttdoc">Computes the result in the upgraded element type.</div><div class="ttdef"><b>Definition</b> core.hpp:106</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaf3483e5e000367c812b507ed46399367"><div class="ttname"><a href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a></div><div class="ttdeci">constexpr auto pedantic</div><div class="ttdoc">Follows the corner cases of the corresponding standard function.</div><div class="ttdef"><b>Definition</b> core.hpp:91</div></div>
+<div class="ttc" id="agroup__eve__math_html_ga0a17ee24ca2ace0f07eb87e494bce229"><div class="ttname"><a href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a></div><div class="ttdeci">constexpr auto horner</div><div class="ttdoc">Implement the horner scheme to evaluate polynomials with coefficients in decreasing power order.</div><div class="ttdef"><b>Definition</b> horner.hpp:120</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">evaluation point floating value</a> arguments.</li>
+<li><span class="tt">ci...</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a> polynom coefficients in decreasing power order, Note that the values of the <span class="tt">ci</span> are not necessarily floating but the non floating ones are to be scalar</li>
+<li><span class="tt">tci</span>: eve::coefficients is a specialization of <a class="elRef" href="https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1product__type.html" title="kumi::concepts::product_type">tuple</a> of floating values, used to avoid possible ambiguities</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, the Horner scheme evaluates the polynom \(p\) at \(x\) by : \(\qquad\qquad\displaystyle p(x) = (((c_0x+c_1)x+ ... )x + c_{n-1})\)</p>
+<ol type="1">
+<li>The value of the polynom at <span class="tt">x</span> is returned.</li>
+<li>Same as the call with the elements of the tuple.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li><span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a>[<a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a>]</span> instead of <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> is used in internal computations.</li>
+<li>a Kahan like compensated algorithm is used to enhance accuracy.</li>
+<li>the computation is applied to upgraded types values when available.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.<ul>
+<li>If x is scalar, the polynomials are all computed at the same point</li>
+<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Wikipedia](<a href="https://en.wikipedia.org/wiki/Horner's_method">https://en.wikipedia.org/wiki/Horner's_method</a>)</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1 TODO</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd = {-0.3, 0.5, 0.0, 2.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> b  = {-2.0, 10.5, -4.0, 0.1};</div>
+<div class="line">  <span class="keywordtype">double</span> x(0.2);</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> v {1.0, -2.0, 3.0, -4.0};</div>
+<div class="line">  <span class="keyword">using </span>w_t = <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> wv{ w_t{1.5, 1, 2, 3}, w_t{4, 5, 6, 7}, w_t{8, 9, 10, 11} };</div>
+<div class="line">  <span class="keyword">auto</span> t =<a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>{1.5,4.0,8.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                   = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                    = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- v                                    = &quot;</span> &lt;&lt; v  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wv                                   = &quot;</span> &lt;&lt; wv &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- b                                    = &quot;</span> &lt;&lt; b  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, 1.0, -2.0, 3.0, -4.0)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(xd, 1.0, -2.0, 3.0, -4.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5, 1, b, 3, -4)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, 1, -2, 3, -4)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(xd, 1, -2, 3, -4)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, eve::coefficients(v))     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(xd, eve::coefficients(v))  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, eve::coefficients(t))     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(xd, eve::coefficients(t))   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, eve::coefficients(t))      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(x, eve::coefficients(t))   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(w_t(x), eve::coefficients(t)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(w_t(x), eve::coefficients(t))   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(x, eve::coefficients(wv))     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(x, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(0.5f, eve::coefficients(wv))  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(0.5, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(xd, eve::coefficients(wv))    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(xd, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(2.0, eve::coefficients(t))    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(2.0, eve::coefficients(t)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(2.0,1.5,4.0,8.0)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(2.0, 1.5,4.0,8.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; horner(w_t(2.0),1.5,4.0,8.0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a17ee24ca2ace0f07eb87e494bce229">eve::horner</a>(w_t(2.0), 1.5,4.0,8.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructkumi_1_1tuple_html"><div class="ttname"><a href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a></div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gadeb757d766fe37f677ad7b883fc9d7f2" name="gadeb757d766fe37f677ad7b883fc9d7f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadeb757d766fe37f677ad7b883fc9d7f2">&#9670;&#160;</a></span>reverse_horner</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::reverse_horner = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reverse_horner_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>implement the horner scheme to evaluate polynomials with coefficients in increasing power order </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">reverse_horner</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> ci...)                       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">reverse_horner</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, eve::coefficients tci)                  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">reverse_horner</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/*any of the above overloads*/</span>)                      <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">reverse_horner</a>[kahan](<span class="comment">/*any of the above overloads*/</span>)                         <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">reverse_horner</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a">widen</a>](<span class="comment">/*any of the above overloads*/</span>)                         <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__math_html_gadeb757d766fe37f677ad7b883fc9d7f2"><div class="ttname"><a href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a></div><div class="ttdeci">constexpr auto reverse_horner</div><div class="ttdoc">implement the horner scheme to evaluate polynomials with coefficients in increasing power order</div><div class="ttdef"><b>Definition</b> reverse_horner.hpp:117</div></div>
+</div><!-- fragment --><ol type="1">
+<li>Polynom is evaluated at x the other inputs are the polynomial coefficients.</li>
+<li>Polynom is evaluated at x the other input is a range or a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> containing the coefficients</li>
+<li><span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a>[<a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a>]</span> instead of <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> is used in internal computations.</li>
+<li>a Kahan like compensated algorithm is used to enhance accuracy.</li>
+<li>the computation is applied to upgraded types values when available.</li>
+</ol>
+<p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">evaluation point floating value</a> arguments.</li>
+<li><span class="tt">ci...</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a> polynom coefficients in increasing power order, Note that the values of the <span class="tt">ci</span> are not necessarily floating but the non floating ones are to be scalar</li>
+<li><span class="tt">tci</span>: eve::coefficients is a specialization of <a class="elRef" href="https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1product__type.html" title="kumi::concepts::product_type">tuple</a> of floating values used to avoid possible ambiguities</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by increasing power order, the reverse Horner scheme evaluates the polynom \(p\) at \(x\) using the following formula:</p>
+<p>\(\qquad\qquad\displaystyle p(x) = (((c_{n-1}x+c_{n-2})x+ ... )x + c_0)\)</p>
+<ol type="1">
+<li>The value of the polynom at <span class="tt">x</span> is returned.</li>
+<li>same as the call with the elements of the tuple. 3.<span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a>[<a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a>]</span> instead of <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> is used in internal computations. This is intended to insure more accurate computations where needed. This has no cost (and is automatically done) if the system has hard wired <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> but is very expansive if it is not the case.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.<ul>
+<li>If x is scalar, the polynomials are all computed at the same point</li>
+<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Wikipedia](<a href="https://en.wikipedia.org/wiki/Horner's_method">https://en.wikipedia.org/wiki/Horner's_method</a>)</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd = {-0.3, 0.5, 0.0, 2.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> b  = {-2.0, 10.5, -4.0, 0.1};</div>
+<div class="line">  <span class="keywordtype">double</span> x(0.2);</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> v {1.0, -2.0, 3.0, -4.0};</div>
+<div class="line">  <span class="keyword">using </span>w_t = <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> wv{ w_t{1.5, 1, 2, 3}, w_t{4, 5, 6, 7}, w_t{8, 9, 10, 11} };</div>
+<div class="line">  <span class="keyword">auto</span> t = <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>{1.5,4.0,8.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                       = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                        = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- v                                        = &quot;</span> &lt;&lt; v  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wv                                       = &quot;</span> &lt;&lt; wv &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, 1.0, -2.0, 3.0, -4.0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(xd, 1.0, -2.0, 3.0, -4.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(0.5, 1, b, 3, -4)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(0.5, 1, b, 3, -4) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(x, 1, -2, 3, -4)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(xd, 1, -2, 3, -4)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, v)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(xd, eve::coefficients(v))  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, t)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(xd, eve::coefficients(t))   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(x, t)                     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(x, eve::coefficients(t))   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(x, wv)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(x, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(0.5f, wv)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(0.5, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(xd, wv)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(xd, eve::coefficients(wv)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(2.0, t)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(2.0, eve::coefficients(t)) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner(2.0, 1.5,4.0,8.0)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(2.0, 1.5,4.0,8.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; reverse_horner                           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadeb757d766fe37f677ad7b883fc9d7f2">eve::reverse_horner</a>(w_t(2.0),  1.5,4.0,8.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga83b4389dc1cf741a8e892a29fe007a2c" name="ga83b4389dc1cf741a8e892a29fe007a2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83b4389dc1cf741a8e892a29fe007a2c">&#9670;&#160;</a></span>tchebsum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::tchebsum = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebsum_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implement the evaluation of tchebytchev polynomials with coefficients in increasing or decreasing power order. </p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by increasing power order, the Tchebsum scheme evaluates : \(\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\)</p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> ...ci)                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, eve::coefficients <span class="keyword">auto</span> tci)            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/*any of the above overloads*/</span>)                     <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[kahan](<span class="comment">/*any of the above overloads*/</span>)                        <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a">widen</a>](<span class="comment">/*any of the above overloads*/</span>)                        <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[increasing](<span class="comment">/*any of the above overloads*/</span>)                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">tchebsum</a>[decreasing](<span class="comment">/*any of the above overloads*/</span>)                   <span class="keyword">noexcept</span>; <span class="comment">// 7</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__math_html_ga83b4389dc1cf741a8e892a29fe007a2c"><div class="ttname"><a href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a></div><div class="ttdeci">constexpr auto tchebsum</div><div class="ttdoc">Implement the evaluation of tchebytchev polynomials with coefficients in increasing or decreasing pow...</div><div class="ttdef"><b>Definition</b> tchebsum.hpp:120</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">evaluation point floating value</a> arguments.</li>
+<li><span class="tt">ci...</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a> tchebytchev coefficients in increasing power order, Note that the values of the <span class="tt">ci</span> are not necessarily floating but the non floating ones are to be scalar</li>
+<li><span class="tt">tci</span>: eve::coefficients is a specialization of <a class="elRef" href="https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1product__type.html" title="kumi::concepts::product_type">tuple</a> of floating values, used to avoid possible ambiguities</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the Tchebytchev coefficients of the polynomial The Tchebsum scheme evaluates : \(\qquad\displaystyle p(x) = c_0/2+\sum_1^n c_n T_n(x))\)</p>
+<ol type="1">
+<li>The value at <span class="tt">x</span> f the polynom based on first kind Tchebytchev function is returned.</li>
+<li>Same as the call with the elements of the tuple.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li><span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a>[<a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a>]</span> instead of <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> is used in internal computations.</li>
+<li>a Kahan like compensated algorithm is used to enhance accuracy.</li>
+<li>the computation is applied to upgraded types values when available.</li>
+<li>the order of the given coefficients is reversed</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>If the coefficients are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.<ul>
+<li>If x is scalar, the polynomials are all computed at the same point</li>
+<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Wikipedia](<a href="https://en.wikipedia.org/wiki/Tchebsum's_method">https://en.wikipedia.org/wiki/Tchebsum's_method</a>)</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span> tch1(<span class="keyword">auto</span> t, <span class="keyword">auto</span> c)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">double</span> u0 = 0;</div>
+<div class="line">  <span class="keywordtype">double</span> u1 = 0;</div>
+<div class="line">  <span class="keywordtype">double</span> u2 = 0;</div>
+<div class="line">  <span class="keyword">auto</span> tt = t+t;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=c.size()-1; i &gt;= 0 ; --i)</div>
+<div class="line">  {</div>
+<div class="line">    u2=u1;</div>
+<div class="line">    u1=u0;</div>
+<div class="line">    u0=tt*u1+c[i]-u2;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">return</span> (u0-u2)/2;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span> tch2(<span class="keyword">auto</span> t, <span class="keyword">auto</span> ... c)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">double</span> u0 = 0;</div>
+<div class="line">  <span class="keywordtype">double</span> u1 = 0;</div>
+<div class="line">  <span class="keywordtype">double</span> u2 = 0;</div>
+<div class="line">  <span class="keyword">auto</span> tt = t+t;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> clemshaw_step = [&amp;](<span class="keyword">auto</span> ci){</div>
+<div class="line">    u2=u1;</div>
+<div class="line">    u1=u0;</div>
+<div class="line">    u0 = <a class="code hl_variable" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07">fma</a>(tt, u1, ci-u2);</div>
+<div class="line">    <span class="keywordflow">return</span> u0;</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  ((u0 = clemshaw_step(c)), ...);</div>
+<div class="line">  <span class="keywordflow">return</span> (u0-u2)/2;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::array&lt;double, 4&gt; c{1, 2, 3, 4};</div>
+<div class="line"> std::array&lt;double, 4&gt; d{4.0, 3.0, 2.0, 1.0};</div>
+<div class="line">  std::cout &lt;&lt;  tch1(-2.0, c) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>[eve::increasing](2.0, c)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>[eve::decreasing](2.0, d)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  tch2(2.0, 4.0, 3.0, 2.0, 1.0)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>[eve::decreasing](2.0, 4.0, 3.0, 2.0, 1.0)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>(2.0, 1.0, 2.0, 3.0, 4.0)&lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt; xx{-2.0, -0.44, 0.44, 2.0};</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>[eve::increasing](xx, c)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>[eve::decreasing](xx, d)&lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  <a class="code hl_variable" href="#ga83b4389dc1cf741a8e892a29fe007a2c">eve::tchebsum</a>(xx, 1.0, 2.0, 3.0, 4.0)&lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__fma__family_html_gae79b56378eacf4c4f3b3d7e128facb07"><div class="ttname"><a href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07">eve::fma</a></div><div class="ttdeci">constexpr auto fma</div><div class="ttdoc">strict_elementwise_callable computing the fused multiply add of its three parameters.</div><div class="ttdef"><b>Definition</b> fma.hpp:100</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

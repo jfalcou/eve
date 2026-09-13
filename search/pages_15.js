@@ -1,7 +1,7 @@
 var searchData=
 [
   ['targets_0',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]],
-  ['template_1',['template',['../group__eve__arch_gab707570aa2d35678c5cd5c686a994d57.html#autotoc_md2',1,'Helper variable template'],['../structeve_1_1fundamental__cardinal.html#autotoc_md5',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md30',1,'Helper variable template']]],
+  ['template_1',['template',['../group__eve__arch.html#autotoc_md2',1,'Helper variable template'],['../structeve_1_1fundamental__cardinal.html#autotoc_md5',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md30',1,'Helper variable template']]],
   ['terms_2',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
   ['testing_3',['Building for Testing',['../dev_cmake.html',1,'']]],
   ['tests_4',['Tests',['../dev_cmake.html#autotoc_md62',1,'Compiling EVE Random Tests'],['../dev_cmake.html#autotoc_md61',1,'Compiling EVE Unit Tests']]],
@@ -17,7 +17,7 @@ var searchData=
   ['the_20one_20big_20news_20for_20this_20release_3a_20sve_14',['The One Big News for this release: SVE',['../changelog.html#autotoc_md36',1,'']]],
   ['the_20source_15',['Retrieving the source',['../setup.html#autotoc_md73',1,'']]],
   ['theoretic_20foundations_16',['Type Theoretic Foundations',['https://jfalcou.github.io/kumi/kumi_introduction.html',1,'kumi_glossary']]],
-  ['there_20is_20a_20match_17',['there is a match',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['there_20is_20a_20match_17',['there is a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
   ['this_20release_3a_20sve_18',['The One Big News for this release: SVE',['../changelog.html#autotoc_md36',1,'']]],
   ['to_20dynamic_20dispatch_19',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
   ['to_20simd_20processing_20',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md106',1,'']]],

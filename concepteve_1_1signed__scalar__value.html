@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,10 +126,9 @@ $(function(){initNavTree('concepteve_1_1signed__scalar__value.html','',''); });
 
 <p>Specify that a type represents a signed scalar value. The concept <span class="tt">signed_scalar_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt"><a class="el" href="concepteve_1_1arithmetic__scalar__value.html" title="Specify that a type represents a type suitable for vectorization The concept arithmetic_scalar_value&lt;...">eve::arithmetic_scalar_value</a>&lt;T&gt;</span> and <span class="tt">std::integral&lt;T&gt;</span>.  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/concept/vectorizable.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><h2 class="groupheader">Examples </h2>
+<div class="textblock"><p>Specify that a type represents a signed scalar value. The concept <span class="tt">signed_scalar_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt"><a class="el" href="concepteve_1_1arithmetic__scalar__value.html" title="Specify that a type represents a type suitable for vectorization The concept arithmetic_scalar_value&lt;...">eve::arithmetic_scalar_value</a>&lt;T&gt;</span> and <span class="tt">std::integral&lt;T&gt;</span>. </p>
+<h2 class="groupheader">Examples </h2>
 <ul>
 <li><span class="tt">std::int32_t</span></li>
 <li><span class="tt">float</span> </li>

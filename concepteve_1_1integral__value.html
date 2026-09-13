@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,10 +126,9 @@ $(function(){initNavTree('concepteve_1_1integral__value.html','',''); });
 
 <p>The concept <span class="tt">integral_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">eve::value</a></span> and the element type satisfies <span class="tt">std::integral</span>.  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/concept/value.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><h2 class="groupheader">Examples </h2>
+<div class="textblock"><p>The concept <span class="tt">integral_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">eve::value</a></span> and the element type satisfies <span class="tt">std::integral</span>. </p>
+<h2 class="groupheader">Examples </h2>
 <ul>
 <li><span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;char&gt;</span></li>
 <li><span class="tt">int</span></li>

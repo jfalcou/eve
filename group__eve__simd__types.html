@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,7 +129,8 @@ $(function(){initNavTree('group__eve__simd__types.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Types and functions wrappers for SIMD registers and related operations</p>
+<div class="textblock"><p>SIMD related types. </p>
+<p>Types and functions wrappers for SIMD registers and related operations</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -154,11 +157,11 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ga8a5020911faf4ccefcfb1d2a8b718719" id="r_ga8a5020911faf4ccefcfb1d2a8b718719"><td class="memTemplParams" colspan="2"><a id="ga8a5020911faf4ccefcfb1d2a8b718719" name="ga8a5020911faf4ccefcfb1d2a8b718719"></a>
 template&lt;arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal&gt; </td></tr>
-<tr class="memitem:ga8a5020911faf4ccefcfb1d2a8b718719 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>eve::operator==</b> (logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; T, Cardinal &gt; &gt; a, logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0">is_equal</a>(a, b))</td></tr>
+<tr class="memitem:ga8a5020911faf4ccefcfb1d2a8b718719 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>eve::operator==</b> (logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; T, Cardinal &gt; &gt; a, logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0">is_equal</a>(a, b))</td></tr>
 <tr class="memdesc:ga8a5020911faf4ccefcfb1d2a8b718719"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of two eve::logical. <br /></td></tr>
 <tr class="memitem:gaa3dfaa4cfdde3a9e71e878d8fe9dce3a" id="r_gaa3dfaa4cfdde3a9e71e878d8fe9dce3a"><td class="memTemplParams" colspan="2"><a id="gaa3dfaa4cfdde3a9e71e878d8fe9dce3a" name="gaa3dfaa4cfdde3a9e71e878d8fe9dce3a"></a>
 template&lt;arithmetic_scalar_value T, arithmetic_scalar_value U, typename Cardinal&gt; </td></tr>
-<tr class="memitem:gaa3dfaa4cfdde3a9e71e878d8fe9dce3a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>eve::operator!=</b> (logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; T, Cardinal &gt; &gt; a, logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates_ga005f052be0bb62e30b57c344c3b2fb73.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(a, b))</td></tr>
+<tr class="memitem:gaa3dfaa4cfdde3a9e71e878d8fe9dce3a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>eve::operator!=</b> (logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; T, Cardinal &gt; &gt; a, logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(a, b))</td></tr>
 <tr class="memdesc:gaa3dfaa4cfdde3a9e71e878d8fe9dce3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of two eve::logical. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -128,25 +130,705 @@ $(function(){initNavTree('group__eve__core__reduction.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga5cb8d1d1471423dfa2b00e7da2073169" id="r_ga5cb8d1d1471423dfa2b00e7da2073169"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_ga5cb8d1d1471423dfa2b00e7da2073169.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;all_t&gt;</td></tr>
+<tr class="memitem:ga5cb8d1d1471423dfa2b00e7da2073169" id="r_ga5cb8d1d1471423dfa2b00e7da2073169"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;all_t&gt;</td></tr>
 <tr class="memdesc:ga5cb8d1d1471423dfa2b00e7da2073169"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a bool value which is true if and only if every elements of <span class="tt">x</span> evaluates to true.  <br /></td></tr>
-<tr class="memitem:ga668c3edce7062da8ba1f66504d149f88" id="r_ga668c3edce7062da8ba1f66504d149f88"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_ga668c3edce7062da8ba1f66504d149f88.html#ga668c3edce7062da8ba1f66504d149f88">eve::any</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;any_t&gt;</td></tr>
+<tr class="memitem:ga668c3edce7062da8ba1f66504d149f88" id="r_ga668c3edce7062da8ba1f66504d149f88"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga668c3edce7062da8ba1f66504d149f88">eve::any</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;any_t&gt;</td></tr>
 <tr class="memdesc:ga668c3edce7062da8ba1f66504d149f88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a bool value which is true if and only if one or more elements of <span class="tt">x</span> evaluates to true.  <br /></td></tr>
-<tr class="memitem:gaee97bf40ee1dcb8f3cd2477faec994cc" id="r_gaee97bf40ee1dcb8f3cd2477faec994cc"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_gaee97bf40ee1dcb8f3cd2477faec994cc.html#gaee97bf40ee1dcb8f3cd2477faec994cc">eve::count_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;count_true_t&gt;</td></tr>
+<tr class="memitem:gaee97bf40ee1dcb8f3cd2477faec994cc" id="r_gaee97bf40ee1dcb8f3cd2477faec994cc"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">eve::count_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;count_true_t&gt;</td></tr>
 <tr class="memdesc:gaee97bf40ee1dcb8f3cd2477faec994cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the number of elements of the input which evaluates to <span class="tt">true</span>.  <br /></td></tr>
-<tr class="memitem:ga146ea89681f9d926afcc7b3bf968f40d" id="r_ga146ea89681f9d926afcc7b3bf968f40d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#ga146ea89681f9d926afcc7b3bf968f40d">eve::first_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;first_true_t&gt;</td></tr>
+<tr class="memitem:ga146ea89681f9d926afcc7b3bf968f40d" id="r_ga146ea89681f9d926afcc7b3bf968f40d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga146ea89681f9d926afcc7b3bf968f40d">eve::first_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;first_true_t&gt;</td></tr>
 <tr class="memdesc:ga146ea89681f9d926afcc7b3bf968f40d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of the first element in the input which evaluates to <span class="tt">true</span>, if there is one.  <br /></td></tr>
-<tr class="memitem:gabc10fff649535870a897cef2a1e1673e" id="r_gabc10fff649535870a897cef2a1e1673e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;last_true_t&gt;</td></tr>
+<tr class="memitem:gabc10fff649535870a897cef2a1e1673e" id="r_gabc10fff649535870a897cef2a1e1673e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;last_true_t&gt;</td></tr>
 <tr class="memdesc:gabc10fff649535870a897cef2a1e1673e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the index of the last element in the input which evaluates to <span class="tt">true</span>, if there is one.  <br /></td></tr>
-<tr class="memitem:gaf7f045ef2ed35833e8c3dc0228de48b8" id="r_gaf7f045ef2ed35833e8c3dc0228de48b8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_gaf7f045ef2ed35833e8c3dc0228de48b8.html#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;maximum_t&gt;</td></tr>
+<tr class="memitem:gaf7f045ef2ed35833e8c3dc0228de48b8" id="r_gaf7f045ef2ed35833e8c3dc0228de48b8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;maximum_t&gt;</td></tr>
 <tr class="memdesc:gaf7f045ef2ed35833e8c3dc0228de48b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the maximal value in a simd vector or valmin if the input is fully masked.  <br /></td></tr>
-<tr class="memitem:ga729853eb0b9c9f168dd104b1df7a8ec8" id="r_ga729853eb0b9c9f168dd104b1df7a8ec8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_ga729853eb0b9c9f168dd104b1df7a8ec8.html#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;minimum_t&gt;</td></tr>
-<tr class="memdesc:ga729853eb0b9c9f168dd104b1df7a8ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the minimal value in a simd vector or <a class="el" href="group__eve__core__constants_ga2544f12d841d878129a13f0fab8d1d21.html#ga2544f12d841d878129a13f0fab8d1d21" title="eve::majorant">majorant</a> if the input is fully masked.  <br /></td></tr>
-<tr class="memitem:ga6c3f7d70fe96da70a69c2139a7c325ea" id="r_ga6c3f7d70fe96da70a69c2139a7c325ea"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_ga6c3f7d70fe96da70a69c2139a7c325ea.html#ga6c3f7d70fe96da70a69c2139a7c325ea">eve::none</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;none_t&gt;</td></tr>
+<tr class="memitem:ga729853eb0b9c9f168dd104b1df7a8ec8" id="r_ga729853eb0b9c9f168dd104b1df7a8ec8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;minimum_t&gt;</td></tr>
+<tr class="memdesc:ga729853eb0b9c9f168dd104b1df7a8ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the minimal value in a simd vector or <a class="el" href="group__eve__core__constants.html#ga2544f12d841d878129a13f0fab8d1d21" title="eve::majorant">majorant</a> if the input is fully masked.  <br /></td></tr>
+<tr class="memitem:ga6c3f7d70fe96da70a69c2139a7c325ea" id="r_ga6c3f7d70fe96da70a69c2139a7c325ea"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">eve::none</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;none_t&gt;</td></tr>
 <tr class="memdesc:ga6c3f7d70fe96da70a69c2139a7c325ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a bool value which is true if and only if all elements of <span class="tt">x</span> evaluate to false.  <br /></td></tr>
-<tr class="memitem:gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37" id="r_gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__reduction_gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37.html#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reduce_t&gt;</td></tr>
+<tr class="memitem:gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37" id="r_gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reduce_t&gt;</td></tr>
 <tr class="memdesc:gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the reduction of a SIMD value using a given callable. Performs an horizontal sum by default.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga5cb8d1d1471423dfa2b00e7da2073169" name="ga5cb8d1d1471423dfa2b00e7da2073169"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5cb8d1d1471423dfa2b00e7da2073169">&#9670;&#160;</a></span>all</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::all = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;all_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes a bool value which is true if and only if every elements of <span class="tt">x</span> evaluates to true. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">all</a>(L x) <span class="keyword">requires</span> !Options::contains(splat)                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">all</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> t) <span class="keyword">requires</span> !Options::contains(splat)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Splat overload</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">   L <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">all</a>[splat](L x) <span class="keyword">requires</span> Options::contains(splat)                        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">all</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>)        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">all</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)           <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga5cb8d1d1471423dfa2b00e7da2073169"><div class="ttname"><a href="#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a></div><div class="ttdeci">constexpr auto all</div><div class="ttdoc">Computes a bool value which is true if and only if every elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> all.hpp:95</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+<div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition</b> top_bits.hpp:80</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">argument</a>.</li>
+<li><span class="tt">t</span>: <a class="el" href="structeve_1_1top__bits.html" title="top_bits">top bits</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>A bool value which is true if and only if every elements of <span class="tt">x</span> evaluates to true.</li>
+<li>The result of the reduction is splatted across every lane of the output.</li>
+<li>Same as the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                        = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                              </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; all(wu0 &lt;= maximum(wu0)/2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; all[ignore_last(2)](wu0 &lt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_gaf7f045ef2ed35833e8c3dc0228de48b8"><div class="ttname"><a href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a></div><div class="ttdeci">constexpr auto maximum</div><div class="ttdoc">Computes the maximal value in a simd vector or valmin if the input is fully masked.</div><div class="ttdef"><b>Definition</b> maximum.hpp:83</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga668c3edce7062da8ba1f66504d149f88" name="ga668c3edce7062da8ba1f66504d149f88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga668c3edce7062da8ba1f66504d149f88">&#9670;&#160;</a></span>any</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::any = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;any_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes a bool value which is true if and only if one or more elements of <span class="tt">x</span> evaluates to true. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;relaxed_logical_value T&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">any</a>(T x) <span class="keyword">requires</span> !Options::contains(splat)                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;logical_simd_value T&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">any</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;T&gt;</a> t) <span class="keyword">requires</span> !Options::contains(splat)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Splat overload</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;logical_simd_value T&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">any</a>[splat](T x) <span class="keyword">requires</span> Options::contains(splat)                        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">any</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>)        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">any</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)           <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga668c3edce7062da8ba1f66504d149f88"><div class="ttname"><a href="#ga668c3edce7062da8ba1f66504d149f88">eve::any</a></div><div class="ttdeci">constexpr auto any</div><div class="ttdoc">Computes a bool value which is true if and only if one or more elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> any.hpp:97</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">argument</a>.</li>
+<li><span class="tt">t</span>: <a class="el" href="structeve_1_1top__bits.html" title="top_bits">top bits</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>A bool value which is true if and only if one or more elements of <span class="tt">x</span> evaluates to true.</li>
+<li>The result of the reduction is splatted across every lane of the output.</li>
+<li>Same as the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                        = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                              </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; any(wu0 &lt;= maximum(wu0)/2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">eve::any</a>(wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; any[ignore_last(2)](wu0 &lt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga668c3edce7062da8ba1f66504d149f88">eve::any</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaee97bf40ee1dcb8f3cd2477faec994cc" name="gaee97bf40ee1dcb8f3cd2477faec994cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaee97bf40ee1dcb8f3cd2477faec994cc">&#9670;&#160;</a></span>count_true</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::count_true = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;count_true_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the number of elements of the input which evaluates to <span class="tt">true</span>. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;relaxed_logical_value L&gt;</div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">count_true</a>(L x)                                                       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;relaxed_logical_value L&gt;</div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">count_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> t)                                             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">count_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   std::ptrdiff_t <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">count_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_gaee97bf40ee1dcb8f3cd2477faec994cc"><div class="ttname"><a href="#gaee97bf40ee1dcb8f3cd2477faec994cc">eve::count_true</a></div><div class="ttdeci">constexpr auto count_true</div><div class="ttdoc">Computes the number of elements of the input which evaluates to true.</div><div class="ttdef"><b>Definition</b> count_true.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">argument</a>.</li>
+<li><span class="tt">t</span>: <a class="el" href="structeve_1_1top__bits.html" title="top_bits">top bits</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The number of elements in <span class="tt">x</span> which evaluates to <span class="tt">true</span>. Scalar values are treated as one element.</li>
+<li>The masked version which return the number of non-masked true elements.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                               = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                                     </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; count_true(wu0 &lt;= maximum(wu0)/2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">eve::count_true</a>(wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; count_true[ignore_last(2)](wu0 &lt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaee97bf40ee1dcb8f3cd2477faec994cc">eve::count_true</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> <h2 class="groupheader">Semantic Modifiers </h2>
+
+</div>
+</div>
+<a id="ga146ea89681f9d926afcc7b3bf968f40d" name="ga146ea89681f9d926afcc7b3bf968f40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga146ea89681f9d926afcc7b3bf968f40d">&#9670;&#160;</a></span>first_true</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::first_true = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;first_true_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the index of the first element in the input which evaluates to <span class="tt">true</span>, if there is one. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">first_true</a>(L m) <span class="keyword">noexcept</span>;                                               <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">first_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> m) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// lane masking</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">first_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;   <span class="comment">// 2</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">first_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;      <span class="comment">// 2</span></div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga146ea89681f9d926afcc7b3bf968f40d"><div class="ttname"><a href="#ga146ea89681f9d926afcc7b3bf968f40d">eve::first_true</a></div><div class="ttdeci">constexpr auto first_true</div><div class="ttdoc">Returns the index of the first element in the input which evaluates to true, if there is one.</div><div class="ttdef"><b>Definition</b> first_true.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>m - <a class="el" href="concepteve_1_1logical__value.html" title="The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...">logical_value</a> or <a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">top_bits</a> where to find first true value</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>An <span class="tt">std::optional</span> containing the index of the first element which evaluates to <span class="tt">true</span>, <span class="tt">std::nullopt</span> if there are none.</li>
+<li>Same as 1. but masked elements are ignored during the search.</li>
+</ol>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Should you check for any?</h2>
+<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="#ga668c3edce7062da8ba1f66504d149f88" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do it otherwise.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+What if I know there is a match?</h2>
+<p>We would recommend <span class="tt"><a class="el" href="#ga146ea89681f9d926afcc7b3bf968f40d" title="Returns the index of the first element in the input which evaluates to true, if there is one.">eve::first_true(m)</a></span> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                                      = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; first_true(wu0 &gt;= maximum(wu0)/2)                        = &quot;</span> &lt;&lt; *<a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">eve::first_true</a>(wu0 &gt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; first_true[ignore_first(4)](wu0 &lt;= maximum(wu0)/2 &gt;  1u) = &quot;</span> &lt;&lt; *<a class="code hl_variable" href="#ga146ea89681f9d926afcc7b3bf968f40d">eve::first_true</a>[<a class="code hl_struct" href="structeve_1_1ignore__first.html">eve::ignore_first</a>(4)](wu0 &gt; 1u) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:516</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gabc10fff649535870a897cef2a1e1673e" name="gabc10fff649535870a897cef2a1e1673e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabc10fff649535870a897cef2a1e1673e">&#9670;&#160;</a></span>last_true</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::last_true = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;last_true_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the index of the last element in the input which evaluates to <span class="tt">true</span>, if there is one. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_logical_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">last_true</a>(L m) <span class="keyword">noexcept</span>;                                               <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;logical_simd_value L&gt;</div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">last_true</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;L&gt;</a> m) <span class="keyword">noexcept</span>;                                     <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// lane masking</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">last_true</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;   <span class="comment">// 2</span></div>
+<div class="line">std::optional&lt;std::ptrdiff_t&gt; <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">last_true</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above */</span>) <span class="keyword">noexcept</span>;      <span class="comment">// 2</span></div>
+<div class="ttc" id="agroup__eve__core__reduction_html_gabc10fff649535870a897cef2a1e1673e"><div class="ttname"><a href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a></div><div class="ttdeci">constexpr auto last_true</div><div class="ttdoc">Returns the index of the last element in the input which evaluates to true, if there is one.</div><div class="ttdef"><b>Definition</b> last_true.hpp:84</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>m - <a class="el" href="concepteve_1_1logical__value.html" title="The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...">logical_value</a> or <a class="el" href="structeve_1_1top__bits.html" title="The cheapest to get bitset for simd logical.">top_bits</a> where to find last true value</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>An <span class="tt">std::optional</span> containing the index of the last element which evaluates to <span class="tt">true</span>, <span class="tt">std::nullopt</span> if there are none.</li>
+<li>Same as 1. but masked elements are ignored during the search.</li>
+</ol>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+Should you check for any?</h2>
+<p>The function is considering the case when nothing is set to be likely, checking for <a class="el" href="#ga668c3edce7062da8ba1f66504d149f88" title="Computes a bool value which is true if and only if one or more elements of x evaluates to true.">eve::any</a> before hand is not going to be helpful. At the moment there isn't a function that would do otherwise.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+What if I know there is a match?</h2>
+<p>We would recommend <span class="tt"><a class="el" href="#gabc10fff649535870a897cef2a1e1673e" title="Returns the index of the last element in the input which evaluates to true, if there is one.">eve::last_true(m)</a></span> - this is likely to trigger compiler optimizations, based on it being UB otherwise.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;optional&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> show(<span class="keywordtype">char</span> <span class="keyword">const</span>* what, std::optional&lt;std::ptrdiff_t&gt; r)</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; what;</div>
+<div class="line">  <span class="keywordflow">if</span>( r ) std::cout &lt;&lt; *r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; <span class="keywordflow">else</span> std::cout &lt;&lt; <span class="stringliteral">&quot;nullopt\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int32_t, eve::fixed&lt;8&gt;</a>&gt; w = {1, 0, 3, 0, 5, 0, 0, 8};</div>
+<div class="line">  <span class="keyword">auto</span> m = w &gt; 0;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- w                              = &quot;</span> &lt;&lt; w &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- m = (w &gt; 0)                    = &quot;</span> &lt;&lt; m &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true(m)                   = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>(m));</div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true[eve::ignore_last(2)](m) = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](m));</div>
+<div class="line">  show(<span class="stringliteral">&quot;-&gt; last_true(w &gt; 100)              = &quot;</span>, <a class="code hl_variable" href="#gabc10fff649535870a897cef2a1e1673e">eve::last_true</a>(w &gt; 100));</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaf7f045ef2ed35833e8c3dc0228de48b8" name="gaf7f045ef2ed35833e8c3dc0228de48b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf7f045ef2ed35833e8c3dc0228de48b8">&#9670;&#160;</a></span>maximum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::maximum = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;maximum_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the maximal value in a simd vector or valmin if the input is fully masked. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;arithmetic_value T&gt;</div>
+<div class="line">   element_type_t&lt;T&gt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">maximum</a>(T x) <span class="keyword">requires</span>(!O::contains(splat))            <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;arithmetic_simd_value T&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">maximum</a>(T x) <span class="keyword">requires</span>(O::contains(splat))                             <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">maximum</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">maximum</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The maximal value of all lanes. Scalar values are returned as is.</li>
+<li>The maximal value of all lanes splatted across every lane of the input.</li>
+<li>Same as the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                          = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[wf0 != -2.0f](wf0)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[wf0 != -2.0f](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[wu0 != 2u](wu0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[wu0 != 2u](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; maximum[wi0 != -2](wi0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>[wi0 != -2](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga729853eb0b9c9f168dd104b1df7a8ec8" name="ga729853eb0b9c9f168dd104b1df7a8ec8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga729853eb0b9c9f168dd104b1df7a8ec8">&#9670;&#160;</a></span>minimum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::minimum = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;minimum_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the minimal value in a simd vector or <a class="el" href="group__eve__core__constants.html#ga2544f12d841d878129a13f0fab8d1d21" title="eve::majorant">majorant</a> if the input is fully masked. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;arithmetic_value T&gt;</div>
+<div class="line">   element_type_t&lt;T&gt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">minimum</a>(T v) <span class="keyword">requires</span>(!O::contains(splat))                <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;arithmetic_simd_value T&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">minimum</a>(T v) <span class="keyword">requires</span>(O::contains(splat))                                 <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">minimum</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">minimum</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga729853eb0b9c9f168dd104b1df7a8ec8"><div class="ttname"><a href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a></div><div class="ttdeci">constexpr auto minimum</div><div class="ttdoc">Computes the minimal value in a simd vector or majorant if the input is fully masked.</div><div class="ttdef"><b>Definition</b> minimum.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameter</b></p>
+<ul>
+<li><span class="tt">v</span>: <a class="el" href="concepteve_1_1arithmetic__value.html" title="eve::arithmetic_value">argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The minimal value of all lanes. Scalar values are returned as is.</li>
+<li>The minimal value of all lanes splatted across every lane of said input.</li>
+<li>Same as the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, -4.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                          = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[wf0 != -2.0f](wf0)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[wf0 != -2.0f](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[wu0 != 2u](wu0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[wu0 != 2u](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; minimum[wi0 != -2](wi0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga729853eb0b9c9f168dd104b1df7a8ec8">eve::minimum</a>[wi0 != -2](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6c3f7d70fe96da70a69c2139a7c325ea" name="ga6c3f7d70fe96da70a69c2139a7c325ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6c3f7d70fe96da70a69c2139a7c325ea">&#9670;&#160;</a></span>none</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::none = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;none_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes a bool value which is true if and only if all elements of <span class="tt">x</span> evaluate to false. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;relaxed_logical_value T&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">none</a>(T v) <span class="keyword">requires</span> !Options::contains(splat)                    <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span>&lt;logical_simd_value T&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">none</a>(<a class="code hl_struct" href="structeve_1_1top__bits.html">top_bits&lt;T&gt;</a> t) <span class="keyword">requires</span> !Options::contains(splat)          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Splat overload</span></div>
+<div class="line">   <span class="keyword">template</span>&lt;logical_simd_value T&gt;</div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">none</a>(T t) <span class="keyword">requires</span> Options::contains(splat)                     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">none</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keywordtype">bool</span> <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">none</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga6c3f7d70fe96da70a69c2139a7c325ea"><div class="ttname"><a href="#ga6c3f7d70fe96da70a69c2139a7c325ea">eve::none</a></div><div class="ttdeci">constexpr auto none</div><div class="ttdoc">Computes a bool value which is true if and only if all elements of x evaluate to false.</div><div class="ttdef"><b>Definition</b> none.hpp:95</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">v</span>: <a class="el" href="concepteve_1_1relaxed__logical__value.html" title="eve::relaxed_logical_value">argument</a>.</li>
+<li><span class="tt">t</span>: <a class="el" href="structeve_1_1top__bits.html" title="top_bits">top bits</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>A bool value which is true if and only if all elements of <span class="tt">x</span> evaluates to false.</li>
+<li>The result of the reduction is splatted across every lane of the output.</li>
+<li>Same as the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                         = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">                                                               </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; none(wu0 &lt;= maximum(wu0)/2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">eve::none</a>(wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; none[ignore_last(2)](wu0 &lt;= maximum(wu0)/2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6c3f7d70fe96da70a69c2139a7c325ea">eve::none</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0 &lt;= <a class="code hl_variable" href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a>(wu0)/2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37" name="gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">&#9670;&#160;</a></span>reduce</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::reduce = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;reduce_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the reduction of a SIMD value using a given callable. Performs an horizontal sum by default. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads (non-splat)</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;value T, <span class="keyword">typename</span> Callable&gt;</div>
+<div class="line">   element_type_t&lt;T&gt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>(T x, Callable f) <span class="keyword">requires</span>(!O::contains(splat))     <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;value T&gt;</div>
+<div class="line">   element_type_t&lt;T&gt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>(T x) <span class="keyword">requires</span>(!O::contains(splat))                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Splat overloads</span></div>
+<div class="line">   <span class="keyword">template</span> &lt;simd_value T, <span class="keyword">typename</span> Callable&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>(T x, Callable f) <span class="keyword">requires</span>(O::contains(splat))                      <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="keyword">template</span> &lt;simd_value T&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>(T x) <span class="keyword">requires</span>(O::contains(splat))                                  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>)      <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">reduce</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/* any of the above overloads */</span>)         <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37"><div class="ttname"><a href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a></div><div class="ttdeci">constexpr auto reduce</div><div class="ttdoc">Computes the reduction of a SIMD value using a given callable. Performs an horizontal sum by default.</div><div class="ttdef"><b>Definition</b> reduce.hpp:156</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+<li><span class="tt">f</span>: Callable to use for reduction.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The result of reducing all lanes with the given callable (or addition by default). Scalar values are returned as is.</li>
+<li>The reduction result splatted across every lane of the input.</li>
+<li>Same as any of the above but the masked lanes are ignored during the operation.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_ft pf = {0.5f,1.5f,2.5f,3.f};</div>
+<div class="line">  wide_it qi = {2,3,4,5};</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> summ  = [](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) { <span class="keywordflow">return</span> a+b; };</div>
+<div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__reductions_ga6c139ebafaebc0f7dbca2fd57aee943c.html#ga6c139ebafaebc0f7dbca2fd57aee943c">prod</a> = [](<span class="keyword">auto</span> a, <span class="keyword">auto</span> b) { <span class="keywordflow">return</span> a*b; };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf             = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reduce(pf,summ) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a>(pf, summ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi             = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reduce(qi,prod) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a>(qi, prod) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd with splat&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- pf                    = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reduce[splat](pf,summ) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a>[eve::splat](pf, summ) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- qi                     = &quot;</span> &lt;&lt; qi &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; reduce[splat](qi,prod) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa1ec7a1068d9a82ce9b7bb9d1f9d7f37">eve::reduce</a>[eve::splat](qi, prod) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__kumi__reductions_ga6c139ebafaebc0f7dbca2fd57aee943c_html_ga6c139ebafaebc0f7dbca2fd57aee943c"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__reductions_ga6c139ebafaebc0f7dbca2fd57aee943c.html#ga6c139ebafaebc0f7dbca2fd57aee943c">kumi::prod</a></div><div class="ttdeci">constexpr prod_t prod</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

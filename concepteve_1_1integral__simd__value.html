@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,10 +126,9 @@ $(function(){initNavTree('concepteve_1_1integral__simd__value.html','',''); });
 
 <p>Specifies that a type is a SIMD type with integral elements.  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/concept/vectorized.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The concept <span class="tt">integral_simd_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt">eve::arithmetic_simd_value&lt;T&gt;</span> and <span class="tt"><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;T&gt;</span> satisfies <span class="tt">std::integral</span>.</p>
+<div class="textblock"><p>Specifies that a type is a SIMD type with integral elements. </p>
+<p>The concept <span class="tt">integral_simd_value&lt;T&gt;</span> is satisfied if and only if T satisfies <span class="tt">eve::arithmetic_simd_value&lt;T&gt;</span> and <span class="tt"><a class="el" href="structeve_1_1element__type.html" title="Extracts the scalar part of a type.">eve::element_type</a>&lt;T&gt;</span> satisfies <span class="tt">std::integral</span>.</p>
 <h2 class="groupheader">Examples </h2>
 <ul>
 <li><span class="tt">eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;short&gt;&gt;</span></li>

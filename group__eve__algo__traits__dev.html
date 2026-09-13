@@ -1,0 +1,737 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Algorithm Traits</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('group__eve__algo__traits__dev.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#groups">Contents</a> &#124;
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Algorithm Traits </div></div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Reading, rewriting and carrying a set of algorithm traits. </p>
+<p>Writing an algorithm the way <b>EVE</b> writes its own means reading what the caller asked for. The tools below answer that: the readers report a decision, the rewriters turn a caller's set into the canonical one an algorithm loops on, and <span class="tt"><a class="el" href="#ga76d0a5b1ecac2e0c02fa429dd94aa632" title="Callable accepting a trait set, built from an algorithm&#39;s implementation.">function_with_traits</a></span> builds the callable that accepts a set at all. Calling an algorithm needs none of them, only the <a class="el" href="group__eve__algo__traits.html" title="Options">Options</a> it accepts.</p>
+<p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span> </div>
+</div><!-- fragment --><p>Unrolled iterations run on the same loop step, so a custom algorithm keeps them free of dependencies, <span class="tt">for_each_iteration</span> rather than <span class="tt"><a class="el" href="group__eve__algos.html#ga7547375958ed972878636d26b215cf6e" title="a basic for_each algorithm.">for_each</a></span> when that takes a hand-written loop.</p>
+<dl class="section see"><dt>See also</dt><dd>algo_rationale for the order these tools are used in.</dd></dl>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-groups" class="groupheader"><a id="groups" name="groups"></a>
+Contents</h2></td></tr>
+<tr class="memitem:eve_5Falgo_5Fdefault_5Fsimple_5Falgo_5Ftraits" id="r_eve_5Falgo_5Fdefault_5Fsimple_5Falgo_5Ftraits"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__default__simple__algo__traits.html">default_simple_algo_traits</a></td></tr>
+<tr class="memdesc:group__eve__algo__default__simple__algo__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefined set the algorithms with a short body start from. <br /></td></tr>
+<tr class="memitem:eve_5Falgo_5Fno_5Ftraits" id="r_eve_5Falgo_5Fno_5Ftraits"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__no__traits.html">no_traits</a></td></tr>
+<tr class="memdesc:group__eve__algo__no__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty set, for an algorithm that starts from no default. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:eve_3A_3Aalgo_3A_3Atraits_3C_20Settings_20_3E" id="r_eve_3A_3Aalgo_3A_3Atraits_3C_20Settings_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1traits.html">eve::algo::traits&lt; Settings &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compile time set of tuning parameters an algorithm accepts.  <a href="structeve_1_1algo_1_1traits.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga11696ac18da8fb7c68d7c38b03e7eaef" id="r_ga11696ac18da8fb7c68d7c38b03e7eaef"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:ga11696ac18da8fb7c68d7c38b03e7eaef template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga11696ac18da8fb7c68d7c38b03e7eaef">eve::algo::extra_types_to_consider</a> = rbr::result::fetch_t&lt;(consider_types_key | <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>{}), Traits&gt;</td></tr>
+<tr class="memdesc:ga11696ac18da8fb7c68d7c38b03e7eaef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Types <a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a> added to the set, as a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>.  <br /></td></tr>
+<tr class="memitem:gaea3dda7eb8ca3268808caac3dd41fdcc" id="r_gaea3dda7eb8ca3268808caac3dd41fdcc"><td class="memTemplParams" colspan="2">template&lt;typename Traits, typename RorI&gt; </td></tr>
+<tr class="memitem:gaea3dda7eb8ca3268808caac3dd41fdcc template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaea3dda7eb8ca3268808caac3dd41fdcc">eve::algo::get_types_to_consider_for</a></td></tr>
+<tr class="memdesc:gaea3dda7eb8ca3268808caac3dd41fdcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Every type the cardinal selection weighs, as a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>.  <br /></td></tr>
+<tr class="memitem:ga967c316c157e858ddb09a73a90e77896" id="r_ga967c316c157e858ddb09a73a90e77896"><td class="memTemplParams" colspan="2">template&lt;typename Traits, typename RorI&gt; </td></tr>
+<tr class="memitem:ga967c316c157e858ddb09a73a90e77896 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga967c316c157e858ddb09a73a90e77896">eve::algo::iteration_cardinal_t</a></td></tr>
+<tr class="memdesc:ga967c316c157e858ddb09a73a90e77896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cardinal an algorithm iterates with.  <br /></td></tr>
+<tr class="memitem:ga0a41b0f27cb4bc5f3dfa973cd1459cbc" id="r_ga0a41b0f27cb4bc5f3dfa973cd1459cbc"><td class="memTemplParams" colspan="2">template&lt;typename Traits, typename RorI&gt; </td></tr>
+<tr class="memitem:ga0a41b0f27cb4bc5f3dfa973cd1459cbc template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga0a41b0f27cb4bc5f3dfa973cd1459cbc">eve::algo::get_index_type_t</a></td></tr>
+<tr class="memdesc:ga0a41b0f27cb4bc5f3dfa973cd1459cbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integral type an algorithm counts indices in.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ga83d5cdb35c43f00ca4be317ad32e69fd" id="r_ga83d5cdb35c43f00ca4be317ad32e69fd"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:ga83d5cdb35c43f00ca4be317ad32e69fd template"><td class="memItemLeft">constexpr std::ptrdiff_t&#160;</td><td class="memItemRight"><a class="el" href="#ga83d5cdb35c43f00ca4be317ad32e69fd">eve::algo::get_unrolling</a> ()</td></tr>
+<tr class="memdesc:ga83d5cdb35c43f00ca4be317ad32e69fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of SIMD registers handled per loop step.  <br /></td></tr>
+<tr class="memitem:gabb968c59d60f3a6e7becd4f2a5ac8fa4" id="r_gabb968c59d60f3a6e7becd4f2a5ac8fa4"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:gabb968c59d60f3a6e7becd4f2a5ac8fa4 template"><td class="memItemLeft">constexpr std::ptrdiff_t&#160;</td><td class="memItemRight"><a class="el" href="#gabb968c59d60f3a6e7becd4f2a5ac8fa4">eve::algo::get_overflow</a> ()</td></tr>
+<tr class="memdesc:gabb968c59d60f3a6e7becd4f2a5ac8fa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of lanes the loop may write past its range.  <br /></td></tr>
+<tr class="memitem:gafec586a1cd7d254ab1b15256e65564b4" id="r_gafec586a1cd7d254ab1b15256e65564b4"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:gafec586a1cd7d254ab1b15256e65564b4 template"><td class="memItemLeft">constexpr std::optional&lt; std::ptrdiff_t &gt;&#160;</td><td class="memItemRight"><a class="el" href="#gafec586a1cd7d254ab1b15256e65564b4">eve::algo::get_expected_smaller_r</a> ()</td></tr>
+<tr class="memdesc:gafec586a1cd7d254ab1b15256e65564b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which of two ranges <a class="el" href="group__eve__algo__expect__smaller__range.html#ga2d13212794beb6ffc81d8a0d2f8b1419">eve::algo::expect_smaller_range</a> named, if any.  <br /></td></tr>
+<tr class="memitem:ga80f877764d676142f3deaeb933452916" id="r_ga80f877764d676142f3deaeb933452916"><td class="memTemplParams" colspan="2">template&lt;typename K, typename Traits&gt; </td></tr>
+<tr class="memitem:ga80f877764d676142f3deaeb933452916 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga80f877764d676142f3deaeb933452916">eve::algo::drop_key</a> (K k, Traits tr)</td></tr>
+<tr class="memdesc:ga80f877764d676142f3deaeb933452916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait set without the key <span class="tt">k</span>.  <br /></td></tr>
+<tr class="memitem:ga6868eeae6336704cb5a614cb297acb8b" id="r_ga6868eeae6336704cb5a614cb297acb8b"><td class="memTemplParams" colspan="2">template&lt;bool cond, typename K, typename Traits&gt; </td></tr>
+<tr class="memitem:ga6868eeae6336704cb5a614cb297acb8b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6868eeae6336704cb5a614cb297acb8b">eve::algo::drop_key_if</a> (K k, Traits tr)</td></tr>
+<tr class="memdesc:ga6868eeae6336704cb5a614cb297acb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait set without the key <span class="tt">k</span>, when <span class="tt">cond</span> holds.  <br /></td></tr>
+<tr class="memitem:gab5c5996b8fd2b04c6fec2973204c2643" id="r_gab5c5996b8fd2b04c6fec2973204c2643"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:gab5c5996b8fd2b04c6fec2973204c2643 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab5c5996b8fd2b04c6fec2973204c2643">eve::algo::density_for_compress_copy</a> ()</td></tr>
+<tr class="memdesc:gab5c5996b8fd2b04c6fec2973204c2643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output density a compressing copy writes with.  <br /></td></tr>
+<tr class="memitem:gae6eb9865965d9086d024be7975527e94" id="r_gae6eb9865965d9086d024be7975527e94"><td class="memTemplParams" colspan="2">template&lt;typename Settings&gt; </td></tr>
+<tr class="memitem:gae6eb9865965d9086d024be7975527e94 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gae6eb9865965d9086d024be7975527e94">eve::algo::process_equivalents</a> (<a class="el" href="structeve_1_1algo_1_1traits.html">traits</a>&lt; Settings &gt; tr)</td></tr>
+<tr class="memdesc:gae6eb9865965d9086d024be7975527e94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait set with every shorthand expanded.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gace8bf101c25120711e9c36550ae00536" id="r_gace8bf101c25120711e9c36550ae00536"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gace8bf101c25120711e9c36550ae00536">eve::algo::default_to</a></td></tr>
+<tr class="memdesc:gace8bf101c25120711e9c36550ae00536"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trait set where a caller's choices override an algorithm's defaults.  <br /></td></tr>
+<tr class="memitem:ga8e0ca07c173d4c441a3b1f9cdb034027" id="r_ga8e0ca07c173d4c441a3b1f9cdb034027"><td class="memTemplParams" colspan="2">template&lt;typename Traits&gt; </td></tr>
+<tr class="memitem:ga8e0ca07c173d4c441a3b1f9cdb034027 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga8e0ca07c173d4c441a3b1f9cdb034027">eve::algo::has_type_overrides_v</a> = Traits::contains(force_type_key) || Traits::contains(common_with_types_key)</td></tr>
+<tr class="memdesc:ga8e0ca07c173d4c441a3b1f9cdb034027"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether a zip trait set requests a type conversion.  <br /></td></tr>
+<tr class="memitem:ga76d0a5b1ecac2e0c02fa429dd94aa632" id="r_ga76d0a5b1ecac2e0c02fa429dd94aa632"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename &gt; typename F&gt; </td></tr>
+<tr class="memitem:ga76d0a5b1ecac2e0c02fa429dd94aa632 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga76d0a5b1ecac2e0c02fa429dd94aa632">eve::algo::function_with_traits</a> = F&lt;eve_implementation_defined&gt;{}</td></tr>
+<tr class="memdesc:ga76d0a5b1ecac2e0c02fa429dd94aa632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable accepting a trait set, built from an algorithm's implementation.  <br /></td></tr>
+</table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a id="ga11696ac18da8fb7c68d7c38b03e7eaef" name="ga11696ac18da8fb7c68d7c38b03e7eaef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga11696ac18da8fb7c68d7c38b03e7eaef">&#9670;&#160;</a></span>extra_types_to_consider</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga11696ac18da8fb7c68d7c38b03e7eaef">eve::algo::extra_types_to_consider</a> = rbr::result::fetch_t&lt;(consider_types_key | <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>{}), Traits&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Types <a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a> added to the set, as a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Empty tuple when the set carries no <a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a>. </p>
+
+</div>
+</div>
+<a id="ga0a41b0f27cb4bc5f3dfa973cd1459cbc" name="ga0a41b0f27cb4bc5f3dfa973cd1459cbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a41b0f27cb4bc5f3dfa973cd1459cbc">&#9670;&#160;</a></span>get_index_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits, typename RorI&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga0a41b0f27cb4bc5f3dfa973cd1459cbc">eve::algo::get_index_type_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"> </div>
+<div class="line"><span class="keyword">typename</span> rbr::result::fetch_t&lt;(index_type_key | eve_implementation_defined()),</div>
+<div class="line">                       Traits&gt;::type</div>
+</div><!-- fragment -->
+<p>Integral type an algorithm counts indices in. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read. </td></tr>
+    <tr><td class="paramname">RorI</td><td>Range or iterator the algorithm walks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Trait set  </th><th class="markdownTableHeadLeft">Result  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">carries <a class="el" href="group__eve__algo__index__type.html#ga939cbe71c5d2a082f404882bcd768e55">eve::algo::index_type</a>  </td><td class="markdownTableBodyLeft">that type  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">otherwise  </td><td class="markdownTableBodyLeft">smallest unsigned type covering <span class="tt">RorI</span>  </td></tr>
+</table>
+
+</div>
+</div>
+<a id="gaea3dda7eb8ca3268808caac3dd41fdcc" name="gaea3dda7eb8ca3268808caac3dd41fdcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaea3dda7eb8ca3268808caac3dd41fdcc">&#9670;&#160;</a></span>get_types_to_consider_for</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits, typename RorI&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#gaea3dda7eb8ca3268808caac3dd41fdcc">eve::algo::get_types_to_consider_for</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"> </div>
+<div class="line">kumi::result::cat_t&lt;extra_types_to_consider&lt;Traits&gt;, types_to_consider_for_t&lt;RorI&gt;&gt;</div>
+</div><!-- fragment -->
+<p>Every type the cardinal selection weighs, as a <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read. </td></tr>
+    <tr><td class="paramname">RorI</td><td>Range or iterator the algorithm walks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The types <span class="tt">RorI</span> carries, followed by those <a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a> added. </p>
+
+</div>
+</div>
+<a id="ga967c316c157e858ddb09a73a90e77896" name="ga967c316c157e858ddb09a73a90e77896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga967c316c157e858ddb09a73a90e77896">&#9670;&#160;</a></span>iteration_cardinal_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits, typename RorI&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga967c316c157e858ddb09a73a90e77896">eve::algo::iteration_cardinal_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"> </div>
+<div class="line">rbr::result::fetch_t&lt; (force_cardinal_key | eve_implementation_defined{})</div>
+<div class="line">                    , Traits</div>
+<div class="line">                    &gt;</div>
+</div><!-- fragment -->
+<p>Cardinal an algorithm iterates with. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read. </td></tr>
+    <tr><td class="paramname">RorI</td><td>Range or iterator the algorithm walks.</td></tr>
+  </table>
+  </dd>
+</dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Trait set  </th><th class="markdownTableHeadLeft">Result  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">carries <a class="el" href="group__eve__algo__force__cardinal.html#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal</a>  </td><td class="markdownTableBodyLeft">that cardinal  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft">carries allow_frequency_scaling  </td><td class="markdownTableBodyLeft">expected cardinal of the considered types  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft">otherwise  </td><td class="markdownTableBodyLeft">cardinal that avoids frequency scaling  </td></tr>
+</table>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#gaea3dda7eb8ca3268808caac3dd41fdcc" title="Every type the cardinal selection weighs, as a kumi::tuple.">get_types_to_consider_for</a> </dd></dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="gab5c5996b8fd2b04c6fec2973204c2643" name="gab5c5996b8fd2b04c6fec2973204c2643"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab5c5996b8fd2b04c6fec2973204c2643">&#9670;&#160;</a></span>density_for_compress_copy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::density_for_compress_copy </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Output density a compressing copy writes with. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>eve::sparse when the set carries <a class="el" href="group__eve__algo__sparse__output.html#ga20320b3af45c2868e9a4e6c7a5049fa9">eve::algo::sparse_output</a>, eve::dense otherwise. </p>
+
+</div>
+</div>
+<a id="ga80f877764d676142f3deaeb933452916" name="ga80f877764d676142f3deaeb933452916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80f877764d676142f3deaeb933452916">&#9670;&#160;</a></span>drop_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename K, typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::drop_key </td>
+          <td>(</td>
+          <td class="paramtype">K</td>          <td class="paramname"><span class="paramname"><em>k</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Traits</td>          <td class="paramname"><span class="paramname"><em>tr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Trait set without the key <span class="tt">k</span>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">K</td><td>Keyword to remove. </td></tr>
+    <tr><td class="paramname">Traits</td><td>Trait set to strip.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Called once the decision <span class="tt">k</span> carried is taken, so the rest of the loop cannot read it again. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="#ga6868eeae6336704cb5a614cb297acb8b" title="Trait set without the key k, when cond holds.">drop_key_if</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga6868eeae6336704cb5a614cb297acb8b" name="ga6868eeae6336704cb5a614cb297acb8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6868eeae6336704cb5a614cb297acb8b">&#9670;&#160;</a></span>drop_key_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;bool cond, typename K, typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::drop_key_if </td>
+          <td>(</td>
+          <td class="paramtype">K</td>          <td class="paramname"><span class="paramname"><em>k</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Traits</td>          <td class="paramname"><span class="paramname"><em>tr</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Trait set without the key <span class="tt">k</span>, when <span class="tt">cond</span> holds. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">cond</td><td>Condition deciding the removal. </td></tr>
+    <tr><td class="paramname">K</td><td>Keyword to remove. </td></tr>
+    <tr><td class="paramname">Traits</td><td>Trait set to strip.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Keeps an <span class="tt">if constexpr</span> out of the call site. </p>
+
+</div>
+</div>
+<a id="gafec586a1cd7d254ab1b15256e65564b4" name="gafec586a1cd7d254ab1b15256e65564b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafec586a1cd7d254ab1b15256e65564b4">&#9670;&#160;</a></span>get_expected_smaller_r()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; std::ptrdiff_t &gt; eve::algo::get_expected_smaller_r </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Which of two ranges <a class="el" href="group__eve__algo__expect__smaller__range.html#ga2d13212794beb6ffc81d8a0d2f8b1419">eve::algo::expect_smaller_range</a> named, if any. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Empty optional when the set names none. </p>
+
+</div>
+</div>
+<a id="gabb968c59d60f3a6e7becd4f2a5ac8fa4" name="gabb968c59d60f3a6e7becd4f2a5ac8fa4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabb968c59d60f3a6e7becd4f2a5ac8fa4">&#9670;&#160;</a></span>get_overflow()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ptrdiff_t eve::algo::get_overflow </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Number of lanes the loop may write past its range. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read, which has to carry <a class="el" href="group__eve__algo__overflow.html#ga988f8c96b378db06d7779187f19499cc">eve::algo::overflow</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga83d5cdb35c43f00ca4be317ad32e69fd" name="ga83d5cdb35c43f00ca4be317ad32e69fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga83d5cdb35c43f00ca4be317ad32e69fd">&#9670;&#160;</a></span>get_unrolling()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::ptrdiff_t eve::algo::get_unrolling </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Number of SIMD registers handled per loop step. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Reports <span class="tt">1</span> when the set carries no <a class="el" href="group__eve__algo__unroll.html#gaa0edcdf11a934c3303c8dbac175f5340">eve::algo::unroll</a>. </p>
+
+</div>
+</div>
+<a id="gae6eb9865965d9086d024be7975527e94" name="gae6eb9865965d9086d024be7975527e94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae6eb9865965d9086d024be7975527e94">&#9670;&#160;</a></span>process_equivalents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Settings&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::process_equivalents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeve_1_1algo_1_1traits.html">traits</a>&lt; Settings &gt;</td>          <td class="paramname"><span class="paramname"><em>tr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Trait set with every shorthand expanded. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Settings</td><td>Settings of the trait set to expand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Written  </th><th class="markdownTableHeadLeft">Stands for  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><a class="el" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a>  </td><td class="markdownTableBodyLeft">no_aligning, unroll&lt;1&gt; and single_pass  </td></tr>
+</table>
+<p>An algorithm reads this first, so the rest of its loop sees one canonical set. </p><dl class="section see"><dt>See also</dt><dd>algo_rationale </dd></dl>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gace8bf101c25120711e9c36550ae00536" name="gace8bf101c25120711e9c36550ae00536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gace8bf101c25120711e9c36550ae00536">&#9670;&#160;</a></span>default_to</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::default_to</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">                                 =</div>
+<div class="line">   []&lt;<span class="keyword">typename</span> User, <span class="keyword">typename</span> Default&gt;(<a class="code hl_struct" href="structeve_1_1algo_1_1traits.html">traits&lt;User&gt;</a> <span class="keyword">const</span>&amp; user, <a class="code hl_struct" href="structeve_1_1algo_1_1traits.html">traits&lt;Default&gt;</a> <span class="keyword">const</span>&amp; defaults)</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordflow">if</span> <span class="keyword">constexpr</span> ( User::contains(consider_types_key) &amp;&amp;</div>
+<div class="line">                 Default::contains(consider_types_key) )</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> consider_all_types = kumi::result::cat_t &lt; rbr::result::fetch_t&lt;consider_types_key, User   &gt;</div>
+<div class="line">                                                  , rbr::result::fetch_t&lt;consider_types_key, Default&gt;</div>
+<div class="line">                                                  &gt;{};</div>
+<div class="line">    <span class="keyword">auto</span> settings = rbr::merge(rbr::merge(rbr::settings(consider_types_key = consider_all_types),</div>
+<div class="line">                                          user),</div>
+<div class="line">                               defaults);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_struct" href="structeve_1_1algo_1_1traits.html">traits</a>&lt;<span class="keyword">decltype</span>(settings)&gt;{settings};</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordflow">else</span></div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">using </span>settings_t = <span class="keyword">decltype</span>(rbr::merge(user, defaults));</div>
+<div class="line">    <span class="keywordflow">return</span> traits&lt;settings_t&gt;{rbr::merge(user, defaults)};</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1algo_1_1traits_html"><div class="ttname"><a href="structeve_1_1algo_1_1traits.html">eve::algo::traits</a></div><div class="ttdoc">Compile time set of tuning parameters an algorithm accepts.</div><div class="ttdef"><b>Definition</b> traits.hpp:111</div></div>
+</div><!-- fragment -->
+<p>Trait set where a caller's choices override an algorithm's defaults. </p>
+<p>Both sets keep their <a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a> entries, which add up rather than replace one another. Every other key comes from the caller when present. </p>
+
+</div>
+</div>
+<a id="ga76d0a5b1ecac2e0c02fa429dd94aa632" name="ga76d0a5b1ecac2e0c02fa429dd94aa632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76d0a5b1ecac2e0c02fa429dd94aa632">&#9670;&#160;</a></span>function_with_traits</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;template&lt; typename &gt; typename F&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::algo::function_with_traits = F&lt;eve_implementation_defined&gt;{}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable accepting a trait set, built from an algorithm's implementation. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">F</td><td>Implementation template, taking the type that carries the traits.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TraitsSupport&gt;</div>
+<div class="line"><span class="keyword">struct </span>my_algo_ : TraitsSupport</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;relaxed_range R&gt; <span class="keyword">auto</span> operator()(R&amp;&amp; r) <span class="keyword">const</span>;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> my_algo = <a class="code hl_variable" href="#ga76d0a5b1ecac2e0c02fa429dd94aa632">function_with_traits&lt;my_algo_&gt;</a>[<a class="code hl_variable" href="group__eve__algo__default__simple__algo__traits.html#ga2eb997889def73db09be52b0d1017e6f">default_simple_algo_traits</a>];</div>
+<div class="ttc" id="agroup__eve__algo__default__simple__algo__traits_html_ga2eb997889def73db09be52b0d1017e6f"><div class="ttname"><a href="group__eve__algo__default__simple__algo__traits.html#ga2eb997889def73db09be52b0d1017e6f">eve::algo::default_simple_algo_traits</a></div><div class="ttdeci">constexpr algo::traits default_simple_algo_traits</div><div class="ttdef"><b>Definition</b> traits.hpp:1162</div></div>
+<div class="ttc" id="agroup__eve__algo__traits__dev_html_ga76d0a5b1ecac2e0c02fa429dd94aa632"><div class="ttname"><a href="#ga76d0a5b1ecac2e0c02fa429dd94aa632">eve::algo::function_with_traits</a></div><div class="ttdeci">constexpr auto function_with_traits</div><div class="ttdoc">Callable accepting a trait set, built from an algorithm&#39;s implementation.</div><div class="ttdef"><b>Definition</b> traits.hpp:1250</div></div>
+</div><!-- fragment --><p>Every algorithm under <span class="tt">eve/module/algo/algo</span> is declared this way. </p><dl class="section see"><dt>See also</dt><dd>algo_rationale </dd></dl>
+
+</div>
+</div>
+<a id="ga8e0ca07c173d4c441a3b1f9cdb034027" name="ga8e0ca07c173d4c441a3b1f9cdb034027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e0ca07c173d4c441a3b1f9cdb034027">&#9670;&#160;</a></span>has_type_overrides_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Traits&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::algo::has_type_overrides_v = Traits::contains(force_type_key) || Traits::contains(common_with_types_key)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Whether a zip trait set requests a type conversion. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits</td><td>Trait set to read.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>True when the set carries <a class="el" href="group__eve__algo__force__type.html#gaa0660d17d33bec0cc2b67123f4e641f5">eve::algo::force_type</a> or <a class="el" href="group__eve__algo__common__with__types.html#ga6fe08218254b894a318ab2fd1b4b49b7">eve::algo::common_with_types</a>. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

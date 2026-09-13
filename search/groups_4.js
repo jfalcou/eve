@@ -4,7 +4,9 @@ var searchData=
   ['eve_1',['EVE',['../group__eve__simd.html',1,'']]],
   ['eve_5fcore_5ffma_5finternal_2',['Eve_core_fma_internal',['../group__eve__core__fma__internal.html',1,'']]],
   ['eve_5fmath_5fsigmoid_3',['Eve_math_sigmoid',['../group__eve__math__sigmoid.html',1,'']]],
-  ['exponential_4',['Exponential',['../group__eve__math__exp.html',1,'']]],
-  ['expressions_5',['Conditional Expressions',['../group__eve__conditional.html',1,'']]],
-  ['extensions_20points_6',['Extensions points',['../group__eve__extensions.html',1,'']]]
+  ['expect_5fsmaller_5frange_4',['expect_smaller_range',['../group__eve__algo__expect__smaller__range.html',1,'']]],
+  ['expensive_5fcallable_5',['expensive_callable',['../group__eve__algo__expensive__callable.html',1,'']]],
+  ['exponential_6',['Exponential',['../group__eve__math__exp.html',1,'']]],
+  ['expressions_7',['Conditional Expressions',['../group__eve__conditional.html',1,'']]],
+  ['extensions_20points_8',['Extensions points',['../group__eve__extensions.html',1,'']]]
 ];

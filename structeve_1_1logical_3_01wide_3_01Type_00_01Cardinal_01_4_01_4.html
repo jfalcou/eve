@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,14 +129,10 @@ $(function(){initNavTree('structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_0
   <div class="headertitle"><div class="title">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Wrapper for SIMD registers holding logical types with compile-time size.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/cpu/logical_wide.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic_scalar_value Type, typename Cardinal&gt;<br />
-struct eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/logical.hpp&gt;</span></p>
+struct eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</div><p>Wrapper for SIMD registers holding logical types with compile-time size. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/logical.hpp&gt;</span></p>
 <p>This specialization of eve::logical is an architecture-agnostic representation of a low-level SIMD register mask and provides standardized API to access information, compute values and manipulate such register.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -147,7 +145,7 @@ struct eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</div><p><b>Required he
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:af762237b37ee7ef715219473e509a84d" id="r_af762237b37ee7ef715219473e509a84d"><td class="memItemLeft"><a id="af762237b37ee7ef715219473e509a84d" name="af762237b37ee7ef715219473e509a84d"></a>
-using&#160;</td><td class="memItemRight"><b>translated_element_type</b> = <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt;<a class="el" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;Type&gt;&gt;</td></tr>
+using&#160;</td><td class="memItemRight"><b>translated_element_type</b> = <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt;<a class="el" href="namespaceeve.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;Type&gt;&gt;</td></tr>
 <tr class="memdesc:af762237b37ee7ef715219473e509a84d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current logical's elements type. <br /></td></tr>
 <tr class="memitem:a815b515edafa5a1fd54dfa58284cc2b1" id="r_a815b515edafa5a1fd54dfa58284cc2b1"><td class="memItemLeft"><a id="a815b515edafa5a1fd54dfa58284cc2b1" name="a815b515edafa5a1fd54dfa58284cc2b1"></a>
 using&#160;</td><td class="memItemRight"><b>translated_type</b> = <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt;typename <a class="el" href="structeve_1_1wide.html">wide</a>&lt;Type, Cardinal&gt;::translated_type&gt;</td></tr>
@@ -179,7 +177,7 @@ using&#160;</td><td class="memItemRight"><b>combined_type</b> = <a class="el" hr
 <tr class="memitem:a25b557f84e25bb1b30bb67a686d80e84" id="r_a25b557f84e25bb1b30bb67a686d80e84"><td class="memTemplParams" colspan="2"><a id="a25b557f84e25bb1b30bb67a686d80e84" name="a25b557f84e25bb1b30bb67a686d80e84"></a>
 template&lt;typename T, typename N = expected_cardinal_t&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a25b557f84e25bb1b30bb67a686d80e84 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><b>rebind</b> = <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt;<a class="el" href="structeve_1_1wide.html">wide</a>&lt;T,N&gt;&gt;</td></tr>
-<tr class="memdesc:a25b557f84e25bb1b30bb67a686d80e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a different type <span class="tt">T</span> and cardinal <span class="tt">N</span>. If unspecified, <span class="tt">N</span> is computed as <span class="tt"><a class="el" href="group__eve__arch_gab707570aa2d35678c5cd5c686a994d57.html#gab707570aa2d35678c5cd5c686a994d57" title="Computes the expected cardinal of a given type.">expected_cardinal_t</a>&lt;T&gt;</span>. <br /></td></tr>
+<tr class="memdesc:a25b557f84e25bb1b30bb67a686d80e84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> from a different type <span class="tt">T</span> and cardinal <span class="tt">N</span>. If unspecified, <span class="tt">N</span> is computed as <span class="tt"><a class="el" href="group__eve__arch.html#gab707570aa2d35678c5cd5c686a994d57" title="Computes the expected cardinal of a given type.">expected_cardinal_t</a>&lt;T&gt;</span>. <br /></td></tr>
 <tr class="memitem:a0a505c7c261060febd032a868d28af92" id="r_a0a505c7c261060febd032a868d28af92"><td class="memTemplParams" colspan="2"><a id="a0a505c7c261060febd032a868d28af92" name="a0a505c7c261060febd032a868d28af92"></a>
 template&lt;typename N&gt; </td></tr>
 <tr class="memitem:a0a505c7c261060febd032a868d28af92 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><b>rescale</b> = <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a>&lt;<a class="el" href="structeve_1_1wide.html">wide</a>&lt;Type,N&gt;&gt;</td></tr>
@@ -223,7 +221,7 @@ auto&#160;</td><td class="memItemRight"><b>bitmap</b> () const noexcept</td></tr
 <tr class="memdesc:a19f9305f2be6c493a6e86c236fcf4f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs from ABI-specific storage. <br /></td></tr>
 <tr class="memitem:abed0447593ed96d503e1b0ca6eac54fb" id="r_abed0447593ed96d503e1b0ca6eac54fb"><td class="memTemplParams" colspan="2"><a id="abed0447593ed96d503e1b0ca6eac54fb" name="abed0447593ed96d503e1b0ca6eac54fb"></a>
 template&lt;_::range Range&gt; <br />
-requires (std::same_as&lt;<a class="el" href="group__eve__traits_gaae6fbba5b56b9fab940a05b444c15e6f.html#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;Range&gt;, <a class="el" href="#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="#ac94c47f8d965d821d503a0a41818fde8">storage_type</a>, Range&gt;)</td></tr>
+requires (std::same_as&lt;<a class="el" href="group__eve__traits.html#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;Range&gt;, <a class="el" href="#a949b3a102b27d4c7a290ea89caf45e12">value_type</a>&gt; &amp;&amp; !std::same_as&lt;<a class="el" href="#ac94c47f8d965d821d503a0a41818fde8">storage_type</a>, Range&gt;)</td></tr>
 <tr class="memitem:abed0447593ed96d503e1b0ca6eac54fb template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><b>logical</b> (Range &amp;&amp;r) noexcept</td></tr>
 <tr class="memdesc:abed0447593ed96d503e1b0ca6eac54fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Container">Container</a>. Construction is done piecewise unless the <a href="https://en.cppreference.com/w/cpp/named_req/Inputterator">Input Iterators</a> extracted from <span class="tt">r</span> are [Random Access Iterators](<a href="https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator">https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator</a>. <br /></td></tr>
 <tr class="memitem:ab463edf2bbe092c328f8dc599e49ce8f" id="r_ab463edf2bbe092c328f8dc599e49ce8f"><td class="memTemplParams" colspan="2"><a id="ab463edf2bbe092c328f8dc599e49ce8f" name="ab463edf2bbe092c328f8dc599e49ce8f"></a>
@@ -247,10 +245,10 @@ requires ( std::convertible_to&lt;T0, <a class="el" href="#a949b3a102b27d4c7a290
 <tr class="memitem:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><b>logical</b> (T0 const &amp;v0, T1 const &amp;v1, Ts const &amp;... vs) noexcept</td></tr>
 <tr class="memdesc:a3a83d0ff7cbb1ed2e9fc62dec58f7aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a sequence of scalar values of proper size. <br /></td></tr>
 <tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4" id="r_a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="memTemplParams" colspan="2">template&lt;eve::invocable&lt; <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>, <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </td></tr>
-<tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a84ea3b085a785e085cbb9a9ffba1c4a4.html#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a> (Generator &amp;&amp;g) noexcept</td></tr>
+<tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a> (Generator &amp;&amp;g) noexcept</td></tr>
 <tr class="memdesc:a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <br /></td></tr>
 <tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4" id="r_a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="memTemplParams" colspan="2">template&lt;eve::invocable&lt; <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </td></tr>
-<tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a84ea3b085a785e085cbb9a9ffba1c4a4.html#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a> (Generator &amp;&amp;g) noexcept</td></tr>
+<tr class="memitem:a84ea3b085a785e085cbb9a9ffba1c4a4 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a84ea3b085a785e085cbb9a9ffba1c4a4">logical</a> (Generator &amp;&amp;g) noexcept</td></tr>
 <tr class="memdesc:a84ea3b085a785e085cbb9a9ffba1c4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <br /></td></tr>
 <tr class="memitem:a767f16dc3944e89d8047d55cb73ea20d" id="r_a767f16dc3944e89d8047d55cb73ea20d"><td class="memTemplParams" colspan="2"><a id="a767f16dc3944e89d8047d55cb73ea20d" name="a767f16dc3944e89d8047d55cb73ea20d"></a>
 template&lt;logical_simd_value WL0, logical_simd_value WL1, logical_simd_value... WLs&gt; <br />
@@ -284,10 +282,10 @@ auto&#160;</td><td class="memItemRight"><b>back</b> () const noexcept</td></tr>
 <tr class="memitem:a7de72be98e577d883e5d4e13487bcb20" id="r_a7de72be98e577d883e5d4e13487bcb20"><td class="memItemLeft"><a id="a7de72be98e577d883e5d4e13487bcb20" name="a7de72be98e577d883e5d4e13487bcb20"></a>
 auto&#160;</td><td class="memItemRight"><b>front</b> () const noexcept</td></tr>
 <tr class="memdesc:a7de72be98e577d883e5d4e13487bcb20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the value of the first lane. <br /></td></tr>
-<tr class="memitem:aa9cd862159f14c1959ab479dc243a310" id="r_aa9cd862159f14c1959ab479dc243a310"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_aa9cd862159f14c1959ab479dc243a310.html#aa9cd862159f14c1959ab479dc243a310">slice</a> () const</td></tr>
+<tr class="memitem:aa9cd862159f14c1959ab479dc243a310" id="r_aa9cd862159f14c1959ab479dc243a310"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#aa9cd862159f14c1959ab479dc243a310">slice</a> () const</td></tr>
 <tr class="memdesc:aa9cd862159f14c1959ab479dc243a310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slice a eve::logical into two eve::logical of half cardinal. Does not participate in overload resolution if <span class="tt">Cardinal::value == 1</span>.  <br /></td></tr>
 <tr class="memitem:a71e274784f66b6d8f845129e580ae02a" id="r_a71e274784f66b6d8f845129e580ae02a"><td class="memTemplParams" colspan="2">template&lt;std::size_t Slice&gt; </td></tr>
-<tr class="memitem:a71e274784f66b6d8f845129e580ae02a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4_a71e274784f66b6d8f845129e580ae02a.html#a71e274784f66b6d8f845129e580ae02a">slice</a> (slice_t&lt; Slice &gt; s) const</td></tr>
+<tr class="memitem:a71e274784f66b6d8f845129e580ae02a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a71e274784f66b6d8f845129e580ae02a">slice</a> (slice_t&lt; Slice &gt; s) const</td></tr>
 <tr class="memdesc:a71e274784f66b6d8f845129e580ae02a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the upper or lower half-sized slice of a eve::logical. Does not participate in overload resolution if <span class="tt">Cardinal::value == 1</span>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
@@ -340,21 +338,235 @@ void&#160;</td><td class="memItemRight"><b>swap</b> (<a class="el" href="#ab42e9
 <tr class="memdesc:a7cec0220f0393e97f10e78ea89c112a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of <span class="tt">lhs</span> and <span class="tt">rhs</span> by calling <span class="tt">lhs.swap(rhs)</span>. <br /></td></tr>
 <tr class="memitem:afccc614d090f5ed1046fb73afa650494" id="r_afccc614d090f5ed1046fb73afa650494"><td class="memTemplParams" colspan="2"><a id="afccc614d090f5ed1046fb73afa650494" name="afccc614d090f5ed1046fb73afa650494"></a>
 template&lt;logical_scalar_value S&gt; </td></tr>
-<tr class="memitem:afccc614d090f5ed1046fb73afa650494 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator==</b> (<a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w, S s) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates_ga3d2da74d0f6d2327e8dfd4cc109a96b0.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0">is_equal</a>(w, s))</td></tr>
+<tr class="memitem:afccc614d090f5ed1046fb73afa650494 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator==</b> (<a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w, S s) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates.html#ga3d2da74d0f6d2327e8dfd4cc109a96b0">is_equal</a>(w, s))</td></tr>
 <tr class="memdesc:afccc614d090f5ed1046fb73afa650494"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise equality comparison of a eve::logical and a scalar value. <br /></td></tr>
 <tr class="memitem:af9781f0446ba35ad5bd552cc4a27410e" id="r_af9781f0446ba35ad5bd552cc4a27410e"><td class="memTemplParams" colspan="2"><a id="af9781f0446ba35ad5bd552cc4a27410e" name="af9781f0446ba35ad5bd552cc4a27410e"></a>
 template&lt;logical_scalar_value S&gt; </td></tr>
-<tr class="memitem:af9781f0446ba35ad5bd552cc4a27410e template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator!=</b> (<a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w, S s) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates_ga005f052be0bb62e30b57c344c3b2fb73.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(w, s))</td></tr>
+<tr class="memitem:af9781f0446ba35ad5bd552cc4a27410e template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator!=</b> (<a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w, S s) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(w, s))</td></tr>
 <tr class="memdesc:af9781f0446ba35ad5bd552cc4a27410e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a eve::logical and a scalar value. <br /></td></tr>
 <tr class="memitem:afe4168d85e4249d0e5b0857f86c3674a" id="r_afe4168d85e4249d0e5b0857f86c3674a"><td class="memTemplParams" colspan="2"><a id="afe4168d85e4249d0e5b0857f86c3674a" name="afe4168d85e4249d0e5b0857f86c3674a"></a>
 template&lt;logical_scalar_value S&gt; </td></tr>
-<tr class="memitem:afe4168d85e4249d0e5b0857f86c3674a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator!=</b> (S s, <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates_ga005f052be0bb62e30b57c344c3b2fb73.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(w, s))</td></tr>
+<tr class="memitem:afe4168d85e4249d0e5b0857f86c3674a template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><b>operator!=</b> (S s, <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> w) noexcept -&gt; decltype(<a class="el" href="group__eve__core__predicates.html#ga005f052be0bb62e30b57c344c3b2fb73">is_not_equal</a>(w, s))</td></tr>
 <tr class="memdesc:afe4168d85e4249d0e5b0857f86c3674a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Element-wise inequality comparison of a scalar value and a eve::logical. <br /></td></tr>
 <tr class="memitem:a28c1bda76458566e049f1c9dd20463a6" id="r_a28c1bda76458566e049f1c9dd20463a6"><td class="memTemplParams" colspan="2"><a id="a28c1bda76458566e049f1c9dd20463a6" name="a28c1bda76458566e049f1c9dd20463a6"></a>
 template&lt;typename C, typename Ct&gt; </td></tr>
 <tr class="memitem:a28c1bda76458566e049f1c9dd20463a6 template"><td class="memItemLeft">auto &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (std::basic_ostream&lt; C, Ct &gt; &amp;os, <a class="el" href="#ab42e96c04ba7d545273a8411e2172411">logical</a> const &amp;p)</td></tr>
 <tr class="memdesc:a28c1bda76458566e049f1c9dd20463a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into a output stream. <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a84ea3b085a785e085cbb9a9ffba1c4a4" name="a84ea3b085a785e085cbb9a9ffba1c4a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ea3b085a785e085cbb9a9ffba1c4a4">&#9670;&#160;</a></span>logical() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic_scalar_value Type, typename Cardinal&gt; </div>
+<div class="memtemplate">
+template&lt;eve::invocable&lt; <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a>, <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::logical </td>
+          <td>(</td>
+          <td class="paramtype">Generator &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>g</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
+<p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
+<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1cardinal.html">cardinal</a>);</div>
+<div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition</b> generator.hpp:30</div></div>
+<div class="ttc" id="astructeve_1_1cardinal_html"><div class="ttname"><a href="structeve_1_1cardinal.html">eve::cardinal</a></div><div class="ttdoc">Computes the cardinal of a given type.</div><div class="ttdef"><b>Definition</b> cardinal.hpp:54</div></div>
+</div><!-- fragment --><p> <br  />
+</p>
+<p>and is supposed to return the value computed from the current index and the cardinal to store at said index.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">g</td><td>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> to use as a value generator</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b></p>
+<p><a href="https://godbolt.org/z/aWa385hKb"><b>See it live on Compiler Explorer</b></a></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/logical.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Generates the logical wide [ false false true true ]</span></div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int, fixed&lt;4&gt;&gt;&gt; r = [](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c) { <span class="keywordflow">return</span> i &lt; (c / 2) ? 0 : 1; };</div>
+<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a84ea3b085a785e085cbb9a9ffba1c4a4" name="a84ea3b085a785e085cbb9a9ffba1c4a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84ea3b085a785e085cbb9a9ffba1c4a4">&#9670;&#160;</a></span>logical() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic_scalar_value Type, typename Cardinal&gt; </div>
+<div class="memtemplate">
+template&lt;eve::invocable&lt; <a class="el" href="#ad6cf7dc0caa30cc3860f331f683f6c10">size_type</a> &gt; Generator&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::logical </td>
+          <td>(</td>
+          <td class="paramtype">Generator &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>g</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
+<p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
+<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index);</div>
+</div><!-- fragment --><p> <br  />
+</p>
+<p>and is supposed to return the value computed from the current index to store at said index.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">g</td><td>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> to use as a value generator</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b></p>
+<p><a href="https://godbolt.org/z/aWa385hKb"><b>See it live on Compiler Explorer</b></a></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/logical.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Generates the logical wide [true false true .. ]</span></div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i%2 == 0; };</div>
+<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="aa9cd862159f14c1959ab479dc243a310" name="aa9cd862159f14c1959ab479dc243a310"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9cd862159f14c1959ab479dc243a310">&#9670;&#160;</a></span>slice() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic_scalar_value Type, typename Cardinal&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::slice </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Slice a eve::logical into two eve::logical of half cardinal. Does not participate in overload resolution if <span class="tt">Cardinal::value == 1</span>. </p>
+<p><b>Example:</b></p>
+<p><a href="https://godbolt.org/z/P8W3K7T7q"><b>See it live on Compiler Explorer</b></a></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/logical.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Generates the logical&lt;wide&gt; [true false true .. ]</span></div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i%2 == 0;};</div>
+<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span>[<a class="code hl_variable" href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">lo</a>,<a class="code hl_variable" href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a>] = r.slice();</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__bitops_html_ga61fa2a64540198462d0aed12e93967a1"><div class="ttname"><a href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">eve::lo</a></div><div class="ttdeci">constexpr auto lo</div><div class="ttdoc">Computes the least significant half of each lane.</div><div class="ttdef"><b>Definition</b> lo.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__core__bitops_html_gac36375f33a27d2122d4ca0f3a006f7b2"><div class="ttname"><a href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">eve::hi</a></div><div class="ttdeci">constexpr auto hi</div><div class="ttdoc">elementwise_callable computing the most significant half of each lane.</div><div class="ttdef"><b>Definition</b> hi.hpp:71</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a71e274784f66b6d8f845129e580ae02a" name="a71e274784f66b6d8f845129e580ae02a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e274784f66b6d8f845129e580ae02a">&#9670;&#160;</a></span>slice() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic_scalar_value Type, typename Cardinal&gt; </div>
+<div class="memtemplate">
+template&lt;std::size_t Slice&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Cardinal &gt; &gt;::slice </td>
+          <td>(</td>
+          <td class="paramtype">slice_t&lt; Slice &gt;</td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the upper or lower half-sized slice of a eve::logical. Does not participate in overload resolution if <span class="tt">Cardinal::value == 1</span>. </p>
+<dl class="section see"><dt>See also</dt><dd>eve::upper_ </dd>
+<dd>
+eve::lower_</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">s</td><td>A tag indicating which slice is required</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Example:</b></p>
+<p><a href="https://godbolt.org/z/WjWxP4jqW"><b>See it live on Compiler Explorer</b></a></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/logical.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Generates the logical&lt;wide&gt; [true false true .. ]</span></div>
+<div class="line">  eve::logical&lt;eve::wide&lt;int&gt;&gt; r = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i%2 == 0;};</div>
+<div class="line">  std::cout &lt;&lt; r &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">lo</a> = r.slice(eve::lower_);</div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a> = r.slice(eve::upper_);</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">lo</a> &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

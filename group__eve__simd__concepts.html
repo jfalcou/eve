@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,15 +125,16 @@ $(function(){initNavTree('group__eve__simd__concepts.html','',''); });
   <div class="headertitle"><div class="title">SIMD Concepts </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Provides Concepts for SIMD related components. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:eve_3A_3Awide_5Fcardinal" id="r_eve_3A_3Awide_5Fcardinal"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1wide__cardinal.html">eve::wide_cardinal</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">concept to determine if this is cardinal type of a wide <br /></td></tr>
 <tr class="memitem:eve_3A_3Acombinable" id="r_eve_3A_3Acombinable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1combinable.html">eve::combinable</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that the types passed are all SIMD values that can be passed to <span class="tt"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span>. i.e they share a common value type and their cardinals and numbers are consistent with <span class="tt"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> semantics. <br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that the types passed are all SIMD values that can be passed to <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span>. i.e they share a common value type and their cardinals and numbers are consistent with <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> semantics. <br /></td></tr>
 <tr class="memitem:eve_3A_3Acombinable_5Fto" id="r_eve_3A_3Acombinable_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1combinable__to.html">eve::combinable_to</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that the types passed can be passed to <span class="tt"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> and that the resulting type would be <span class="tt">Tgt</span>. <br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks that the types passed can be passed to <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> and that the resulting type would be <span class="tt">Tgt</span>. <br /></td></tr>
 <tr class="memitem:eve_3A_3Airregular_5Fpredicate" id="r_eve_3A_3Airregular_5Fpredicate"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">std::predicate but doesn't require regularity <br /></td></tr>
 <tr class="memitem:eve_3A_3Ainvocable_5Freturning" id="r_eve_3A_3Ainvocable_5Freturning"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1invocable__returning.html">eve::invocable_returning</a></td></tr>
@@ -159,7 +162,7 @@ Concepts</h2></td></tr>
 <tr class="memitem:eve_3A_3Alogical_5Fsimd_5Fvalue" id="r_eve_3A_3Alogical_5Fsimd_5Fvalue"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type represents a logical SIMD value. The concept <span class="tt">logical_simd_value&lt;T&gt;</span> is satisfied if and only if T is an instance of eve::logical and its contents satisfy eve::plain_simd_value. <br /></td></tr>
 <tr class="memitem:eve_3A_3Asubstitute_5Ffor" id="r_eve_3A_3Asubstitute_5Ffor"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1substitute__for.html">eve::substitute_for</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type can be used as a substitute for another type after calling <span class="tt"><a class="el" href="group__eve__core__conversions_gae0215a0e7a791f53d8026ed30cd5c818.html#gae0215a0e7a791f53d8026ed30cd5c818" title="converts eve constant or just a value to a type.">eve::as_value</a></span> on a value of the first type. <br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specify that a type can be used as a substitute for another type after calling <span class="tt"><a class="el" href="group__eve__core__conversions.html#gae0215a0e7a791f53d8026ed30cd5c818" title="converts eve constant or just a value to a type.">eve::as_value</a></span> on a value of the first type. <br /></td></tr>
 <tr class="memitem:eve_3A_3Avalue" id="r_eve_3A_3Avalue"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1value.html">eve::value</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The concept <span class="tt">value&lt;T&gt;</span> is satisfied if and only if T satisfies either <span class="tt"><a class="el" href="concepteve_1_1scalar__value.html" title="Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...">eve::scalar_value</a></span> or <span class="tt"><a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a></span>. <br /></td></tr>
 <tr class="memitem:eve_3A_3Aintegral_5Fvalue" id="r_eve_3A_3Aintegral_5Fvalue"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1integral__value.html">eve::integral_value</a></td></tr>

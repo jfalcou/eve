@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -142,7 +144,7 @@ sve, powerpc: ....
 <div class="line">  <span class="comment">// eve only supports std::int8_t and std::uint8_t, not char.</span></div>
 <div class="line">  std::span s_bytes{<span class="keyword">reinterpret_cast&lt;</span>std::uint8_t*<span class="keyword">&gt;</span>(s.data()), s.size()};</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> end = <a class="code hl_variable" href="group__eve__algos_gadd433852d81668a52c92e3778111e5ac.html#gadd433852d81668a52c92e3778111e5ac">eve::algo::remove_if</a>[<a class="code hl_variable" href="group__eve__algo__traits_ga129b5b6d565ac288ce78eec6ecbb5e0b.html#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal&lt;16&gt;</a>](</div>
+<div class="line">  <span class="keyword">auto</span> end = <a class="code hl_variable" href="group__eve__algos.html#gadd433852d81668a52c92e3778111e5ac">eve::algo::remove_if</a>[<a class="code hl_variable" href="group__eve__algo__force__cardinal.html#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal&lt;16&gt;</a>](</div>
 <div class="line">    s_bytes,[](u8x16 v) -&gt; eve::logical&lt;u8x16&gt; {</div>
 <div class="line">    <span class="comment">// A simd is_space we took from @aqrit</span></div>
 <div class="line">    __m128i lut = _mm_setr_epi8(<span class="charliteral">&#39; &#39;</span>,    0,    0,  0,</div>
@@ -183,7 +185,7 @@ What about non-native sizes?</h1>
 <div class="line">  TTS_EQUAL(ints.slice(eve::lower_),  lo_expected);</div>
 <div class="line">  TTS_EQUAL(ints.slice(eve::upper_), hi_expected);</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> [<a class="code hl_variable" href="group__eve__core__bitops_ga61fa2a64540198462d0aed12e93967a1.html#ga61fa2a64540198462d0aed12e93967a1">lo</a>, <a class="code hl_variable" href="group__eve__core__bitops_gac36375f33a27d2122d4ca0f3a006f7b2.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a>] = ints.slice();</div>
+<div class="line">  <span class="keyword">auto</span> [<a class="code hl_variable" href="group__eve__core__bitops.html#ga61fa2a64540198462d0aed12e93967a1">lo</a>, <a class="code hl_variable" href="group__eve__core__bitops.html#gac36375f33a27d2122d4ca0f3a006f7b2">hi</a>] = ints.slice();</div>
 <div class="line"> </div>
 <div class="line">  TTS_EQUAL(lo, lo_expected);</div>
 <div class="line">  TTS_EQUAL(hi, hi_expected);</div>

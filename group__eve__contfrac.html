@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -128,11 +130,180 @@ $(function(){initNavTree('group__eve__contfrac.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga00839b4ed589aba86fcb42545c88eaeb" id="r_ga00839b4ed589aba86fcb42545c88eaeb"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__contfrac_ga00839b4ed589aba86fcb42545c88eaeb.html#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_a_t&gt;</td></tr>
+<tr class="memitem:ga00839b4ed589aba86fcb42545c88eaeb" id="r_ga00839b4ed589aba86fcb42545c88eaeb"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_a_t&gt;</td></tr>
 <tr class="memdesc:ga00839b4ed589aba86fcb42545c88eaeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement the Lentz scheme to evaluate a continued fraction with no leading term: \(\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}}\).  <br /></td></tr>
-<tr class="memitem:gac8fda10393aa09246d2bfe8b309cb909" id="r_gac8fda10393aa09246d2bfe8b309cb909"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__contfrac_gac8fda10393aa09246d2bfe8b309cb909.html#gac8fda10393aa09246d2bfe8b309cb909">eve::lentz_b</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_b_t&gt;</td></tr>
+<tr class="memitem:gac8fda10393aa09246d2bfe8b309cb909" id="r_gac8fda10393aa09246d2bfe8b309cb909"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gac8fda10393aa09246d2bfe8b309cb909">eve::lentz_b</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_b_t&gt;</td></tr>
 <tr class="memdesc:gac8fda10393aa09246d2bfe8b309cb909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement the Lentz scheme to evaluate a continued fraction with leading term \(b_0\): \(\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}\).  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga00839b4ed589aba86fcb42545c88eaeb" name="ga00839b4ed589aba86fcb42545c88eaeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga00839b4ed589aba86fcb42545c88eaeb">&#9670;&#160;</a></span>lentz_a</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::lentz_a = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_a_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implement the Lentz scheme to evaluate a continued fraction with no leading term: \(\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}}\). </p>
+<p><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Gen, eve::scalar_value T&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="#ga00839b4ed589aba86fcb42545c88eaeb">lentz_a</a>(Gen g, <span class="keyword">const</span> T&amp; tol, <span class="keywordtype">size_t</span> &amp; max_terms) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__contfrac_html_ga00839b4ed589aba86fcb42545c88eaeb"><div class="ttname"><a href="#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a></div><div class="ttdeci">constexpr auto lentz_a</div><div class="ttdoc">Implement the Lentz scheme to evaluate a continued fraction with no leading term: .</div><div class="ttdef"><b>Definition</b> lentz_a.hpp:80</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">g</span> : generator function.</li>
+<li><span class="tt">tol</span> : tolerance value. If negative the effective tolerance will be <a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">abs(tol)</a>*eve::eps(as(&lt; u_t&gt;) where u_t is the underlying floating type associated to the return type of the invocable g.</li>
+<li><span class="tt">max_terms</span> : no more than max_terms calls to the generator will be made,</li>
+</ul>
+<p>The generator type should be an invocable which supports the following operations:</p><ul>
+<li>The call to g() returns a floating value or a pair (<a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>) of such. Each time this operator is called then the next pair of a and b values has to be returned, or, if result_type is not a pair type, then the next b value has to be returned and all the a values are assumed to be equal to one.</li>
+<li>In all the continued fraction evaluation functions the effective tol parameter is the relative precision desired in the result, The evaluation of the fraction will continue until the last term evaluated leaves the relative error in the result less than tolerance or the max_terms iteration is reached.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The value of the continued fraction is returned. \(\displaystyle \frac{a_0}{b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots\vphantom{\frac{1}{1}} }}}\)</p>
+<p>Note that the first a and b values (a0 and b0) generated are both used here.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><span class="keyword">struct </span>const_fraction</div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">typedef</span> T result_type;</div>
+<div class="line"> </div>
+<div class="line">   result_type operator()()</div>
+<div class="line">   {</div>
+<div class="line">     <span class="keywordflow">return</span> T{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
+<div class="line">   }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> z{1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0};</div>
+<div class="line">  <span class="keyword">auto</span> ref = (-z+<a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(<a class="code hl_variable" href="group__eve__core__arithmetic.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a>(z)+4))/2;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref constant fracs are: &quot;</span> &lt;&lt; ref &lt;&lt; std::endl;</div>
+<div class="line">  const_fraction&lt;<span class="keyword">decltype</span>(z)&gt; func;</div>
+<div class="line">  <span class="keyword">auto</span> gr = <a class="code hl_variable" href="#ga00839b4ed589aba86fcb42545c88eaeb">eve::lentz_a</a>(func,<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 100);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs are: &quot;</span> &lt;&lt; gr &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga044101b90ab7a146067d8cb1f76889eb"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a></div><div class="ttdeci">constexpr auto sqr</div><div class="ttdoc">Computes the square of the parameter.</div><div class="ttdef"><b>Definition</b> sqr.hpp:98</div></div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga641aa98b8a2c05bf5bfb4907d15faf37"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the elementwise square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:86</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gac8fda10393aa09246d2bfe8b309cb909" name="gac8fda10393aa09246d2bfe8b309cb909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac8fda10393aa09246d2bfe8b309cb909">&#9670;&#160;</a></span>lentz_b</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::lentz_b = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;lentz_b_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implement the Lentz scheme to evaluate a continued fraction with leading term \(b_0\): \(\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\cdots}}\). </p>
+<p><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt; <span class="keyword">typename</span> Gen, eve::<span class="keywordtype">float</span>ing_value T&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="#gac8fda10393aa09246d2bfe8b309cb909">lentz_b</a>(Gen g, <span class="keyword">const</span> T&amp; tol, <span class="keywordtype">size_t</span> &amp; max_terms) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__contfrac_html_gac8fda10393aa09246d2bfe8b309cb909"><div class="ttname"><a href="#gac8fda10393aa09246d2bfe8b309cb909">eve::lentz_b</a></div><div class="ttdeci">constexpr auto lentz_b</div><div class="ttdoc">Implement the Lentz scheme to evaluate a continued fraction with leading term : .</div><div class="ttdef"><b>Definition</b> lentz_b.hpp:93</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">g</span> : generator function.</li>
+<li><span class="tt">tol</span> : tolerance value. If negative the effective tolerance will be <a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">abs(tol)</a>*eve::eps(as(&lt; u_t&gt;) where u_t is the underlying floating type associated to the return type of the invocable g.</li>
+<li><span class="tt">max_terms</span> : no more than max_terms calls to the generator will be made.</li>
+</ul>
+<p>The generator type should be an invocable which supports the following operations:</p><ul>
+<li>The call to g() returns a floating value or a pair (<a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>) of such. Each time this operator is called then the next pair of a and b values has to be returned, or, if result_type is not a pair type, then the next b value has to be returned and all the a values are assumed to be equal to one.</li>
+<li>In all the continued fraction evaluation functions the effective tol parameter is the relative precision desired in the result, The evaluation of the fraction will continue until the last term evaluated leaves the relative error in the result less than tolerance or the max_terms iteration is reached.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The value of the continued fraction is returned. \(\displaystyle b_0+\frac{a_1}{b_1+\frac{a_2}{b_2+\frac{a_3}{b_3+\cdots\vphantom{\frac{1}{1}} }}}\)</p>
+<p>Note that the first a value (a0) generated is not used here.</p>
+<dl class="section note"><dt>Note</dt><dd>the implementation is largely inspired by the boost/math/fraction one, with less requirements on the invocable. Peculiarly lambda functions can be used.</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><span class="keyword">struct </span>const_fraction</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> operator()(){ <span class="keywordflow">return</span> T{1.0, 2.0, 3.0, 4.0}; }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">struct </span>tan_fraction</div>
+<div class="line">{</div>
+<div class="line">  T a, b;</div>
+<div class="line">  tan_fraction(T v) : a(-v * v), b(-1) {}</div>
+<div class="line">  <span class="keyword">auto</span> operator()()</div>
+<div class="line">  {</div>
+<div class="line">    b += T(2);</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple_a612d97f050a7b0eb9999f40c045779bf.html#a612d97f050a7b0eb9999f40c045779bf">kumi::tuple</a>{a, b};</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line">T mytan(T a)</div>
+<div class="line">{</div>
+<div class="line">  tan_fraction&lt;T&gt; fract(a);</div>
+<div class="line">  <span class="keywordflow">return</span> a/<a class="code hl_variable" href="#gac8fda10393aa09246d2bfe8b309cb909">eve::lentz_b</a>(fract, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>&lt;eve::underlying_type_t&lt;T&gt;&gt;()), 100);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  const_fraction&lt;w_t&gt; func;</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> zz{1.0, 2.0, 3.0, 4.0};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref constant fracs &quot;</span> &lt;&lt; (zz+<a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(<a class="code hl_variable" href="group__eve__core__arithmetic.html#ga044101b90ab7a146067d8cb1f76889eb">eve::sqr</a>(zz)+4))/2 &lt;&lt; std::endl;</div>
+<div class="line">  <span class="keyword">auto</span> gr = <a class="code hl_variable" href="#gac8fda10393aa09246d2bfe8b309cb909">eve::lentz_b</a>(func,<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 100);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;    constant fracs &quot;</span> &lt;&lt; gr &lt;&lt; std::endl;</div>
+<div class="line">  w_t z{<a class="code hl_variable" href="group__eve__math__constants.html#ga2a706e8a2c1d95d557f32f1aa54d1ada">eve::pio_4</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), <a class="code hl_variable" href="group__eve__math__constants.html#gac30b29df2f7d7903ac7e0097a51b22e4">eve::pio_3</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), 0.0, 1.0};</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;frac tan(&quot;</span> &lt;&lt; z &lt;&lt; <span class="stringliteral">&quot;) is: &quot;</span> &lt;&lt; mytan(z) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;ref  tan(&quot;</span> &lt;&lt; z &lt;&lt; <span class="stringliteral">&quot;) is: &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__math__trig.html#ga4e45e50d570ac3a6e925f7fd39f40c42">eve::tan</a>(z) &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__math__constants_html_ga2a706e8a2c1d95d557f32f1aa54d1ada"><div class="ttname"><a href="group__eve__math__constants.html#ga2a706e8a2c1d95d557f32f1aa54d1ada">eve::pio_4</a></div><div class="ttdeci">constexpr auto pio_4</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition</b> pio_4.hpp:76</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_gac30b29df2f7d7903ac7e0097a51b22e4"><div class="ttname"><a href="group__eve__math__constants.html#gac30b29df2f7d7903ac7e0097a51b22e4">eve::pio_3</a></div><div class="ttdeci">constexpr auto pio_3</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition</b> pio_3.hpp:76</div></div>
+<div class="ttc" id="agroup__eve__math__trig_html_ga4e45e50d570ac3a6e925f7fd39f40c42"><div class="ttname"><a href="group__eve__math__trig.html#ga4e45e50d570ac3a6e925f7fd39f40c42">eve::tan</a></div><div class="ttdeci">constexpr auto tan</div><div class="ttdoc">elementwise_callable object computing the tangent.</div><div class="ttdef"><b>Definition</b> tan.hpp:93</div></div>
+<div class="ttc" id="astructkumi_1_1tuple_a612d97f050a7b0eb9999f40c045779bf_html_a612d97f050a7b0eb9999f40c045779bf"><div class="ttname"><a href="https://jfalcou.github.io/kumi/structkumi_1_1tuple_a612d97f050a7b0eb9999f40c045779bf.html#a612d97f050a7b0eb9999f40c045779bf">kumi::tuple</a></div><div class="ttdeci">tuple(Ts &amp;&amp;...) -&gt; tuple&lt; std::unwrap_ref_decay_t&lt; Ts &gt;... &gt;</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

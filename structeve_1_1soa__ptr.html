@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1soa__ptr.html','','structeve_1_1soa__ptr-
   <div class="headertitle"><div class="title">eve::soa_ptr&lt; Ptrs &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__memory.html">Memory Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code one should use <span class="tt"><a class="el" href="structeve_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">views::zip_iterator</a></span> instead, it can do everything <span class="tt"><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></span> can and more. We are still trying to figure out how/where these abstractions should live.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/memory/soa_ptr.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename ... Ptrs&gt;<br />
-struct eve::soa_ptr&lt; Ptrs &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/memory/soa_ptr.hpp&gt;</span> </p>
+struct eve::soa_ptr&lt; Ptrs &gt;</div><p>a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code one should use <span class="tt"><a class="el" href="structeve_1_1views_1_1zip__iterator.html" title="A relaxed_iterator on top of multiple relaxed_iterator. If all of the components are iterator they ha...">views::zip_iterator</a></span> instead, it can do everything <span class="tt"><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></span> can and more. We are still trying to figure out how/where these abstractions should live. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/memory/soa_ptr.hpp&gt;</span> </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

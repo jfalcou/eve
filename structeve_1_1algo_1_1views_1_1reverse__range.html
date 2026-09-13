@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1algo_1_1views_1_1reverse__range.html','',
   <div class="headertitle"><div class="title">eve::algo::views::reverse_range&lt; R &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__views.html">Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>An adapter over a <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> that allows to iterate in the reverse order. Should be created by a call to <span class="tt"><a class="el" href="group__eve__views_ga99cbdbcd28d1967761946207eaaffa25.html#ga99cbdbcd28d1967761946207eaaffa25" title="Takes an iterator or a range and returns an adapter for reverse iteration.">eve::algo::views::reverse</a></span>. NOTE: at this point <a class="el" href="group__eve__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">convert(reverse)</a> will not do anything smart.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/views/reverse.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;non_owning_range R&gt;<br />
-struct eve::algo::views::reverse_range&lt; R &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/reverse.hpp&gt;</span></p>
+struct eve::algo::views::reverse_range&lt; R &gt;</div><p>An adapter over a <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> that allows to iterate in the reverse order. Should be created by a call to <span class="tt"><a class="el" href="group__eve__views.html#ga99cbdbcd28d1967761946207eaaffa25" title="Takes an iterator or a range and returns an adapter for reverse iteration.">eve::algo::views::reverse</a></span>. NOTE: at this point <a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">convert(reverse)</a> will not do anything smart. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/reverse.hpp&gt;</span></p>
 <p>Has a shorthand <span class="tt"><a class="el" href="structeve_1_1views_1_1reverse__range.html" title="An adapter over a relaxed_range that allows to iterate in the reverse order. Should be created by a c...">eve::views::reverse_range</a></span> in <span class="tt">&lt;eve/views/reverse.hpp&gt;</span>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -119,16 +121,17 @@ $(function(){initNavTree('group__eve__core.html','',''); });
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Topics</a> &#124;
+<a href="#groups">Contents</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Core functions <div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__functions.html">Functions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This module provides implementation for various fundamental functions</p>
+<div class="textblock"><p>Core functions. </p>
+<p>This module provides implementation for various fundamental functions</p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-groups" class="groupheader"><a id="groups" name="groups"></a>
-Topics</h2></td></tr>
+Contents</h2></td></tr>
 <tr class="memitem:eve_5Fcore_5Faccuracy" id="r_eve_5Fcore_5Faccuracy"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy.html">Accuracy helpers</a></td></tr>
 <tr class="memitem:eve_5Fcore_5Farithmetic" id="r_eve_5Fcore_5Farithmetic"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__arithmetic.html">Arithmetic operations</a></td></tr>
 <tr class="memitem:eve_5Fcore_5Fbitops" id="r_eve_5Fcore_5Fbitops"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__bitops.html">Bitwise functions</a></td></tr>
@@ -147,13 +150,152 @@ Topics</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga5c2b47962e4523e5ca348a7e3034032b" id="r_ga5c2b47962e4523e5ca348a7e3034032b"><td class="memItemLeft">constexpr callable_deinterleave_groups_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core_ga5c2b47962e4523e5ca348a7e3034032b.html#ga5c2b47962e4523e5ca348a7e3034032b">eve::deinterleave_groups</a> = {}</td></tr>
+<tr class="memitem:ga5c2b47962e4523e5ca348a7e3034032b" id="r_ga5c2b47962e4523e5ca348a7e3034032b"><td class="memItemLeft">constexpr callable_deinterleave_groups_&#160;</td><td class="memItemRight"><a class="el" href="#ga5c2b47962e4523e5ca348a7e3034032b">eve::deinterleave_groups</a> = {}</td></tr>
 <tr class="memdesc:ga5c2b47962e4523e5ca348a7e3034032b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callabe object that deinterleaves values in n wides.  <br /></td></tr>
-<tr class="memitem:ga2b09f7ec6c1c06462052833c3d08cefb" id="r_ga2b09f7ec6c1c06462052833c3d08cefb"><td class="memItemLeft">constexpr callable_rotate_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core_ga2b09f7ec6c1c06462052833c3d08cefb.html#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a> = {}</td></tr>
+<tr class="memitem:ga2b09f7ec6c1c06462052833c3d08cefb" id="r_ga2b09f7ec6c1c06462052833c3d08cefb"><td class="memItemLeft">constexpr callable_rotate_&#160;</td><td class="memItemRight"><a class="el" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a> = {}</td></tr>
 <tr class="memdesc:ga2b09f7ec6c1c06462052833c3d08cefb"><td class="mdescLeft">&#160;</td><td class="mdescRight">rotates two halves of the register by a chosen number of elements.  <br /></td></tr>
-<tr class="memitem:ga721ccc166a96634b64bb08c83ae7e0ed" id="r_ga721ccc166a96634b64bb08c83ae7e0ed"><td class="memItemLeft">constexpr callable_try_each_group_position_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core_ga721ccc166a96634b64bb08c83ae7e0ed.html#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a> = {}</td></tr>
+<tr class="memitem:ga721ccc166a96634b64bb08c83ae7e0ed" id="r_ga721ccc166a96634b64bb08c83ae7e0ed"><td class="memItemLeft">constexpr callable_try_each_group_position_&#160;</td><td class="memItemRight"><a class="el" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a> = {}</td></tr>
 <tr class="memdesc:ga721ccc166a96634b64bb08c83ae7e0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">For a given <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> and a group size returns a tuple of (x::size() / group_size) permuatitions for this register such that each group will be in each position exactly once.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga5c2b47962e4523e5ca348a7e3034032b" name="ga5c2b47962e4523e5ca348a7e3034032b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5c2b47962e4523e5ca348a7e3034032b">&#9670;&#160;</a></span>deinterleave_groups</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_deinterleave_groups_ eve::deinterleave_groups = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callabe object that deinterleaves values in n wides. </p>
+<p>This is a generalization of deinterleave_groups_shuffle for n wides.</p>
+<p>The different name comes from for 2 wides - this returns a tuple of 2 wides and a shuffle returns an aggregate</p>
+<p>First parameter is <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">fixed&lt;N&gt;</a> group_size - how many elements we consider one element After that you pass n simd values. Together those n simd values have interleaved values. We return a tuple of wides, where all values are separated between individual wides.</p>
+<p>NOTE: you can think of this function as AoS to SoA, where all fields have the same size. group is the size of the field in wide elements.</p>
+<p>Examples (one letter is a group - first parameter, group order is preserved): ABAB'ABAB ABAB'ABAB =&gt; [AAAA'AAAA BBBB'BBBB] ABCA BCAB CABC =&gt; [AAAA BBBB CCCC] ABCD'EABC DEAB'CDEA BCDE'ABCD EABC'DEA BCDE'ABCD =&gt; [Ax8 Bx8 Cx8 Dx8 Ex8]</p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/core.hpp&gt;</span> </p>
+
+</div>
+</div>
+<a id="ga2b09f7ec6c1c06462052833c3d08cefb" name="ga2b09f7ec6c1c06462052833c3d08cefb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2b09f7ec6c1c06462052833c3d08cefb">&#9670;&#160;</a></span>rotate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_rotate_ eve::rotate = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>rotates two halves of the register by a chosen number of elements. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --> <h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t M&gt;</div>
+<div class="line">   T <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">rotate</a>(T x, index&lt;N&gt; <span class="keyword">const</span> &amp;) <span class="keyword">noexcept</span>;</div>
+<div class="ttc" id="agroup__eve__core_html_ga2b09f7ec6c1c06462052833c3d08cefb"><div class="ttname"><a href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a></div><div class="ttdeci">constexpr callable_rotate_ rotate</div><div class="ttdoc">rotates two halves of the register by a chosen number of elements.</div><div class="ttdef"><b>Definition</b> rotate.hpp:59</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : simd value to rotate</li>
+<li><span class="tt">M</span> : position of the middle. In std::rotate(f, m, l) -&gt; this is std::distance(f, m);</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Return T which is a permutation of x such that elements x[M: T::size()) come first followed by x[0:M) and the relative order in those halves is preserved.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_it x = {1, 2, 3, 4};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                        = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;0&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;0&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;1&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;1&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;2&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;2&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;3&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;3&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;4&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;4&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga721ccc166a96634b64bb08c83ae7e0ed" name="ga721ccc166a96634b64bb08c83ae7e0ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga721ccc166a96634b64bb08c83ae7e0ed">&#9670;&#160;</a></span>try_each_group_position</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_try_each_group_position_ eve::try_each_group_position = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>For a given <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> and a group size returns a tuple of (x::size() / group_size) permuatitions for this register such that each group will be in each position exactly once. </p>
+<p>This is useful when one needs to try each element against something. Motivational example could be intersection: try each element from one register against another. Groups allow you to treat N elements as one.</p>
+<p>We took the idea for the operation from: "Faster-Than-Native Alternatives for x86 VP2INTERSECT Instructions" by Guillermo Diez-Canas. Link: <a href="https://arxiv.org/abs/2112.06342">https://arxiv.org/abs/2112.06342</a></p>
+<p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">argument</a>.</li>
+<li><span class="tt"><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">fixed</a>&lt;N&gt;</span> : number of elements in group</li>
+</ul>
+<p><b>Return value</b></p>
+<p><a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> of all results</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  wide_it x = {1, 2, 3, 4};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                        = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lane&lt;1&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lane&lt;1&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lane&lt;2&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lane&lt;2&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core_html_ga721ccc166a96634b64bb08c83ae7e0ed"><div class="ttname"><a href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a></div><div class="ttdeci">constexpr callable_try_each_group_position_ try_each_group_position</div><div class="ttdoc">For a given simd_value and a group size returns a tuple of (x::size() / group_size) permuatitions for...</div><div class="ttdef"><b>Definition</b> try_each_group_position.hpp:51</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

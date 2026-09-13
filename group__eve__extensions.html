@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,7 +129,8 @@ $(function(){initNavTree('group__eve__extensions.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Macros, classes and functions designed to extend EVE externally. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:eve_3A_3Acallable_3C_20Func_2C_20OptionsValues_2C_20Options_20_3E" id="r_eve_3A_3Acallable_3C_20Func_2C_20OptionsValues_2C_20Options_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1callable.html">eve::callable&lt; Func, OptionsValues, Options &gt;</a></td></tr>
@@ -147,9 +150,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gafb7ce9baadbb712995f3a9dbef803314" id="r_gafb7ce9baadbb712995f3a9dbef803314"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="group__eve__extensions_gafb7ce9baadbb712995f3a9dbef803314.html#gafb7ce9baadbb712995f3a9dbef803314">EVE_CALLABLE_OBJECT_FROM</a>(NS,  TYPE,  NAME)</td></tr>
+<tr class="memitem:gafb7ce9baadbb712995f3a9dbef803314" id="r_gafb7ce9baadbb712995f3a9dbef803314"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#gafb7ce9baadbb712995f3a9dbef803314">EVE_CALLABLE_OBJECT_FROM</a>(NS,  TYPE,  NAME)</td></tr>
 <tr class="memdesc:gafb7ce9baadbb712995f3a9dbef803314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the generic function interface for any EVE-compatible <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>.  <br /></td></tr>
-<tr class="memitem:ga3d0c2dd0a42392476adec67bcd45d3bd" id="r_ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="group__eve__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(TYPE,  NAME)</td></tr>
+<tr class="memitem:ga3d0c2dd0a42392476adec67bcd45d3bd" id="r_ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(TYPE,  NAME)</td></tr>
 <tr class="memdesc:ga3d0c2dd0a42392476adec67bcd45d3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate the generic function interface for an actual <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>.  <br /></td></tr>
 <tr class="memitem:gaf0beae174fce698157d30319be9355d0" id="r_gaf0beae174fce698157d30319be9355d0"><td class="memItemLeft"><a id="gaf0beae174fce698157d30319be9355d0" name="gaf0beae174fce698157d30319be9355d0"></a>
 #define&#160;</td><td class="memItemRight"><b>EVE_DISPATCH_CALL</b>(...)</td></tr>
@@ -172,15 +175,290 @@ Concepts</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4" id="r_gaf4a87d02fe2157d5848083b4ff725dc4"><td class="memTemplParams" colspan="2">template&lt;typename Func, auto... Opt&gt; </td></tr>
-<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__eve__extensions_gaf4a87d02fe2157d5848083b4ff725dc4.html#gaf4a87d02fe2157d5848083b4ff725dc4">eve::supports_options</a> = requires{ (std::declval&lt;Func&gt;()[Opt], ...); }</td></tr>
+<tr class="memitem:gaf4a87d02fe2157d5848083b4ff725dc4 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#gaf4a87d02fe2157d5848083b4ff725dc4">eve::supports_options</a> = requires{ (std::declval&lt;Func&gt;()[Opt], ...); }</td></tr>
 <tr class="memdesc:gaf4a87d02fe2157d5848083b4ff725dc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a callable function supports given options.  <br /></td></tr>
 <tr class="memitem:ga406269d77123b31f9bc18b38b78c8e25" id="r_ga406269d77123b31f9bc18b38b78c8e25"><td class="memTemplParams" colspan="2"><a id="ga406269d77123b31f9bc18b38b78c8e25" name="ga406269d77123b31f9bc18b38b78c8e25"></a>
 template&lt;template&lt; typename &gt; class Func&gt; </td></tr>
 <tr class="memitem:ga406269d77123b31f9bc18b38b78c8e25 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><b>eve::functor</b> = Func&lt;<a class="el" href="structeve_1_1options.html">eve::options</a>&lt;&gt;&gt;{}</td></tr>
 <tr class="memdesc:ga406269d77123b31f9bc18b38b78c8e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> generator. <br /></td></tr>
-<tr class="memitem:ga28f160dc16e57390e8d479cc62d89af6" id="r_ga28f160dc16e57390e8d479cc62d89af6"><td class="memItemLeft">constexpr _::condition_key_t&#160;</td><td class="memItemRight"><a class="el" href="group__eve__extensions_ga28f160dc16e57390e8d479cc62d89af6.html#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a> = {}</td></tr>
+<tr class="memitem:ga28f160dc16e57390e8d479cc62d89af6" id="r_ga28f160dc16e57390e8d479cc62d89af6"><td class="memItemLeft">constexpr _::condition_key_t&#160;</td><td class="memItemRight"><a class="el" href="#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a> = {}</td></tr>
 <tr class="memdesc:ga28f160dc16e57390e8d479cc62d89af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyword for retrieving conditionals decorator.  <br /></td></tr>
 </table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="ga3d0c2dd0a42392476adec67bcd45d3bd" name="ga3d0c2dd0a42392476adec67bcd45d3bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3d0c2dd0a42392476adec67bcd45d3bd">&#9670;&#160;</a></span>EVE_CALLABLE_OBJECT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EVE_CALLABLE_OBJECT</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>TYPE</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>NAME</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;                                                                                             \</div>
+<div class="line"><span class="keyword">static</span> EVE_FORCEINLINE <span class="keyword">constexpr</span> <span class="keyword">auto</span> deferred_call(<span class="keyword">auto</span> arch, Args&amp;&amp;...args) <span class="keyword">noexcept</span>                                 \</div>
+<div class="line">-&gt; <span class="keyword">decltype</span>(NAME(eve::_::adl_helper, arch, EVE_FWD(args)...))                                                     \</div>
+<div class="line">{                                                                                                                      \</div>
+<div class="line">  <span class="keywordflow">return</span> NAME(eve::_::adl_helper, arch, EVE_FWD(args)...);                                                        \</div>
+<div class="line">}                                                                                                                      \</div>
+<div class="line"><span class="keyword">using </span>callable_tag_type     = TYPE                                                                                     \</div>
+</div><!-- fragment -->
+<p>Generate the generic function interface for an actual <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Use inside a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> definition to generate the required EVE protocol of function's resolution based on type and architecture information using overload from the <span class="tt"><a class="el" href="namespaceeve_1_1__.html">eve::_</a></span> namespace.</p>
+<dl class="section warning"><dt>Warning</dt><dd><a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="EVE_CALLABLE_OBJECT">EVE_CALLABLE_OBJECT</a> is mostly used for EVE <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> definition. If you want to use EVE's overload facility for your own library, use <a class="el" href="#gafb7ce9baadbb712995f3a9dbef803314" title="EVE_CALLABLE_OBJECT_FROM">EVE_CALLABLE_OBJECT_FROM</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TYPE</td><td>Current <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> type </td></tr>
+    <tr><td class="paramname">NAME</td><td>Function identifier for overloads. Calls to <span class="tt">eve::_::NAME</span> are supposed to succeed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<h2 class="groupheader">Usage </h2>
+<p><a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="EVE_CALLABLE_OBJECT">EVE_CALLABLE_OBJECT</a> generates the expected code for defining a EVE <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. EVE <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> are function object which supports decorators and use an external function to specify its implementation.</p>
+<p><a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="EVE_CALLABLE_OBJECT">EVE_CALLABLE_OBJECT</a> relies on its enclosing type to provide at least one declaration of a member function named <span class="tt">call</span> which represent the expected prototype of the function object, including potential constraints, and its associated return type. <a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="EVE_CALLABLE_OBJECT">EVE_CALLABLE_OBJECT</a> also relies on the existence of an appropriate number of function overloads named <span class="tt">NAME</span> defined in the <a class="el" href="namespaceeve_1_1__.html">eve::_</a> namespace. Those function contains the implementation of the <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> overload for each pre-defined function.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/traits/overload.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Options&gt;</div>
+<div class="line">  <span class="keyword">struct </span>func_t : callable&lt;func_t, Options&gt;</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// operator() are defined here to maximize quality of error message. They all use EVE_DISPATCH_CALL at some point.</span></div>
+<div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
+<div class="line">    EVE_FORCEINLINE T       operator()(T v)<span class="keyword">       const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_FORCEINLINE <span class="keywordtype">double</span>  operator()(<span class="keywordtype">double</span> v)<span class="keyword">  const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_FORCEINLINE <span class="keywordtype">void</span>    operator()(<span class="keywordtype">float</span>)     <span class="keyword">const</span> = <span class="keyword">delete</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// This ties the function object to the overload set</span></div>
+<div class="line">    <a class="code hl_define" href="#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(func_t, func_);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Build the callable object from the function object type</span></div>
+<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> func = <a class="code hl_variable" href="#ga406269d77123b31f9bc18b38b78c8e25">functor&lt;func_t&gt;</a>;</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::_</span></div>
+<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve_1_1__.html">eve::_</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">auto</span> func_(<a class="code hl_define" href="#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp;, eve::integral_value <span class="keyword">auto</span> x) {  <span class="keywordflow">return</span> x*x;  }</div>
+<div class="line">  <span class="keyword">auto</span> func_(<a class="code hl_define" href="#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp;, <span class="keywordtype">double</span> x)                   {  <span class="keywordflow">return</span> 1./x; }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; eve::func(8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; eve::func(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;short&gt;</a>{77}) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; eve::func(25.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(double) supported     : &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::func&gt;, <span class="keywordtype">double</span>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(float) supported      : &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::func&gt;, <span class="keywordtype">float</span>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(wide&lt;float&gt;) supported: &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;eve::func&gt;, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__extensions_html_ga3d0c2dd0a42392476adec67bcd45d3bd"><div class="ttname"><a href="#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a></div><div class="ttdeci">#define EVE_CALLABLE_OBJECT(TYPE, NAME)</div><div class="ttdoc">Generate the generic function interface for an actual eve::callable.</div><div class="ttdef"><b>Definition</b> protocol.hpp:157</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_ga406269d77123b31f9bc18b38b78c8e25"><div class="ttname"><a href="#ga406269d77123b31f9bc18b38b78c8e25">eve::functor</a></div><div class="ttdeci">constexpr auto functor</div><div class="ttdoc">EVE&#39;s Callable Object generator.</div><div class="ttdef"><b>Definition</b> supports.hpp:107</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_gaa3458167ed8a49f4d2bcc308470b0d75"><div class="ttname"><a href="#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a></div><div class="ttdeci">#define EVE_REQUIRES(ARCH)</div><div class="ttdoc">Flag a function to support delayed calls on given architecture.</div><div class="ttdef"><b>Definition</b> protocol.hpp:226</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_gaf0beae174fce698157d30319be9355d0"><div class="ttname"><a href="#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a></div><div class="ttdeci">#define EVE_DISPATCH_CALL(...)</div><div class="ttdoc">Generate the proper call to current EVE&#39;s Callable Object implementation.</div><div class="ttdef"><b>Definition</b> protocol.hpp:194</div></div>
+<div class="ttc" id="anamespaceeve_1_1___html"><div class="ttname"><a href="namespaceeve_1_1__.html">eve::_</a></div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gafb7ce9baadbb712995f3a9dbef803314" name="gafb7ce9baadbb712995f3a9dbef803314"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafb7ce9baadbb712995f3a9dbef803314">&#9670;&#160;</a></span>EVE_CALLABLE_OBJECT_FROM</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EVE_CALLABLE_OBJECT_FROM</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>NS</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>TYPE</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>NAME</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Value:</b><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt;                                                                                             \</div>
+<div class="line"><span class="keyword">static</span> EVE_FORCEINLINE <span class="keyword">constexpr</span> <span class="keyword">auto</span> deferred_call(<span class="keyword">auto</span> arch, Args&amp;&amp;...args) <span class="keyword">noexcept</span>                                 \</div>
+<div class="line">-&gt; <span class="keyword">decltype</span>(NAME(NS::adl_helper, arch, EVE_FWD(args)...))                                                              \</div>
+<div class="line">{                                                                                                                      \</div>
+<div class="line">  <span class="keywordflow">return</span> NAME( NS::adl_helper, arch, EVE_FWD(args)...);                                                                \</div>
+<div class="line">}                                                                                                                      \</div>
+<div class="line"><span class="keyword">using </span>callable_tag_type     = TYPE                                                                                     \</div>
+</div><!-- fragment -->
+<p>Generate the generic function interface for any EVE-compatible <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Use inside a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> definition to generate the required EVE protocol of function's resolution based on type and architecture information.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">NS</td><td>Namespace in which specialization of the <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> will be found. This namespace must have been registered via EVE_CALLABLE_NAMESPACE. </td></tr>
+    <tr><td class="paramname">TYPE</td><td>Current <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> type </td></tr>
+    <tr><td class="paramname">NAME</td><td>Function identifier for overloads. Calls to <span class="tt">NS::NAME</span> are supposed to succeed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="Generate the generic function interface for an actual eve::callable.">EVE_CALLABLE_OBJECT</a> </dd>
+<dd>
+<a class="el" href="#gad83e12234bfdd5eb87538358c5b1b6b4" title="Register a namespace as suitable for containing eve::callable overloads.">EVE_CALLABLE_NAMESPACE</a></dd></dl>
+<h2 class="groupheader">Usage </h2>
+<p><a class="el" href="#gafb7ce9baadbb712995f3a9dbef803314" title="EVE_CALLABLE_OBJECT_FROM">EVE_CALLABLE_OBJECT_FROM</a> generates the expected code for defining a EVE <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. EVE <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> are function object which supports decorators and use an external function to specify its implementation.</p>
+<p><a class="el" href="#gafb7ce9baadbb712995f3a9dbef803314" title="EVE_CALLABLE_OBJECT_FROM">EVE_CALLABLE_OBJECT_FROM</a> relies on its enclosing type to provide at least one declaration of a member function named <span class="tt">call</span> which represent the expected prototype of the function object, including potential constraints, and its associated return type. <a class="el" href="#ga3d0c2dd0a42392476adec67bcd45d3bd" title="EVE_CALLABLE_OBJECT">EVE_CALLABLE_OBJECT</a> also relies on the existence of an appropriate number of function overloads named <span class="tt">NAME</span> defined in the <span class="tt">NS</span> namespace. Those function contains the implementation of the <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> overload for each pre-defined function.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;type_traits&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/traits/overload.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Register my_lib::impl as a proper callable namespace</span></div>
+<div class="line"><span class="keyword">namespace </span>my_lib::impl { <a class="code hl_define" href="#gad83e12234bfdd5eb87538358c5b1b6b4">EVE_CALLABLE_NAMESPACE</a>(); }</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// EVE_CALLABLE_OBJECT_FROM helps defining your own EVE-like callable in your own library</span></div>
+<div class="line"><span class="keyword">namespace </span>my_lib</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Options&gt;</div>
+<div class="line">  <span class="keyword">struct </span>func_t : <a class="code hl_struct" href="structeve_1_1callable.html">eve::callable</a>&lt;func_t, Options&gt;</div>
+<div class="line">  {</div>
+<div class="line">    <span class="comment">// operator() are defined here to maximize quality of error message. They all use EVE_DISPATCH_CALL at some point.</span></div>
+<div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
+<div class="line">    EVE_FORCEINLINE T       operator()(T v)<span class="keyword">       const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_FORCEINLINE <span class="keywordtype">double</span>  operator()(<span class="keywordtype">double</span> v)<span class="keyword">  const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_FORCEINLINE <span class="keywordtype">void</span>    operator()(<span class="keywordtype">float</span>)     <span class="keyword">const</span> = <span class="keyword">delete</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// This ties the function object to the overload set</span></div>
+<div class="line">    <a class="code hl_define" href="#gafb7ce9baadbb712995f3a9dbef803314">EVE_CALLABLE_OBJECT_FROM</a>(my_lib::impl, func_t, func_);</div>
+<div class="line">  };</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Build the callable object from the function object type</span></div>
+<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> func = <a class="code hl_variable" href="#ga406269d77123b31f9bc18b38b78c8e25">eve::functor&lt;func_t&gt;</a>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// As func_t used EVE_CALLABLE_OBJECT_FROM, we can write overloads in this namespace</span></div>
+<div class="line">  <span class="keyword">namespace </span>impl</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">auto</span> func_(<a class="code hl_define" href="#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(eve::cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp;, eve::integral_value <span class="keyword">auto</span> x) {  <span class="keywordflow">return</span> x*x;  }</div>
+<div class="line">    <span class="keyword">auto</span> func_(<a class="code hl_define" href="#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(eve::cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp;, <span class="keywordtype">double</span> x)                   {  <span class="keywordflow">return</span> 1./x; }</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; my_lib::func(8) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; my_lib::func(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;short&gt;</a>{77}) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; my_lib::func(25.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(double) supported     : &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;my_lib::func&gt;, <span class="keywordtype">double</span>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(float) supported      : &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;my_lib::func&gt;, <span class="keywordtype">float</span>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Is func(wide&lt;float&gt;) supported: &quot;</span></div>
+<div class="line">            &lt;&lt; std::boolalpha &lt;&lt; std::is_invocable_v&lt;eve::tag_t&lt;my_lib::func&gt;, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>&gt;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__extensions_html_gad83e12234bfdd5eb87538358c5b1b6b4"><div class="ttname"><a href="#gad83e12234bfdd5eb87538358c5b1b6b4">EVE_CALLABLE_NAMESPACE</a></div><div class="ttdeci">#define EVE_CALLABLE_NAMESPACE()</div><div class="ttdoc">Register a namespace as suitable for containing eve::callable overloads.</div><div class="ttdef"><b>Definition</b> protocol.hpp:214</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_gafb7ce9baadbb712995f3a9dbef803314"><div class="ttname"><a href="#gafb7ce9baadbb712995f3a9dbef803314">EVE_CALLABLE_OBJECT_FROM</a></div><div class="ttdeci">#define EVE_CALLABLE_OBJECT_FROM(NS, TYPE, NAME)</div><div class="ttdoc">Generate the generic function interface for any EVE-compatible Callable Object.</div><div class="ttdef"><b>Definition</b> protocol.hpp:109</div></div>
+<div class="ttc" id="astructeve_1_1callable_html"><div class="ttname"><a href="structeve_1_1callable.html">eve::callable</a></div><div class="ttdoc">CRTP base class defining an EVE&#39;s Callable Object.</div><div class="ttdef"><b>Definition</b> callable.hpp:51</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga28f160dc16e57390e8d479cc62d89af6" name="ga28f160dc16e57390e8d479cc62d89af6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga28f160dc16e57390e8d479cc62d89af6">&#9670;&#160;</a></span>condition_key</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">_::condition_key_t eve::condition_key = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Keyword for retrieving conditionals decorator. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>When a eve::decorated_callable is called with an option provided via eve::conditional, the value of the conditional can be retrieved using <a class="el" href="#ga28f160dc16e57390e8d479cc62d89af6" title="Keyword for retrieving conditionals decorator.">eve::condition_key</a> </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacesupports.html" title="Support detection SPY namespace.">eve::supports</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaf4a87d02fe2157d5848083b4ff725dc4" name="gaf4a87d02fe2157d5848083b4ff725dc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf4a87d02fe2157d5848083b4ff725dc4">&#9670;&#160;</a></span>supports_options</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Func, auto... Opt&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::supports_options = requires{ (std::declval&lt;Func&gt;()[Opt], ...); }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a callable function supports given options. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
+</div><!-- fragment --><p>This template variable evaluates to <span class="tt">true</span> if the callable <span class="tt">Func</span> supports all the specified options.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Func</td><td>The callable function to check </td></tr>
+    <tr><td class="paramname">Opt</td><td>The options to check for support </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

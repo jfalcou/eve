@@ -4,8 +4,10 @@ var searchData=
   ['simd_20concepts_1',['SIMD Concepts',['../group__eve__simd__concepts.html',1,'']]],
   ['simd_20related_20types_2',['SIMD related types',['../group__eve__simd__types.html',1,'']]],
   ['simd_20specific_20operations_3',['SIMD Specific Operations',['../group__eve__core__simd.html',1,'']]],
-  ['special_20functions_4',['Special functions',['../group__eve__special.html',1,'']]],
-  ['specific_20operations_5',['SIMD Specific Operations',['../group__eve__core__simd.html',1,'']]],
-  ['specific_20transformations_6',['Specific Transformations',['https://jfalcou.github.io/kumi/group__kumi__record__transforms.html',1,'Record Type Specific Transformations'],['https://jfalcou.github.io/kumi/group__kumi__tuple__transforms.html',1,'Tuple Type Specific Transformations']]],
-  ['structured_20types_20management_7',['Structured Types Management',['../group__eve__struct.html',1,'']]]
+  ['single_5fpass_4',['single_pass',['../group__eve__algo__single__pass.html',1,'']]],
+  ['sparse_5foutput_5',['sparse_output',['../group__eve__algo__sparse__output.html',1,'']]],
+  ['special_20functions_6',['Special functions',['../group__eve__special.html',1,'']]],
+  ['specific_20operations_7',['SIMD Specific Operations',['../group__eve__core__simd.html',1,'']]],
+  ['specific_20transformations_8',['Specific Transformations',['https://jfalcou.github.io/kumi/group__kumi__record__transforms.html',1,'Record Type Specific Transformations'],['https://jfalcou.github.io/kumi/group__kumi__tuple__transforms.html',1,'Tuple Type Specific Transformations']]],
+  ['structured_20types_20management_9',['Structured Types Management',['../group__eve__struct.html',1,'']]]
 ];

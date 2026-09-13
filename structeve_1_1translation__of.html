@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1translation__of.html','','structeve_1_1tr
   <div class="headertitle"><div class="title">eve::translation_of&lt; T &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Notifies EVE that a type is translatable and its translation target.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/translation.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-struct eve::translation_of&lt; T &gt;</div><p>By default, most EVE functions only work on fundamental types. Translation allows the user to specify that a custom type should be treated as one of the fundamental types when used in EVE.</p>
+struct eve::translation_of&lt; T &gt;</div><p>Notifies EVE that a type is translatable and its translation target. </p>
+<p>By default, most EVE functions only work on fundamental types. Translation allows the user to specify that a custom type should be treated as one of the fundamental types when used in EVE.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type to be translated</td></tr>

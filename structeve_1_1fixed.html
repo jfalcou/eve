@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1fixed.html','','structeve_1_1fixed-member
   <div class="headertitle"><div class="title">eve::fixed&lt; Cardinal &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>SIMD register cardinal type.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/cardinals.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;std::ptrdiff_t Cardinal&gt;<br />
-struct eve::fixed&lt; Cardinal &gt;</div><p><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a> wraps an integral power of two constant that represents the number of lanes in a given <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> type.</p>
+struct eve::fixed&lt; Cardinal &gt;</div><p>SIMD register cardinal type. </p>
+<p><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a> wraps an integral power of two constant that represents the number of lanes in a given <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> type.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Cardinal</td><td>Number of lane. If <span class="tt">Cardinal</span> is not a power of two, code is invalid.</td></tr>

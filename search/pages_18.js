@@ -1,7 +1,7 @@
 var searchData=
 [
   ['what_20about_20non_20native_20sizes_0',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]],
-  ['what_20if_20i_20know_20there_20is_20a_20match_1',['What if I know there is a match',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['what_20if_20i_20know_20there_20is_20a_20match_1',['What if I know there is a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
   ['what_20s_20changed_2',['What s Changed',['../changelog.html#autotoc_md33',1,'What&apos;s Changed'],['../changelog.html#autotoc_md42',1,'What&apos;s Changed'],['../changelog.html#autotoc_md45',1,'What&apos;s Changed'],['../changelog.html#autotoc_md48',1,'What&apos;s Changed']]],
   ['wise_20operations_3',['Element-wise Operations',['../glossary_semantic.html#glossary_elementwise',1,'']]],
   ['with_20alternative_4',['Mask with alternative',['../conditional.html#autotoc_md90',1,'']]],

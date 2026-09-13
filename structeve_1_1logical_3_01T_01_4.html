@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,14 +126,10 @@ $(function(){initNavTree('structeve_1_1logical_3_01T_01_4.html','','structeve_1_
   <div class="headertitle"><div class="title">eve::logical&lt; T &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Wrapper for SIMD compatible logical types.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/arch/cpu/logical.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;plain_scalar_value T&gt;<br />
-struct eve::logical&lt; T &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/logical.hpp&gt;</span></p>
+struct eve::logical&lt; T &gt;</div><p>Wrapper for SIMD compatible logical types. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/logical.hpp&gt;</span></p>
 <p>eve::logical is an architecture-agnostic representation of a boolean mask and provides standardized API to access information, compute values and manipulate such mask. Contrary to <span class="tt">bool</span>, an instance of logical has the same sizeof as <span class="tt">T</span>, allowing seamless interaction with an instance eve::logical&lt;eve::wide&lt; T &gt;&gt;.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -143,7 +141,7 @@ struct eve::logical&lt; T &gt;</div><p><b>Required header:</b> <span class="tt">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a10f3da5f5e37929c571303df3fe2933a" id="r_a10f3da5f5e37929c571303df3fe2933a"><td class="memItemLeft"><a id="a10f3da5f5e37929c571303df3fe2933a" name="a10f3da5f5e37929c571303df3fe2933a"></a>
-using&#160;</td><td class="memItemRight"><b>translated_type</b> = <a class="el" href="#a83188ebd25932c504e2e289b63e223b4">logical</a>&lt;<a class="el" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;T&gt;&gt;</td></tr>
+using&#160;</td><td class="memItemRight"><b>translated_type</b> = <a class="el" href="#a83188ebd25932c504e2e289b63e223b4">logical</a>&lt;<a class="el" href="namespaceeve.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;T&gt;&gt;</td></tr>
 <tr class="memdesc:a10f3da5f5e37929c571303df3fe2933a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type resulting from translating the current logical type. <br /></td></tr>
 <tr class="memitem:a4ca253e53d508bd86a04e37251298986" id="r_a4ca253e53d508bd86a04e37251298986"><td class="memItemLeft"><a id="a4ca253e53d508bd86a04e37251298986" name="a4ca253e53d508bd86a04e37251298986"></a>
 using&#160;</td><td class="memItemRight"><b>value_type</b> = T</td></tr>
@@ -152,7 +150,7 @@ using&#160;</td><td class="memItemRight"><b>value_type</b> = T</td></tr>
 using&#160;</td><td class="memItemRight"><b>mask_type</b> = T</td></tr>
 <tr class="memdesc:a7f0eebc0478c6f0faf7c0ec92c634609"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the numerical value of mask. <br /></td></tr>
 <tr class="memitem:a565e06755bae0876326ea16ffb68abc4" id="r_a565e06755bae0876326ea16ffb68abc4"><td class="memItemLeft"><a id="a565e06755bae0876326ea16ffb68abc4" name="a565e06755bae0876326ea16ffb68abc4"></a>
-using&#160;</td><td class="memItemRight"><b>bits_type</b> = as_integer_t&lt;<a class="el" href="namespaceeve_a7f168aef1d16a9b1d923d0a26a20ef7d.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;T&gt;, unsigned&gt;</td></tr>
+using&#160;</td><td class="memItemRight"><b>bits_type</b> = as_integer_t&lt;<a class="el" href="namespaceeve.html#a7f168aef1d16a9b1d923d0a26a20ef7d">translate_t</a>&lt;T&gt;, unsigned&gt;</td></tr>
 <tr class="memdesc:a565e06755bae0876326ea16ffb68abc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the bitwise representation of the mask. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>

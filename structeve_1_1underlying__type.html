@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,14 +123,10 @@ $(function(){initNavTree('structeve_1_1underlying__type.html','',''); });
   <div class="headertitle"><div class="title">eve::underlying_type&lt; Ts &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__traits.html">Type traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Computes the most scalar type associated with a type.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/underlying_type.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Ts&gt;<br />
-struct eve::underlying_type&lt; Ts &gt;</div><p>Retrieves the underlying type of one or more types, i.e the simplest type on which constraints and concept can be applied to.</p>
+struct eve::underlying_type&lt; Ts &gt;</div><p>Computes the most scalar type associated with a type. </p>
+<p>Retrieves the underlying type of one or more types, i.e the simplest type on which constraints and concept can be applied to.</p>
 <p>By definition:</p><ul>
 <li>the underlying type of any <a class="el" href="concepteve_1_1plain__scalar__value.html" title="eve::plain_scalar_value">eve::plain_scalar_value</a> is the type itself</li>
 <li>the underlying type of any <a class="el" href="concepteve_1_1logical__scalar__value.html" title="eve::logical_scalar_value">eve::logical_scalar_value</a> is the type itself,</li>

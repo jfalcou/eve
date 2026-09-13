@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['a_20match_0',['a match',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['a_20match_0',['a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
   ['abi_20traits_1',['ABI traits',['../glossary_semantic.html#autotoc_md66',1,'']]],
   ['about_20non_20native_20sizes_2',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]],
   ['access_3',['Generalized Element Access',['../glossary_semantic.html#autotoc_md68',1,'']]],
@@ -14,7 +14,7 @@ var searchData=
   ['and_20depreciation_11',['Removal and Depreciation',['../changelog.html#autotoc_md34',1,'']]],
   ['and_20processing_12',['Storage and Processing',['../intro-04.html#autotoc_md108',1,'']]],
   ['and_20using_20dynamic_20kernels_13',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md115',1,'']]],
-  ['any_14',['any',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md20',1,'Should you check for any?']]],
+  ['any_14',['any',['../group__eve__core__reduction.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction.html#autotoc_md20',1,'Should you check for any?']]],
   ['api_15',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
   ['architecture_20targets_16',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]],
   ['architectures_20compilers_20support_20fixes_17',['Architectures/Compilers Support &amp;amp; Fixes',['../changelog.html#autotoc_md35',1,'']]],

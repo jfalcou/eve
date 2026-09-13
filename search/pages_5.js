@@ -2,11 +2,11 @@ var searchData=
 [
   ['c_20specific_20terms_0',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
   ['callable_20function_20objects_20as_20main_20api_1',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
-  ['calls_2',['Masked Calls',['../group__eve__core__compress_ga8e545371fd605df1555e4cd0b2f62374.html#autotoc_md17',1,'']]],
+  ['calls_2',['Masked Calls',['../group__eve__core__compress.html#autotoc_md17',1,'']]],
   ['cardinal_3',['Cardinal',['../glossary_semantic.html#autotoc_md64',1,'Cardinal'],['../design_rationale.html#rationale-simd',1,'SIMD registers as Type x Cardinal']]],
   ['change_20log_4',['Change Log',['https://jfalcou.github.io/kumi/kumi_changelog.html',1,'Change Log'],['../changelog.html',1,'Change Log']]],
   ['changed_5',['Changed',['../changelog.html#autotoc_md33',1,'What&apos;s Changed'],['../changelog.html#autotoc_md42',1,'What&apos;s Changed'],['../changelog.html#autotoc_md45',1,'What&apos;s Changed'],['../changelog.html#autotoc_md48',1,'What&apos;s Changed']]],
-  ['check_20for_20any_6',['check for any',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md20',1,'Should you check for any?']]],
+  ['check_20for_20any_6',['check for any',['../group__eve__core__reduction.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction.html#autotoc_md20',1,'Should you check for any?']]],
   ['classification_7',['Operations Classification',['../glossary_semantic.html#autotoc_md67',1,'']]],
   ['cmake_8',['Use with CMake',['../setup.html#autotoc_md85',1,'']]],
   ['cmake_20setup_9',['CMake setup',['../dev_cmake.html#autotoc_md60',1,'']]],

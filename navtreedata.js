@@ -89,29 +89,30 @@ var NAVTREE =
           [ "Named Shuffles", "group__eve__core__named__shuffles.html", null ],
           [ "Reductions", "group__eve__core__reduction.html", null ]
         ] ],
-        [ "Algorithms & Views", "usergroup12.html", [
+        [ "Algorithms & Views", "group__eve__algorithms.html", [
           [ "Algorithms", "group__eve__algos.html", null ],
           [ "Views", "group__eve__views.html", null ],
           [ "Options", "group__eve__algo__traits.html", null ],
           [ "Concepts", "group__eve__algo__concepts.html", null ]
         ] ]
       ] ],
-      [ "Developer API", "usergroup13.html", [
+      [ "Developer API", "usergroup12.html", [
         [ "Type Traits", "group__eve__traits.html", null ],
+        [ "Algorithm Traits", "group__eve__algo__traits__dev.html", null ],
         [ "Architecture Helpers", "group__eve__arch.html", null ],
         [ "Functions and Callables", "group__eve__extensions.html", null ],
         [ "User-Defined Types Supports", "group__eve__struct.html", null ]
       ] ],
       [ "Concepts List", "concepts.html", "concepts" ]
     ] ],
-    [ "About The Library", "usergroup14.html", [
+    [ "About The Library", "usergroup13.html", [
       [ "Glossary", "glossary_semantic.html", null ],
       [ "Changelog", "changelog.html", null ],
-      [ "EVE Development", "usergroup15.html", [
+      [ "EVE Development", "usergroup14.html", [
         [ "Environment", "dev_environment.html", null ],
         [ "CMake Usage", "dev_cmake.html", null ]
       ] ],
-      [ "Rationale", "usergroup16.html", [
+      [ "Rationale", "usergroup15.html", [
         [ "Design Decisions", "design_rationale.html", null ],
         [ "SIMD Algorithms", "algo_rationale.html", null ]
       ] ],

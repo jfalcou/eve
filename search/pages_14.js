@@ -10,7 +10,7 @@ var searchData=
   ['setting_20up_20the_20library_7',['Setting up the Library',['../setup.html#autotoc_md79',1,'']]],
   ['setup_8',['Setup',['https://jfalcou.github.io/kumi/kumi_setup.html',1,'']]],
   ['setup_9',['setup',['../dev_cmake.html#autotoc_md60',1,'CMake setup'],['../dev_environment.html#dev_docker_setup',1,'Docker setup']]],
-  ['should_20you_20check_20for_20any_10',['Should you check for any',['../group__eve__core__reduction_ga146ea89681f9d926afcc7b3bf968f40d.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction_gabc10fff649535870a897cef2a1e1673e.html#autotoc_md20',1,'Should you check for any?']]],
+  ['should_20you_20check_20for_20any_10',['Should you check for any',['../group__eve__core__reduction.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction.html#autotoc_md20',1,'Should you check for any?']]],
   ['simd_20algorithms_11',['SIMD Algorithms',['../algo_rationale.html',1,'SIMD Algorithms'],['../intro-02.html#autotoc_md100',1,'Toward SIMD Algorithms']]],
   ['simd_20aware_20udt_12',['Creating SIMD-aware UDT',['../intro-04.html#autotoc_md107',1,'']]],
   ['simd_20processing_13',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md106',1,'']]],

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -129,47 +131,599 @@ $(function(){initNavTree('group__eve__core__decorators.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaada98a0e92f1b86e9a3dd930ca345b13" id="r_gaada98a0e92f1b86e9a3dd930ca345b13"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gaada98a0e92f1b86e9a3dd930ca345b13.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a> = ::rbr::flag( saturated_mode{} )</td></tr>
+<tr class="memitem:gaada98a0e92f1b86e9a3dd930ca345b13" id="r_gaada98a0e92f1b86e9a3dd930ca345b13"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a> = ::rbr::flag( saturated_mode{} )</td></tr>
 <tr class="memdesc:gaada98a0e92f1b86e9a3dd930ca345b13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keeps the result inside the range of its type instead of wrapping or overflowing.  <br /></td></tr>
-<tr class="memitem:gaf3483e5e000367c812b507ed46399367" id="r_gaf3483e5e000367c812b507ed46399367"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gaf3483e5e000367c812b507ed46399367.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a> = ::rbr::flag( pedantic_mode{} )</td></tr>
+<tr class="memitem:gaf3483e5e000367c812b507ed46399367" id="r_gaf3483e5e000367c812b507ed46399367"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a> = ::rbr::flag( pedantic_mode{} )</td></tr>
 <tr class="memdesc:gaf3483e5e000367c812b507ed46399367"><td class="mdescLeft">&#160;</td><td class="mdescRight">Follows the corner cases of the corresponding standard function.  <br /></td></tr>
-<tr class="memitem:ga493e4e10b2fd953a22f9e08305820ab3" id="r_ga493e4e10b2fd953a22f9e08305820ab3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga493e4e10b2fd953a22f9e08305820ab3.html#ga493e4e10b2fd953a22f9e08305820ab3">eve::numeric</a> = ::rbr::flag( numeric_mode{} )</td></tr>
+<tr class="memitem:ga493e4e10b2fd953a22f9e08305820ab3" id="r_ga493e4e10b2fd953a22f9e08305820ab3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga493e4e10b2fd953a22f9e08305820ab3">eve::numeric</a> = ::rbr::flag( numeric_mode{} )</td></tr>
 <tr class="memdesc:ga493e4e10b2fd953a22f9e08305820ab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes NaN lose against any definite value.  <br /></td></tr>
-<tr class="memitem:ga6c0cc9c878d3708a08358dba52c287f5" id="r_ga6c0cc9c878d3708a08358dba52c287f5"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga6c0cc9c878d3708a08358dba52c287f5.html#ga6c0cc9c878d3708a08358dba52c287f5">eve::almost</a> = {}</td></tr>
+<tr class="memitem:ga6c0cc9c878d3708a08358dba52c287f5" id="r_ga6c0cc9c878d3708a08358dba52c287f5"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6c0cc9c878d3708a08358dba52c287f5">eve::almost</a> = {}</td></tr>
 <tr class="memdesc:ga6c0cc9c878d3708a08358dba52c287f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns an equality or an ordering into its tolerant form.  <br /></td></tr>
-<tr class="memitem:ga97e01b7ed09173dbb06a6dcab0033177" id="r_ga97e01b7ed09173dbb06a6dcab0033177"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga97e01b7ed09173dbb06a6dcab0033177.html#ga97e01b7ed09173dbb06a6dcab0033177">eve::definitely</a> = {}</td></tr>
+<tr class="memitem:ga97e01b7ed09173dbb06a6dcab0033177" id="r_ga97e01b7ed09173dbb06a6dcab0033177"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga97e01b7ed09173dbb06a6dcab0033177">eve::definitely</a> = {}</td></tr>
 <tr class="memdesc:ga97e01b7ed09173dbb06a6dcab0033177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Requires a strict comparison to hold by a margin.  <br /></td></tr>
-<tr class="memitem:gab99e44220c7f6c31754e4fbadec3403a" id="r_gab99e44220c7f6c31754e4fbadec3403a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gab99e44220c7f6c31754e4fbadec3403a.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a> = ::rbr::flag( raw_mode{} )</td></tr>
+<tr class="memitem:gab99e44220c7f6c31754e4fbadec3403a" id="r_gab99e44220c7f6c31754e4fbadec3403a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a> = ::rbr::flag( raw_mode{} )</td></tr>
 <tr class="memdesc:gab99e44220c7f6c31754e4fbadec3403a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the operation minimally, trading accuracy for speed.  <br /></td></tr>
-<tr class="memitem:gaeb191712fb50db5f1cf67338b6702fda" id="r_gaeb191712fb50db5f1cf67338b6702fda"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gaeb191712fb50db5f1cf67338b6702fda.html#gaeb191712fb50db5f1cf67338b6702fda">eve::fast</a> = ::rbr::flag( fast_mode{} )</td></tr>
-<tr class="memdesc:gaeb191712fb50db5f1cf67338b6702fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the operation faster than the regular call while keeping more accuracy than <span class="tt"><a class="el" href="group__eve__core__decorators_gab99e44220c7f6c31754e4fbadec3403a.html#gab99e44220c7f6c31754e4fbadec3403a" title="Performs the operation minimally, trading accuracy for speed.">raw</a></span>.  <br /></td></tr>
-<tr class="memitem:ga4ff6300fe3143db3b73ebc48bbc6bc6c" id="r_ga4ff6300fe3143db3b73ebc48bbc6bc6c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga4ff6300fe3143db3b73ebc48bbc6bc6c.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a> = ::rbr::flag( lower_mode{} )</td></tr>
+<tr class="memitem:gaeb191712fb50db5f1cf67338b6702fda" id="r_gaeb191712fb50db5f1cf67338b6702fda"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaeb191712fb50db5f1cf67338b6702fda">eve::fast</a> = ::rbr::flag( fast_mode{} )</td></tr>
+<tr class="memdesc:gaeb191712fb50db5f1cf67338b6702fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the operation faster than the regular call while keeping more accuracy than <span class="tt"><a class="el" href="#gab99e44220c7f6c31754e4fbadec3403a" title="Performs the operation minimally, trading accuracy for speed.">raw</a></span>.  <br /></td></tr>
+<tr class="memitem:ga4ff6300fe3143db3b73ebc48bbc6bc6c" id="r_ga4ff6300fe3143db3b73ebc48bbc6bc6c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a> = ::rbr::flag( lower_mode{} )</td></tr>
 <tr class="memdesc:ga4ff6300fe3143db3b73ebc48bbc6bc6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarantees a result no greater than the exact mathematical one.  <br /></td></tr>
-<tr class="memitem:ga8a4dcc5af0e5fab8cb537e8cbd4601f3" id="r_ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga8a4dcc5af0e5fab8cb537e8cbd4601f3.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a> = ::rbr::flag( upper_mode{} )</td></tr>
+<tr class="memitem:ga8a4dcc5af0e5fab8cb537e8cbd4601f3" id="r_ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a> = ::rbr::flag( upper_mode{} )</td></tr>
 <tr class="memdesc:ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Guarantees a result no smaller than the exact mathematical one.  <br /></td></tr>
-<tr class="memitem:ga148a16123e30a9eef8a38b0ac5d140e8" id="r_ga148a16123e30a9eef8a38b0ac5d140e8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga148a16123e30a9eef8a38b0ac5d140e8.html#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a> = ::rbr::flag( strict_mode{} )</td></tr>
-<tr class="memdesc:ga148a16123e30a9eef8a38b0ac5d140e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the guarantee of <span class="tt"><a class="el" href="group__eve__core__decorators_ga4ff6300fe3143db3b73ebc48bbc6bc6c.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="Guarantees a result no greater than the exact mathematical one.">lower</a></span> or <span class="tt"><a class="el" href="group__eve__core__decorators_ga8a4dcc5af0e5fab8cb537e8cbd4601f3.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="Guarantees a result no smaller than the exact mathematical one.">upper</a></span> into a strict inequality.  <br /></td></tr>
-<tr class="memitem:ga41df7824f33624e9f1febcb4c72bdd6a" id="r_ga41df7824f33624e9f1febcb4c72bdd6a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga41df7824f33624e9f1febcb4c72bdd6a.html#ga41df7824f33624e9f1febcb4c72bdd6a">eve::widen</a> = ::rbr::flag( widen_mode{} )</td></tr>
+<tr class="memitem:ga148a16123e30a9eef8a38b0ac5d140e8" id="r_ga148a16123e30a9eef8a38b0ac5d140e8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga148a16123e30a9eef8a38b0ac5d140e8">eve::strict</a> = ::rbr::flag( strict_mode{} )</td></tr>
+<tr class="memdesc:ga148a16123e30a9eef8a38b0ac5d140e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Turns the guarantee of <span class="tt"><a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="Guarantees a result no greater than the exact mathematical one.">lower</a></span> or <span class="tt"><a class="el" href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="Guarantees a result no smaller than the exact mathematical one.">upper</a></span> into a strict inequality.  <br /></td></tr>
+<tr class="memitem:ga41df7824f33624e9f1febcb4c72bdd6a" id="r_ga41df7824f33624e9f1febcb4c72bdd6a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga41df7824f33624e9f1febcb4c72bdd6a">eve::widen</a> = ::rbr::flag( widen_mode{} )</td></tr>
 <tr class="memdesc:ga41df7824f33624e9f1febcb4c72bdd6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the result in the upgraded element type.  <br /></td></tr>
-<tr class="memitem:gaab43d9045804a4363af05363852344ff" id="r_gaab43d9045804a4363af05363852344ff"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gaab43d9045804a4363af05363852344ff.html#gaab43d9045804a4363af05363852344ff">eve::to_nearest</a> = ::rbr::flag( to_nearest_mode{} )</td></tr>
+<tr class="memitem:gaab43d9045804a4363af05363852344ff" id="r_gaab43d9045804a4363af05363852344ff"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaab43d9045804a4363af05363852344ff">eve::to_nearest</a> = ::rbr::flag( to_nearest_mode{} )</td></tr>
 <tr class="memdesc:gaab43d9045804a4363af05363852344ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds to the nearest integer, ties going to the even one.  <br /></td></tr>
-<tr class="memitem:ga8e43b606df3ea6bfb3d00a9951f3e5a2" id="r_ga8e43b606df3ea6bfb3d00a9951f3e5a2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga8e43b606df3ea6bfb3d00a9951f3e5a2.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2">eve::downward</a> = ::rbr::flag( downward_mode{} )</td></tr>
+<tr class="memitem:ga8e43b606df3ea6bfb3d00a9951f3e5a2" id="r_ga8e43b606df3ea6bfb3d00a9951f3e5a2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga8e43b606df3ea6bfb3d00a9951f3e5a2">eve::downward</a> = ::rbr::flag( downward_mode{} )</td></tr>
 <tr class="memdesc:ga8e43b606df3ea6bfb3d00a9951f3e5a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds toward \(-\infty\).  <br /></td></tr>
-<tr class="memitem:gadc91b5f931296ee665ed345a84f1f629" id="r_gadc91b5f931296ee665ed345a84f1f629"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gadc91b5f931296ee665ed345a84f1f629.html#gadc91b5f931296ee665ed345a84f1f629">eve::upward</a> = ::rbr::flag( upward_mode{} )</td></tr>
+<tr class="memitem:gadc91b5f931296ee665ed345a84f1f629" id="r_gadc91b5f931296ee665ed345a84f1f629"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gadc91b5f931296ee665ed345a84f1f629">eve::upward</a> = ::rbr::flag( upward_mode{} )</td></tr>
 <tr class="memdesc:gadc91b5f931296ee665ed345a84f1f629"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds toward \(+\infty\).  <br /></td></tr>
-<tr class="memitem:gab63230bf7cc8be92416e5fd54ebf70d4" id="r_gab63230bf7cc8be92416e5fd54ebf70d4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gab63230bf7cc8be92416e5fd54ebf70d4.html#gab63230bf7cc8be92416e5fd54ebf70d4">eve::toward_zero</a> = ::rbr::flag( toward_zero_mode{} )</td></tr>
+<tr class="memitem:gab63230bf7cc8be92416e5fd54ebf70d4" id="r_gab63230bf7cc8be92416e5fd54ebf70d4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab63230bf7cc8be92416e5fd54ebf70d4">eve::toward_zero</a> = ::rbr::flag( toward_zero_mode{} )</td></tr>
 <tr class="memdesc:gab63230bf7cc8be92416e5fd54ebf70d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds toward zero.  <br /></td></tr>
-<tr class="memitem:gae205d8052f2b5f0c06badedd7e100f55" id="r_gae205d8052f2b5f0c06badedd7e100f55"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gae205d8052f2b5f0c06badedd7e100f55.html#gae205d8052f2b5f0c06badedd7e100f55">eve::to_nearest_odd</a> = ::rbr::flag( to_nearest_odd_mode{} )</td></tr>
+<tr class="memitem:gae205d8052f2b5f0c06badedd7e100f55" id="r_gae205d8052f2b5f0c06badedd7e100f55"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gae205d8052f2b5f0c06badedd7e100f55">eve::to_nearest_odd</a> = ::rbr::flag( to_nearest_odd_mode{} )</td></tr>
 <tr class="memdesc:gae205d8052f2b5f0c06badedd7e100f55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds to the nearest integer, ties going to the odd one.  <br /></td></tr>
-<tr class="memitem:gaeb2797ca4b0926a5ae0e0e962693223c" id="r_gaeb2797ca4b0926a5ae0e0e962693223c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gaeb2797ca4b0926a5ae0e0e962693223c.html#gaeb2797ca4b0926a5ae0e0e962693223c">eve::left</a> = ::rbr::flag( left_mode{} )</td></tr>
+<tr class="memitem:gaeb2797ca4b0926a5ae0e0e962693223c" id="r_gaeb2797ca4b0926a5ae0e0e962693223c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaeb2797ca4b0926a5ae0e0e962693223c">eve::left</a> = ::rbr::flag( left_mode{} )</td></tr>
 <tr class="memdesc:gaeb2797ca4b0926a5ae0e0e962693223c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the two operands before applying the operation.  <br /></td></tr>
-<tr class="memitem:gab5e572fda344a8c912d08dd9331165be" id="r_gab5e572fda344a8c912d08dd9331165be"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_gab5e572fda344a8c912d08dd9331165be.html#gab5e572fda344a8c912d08dd9331165be">eve::right</a> = ::rbr::flag( right_mode{} )</td></tr>
+<tr class="memitem:gab5e572fda344a8c912d08dd9331165be" id="r_gab5e572fda344a8c912d08dd9331165be"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab5e572fda344a8c912d08dd9331165be">eve::right</a> = ::rbr::flag( right_mode{} )</td></tr>
 <tr class="memdesc:gab5e572fda344a8c912d08dd9331165be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies the operation in the order the operands are written.  <br /></td></tr>
-<tr class="memitem:ga51996d29b0b4c9eeb8514d7742dc4432" id="r_ga51996d29b0b4c9eeb8514d7742dc4432"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga51996d29b0b4c9eeb8514d7742dc4432.html#ga51996d29b0b4c9eeb8514d7742dc4432">eve::spherical</a> = ::rbr::flag( spherical_mode{} )</td></tr>
+<tr class="memitem:ga51996d29b0b4c9eeb8514d7742dc4432" id="r_ga51996d29b0b4c9eeb8514d7742dc4432"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga51996d29b0b4c9eeb8514d7742dc4432">eve::spherical</a> = ::rbr::flag( spherical_mode{} )</td></tr>
 <tr class="memdesc:ga51996d29b0b4c9eeb8514d7742dc4432"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the spherical form of a Bessel function.  <br /></td></tr>
-<tr class="memitem:ga3016f4731788c84517056564d2d5d220" id="r_ga3016f4731788c84517056564d2d5d220"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__decorators_ga3016f4731788c84517056564d2d5d220.html#ga3016f4731788c84517056564d2d5d220">eve::cylindrical</a> = ::rbr::flag( cylindrical_mode{} )</td></tr>
+<tr class="memitem:ga3016f4731788c84517056564d2d5d220" id="r_ga3016f4731788c84517056564d2d5d220"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga3016f4731788c84517056564d2d5d220">eve::cylindrical</a> = ::rbr::flag( cylindrical_mode{} )</td></tr>
 <tr class="memdesc:ga3016f4731788c84517056564d2d5d220"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects the cylindrical form of a Bessel function.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga6c0cc9c878d3708a08358dba52c287f5" name="ga6c0cc9c878d3708a08358dba52c287f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6c0cc9c878d3708a08358dba52c287f5">&#9670;&#160;</a></span>almost</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::almost = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Turns an equality or an ordering into its tolerant form. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Written <span class="tt">f[<a class="el" href="#ga6c0cc9c878d3708a08358dba52c287f5" title="Turns an equality or an ordering into its tolerant form.">almost</a>]</span> the tolerance defaults to <span class="tt">3*eps(as(x))</span>. Written <span class="tt">f[<a class="el" href="#ga6c0cc9c878d3708a08358dba52c287f5" title="Turns an equality or an ordering into its tolerant form.">almost</a> = tol]</span> it is whatever <span class="tt">tol</span> says, and the way it is read depends on its type:</p>
+<ul>
+<li>a floating <span class="tt">tol</span> is a relative distance: \(|x - y| \le \mbox{tol}\cdot\max(|x|, |y|)\)</li>
+<li>an integral <span class="tt">tol</span> is a number of representable values between the two operands</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Only defined for floating point values. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ga97e01b7ed09173dbb06a6dcab0033177" title="eve::definitely"><span class="tt">definitely</span></a> for the opposite bias. </dd></dl>
+
+</div>
+</div>
+<a id="ga3016f4731788c84517056564d2d5d220" name="ga3016f4731788c84517056564d2d5d220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3016f4731788c84517056564d2d5d220">&#9670;&#160;</a></span>cylindrical</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::cylindrical = ::rbr::flag( cylindrical_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Selects the cylindrical form of a Bessel function. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The form the undecorated call already computes, \(J_n(z)\), named so that a call site can say which of the two it wants rather than leaving it to the default. Mirror of <a class="el" href="#ga51996d29b0b4c9eeb8514d7742dc4432" title="eve::spherical"><span class="tt">spherical</span></a>. </p>
+
+</div>
+</div>
+<a id="ga97e01b7ed09173dbb06a6dcab0033177" name="ga97e01b7ed09173dbb06a6dcab0033177"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga97e01b7ed09173dbb06a6dcab0033177">&#9670;&#160;</a></span>definitely</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::definitely = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Requires a strict comparison to hold by a margin. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Mirror image of <a class="el" href="#ga6c0cc9c878d3708a08358dba52c287f5" title="eve::almost"><span class="tt">almost</span></a>: where <span class="tt"><a class="el" href="#ga6c0cc9c878d3708a08358dba52c287f5" title="Turns an equality or an ordering into its tolerant form.">almost</a></span> widens a test so that near misses pass, <span class="tt"><a class="el" href="#ga97e01b7ed09173dbb06a6dcab0033177" title="Requires a strict comparison to hold by a margin.">definitely</a></span> narrows it so that near misses fail. <span class="tt"><a class="el" href="group__eve__core__predicates.html#ga4506c0d18d8f4bb96a2cc5abaf6a1b5a" title="elementwise callable returning a logical true if and only if the element value of the first parameter...">is_greater</a>[<a class="el" href="#ga97e01b7ed09173dbb06a6dcab0033177" title="Requires a strict comparison to hold by a margin.">definitely</a> = tol](x, y)</span> holds when \(x &gt; y + \mbox{tol}\cdot\max(|x|, |y|)\) for a floating <span class="tt">tol</span>, or when <span class="tt">x</span> exceeds the <span class="tt">tol</span>-th representable value after <span class="tt">y</span> for an integral one. Omitting <span class="tt">tol</span> uses <span class="tt">3*eps(as(x))</span>.</p>
+<dl class="section note"><dt>Note</dt><dd>Only defined for floating point values. </dd></dl>
+
+</div>
+</div>
+<a id="ga8e43b606df3ea6bfb3d00a9951f3e5a2" name="ga8e43b606df3ea6bfb3d00a9951f3e5a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e43b606df3ea6bfb3d00a9951f3e5a2">&#9670;&#160;</a></span>downward</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::downward = ::rbr::flag( downward_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rounds toward \(-\infty\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>One of the four integer rounding modes. </p>
+
+</div>
+</div>
+<a id="gaeb191712fb50db5f1cf67338b6702fda" name="gaeb191712fb50db5f1cf67338b6702fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb191712fb50db5f1cf67338b6702fda">&#9670;&#160;</a></span>fast</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::fast = ::rbr::flag( fast_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs the operation faster than the regular call while keeping more accuracy than <span class="tt"><a class="el" href="#gab99e44220c7f6c31754e4fbadec3403a" title="Performs the operation minimally, trading accuracy for speed.">raw</a></span>. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Same intent as <a class="el" href="#gab99e44220c7f6c31754e4fbadec3403a" title="eve::raw"><span class="tt">raw</span></a>, with a smaller loss of accuracy and, usually, a smaller gain. </p>
+
+</div>
+</div>
+<a id="gaeb2797ca4b0926a5ae0e0e962693223c" name="gaeb2797ca4b0926a5ae0e0e962693223c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeb2797ca4b0926a5ae0e0e962693223c">&#9670;&#160;</a></span>left</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::left = ::rbr::flag( left_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swaps the two operands before applying the operation. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p><span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga7392fd608cc6fc3f1626491cd581616d" title="tuple_callable computing the difference of its first argument with the sum of the others.">sub</a>[<a class="el" href="#gaeb2797ca4b0926a5ae0e0e962693223c" title="Swaps the two operands before applying the operation.">left</a>](a, b)</span> is <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga7392fd608cc6fc3f1626491cd581616d" title="tuple_callable computing the difference of its first argument with the sum of the others.">sub(b, a)</a></span>, and the same holds for the other operations that accept it. Useful when the order comes from the call site rather than from the intent. </p>
+
+</div>
+</div>
+<a id="ga4ff6300fe3143db3b73ebc48bbc6bc6c" name="ga4ff6300fe3143db3b73ebc48bbc6bc6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c">&#9670;&#160;</a></span>lower</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::lower = ::rbr::flag( lower_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Guarantees a result no greater than the exact mathematical one. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The computed value is less than or equal to the value an infinitely precise computation would give, NaN excepted. Combine with <a class="el" href="#ga148a16123e30a9eef8a38b0ac5d140e8" title="eve::strict"><span class="tt">strict</span></a> to make the inequality strict.</p>
+<dl class="section note"><dt>Note</dt><dd>Except for <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga1718ca90633862e1c824380381d05f4f" title="tuple_callable computing the arithmetic mean of its arguments.">average</a></span> on integral inputs, this has no effect on integer calls. </dd></dl>
+
+</div>
+</div>
+<a id="ga493e4e10b2fd953a22f9e08305820ab3" name="ga493e4e10b2fd953a22f9e08305820ab3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga493e4e10b2fd953a22f9e08305820ab3">&#9670;&#160;</a></span>numeric</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::numeric = ::rbr::flag( numeric_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Makes NaN lose against any definite value. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Comparisons and reductions normally propagate NaN, and which operand carries it decides the result: <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga208ca607f968474fa9e4d016e0eb4e5f" title="Computes the maximum of its arguments.">eve::max(nan, x)</a></span> is a NaN while <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga208ca607f968474fa9e4d016e0eb4e5f" title="Computes the maximum of its arguments.">eve::max(x, nan)</a></span> is <span class="tt">x</span>. Under this option a NaN never wins either way, so both spellings return <span class="tt">x</span>. </p>
+
+</div>
+</div>
+<a id="gaf3483e5e000367c812b507ed46399367" name="gaf3483e5e000367c812b507ed46399367"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf3483e5e000367c812b507ed46399367">&#9670;&#160;</a></span>pedantic</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::pedantic = ::rbr::flag( pedantic_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Follows the corner cases of the corresponding standard function. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The undecorated call is free to take the shortest route the hardware offers. This option asks instead for the behaviour the C++ standard prescribes on infinities, zeroes and NaNs, which is usually slower. </p>
+
+</div>
+</div>
+<a id="gab99e44220c7f6c31754e4fbadec3403a" name="gab99e44220c7f6c31754e4fbadec3403a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab99e44220c7f6c31754e4fbadec3403a">&#9670;&#160;</a></span>raw</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::raw = ::rbr::flag( raw_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs the operation minimally, trading accuracy for speed. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Corner cases and the last bits of accuracy are given up in exchange for the shortest code path. <a class="el" href="#gaeb191712fb50db5f1cf67338b6702fda" title="eve::fast"><span class="tt">fast</span></a> makes the opposite trade, keeping more accuracy for less of a gain.</p>
+<dl class="section note"><dt>Note</dt><dd>Neither option guarantees a speed improvement, only that the call will not be slower than the regular one. </dd></dl>
+
+</div>
+</div>
+<a id="gab5e572fda344a8c912d08dd9331165be" name="gab5e572fda344a8c912d08dd9331165be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab5e572fda344a8c912d08dd9331165be">&#9670;&#160;</a></span>right</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::right = ::rbr::flag( right_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applies the operation in the order the operands are written. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The behaviour of an undecorated call, spelled out. It exists so that a call site pairing with <a class="el" href="#gaeb2797ca4b0926a5ae0e0e962693223c" title="eve::left"><span class="tt">left</span></a> elsewhere can state which of the two it means instead of relying on the reader knowing the default. </p>
+
+</div>
+</div>
+<a id="gaada98a0e92f1b86e9a3dd930ca345b13" name="gaada98a0e92f1b86e9a3dd930ca345b13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaada98a0e92f1b86e9a3dd930ca345b13">&#9670;&#160;</a></span>saturated</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::saturated = ::rbr::flag( saturated_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Keeps the result inside the range of its type instead of wrapping or overflowing. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>An operation that would leave the representable range returns the nearest bound rather than the value C++ would produce, so <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">eve::abs</a>[<a class="el" href="#gaada98a0e92f1b86e9a3dd930ca345b13" title="Keeps the result inside the range of its type instead of wrapping or overflowing.">saturated</a>](<a class="el" href="group__eve__core__constants.html#ga1fd45a655473cde0022e08497eba14c1" title="Computes the lowest representable value.">valmin</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;()))</span> gives <span class="tt"><a class="el" href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083" title="Computes the greatest representable value.">valmax</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;())</span> instead of wrapping back to a negative number. </p>
+
+</div>
+</div>
+<a id="ga51996d29b0b4c9eeb8514d7742dc4432" name="ga51996d29b0b4c9eeb8514d7742dc4432"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga51996d29b0b4c9eeb8514d7742dc4432">&#9670;&#160;</a></span>spherical</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::spherical = ::rbr::flag( spherical_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Selects the spherical form of a Bessel function. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p><span class="tt"><a class="el" href="group__eve__functions.html#gabb4a644d55742f984dede09b40cc5e4b" title="Computes the spherical or cylindrical Bessel functions of the first kind,.">bessel_j</a>[<a class="el" href="#ga51996d29b0b4c9eeb8514d7742dc4432" title="Selects the spherical form of a Bessel function.">spherical</a>](n, z)</span> computes \(j_n(z)\) where the plain call computes \(J_n(z)\). Accepted by the four Bessel families. </p>
+
+</div>
+</div>
+<a id="ga148a16123e30a9eef8a38b0ac5d140e8" name="ga148a16123e30a9eef8a38b0ac5d140e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga148a16123e30a9eef8a38b0ac5d140e8">&#9670;&#160;</a></span>strict</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::strict = ::rbr::flag( strict_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Turns the guarantee of <span class="tt"><a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="Guarantees a result no greater than the exact mathematical one.">lower</a></span> or <span class="tt"><a class="el" href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="Guarantees a result no smaller than the exact mathematical one.">upper</a></span> into a strict inequality. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Only meaningful next to <a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="eve::lower"><span class="tt">lower</span></a> or <a class="el" href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="eve::upper"><span class="tt">upper</span></a>. The bound is then strict, which usually costs one bit of accuracy and buys some speed.</p>
+<dl class="section note"><dt>Note</dt><dd>Unlike <span class="tt"><a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="Guarantees a result no greater than the exact mathematical one.">lower</a></span> and <span class="tt"><a class="el" href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3" title="Guarantees a result no smaller than the exact mathematical one.">upper</a></span>, this is not accepted by the constants. </dd></dl>
+
+</div>
+</div>
+<a id="gaab43d9045804a4363af05363852344ff" name="gaab43d9045804a4363af05363852344ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaab43d9045804a4363af05363852344ff">&#9670;&#160;</a></span>to_nearest</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::to_nearest = ::rbr::flag( to_nearest_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rounds to the nearest integer, ties going to the even one. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>One of the four integer rounding modes. </p>
+
+</div>
+</div>
+<a id="gae205d8052f2b5f0c06badedd7e100f55" name="gae205d8052f2b5f0c06badedd7e100f55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae205d8052f2b5f0c06badedd7e100f55">&#9670;&#160;</a></span>to_nearest_odd</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::to_nearest_odd = ::rbr::flag( to_nearest_odd_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rounds to the nearest integer, ties going to the odd one. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Experimental, and accepted by <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#gad99c93772514004f757c09fb54ac6b5f" title="tuple_callable computing the sum of its arguments.">add</a></span> only. </p>
+
+</div>
+</div>
+<a id="gab63230bf7cc8be92416e5fd54ebf70d4" name="gab63230bf7cc8be92416e5fd54ebf70d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab63230bf7cc8be92416e5fd54ebf70d4">&#9670;&#160;</a></span>toward_zero</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::toward_zero = ::rbr::flag( toward_zero_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rounds toward zero. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>One of the four integer rounding modes. </p>
+
+</div>
+</div>
+<a id="ga8a4dcc5af0e5fab8cb537e8cbd4601f3" name="ga8a4dcc5af0e5fab8cb537e8cbd4601f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">&#9670;&#160;</a></span>upper</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::upper = ::rbr::flag( upper_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Guarantees a result no smaller than the exact mathematical one. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Mirror image of <a class="el" href="#ga4ff6300fe3143db3b73ebc48bbc6bc6c" title="eve::lower"><span class="tt">lower</span></a>: the computed value is greater than or equal to the exact one, NaN excepted. </p>
+
+</div>
+</div>
+<a id="gadc91b5f931296ee665ed345a84f1f629" name="gadc91b5f931296ee665ed345a84f1f629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadc91b5f931296ee665ed345a84f1f629">&#9670;&#160;</a></span>upward</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::upward = ::rbr::flag( upward_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Rounds toward \(+\infty\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>One of the four integer rounding modes. </p>
+
+</div>
+</div>
+<a id="ga41df7824f33624e9f1febcb4c72bdd6a" name="ga41df7824f33624e9f1febcb4c72bdd6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga41df7824f33624e9f1febcb4c72bdd6a">&#9670;&#160;</a></span>widen</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::widen = ::rbr::flag( widen_mode{} )</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the result in the upgraded element type. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The computation and its result use the type twice as wide as the parameters' element type. Returning to the original width, when needed, is left to the caller through <a class="el" href="group__eve__core__conversions.html#gaa346ad56036f22b3571c873b7ae5bebd" title="eve::convert"><span class="tt">convert</span></a>.</p>
+<dl class="section note"><dt>Note</dt><dd>64 bits types are their own upgrade, so the option does nothing for them. </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

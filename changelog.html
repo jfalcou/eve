@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -200,10 +202,10 @@ What's Changed</h2>
 <li>Added support for more masked functions (See #1384)</li>
 <li>Implemented last_true (See #1340)</li>
 <li>Implemented predicated min/max (See #1337)</li>
-<li>Implemented <a class="el" href="group__eve__algos_ga644058bf8108cda297acc491586b2e95.html#ga644058bf8108cda297acc491586b2e95" title="SIMD algorithm that returns minimum value in the range.">eve::algo::min_value</a> and <a class="el" href="group__eve__algos_ga49074f455a196a7f40e25fa7dc16ffcc.html#ga49074f455a196a7f40e25fa7dc16ffcc" title="SIMD version of std::min_element.">eve::algo::min_element</a> (See #1345)</li>
-<li>Implemented <a class="el" href="group__eve__algos_gaf81b82c776f35dc63602d6f07d2bb644.html#gaf81b82c776f35dc63602d6f07d2bb644" title="SIMD algorithm that returns maximum value in the range.">eve::algo::max_value</a> and <a class="el" href="group__eve__algos_gaa90a6e15c02d3781403a02347bd8d043.html#gaa90a6e15c02d3781403a02347bd8d043" title="SIMD variation on std::max_element not exact match.">eve::algo::max_element</a> (See #1372)</li>
-<li>Implemented <a class="el" href="group__eve__algos_gabe47d333f5fa9a70ac6836b2c9c01d98.html#gabe47d333f5fa9a70ac6836b2c9c01d98" title="SIMD version of std::transform_reduce for a single range.">eve::algo::transform_reduce</a> (See #1335)</li>
-<li>Implemented <a class="el" href="group__eve__algos_ga7f8aa6406e8af7b3b656a584144e6fcd.html#ga7f8aa6406e8af7b3b656a584144e6fcd" title="a version of find_last_if with a value to find instead of a predicate to test.">eve::algo::find_last</a> (See #1347, #1368)</li>
+<li>Implemented <a class="el" href="group__eve__algos.html#ga644058bf8108cda297acc491586b2e95" title="SIMD algorithm that returns minimum value in the range.">eve::algo::min_value</a> and <a class="el" href="group__eve__algos.html#ga49074f455a196a7f40e25fa7dc16ffcc" title="SIMD version of std::min_element.">eve::algo::min_element</a> (See #1345)</li>
+<li>Implemented <a class="el" href="group__eve__algos.html#gaf81b82c776f35dc63602d6f07d2bb644" title="SIMD algorithm that returns maximum value in the range.">eve::algo::max_value</a> and <a class="el" href="group__eve__algos.html#gaa90a6e15c02d3781403a02347bd8d043" title="SIMD variation on std::max_element not exact match.">eve::algo::max_element</a> (See #1372)</li>
+<li>Implemented <a class="el" href="group__eve__algos.html#gabe47d333f5fa9a70ac6836b2c9c01d98" title="SIMD version of std::transform_reduce for a single range.">eve::algo::transform_reduce</a> (See #1335)</li>
+<li>Implemented <a class="el" href="group__eve__algos.html#ga7f8aa6406e8af7b3b656a584144e6fcd" title="a version of find_last_if with a value to find instead of a predicate to test.">eve::algo::find_last</a> (See #1347, #1368)</li>
 </ul>
 </li>
 <li>Performances fixes<ul>
@@ -286,7 +288,7 @@ What's Changed</h2>
 </ul>
 </li>
 <li>Convert<ul>
-<li>Fixed missing code for <span class="tt"><a class="el" href="group__eve__core__conversions_gaa346ad56036f22b3571c873b7ae5bebd.html#gaa346ad56036f22b3571c873b7ae5bebd" title="Converts a value to another type.">eve::convert</a></span>. All convert calls now produce optimal code.</li>
+<li>Fixed missing code for <span class="tt"><a class="el" href="group__eve__core__conversions.html#gaa346ad56036f22b3571c873b7ae5bebd" title="Converts a value to another type.">eve::convert</a></span>. All convert calls now produce optimal code.</li>
 <li>More specifically and addition to global fixes, <b>aguinet</b> contributed:<ul>
 <li>Improvement for u64 =&gt; u32 when using AVX2</li>
 <li>Improvement for u16 =&gt; u8 when using AVX2</li>

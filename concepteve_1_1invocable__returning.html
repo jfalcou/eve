@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,10 +126,9 @@ $(function(){initNavTree('concepteve_1_1invocable__returning.html','',''); });
 
 <p>Specifies that the function <span class="tt">Op</span>, when called with arguments of types <span class="tt">Args...</span>, returns a value convertible to <span class="tt">R</span>.  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/concept/invocable.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="textblock"><p>Specifies that the function <span class="tt">Op</span>, when called with arguments of types <span class="tt">Args...</span>, returns a value convertible to <span class="tt">R</span>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Op</td><td>The function type </td></tr>
     <tr><td class="paramname">R</td><td>The expected return type </td></tr>

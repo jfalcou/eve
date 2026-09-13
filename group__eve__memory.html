@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -129,7 +131,8 @@ $(function(){initNavTree('group__eve__memory.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Realigns a pointer under a given power-of-2 alignment constraint.</p>
+<div class="textblock"><p>Realigns integral value over a given power-of-2 alignment constraint. </p>
+<p>Realigns a pointer under a given power-of-2 alignment constraint.</p>
 <p>Realigns a pointer over a given power-of-2 alignment constraint.</p>
 <p>Realigns integral value under a given power-of-2 alignment constraint.</p>
 <p><b>EVE</b> provides various elements to simplify the management of SIMD-compatible memory like functions and allocators for requesting SIMD-compatible block of memory, pointer wrappers to discriminate aligned memory from regular one, and alignment computation functions.</p>
@@ -208,44 +211,573 @@ Concepts</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga54bcb5761211b78d9de3101200a49a9e" id="r_ga54bcb5761211b78d9de3101200a49a9e"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga54bcb5761211b78d9de3101200a49a9e template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga54bcb5761211b78d9de3101200a49a9e.html#ga54bcb5761211b78d9de3101200a49a9e">eve::unaligned_t</a> = decltype(<a class="el" href="group__eve__memory_ga62462e7b23d8d092781d5561a9d4c90f.html#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(std::declval&lt;T&gt;()))</td></tr>
+<tr class="memitem:ga54bcb5761211b78d9de3101200a49a9e template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga54bcb5761211b78d9de3101200a49a9e">eve::unaligned_t</a> = decltype(<a class="el" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(std::declval&lt;T&gt;()))</td></tr>
 <tr class="memdesc:ga54bcb5761211b78d9de3101200a49a9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the unaligned pointer type associated to a given type.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ga069e9f110c0cb2416812ef8fc5a37555" id="r_ga069e9f110c0cb2416812ef8fc5a37555"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555">eve::over</a> : std::size_t </td></tr>
-<tr class="memdesc:ga069e9f110c0cb2416812ef8fc5a37555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of over-alignment constraints.  <a href="group__eve__memory_ga069e9f110c0cb2416812ef8fc5a37555.html#ga069e9f110c0cb2416812ef8fc5a37555">More...</a><br /></td></tr>
-<tr class="memitem:ga664bc5b316e0dd3be42aa4c2fd818047" id="r_ga664bc5b316e0dd3be42aa4c2fd818047"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">eve::under</a> : std::size_t </td></tr>
-<tr class="memdesc:ga664bc5b316e0dd3be42aa4c2fd818047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of under-alignment constraints.  <a href="group__eve__memory_ga664bc5b316e0dd3be42aa4c2fd818047.html#ga664bc5b316e0dd3be42aa4c2fd818047">More...</a><br /></td></tr>
+<tr class="memitem:ga069e9f110c0cb2416812ef8fc5a37555" id="r_ga069e9f110c0cb2416812ef8fc5a37555"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#ga069e9f110c0cb2416812ef8fc5a37555">eve::over</a> : std::size_t </td></tr>
+<tr class="memdesc:ga069e9f110c0cb2416812ef8fc5a37555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of over-alignment constraints.  <a href="#ga069e9f110c0cb2416812ef8fc5a37555">More...</a><br /></td></tr>
+<tr class="memitem:ga664bc5b316e0dd3be42aa4c2fd818047" id="r_ga664bc5b316e0dd3be42aa4c2fd818047"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#ga664bc5b316e0dd3be42aa4c2fd818047">eve::under</a> : std::size_t </td></tr>
+<tr class="memdesc:ga664bc5b316e0dd3be42aa4c2fd818047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Strong integral type that represents the notion of under-alignment constraints.  <a href="#ga664bc5b316e0dd3be42aa4c2fd818047">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13" id="r_gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplParams" colspan="2">template&lt;std::size_t A, typename T, typename Other&gt; </td></tr>
-<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_gad05ab928f3e9aa972a7e7146f76cce13.html#gad05ab928f3e9aa972a7e7146f76cce13">eve::is_aligned</a> (<a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a>&lt; T, Other &gt; const &amp;ptr) noexcept</td></tr>
+<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#gad05ab928f3e9aa972a7e7146f76cce13">eve::is_aligned</a> (<a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a>&lt; T, Other &gt; const &amp;ptr) noexcept</td></tr>
 <tr class="memdesc:gad05ab928f3e9aa972a7e7146f76cce13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is aligned on a given alignment.  <br /></td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858" id="r_gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, std::integral T&gt; </td></tr>
-<tr class="memitem:gab1add731db6f65a080c9ec8b4a125858 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_gab1add731db6f65a080c9ec8b4a125858.html#gab1add731db6f65a080c9ec8b4a125858">eve::is_aligned</a> (T v) noexcept</td></tr>
+<tr class="memitem:gab1add731db6f65a080c9ec8b4a125858 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#gab1add731db6f65a080c9ec8b4a125858">eve::is_aligned</a> (T v) noexcept</td></tr>
 <tr class="memdesc:gab1add731db6f65a080c9ec8b4a125858"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74" id="r_ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, typename T&gt; </td></tr>
-<tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga25228d751afbdd3a2c7d09aea5f2ae74.html#ga25228d751afbdd3a2c7d09aea5f2ae74">eve::is_aligned</a> (T *ptr) noexcept</td></tr>
+<tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga25228d751afbdd3a2c7d09aea5f2ae74">eve::is_aligned</a> (T *ptr) noexcept</td></tr>
 <tr class="memdesc:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 <tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca" id="r_ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="memTemplParams" colspan="2">template&lt;typename T, typename Lanes&gt; </td></tr>
-<tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga3c06e236e6195d1a36a43e0fcc7c5eca.html#ga3c06e236e6195d1a36a43e0fcc7c5eca">eve::is_aligned</a> (T *ptr, Lanes lanes) noexcept</td></tr>
+<tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga3c06e236e6195d1a36a43e0fcc7c5eca">eve::is_aligned</a> (T *ptr, Lanes lanes) noexcept</td></tr>
 <tr class="memdesc:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga49de20d14b6d3133b2bc19a95b1af7bd" id="r_ga49de20d14b6d3133b2bc19a95b1af7bd"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga49de20d14b6d3133b2bc19a95b1af7bd.html#ga49de20d14b6d3133b2bc19a95b1af7bd">eve::read</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;read_t&gt;</td></tr>
+<tr class="memitem:ga49de20d14b6d3133b2bc19a95b1af7bd" id="r_ga49de20d14b6d3133b2bc19a95b1af7bd"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga49de20d14b6d3133b2bc19a95b1af7bd">eve::read</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;read_t&gt;</td></tr>
 <tr class="memdesc:ga49de20d14b6d3133b2bc19a95b1af7bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object reading single value from memory.  <br /></td></tr>
-<tr class="memitem:gad748180639cb9a4e2dbf82e48d986615" id="r_gad748180639cb9a4e2dbf82e48d986615"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_gad748180639cb9a4e2dbf82e48d986615.html#gad748180639cb9a4e2dbf82e48d986615">eve::store</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;store_t&gt;</td></tr>
+<tr class="memitem:gad748180639cb9a4e2dbf82e48d986615" id="r_gad748180639cb9a4e2dbf82e48d986615"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;store_t&gt;</td></tr>
 <tr class="memdesc:gad748180639cb9a4e2dbf82e48d986615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store the elements of a <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> into the given memory location.  <br /></td></tr>
-<tr class="memitem:ga62462e7b23d8d092781d5561a9d4c90f" id="r_ga62462e7b23d8d092781d5561a9d4c90f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_ga62462e7b23d8d092781d5561a9d4c90f.html#ga62462e7b23d8d092781d5561a9d4c90f">eve::unalign</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;unalign_t&gt;</td></tr>
+<tr class="memitem:ga62462e7b23d8d092781d5561a9d4c90f" id="r_ga62462e7b23d8d092781d5561a9d4c90f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga62462e7b23d8d092781d5561a9d4c90f">eve::unalign</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;unalign_t&gt;</td></tr>
 <tr class="memdesc:ga62462e7b23d8d092781d5561a9d4c90f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object for computing an unaligned version of a relaxed iterator.  <br /></td></tr>
-<tr class="memitem:gad32771ddeb3886065ba659298a50e125" id="r_gad32771ddeb3886065ba659298a50e125"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_gad32771ddeb3886065ba659298a50e125.html#gad32771ddeb3886065ba659298a50e125">eve::write</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;write_t&gt;</td></tr>
+<tr class="memitem:gad32771ddeb3886065ba659298a50e125" id="r_gad32771ddeb3886065ba659298a50e125"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad32771ddeb3886065ba659298a50e125">eve::write</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;write_t&gt;</td></tr>
 <tr class="memdesc:gad32771ddeb3886065ba659298a50e125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object writing a scalar value to memory.  <br /></td></tr>
-<tr class="memitem:gad0ad3e63b14261774f8ca2c04503159a" id="r_gad0ad3e63b14261774f8ca2c04503159a"><td class="memItemLeft">constexpr callable_store_equivalent_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__memory_gad0ad3e63b14261774f8ca2c04503159a.html#gad0ad3e63b14261774f8ca2c04503159a">eve::store_equivalent</a> = {}</td></tr>
+<tr class="memitem:gad0ad3e63b14261774f8ca2c04503159a" id="r_gad0ad3e63b14261774f8ca2c04503159a"><td class="memItemLeft">constexpr callable_store_equivalent_&#160;</td><td class="memItemRight"><a class="el" href="#gad0ad3e63b14261774f8ca2c04503159a">eve::store_equivalent</a> = {}</td></tr>
 <tr class="memdesc:gad0ad3e63b14261774f8ca2c04503159a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callable object, customisation point. If an iterator's store operation can be done as a store to some other iterator/pointer - this is a transformation to customize.  <br /></td></tr>
 </table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a id="ga54bcb5761211b78d9de3101200a49a9e" name="ga54bcb5761211b78d9de3101200a49a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga54bcb5761211b78d9de3101200a49a9e">&#9670;&#160;</a></span>unaligned_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga54bcb5761211b78d9de3101200a49a9e">eve::unaligned_t</a> = decltype(<a class="el" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(std::declval&lt;T&gt;()))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the unaligned pointer type associated to a given type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/core.hpp&gt;</span></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#ga54bcb5761211b78d9de3101200a49a9e">unaligned_t</a> = <span class="keyword">decltype</span>(<a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(std::declval&lt;T&gt;()));</div>
+<div class="ttc" id="agroup__eve__memory_html_ga54bcb5761211b78d9de3101200a49a9e"><div class="ttname"><a href="#ga54bcb5761211b78d9de3101200a49a9e">eve::unaligned_t</a></div><div class="ttdeci">decltype(unalign(std::declval&lt; T &gt;())) unaligned_t</div><div class="ttdoc">Compute the unaligned pointer type associated to a given type.</div><div class="ttdef"><b>Definition</b> unalign.hpp:113</div></div>
+<div class="ttc" id="agroup__eve__memory_html_ga62462e7b23d8d092781d5561a9d4c90f"><div class="ttname"><a href="#ga62462e7b23d8d092781d5561a9d4c90f">eve::unalign</a></div><div class="ttdeci">constexpr auto unalign</div><div class="ttdoc">Callable object for computing an unaligned version of a relaxed iterator.</div><div class="ttdef"><b>Definition</b> unalign.hpp:93</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga069e9f110c0cb2416812ef8fc5a37555" name="ga069e9f110c0cb2416812ef8fc5a37555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga069e9f110c0cb2416812ef8fc5a37555">&#9670;&#160;</a></span>over</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#ga069e9f110c0cb2416812ef8fc5a37555">eve::over</a> : std::size_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Strong integral type that represents the notion of over-alignment constraints. </p>
+<p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/memory/align.hpp&gt;</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">enum class</span> <a class="code hl_enumeration" href="#ga069e9f110c0cb2416812ef8fc5a37555">over</a> : std::size_t {};</div>
+<div class="ttc" id="agroup__eve__memory_html_ga069e9f110c0cb2416812ef8fc5a37555"><div class="ttname"><a href="#ga069e9f110c0cb2416812ef8fc5a37555">eve::over</a></div><div class="ttdeci">over</div><div class="ttdoc">Strong integral type that represents the notion of over-alignment constraints.</div><div class="ttdef"><b>Definition</b> align.hpp:44</div></div>
+</div><!-- fragment --><p> <br  />
+ Strong integral type that represents the notion of over-alignment constraints.</p>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+Non-Member Function</h4>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">inline</span> std::size_t to_integer(<a class="code hl_enumeration" href="#ga069e9f110c0cb2416812ef8fc5a37555">over</a> n)  <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><p>Equivalent to: <span class="tt">return std::size_t(n);</span></p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ga664bc5b316e0dd3be42aa4c2fd818047" title="Strong integral type that represents the notion of under-alignment constraints.">under</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga664bc5b316e0dd3be42aa4c2fd818047" name="ga664bc5b316e0dd3be42aa4c2fd818047"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga664bc5b316e0dd3be42aa4c2fd818047">&#9670;&#160;</a></span>under</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#ga664bc5b316e0dd3be42aa4c2fd818047">eve::under</a> : std::size_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Strong integral type that represents the notion of under-alignment constraints. </p>
+<p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/memory/align.hpp&gt;</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">enum class</span> <a class="code hl_enumeration" href="#ga664bc5b316e0dd3be42aa4c2fd818047">under</a> : std::size_t {};</div>
+<div class="ttc" id="agroup__eve__memory_html_ga664bc5b316e0dd3be42aa4c2fd818047"><div class="ttname"><a href="#ga664bc5b316e0dd3be42aa4c2fd818047">eve::under</a></div><div class="ttdeci">under</div><div class="ttdoc">Strong integral type that represents the notion of under-alignment constraints.</div><div class="ttdef"><b>Definition</b> align.hpp:77</div></div>
+</div><!-- fragment --><p> <br  />
+ Strong integral type that represents the notion of under-alignment constraints.</p>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+Non-Member Function</h4>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">inline</span> std::size_t to_integer(<a class="code hl_enumeration" href="#ga664bc5b316e0dd3be42aa4c2fd818047">under</a> n)  <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><p>Equivalent to: <span class="tt">return std::size_t(n);</span></p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#ga069e9f110c0cb2416812ef8fc5a37555" title="Strong integral type that represents the notion of over-alignment constraints.">over</a> </dd></dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="gad05ab928f3e9aa972a7e7146f76cce13" name="gad05ab928f3e9aa972a7e7146f76cce13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad05ab928f3e9aa972a7e7146f76cce13">&#9670;&#160;</a></span>is_aligned() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t A, typename T, typename Other&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::is_aligned </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a>&lt; T, Other &gt; const &amp;</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if an <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is aligned on a given alignment. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td><a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> to checks </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">A</td><td>Alignment constraint to verify </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A boolean indicating if <span class="tt">ptr</span> is compatible with the <span class="tt">Other</span> alignment. </dd></dl>
+
+</div>
+</div>
+<a id="ga25228d751afbdd3a2c7d09aea5f2ae74" name="ga25228d751afbdd3a2c7d09aea5f2ae74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga25228d751afbdd3a2c7d09aea5f2ae74">&#9670;&#160;</a></span>is_aligned() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t Alignment, typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::is_aligned </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a pointer satisfies an alignment constraint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Pointer to check </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Alignment</td><td>Alignment constraint to verify. Behavior is undefined if this constraint is not a power of 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if <span class="tt">ptr</span> is aligned over <span class="tt">Alignment</span>, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ga3c06e236e6195d1a36a43e0fcc7c5eca" name="ga3c06e236e6195d1a36a43e0fcc7c5eca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3c06e236e6195d1a36a43e0fcc7c5eca">&#9670;&#160;</a></span>is_aligned() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, typename Lanes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::is_aligned </td>
+          <td>(</td>
+          <td class="paramtype">T *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Lanes</td>          <td class="paramname"><span class="paramname"><em>lanes</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a pointer satisfies an alignment constraint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ptr</td><td>Pointer to check </td></tr>
+    <tr><td class="paramname">lanes</td><td>Alignment constraint to verify expressed as a SIMD register number of lanes.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if <span class="tt">ptr</span> is aligned over the alignment implied by <span class="tt">lanes</span>, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="gab1add731db6f65a080c9ec8b4a125858" name="gab1add731db6f65a080c9ec8b4a125858"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab1add731db6f65a080c9ec8b4a125858">&#9670;&#160;</a></span>is_aligned() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::size_t Alignment, std::integral T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool eve::is_aligned </td>
+          <td>(</td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a pointer satisfies an alignment constraint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Integral value to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Alignment</td><td>Alignment constraint to verify. Behavior is undefined if this constraint is not a power of 2.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if <span class="tt">ptr</span> is aligned over <span class="tt">Alignment</span>, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga49de20d14b6d3133b2bc19a95b1af7bd" name="ga49de20d14b6d3133b2bc19a95b1af7bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga49de20d14b6d3133b2bc19a95b1af7bd">&#9670;&#160;</a></span>read</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::read = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;read_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object reading single value from memory. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/core.hpp&gt;</span></p>
+<p><span class="tt">operator*</span> based interface used in the standard has notorious issues with proxy references. To prevent those issues when dealing with complex, potentially SIMD-aware iterators, <span class="tt"><a class="el" href="#ga49de20d14b6d3133b2bc19a95b1af7bd" title="Callable object reading single value from memory.">eve::read</a></span> is to be used.</p>
+<h4 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+Members Functions</h4>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">Member  </th><th class="markdownTableHeadLeft">Effect  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><span class="tt">operator()</span>  </td><td class="markdownTableBodyLeft">Performs a single read from memory  </td></tr>
+</table>
+<hr  />
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ptr&gt; <span class="keyword">auto</span> operator()(Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<p><span class="tt">ptr</span>: Memory to read from.</p>
+<p><b>Return value</b></p>
+<p>Returns a single value read at the memory location specified by <span class="tt">ptr</span>. If <span class="tt">ptr</span> is equivalent to <span class="tt">nullptr</span>, the behavior is undefined. </p>
+
+</div>
+</div>
+<a id="gad748180639cb9a4e2dbf82e48d986615" name="gad748180639cb9a4e2dbf82e48d986615"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad748180639cb9a4e2dbf82e48d986615">&#9670;&#160;</a></span>store</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::store = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;store_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Store the elements of a <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> into the given memory location. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_simd_value T, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                           <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;logical_simd_value T, logical_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                           <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// Lanes masking</span></div>
+<div class="line">  <span class="keyword">auto</span> <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">store</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/* any of the above overloads */</span>) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__memory_html_gad748180639cb9a4e2dbf82e48d986615"><div class="ttname"><a href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:80</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></span> : The <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> to store.</li>
+<li><span class="tt">ptr</span> : A pointer to the memory location where the elements of <span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></span> will be stored.</li>
+<li><span class="tt">c</span> : A <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="eve::relative_conditional_expr">relative conditional expression</a> masking the operation.</li>
+</ul>
+<p><b>Overloads</b></p>
+<ol type="1">
+<li>Stores the elements of <span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></span> into the memory location pointed to by <span class="tt">ptr</span>.</li>
+<li>Same as 1. but lanes masked by the condition <span class="tt">c</span> will not be stored.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/eve.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">float</span> arr[4];</div>
+<div class="line">  <span class="keywordtype">int</span> iarr[4];</div>
+<div class="line">  eve::logical&lt;float&gt; larr[4];</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; w = {3, 2, 1, 0};</div>
+<div class="line">  eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;&gt;&gt; lw = {<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">false</span>};</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a>(w, arr);</div>
+<div class="line">  <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a>(lw, larr);</div>
+<div class="line">  <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a>(lw, iarr);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;arr: &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : arr) {</div>
+<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;larr: &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : larr) {</div>
+<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;iarr: &quot;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keyword">auto</span> val : iarr) {</div>
+<div class="line">    std::cout &lt;&lt; val &lt;&lt; <span class="stringliteral">&quot; (&quot;</span> &lt;&lt; (val ? <span class="stringliteral">&quot;true&quot;</span> : <span class="stringliteral">&quot;false&quot;</span>) &lt;&lt; <span class="stringliteral">&quot;) &quot;</span>;</div>
+<div class="line">  }</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gad0ad3e63b14261774f8ca2c04503159a" name="gad0ad3e63b14261774f8ca2c04503159a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad0ad3e63b14261774f8ca2c04503159a">&#9670;&#160;</a></span>store_equivalent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_store_equivalent_ eve::store_equivalent = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object, customisation point. If an iterator's store operation can be done as a store to some other iterator/pointer - this is a transformation to customize. </p>
+<p>Should return new ignore/value/pointer triplet</p>
+<p>By default returns ignore/value/pointer tuple, unchanged. </p>
+
+</div>
+</div>
+<a id="ga62462e7b23d8d092781d5561a9d4c90f" name="ga62462e7b23d8d092781d5561a9d4c90f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga62462e7b23d8d092781d5561a9d4c90f">&#9670;&#160;</a></span>unalign</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::unalign = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;unalign_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object for computing an unaligned version of a relaxed iterator. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;std::contiguous_iterator I&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> I <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(I p) <span class="keyword">noexcept</span>;                      <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::relaxed_iterator Ptr&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(Ptr p) <span class="keyword">noexcept</span>;                 <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> N&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> T* <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(<a class="code hl_struct" href="structeve_1_1aligned__ptr.html">aligned_ptr&lt;T, N&gt;</a> p) <span class="keyword">noexcept</span>;     <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ptrs&gt;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(<a class="code hl_struct" href="structeve_1_1soa__ptr.html">soa_ptr&lt;Ptrs...&gt;</a> p) <span class="keyword">noexcept</span>;    <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1aligned__ptr_html"><div class="ttname"><a href="structeve_1_1aligned__ptr.html">eve::aligned_ptr</a></div><div class="ttdoc">Wrapper for non-owning aligned pointers.</div><div class="ttdef"><b>Definition</b> aligned_ptr.hpp:50</div></div>
+<div class="ttc" id="astructeve_1_1soa__ptr_html"><div class="ttname"><a href="structeve_1_1soa__ptr.html">eve::soa_ptr</a></div><div class="ttdoc">a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code on...</div><div class="ttdef"><b>Definition</b> soa_ptr.hpp:32</div></div>
+</div><!-- fragment --><p>Convert the pointer or iterator passed as a parameter to a pointer without any information about its alignment.</p>
+<p><b>Parameters</b></p><ul>
+<li><span class="tt">p</span>: A pointer or relaxed iterator to convert.</li>
+</ul>
+<p><b>Return value</b></p><ol type="1">
+<li>Return <span class="tt">p</span> as it is as <span class="tt">std::iterator</span> does not provide alignment information.</li>
+<li>Return the iterator-specific value as computed by the iterator <span class="tt"><a class="el" href="#ga62462e7b23d8d092781d5561a9d4c90f" title="Callable object for computing an unaligned version of a relaxed iterator.">unalign</a></span> member.</li>
+<li>Return the raw pointer contained in <span class="tt">p</span>.</li>
+<li>Return a <span class="tt"><a class="el" href="structeve_1_1soa__ptr.html" title="a low level abstraction that is like a tuple of pointers to parallel arrays. We think that in code on...">soa_ptr</a></span> made of all unaligned pointers of <span class="tt">p</span>. </li>
+</ol>
+
+</div>
+</div>
+<a id="gad32771ddeb3886065ba659298a50e125" name="gad32771ddeb3886065ba659298a50e125"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad32771ddeb3886065ba659298a50e125">&#9670;&#160;</a></span>write</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::write = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;write_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Callable object writing a scalar value to memory. </p>
+<p><span class="tt">operator*</span> based interface used in the standard has notorious issues with proxy references. To prevent those issues when dealing with complex, potentially SIMD-aware iterators, <span class="tt"><a class="el" href="#gad32771ddeb3886065ba659298a50e125" title="Callable object writing a scalar value to memory.">eve::write</a></span> is to be used.</p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ptr, scalar_value V&gt;</div>
+<div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Ptr p, V v) { *p = v; }</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Writeable, scalar_value V&gt;</div>
+<div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Writeable p, V v) { p.write(v); }</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Writeable p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;         <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ptrs, <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> V&gt;</div>
+<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, <a class="code hl_struct" href="structeve_1_1soa__ptr.html">soa_ptr&lt;Ptrs...&gt;</a> p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;  <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition</b> scalar.hpp:138</div></div>
+</div><!-- fragment --><ol type="1">
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar</a> <span class="tt">v</span> into the memory pointed by <span class="tt">p</span>;</li>
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar</a> <span class="tt">v</span> into the memory managed by the object <span class="tt">p</span>;</li>
+<li>Write the <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar</a> <span class="tt">v</span> into the memory pointed by SoA pointer <span class="tt">p</span>;</li>
+</ol>
+<p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">v</span>: <a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">scalar</a> to write to memory.</li>
+<li><span class="tt">p</span>: A pointer or rich iterator to write to. </li>
+</ul>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

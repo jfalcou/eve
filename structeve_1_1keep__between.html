@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -125,18 +127,14 @@ $(function(){initNavTree('structeve_1_1keep__between.html','','structeve_1_1keep
   <div class="headertitle"><div class="title">eve::keep_between Struct Reference<div class="ingroups"><a class="el" href="group__eve__conditional.html">Conditional Expressions</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Conditional expression keeping all lanes between two position.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/conditional.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span> </p>
+<div class="textblock"><p>Conditional expression keeping all lanes between two position. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/conditional.hpp&gt;</span> </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aca92a195f802ba9cefc4ce60fd9d2ddb" id="r_aca92a195f802ba9cefc4ce60fd9d2ddb"><td class="memTemplParams" colspan="2">template&lt;typename V&gt; </td></tr>
-<tr class="memitem:aca92a195f802ba9cefc4ce60fd9d2ddb template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1keep__between_aca92a195f802ba9cefc4ce60fd9d2ddb.html#aca92a195f802ba9cefc4ce60fd9d2ddb">else_</a> (V const &amp;v) const</td></tr>
+<tr class="memitem:aca92a195f802ba9cefc4ce60fd9d2ddb template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#aca92a195f802ba9cefc4ce60fd9d2ddb">else_</a> (V const &amp;v) const</td></tr>
 <tr class="memdesc:aca92a195f802ba9cefc4ce60fd9d2ddb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extends a conditional expression with an alternative value.  <br /></td></tr>
 <tr class="memitem:acb2f05a69821cb3d669f0c6e23acdd03" id="r_acb2f05a69821cb3d669f0c6e23acdd03"><td class="memTemplParams" colspan="2"><a id="acb2f05a69821cb3d669f0c6e23acdd03" name="acb2f05a69821cb3d669f0c6e23acdd03"></a>
 template&lt;typename T&gt; </td></tr>
@@ -157,6 +155,44 @@ template&lt;typename Ch, typename Ct&gt; </td></tr>
 <tr class="memitem:a969ce653cae900edc1c8345d49eec8ac template"><td class="memItemLeft">auto &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (std::basic_ostream&lt; Ch, Ct &gt; &amp;os, keep_between const &amp;c)</td></tr>
 <tr class="memdesc:a969ce653cae900edc1c8345d49eec8ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1keep__between.html" title="Conditional expression keeping all lanes between two position.">eve::keep_between</a> conditional expression into a output stream. <br /></td></tr>
 </table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="aca92a195f802ba9cefc4ce60fd9d2ddb" name="aca92a195f802ba9cefc4ce60fd9d2ddb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca92a195f802ba9cefc4ce60fd9d2ddb">&#9670;&#160;</a></span>else_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename V&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::keep_between::else_ </td>
+          <td>(</td>
+          <td class="paramtype">V const &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extends a conditional expression with an alternative value. </p>
+<p>By default, conditional operations use their unchanged input whenever the conditional evaluates to <span class="tt">false</span>. By using this member function, operations will use the user provided <a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">eve::value</a> <span class="tt">v</span> instead.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Value to use if the conditional expression evaluates to <span class="tt">false</span></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of <a class="el" href="structeve_1_1or__.html" title="Conditional/Alternative wrapper.">eve::or_</a> wrapping current conditional expression with <span class="tt">v</span>.   </dd></dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

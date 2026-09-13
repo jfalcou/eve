@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,13 +123,9 @@ $(function(){initNavTree('structmap__store__op.html','',''); });
   <div class="headertitle"><div class="title">map_store_op Struct Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__algo__concepts.html">Algorithms Concepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>requirement for the operation applied on store in map. should work on both scalar and wide for the underlying iterator for any cardinal.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/views/map.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>accepts the <span class="tt">as&lt;value_type_t&lt;Base&gt;&gt;</span> for convenience (so that it can be defined without knowing the underlying type).</p>
+<div class="textblock"><p>requirement for the operation applied on store in map. should work on both scalar and wide for the underlying iterator for any cardinal. </p>
+<p>accepts the <span class="tt">as&lt;value_type_t&lt;Base&gt;&gt;</span> for convenience (so that it can be defined without knowing the underlying type).</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/map.hpp&gt;</span></p>
 <p>Has a shorthand <span class="tt">eve::views::map_store_op</span> in <span class="tt">&lt;eve/views/map.hpp&gt;</span> </p>
 </div></div><!-- contents -->

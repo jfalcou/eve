@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -122,11 +124,11 @@ $(function(){initNavTree('concepteve_1_1combinable.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>Checks that the types passed are all SIMD values that can be passed to <span class="tt"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span>. i.e they share a common value type and their cardinals and numbers are consistent with <span class="tt"><a class="el" href="group__eve__core__simd_gaa40b2ed752ac083e7336bfcfb216545a.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> semantics.  
-</p>
-
-<p><code>#include &lt;eve/concept/combinable.hpp&gt;</code></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<p>Checks that the types passed are all SIMD values that can be passed to <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span>. i.e they share a common value type and their cardinals and numbers are consistent with <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> semantics.  
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Checks that the types passed are all SIMD values that can be passed to <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span>. i.e they share a common value type and their cardinals and numbers are consistent with <span class="tt"><a class="el" href="group__eve__core__simd.html#gaa40b2ed752ac083e7336bfcfb216545a" title="Combines two SIMD values in a larger one.">eve::combine</a></span> semantics. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> W0, <span class="keyword">typename</span> W1, <span class="keyword">typename</span>... Ws&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1combinable.html">combinable</a> = std::has_single_bit(<span class="keyword">sizeof</span>...(Ws) + 2)</div>
 <div class="line">                        &amp;&amp; <a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value&lt;W0&gt;</a></div>

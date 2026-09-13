@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,7 +129,8 @@ $(function(){initNavTree('group__eve__traits.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Using <b>EVE</b> types and functions may require information about some properties of the processed types that are accessible through the following traits.</p>
+<div class="textblock"><p>Type traits for SIMD related types and functions. </p>
+<p>Using <b>EVE</b> types and functions may require information about some properties of the processed types that are accessible through the following traits.</p>
 <p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/traits.hpp&gt;</span> </div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -167,26 +170,218 @@ Concepts</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga331d84fa4b64e5deb329b1a09d60c747" id="r_ga331d84fa4b64e5deb329b1a09d60c747"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga331d84fa4b64e5deb329b1a09d60c747 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_ga331d84fa4b64e5deb329b1a09d60c747.html#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a> = decltype(_::iterator_cardinal_impl&lt;T&gt;())</td></tr>
+<tr class="memitem:ga331d84fa4b64e5deb329b1a09d60c747 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a> = decltype(_::iterator_cardinal_impl&lt;T&gt;())</td></tr>
 <tr class="memdesc:ga331d84fa4b64e5deb329b1a09d60c747"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_cardinal()</span> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>).  <br /></td></tr>
 <tr class="memitem:ga4a03242c42306d4595845cb329d5d7ec" id="r_ga4a03242c42306d4595845cb329d5d7ec"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ga4a03242c42306d4595845cb329d5d7ec template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_ga4a03242c42306d4595845cb329d5d7ec.html#ga4a03242c42306d4595845cb329d5d7ec">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt;<a class="el" href="group__eve__traits_gaa29d8cb3ef4de3080fef8b6277614d92.html#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td></tr>
+<tr class="memitem:ga4a03242c42306d4595845cb329d5d7ec template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga4a03242c42306d4595845cb329d5d7ec">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td></tr>
 <tr class="memdesc:ga4a03242c42306d4595845cb329d5d7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cardinal type of the maximum lane count of given wide or scalar types.  <br /></td></tr>
 <tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f" id="r_gaae6fbba5b56b9fab940a05b444c15e6f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_gaae6fbba5b56b9fab940a05b444c15e6f.html#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td></tr>
+<tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td></tr>
 <tr class="memdesc:gaae6fbba5b56b9fab940a05b444c15e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <br /></td></tr>
 <tr class="memitem:ga55234286d380ec9a9baef96a65649356" id="r_ga55234286d380ec9a9baef96a65649356"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga55234286d380ec9a9baef96a65649356 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_ga55234286d380ec9a9baef96a65649356.html#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="group__eve__traits_gaae6fbba5b56b9fab940a05b444c15e6f.html#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, <a class="el" href="group__eve__traits_ga331d84fa4b64e5deb329b1a09d60c747.html#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t</a>&lt;T&gt;&gt;</td></tr>
+<tr class="memitem:ga55234286d380ec9a9baef96a65649356 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t</a>&lt;T&gt;&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92" id="r_gaa29d8cb3ef4de3080fef8b6277614d92"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_gaa29d8cb3ef4de3080fef8b6277614d92.html#gaa29d8cb3ef4de3080fef8b6277614d92">eve::max_lanes_v</a> = _::compute_max_lanes&lt;Ts...&gt;()</td></tr>
+<tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">eve::max_lanes_v</a> = _::compute_max_lanes&lt;Ts...&gt;()</td></tr>
 <tr class="memdesc:gaa29d8cb3ef4de3080fef8b6277614d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum lane count of given wide or scalar types.  <br /></td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681" id="r_ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681 template"><td class="memItemLeft">constexpr std::size_t&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits_ga6e8aacb30e0e7798a5cf8e30f9ace681.html#ga6e8aacb30e0e7798a5cf8e30f9ace681">eve::max_scalar_size_v</a></td></tr>
+<tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681 template"><td class="memItemLeft">constexpr std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#ga6e8aacb30e0e7798a5cf8e30f9ace681">eve::max_scalar_size_v</a></td></tr>
 <tr class="memdesc:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <br /></td></tr>
 </table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a id="ga331d84fa4b64e5deb329b1a09d60c747" name="ga331d84fa4b64e5deb329b1a09d60c747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga331d84fa4b64e5deb329b1a09d60c747">&#9670;&#160;</a></span>iterator_cardinal_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a> = decltype(_::iterator_cardinal_impl&lt;T&gt;())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_cardinal()</span> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>). </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<ul>
+<li>returns it's return type. Otherwise returns <span class="tt"><a class="el" href="group__eve__arch.html#gab707570aa2d35678c5cd5c686a994d57" title="Computes the expected cardinal of a given type.">expected_cardinal_t</a>&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a>&lt;T&gt;&gt;</span>.</li>
+</ul>
+<p><em>NOTE</em>: for <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> we return expected_cardinal.</p>
+<p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/iterator_cardinal.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> iterator_cardinal_v = iterator_cardinal&lt;T&gt;::value;</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga4a03242c42306d4595845cb329d5d7ec" name="ga4a03242c42306d4595845cb329d5d7ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4a03242c42306d4595845cb329d5d7ec">&#9670;&#160;</a></span>max_lanes_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga4a03242c42306d4595845cb329d5d7ec">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The cardinal type of the maximum lane count of given wide or scalar types. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Ts</td><td>Types to process </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaae6fbba5b56b9fab940a05b444c15e6f" name="gaae6fbba5b56b9fab940a05b444c15e6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae6fbba5b56b9fab940a05b444c15e6f">&#9670;&#160;</a></span>value_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>A meta function for getting an associated value_type for a relaxed iterator/range. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t&lt;T&gt;</a> is computed as follows:</p><ul>
+<li>If T has begin/end - <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> for return type of begin</li>
+<li>If T is std::iterator -&gt; returns iterator_traits&lt;T&gt;::value_type</li>
+<li>If T has nested <span class="tt">value_type</span> -&gt; returns it</li>
+<li>If T is a product type and all elements have <a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a> defined for them -</li>
+<li><a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> for the individual product types.</li>
+<li>Otherwise it's undefined.</li>
+</ul>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p>
+
+</div>
+</div>
+<a id="ga55234286d380ec9a9baef96a65649356" name="ga55234286d380ec9a9baef96a65649356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga55234286d380ec9a9baef96a65649356">&#9670;&#160;</a></span>wide_value_type_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t</a>&lt;T&gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/wide_value_type.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#ga55234286d380ec9a9baef96a65649356">wide_value_type_t</a> = as_wide_t&lt;value_type_t&lt;T&gt;, <a class="code hl_typedef" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t&lt;T&gt;</a>&gt;</div>
+<div class="ttc" id="agroup__eve__traits_html_ga331d84fa4b64e5deb329b1a09d60c747"><div class="ttname"><a href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a></div><div class="ttdeci">decltype(_::iterator_cardinal_impl&lt; T &gt;()) iterator_cardinal_t</div><div class="ttdoc">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static fu...</div><div class="ttdef"><b>Definition</b> iterator_cardinal.hpp:49</div></div>
+<div class="ttc" id="agroup__eve__traits_html_ga55234286d380ec9a9baef96a65649356"><div class="ttname"><a href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a></div><div class="ttdeci">as_wide_t&lt; value_type_t&lt; T &gt;, iterator_cardinal_t&lt; T &gt; &gt; wide_value_type_t</div><div class="ttdef"><b>Definition</b> wide_value_type.hpp:33</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gaa29d8cb3ef4de3080fef8b6277614d92" name="gaa29d8cb3ef4de3080fef8b6277614d92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa29d8cb3ef4de3080fef8b6277614d92">&#9670;&#160;</a></span>max_lanes_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Ts&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::max_lanes_v = _::compute_max_lanes&lt;Ts...&gt;()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A meta function for getting a maximum lane count of given wide or scalar types. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Ts</td><td>Types to process </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga6e8aacb30e0e7798a5cf8e30f9ace681" name="ga6e8aacb30e0e7798a5cf8e30f9ace681"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6e8aacb30e0e7798a5cf8e30f9ace681">&#9670;&#160;</a></span>max_scalar_size_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t eve::max_scalar_size_v</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__reductions_ga718f20d4004a2d3a409bfcfda289ba34.html#ga718f20d4004a2d3a409bfcfda289ba34">kumi::max_flat</a>( kumi::as_tuple_t&lt;T&gt;{}</div>
+<div class="line">                , [](<span class="keyword">auto</span> m) { <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(m); }</div>
+<div class="line">                )</div>
+<div class="ttc" id="agroup__kumi__reductions_ga718f20d4004a2d3a409bfcfda289ba34_html_ga718f20d4004a2d3a409bfcfda289ba34"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__reductions_ga718f20d4004a2d3a409bfcfda289ba34.html#ga718f20d4004a2d3a409bfcfda289ba34">kumi::max_flat</a></div><div class="ttdeci">constexpr max_flat_t max_flat</div></div>
+</div><!-- fragment -->
+<p>A meta function for getting a maximum size of scalar. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<pre class="fragment">   For a product type returns max size of individual fields.
+   Otherwise returns sizeof(T)
+</pre><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/max_scalar_size.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

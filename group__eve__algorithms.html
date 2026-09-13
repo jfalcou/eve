@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -119,32 +121,33 @@ $(function(){initNavTree('group__eve__algorithms.html','',''); });
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Topics</a> &#124;
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#groups">Contents</a>  </div>
   <div class="headertitle"><div class="title">Algorithms and Views <div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This module provides implementation of SIMD versions of some std ranges algorithms. Take care that some prerequisite and syntaxes are not fully standard conformant</p>
+<div class="textblock"><p>SIMD versions of the standard range-based algorithms. </p>
+<p>An algorithm of this module processes its data with SIMD operations, through <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>, with the loop, the alignment and the tail handled by the library. A call looks like its <span class="tt">std::ranges</span> counterpart, and the callable receives SIMD values in place of scalars:</p>
+<div class="fragment"><div class="line">std::vector&lt;float&gt; in(1024), out(1024);</div>
+<div class="line"><a class="code hl_variable" href="group__eve__algos.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a>(in, out, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x * x; });</div>
+<div class="ttc" id="agroup__eve__algos_html_gafac4ab5cfc7a92076d9fc87346b8180a"><div class="ttname"><a href="group__eve__algos.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a></div><div class="ttdeci">constexpr auto transform_to</div><div class="ttdoc">SIMD version of std::transform.</div><div class="ttdef"><b>Definition</b> transform.hpp:112</div></div>
+</div><!-- fragment --><p>Two things differ from the standard:</p>
+<ul>
+<li>an algorithm takes ranges, never an iterator pair, which <span class="tt">eve::algo::as_range</span> turns into a range;</li>
+<li>the callable is called on <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> values of any cardinal, so it is written for a SIMD value and never for a scalar alone.</li>
+</ul>
 <p><b>Required header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span> </div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-groups" class="groupheader"><a id="groups" name="groups"></a>
-Topics</h2></td></tr>
-<tr class="memitem:eve_5Falgo_5Ftraits" id="r_eve_5Falgo_5Ftraits"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__traits.html">AlgoTraits</a></td></tr>
-<tr class="memdesc:group__eve__algo__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Different customisation for algorithms. <br /></td></tr>
+Contents</h2></td></tr>
 <tr class="memitem:eve_5Falgos" id="r_eve_5Falgos"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algos.html">Algorithms</a></td></tr>
-<tr class="memdesc:group__eve__algos"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides SIMD implementation of standard algorithms. <br /></td></tr>
+<tr class="memdesc:group__eve__algos"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD implementations of the standard algorithms. <br /></td></tr>
 <tr class="memitem:eve_5Falgo_5Fconcepts" id="r_eve_5Falgo_5Fconcepts"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__concepts.html">Algorithms Concepts</a></td></tr>
-<tr class="memdesc:group__eve__algo__concepts"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides Concepts for algorithms and related components. <br /></td></tr>
+<tr class="memdesc:group__eve__algo__concepts"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concepts a range or an iterator satisfies to enter an algorithm, and the types that model them. <br /></td></tr>
+<tr class="memitem:eve_5Falgo_5Ftraits" id="r_eve_5Falgo_5Ftraits"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__traits.html">Options</a></td></tr>
+<tr class="memdesc:group__eve__algo__traits"><td class="mdescLeft">&#160;</td><td class="mdescRight">Options that tune how an algorithm runs. <br /></td></tr>
 <tr class="memitem:eve_5Fviews" id="r_eve_5Fviews"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="group__eve__views.html">Views</a></td></tr>
-<tr class="memdesc:group__eve__views"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides views to work with SIMD algorithms. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:eve_3A_3Aalgo_3A_3Arange_5Fref_5Fwrapper_3C_20Rng_20_3E" id="r_eve_3A_3Aalgo_3A_3Arange_5Fref_5Fwrapper_3C_20Rng_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html">eve::algo::range_ref_wrapper&lt; Rng &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a <a class="el" href="concepteve_1_1algo_1_1non__owning__range.html" title="a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...">non_owning_range</a> wrapper around owning range. Should be created via <span class="tt"><a class="el" href="group__eve__algo__concepts_gab9087b01917ce8f9ebe656e5a0c0356d.html#gab9087b01917ce8f9ebe656e5a0c0356d" title="for a non_owning_range returns it, otherwise returns a range_ref_wrapper.">range_ref</a></span>  <a href="structeve_1_1algo_1_1range__ref__wrapper.html#details">More...</a><br /></td></tr>
-<tr class="memitem:eve_3A_3Aalgo_3A_3Aptr_5Fiterator_3C_20Ptr_2C_20Cardinal_20_3E" id="r_eve_3A_3Aalgo_3A_3Aptr_5Fiterator_3C_20Ptr_2C_20Cardinal_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1ptr__iterator.html">eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An eve iterator on top of pointer or aligned pointer.  <a href="structeve_1_1algo_1_1ptr__iterator.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:group__eve__views"><td class="mdescLeft">&#160;</td><td class="mdescRight">Views that adapt a range for an algorithm without copying it. <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

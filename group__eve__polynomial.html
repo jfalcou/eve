@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,27 +126,787 @@ $(function(){initNavTree('group__eve__polynomial.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span> </div>
+<div class="textblock"><p>This module provides implementation for scalar and SIMD versions of polynomial evaluation functions. </p>
+<p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span> </div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga25250a7749320a35fdf49821e75124fa" id="r_ga25250a7749320a35fdf49821e75124fa"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga25250a7749320a35fdf49821e75124fa.html#ga25250a7749320a35fdf49821e75124fa">eve::newton</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;newton_t&gt;</td></tr>
+<tr class="memitem:ga25250a7749320a35fdf49821e75124fa" id="r_ga25250a7749320a35fdf49821e75124fa"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga25250a7749320a35fdf49821e75124fa">eve::newton</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;newton_t&gt;</td></tr>
 <tr class="memdesc:ga25250a7749320a35fdf49821e75124fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement the Newton scheme to evaluate polynomials.  <br /></td></tr>
-<tr class="memitem:ga0a8064a3bf2a0b02a5aab69f12ac48c4" id="r_ga0a8064a3bf2a0b02a5aab69f12ac48c4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga0a8064a3bf2a0b02a5aab69f12ac48c4.html#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;abel_t&gt;</td></tr>
+<tr class="memitem:ga0a8064a3bf2a0b02a5aab69f12ac48c4" id="r_ga0a8064a3bf2a0b02a5aab69f12ac48c4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;abel_t&gt;</td></tr>
 <tr class="memdesc:ga0a8064a3bf2a0b02a5aab69f12ac48c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the value of the Abel function of order <span class="tt">n</span> at <span class="tt">x</span>: \(x(x-an)^{n-1}\). for positive integer <span class="tt">n</span> it is Abel polynomial.  <br /></td></tr>
-<tr class="memitem:ga654af420c26859a9b088461f2b49d336" id="r_ga654af420c26859a9b088461f2b49d336"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga654af420c26859a9b088461f2b49d336.html#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gegenbauer_t&gt;</td></tr>
+<tr class="memitem:ga654af420c26859a9b088461f2b49d336" id="r_ga654af420c26859a9b088461f2b49d336"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gegenbauer_t&gt;</td></tr>
 <tr class="memdesc:ga654af420c26859a9b088461f2b49d336"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing the value of a gegenbauer polynomial \( \mathbf{C}_n^\lambda(x)\).  <br /></td></tr>
-<tr class="memitem:ga6cb61eb743e4ac43c44bd0b330f8a8c9" id="r_ga6cb61eb743e4ac43c44bd0b330f8a8c9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga6cb61eb743e4ac43c44bd0b330f8a8c9.html#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;hermite_t&gt;</td></tr>
+<tr class="memitem:ga6cb61eb743e4ac43c44bd0b330f8a8c9" id="r_ga6cb61eb743e4ac43c44bd0b330f8a8c9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;hermite_t&gt;</td></tr>
 <tr class="memdesc:ga6cb61eb743e4ac43c44bd0b330f8a8c9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing the value of the 'physicists' Hermite polynomial of order <span class="tt">n</span> at <span class="tt">x</span>:  <br /></td></tr>
-<tr class="memitem:ga0e8517a2ade493151ddd04defc631971" id="r_ga0e8517a2ade493151ddd04defc631971"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga0e8517a2ade493151ddd04defc631971.html#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_t&gt;</td></tr>
+<tr class="memitem:ga0e8517a2ade493151ddd04defc631971" id="r_ga0e8517a2ade493151ddd04defc631971"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_t&gt;</td></tr>
 <tr class="memdesc:ga0e8517a2ade493151ddd04defc631971"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing the value of the Jacobi polynomials \(P^{\alpha, \beta}_n(x)\).  <br /></td></tr>
-<tr class="memitem:ga79168b37417f76520ad0cf3e7cdef489" id="r_ga79168b37417f76520ad0cf3e7cdef489"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga79168b37417f76520ad0cf3e7cdef489.html#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;laguerre_t&gt;</td></tr>
+<tr class="memitem:ga79168b37417f76520ad0cf3e7cdef489" id="r_ga79168b37417f76520ad0cf3e7cdef489"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;laguerre_t&gt;</td></tr>
 <tr class="memdesc:ga79168b37417f76520ad0cf3e7cdef489"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">strict_elementwise_callable</span> object computing the value of the Laguerre and associated Laguerre polynomials of order <span class="tt">n</span> at <span class="tt">x</span>:  <br /></td></tr>
-<tr class="memitem:ga669b4f63c4de40bd3712f90a301df477" id="r_ga669b4f63c4de40bd3712f90a301df477"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga669b4f63c4de40bd3712f90a301df477.html#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;legendre_t&gt;</td></tr>
+<tr class="memitem:ga669b4f63c4de40bd3712f90a301df477" id="r_ga669b4f63c4de40bd3712f90a301df477"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;legendre_t&gt;</td></tr>
 <tr class="memdesc:ga669b4f63c4de40bd3712f90a301df477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the value of the Legendre and associated Legendre polynomials of order <span class="tt">n</span> at <span class="tt">x</span>:  <br /></td></tr>
-<tr class="memitem:ga76ed546859e8fc7ab78c7a998d64faa3" id="r_ga76ed546859e8fc7ab78c7a998d64faa3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__polynomial_ga76ed546859e8fc7ab78c7a998d64faa3.html#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebytchev_t&gt;</td></tr>
+<tr class="memitem:ga76ed546859e8fc7ab78c7a998d64faa3" id="r_ga76ed546859e8fc7ab78c7a998d64faa3"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebytchev_t&gt;</td></tr>
 <tr class="memdesc:ga76ed546859e8fc7ab78c7a998d64faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the value of the Tchebytchev polynomial of order <span class="tt">n</span> at <span class="tt">x</span>:  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga0a8064a3bf2a0b02a5aab69f12ac48c4" name="ga0a8064a3bf2a0b02a5aab69f12ac48c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">&#9670;&#160;</a></span>abel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::abel = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;abel_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the value of the Abel function of order <span class="tt">n</span> at <span class="tt">x</span>: \(x(x-an)^{n-1}\). for positive integer <span class="tt">n</span> it is Abel polynomial. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">abel</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> a)                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">abel</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> a) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">abel</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> a)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
+<div class="ttc" id="aconcepteve_1_1integral__value_html"><div class="ttname"><a href="concepteve_1_1integral__value.html">eve::integral_value</a></div><div class="ttdoc">The concept integral_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:51</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga0a8064a3bf2a0b02a5aab69f12ac48c4"><div class="ttname"><a href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a></div><div class="ttdeci">constexpr auto abel</div><div class="ttdoc">Computes the value of the Abel function of order n at x: . for positive integer n it is Abel polynomi...</div><div class="ttdef"><b>Definition</b> abel.hpp:74</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a></li>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+<li><span class="tt">a</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>1.The value of the polynomial at <span class="tt">x</span> is returned.</p><ol type="1">
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Abel_polynomials">Wikipedia: Abel Polynomials</a></li>
+<li><a href="https://mathworld.wolfram.com/AbelPolynomial.html">Wolfram MathWorld: Abel Polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wx = {-1.0f, 0.0f, 1.0f, 2.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wa = {0.0f, 1.0f, 2.0f, 3.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wn = {0, 1, 2, 3};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wx                               = &quot;</span> &lt;&lt; wx &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wa                               = &quot;</span> &lt;&lt; wa&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wn                               = &quot;</span> &lt;&lt; wn &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; abel(wn, wx, wa)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a>(wn, wx, wa) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; abel(wa, wx, wa)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a>(wa, wx, wa) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; abel[ignore_last(2)](wa, wx, wa) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wa, wx, wa) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; abel[wx != 2.0f](wa, wx, wa)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0a8064a3bf2a0b02a5aab69f12ac48c4">eve::abel</a>[wx != 2.0f](wa, wx, wa) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga654af420c26859a9b088461f2b49d336" name="ga654af420c26859a9b088461f2b49d336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga654af420c26859a9b088461f2b49d336">&#9670;&#160;</a></span>gegenbauer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::gegenbauer = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;gegenbauer_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> object computing the value of a gegenbauer polynomial \( \mathbf{C}_n^\lambda(x)\). </p>
+<p><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">gegenbauer</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> lambda,</div>
+<div class="line">                            <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                                                    <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">gegenbauer</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> lambda,</div>
+<div class="line">                                                      <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">gegenbauer</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> lambda,</div>
+<div class="line">                                                   <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                             <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga654af420c26859a9b088461f2b49d336"><div class="ttname"><a href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a></div><div class="ttdeci">constexpr auto gegenbauer</div><div class="ttdoc">strict_elementwise_callable object computing the value of a gegenbauer polynomial .</div><div class="ttdef"><b>Definition</b> gegenbauer.hpp:95</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span>: <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral argument</a>.</li>
+<li><span class="tt">lambda</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>. Must be greater than \(-\frac12\).</li>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li><p class="startli">The value of \( \mathbf{C}_n^\lambda(x)\) is returned.</p>
+<p class="startli">The Gegenbauer polynomials are a sequence of orthogonal polynomials relative to \((1-x^2)^{\lambda-1/2}\) on the \([-1, +1]\) interval satisfying the following recurrence relation:</p><ul>
+<li>\( \mathbf{C}_0^\lambda(x) = 1\).</li>
+<li>\( \mathbf{C}_1^\lambda(x) = 2\lambda x\).</li>
+<li>\( \mathbf{C}_n^\lambda(x) = \left[(2x+\lambda-1)\mathbf{C}_{n-1}^\lambda(x) -
+           (n+2\lambda-2)\mathbf{C}_{n-2}^\lambda(x)\right]/n\).</li>
+</ul>
+</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Gegenbauer_polynomials">Wikipedia: Gegenbauer polynomials</a></li>
+<li><a href="https://mathworld.wolfram.com/GegenbauerPolynomial.html">Wolfram MathWorld: Gegenbauer polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <span class="keywordtype">double</span>    l(-3.0/8.0);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                  = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                   = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- l                                   = &quot;</span> &lt;&lt; l  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer[ignore_last(2)](n, l, xd)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer[n &gt; 3](n, l, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>[n &gt; 3](n, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(3, l, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(3, l, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; gegenbauer(n, l, 0.3)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga654af420c26859a9b088461f2b49d336">eve::gegenbauer</a>(n, l, 0.3) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6cb61eb743e4ac43c44bd0b330f8a8c9" name="ga6cb61eb743e4ac43c44bd0b330f8a8c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">&#9670;&#160;</a></span>hermite</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::hermite = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;hermite_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> object computing the value of the 'physicists' Hermite polynomial of order <span class="tt">n</span> at <span class="tt">x</span>: </p>
+<p>The physicists Hermite polynomials are a sequence of orthogonal polynomials relative to \(e^{-x^2}\) on the \([-\infty, +\infty]\) interval satisfying the following recurrence relation:</p><ul>
+<li>\( \mathbf{H}_0(x) = 1\).</li>
+<li>\( \mathbf{H}_1(x) = 2x\).</li>
+<li>\( \mathbf{H}_n(x) = 2x\mathbf{H}_{n-1}(x) -2(n-1)\mathbf{H}_{n-2}x\).</li>
+</ul>
+<h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">hermite</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">hermite</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">hermite</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic option</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">hermite</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                         <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> hn, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> hnm1)                      <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga6cb61eb743e4ac43c44bd0b330f8a8c9"><div class="ttname"><a href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a></div><div class="ttdeci">constexpr auto hermite</div><div class="ttdoc">strict_elementwise_callable object computing the value of the &#39;physicists&#39; Hermite polynomial of orde...</div><div class="ttdef"><b>Definition</b> hermite.hpp:108</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span>: <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral positive argument</a>.</li>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the 'physicists' hermite polynomial \( \displaystyle \mathbf{H}_n(x) = (-1)^n e^{x^2}\frac{d}{dx^n}e^{-x^2}\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>implements the three terms recurrence relation for the physicists Hermite polynomials, \(\displaystyle \mbox{H}_{n+1} = (2*x)\mbox{H}_{n}-2*n\mbox{H}_{n-1}\). This call can be used to create a sequence of values evaluated at the same <span class="tt">x</span>, and for rising <span class="tt">n</span>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/18.3">DLMF: Classical Orthogonal Polynomials</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/hermite">C++ standard reference: hermite</a></li>
+<li><a href="https://mathworld.wolfram.com/HermitePolynomial.html">Wolfram MathWorld: Hermite Polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd = {0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n  = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x(2.0);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                             = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                              = &quot;</span> &lt;&lt; n &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(n, xd)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(n, xd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite[ignore_last(2)](n, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite[n != 4](n, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>[n != 4](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>wide_ft =  <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  std::array&lt;wide_ft, 8&gt; h;</div>
+<div class="line">  h[0] = <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(0, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[0]                           = &quot;</span> &lt;&lt;  h[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  h[1] = <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(1, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[1]                           = &quot;</span> &lt;&lt;  h[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
+<div class="line">  {</div>
+<div class="line">    h[i] = <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>[eve::successor](i-1, xd, h[i-1], h[i-2]);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; h[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]                           = &quot;</span> &lt;&lt;  h[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hermite(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga6cb61eb743e4ac43c44bd0b330f8a8c9">eve::hermite</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga0e8517a2ade493151ddd04defc631971" name="ga0e8517a2ade493151ddd04defc631971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0e8517a2ade493151ddd04defc631971">&#9670;&#160;</a></span>jacobi</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::jacobi = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> object computing the value of the Jacobi polynomials \(P^{\alpha, \beta}_n(x)\). </p>
+<p><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">jacobi</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                            <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__special.html#ga82b53a249d6073de3db11e4aa3792333">beta</a>)                         <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">jacobi</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                                   <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha,  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__special.html#ga82b53a249d6073de3db11e4aa3792333">beta</a>) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">jacobi</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                                <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha,  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__special.html#ga82b53a249d6073de3db11e4aa3792333">beta</a>)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga0e8517a2ade493151ddd04defc631971"><div class="ttname"><a href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a></div><div class="ttdeci">constexpr auto jacobi</div><div class="ttdoc">strict_elementwise_callable object computing the value of the Jacobi polynomials .</div><div class="ttdef"><b>Definition</b> jacobi.hpp:92</div></div>
+<div class="ttc" id="agroup__eve__special_html_ga82b53a249d6073de3db11e4aa3792333"><div class="ttname"><a href="group__eve__special.html#ga82b53a249d6073de3db11e4aa3792333">eve::beta</a></div><div class="ttdeci">constexpr auto beta</div><div class="ttdoc">elementwise_callable object computing the beta function: .</div><div class="ttdef"><b>Definition</b> beta.hpp:79</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span> : <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral positive argument</a>. (returns a NaN if <span class="tt">n</span> does not fulfill these conditions).</li>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+<li><span class="tt">alpha</span>, <span class="tt"><a class="el" href="group__eve__special.html#ga82b53a249d6073de3db11e4aa3792333" title="elementwise_callable object computing the beta function: .">beta</a></span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>The Jacobi polynomials are a sequence of orthogonal polynomials relative to \((1-x)^{\alpha}(1+x)^{\beta}\), for \(\alpha \) and \(\beta \) greater than -1, on the \([-1, +1]\) interval.</p>
+<p>They can be defined via a Rodrigues formula:  \(\displaystyle P^{\alpha, \beta}_n(x) = \frac{(-1)^n}{2^n n!}(1-x)^{-\alpha}
+    (1+x)^{-\beta} \frac{d}{dx^n}\left\{ (1-x)^{\alpha}(1+x)^{\beta}(1-x^2)^n \right\}\).</p>
+<ol type="1">
+<li>The value of the polynomial \(P^{\alpha, \beta}_n(x)\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/18.3">DLMF: Classical Orthogonal Polynomials</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Jacobi_polynomials">Wikipedia:Jacobi polynomial</a></li>
+<li><a href="https://mathworld.wolfram.com/JacobiPolynomial.html">Wolfram MathWorld:Jacobi Polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n1{0.5, -3.0, 2.0, 3.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> aa{-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0};</div>
+<div class="line">  <span class="keywordtype">double</span>    x(0.5);</div>
+<div class="line">  <span class="keywordtype">double</span>    a(-3/8.0);</div>
+<div class="line">  <span class="keywordtype">double</span>    b(0.25);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                 = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                  = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n1                                 = &quot;</span> &lt;&lt; n1  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                  = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- aa                                 = &quot;</span> &lt;&lt; aa &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- a                                  = &quot;</span> &lt;&lt; a  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- b                                  = &quot;</span> &lt;&lt; b  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(n, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi[ignore_last(2)](n, a, b, xd)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi[n &gt; 3](n, a, b, xd)         = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>[n &gt; 3](n, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(4, a, b, xd)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(4, a, b, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(4, a, b, x)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(4, a, b, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b 0.5)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(n, a, b, 0.5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, a, b, x)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(n, a, b, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n, aa, b, x)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(n, aa, b, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(n1, a, b, x)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(n1, a, b, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi(-3.0, a, b, x)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga0e8517a2ade493151ddd04defc631971">eve::jacobi</a>(-3.0, a, b, x)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga79168b37417f76520ad0cf3e7cdef489" name="ga79168b37417f76520ad0cf3e7cdef489"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga79168b37417f76520ad0cf3e7cdef489">&#9670;&#160;</a></span>laguerre</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::laguerre = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;laguerre_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt">strict_elementwise_callable</span> object computing the value of the Laguerre and associated Laguerre polynomials of order <span class="tt">n</span> at <span class="tt">x</span>: </p>
+<ul>
+<li>The Laguerre polynomial of order n is given by  \(\displaystyle \mbox{L}_{n}(x)
+     = \frac{e^x}{n!}\frac{d^n}{dx^n}(x^ne^{-x})\).</li>
+<li>The associated laguerre polynomial is given by  \(\displaystyle \mbox{L}_{n}^{m} =
+     (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\).</li>
+</ul>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">laguerre</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                 <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">laguerre</a>[associated](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                            <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">laguerre</a>[successor](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> lnm1) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">laguerre</a>[successor](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> lnm1) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">laguerre</a>[associated][successor](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga79168b37417f76520ad0cf3e7cdef489"><div class="ttname"><a href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a></div><div class="ttdeci">constexpr auto laguerre</div><div class="ttdoc">strict_elementwise_callable object computing the value of the Laguerre and associated Laguerre polyno...</div><div class="ttdef"><b>Definition</b> laguerre.hpp:99</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span>, <span class="tt">m</span>, <span class="tt">l</span>, <span class="tt">ln</span>, <span class="tt">lnm1</span> : <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral positive arguments</a>.</li>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the Laguerre polynomial of order <span class="tt">n</span> at <span class="tt">x</span> is returned.</li>
+<li>The value of the associated Laguerre polynomial of orders <span class="tt">n</span>, <span class="tt">m</span> at <span class="tt">x</span> is returned. constexpr auto <a class="el" href="#ga669b4f63c4de40bd3712f90a301df477" title="Computes the value of the Legendre and associated Legendre polynomials of order n at x:">legendre(integral_value auto n, floating_value auto x)</a> noexcept; //1</li>
+<li>implements the three term recurrence relation for the Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1} = \left((2n+1-x)\mbox{L}_{n}-n\mbox{L}_{n-1}\right)/(n+1)\)</li>
+<li>implements the three term recurrence relation for the associated Laguerre polynomials, \(\displaystyle \mbox{L}_{n+1}^m = \left((m+2n+1-x)\mbox{L}_{n}^{m}-(m+n)\mbox{L}_{n-1}^{m}\right)/(n+1)\)</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/18.3">DLMF: Classical Orthogonal Polynomials</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/laguerre">C++ standard reference: laguerre</a></li>
+<li><a href="https://mathworld.wolfram.com/LaguerrePolynomial.html">Wolfram MathWorld: Laguerre Polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> m{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <span class="keywordtype">double</span>    x(0.5);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- m                                = &quot;</span> &lt;&lt; m  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                               = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(n, xd)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>(n, xd)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[ignore_last(2)](n, xd)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, xd)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[n &gt; 3](n, xd)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[n &gt; 3](n, xd)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(3, xd)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>(3, xd)  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre(n, x)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[associated](n, m, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[eve::associated](n, m, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[associated](3, m, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[eve::associated](3, m, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[associated](n, 3, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[eve::associated](n, 3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; laguerre[associated](n, m, x)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga79168b37417f76520ad0cf3e7cdef489">eve::laguerre</a>[eve::associated](n, m, x) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga669b4f63c4de40bd3712f90a301df477" name="ga669b4f63c4de40bd3712f90a301df477"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga669b4f63c4de40bd3712f90a301df477">&#9670;&#160;</a></span>legendre</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::legendre = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;legendre_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the value of the Legendre and associated Legendre polynomials of order <span class="tt">n</span> at <span class="tt">x</span>: </p>
+<ul>
+<li>The Legendre polynomial of order n is given by  \(\displaystyle \mbox{L}_{n}(x)
+     = \frac{e^x}{n!}\frac{d^n}{dx^n}(x^ne^{-x})\).</li>
+<li>The associated legendre polynomial is given by  \(\displaystyle \mbox{L}_{n}^{m} =
+     (-1)^m\frac{d^m}{dx^m}\mbox{L}_{n+m}(x)\).</li>
+</ul>
+<p><b>Defined in header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)             <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[p_kind](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[q_kind](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)     <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[associated](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[condon_shortley](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n,</div>
+<div class="line">                                            <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[sph](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> theta)                           <span class="keyword">noexcept</span>; <span class="comment">// 5</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[successor](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> lnm1)   <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">legendre</a>[successor](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> l,<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> m,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x,</div>
+<div class="line">                                      <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> ln, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> lnm1)   <span class="keyword">noexcept</span>; <span class="comment">// 6</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga669b4f63c4de40bd3712f90a301df477"><div class="ttname"><a href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a></div><div class="ttdeci">constexpr auto legendre</div><div class="ttdoc">Computes the value of the Legendre and associated Legendre polynomials of order n at x:</div><div class="ttdef"><b>Definition</b> legendre.hpp:124</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span>, <span class="tt">m</span>, <span class="tt">ln</span>, <span class="tt">lnm1</span> : <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral positive arguments</a>.</li>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating argument</a>. (prefer double elements for accuracy)</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the Legendre polynomial of order <span class="tt">n</span> at <span class="tt">x</span> is returned.</li>
+<li>The value of the Legendre polynomial of order <span class="tt">n</span> at <span class="tt">x</span> of the second kind is returned.</li>
+<li>The value of the associated legendre polynomial of orders <span class="tt">n</span>, <span class="tt">m</span> at <span class="tt">x</span> is returned.</li>
+<li>multiplies the associated legendre polynomial value by the Condon-Shortley phase \((-1)^m\) to match the definition given by Abramowitz and Stegun (8.6.6). This is currently the version implemented in boost::math.</li>
+<li>returns the spherical associated Legendre function of degree l, order m, and polar angle theta in radian (that is the classical spherical harmonic with \(\phi = 0\)), i.e. \(\displaystyle (-1)^m\frac{(2l+1)(l-m)!}{4\pi(l+m)!}\mbox{P}^m_{l}(\cos\theta)\)</li>
+<li>The <span class="tt">successor</span> option implements the three term recurrence relation for the (associated) Legendre polynomials,  \(\displaystyle \mbox{P}^m_{l+1} =
+        \left((2l+1)\mbox{P}^m_{l}(x)-l\mbox{P}^m_{l-1}(x)\right)/(l+m+1)\) ( \(m = 0\) and no \(m\) in call are equivalent here).</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/18.3">DLMF: Classical Orthogonal Polynomials</a></li>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/legendre">C++ standard reference: legendre</a></li>
+<li><a href="https://mathworld.wolfram.com/LegendrePolynomial.html">Wolfram MathWorld: Legendre Polynomial</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n = {0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd = {-0.1, -0.2, -0.3, -0.5, 0.0, 0.2, 0.3, 2.0};</div>
+<div class="line">  <span class="keywordtype">double</span>    x(0.5);</div>
+<div class="line">  <span class="keywordtype">double</span>    z(1);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                 = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                 = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- z                                 = &quot;</span> &lt;&lt; z  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(n, xd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[ignore_last(2)](n, xd)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[n &gt; 3](n, xd)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[n &gt; 3](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(3, xd)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(n, 0.5)                  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>(n, 0.5) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre(n, x)                    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[p_kind](n, xd)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[eve::p_kind](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[q_kind](n, xd)           = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[eve::q_kind](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[spherical](n, z, xd)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga51996d29b0b4c9eeb8514d7742dc4432">eve::spherical</a>](n, z, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[associated(n, z, xd)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[eve::associated](n, z, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; legendre[condon_shortley(n, z, xd = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga669b4f63c4de40bd3712f90a301df477">eve::legendre</a>[eve::condon_shortley](n, z, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga51996d29b0b4c9eeb8514d7742dc4432"><div class="ttname"><a href="group__eve__core__decorators.html#ga51996d29b0b4c9eeb8514d7742dc4432">eve::spherical</a></div><div class="ttdeci">constexpr auto spherical</div><div class="ttdoc">Selects the spherical form of a Bessel function.</div><div class="ttdef"><b>Definition</b> core.hpp:97</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga25250a7749320a35fdf49821e75124fa" name="ga25250a7749320a35fdf49821e75124fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga25250a7749320a35fdf49821e75124fa">&#9670;&#160;</a></span>newton</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::newton = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;newton_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implement the Newton scheme to evaluate polynomials. </p>
+<p>If \((c_i)_{0\le i\le n-1}\) denotes the coefficients of the polynomial by decreasing power order, and \((m_i)_{0\le i\le n-2}\) the nodes, the Newton scheme evaluates the polynom \(p\) at \(x\) using the following formula :</p>
+<p>\(\qquad\displaystyle p(x) = (((c_0(x-m_0)+c_1)(x-m_1)+ ... )(x-m_{n-2}) + c_{n-1})\)</p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overloads</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">newton</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> ... cmi)         <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">newton</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, eve::coefficients ci</div>
+<div class="line">                                                eve::nodes <span class="keyword">auto</span> ni)                  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">newton</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">newton</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)        <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">newton</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<span class="comment">/*any of the above overloads*/</span>)                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaf3483e5e000367c812b507ed46399367"><div class="ttname"><a href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a></div><div class="ttdeci">constexpr auto pedantic</div><div class="ttdoc">Follows the corner cases of the corresponding standard function.</div><div class="ttdef"><b>Definition</b> core.hpp:91</div></div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga25250a7749320a35fdf49821e75124fa"><div class="ttname"><a href="#ga25250a7749320a35fdf49821e75124fa">eve::newton</a></div><div class="ttdeci">constexpr auto newton</div><div class="ttdoc">Implement the Newton scheme to evaluate polynomials.</div><div class="ttdef"><b>Definition</b> newton.hpp:116</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+<li><span class="tt">ci</span>: eve::coefficients tuple containing the coefficients by decreasing power order.</li>
+<li><span class="tt">cn</span>: eve::nodes tuple containing the nodes by decreasing power order.</li>
+<li><span class="tt">cni...</span>: all the coefficients followed by all the nodes, both in decreasing power order. The total number of values is to be odd. If s is this number, the (s+1)/2 first are taken as the coefs and the others are the nodes. Note that the values of the cmi are not necessarily floating but the non floating ones are to be scalar</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of the polynom at <span class="tt">x</span> is returned.</li>
+<li>same as the call with the elements of the tuples.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li><span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a>[<a class="el" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367" title="Follows the corner cases of the corresponding standard function.">pedantic</a>]</span> instead of <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma</a></span> is used in internal computations.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>If the coefficients or nodes are simd values of cardinal N, this means you simultaneously compute the values of N polynomials.<ul>
+<li>If x is scalar, the polynomials are all computed at the same point</li>
+<li>If x is simd, the nth polynomial is computed on the nth value of x</li>
+</ul>
+</dd></dl>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/math.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf([](<span class="keyword">auto</span> i, <span class="keyword">auto</span> c){ <span class="keywordflow">return</span> (1+<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>()))*(i-c/2);});</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> wtc{wf,2*wf,3*wf};</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> wtn{4*wf, 5*wf};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(10);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf  = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wtc = &quot;</span> &lt;&lt; wtc &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wtn = &quot;</span> &lt;&lt; wtn &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(wf,wf,2*wf,3*wf,4*wf,5*wf)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">eve::newton</a>(wf,wf,2*wf,3*wf,4*wf,5*wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton(wf,coefficients(wtc),coefficients(wtn))  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">eve::newton</a>(wf, eve::coefficients(wtc),eve::nodes(wtn)) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; newton[pedantic](wf,wf,2*wf,3*wf,4*wf, 5*wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga25250a7749320a35fdf49821e75124fa">eve::newton</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf,wf,2*wf,3*wf,4*wf, 5*wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructkumi_1_1tuple_html"><div class="ttname"><a href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a></div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga76ed546859e8fc7ab78c7a998d64faa3" name="ga76ed546859e8fc7ab78c7a998d64faa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga76ed546859e8fc7ab78c7a998d64faa3">&#9670;&#160;</a></span>tchebytchev</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::tchebytchev = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;tchebytchev_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the value of the Tchebytchev polynomial of order <span class="tt">n</span> at <span class="tt">x</span>: </p>
+<ul>
+<li>The Tchebytchev polynomial of order n is given by  \( \displaystyle \mbox{T}_{n}(x)
+     = \cos(n\arccos(x))\) on \([-1, +1]\)</li>
+</ul>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>(<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                           <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>[kind_1](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>[kind_2](<a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> n, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                  <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">tchebytchev</a>[successor](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> tn,</div>
+<div class="line">                                                                <a class="code hl_concept" href="concepteve_1_1integral__value.html">integral_value</a> <span class="keyword">auto</span> tnm1)            <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__polynomial_html_ga76ed546859e8fc7ab78c7a998d64faa3"><div class="ttname"><a href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a></div><div class="ttdeci">constexpr auto tchebytchev</div><div class="ttdoc">Computes the value of the Tchebytchev polynomial of order n at x:</div><div class="ttdef"><b>Definition</b> tchebytchev.hpp:100</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">n</span> : <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral positive arguments</a>. (note that negative values return a NaN)</li>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">real floating argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>1.The value of the polynomial at <span class="tt">x</span> is returned.</p><ol type="1">
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>evaluates the nth polynomial of tchebytchev of second kind \( \displaystyle U_n(x) =  \frac{\sin(n\arccos x)}{\sin(\arccos x)}\). on \([-1, +1]\).</li>
+<li>computes the value of \(T_{n+1}(x)\) knowing the values tn = \(T_n(x)\) and tnm1 = \(T_{n-1}(x)\), This call can be used to create a sequence of values evaluated at the same <span class="tt">x</span> and for rising <span class="tt">n</span>.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Chebyshev_polynomials">Wikipedia: Chebyshev_polynomials</a></li>
+<li><a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheFirstKind.html">Wolfram MathWorld: first kind</a></li>
+<li><a href="https://mathworld.wolfram.com/ChebyshevPolynomialoftheSecondKind.html">Wolfram MathWorld: second kind</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/polynomial.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> xd{0.5, -1.5, 0.1, -1.0, 19.0, 25.0, 21.5, 10000.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n{0, 1, 2, 3, 4, 5, 6, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> n1{0, -1, -2, -3, -4, -5, -6, -7};</div>
+<div class="line">  <span class="keywordtype">double</span> x(0.5);</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                      = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- n                                       = &quot;</span> &lt;&lt; n  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                       = &quot;</span> &lt;&lt; x  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[eve::ignore_last(2)](n, xd) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[n &gt; 3](n, xd)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[n &gt;  3](n, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(3, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(3, xd) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, 2.0)                     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, 2.0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(n, x)                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(n, x)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev[kind_2](n, xd)              = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[eve::kind_2](n, xd) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">using </span>wide_ft =  <span class="keyword">decltype</span>(xd);</div>
+<div class="line">  std::array&lt;wide_ft, 8&gt; t;</div>
+<div class="line">  t[0] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(0, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[0]                                    = &quot;</span> &lt;&lt;  t[0] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 0 &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(0, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  t[1] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(1, xd);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[1]                                    = &quot;</span> &lt;&lt;  t[1] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; 1 &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(1, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 2; i &lt;= 7; ++i)</div>
+<div class="line">  {</div>
+<div class="line">    t[i] = <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>[eve::successor](xd, t[i-1], t[i-2]);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; t[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]                                    = &quot;</span> &lt;&lt;  t[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; tchebytchev(&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;, xd)                      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga76ed546859e8fc7ab78c7a998d64faa3">eve::tchebytchev</a>(i, xd)   &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line"> }</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

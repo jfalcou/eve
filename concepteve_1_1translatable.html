@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,10 +126,9 @@ $(function(){initNavTree('concepteve_1_1translatable.html','',''); });
 
 <p>Determines if a type can be translated.  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/translation.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>This also covers non-translatable types as their translation target is themselves by default. </dd></dl>
+<div class="textblock"><p>Determines if a type can be translated. </p>
+<dl class="section note"><dt>Note</dt><dd>This also covers non-translatable types as their translation target is themselves by default. </dd></dl>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1translatable.html">translatable</a> = std::same_as&lt;typename translation_of&lt;T&gt;::type, T&gt;</div>

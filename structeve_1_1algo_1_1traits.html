@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -119,26 +121,58 @@ $(function(){initNavTree('structeve_1_1algo_1_1traits.html','','structeve_1_1alg
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="structeve_1_1algo_1_1traits-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">eve::algo::traits&lt; Settings &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__algo__traits.html">AlgoTraits</a></div></div></div>
+  <div class="headertitle"><div class="title">eve::algo::traits&lt; Settings &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__algo__traits__dev.html">Algorithm Traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>A compile time set of all the tuning parameters passed to the algorithm. These allow you to fine-tune the loops and not being stuck with our defaults.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/traits.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Settings&gt;<br />
-struct eve::algo::traits&lt; Settings &gt;</div><p>Unless you write your own algorithms like eve's, you probably won't need to use this class. If you do that, we suggest to looking at one of the algorithms from eve/module/algo/algo.</p>
-<p>When calling you just pass individual traits via [], i.e.</p>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="group__eve__algos_gadf0762ce0ad64c41ff1eb704a436894d.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>[<a class="code hl_variable" href="group__eve__algo__traits_ga03487a05ad7b38febedbf22e671dcf93.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a>][eve::algo::cosider_types&lt;double&gt;]()</div>
-<div class="ttc" id="agroup__eve__algo__traits_ga03487a05ad7b38febedbf22e671dcf93_html_ga03487a05ad7b38febedbf22e671dcf93"><div class="ttname"><a href="group__eve__algo__traits_ga03487a05ad7b38febedbf22e671dcf93.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdoc">NOTE: equivalent to no_aligning + no_unrolling + single_pass By default eve algorithms will assume th...</div><div class="ttdef"><b>Definition</b> traits.hpp:267</div></div>
-<div class="ttc" id="agroup__eve__algos_gadf0762ce0ad64c41ff1eb704a436894d_html_gadf0762ce0ad64c41ff1eb704a436894d"><div class="ttname"><a href="group__eve__algos_gadf0762ce0ad64c41ff1eb704a436894d.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition</b> find.hpp:130</div></div>
-</div><!-- fragment --><p>You can also pass traits struct: </p><div class="fragment"><div class="line"><a class="code hl_variable" href="group__eve__algos_gadf0762ce0ad64c41ff1eb704a436894d.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>[<a class="code hl_struct" href="structeve_1_1algo_1_1traits.html">eve::algo::traits</a>{<a class="code hl_variable" href="group__eve__algo__traits_ga03487a05ad7b38febedbf22e671dcf93.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a>, eve::algo::cosider_types&lt;double&gt;}]()</div>
-<div class="ttc" id="astructeve_1_1algo_1_1traits_html"><div class="ttname"><a href="structeve_1_1algo_1_1traits.html">eve::algo::traits</a></div><div class="ttdoc">A compile time set of all the tuning parameters passed to the algorithm. These allow you to fine-tune...</div><div class="ttdef"><b>Definition</b> traits.hpp:50</div></div>
-</div><!-- fragment --><p> This is useful for prebuilding traits (for example eve::algo::default_simple_algo_traits) </p>
-</div></div><!-- contents -->
+struct eve::algo::traits&lt; Settings &gt;</div><p>Compile time set of tuning parameters an algorithm accepts. </p>
+<div class="headerfile"><b>Header file</b> <code>#include &lt;eve/module/algo.hpp&gt;</code></div><div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Settings&gt;</div>
+<div class="line">  <span class="keyword">struct </span><a class="code hl_function" href="#a6a9c4c71cf91ec7fcb85865532c3c99b">traits</a> : Settings</div>
+<div class="line">  {</div>
+<div class="line">    <span class="keyword">template</span>&lt;rbr::concepts::option... Options&gt;</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">explicit</span> <a class="code hl_function" href="#a6a9c4c71cf91ec7fcb85865532c3c99b">traits</a>(Options&amp;&amp;... <a class="code hl_struct" href="structeve_1_1options.html">options</a>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Options&gt;</div>
+<div class="line">    <span class="keyword">constexpr</span> <a class="code hl_function" href="#a6a9c4c71cf91ec7fcb85865532c3c99b">traits</a>(rbr::settings&lt;Options...&gt; <span class="keyword">const</span>&amp; <a class="code hl_struct" href="structeve_1_1options.html">options</a>);</div>
+<div class="line">  };</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1algo_1_1traits_html_a6a9c4c71cf91ec7fcb85865532c3c99b"><div class="ttname"><a href="#a6a9c4c71cf91ec7fcb85865532c3c99b">eve::algo::traits::traits</a></div><div class="ttdeci">constexpr traits(Options &amp;&amp;... options)</div><div class="ttdoc">Builds a set from the traits named one by one.</div><div class="ttdef"><b>Definition</b> traits.hpp:114</div></div>
+<div class="ttc" id="astructeve_1_1options_html"><div class="ttname"><a href="structeve_1_1options.html">eve::options</a></div><div class="ttdoc">Wrapper class around bundle of options passed to eve::callable.</div><div class="ttdef"><b>Definition</b> supports.hpp:44</div></div>
+</div><!-- fragment --> </div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Settings</td><td>Deduced keyword settings, never spelled by hand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Every algorithm carries a default set and accepts traits between brackets. Naming them one at a time builds the set as the call is written:</p>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[<a class="code hl_variable" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">expensive_callable</a>][<a class="code hl_variable" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">consider_types&lt;double&gt;</a>](r, p);</div>
+<div class="ttc" id="agroup__eve__algo__consider__types_html_gaf48b5ce3d81ecae9190a95518e66c65d"><div class="ttname"><a href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a></div><div class="ttdeci">auto consider_types</div><div class="ttdef"><b>Definition</b> traits.hpp:256</div></div>
+<div class="ttc" id="agroup__eve__algo__expensive__callable_html_ga03487a05ad7b38febedbf22e671dcf93"><div class="ttname"><a href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdef"><b>Definition</b> traits.hpp:538</div></div>
+<div class="ttc" id="agroup__eve__algos_html_gadf0762ce0ad64c41ff1eb704a436894d"><div class="ttname"><a href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition</b> find.hpp:130</div></div>
+</div><!-- fragment --><p>A set gathers several traits in a single pair of brackets, which several calls can share:</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> tr = <a class="code hl_function" href="#a6a9c4c71cf91ec7fcb85865532c3c99b">traits</a>{<a class="code hl_variable" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">expensive_callable</a>, <a class="code hl_variable" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">consider_types&lt;double&gt;</a>};</div>
+<div class="line"><a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[tr](r, p);</div>
+<div class="line"><a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[tr](q, p);</div>
+</div><!-- fragment --><p>Traits a call passes override the algorithm's defaults. Those it leaves out keep their default value.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__traits__dev.html" title="Reading, rewriting and carrying a set of algorithm traits.">Algorithm Traits</a> to <a class="el" href="group__eve__memory.html#ga49de20d14b6d3133b2bc19a95b1af7bd" title="Callable object reading single value from memory.">read</a> a set from inside an algorithm. </dd></dl>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a6a9c4c71cf91ec7fcb85865532c3c99b" id="r_a6a9c4c71cf91ec7fcb85865532c3c99b"><td class="memTemplParams" colspan="2"><a id="a6a9c4c71cf91ec7fcb85865532c3c99b" name="a6a9c4c71cf91ec7fcb85865532c3c99b"></a>
+template&lt;rbr::concepts::option... Options&gt; </td></tr>
+<tr class="memitem:a6a9c4c71cf91ec7fcb85865532c3c99b template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><b>traits</b> (Options &amp;&amp;... <a class="el" href="structeve_1_1options.html">options</a>)</td></tr>
+<tr class="memdesc:a6a9c4c71cf91ec7fcb85865532c3c99b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a set from the traits named one by one. <br /></td></tr>
+<tr class="memitem:a48d3a9454b62e338621b595f7b59a385" id="r_a48d3a9454b62e338621b595f7b59a385"><td class="memTemplParams" colspan="2"><a id="a48d3a9454b62e338621b595f7b59a385" name="a48d3a9454b62e338621b595f7b59a385"></a>
+template&lt;typename... Options&gt; </td></tr>
+<tr class="memitem:a48d3a9454b62e338621b595f7b59a385 template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><b>traits</b> (rbr::settings&lt; Options... &gt; const &amp;<a class="el" href="structeve_1_1options.html">options</a>)</td></tr>
+<tr class="memdesc:a48d3a9454b62e338621b595f7b59a385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a set from an existing keyword settings object. <br /></td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- HTML footer for doxygen 1.8.20-->

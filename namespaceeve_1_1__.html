@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -145,17 +147,17 @@ $(function(){initNavTree('namespaceeve_1_1__.html','',''); });
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                                 = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu1                                 = &quot;</span> &lt;&lt; wu1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">                                                       </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wf0, wf1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wf0 != 0](wf0, wf1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wf0 != 0](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wu0, wu1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wu0, wu1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wu0 != 0](wu0, wu1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wu0 != 0](wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wi0, wi1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wi0, wi1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wi0 != 0](wi0, wi1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wi0 != 0](wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wf0, wf1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wf0 != 0](wf0, wf1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wf0 != 0](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wu0, wu1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wu0, wu1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wu0 != 0](wu0, wu1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wu0 != 0](wu0, wu1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values(wi0, wi1)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>(wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[ignore_last(2)](wi0, wi1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nb_values[wi0 != 0](wi0, wi1)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a>[wi0 != 0](wi0, wi1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315_html_ga6a445739414b920ec65978c6bbc5b315"><div class="ttname"><a href="group__eve__core__internal_ga6a445739414b920ec65978c6bbc5b315.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a></div><div class="ttdeci">constexpr auto nb_values</div><div class="ttdoc">elementwise_callable object computing the number of values representable in the type between the argu...</div><div class="ttdef"><b>Definition</b> nb_values.hpp:72</div></div>
+<div class="ttc" id="agroup__eve__core__internal_html_ga6a445739414b920ec65978c6bbc5b315"><div class="ttname"><a href="group__eve__core__internal.html#ga6a445739414b920ec65978c6bbc5b315">eve::nb_values</a></div><div class="ttdeci">constexpr auto nb_values</div><div class="ttdoc">elementwise_callable object computing the number of values representable in the type between the argu...</div><div class="ttdef"><b>Definition</b> nb_values.hpp:72</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> </div><table class="memberdecls">
@@ -167,8 +169,66 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aeabc5804d976435a5a0cbe79cec380ff" id="r_aeabc5804d976435a5a0cbe79cec380ff"><td class="memTemplParams" colspan="2">template&lt;typename T, callable_options O&gt; </td></tr>
-<tr class="memitem:aeabc5804d976435a5a0cbe79cec380ff template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespaceeve_1_1___aeabc5804d976435a5a0cbe79cec380ff.html#aeabc5804d976435a5a0cbe79cec380ff">ellint_rj_</a> (adl_helper_t const &amp;, cpu_ const &amp;, O const &amp;, T x, T y, T z, T p)</td></tr>
+<tr class="memitem:aeabc5804d976435a5a0cbe79cec380ff template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#aeabc5804d976435a5a0cbe79cec380ff">ellint_rj_</a> (adl_helper_t const &amp;, cpu_ const &amp;, O const &amp;, T x, T y, T z, T p)</td></tr>
 </table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="aeabc5804d976435a5a0cbe79cec380ff" name="aeabc5804d976435a5a0cbe79cec380ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeabc5804d976435a5a0cbe79cec380ff">&#9670;&#160;</a></span>ellint_rj_()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, callable_options O&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::_::ellint_rj_ </td>
+          <td>(</td>
+          <td class="paramtype">adl_helper_t const &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">cpu_ const &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">O const &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>z</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T</td>          <td class="paramname"><span class="paramname"><em>p</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>= <a class="el" href="group__eve__core__constants.html#ga5628ae5a0568eaa5e4672e3e63b6db35" title="Computes the constant .">mone(as(y_))</a>;</p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

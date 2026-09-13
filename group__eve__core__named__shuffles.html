@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -128,19 +130,388 @@ $(function(){initNavTree('group__eve__core__named__shuffles.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga43d76ccd08cc93ecbf6ebff44ca6321f" id="r_ga43d76ccd08cc93ecbf6ebff44ca6321f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_ga43d76ccd08cc93ecbf6ebff44ca6321f.html#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a> = _::named_shuffle_2&lt;blend_t&gt; {}</td></tr>
+<tr class="memitem:ga43d76ccd08cc93ecbf6ebff44ca6321f" id="r_ga43d76ccd08cc93ecbf6ebff44ca6321f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a> = _::named_shuffle_2&lt;blend_t&gt; {}</td></tr>
 <tr class="memdesc:ga43d76ccd08cc93ecbf6ebff44ca6321f"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for mixing 2 registers together, without changing positions.  <br /></td></tr>
-<tr class="memitem:ga9a82942f0d1facc72749788d545576fa" id="r_ga9a82942f0d1facc72749788d545576fa"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_ga9a82942f0d1facc72749788d545576fa.html#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a> = _::named_shuffle_1&lt;broadcast_lane_t&gt; {}</td></tr>
+<tr class="memitem:ga9a82942f0d1facc72749788d545576fa" id="r_ga9a82942f0d1facc72749788d545576fa"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a> = _::named_shuffle_1&lt;broadcast_lane_t&gt; {}</td></tr>
 <tr class="memdesc:ga9a82942f0d1facc72749788d545576fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for duplicating the lane across a register.  <br /></td></tr>
-<tr class="memitem:ga64933cc646e6b0711efa760eec8a69d9" id="r_ga64933cc646e6b0711efa760eec8a69d9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_ga64933cc646e6b0711efa760eec8a69d9.html#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a> = _::named_shuffle_1&lt;reverse_t&gt; {}</td></tr>
+<tr class="memitem:ga64933cc646e6b0711efa760eec8a69d9" id="r_ga64933cc646e6b0711efa760eec8a69d9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a> = _::named_shuffle_1&lt;reverse_t&gt; {}</td></tr>
 <tr class="memdesc:ga64933cc646e6b0711efa760eec8a69d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for reversing a register.  <br /></td></tr>
-<tr class="memitem:ga67244946cf4cab4f4f2bc19e0c9f9b81" id="r_ga67244946cf4cab4f4f2bc19e0c9f9b81"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_ga67244946cf4cab4f4f2bc19e0c9f9b81.html#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a> = _::named_shuffle_1&lt;reverse_in_subgroups_t&gt; {}</td></tr>
+<tr class="memitem:ga67244946cf4cab4f4f2bc19e0c9f9b81" id="r_ga67244946cf4cab4f4f2bc19e0c9f9b81"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a> = _::named_shuffle_1&lt;reverse_in_subgroups_t&gt; {}</td></tr>
 <tr class="memdesc:ga67244946cf4cab4f4f2bc19e0c9f9b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle for reversing all subgroups in a register  <br /></td></tr>
-<tr class="memitem:gadf4386e52fdcc1b41879ce39ee4a518d" id="r_gadf4386e52fdcc1b41879ce39ee4a518d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_gadf4386e52fdcc1b41879ce39ee4a518d.html#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a> = _::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td></tr>
+<tr class="memitem:gadf4386e52fdcc1b41879ce39ee4a518d" id="r_gadf4386e52fdcc1b41879ce39ee4a518d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a> = _::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td></tr>
 <tr class="memdesc:gadf4386e52fdcc1b41879ce39ee4a518d"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1, 0, 3, 2]  <br /></td></tr>
-<tr class="memitem:ga06f45fd6acf2d0720f511c613fc24ad0" id="r_ga06f45fd6acf2d0720f511c613fc24ad0"><td class="memItemLeft">constexpr callable_slide_left_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__named__shuffles_ga06f45fd6acf2d0720f511c613fc24ad0.html#ga06f45fd6acf2d0720f511c613fc24ad0">eve::slide_left</a> = {}</td></tr>
+<tr class="memitem:ga06f45fd6acf2d0720f511c613fc24ad0" id="r_ga06f45fd6acf2d0720f511c613fc24ad0"><td class="memItemLeft">constexpr callable_slide_left_&#160;</td><td class="memItemRight"><a class="el" href="#ga06f45fd6acf2d0720f511c613fc24ad0">eve::slide_left</a> = {}</td></tr>
 <tr class="memdesc:ga06f45fd6acf2d0720f511c613fc24ad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">a named shuffles for sliding two simd values together and selecting one register. Common names for this would also include "shift", "extract". Second value can be omitted for an implicit zero.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga43d76ccd08cc93ecbf6ebff44ca6321f" name="ga43d76ccd08cc93ecbf6ebff44ca6321f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">&#9670;&#160;</a></span>blend</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::blend = _::named_shuffle_2&lt;blend_t&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffle for mixing 2 registers together, without changing positions. </p>
+<dl class="section note"><dt>Note</dt><dd>You might be looking for <span class="tt">eve::if_else_</span>.</dd></dl>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>(TODO: support mixing more than 2 registers)</p>
+<p>Accepts a pattern with just 0 and 1 that indicates number of the element for the current slot</p>
+<p><a class="el" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f" title="a named shuffle for mixing 2 registers together, without changing positions.">blend([0, 1, 2, 3], [4, 5, 6, 7], pattern&lt;1, 0, 0, 1&gt;)</a> -&gt; [4, 1, 2, 7].</p>
+<p>As any named shuffle, allows to specify a group size.</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T, std::ptrdiff_t G, std::ptrdiff_t ...I&gt;  <span class="comment">// (1)</span></div>
+<div class="line">T <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">blend</a>(T x, T y, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a>, <a class="code hl_struct" href="structeve_1_1pattern__t.html">pattern_t&lt;I...&gt;</a>)</div>
+<div class="line"><span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">blend</a>(T x, T y, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a>, <a class="code hl_concept" href="concepteve_1_1pattern__formula.html">pattern_formula</a> <span class="keyword">auto</span> gen)</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T, std::ptrdiff_t ...I&gt; <span class="comment">// (2)</span></div>
+<div class="line">T <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">blend</a>(T x, T y, <a class="code hl_struct" href="structeve_1_1pattern__t.html">pattern_t&lt;I...&gt;</a>)</div>
+<div class="line"><span class="keyword">template</span>&lt;<a class="code hl_concept" href="concepteve_1_1simd__value.html">simd_value</a> T, std::ptrdiff_t ...I&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">blend</a>(T x, T y, <a class="code hl_concept" href="concepteve_1_1pattern__formula.html">pattern_formula</a> <span class="keyword">auto</span> gen)</div>
+<div class="ttc" id="aconcepteve_1_1pattern__formula_html"><div class="ttname"><a href="concepteve_1_1pattern__formula.html">eve::pattern_formula</a></div><div class="ttdoc">what callable can be a pattern formula</div><div class="ttdef"><b>Definition</b> pattern.hpp:100</div></div>
+<div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition</b> vectorized.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_ga43d76ccd08cc93ecbf6ebff44ca6321f"><div class="ttname"><a href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a></div><div class="ttdeci">constexpr auto blend</div><div class="ttdoc">a named shuffle for mixing 2 registers together, without changing positions.</div><div class="ttdef"><b>Definition</b> blend.hpp:150</div></div>
+<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1pattern__t_html"><div class="ttname"><a href="structeve_1_1pattern__t.html">eve::pattern_t</a></div><div class="ttdoc">Shuffling pattern.</div><div class="ttdef"><b>Definition</b> pattern.hpp:27</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x, y - values to shuffle.</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li>pattern - how to shuffle elements I == 0 -&gt; take a group from x I == 1 -&gt; take a group from y</li>
+<li>gen - <a class="el" href="concepteve_1_1pattern__formula.html" title="what callable can be a pattern formula">eve::pattern_formula</a> = alternative way to specify a pattern, computing it from index and size.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Returns a register with elements selected according to the mask.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
+<div class="line">  w_t y {4, 5, 6, 7};</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// basic example</span></div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t{4, 1, 2, 7} == <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a>(x, y, <a class="code hl_variable" href="group__eve__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd">eve::pattern&lt;1, 0, 0, 1&gt;</a>)));</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// basic example, formula</span></div>
+<div class="line">  TTS_EXPECT(</div>
+<div class="line">      <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t{0, 5, 2, 7} == <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a>(x, y, [](<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> <span class="comment">/*size*/</span>) { <span class="keywordflow">return</span> i % 2; })));</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// mixing groups</span></div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t{4, 5, 2, 3} == <a class="code hl_variable" href="#ga43d76ccd08cc93ecbf6ebff44ca6321f">eve::blend</a>(x, y, eve::lane&lt;2&gt;, <a class="code hl_variable" href="group__eve__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd">eve::pattern&lt;1, 0&gt;</a>)));</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__reduction_html_ga5cb8d1d1471423dfa2b00e7da2073169"><div class="ttname"><a href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a></div><div class="ttdeci">constexpr auto all</div><div class="ttdoc">Computes a bool value which is true if and only if every elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> all.hpp:95</div></div>
+<div class="ttc" id="agroup__eve__simd__types_html_ga61c6484edbe5ceb7f92946bc798802dd"><div class="ttname"><a href="group__eve__simd__types.html#ga61c6484edbe5ceb7f92946bc798802dd">eve::pattern</a></div><div class="ttdeci">constexpr auto pattern</div><div class="ttdoc">Generate a shuffling pattern.</div><div class="ttdef"><b>Definition</b> pattern.hpp:91</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga9a82942f0d1facc72749788d545576fa" name="ga9a82942f0d1facc72749788d545576fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9a82942f0d1facc72749788d545576fa">&#9670;&#160;</a></span>broadcast_lane</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::broadcast_lane = _::named_shuffle_1&lt;broadcast_lane_t&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffle for duplicating the lane across a register. </p>
+<dl class="section note"><dt>Note</dt><dd>use <a class="el" href="group__eve__core__simd.html#ga0f764f21419f124e1e29c15718520a16" title="Computes the.">eve::broadcast</a> or a constructor to create a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> from a scalar value. This is a shuffle, for when the value is in register already.</dd></dl>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size()</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t I&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga9a82942f0d1facc72749788d545576fa">broadcast_lane</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, eve::index_t&lt;I&gt;);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t I&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga9a82942f0d1facc72749788d545576fa">broadcast_lane</a>(T x, eve::index_t&lt;I&gt;);  <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_ga9a82942f0d1facc72749788d545576fa"><div class="ttname"><a href="#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a></div><div class="ttdeci">constexpr auto broadcast_lane</div><div class="ttdoc">a named shuffle for duplicating the lane across a register.</div><div class="ttdef"><b>Definition</b> broadcast_lane.hpp:127</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li>I - index of the lane to broadcast</li>
+</ul>
+<p>(2) calls (1) with G == 1; (1) broadcasts the group of size G in position I to all register.</p>
+<p><b>Return value</b></p>
+<p>shuffled register</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
+<div class="line"> </div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{1, 1, 1, 1} == <a class="code hl_variable" href="#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a>(x, eve::index&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{2, 3, 2, 3} == <a class="code hl_variable" href="#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a>(x, eve::lane&lt;2&gt;, eve::index&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{0, 1, 2, 3} == <a class="code hl_variable" href="#ga9a82942f0d1facc72749788d545576fa">eve::broadcast_lane</a>(x, eve::lane&lt;4&gt;, eve::index&lt;0&gt;)) );</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga64933cc646e6b0711efa760eec8a69d9" name="ga64933cc646e6b0711efa760eec8a69d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga64933cc646e6b0711efa760eec8a69d9">&#9670;&#160;</a></span>reverse</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::reverse = _::named_shuffle_1&lt;reverse_t&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffle for reversing a register. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size()</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">reverse</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">reverse</a>(T x);  <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_ga64933cc646e6b0711efa760eec8a69d9"><div class="ttname"><a href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a></div><div class="ttdeci">constexpr auto reverse</div><div class="ttdoc">a named shuffle for reversing a register.</div><div class="ttdef"><b>Definition</b> reverse.hpp:134</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+</ul>
+<p>(2) calls (1) with G == 1; (1) reverses positions of adjacent groups of elements of size G</p>
+<p><b>Return value</b></p>
+<p>Return x where groups of contiguous G elements are reversed.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
+<div class="line"> </div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a>(x)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{3, 2, 1, 0} == <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a>(x, eve::lane&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{2, 3, 0, 1} == <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a>(x, eve::lane&lt;2&gt;)) );</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// lane&lt;0&gt; is not OK</span></div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{0, 1, 2, 3} == <a class="code hl_variable" href="#ga64933cc646e6b0711efa760eec8a69d9">eve::reverse</a>(x, eve::lane&lt;4&gt;)) );</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga67244946cf4cab4f4f2bc19e0c9f9b81" name="ga67244946cf4cab4f4f2bc19e0c9f9b81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">&#9670;&#160;</a></span>reverse_in_subgroups</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::reverse_in_subgroups = _::named_shuffle_1&lt;reverse_in_subgroups_t&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffle for reversing all subgroups in a register </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size() Subgroup size has to be 1 &lt;= SubG &lt;= T::size() / G</p>
+<dl class="section note"><dt>Note</dt><dd>SubG == T::size() makes this function equivalent <a class="el" href="#ga64933cc646e6b0711efa760eec8a69d9" title="a named shuffle for reversing a register.">eve::reverse</a>.</dd></dl>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t SubG&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">reverse_in_subgroups</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;SubG&gt;</a>);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t SubG&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">reverse_in_subgroups</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;SubG&gt;</a>); <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_ga67244946cf4cab4f4f2bc19e0c9f9b81"><div class="ttname"><a href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a></div><div class="ttdeci">constexpr auto reverse_in_subgroups</div><div class="ttdoc">a named shuffle for reversing all subgroups in a register</div><div class="ttdef"><b>Definition</b> reverse_in_subgroups.hpp:133</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li>SubG - size of a subgroup</li>
+</ul>
+<p>(2) calls (1) with G == 1; (1) within each SubG reverses positions elements</p>
+<p><b>Return value</b></p>
+<p>Returns x where each subgroup is reversed.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
+<div class="line"> </div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t {0, 1, 2, 3} == <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a>(x, eve::lane&lt;1&gt;)));</div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t {1, 0, 3, 2} == <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a>(x, eve::lane&lt;2&gt;)));</div>
+<div class="line">  TTS_EXPECT(<a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t {3, 2, 1, 0} == <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a>(x, eve::lane&lt;4&gt;)));</div>
+<div class="line"> </div>
+<div class="line">  TTS_EXPECT(</div>
+<div class="line">      <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>(w_t {2, 3, 0, 1} == <a class="code hl_variable" href="#ga67244946cf4cab4f4f2bc19e0c9f9b81">eve::reverse_in_subgroups</a>(x, eve::lane&lt;2&gt;, eve::lane&lt;2&gt;)));</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga06f45fd6acf2d0720f511c613fc24ad0" name="ga06f45fd6acf2d0720f511c613fc24ad0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga06f45fd6acf2d0720f511c613fc24ad0">&#9670;&#160;</a></span>slide_left</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">callable_slide_left_ eve::slide_left = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffles for sliding two simd values together and selecting one register. Common names for this would also include "shift", "extract". Second value can be omitted for an implicit zero. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>As any named shuffle, allows to pass a group size, to treat multiple elements as one. Group size has to be 0 &lt; G &lt;= T::size() Shift * GroupSize &lt;= T::size() Shift &gt;= 0</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga06f45fd6acf2d0720f511c613fc24ad0">slide_left</a>(T x, eve::index&lt;S&gt;);  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga06f45fd6acf2d0720f511c613fc24ad0">slide_left</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, eve::index&lt;S&gt;);  <span class="comment">// (2)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga06f45fd6acf2d0720f511c613fc24ad0">slide_left</a>(T x, T y, eve::index&lt;S&gt;);  <span class="comment">// (3)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span> &lt;simd_value T, std::ptrdiff_t G, std::ptrdiff_t S&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#ga06f45fd6acf2d0720f511c613fc24ad0">slide_left</a>(T x, T y, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;G&gt;</a>, eve::index&lt;S&gt;);  <span class="comment">// (4)</span></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_ga06f45fd6acf2d0720f511c613fc24ad0"><div class="ttname"><a href="#ga06f45fd6acf2d0720f511c613fc24ad0">eve::slide_left</a></div><div class="ttdeci">constexpr callable_slide_left_ slide_left</div><div class="ttdoc">a named shuffles for sliding two simd values together and selecting one register. Common names for th...</div><div class="ttdef"><b>Definition</b> slide_left.hpp:16</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x, y - simd_values to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+<li><p class="startli">S - shift by how many elements to shift</p>
+<p class="startli">(2), (4) - call (1) (3) respectively, with S = G * S (1) - equivalent to calling <span class="tt"><a class="el" href="#ga06f45fd6acf2d0720f511c613fc24ad0" title="a named shuffles for sliding two simd values together and selecting one register. Common names for th...">eve::slide_left</a>(x, <a class="el" href="group__eve__core__constants.html#gab4ecebb6ef8d0c73695dee1eb7371e6f" title="Computes the constant 0.">eve::zero(eve::as(x))</a>);</span> (3) - slide_left [abcd], [efgh], index&lt;1&gt; ==&gt; [bcde]</p>
+</li>
+</ul>
+<p><b>Return value</b> shuffled register</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span></div>
+<div class="line">main()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// in progress</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gadf4386e52fdcc1b41879ce39ee4a518d" name="gadf4386e52fdcc1b41879ce39ee4a518d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadf4386e52fdcc1b41879ce39ee4a518d">&#9670;&#160;</a></span>swap_adjacent</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::swap_adjacent = _::named_shuffle_1&lt;swap_adjacent_t&gt; {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1, 0, 3, 2] </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>Can apply an opteration for group of elements instead of elements. Group size has to be 0 &lt; G &lt; T::size()</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;simd_value T, std::ptrdiff_t G&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#gadf4386e52fdcc1b41879ce39ee4a518d">swap_adjacent</a>(T x, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;G&gt;</a>)  <span class="comment">// (1)</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;simd_value T&gt;</div>
+<div class="line">T <a class="code hl_variable" href="#gadf4386e52fdcc1b41879ce39ee4a518d">swap_adjacent</a>(T x)  <span class="comment">// (2)</span></div>
+<div class="ttc" id="agroup__eve__core__named__shuffles_html_gadf4386e52fdcc1b41879ce39ee4a518d"><div class="ttname"><a href="#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a></div><div class="ttdeci">constexpr auto swap_adjacent</div><div class="ttdoc">a named shuffle that goes all pairs of elements and swaps them: [0, 1, 2, 3] =&gt; [1,...</div><div class="ttdef"><b>Definition</b> swap_adjacent.hpp:117</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li>x - <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a> to shuffle</li>
+<li>G - (optional) - number of elements to treat as one.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Return x where groups of contiguous G elements are swapped.</p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  w_t x {0, 1, 2, 3};</div>
+<div class="line"> </div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{1, 0, 3, 2} == <a class="code hl_variable" href="#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a>(x)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{1, 0, 3, 2} == <a class="code hl_variable" href="#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a>(x, eve::lane&lt;1&gt;)) );</div>
+<div class="line">  TTS_EXPECT( <a class="code hl_variable" href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a>( w_t{2, 3, 0, 1} == <a class="code hl_variable" href="#gadf4386e52fdcc1b41879ce39ee4a518d">eve::swap_adjacent</a>(x, eve::lane&lt;2&gt;)) );</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// lane&lt;0&gt; and lane&lt;4&gt; are not OK.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

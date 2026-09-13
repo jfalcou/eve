@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,17 +129,23 @@ $(function(){initNavTree('group__eve__algo__concepts.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"></div><table class="memberdecls">
+<div class="textblock"><p>Concepts a range or an iterator satisfies to enter an algorithm, and the types that model them. </p>
+<p>An algorithm accepts a <a class="el" href="structrelaxed__range.html" title="relaxed_range">relaxed_range</a>: a <span class="tt">begin</span> and an <span class="tt">end</span> over contiguous memory, a <span class="tt">std::vector</span>, a <span class="tt">std::span</span>, an array, a view of this module, or two pointers through <span class="tt">eve::algo::as_range</span>. The relaxed concepts widen the standard ones to what SIMD needs: an aligned pointer or an <span class="tt">eve::algo::iterator</span> as iterator, and a <a class="el" href="structrelaxed__sentinel__for.html" title="relaxed_sentinel_for">relaxed_sentinel_for</a> that need not be an iterator of the same type.</p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:eve_3A_3Aalgo_3A_3Anothing_5Ft" id="r_eve_3A_3Aalgo_3A_3Anothing_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1nothing__t.html">eve::algo::nothing_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a type to indicate that there is nothing there  <a href="structeve_1_1algo_1_1nothing__t.html#details">More...</a><br /></td></tr>
 <tr class="memitem:relaxed_5Fiterator" id="r_relaxed_5Fiterator"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structrelaxed__iterator.html">relaxed_iterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">anything that can be reasonably converted to an <span class="tt">iterator</span>: std::contigious_iterator, eve::algo::iterator, aligned_ptr. Defined as being totally_ordered, having +/- like an iterator And <span class="tt">preprocess_range(<a class="el" href="structeve_1_1algo_1_1traits.html" title="A compile time set of all the tuning parameters passed to the algorithm. These allow you to fine-tune...">eve::algo::traits</a>{}, I, I)</span> should work. <span class="tt"><a class="el" href="group__eve__memory_ga62462e7b23d8d092781d5561a9d4c90f.html#ga62462e7b23d8d092781d5561a9d4c90f" title="Callable object for computing an unaligned version of a relaxed iterator.">eve::unalign(I)</a></span> should be OK.  <a href="structrelaxed__iterator.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">anything that can be reasonably converted to an <span class="tt">iterator</span>: std::contigious_iterator, eve::algo::iterator, aligned_ptr. Defined as being totally_ordered, having +/- like an iterator And <span class="tt">preprocess_range(<a class="el" href="structeve_1_1algo_1_1traits.html" title="Compile time set of tuning parameters an algorithm accepts.">eve::algo::traits</a>{}, I, I)</span> should work. <span class="tt"><a class="el" href="group__eve__memory.html#ga62462e7b23d8d092781d5561a9d4c90f" title="Callable object for computing an unaligned version of a relaxed iterator.">eve::unalign(I)</a></span> should be OK.  <a href="structrelaxed__iterator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:relaxed_5Fsentinel_5Ffor" id="r_relaxed_5Fsentinel_5Ffor"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structrelaxed__sentinel__for.html">relaxed_sentinel_for</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two relaxed iterators form a valid relaxed range pair. <span class="tt">preprocess_range</span> has to be defined for the pair. Example: int const* is a <span class="tt"><a class="el" href="structrelaxed__sentinel__for.html" title="Two relaxed iterators form a valid relaxed range pair. preprocess_range has to be defined for the pai...">relaxed_sentinel_for</a></span> <span class="tt">aligned_ptr&lt;int const&gt;</span>.  <a href="structrelaxed__sentinel__for.html#details">More...</a><br /></td></tr>
 <tr class="memitem:relaxed_5Frange" id="r_relaxed_5Frange"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structrelaxed__range.html">relaxed_range</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any class that has <span class="tt">begin/end</span> and <span class="tt">end</span> is a <span class="tt"><a class="el" href="structrelaxed__sentinel__for.html" title="Two relaxed iterators form a valid relaxed range pair. preprocess_range has to be defined for the pai...">relaxed_sentinel_for</a></span> begin. User can customize <span class="tt">preprocess_range</span> for a <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> in case there is more information to get from there then would be from just <span class="tt">begin</span>/<span class="tt">end</span>.  <a href="structrelaxed__range.html#details">More...</a><br /></td></tr>
+<tr class="memitem:eve_3A_3Aalgo_3A_3Aptr_5Fiterator_3C_20Ptr_2C_20Cardinal_20_3E" id="r_eve_3A_3Aalgo_3A_3Aptr_5Fiterator_3C_20Ptr_2C_20Cardinal_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1ptr__iterator.html">eve::algo::ptr_iterator&lt; Ptr, Cardinal &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An eve iterator on top of pointer or aligned pointer.  <a href="structeve_1_1algo_1_1ptr__iterator.html#details">More...</a><br /></td></tr>
+<tr class="memitem:eve_3A_3Aalgo_3A_3Arange_5Fref_5Fwrapper_3C_20Rng_20_3E" id="r_eve_3A_3Aalgo_3A_3Arange_5Fref_5Fwrapper_3C_20Rng_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html">eve::algo::range_ref_wrapper&lt; Rng &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a <a class="el" href="concepteve_1_1algo_1_1non__owning__range.html" title="a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...">non_owning_range</a> wrapper around owning range. Should be created via <span class="tt"><a class="el" href="#gab9087b01917ce8f9ebe656e5a0c0356d" title="for a non_owning_range returns it, otherwise returns a range_ref_wrapper.">range_ref</a></span>  <a href="structeve_1_1algo_1_1range__ref__wrapper.html#details">More...</a><br /></td></tr>
 <tr class="memitem:map_5Fload_5Fop" id="r_map_5Fload_5Fop"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmap__load__op.html">map_load_op</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">requirement for the operation applied on read/load in map. should work on both scalar and wide for the underlying iterator for any cardinal.  <a href="structmap__load__op.html#details">More...</a><br /></td></tr>
 <tr class="memitem:map_5Fstore_5Fop" id="r_map_5Fstore_5Fop"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structmap__store__op.html">map_store_op</a></td></tr>
@@ -151,20 +159,133 @@ Concepts</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:gaa7e8d090b9c040a50269d70444af720a" id="r_gaa7e8d090b9c040a50269d70444af720a"><td class="memTemplParams" colspan="2">template&lt;typename R&gt; </td></tr>
-<tr class="memitem:gaa7e8d090b9c040a50269d70444af720a template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__concepts_gaa7e8d090b9c040a50269d70444af720a.html#gaa7e8d090b9c040a50269d70444af720a">eve::algo::iterator_t</a> = decltype(std::declval&lt;R&gt;().begin())</td></tr>
+<tr class="memitem:gaa7e8d090b9c040a50269d70444af720a template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaa7e8d090b9c040a50269d70444af720a">eve::algo::iterator_t</a> = decltype(std::declval&lt;R&gt;().begin())</td></tr>
 <tr class="memdesc:gaa7e8d090b9c040a50269d70444af720a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator for a relaxed range.  <br /></td></tr>
 <tr class="memitem:ga5b4e7bedc3df8b7b9b7a778766ac301a" id="r_ga5b4e7bedc3df8b7b9b7a778766ac301a"><td class="memTemplParams" colspan="2">template&lt;typename R&gt; </td></tr>
-<tr class="memitem:ga5b4e7bedc3df8b7b9b7a778766ac301a template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__concepts_ga5b4e7bedc3df8b7b9b7a778766ac301a.html#ga5b4e7bedc3df8b7b9b7a778766ac301a">eve::algo::sentinel_t</a> = decltype(std::declval&lt;R&gt;().end())</td></tr>
+<tr class="memitem:ga5b4e7bedc3df8b7b9b7a778766ac301a template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga5b4e7bedc3df8b7b9b7a778766ac301a">eve::algo::sentinel_t</a> = decltype(std::declval&lt;R&gt;().end())</td></tr>
 <tr class="memdesc:ga5b4e7bedc3df8b7b9b7a778766ac301a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for a relaxed range.  <br /></td></tr>
 <tr class="memitem:gafeacb9463c55a04e05119f27b880b0e5" id="r_gafeacb9463c55a04e05119f27b880b0e5"><td class="memTemplParams" colspan="2">template&lt;typename R&gt; </td></tr>
-<tr class="memitem:gafeacb9463c55a04e05119f27b880b0e5 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__concepts_gafeacb9463c55a04e05119f27b880b0e5.html#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a> = <a class="el" href="group__eve__memory_ga54bcb5761211b78d9de3101200a49a9e.html#ga54bcb5761211b78d9de3101200a49a9e">unaligned_t</a>&lt;<a class="el" href="group__eve__algo__concepts_gaa7e8d090b9c040a50269d70444af720a.html#gaa7e8d090b9c040a50269d70444af720a">iterator_t</a>&lt;R&gt;&gt;</td></tr>
+<tr class="memitem:gafeacb9463c55a04e05119f27b880b0e5 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a> = <a class="el" href="group__eve__memory.html#ga54bcb5761211b78d9de3101200a49a9e">unaligned_t</a>&lt;<a class="el" href="#gaa7e8d090b9c040a50269d70444af720a">iterator_t</a>&lt;R&gt;&gt;</td></tr>
 <tr class="memdesc:gafeacb9463c55a04e05119f27b880b0e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unaligned iterator for a relaxed range.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gab9087b01917ce8f9ebe656e5a0c0356d" id="r_gab9087b01917ce8f9ebe656e5a0c0356d"><td class="memItemLeft">constexpr range_ref_&#160;</td><td class="memItemRight"><a class="el" href="group__eve__algo__concepts_gab9087b01917ce8f9ebe656e5a0c0356d.html#gab9087b01917ce8f9ebe656e5a0c0356d">eve::algo::range_ref</a></td></tr>
+<tr class="memitem:gab9087b01917ce8f9ebe656e5a0c0356d" id="r_gab9087b01917ce8f9ebe656e5a0c0356d"><td class="memItemLeft">constexpr range_ref_&#160;</td><td class="memItemRight"><a class="el" href="#gab9087b01917ce8f9ebe656e5a0c0356d">eve::algo::range_ref</a></td></tr>
 <tr class="memdesc:gab9087b01917ce8f9ebe656e5a0c0356d"><td class="mdescLeft">&#160;</td><td class="mdescRight">for a <span class="tt"><a class="el" href="concepteve_1_1algo_1_1non__owning__range.html" title="a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...">non_owning_range</a></span> returns it, otherwise returns a <span class="tt"><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html" title="a non_owning_range wrapper around owning range. Should be created via range_ref">range_ref_wrapper</a></span>.  <br /></td></tr>
 </table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a id="gaa7e8d090b9c040a50269d70444af720a" name="gaa7e8d090b9c040a50269d70444af720a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa7e8d090b9c040a50269d70444af720a">&#9670;&#160;</a></span>iterator_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#gaa7e8d090b9c040a50269d70444af720a">eve::algo::iterator_t</a> = decltype(std::declval&lt;R&gt;().begin())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Iterator for a relaxed range. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td>- relaxed range to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/concepts.hpp&gt;</span></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_range R&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#gaa7e8d090b9c040a50269d70444af720a">iterator_t</a> = <span class="keyword">decltype</span>(std::declval&lt;R&gt;().begin());</div>
+<div class="ttc" id="agroup__eve__algo__concepts_html_gaa7e8d090b9c040a50269d70444af720a"><div class="ttname"><a href="#gaa7e8d090b9c040a50269d70444af720a">eve::algo::iterator_t</a></div><div class="ttdeci">decltype(std::declval&lt; R &gt;().begin()) iterator_t</div><div class="ttdoc">Iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:34</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga5b4e7bedc3df8b7b9b7a778766ac301a" name="ga5b4e7bedc3df8b7b9b7a778766ac301a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5b4e7bedc3df8b7b9b7a778766ac301a">&#9670;&#160;</a></span>sentinel_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ga5b4e7bedc3df8b7b9b7a778766ac301a">eve::algo::sentinel_t</a> = decltype(std::declval&lt;R&gt;().end())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sentinel for a relaxed range. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td>- relaxed range to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/concepts.hpp&gt;</span></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;relaxed_range R&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#ga5b4e7bedc3df8b7b9b7a778766ac301a">sentinel_t</a> = <span class="keyword">decltype</span>(std::declval&lt;R&gt;().end());</div>
+<div class="ttc" id="agroup__eve__algo__concepts_html_ga5b4e7bedc3df8b7b9b7a778766ac301a"><div class="ttname"><a href="#ga5b4e7bedc3df8b7b9b7a778766ac301a">eve::algo::sentinel_t</a></div><div class="ttdeci">decltype(std::declval&lt; R &gt;().end()) sentinel_t</div><div class="ttdoc">Sentinel for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:50</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gafeacb9463c55a04e05119f27b880b0e5" name="gafeacb9463c55a04e05119f27b880b0e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafeacb9463c55a04e05119f27b880b0e5">&#9670;&#160;</a></span>unaligned_iterator_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename R&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a> = <a class="el" href="group__eve__memory.html#ga54bcb5761211b78d9de3101200a49a9e">unaligned_t</a>&lt;<a class="el" href="#gaa7e8d090b9c040a50269d70444af720a">iterator_t</a>&lt;R&gt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unaligned iterator for a relaxed range. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">R</td><td>- relaxed range to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>an iterator that can represent every position in the range</p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/concepts.hpp&gt;</span></p>
+<div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> R&gt;</div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#gafeacb9463c55a04e05119f27b880b0e5">unaligned_iterator_t</a> = <a class="code hl_typedef" href="group__eve__memory.html#ga54bcb5761211b78d9de3101200a49a9e">unaligned_t&lt;iterator_t&lt;R&gt;</a>&gt;;</div>
+<div class="ttc" id="agroup__eve__algo__concepts_html_gafeacb9463c55a04e05119f27b880b0e5"><div class="ttname"><a href="#gafeacb9463c55a04e05119f27b880b0e5">eve::algo::unaligned_iterator_t</a></div><div class="ttdeci">unaligned_t&lt; iterator_t&lt; R &gt; &gt; unaligned_iterator_t</div><div class="ttdoc">Unaligned iterator for a relaxed range.</div><div class="ttdef"><b>Definition</b> ranges_types.hpp:68</div></div>
+<div class="ttc" id="agroup__eve__memory_html_ga54bcb5761211b78d9de3101200a49a9e"><div class="ttname"><a href="group__eve__memory.html#ga54bcb5761211b78d9de3101200a49a9e">eve::unaligned_t</a></div><div class="ttdeci">decltype(unalign(std::declval&lt; T &gt;())) unaligned_t</div><div class="ttdoc">Compute the unaligned pointer type associated to a given type.</div><div class="ttdef"><b>Definition</b> unalign.hpp:113</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gab9087b01917ce8f9ebe656e5a0c0356d" name="gab9087b01917ce8f9ebe656e5a0c0356d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab9087b01917ce8f9ebe656e5a0c0356d">&#9670;&#160;</a></span>range_ref</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">range_ref_ eve::algo::range_ref</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>for a <span class="tt"><a class="el" href="concepteve_1_1algo_1_1non__owning__range.html" title="a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...">non_owning_range</a></span> returns it, otherwise returns a <span class="tt"><a class="el" href="structeve_1_1algo_1_1range__ref__wrapper.html" title="a non_owning_range wrapper around owning range. Should be created via range_ref">range_ref_wrapper</a></span>. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/range_ref.hpp&gt;</span> </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

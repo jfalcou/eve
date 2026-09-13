@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,14 +123,10 @@ $(function(){initNavTree('structeve_1_1supports__ordering.html','',''); });
   <div class="headertitle"><div class="title">eve::supports_ordering&lt; Type &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__struct.html">Structured Types Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Register a user-defined type to supports ordering.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/product_type.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Type&gt;<br />
-struct eve::supports_ordering&lt; Type &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+struct eve::supports_ordering&lt; Type &gt;</div><p>Register a user-defined type to supports ordering. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Type</td><td>Type to register as supporting ordering operators</td></tr>
   </table>

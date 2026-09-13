@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,46 +126,1058 @@ $(function(){initNavTree('group__eve__elliptic.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This module provides implementation for scalar and SIMD versions of elliptic functions.</p>
+<div class="textblock"><p>Elliptic functions. </p>
+<p>This module provides implementation for scalar and SIMD versions of elliptic functions.</p>
 <p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span> </div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga26e45af7849aad905292a09fb32579d7" id="r_ga26e45af7849aad905292a09fb32579d7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga26e45af7849aad905292a09fb32579d7.html#ga26e45af7849aad905292a09fb32579d7">eve::am</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;am_t&gt;</td></tr>
+<tr class="memitem:ga26e45af7849aad905292a09fb32579d7" id="r_ga26e45af7849aad905292a09fb32579d7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;am_t&gt;</td></tr>
 <tr class="memdesc:ga26e45af7849aad905292a09fb32579d7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi's Amplitude function.  <br /></td></tr>
-<tr class="memitem:ga5f26f3d8d4aff93caff34f769d0a598a" id="r_ga5f26f3d8d4aff93caff34f769d0a598a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga5f26f3d8d4aff93caff34f769d0a598a.html#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_1_t&gt;</td></tr>
+<tr class="memitem:ga5f26f3d8d4aff93caff34f769d0a598a" id="r_ga5f26f3d8d4aff93caff34f769d0a598a"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_1_t&gt;</td></tr>
 <tr class="memdesc:ga5f26f3d8d4aff93caff34f769d0a598a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the first kind.  <br /></td></tr>
-<tr class="memitem:gae56d989dc8f96ec24e6b41fbc408ebb1" id="r_gae56d989dc8f96ec24e6b41fbc408ebb1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_gae56d989dc8f96ec24e6b41fbc408ebb1.html#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_2_t&gt;</td></tr>
+<tr class="memitem:gae56d989dc8f96ec24e6b41fbc408ebb1" id="r_gae56d989dc8f96ec24e6b41fbc408ebb1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_2_t&gt;</td></tr>
 <tr class="memdesc:gae56d989dc8f96ec24e6b41fbc408ebb1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the second kind.  <br /></td></tr>
-<tr class="memitem:ga865feb1e7d9a99be2bb8d17153606adf" id="r_ga865feb1e7d9a99be2bb8d17153606adf"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga865feb1e7d9a99be2bb8d17153606adf.html#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_d_t&gt;</td></tr>
+<tr class="memitem:ga865feb1e7d9a99be2bb8d17153606adf" id="r_ga865feb1e7d9a99be2bb8d17153606adf"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_d_t&gt;</td></tr>
 <tr class="memdesc:ga865feb1e7d9a99be2bb8d17153606adf"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the \(\mbox{D}\) elliptic integral.  <br /></td></tr>
-<tr class="memitem:ga9f3e72aeb0f119dc9cf880628a4b9557" id="r_ga9f3e72aeb0f119dc9cf880628a4b9557"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga9f3e72aeb0f119dc9cf880628a4b9557.html#ga9f3e72aeb0f119dc9cf880628a4b9557">eve::ellint_fe</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_fe_t&gt;</td></tr>
+<tr class="memitem:ga9f3e72aeb0f119dc9cf880628a4b9557" id="r_ga9f3e72aeb0f119dc9cf880628a4b9557"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">eve::ellint_fe</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_fe_t&gt;</td></tr>
 <tr class="memdesc:ga9f3e72aeb0f119dc9cf880628a4b9557"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the first and second kind.  <br /></td></tr>
-<tr class="memitem:gacca6a0474300efc2cd1907c70b1d6f67" id="r_gacca6a0474300efc2cd1907c70b1d6f67"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_gacca6a0474300efc2cd1907c70b1d6f67.html#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rc_t&gt;</td></tr>
+<tr class="memitem:gacca6a0474300efc2cd1907c70b1d6f67" id="r_gacca6a0474300efc2cd1907c70b1d6f67"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rc_t&gt;</td></tr>
 <tr class="memdesc:gacca6a0474300efc2cd1907c70b1d6f67"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the degenerate Carlson's elliptic integral  \(  \mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
   \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\).  <br /></td></tr>
-<tr class="memitem:gad55c7d3040b1eb8469a3fa17e79396e1" id="r_gad55c7d3040b1eb8469a3fa17e79396e1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_gad55c7d3040b1eb8469a3fa17e79396e1.html#gad55c7d3040b1eb8469a3fa17e79396e1">eve::ellint_rd</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rd_t&gt;</td></tr>
+<tr class="memitem:gad55c7d3040b1eb8469a3fa17e79396e1" id="r_gad55c7d3040b1eb8469a3fa17e79396e1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad55c7d3040b1eb8469a3fa17e79396e1">eve::ellint_rd</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rd_t&gt;</td></tr>
 <tr class="memdesc:gad55c7d3040b1eb8469a3fa17e79396e1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Carlson's elliptic integral  \(  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\).  <br /></td></tr>
-<tr class="memitem:ga72b982adb94e9f25bbe3e4badc1dd0ee" id="r_ga72b982adb94e9f25bbe3e4badc1dd0ee"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga72b982adb94e9f25bbe3e4badc1dd0ee.html#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rf_t&gt;</td></tr>
+<tr class="memitem:ga72b982adb94e9f25bbe3e4badc1dd0ee" id="r_ga72b982adb94e9f25bbe3e4badc1dd0ee"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rf_t&gt;</td></tr>
 <tr class="memdesc:ga72b982adb94e9f25bbe3e4badc1dd0ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Carlson's elliptic integral   \(  \mathbf{R}_\mathbf{F}(x, y) =
   \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
   (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\).  <br /></td></tr>
-<tr class="memitem:ga276983e7975e461a199c32ce5eb97a44" id="r_ga276983e7975e461a199c32ce5eb97a44"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga276983e7975e461a199c32ce5eb97a44.html#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rg_t&gt;</td></tr>
+<tr class="memitem:ga276983e7975e461a199c32ce5eb97a44" id="r_ga276983e7975e461a199c32ce5eb97a44"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rg_t&gt;</td></tr>
 <tr class="memdesc:ga276983e7975e461a199c32ce5eb97a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Carlson's elliptic integral    \( \mathbf{R}_\mathbf{G}(x, y) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi}
   \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
   +y\sin^2\theta\sin^2\phi
   +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\).  <br /></td></tr>
-<tr class="memitem:ga65cefaf422775dcd1abbc8929e3f4ed9" id="r_ga65cefaf422775dcd1abbc8929e3f4ed9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga65cefaf422775dcd1abbc8929e3f4ed9.html#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rj_t&gt;</td></tr>
+<tr class="memitem:ga65cefaf422775dcd1abbc8929e3f4ed9" id="r_ga65cefaf422775dcd1abbc8929e3f4ed9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rj_t&gt;</td></tr>
 <tr class="memdesc:ga65cefaf422775dcd1abbc8929e3f4ed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the Carlson's elliptic integral  \( \mathbf{R}_\mathbf{J}(x, y) = \frac32 \int_{0}^{\infty}
   \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\).  <br /></td></tr>
-<tr class="memitem:ga24d1bc66420e69358ebd2eb5ff39bff2" id="r_ga24d1bc66420e69358ebd2eb5ff39bff2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_ga24d1bc66420e69358ebd2eb5ff39bff2.html#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;heuman_lambda_t&gt;</td></tr>
+<tr class="memitem:ga24d1bc66420e69358ebd2eb5ff39bff2" id="r_ga24d1bc66420e69358ebd2eb5ff39bff2"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;heuman_lambda_t&gt;</td></tr>
 <tr class="memdesc:ga24d1bc66420e69358ebd2eb5ff39bff2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Heuman lambda function.  <br /></td></tr>
-<tr class="memitem:gaeec8a87b0fc27df584c3ace240a2fda8" id="r_gaeec8a87b0fc27df584c3ace240a2fda8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_gaeec8a87b0fc27df584c3ace240a2fda8.html#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_elliptic_t&gt;</td></tr>
+<tr class="memitem:gaeec8a87b0fc27df584c3ace240a2fda8" id="r_gaeec8a87b0fc27df584c3ace240a2fda8"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_elliptic_t&gt;</td></tr>
 <tr class="memdesc:gaeec8a87b0fc27df584c3ace240a2fda8"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi's sn, cn and dn function simultaneously.  <br /></td></tr>
-<tr class="memitem:gaa123505d28500b3ea5216a5b88a5da05" id="r_gaa123505d28500b3ea5216a5b88a5da05"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__elliptic_gaa123505d28500b3ea5216a5b88a5da05.html#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_zeta_t&gt;</td></tr>
+<tr class="memitem:gaa123505d28500b3ea5216a5b88a5da05" id="r_gaa123505d28500b3ea5216a5b88a5da05"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_zeta_t&gt;</td></tr>
 <tr class="memdesc:gaa123505d28500b3ea5216a5b88a5da05"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi Zeta function.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga26e45af7849aad905292a09fb32579d7" name="ga26e45af7849aad905292a09fb32579d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga26e45af7849aad905292a09fb32579d7">&#9670;&#160;</a></span>am</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::am = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;am_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi's Amplitude function. </p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/am">C++ standard reference: am</a></li>
+<li><a href="https://dlmf.nist.gov/22.16">DLMF: Jacobi zeta</a></li>
+<li><a href="https://mathworld.wolfram.com/JacobiZetaFunction.html">Wolfram MathWorld: Jacobi Zeta Function</a></li>
+<li><a href="https://beta.boost.org/doc/libs/1_84_0/libs/math/doc/html/math_toolkit/ellint/jacobi_zeta.html">Boost: jacobi_zeta</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; am(wphi, wf)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; am[ignore_last(2)](wphi,wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; am[wf != 1.0](wphi,wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a>[wf != -1.0f](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; am(pio_2[lower], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; am(pio_2[upper], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga4ff6300fe3143db3b73ebc48bbc6bc6c"><div class="ttname"><a href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a></div><div class="ttdeci">constexpr auto lower</div><div class="ttdoc">Guarantees a result no greater than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:103</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><div class="ttname"><a href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a></div><div class="ttdeci">constexpr auto upper</div><div class="ttdoc">Guarantees a result no smaller than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:102</div></div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga26e45af7849aad905292a09fb32579d7"><div class="ttname"><a href="#ga26e45af7849aad905292a09fb32579d7">eve::am</a></div><div class="ttdeci">constexpr auto am</div><div class="ttdoc">elementwise_callable object computing the Jacobi&#39;s Amplitude function.</div><div class="ttdef"><b>Definition</b> am.hpp:98</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_gabd8e0faaa62af384db4334f953957003"><div class="ttname"><a href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a></div><div class="ttdeci">constexpr auto pio_2</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition</b> pio_2.hpp:76</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --><h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">//Semantic modifiers</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>[modular](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha)    <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>[eccentric(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>[threshold = tol](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;<span class="comment">// 3</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga26e45af7849aad905292a09fb32579d7">am</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> autolm](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">u</span>: argument.</li>
+<li><span class="tt">x</span>: amplitude parameter ( \(0\le m\le 1\)).</li>
+<li><span class="tt">alpha</span>: modular angle given in radian (modular option).</li>
+<li><span class="tt">m</span> : elliptic modulus or eccentricity (eccentric option).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">l</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>return the jacobian amplitude function. Take care that the meaning of the second parameters depends on the option used (see note below).</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+<li>a threshold can be given controlling the needed accuracy.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd><ul>
+<li>\(\alpha\) is named the modular angle given in radian (modular option).</li>
+<li>\( k = \sin\alpha \) is named the elliptic modulus or eccentricity (eccentric option).</li>
+<li>\( m = k^2 = \sin^2\alpha\) is named the parameter (no option). Each of the above three quantities is completely determined by any of the others (given that they are non-negative). Thus, they can be used interchangeably (give the right option). </li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<a id="ga5f26f3d8d4aff93caff34f769d0a598a" name="ga5f26f3d8d4aff93caff34f769d0a598a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5f26f3d8d4aff93caff34f769d0a598a">&#9670;&#160;</a></span>ellint_1</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_1 = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_1_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the first kind. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)                                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)             <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[modular](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha)<span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[eccentric](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> m)  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga5f26f3d8d4aff93caff34f769d0a598a"><div class="ttname"><a href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a></div><div class="ttdeci">constexpr auto ellint_1</div><div class="ttdoc">elementwise_callable object computing the elliptic integrals of the first kind.</div><div class="ttdef"><b>Definition</b> ellint_1.hpp:96</div></div>
+<div class="ttc" id="agroup__eve__elliptic_html_gae56d989dc8f96ec24e6b41fbc408ebb1"><div class="ttname"><a href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a></div><div class="ttdeci">constexpr auto ellint_2</div><div class="ttdoc">elementwise_callable object computing the elliptic integrals of the second kind.</div><div class="ttdef"><b>Definition</b> ellint_2.hpp:96</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_ga0f8fbe6ec946f1ecfc3e2463ab90db22"><div class="ttname"><a href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">eve::phi</a></div><div class="ttdeci">constexpr auto phi</div><div class="ttdoc">Callable object computing the golden ratio : .</div><div class="ttdef"><b>Definition</b> phi.hpp:80</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt"><a class="el" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22" title="Callable object computing the golden ratio : .">phi</a></span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating Jacobi amplitude</a>.</li>
+<li><span class="tt">k</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating elliptic modulus</a>. <span class="tt">k</span> must satisfy \(k^2\sin^2\phi \le 1\) or the result is <span class="tt">NaN</span>. In the complete case this means \(|k| \le 1\).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the complete elliptic integral of the first kind \(\mathbf{K}(k) = \int_0^{\pi/2} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\). (corresponding to \( \phi = \pi/2 \)) is returned.</li>
+<li>the incomplete elliptic integral of the first kind is returned: \(\mathbf{F}(\phi, k) = \int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\)</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1">C++ standard reference: ellint_1</a></li>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/EllipticIntegral.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_1(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_1(wphi, wf)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_1[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_1[wf != 1.0](wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a>[wf != -1.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_1(pio_2[lower], wf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">eve::ellint_1</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gae56d989dc8f96ec24e6b41fbc408ebb1" name="gae56d989dc8f96ec24e6b41fbc408ebb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gae56d989dc8f96ec24e6b41fbc408ebb1">&#9670;&#160;</a></span>ellint_2</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_2 = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_2_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the second kind. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)                                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)             <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[modular](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha)<span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[eccentric](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> m)  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">ellint_2</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> l](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt"><a class="el" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22" title="Callable object computing the golden ratio : .">phi</a></span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating Jacobi amplitude</a>.</li>
+<li><span class="tt">k</span>: amplitude parameter ( \(0\le k\le 1\)).</li>
+<li><span class="tt">alpha</span>: amodular angle given in radian (modular option).</li>
+<li><span class="tt">m</span> : elliptic modulus or eccentricity (eccentric option).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">l</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the complete ( corresponding to \( \phi = \pi/2 \) )of the second kind: \(\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\) is returned.</li>
+<li>the incomplete elliptic integrals of the second kind: \( \mathbf{E}(\phi, k) = \int_0^{\phi} \scriptstyle \sqrt{1-k\sin^2 t}\,\mathrm{d}t\) is returned. \(\alpha\) is \(\sin k\) and \(m\) is \(\sqrt(k)\)</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_1">C++ standard reference: ellint_2</a></li>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/EllipticIntegral.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_2(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_2(wphi, wf)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_2[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_2[wf != 1.0](wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a>[wf != -1.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_2(pio_2,wf)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae56d989dc8f96ec24e6b41fbc408ebb1">eve::ellint_2</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga865feb1e7d9a99be2bb8d17153606adf" name="ga865feb1e7d9a99be2bb8d17153606adf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga865feb1e7d9a99be2bb8d17153606adf">&#9670;&#160;</a></span>ellint_d</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_d = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_d_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the \(\mbox{D}\) elliptic integral. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">ellint_d</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)                                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">ellint_d</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">ellint_d</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>) <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">ellint_d</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<span class="comment">/*any of the above overloads*/</span>)    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga865feb1e7d9a99be2bb8d17153606adf"><div class="ttname"><a href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a></div><div class="ttdeci">constexpr auto ellint_d</div><div class="ttdoc">elementwise_callable object computing the  elliptic integral.</div><div class="ttdef"><b>Definition</b> ellint_d.hpp:94</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt"><a class="el" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22" title="Callable object computing the golden ratio : .">phi</a></span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating Jacobi amplitude</a>.</li>
+<li><span class="tt">k</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating elliptic modulus</a>. <span class="tt">k</span> must satisfy \(k^2\sin^2\phi \le 1\) or the result is <span class="tt">NaN</span>. In the complete case this means \(|k| \le 1\).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the complete elliptic integral ( corresponding to \( \phi = \pi/2 \) ):  \( \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+       \scriptstyle\;\mathrm{d}t\) is returned.</li>
+<li>the incomplete elliptic integral of the first kind:  \( \mathbf{D}(k) = \int_0^{\pi/2} \frac{\sin^2 t}{\sqrt{1-k^2\sin^2 t}}
+        \scriptstyle\;\mathrm{d}t\) is returned:</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/EllipticIntegral.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_d(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_d(wphi, wf)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_d[ignore_last(2)](wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_d[wf != 1.0](wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a>[wf != -1.0f](wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_d(pio_2[lower],wf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga865feb1e7d9a99be2bb8d17153606adf">eve::ellint_d</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga9f3e72aeb0f119dc9cf880628a4b9557" name="ga9f3e72aeb0f119dc9cf880628a4b9557"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9f3e72aeb0f119dc9cf880628a4b9557">&#9670;&#160;</a></span>ellint_fe</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_fe = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_fe_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the elliptic integrals of the first and second kind. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">ellint_fe</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)                                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">ellint_fe</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">ellint_fe</a>[modular](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha)<span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">ellint_fe</a>[eccentric](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> <a class="code hl_variable" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22">phi</a>, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> m)  <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga9f3e72aeb0f119dc9cf880628a4b9557"><div class="ttname"><a href="#ga9f3e72aeb0f119dc9cf880628a4b9557">eve::ellint_fe</a></div><div class="ttdeci">constexpr auto ellint_fe</div><div class="ttdoc">elementwise_callable object computing the elliptic integrals of the first and second kind.</div><div class="ttdef"><b>Definition</b> ellint_fe.hpp:93</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt"><a class="el" href="group__eve__math__constants.html#ga0f8fbe6ec946f1ecfc3e2463ab90db22" title="Callable object computing the golden ratio : .">phi</a></span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating Jacobi amplitude</a>.</li>
+<li><span class="tt">k</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating elliptic modulus</a>. <span class="tt">k</span> must satisfy \(k^2\sin^2\phi \le 1\) or the result is <span class="tt">NaN</span>. In the complete case this means \(|k| \le 1\).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the complete elliptic integral of the first and second kind \(\mathbf{K}(k) = \int_0^{\pi/2} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\) and \(\mathbf{E}(k) = \int_0^{\pi/2} \scriptstyle \sqrt{1-k^2\sin^2 t}\,\mathrm{d}t\) is returned. (corresponding to \( \phi = \pi/2 \)) are returned.</li>
+<li>the incomplete elliptic integral of the first kind is returned: \(\mathbf{F}(\phi, k) = \int_0^{\phi} \frac{\mathrm{d}t}{\sqrt{1-k^2\sin^2 t}}\)</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>Be aware that as \(\pi/2\) is not exactly represented by floating point values the result of the incomplete function with a \(\phi\) floating point value representing \(\pi/2\) can differ a lot with the result of the complete call.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/numeric/special_functions/ellint_fe">C++ standard reference: ellint_fe</a></li>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/EllipticIntegral.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_fe(wf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">eve::ellint_fe</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_fe(wphi, wf)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9f3e72aeb0f119dc9cf880628a4b9557">eve::ellint_fe</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gacca6a0474300efc2cd1907c70b1d6f67" name="gacca6a0474300efc2cd1907c70b1d6f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacca6a0474300efc2cd1907c70b1d6f67">&#9670;&#160;</a></span>ellint_rc</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_rc = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rc_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the degenerate Carlson's elliptic integral  \(  \mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
+  \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga5f26f3d8d4aff93caff34f769d0a598a">ellint_1</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a>. <span class="tt">x</span> and <span class="tt">y</span> must be strictly positive and <span class="tt">y</span> non zero or the result is <span class="tt">NaN</span>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the value of the Carlson degenerate elliptic integral:  \(\mathbf{R}_\mathbf{C}(x, y) = \frac12 \int_{0}^{\infty}
+      \scriptstyle(t+x)^{-1/2}(t+y)^{-1}\scriptstyle\;\mathrm{d}t\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf{1.0f, 0.0f, 1.5f, 3.0f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf{1.0f, 4.0f, 0.2f, 0.5f};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc(pf, qf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>(pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc[ignore_last(2)](pf, qf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc[qf != 4.0f](pf, qf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>[qf != 4.0f](pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_gacca6a0474300efc2cd1907c70b1d6f67"><div class="ttname"><a href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a></div><div class="ttdeci">constexpr auto ellint_rc</div><div class="ttdoc">elementwise_callable object computing the degenerate Carlson&#39;s elliptic integral  .</div><div class="ttdef"><b>Definition</b> ellint_rc.hpp:81</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gad55c7d3040b1eb8469a3fa17e79396e1" name="gad55c7d3040b1eb8469a3fa17e79396e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad55c7d3040b1eb8469a3fa17e79396e1">&#9670;&#160;</a></span>ellint_rd</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_rd = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rd_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Carlson's elliptic integral  \(  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad55c7d3040b1eb8469a3fa17e79396e1">ellint_rd</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad55c7d3040b1eb8469a3fa17e79396e1">ellint_rd</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                     <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad55c7d3040b1eb8469a3fa17e79396e1">ellint_rd</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                           <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="ttc" id="agroup__eve__elliptic_html_gad55c7d3040b1eb8469a3fa17e79396e1"><div class="ttname"><a href="#gad55c7d3040b1eb8469a3fa17e79396e1">eve::ellint_rd</a></div><div class="ttdeci">constexpr auto ellint_rd</div><div class="ttdoc">elementwise_callable object computing the Carlson&#39;s elliptic integral  .</div><div class="ttdef"><b>Definition</b> ellint_rd.hpp:83</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a>. <span class="tt">x</span> and <span class="tt">y</span> must be strictly positive and <span class="tt">y</span> non zero. In any other case, the result is NaN.</li>
+<li><span class="tt">z</span>: strictly positive <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a>. In any other case, the result is <span class="tt">NaN</span>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the value of  \(  \mathbf{R}_\mathbf{D}(x, y) = \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+        (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf{1.0f, 0.0f, 1.5f, 3.0f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf{1.0f, 4.0f, 0.2f, 0.5f};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc(pf, qf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>(pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc[ignore_last(2)](pf, qf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rc[qf != 4.0f](pf, qf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gacca6a0474300efc2cd1907c70b1d6f67">eve::ellint_rc</a>[qf != 4.0f](pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga72b982adb94e9f25bbe3e4badc1dd0ee" name="ga72b982adb94e9f25bbe3e4badc1dd0ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">&#9670;&#160;</a></span>ellint_rf</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_rf = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rf_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the Carlson's elliptic integral   \(  \mathbf{R}_\mathbf{F}(x, y) =
+  \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+  (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                     <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                           <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga72b982adb94e9f25bbe3e4badc1dd0ee"><div class="ttname"><a href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a></div><div class="ttdeci">constexpr auto ellint_rf</div><div class="ttdoc">Computes the Carlson&#39;s elliptic integral   .</div><div class="ttdef"><b>Definition</b> ellint_rf.hpp:86</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a>. All those arguments must be non-negative and at most one zero or the the result is NaN.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the value of the \(\mathbf{R}_\mathbf{F}\) Carlson elliptic integral:   \(  \mathbf{R}_\mathbf{F}(x, y) =
+      \frac32 \int_{0}^{\infty} \scriptstyle[(t+x)(t+y)]^{-1/2}
+      (t+z)^{-3/2}\scriptstyle\;\mathrm{d}t\). is returned</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integral</a></li>
+<li><a href="https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf{1.0f, 0.0f, 1.5f, 3.0f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf{1.0f, 4.0f, 0.2f, 0.5f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> rf{2.0f, 1.0f, 0.1f, 0.4f};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- rf = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rf(pf, qf, rf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a>(pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rf[ignore_last(2)](pf, qf, rf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rf[qf != 4.0f](pf, qf, rf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">eve::ellint_rf</a>[qf != 4.0f](pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga276983e7975e461a199c32ce5eb97a44" name="ga276983e7975e461a199c32ce5eb97a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga276983e7975e461a199c32ce5eb97a44">&#9670;&#160;</a></span>ellint_rg</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_rg = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rg_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the Carlson's elliptic integral    \( \mathbf{R}_\mathbf{G}(x, y) = \frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi}
+  \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
+  +y\sin^2\theta\sin^2\phi
+  +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">ellint_rg</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">ellint_rg</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                     <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                        <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">ellint_rg</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z)                           <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga276983e7975e461a199c32ce5eb97a44"><div class="ttname"><a href="#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a></div><div class="ttdeci">constexpr auto ellint_rg</div><div class="ttdoc">Computes the Carlson&#39;s elliptic integral    .</div><div class="ttdef"><b>Definition</b> ellint_rg.hpp:90</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating real arguments</a>. All arguments must be non-negative or the result is nan.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the value of the \(\mathbf{R}_\mathbf{G}\) Carlson elliptic integral:    \(\frac1{4\pi} \int_{0}^{2\pi}\int_{0}^{\pi}
+      \scriptstyle\sqrt{x\sin^2\theta\cos^2\phi
+      +y\sin^2\theta\sin^2\phi
+      +z\cos^2\theta} \scriptstyle\;\mathrm{d}\theta\;\mathrm{d}\phi\) is returned:</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf{1.0f, 0.0f, 1.5f, 3.0f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf{1.0f, 4.0f, 0.2f, 0.5f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> rf{2.0f, 1.0f, 0.1f, 0.4f};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- rf = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rg(pf, qf, rf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a>(pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rg[ignore_last(2)](pf, qf, rf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rg[qf != 4.0f](pf, qf, rf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga276983e7975e461a199c32ce5eb97a44">eve::ellint_rg</a>[qf != 4.0f](pf, qf, rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga65cefaf422775dcd1abbc8929e3f4ed9" name="ga65cefaf422775dcd1abbc8929e3f4ed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga65cefaf422775dcd1abbc8929e3f4ed9">&#9670;&#160;</a></span>ellint_rj</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::ellint_rj = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;ellint_rj_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the Carlson's elliptic integral  \( \mathbf{R}_\mathbf{J}(x, y) = \frac32 \int_{0}^{\infty}
+  \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\scriptstyle\;\mathrm{d}t\). </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                            <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> p)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                     <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> p) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga72b982adb94e9f25bbe3e4badc1dd0ee">ellint_rf</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                  <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> p)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating real arguments</a>. <span class="tt">x</span>, <span class="tt">y</span> and <span class="tt">z</span> must be non negative and at most one of them equal to 0. In any other case, the result is <span class="tt">NaN</span>.</li>
+<li><span class="tt">p</span>: Non-zero <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating real arguments</a>. In any other case, the result is <span class="tt">NaN</span>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>the value of the \(\mathbf{R}_\mathbf{J}\) Carlson elliptic integral:  \( \frac32 \int_{0}^{\infty}
+       \scriptstyle(t+p)^{-1}[(t+x)(t+y)(t+z)]^{-1/2}\;\mathrm{d}t\) is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/19.2">DLMF: Elliptic Integrals</a></li>
+<li><a href="https://mathworld.wolfram.com/CarlsonEllipticIntegrals.html">Wolfram MathWorld: Elliptic Integral</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf{1.0f, 0.0f, 1.5f, 3.0f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf{1.0f, 4.0f, 0.2f, 0.5f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> rf{2.0f, 1.0f, 0.1f, 0.4f};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> sf{0.19f, 0.5f, 0.87071f, 2.4f};</div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- rf = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- sf = &quot;</span> &lt;&lt; sf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rj(pf, qf, rf, sf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a>(pf, qf, rf, sf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rj[ignore_last(2)](pf, qf, rf, sf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf, qf, rf, sf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; ellint_rj[qf != 4.0f](pf, qf, rf, sf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a>[qf != 4.0f](pf, qf, rf, sf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga65cefaf422775dcd1abbc8929e3f4ed9"><div class="ttname"><a href="#ga65cefaf422775dcd1abbc8929e3f4ed9">eve::ellint_rj</a></div><div class="ttdeci">constexpr auto ellint_rj</div><div class="ttdoc">Computes the Carlson&#39;s elliptic integral  .</div><div class="ttdef"><b>Definition</b> ellint_rj.hpp:91</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga24d1bc66420e69358ebd2eb5ff39bff2" name="ga24d1bc66420e69358ebd2eb5ff39bff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga24d1bc66420e69358ebd2eb5ff39bff2">&#9670;&#160;</a></span>heuman_lambda</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::heuman_lambda = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;heuman_lambda_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Heuman lambda function. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">heuman_lambda</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">heuman_lambda</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">heuman_lambda</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> autolm](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_ga24d1bc66420e69358ebd2eb5ff39bff2"><div class="ttname"><a href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a></div><div class="ttdeci">constexpr auto heuman_lambda</div><div class="ttdoc">elementwise_callable object computing the Heuman lambda function.</div><div class="ttdef"><b>Definition</b> heuman_lambda.hpp:82</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">u</span>: argument.</li>
+<li><span class="tt">x</span>: amplitude parameter ( \(0\le m\le 1\)).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">l</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>return the Heuman lambda value</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://mathworld.wolfram.com/HeumanLambdaFunction.html">Wolfram MathWorld: Heuman lambda Function</a></li>
+<li><a href="https://en.wikipedia.org/wiki/heuman_lambda_functions">Wikipedia: Heuman Lambda functions</a></li>
+<li><a href="https://www.boost.org/doc/libs/1_73_0/libs/math/doc/html/math_toolkit/ellint/heuman_lambda.html">Boost: Heuman lambda</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{0.9, 0.2, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{0.8, 1.0e-30, 0.5, 0.1};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; heuman_lambda(wphi, wf)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; heuman_lambda[ignore_last(2)](wphi,wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; heuman_lambda[wf != 1.0](wphi,wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a>[wf != -1.0f](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; heuman_lambda(pio_2[lower], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; heuman_lambda(pio_2[upper], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga24d1bc66420e69358ebd2eb5ff39bff2">eve::heuman_lambda</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaeec8a87b0fc27df584c3ace240a2fda8" name="gaeec8a87b0fc27df584c3ace240a2fda8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaeec8a87b0fc27df584c3ace240a2fda8">&#9670;&#160;</a></span>jacobi_elliptic</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::jacobi_elliptic = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_elliptic_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi's sn, cn and dn function simultaneously. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">//Semantic modifiers</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>[modular](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> alpha)     <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>[eccentric(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> k)        <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>[threshold = tol](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">jacobi_elliptic</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> autolm](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_gaeec8a87b0fc27df584c3ace240a2fda8"><div class="ttname"><a href="#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a></div><div class="ttdeci">constexpr auto jacobi_elliptic</div><div class="ttdoc">elementwise_callable object computing the Jacobi&#39;s sn, cn and dn function simultaneously.</div><div class="ttdef"><b>Definition</b> jacobi_elliptic.hpp:85</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">u</span>: argument.</li>
+<li><span class="tt">m</span>: amplitude parameter ( \(0\le m\le 1\)).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">l</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>return a <span class="tt"><a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a></span> containing <span class="tt">sn``cn</span> and <span class="tt">dn</span> values. Take care that the meaning of the second parameters depends on the option used (see note below).</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/22.2">DLMF: Jacobian Elliptic</a></li>
+<li><a href="https://mathworld.wolfram.com/JacobiEllipticFunctions.html">Wolfram MathWorld: Jacobi Elliptic Functions</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Jacobi_elliptic_functions">Wikipedia: Jacobi elliptic functions</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   =                              &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi =                              &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   <span class="keyword">auto</span> [sn, cn, dn] = <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a>(wphi, wf);</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sn =                                &quot;</span> &lt;&lt; sn &lt;&lt; std::endl;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; cn =                                &quot;</span> &lt;&lt; cn &lt;&lt; std::endl;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; dn =                                &quot;</span> &lt;&lt; dn &lt;&lt; std::endl;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_elliptic(pio_2[lower], wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_elliptic(pio_2[upper], wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaeec8a87b0fc27df584c3ace240a2fda8">eve::jacobi_elliptic</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gaa123505d28500b3ea5216a5b88a5da05" name="gaa123505d28500b3ea5216a5b88a5da05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa123505d28500b3ea5216a5b88a5da05">&#9670;&#160;</a></span>jacobi_zeta</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::jacobi_zeta = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;jacobi_zeta_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the Jacobi Zeta function. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">jacobi_zeta</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> u, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                  <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">jacobi_zeta</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<span class="comment">/*any of the above overloads*/</span>)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">jacobi_zeta</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> autolm](<span class="comment">/*any of the above overloads*/</span>)          <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__elliptic_html_gaa123505d28500b3ea5216a5b88a5da05"><div class="ttname"><a href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a></div><div class="ttdeci">constexpr auto jacobi_zeta</div><div class="ttdoc">elementwise_callable object computing the Jacobi Zeta function.</div><div class="ttdef"><b>Definition</b> jacobi_zeta.hpp:82</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">u</span>: argument.</li>
+<li><span class="tt">x</span>: amplitude parameter ( \(0\le x\le 1\)).</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">l</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>return the jacobi zeta value.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://dlmf.nist.gov/22.2">DLMF: Jacobian Elliptic</a></li>
+<li><a href="https://mathworld.wolfram.com/JacobiEllipticFunctions.html">Wolfram MathWorld: Jacobi Elliptic Functions</a></li>
+<li><a href="https://en.wikipedia.org/wiki/jacobi_zeta_functions">Wikipedia: Jacobi elliptic functions</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/elliptic.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf{1.0, 0.0, 0.75, 0.5};</div>
+<div class="line"><a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wphi{1.0, 1.0e-30, 0.5, 0.0};</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main(){</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf   = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wphi = &quot;</span> &lt;&lt; wphi &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_zeta(wphi, wf)               = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a>(wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_zeta[ignore_last(2)](wphi,wf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_zeta[wf != 1.0](wphi,wf)     = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a>[wf != -1.0f](wphi, wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_zeta(pio_2[lower], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; jacobi_zeta(pio_2[upper], wf)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaa123505d28500b3ea5216a5b88a5da05">eve::jacobi_zeta</a>(<a class="code hl_variable" href="group__eve__math__constants.html#gabd8e0faaa62af384db4334f953957003">eve::pio_2</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a>](<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(wphi)), wf) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

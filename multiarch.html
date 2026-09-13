@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -143,8 +145,8 @@ Writing the kernel</h2>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; compute with: &quot;</span> &lt;&lt; eve::current_api &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; eve::wide is: &quot;</span> &lt;&lt; <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>() &lt;&lt; <span class="stringliteral">&quot; elements large.\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_variable" href="group__eve__algos_gaca82a7bc09323d8f0da1e0d3d5b0bcea.html#gaca82a7bc09323d8f0da1e0d3d5b0bcea">eve::algo::transform_inplace</a>( std::span{data,size}</div>
-<div class="line">                              , [](<span class="keyword">auto</span> e) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic_ga641aa98b8a2c05bf5bfb4907d15faf37.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(e + e * 3); }</div>
+<div class="line">  <a class="code hl_variable" href="group__eve__algos.html#gaca82a7bc09323d8f0da1e0d3d5b0bcea">eve::algo::transform_inplace</a>( std::span{data,size}</div>
+<div class="line">                              , [](<span class="keyword">auto</span> e) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(e + e * 3); }</div>
 <div class="line">                              );</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The code breaks down this way:</p><ul>

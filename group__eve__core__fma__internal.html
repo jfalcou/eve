@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,9 +129,109 @@ $(function(){initNavTree('group__eve__core__fma__internal.html','',''); });
 <div class="textblock"></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga331b89f386f0ee1b5b8fe337383df088" id="r_ga331b89f386f0ee1b5b8fe337383df088"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__fma__internal_ga331b89f386f0ee1b5b8fe337383df088.html#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;epsilon_t&gt;</td></tr>
+<tr class="memitem:ga331b89f386f0ee1b5b8fe337383df088" id="r_ga331b89f386f0ee1b5b8fe337383df088"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;epsilon_t&gt;</td></tr>
 <tr class="memdesc:ga331b89f386f0ee1b5b8fe337383df088"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the distance of the absolute value of the parameter to the next representable element of its type.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="ga331b89f386f0ee1b5b8fe337383df088" name="ga331b89f386f0ee1b5b8fe337383df088"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga331b89f386f0ee1b5b8fe337383df088">&#9670;&#160;</a></span>epsilon</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::epsilon = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;epsilon_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the distance of the absolute value of the parameter to the next representable element of its type. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2">downward</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                    <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gadc91b5f931296ee665ed345a84f1f629">upward</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                      <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[kahan](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                       <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">epsilon</a>[harrisson](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_ga8e43b606df3ea6bfb3d00a9951f3e5a2"><div class="ttname"><a href="group__eve__core__decorators.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2">eve::downward</a></div><div class="ttdeci">constexpr auto downward</div><div class="ttdoc">Rounds toward .</div><div class="ttdef"><b>Definition</b> core.hpp:80</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gadc91b5f931296ee665ed345a84f1f629"><div class="ttname"><a href="group__eve__core__decorators.html#gadc91b5f931296ee665ed345a84f1f629">eve::upward</a></div><div class="ttdeci">constexpr auto upward</div><div class="ttdoc">Rounds toward .</div><div class="ttdef"><b>Definition</b> core.hpp:101</div></div>
+<div class="ttc" id="agroup__eve__core__fma__internal_html_ga331b89f386f0ee1b5b8fe337383df088"><div class="ttname"><a href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a></div><div class="ttdeci">constexpr auto epsilon</div><div class="ttdoc">elementwise_callable object computing the distance of the absolute value of the parameter to the next...</div><div class="ttdef"><b>Definition</b> epsilon.hpp:90</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The distance of <a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">abs(x)</a> to the next representable element in the type of <span class="tt">x</span>. (Kahan definition)</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>The distance of <a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">abs(x)</a> to the previous representable element in the type of <span class="tt">x</span>. (Goldberg definition)</li>
+<li>The distance of <a class="el" href="group__eve__core__arithmetic.html#ga67722c49041abeb17485c8961f961cd7" title="elementwise_callable object computing the absolute value of the parameter.">abs(x)</a> to the nearest representable element in the type of <span class="tt">x</span>, not equal to x. (Harrisson definition).</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>somewhat faster algorithms are at hand using <a class="el" href="group__eve__core__accuracy.html#ga8c7d48b6fe0b1111e63719dc666f9d9c" title="sulp">sulp</a>, if you are insterested by by the signed ulp value.</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="//!https://en.wikipedia.org/wiki/Unit_in_the_last_place">wikipedia</a></li>
+<li><a href="https://hal.science/inria-00070503">HAL: On the definition of ulp(x)</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, 10*<a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(-4.0))};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                          = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[kahan](wf0)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[eve::kahan](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[harrisson](wf0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[eve::harrisson](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[wf0 != 0](wf0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[wf0 != 0](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[wu0 != 0](wu0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[wu0 != 0](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; epsilon[wi0 != 0](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga331b89f386f0ee1b5b8fe337383df088">eve::epsilon</a>[wi0 != 0](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga7820cea96e7dff960d4b1ac9becbd84b"><div class="ttname"><a href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a></div><div class="ttdeci">constexpr auto mindenormal</div><div class="ttdoc">Computes the smallest denormal positive value.</div><div class="ttdef"><b>Definition</b> mindenormal.hpp:71</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

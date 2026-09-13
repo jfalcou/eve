@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1options.html','','structeve_1_1options-me
   <div class="headertitle"><div class="title">eve::options&lt; Settings &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__extensions.html">Extensions points</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Wrapper class around bundle of options passed to <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/overload/supports.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;rbr::concepts::settings Settings = rbr::settings&lt;&gt;&gt;<br />
-struct eve::options&lt; Settings &gt;</div><p><b>Defined in Header</b></p>
+struct eve::options&lt; Settings &gt;</div><p>Wrapper class around bundle of options passed to <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a>. </p>
+<p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><p><a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a> can be decorated with options. <a class="el" href="structeve_1_1options.html" title="Wrapper class around bundle of options passed to eve::callable.">eve::options</a> is used internally to gather all those options in a <a href="https://jfalcou.github.io/raberu/">RABERU</a> \1 settings instance for further processing.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>

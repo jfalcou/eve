@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,7 +123,7 @@ $(function(){initNavTree('intro-03.html','',''); });
   <div class="headertitle"><div class="title">Tuples </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data. While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges into a single one. This worked by feeding <a class="el" href="group__eve__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a" title="SIMD version of std::transform.">eve::algo::transform_to</a>'s lambda a tuple of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
+<div class="textblock"><p>In the previous tutorials, we built a SIMD function to compute those cartesian-polar conversions and we used them in the context of a SIMD algorithm to apply them over an arbitrary set of data. While doing so, we introduced the eve::views::zip component that helped us gather multiple ranges into a single one. This worked by feeding <a class="el" href="group__eve__algos.html#gafac4ab5cfc7a92076d9fc87346b8180a" title="SIMD version of std::transform.">eve::algo::transform_to</a>'s lambda a tuple of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>.</p>
 <p>This interaction between SIMD registers and tuple-like types is very interesting and <b>EVE</b> provides different ways to take advantage of these interactions. In this tutorial, we'll go over how <b>EVE</b> can help you design SIMD-aware tuple to write higher level SIMD code.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md103"></a>
 Tuple of SIMD registers</h1>
@@ -143,8 +145,8 @@ Tuple of SIMD registers</h1>
 <div class="line"> </div>
 <div class="line">std::tuple&lt;eve::wide&lt;float&gt;,<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a>&gt; to_polar(<a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> x, <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
-<div class="line">  <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
+<div class="line">  <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
+<div class="line">  <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">  <span class="keywordflow">return</span> { rho, theta };</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>This version of the code just works out of the box. <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> is just a C++ type and thus interacts normally with other standard components.</p>
@@ -160,8 +162,8 @@ SIMD register of tuples</h1>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
-<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp_gaae6d8d8a0ad9d41260c0bbf8f642a370.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
-<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig_ga4e3cc734432c96af2f4e1bfb576ea504.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
+<div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
+<div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;kumi::tuple&lt;float,float&gt;</a>&gt;{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
@@ -180,7 +182,7 @@ SIMD register of tuples</h1>
 <div class="line">    <span class="keyword">auto</span> ins  = eve::views::zip(xs, ys);</div>
 <div class="line">    <span class="keyword">auto</span> outs = eve::views::zip(rho, theta);</div>
 <div class="line"> </div>
-<div class="line">    <a class="code hl_variable" href="group__eve__algos_gafac4ab5cfc7a92076d9fc87346b8180a.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a>[<a class="code hl_variable" href="group__eve__algo__traits_ga31ef5302d899fb36aeff5146a7187cef.html#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a>]</div>
+<div class="line">    <a class="code hl_variable" href="group__eve__algos.html#gafac4ab5cfc7a92076d9fc87346b8180a">eve::algo::transform_to</a>[<a class="code hl_variable" href="group__eve__algo__allow__frequency__scaling.html#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a>]</div>
 <div class="line">                           ( ins, outs</div>
 <div class="line">                            , [](<span class="keyword">auto</span> in) { <span class="keywordflow">return</span> to_polar( get&lt;0&gt;(in), get&lt;1&gt;(in)); }</div>
 <div class="line">                            );</div>
@@ -188,7 +190,7 @@ SIMD register of tuples</h1>
 <div class="line">    <span class="keywordflow">return</span> std::make_tuple(rho,theta);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>In this example we passed <span class="tt"><a class="el" href="group__eve__algo__traits_ga31ef5302d899fb36aeff5146a7187cef.html#ga31ef5302d899fb36aeff5146a7187cef" title="You can find more explanations in the &#39;frequency scaling tutorial&#39;. On intel using 64 byte registers ...">eve::algo::allow_frequency_scaling</a></span> to simplify the example. We talk more about it in frequency scaling tutorial.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>In this example we passed <span class="tt"><a class="el" href="group__eve__algo__allow__frequency__scaling.html#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a></span> to simplify the example. We talk more about it in frequency scaling tutorial.</dd></dl>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md105"></a>
 Conclusion</h1>
 <p>In this tutorial, we managed to:</p><ul>

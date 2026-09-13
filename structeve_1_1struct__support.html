@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,12 +125,10 @@ $(function(){initNavTree('structeve_1_1struct__support.html','','structeve_1_1st
   <div class="headertitle"><div class="title">eve::struct_support&lt; Self, Fields &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__struct.html">Structured Types Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>CRTP base-class to declare operators for user-defined product type.  
- <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Self, typename ... Fields&gt;<br />
-struct eve::struct_support&lt; Self, Fields &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/product_type.hpp&gt;</span></p>
+struct eve::struct_support&lt; Self, Fields &gt;</div><p>CRTP base-class to declare operators for user-defined product type. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/product_type.hpp&gt;</span></p>
 <p><span class="tt"><a class="el" href="structeve_1_1struct__support.html" title="CRTP base-class to declare operators for user-defined product type.">eve::struct_support</a></span> is a CRTP based helper class to define product type like user-defined type. If <span class="tt">Self</span> is this type that inherits from <span class="tt">eve::struct_supports&lt;Self,Fields...&gt;</span>, it will behave as a structure containing members of type <span class="tt">Fields...</span> and provides supports for operators based on the implementation of <span class="tt">Self</span>.</p>
 <p>Generated operators include:</p><ul>
 <li>Member-wise equality is provided by default</li>

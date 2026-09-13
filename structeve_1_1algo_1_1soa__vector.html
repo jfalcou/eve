@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1algo_1_1soa__vector.html','','structeve_1
   <div class="headertitle"><div class="title">eve::algo::soa_vector&lt; Type, Allocator &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__eve__memory.html">Memory Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>SIMD-aware container for product types.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/container/soa_vector.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt;<br />
-class eve::algo::soa_vector&lt; Type, Allocator &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/memory/soa_vector.hpp&gt;</span></p>
+class eve::algo::soa_vector&lt; Type, Allocator &gt;</div><p>SIMD-aware container for product types. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/memory/soa_vector.hpp&gt;</span></p>
 <p><a class="el" href="structeve_1_1algo_1_1soa__vector.html" title="SIMD-aware container for product types.">soa_vector</a> is a container similar to <span class="tt">std::vector</span> but optimized to store [product types](eve::product_type) using a Structure Of Array layout compatible with SIMD processing.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -146,16 +144,16 @@ Public Types</h2></td></tr>
 using&#160;</td><td class="memItemRight"><b>value_type</b> = Type</td></tr>
 <tr class="memdesc:afa565773f9b92a3d9e6352686dd0caec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of data stored in the container. <br /></td></tr>
 <tr class="memitem:a63371337208b1895b475884645b7aff3" id="r_a63371337208b1895b475884645b7aff3"><td class="memItemLeft"><a id="a63371337208b1895b475884645b7aff3" name="a63371337208b1895b475884645b7aff3"></a>
-using&#160;</td><td class="memItemRight"><b>iterator</b> = decltype(<a class="el" href="group__eve__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(storage_type{}.<a class="el" href="#a4305ff633912d03ecf954338c2683176">data</a>() , <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
+using&#160;</td><td class="memItemRight"><b>iterator</b> = decltype(<a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(storage_type{}.<a class="el" href="#a4305ff633912d03ecf954338c2683176">data</a>() , <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
 <tr class="memdesc:a63371337208b1895b475884645b7aff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator over the stored Type. <br /></td></tr>
 <tr class="memitem:a08ca84b8e41391cf3323531322cb0838" id="r_a08ca84b8e41391cf3323531322cb0838"><td class="memItemLeft"><a id="a08ca84b8e41391cf3323531322cb0838" name="a08ca84b8e41391cf3323531322cb0838"></a>
-using&#160;</td><td class="memItemRight"><b>const_iterator</b> = decltype(<a class="el" href="group__eve__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(std::declval&lt;storage_type const&gt;().<a class="el" href="#a4305ff633912d03ecf954338c2683176">data</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
+using&#160;</td><td class="memItemRight"><b>const_iterator</b> = decltype(<a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(std::declval&lt;storage_type const&gt;().<a class="el" href="#a4305ff633912d03ecf954338c2683176">data</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
 <tr class="memdesc:a08ca84b8e41391cf3323531322cb0838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const iterator over the stored Type. <br /></td></tr>
 <tr class="memitem:a1cebd79982e022f940660bf05183ff6e" id="r_a1cebd79982e022f940660bf05183ff6e"><td class="memItemLeft"><a id="a1cebd79982e022f940660bf05183ff6e" name="a1cebd79982e022f940660bf05183ff6e"></a>
-using&#160;</td><td class="memItemRight"><b>iterator_aligned</b> = decltype(<a class="el" href="group__eve__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(storage_type{}.<a class="el" href="#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
+using&#160;</td><td class="memItemRight"><b>iterator_aligned</b> = decltype(<a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(storage_type{}.<a class="el" href="#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
 <tr class="memdesc:a1cebd79982e022f940660bf05183ff6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator over the stored Type using aligned data. <br /></td></tr>
 <tr class="memitem:a06409dfeb9c697552b3cbc4bbba13663" id="r_a06409dfeb9c697552b3cbc4bbba13663"><td class="memItemLeft"><a id="a06409dfeb9c697552b3cbc4bbba13663" name="a06409dfeb9c697552b3cbc4bbba13663"></a>
-using&#160;</td><td class="memItemRight"><b>const_iterator_aligned</b> = decltype(<a class="el" href="group__eve__views_ga1d67fe0e91df8539083585c6e096789a.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(std::declval&lt;storage_type const&gt;().<a class="el" href="#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
+using&#160;</td><td class="memItemRight"><b>const_iterator_aligned</b> = decltype(<a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a">views::convert</a>(std::declval&lt;storage_type const&gt;().<a class="el" href="#afb1302da46f4c4235040f1d6717aac60">data_aligned</a>(), <a class="el" href="structeve_1_1as.html">as</a>&lt;<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&gt;{}))</td></tr>
 <tr class="memdesc:a06409dfeb9c697552b3cbc4bbba13663"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const iterator over the stored Type using aligned data. <br /></td></tr>
 <tr class="memitem:a7db1163ad1d400fc98afad5b3715b13f" id="r_a7db1163ad1d400fc98afad5b3715b13f"><td class="memItemLeft"><a id="a7db1163ad1d400fc98afad5b3715b13f" name="a7db1163ad1d400fc98afad5b3715b13f"></a>
 using&#160;</td><td class="memItemRight"><b>pointer</b> = <a class="el" href="#a63371337208b1895b475884645b7aff3">iterator</a></td></tr>
@@ -219,7 +217,7 @@ void&#160;</td><td class="memItemRight"><b>shrink_to_fit</b> ()</td></tr>
 <tr class="memitem:a583e0a2bb360fef57e2fb1cfa856fa45" id="r_a583e0a2bb360fef57e2fb1cfa856fa45"><td class="memItemLeft"><a id="a583e0a2bb360fef57e2fb1cfa856fa45" name="a583e0a2bb360fef57e2fb1cfa856fa45"></a>
 bool&#160;</td><td class="memItemRight"><b>empty</b> () const noexcept</td></tr>
 <tr class="memdesc:a583e0a2bb360fef57e2fb1cfa856fa45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the container has no elements. <br /></td></tr>
-<tr class="memitem:a23a8b5cff720fd36c88f8bcda9cc3cf0" id="r_a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a23a8b5cff720fd36c88f8bcda9cc3cf0.html#a23a8b5cff720fd36c88f8bcda9cc3cf0">reserve</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
+<tr class="memitem:a23a8b5cff720fd36c88f8bcda9cc3cf0" id="r_a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a23a8b5cff720fd36c88f8bcda9cc3cf0">reserve</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
 <tr class="memdesc:a23a8b5cff720fd36c88f8bcda9cc3cf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increase the capacity of the vector to a value that's greater or equal to <span class="tt">n</span>.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Element access</div></td></tr>
 <tr class="memitem:afb1302da46f4c4235040f1d6717aac60" id="r_afb1302da46f4c4235040f1d6717aac60"><td class="memItemLeft"><a id="afb1302da46f4c4235040f1d6717aac60" name="afb1302da46f4c4235040f1d6717aac60"></a>
@@ -234,9 +232,9 @@ auto&#160;</td><td class="memItemRight"><b>data</b> ()</td></tr>
 <tr class="memitem:a41ff6fdeb30e98261d9bafa3ffcbe45b" id="r_a41ff6fdeb30e98261d9bafa3ffcbe45b"><td class="memItemLeft"><a id="a41ff6fdeb30e98261d9bafa3ffcbe45b" name="a41ff6fdeb30e98261d9bafa3ffcbe45b"></a>
 auto&#160;</td><td class="memItemRight"><b>data</b> () const</td></tr>
 <tr class="memdesc:a41ff6fdeb30e98261d9bafa3ffcbe45b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a constant zipped pointer to the beginning. <br /></td></tr>
-<tr class="memitem:ab8e96562f8b090a2575e0b5a7116a9ed" id="r_ab8e96562f8b090a2575e0b5a7116a9ed"><td class="memItemLeft"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_ab8e96562f8b090a2575e0b5a7116a9ed.html#ab8e96562f8b090a2575e0b5a7116a9ed">get</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i) const</td></tr>
+<tr class="memitem:ab8e96562f8b090a2575e0b5a7116a9ed" id="r_ab8e96562f8b090a2575e0b5a7116a9ed"><td class="memItemLeft"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab8e96562f8b090a2575e0b5a7116a9ed">get</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i) const</td></tr>
 <tr class="memdesc:ab8e96562f8b090a2575e0b5a7116a9ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value of the <span class="tt">i</span>th element of the container.  <br /></td></tr>
-<tr class="memitem:a2916bce62a37b27a040f50727df724c9" id="r_a2916bce62a37b27a040f50727df724c9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a2916bce62a37b27a040f50727df724c9.html#a2916bce62a37b27a040f50727df724c9">set</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i, <a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;v)</td></tr>
+<tr class="memitem:a2916bce62a37b27a040f50727df724c9" id="r_a2916bce62a37b27a040f50727df724c9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2916bce62a37b27a040f50727df724c9">set</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> i, <a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;v)</td></tr>
 <tr class="memdesc:a2916bce62a37b27a040f50727df724c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify the value of the <span class="tt">i</span>th element of the container.  <br /></td></tr>
 <tr class="memitem:ab508d79bcf317cfc3a543d0c3dcb26aa" id="r_ab508d79bcf317cfc3a543d0c3dcb26aa"><td class="memItemLeft"><a id="ab508d79bcf317cfc3a543d0c3dcb26aa" name="ab508d79bcf317cfc3a543d0c3dcb26aa"></a>
 void&#160;</td><td class="memItemRight"><b>fill</b> (<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> v)</td></tr>
@@ -285,21 +283,21 @@ Modifiers</h2></td></tr>
 <tr class="memitem:a1180e9fef3d348b215819ea7217c8b01" id="r_a1180e9fef3d348b215819ea7217c8b01"><td class="memItemLeft"><a id="a1180e9fef3d348b215819ea7217c8b01" name="a1180e9fef3d348b215819ea7217c8b01"></a>
 void&#160;</td><td class="memItemRight"><b>clear</b> ()</td></tr>
 <tr class="memdesc:a1180e9fef3d348b215819ea7217c8b01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the contents of the container. <br /></td></tr>
-<tr class="memitem:a9d1fa950c126da0ea504f3cad11ddd28" id="r_a9d1fa950c126da0ea504f3cad11ddd28"><td class="memItemLeft"><a class="el" href="#a63371337208b1895b475884645b7aff3">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a9d1fa950c126da0ea504f3cad11ddd28.html#a9d1fa950c126da0ea504f3cad11ddd28">erase</a> (<a class="el" href="#a08ca84b8e41391cf3323531322cb0838">const_iterator</a> pos)</td></tr>
+<tr class="memitem:a9d1fa950c126da0ea504f3cad11ddd28" id="r_a9d1fa950c126da0ea504f3cad11ddd28"><td class="memItemLeft"><a class="el" href="#a63371337208b1895b475884645b7aff3">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9d1fa950c126da0ea504f3cad11ddd28">erase</a> (<a class="el" href="#a08ca84b8e41391cf3323531322cb0838">const_iterator</a> pos)</td></tr>
 <tr class="memdesc:a9d1fa950c126da0ea504f3cad11ddd28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes an element from the container.  <br /></td></tr>
 <tr class="memitem:a01c465399be641d08efe38ca634c55d2" id="r_a01c465399be641d08efe38ca634c55d2"><td class="memItemLeft"><a id="a01c465399be641d08efe38ca634c55d2" name="a01c465399be641d08efe38ca634c55d2"></a>
 <a class="el" href="#a63371337208b1895b475884645b7aff3">iterator</a>&#160;</td><td class="memItemRight"><b>erase</b> (<a class="el" href="#a08ca84b8e41391cf3323531322cb0838">const_iterator</a> f, <a class="el" href="#a08ca84b8e41391cf3323531322cb0838">const_iterator</a> l)</td></tr>
 <tr class="memdesc:a01c465399be641d08efe38ca634c55d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the elements in the range [first, last). <br /></td></tr>
-<tr class="memitem:a2cb689f3ab9c10b4d9530a04bc9f69b7" id="r_a2cb689f3ab9c10b4d9530a04bc9f69b7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a2cb689f3ab9c10b4d9530a04bc9f69b7.html#a2cb689f3ab9c10b4d9530a04bc9f69b7">push_back</a> (<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;value) noexcept</td></tr>
+<tr class="memitem:a2cb689f3ab9c10b4d9530a04bc9f69b7" id="r_a2cb689f3ab9c10b4d9530a04bc9f69b7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2cb689f3ab9c10b4d9530a04bc9f69b7">push_back</a> (<a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;value) noexcept</td></tr>
 <tr class="memdesc:a2cb689f3ab9c10b4d9530a04bc9f69b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends the given element value to the end of the container.  <br /></td></tr>
-<tr class="memitem:a23cd76edc7e71f4d164a571de326a24a" id="r_a23cd76edc7e71f4d164a571de326a24a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a23cd76edc7e71f4d164a571de326a24a.html#a23cd76edc7e71f4d164a571de326a24a">pop_back</a> () noexcept</td></tr>
+<tr class="memitem:a23cd76edc7e71f4d164a571de326a24a" id="r_a23cd76edc7e71f4d164a571de326a24a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a23cd76edc7e71f4d164a571de326a24a">pop_back</a> () noexcept</td></tr>
 <tr class="memdesc:a23cd76edc7e71f4d164a571de326a24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the last element of the container.  <br /></td></tr>
-<tr class="memitem:a00d09efb7c037e5a1b2393e091e94c91" id="r_a00d09efb7c037e5a1b2393e091e94c91"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_a00d09efb7c037e5a1b2393e091e94c91.html#a00d09efb7c037e5a1b2393e091e94c91">resize</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, <a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> value)</td></tr>
+<tr class="memitem:a00d09efb7c037e5a1b2393e091e94c91" id="r_a00d09efb7c037e5a1b2393e091e94c91"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a00d09efb7c037e5a1b2393e091e94c91">resize</a> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n, <a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> value)</td></tr>
 <tr class="memdesc:a00d09efb7c037e5a1b2393e091e94c91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the container to contain count elements.  <br /></td></tr>
 <tr class="memitem:a454bdf6879ae86443e4df0af94642127" id="r_a454bdf6879ae86443e4df0af94642127"><td class="memItemLeft"><a id="a454bdf6879ae86443e4df0af94642127" name="a454bdf6879ae86443e4df0af94642127"></a>
 void&#160;</td><td class="memItemRight"><b>resize</b> (<a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a> n)</td></tr>
 <tr class="memdesc:a454bdf6879ae86443e4df0af94642127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the current eve::soa_vector to a new size. <br /></td></tr>
-<tr class="memitem:ab677ad163c4f357e765d5f685f4a327c" id="r_ab677ad163c4f357e765d5f685f4a327c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1algo_1_1soa__vector_ab677ad163c4f357e765d5f685f4a327c.html#ab677ad163c4f357e765d5f685f4a327c">swap</a> (<a class="el" href="#a7040f8d97e7f099d22ade6df7f853599">soa_vector</a> &amp;other) noexcept</td></tr>
+<tr class="memitem:ab677ad163c4f357e765d5f685f4a327c" id="r_ab677ad163c4f357e765d5f685f4a327c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab677ad163c4f357e765d5f685f4a327c">swap</a> (<a class="el" href="#a7040f8d97e7f099d22ade6df7f853599">soa_vector</a> &amp;other) noexcept</td></tr>
 <tr class="memdesc:ab677ad163c4f357e765d5f685f4a327c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exchanges the contents of the container with those of <span class="tt">other</span>.  <br /></td></tr>
 <tr class="memitem:a2045227da8d8624b2fc82304f54fe4ce" id="r_a2045227da8d8624b2fc82304f54fe4ce"><td class="memItemLeft"><a id="a2045227da8d8624b2fc82304f54fe4ce" name="a2045227da8d8624b2fc82304f54fe4ce"></a>
 Allocator&#160;</td><td class="memItemRight"><b>get_allocator</b> ()</td></tr>
@@ -308,6 +306,283 @@ Allocator&#160;</td><td class="memItemRight"><b>get_allocator</b> ()</td></tr>
 void&#160;</td><td class="memItemRight"><b>swap</b> (<a class="el" href="#a7040f8d97e7f099d22ade6df7f853599">soa_vector</a> &amp;lhs, <a class="el" href="#a7040f8d97e7f099d22ade6df7f853599">soa_vector</a> &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a3deb25a3ff1468a7e4ccd1937a8d049e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of <span class="tt">lhs</span> and <span class="tt">rhs</span> by calling <span class="tt">lhs.swap(rhs)</span>. <br /></td></tr>
 </table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a9d1fa950c126da0ea504f3cad11ddd28" name="a9d1fa950c126da0ea504f3cad11ddd28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d1fa950c126da0ea504f3cad11ddd28">&#9670;&#160;</a></span>erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a63371337208b1895b475884645b7aff3">iterator</a> <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::erase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a08ca84b8e41391cf3323531322cb0838">const_iterator</a></td>          <td class="paramname"><span class="paramname"><em>pos</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes an element from the container. </p>
+<p>Has the same invalidation semantics as std::vector. <a class="el" href="#a7db16dc990e0a9f719cad868584894c3" title="Returns an iterator to the end.">end()</a> iterator is not a valid pos. </p>
+
+</div>
+</div>
+<a id="ab8e96562f8b090a2575e0b5a7116a9ed" name="ab8e96562f8b090a2575e0b5a7116a9ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8e96562f8b090a2575e0b5a7116a9ed">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a></td>          <td class="paramname"><span class="paramname"><em>i</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the value of the <span class="tt">i</span>th element of the container. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Index of the value to retrieve </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a23cd76edc7e71f4d164a571de326a24a" name="a23cd76edc7e71f4d164a571de326a24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23cd76edc7e71f4d164a571de326a24a">&#9670;&#160;</a></span>pop_back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::pop_back </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Removes the last element of the container. </p>
+<p>Calling pop_back on an empty container results in undefined behavior. Iterators and references to the last element, as well as the <a class="el" href="#a7db16dc990e0a9f719cad868584894c3" title="Returns an iterator to the end.">end()</a> iterator, are invalidated. </p>
+
+</div>
+</div>
+<a id="a2cb689f3ab9c10b4d9530a04bc9f69b7" name="a2cb689f3ab9c10b4d9530a04bc9f69b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cb689f3ab9c10b4d9530a04bc9f69b7">&#9670;&#160;</a></span>push_back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::push_back </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Appends the given element value to the end of the container. </p>
+<p>If the new <a class="el" href="#acfa067cbe1080920388e2637eb920180" title="Returns the number of elements in the container.">size()</a> is greater than <a class="el" href="#a7a932b76d28707377aea95c7332c62c2" title="Returns the number of elements that the container has currently allocated space for.">capacity()</a> then all iterators and references (including the past-the-end iterator) are invalidated. Otherwise only the past-the-end iterator is invalidated. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></td><td><a class="el" href="concepteve_1_1scalar__value.html" title="eve::scalar_value">Value</a> to append </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a23a8b5cff720fd36c88f8bcda9cc3cf0" name="a23a8b5cff720fd36c88f8bcda9cc3cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23a8b5cff720fd36c88f8bcda9cc3cf0">&#9670;&#160;</a></span>reserve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::reserve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increase the capacity of the vector to a value that's greater or equal to <span class="tt">n</span>. </p>
+<p>If <span class="tt">n</span> is greater than the current <a class="el" href="#a7a932b76d28707377aea95c7332c62c2" title="Returns the number of elements that the container has currently allocated space for.">capacity()</a>, new storage is allocated and all iterators, including the past-the-end iterator, and all references to the elements are invalidated. Otherwise, the method does nothing. </p><dl class="section warning"><dt>Warning</dt><dd><a class="el" href="#a23a8b5cff720fd36c88f8bcda9cc3cf0" title="Increase the capacity of the vector to a value that&#39;s greater or equal to n.">reserve()</a> does not change the size of the vector. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>New capacity of the <span class="tt">eve::soa_vector</span> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a00d09efb7c037e5a1b2393e091e94c91" name="a00d09efb7c037e5a1b2393e091e94c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00d09efb7c037e5a1b2393e091e94c91">&#9670;&#160;</a></span>resize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::resize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a></td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resizes the container to contain count elements. </p>
+<p>If the current size is greater than <span class="tt">n</span>, the container is reduced to its first <span class="tt">n</span> elements. If the current size is less than <span class="tt">n</span>, additional elements are appended. Those elements are either default-inserted or copied if <span class="tt"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></span> is provided. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>new size of the container </td></tr>
+    <tr><td class="paramname"><a class="el" href="concepteve_1_1value.html" title="The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...">value</a></td><td>the value to initialize the new elements with </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2916bce62a37b27a040f50727df724c9" name="a2916bce62a37b27a040f50727df724c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2916bce62a37b27a040f50727df724c9">&#9670;&#160;</a></span>set()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::set </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ad4b822a0023ad3a8cec4bc090c41b381">size_type</a></td>          <td class="paramname"><span class="paramname"><em>i</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#afa565773f9b92a3d9e6352686dd0caec">value_type</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>v</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Modify the value of the <span class="tt">i</span>th element of the container. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">i</td><td>Index of the value to write </td></tr>
+    <tr><td class="paramname">v</td><td>Value to write </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab677ad163c4f357e765d5f685f4a327c" name="ab677ad163c4f357e765d5f685f4a327c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab677ad163c4f357e765d5f685f4a327c">&#9670;&#160;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;eve::product_type Type, eve::simd_allocator Allocator = eve::aligned_allocator&lt;unsigned char, eve::fixed&lt;64&gt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector</a>&lt; Type, Allocator &gt;::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a7040f8d97e7f099d22ade6df7f853599">soa_vector</a>&lt; Type, Allocator &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Exchanges the contents of the container with those of <span class="tt">other</span>. </p>
+<p>Does not invoke any move, copy, or swap operations on individual elements. All iterators and references remain valid. The past-the-end iterator is invalidated. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

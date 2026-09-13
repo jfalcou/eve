@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1algo_1_1views_1_1iota__with__step__iterat
   <div class="headertitle"><div class="title">eve::algo::views::iota_with_step_iterator&lt; T, N &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__views.html">Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>An iterator for all values from base to offset. Should be created with <span class="tt"><a class="el" href="group__eve__views_gac2613080675f010cddeaed9159910c8e.html#gac2613080675f010cddeaed9159910c8e" title="A function to generate an iota with a step i.e. a general arithmetic sequence. To generate an iterato...">iota_with_step</a></span> or <span class="tt"><a class="el" href="group__eve__views_gaa4c24e44fd616a31d3bd46ad947a6187.html#gaa4c24e44fd616a31d3bd46ad947a6187" title="A function to generate an iota iterator/view like [0.5, 2.5, 4.5, ...].  To generate an iterator base...">iota</a></span>. Not OK to compare two iterators generated from a different base.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/views/iota.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename N&gt;<br />
-struct eve::algo::views::iota_with_step_iterator&lt; T, N &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/iota.hpp&gt;</span></p>
+struct eve::algo::views::iota_with_step_iterator&lt; T, N &gt;</div><p>An iterator for all values from base to offset. Should be created with <span class="tt"><a class="el" href="group__eve__views.html#gac2613080675f010cddeaed9159910c8e" title="A function to generate an iota with a step i.e. a general arithmetic sequence. To generate an iterato...">iota_with_step</a></span> or <span class="tt"><a class="el" href="group__eve__views.html#gaa4c24e44fd616a31d3bd46ad947a6187" title="A function to generate an iota iterator/view like [0.5, 2.5, 4.5, ...].  To generate an iterator base...">iota</a></span>. Not OK to compare two iterators generated from a different base. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/iota.hpp&gt;</span></p>
 <p>Has a shorthand <span class="tt"><a class="el" href="structeve_1_1views_1_1iota__with__step__iterator.html" title="An iterator for all values from base to offset. Should be created with iota_with_step or iota....">eve::views::iota_with_step_iterator</a></span> in <span class="tt">&lt;eve/views/iota.hpp&gt;</span>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->

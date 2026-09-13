@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,17 +126,16 @@ $(function(){initNavTree('concepteve_1_1algo_1_1non__owning__range.html','','');
 
 <p>a non_owning range is a <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> that does not own it's elements and can be copied without it's contents being affected TODO: FIX-#1017: how is this related to <span class="tt">std::borrowed_range</span>?  
 <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/range_ref.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Can be enabled via: defining 'is_non_owning' internal typedef.</p>
+<div class="textblock"><p>a non_owning range is a <a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a> that does not own it's elements and can be copied without it's contents being affected TODO: FIX-#1017: how is this related to <span class="tt">std::borrowed_range</span>? </p>
+<p>Can be enabled via: defining 'is_non_owning' internal typedef.</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/range_ref.hpp&gt;</span> </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1algo_1_1non__owning__range.html">non_owning_range</a> = <a class="code hl_struct" href="structrelaxed__range.html">relaxed_range&lt;T&gt;</a> &amp;&amp; <span class="keyword">requires</span> {</div>
 <div class="line">    <span class="keyword">typename</span> T::is_non_owning;</div>
 <div class="line">  }</div>
-<div class="ttc" id="aconcepteve_1_1algo_1_1non__owning__range_html"><div class="ttname"><a href="concepteve_1_1algo_1_1non__owning__range.html">eve::algo::non_owning_range</a></div><div class="ttdoc">a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...</div><div class="ttdef"><b>Definition</b> range_ref.hpp:67</div></div>
+<div class="ttc" id="aconcepteve_1_1algo_1_1non__owning__range_html"><div class="ttname"><a href="concepteve_1_1algo_1_1non__owning__range.html">eve::algo::non_owning_range</a></div><div class="ttdoc">a non_owning range is a relaxed_range that does not own it&#39;s elements and can be copied without it&#39;s ...</div><div class="ttdef"><b>Definition</b> range_ref.hpp:64</div></div>
 <div class="ttc" id="astructrelaxed__range_html"><div class="ttname"><a href="structrelaxed__range.html">relaxed_range</a></div><div class="ttdoc">Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

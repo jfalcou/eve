@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -121,14 +123,10 @@ $(function(){initNavTree('structeve_1_1common__type.html','',''); });
   <div class="headertitle"><div class="title">eve::common_type&lt; Ts &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__traits.html">Type traits</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Computes a type that can represent all values in a list of types.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/common_type.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename ... Ts&gt;<br />
-struct eve::common_type&lt; Ts &gt;</div><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/common_type.hpp&gt;</span></p>
+struct eve::common_type&lt; Ts &gt;</div><p>Computes a type that can represent all values in a list of types. </p>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/common_type.hpp&gt;</span></p>
 <p>Similar to <span class="tt">std::common_type</span>.</p>
 <p>We cannot use <span class="tt">std::common_type</span> because it tends to return a bigger type: For example: <span class="tt">std::int16_t</span>, <span class="tt">std::int8_t</span> will return <span class="tt">std::int32_t</span>: <a href="https://godbolt.org/z/vjf9c45E5">https://godbolt.org/z/vjf9c45E5</a></p>
 <p>We also do not follow standard promotion rules: <span class="tt">std::common_type_t&lt;std::int16_t, std::uint16_t&gt;</span> is <span class="tt">std::int32_t</span> BUT: <span class="tt">std::common_type_t&lt;std::int32_t, std::uint32_t&gt;</span> is <span class="tt">std::uint32_t</span> We always do like 32 bit one: - <span class="tt">eve::common_type_t&lt;std::int16_t, std::uint16_t&gt;</span> is <span class="tt">std::uint16_t</span></p>

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -125,38 +127,1004 @@ $(function(){initNavTree('group__eve__core__accuracy.html','',''); });
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>These functions allows performing some basic arithmetic operations with greater accuracy even when a truly upgraded type is not available.</p>
-<p><a class="el" href="group__eve__core__accuracy_gab21bf1ebf628243f28a10f05ce66f820.html#gab21bf1ebf628243f28a10f05ce66f820" title="eve::diff_of_prod">diff_of_prod</a>, <a class="el" href="group__eve__core__accuracy_gad1203df175a5c37630dd175a41b94ae1.html#gad1203df175a5c37630dd175a41b94ae1" title="eve::safe_scale">safe_scale</a>, <a class="el" href="group__eve__core__accuracy_ga86420153c2918b16aee8fa6f4f2d0194.html#ga86420153c2918b16aee8fa6f4f2d0194" title="eve::sufp">sufp</a>, <a class="el" href="group__eve__core__accuracy_ga8c7d48b6fe0b1111e63719dc666f9d9c.html#ga8c7d48b6fe0b1111e63719dc666f9d9c" title="eve::sulp">sulp</a>, <a class="el" href="group__eve__core__accuracy_ga36017626c633cde2a07146d49d9ccbe7.html#ga36017626c633cde2a07146d49d9ccbe7" title="eve::sum_of_prod">sum_of_prod</a>, <a class="el" href="group__eve__core__accuracy_gabacbafd11abd5e82e49aa6ab394cd10e.html#gabacbafd11abd5e82e49aa6ab394cd10e" title="eve::three_fma">three_fma</a>, <a class="el" href="group__eve__core__accuracy_ga3a5c4b16896174afe9e63b05e1f9b011.html#ga3a5c4b16896174afe9e63b05e1f9b011" title="eve::two_add">two_add</a>, <a class="el" href="group__eve__core__accuracy_ga255bfbae7d6cf4b43a63d8f834e907b4.html#ga255bfbae7d6cf4b43a63d8f834e907b4" title="eve::two_prod">two_prod</a>, <a class="el" href="group__eve__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cfcd.html#ga8e384bfd5e06145bdca49fa9da74cfcd" title="eve::two_sub">two_sub</a>, <a class="el" href="group__eve__core__accuracy_ga9234fd48e496db5dd743b5494a4a932d.html#ga9234fd48e496db5dd743b5494a4a932d" title="eve::veltkamp">veltkamp</a>.</p>
-<dl class="section note"><dt>Note</dt><dd>Many functions can also use a <span class="tt"><a class="el" href="group__eve__core__decorators_ga41df7824f33624e9f1febcb4c72bdd6a.html#ga41df7824f33624e9f1febcb4c72bdd6a" title="Computes the result in the upgraded element type.">widen</a></span> decorators. This make the whole computation and result made in the upgraded type if available. Currently types with 64 bits elements cannot be upgraded and for then <span class="tt"><a class="el" href="group__eve__core__decorators_ga41df7824f33624e9f1febcb4c72bdd6a.html#ga41df7824f33624e9f1febcb4c72bdd6a" title="Computes the result in the upgraded element type.">widen</a></span> has no effect.</dd></dl>
+<p><a class="el" href="#gab21bf1ebf628243f28a10f05ce66f820" title="eve::diff_of_prod">diff_of_prod</a>, <a class="el" href="#gad1203df175a5c37630dd175a41b94ae1" title="eve::safe_scale">safe_scale</a>, <a class="el" href="#ga86420153c2918b16aee8fa6f4f2d0194" title="eve::sufp">sufp</a>, <a class="el" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c" title="eve::sulp">sulp</a>, <a class="el" href="#ga36017626c633cde2a07146d49d9ccbe7" title="eve::sum_of_prod">sum_of_prod</a>, <a class="el" href="#gabacbafd11abd5e82e49aa6ab394cd10e" title="eve::three_fma">three_fma</a>, <a class="el" href="#ga3a5c4b16896174afe9e63b05e1f9b011" title="eve::two_add">two_add</a>, <a class="el" href="#ga255bfbae7d6cf4b43a63d8f834e907b4" title="eve::two_prod">two_prod</a>, <a class="el" href="#ga8e384bfd5e06145bdca49fa9da74cfcd" title="eve::two_sub">two_sub</a>, <a class="el" href="#ga9234fd48e496db5dd743b5494a4a932d" title="eve::veltkamp">veltkamp</a>.</p>
+<dl class="section note"><dt>Note</dt><dd>Many functions can also use a <span class="tt"><a class="el" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a" title="Computes the result in the upgraded element type.">widen</a></span> decorators. This make the whole computation and result made in the upgraded type if available. Currently types with 64 bits elements cannot be upgraded and for then <span class="tt"><a class="el" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a" title="Computes the result in the upgraded element type.">widen</a></span> has no effect.</dd></dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gab21bf1ebf628243f28a10f05ce66f820" id="r_gab21bf1ebf628243f28a10f05ce66f820"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_gab21bf1ebf628243f28a10f05ce66f820.html#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;diff_of_prod_t&gt;</td></tr>
+<tr class="memitem:gab21bf1ebf628243f28a10f05ce66f820" id="r_gab21bf1ebf628243f28a10f05ce66f820"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;diff_of_prod_t&gt;</td></tr>
 <tr class="memdesc:gab21bf1ebf628243f28a10f05ce66f820"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the difference of products operation with better accuracy than the naive formula.  <br /></td></tr>
-<tr class="memitem:gad1203df175a5c37630dd175a41b94ae1" id="r_gad1203df175a5c37630dd175a41b94ae1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_gad1203df175a5c37630dd175a41b94ae1.html#gad1203df175a5c37630dd175a41b94ae1">eve::safe_scale</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;safe_scale_t&gt;</td></tr>
+<tr class="memitem:gad1203df175a5c37630dd175a41b94ae1" id="r_gad1203df175a5c37630dd175a41b94ae1"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad1203df175a5c37630dd175a41b94ae1">eve::safe_scale</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;safe_scale_t&gt;</td></tr>
 <tr class="memdesc:gad1203df175a5c37630dd175a41b94ae1"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing underflow-safe and almost overflow-free scaling factor for the input.  <br /></td></tr>
-<tr class="memitem:ga86420153c2918b16aee8fa6f4f2d0194" id="r_ga86420153c2918b16aee8fa6f4f2d0194"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga86420153c2918b16aee8fa6f4f2d0194.html#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sufp_t&gt;</td></tr>
+<tr class="memitem:ga86420153c2918b16aee8fa6f4f2d0194" id="r_ga86420153c2918b16aee8fa6f4f2d0194"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sufp_t&gt;</td></tr>
 <tr class="memdesc:ga86420153c2918b16aee8fa6f4f2d0194"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the signed unit value in the first place of the input i.e. the greatest integer power of 2 less than or equal to |x|, multiplied by the sign of x.  <br /></td></tr>
-<tr class="memitem:ga8c7d48b6fe0b1111e63719dc666f9d9c" id="r_ga8c7d48b6fe0b1111e63719dc666f9d9c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga8c7d48b6fe0b1111e63719dc666f9d9c.html#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sulp_t&gt;</td></tr>
+<tr class="memitem:ga8c7d48b6fe0b1111e63719dc666f9d9c" id="r_ga8c7d48b6fe0b1111e63719dc666f9d9c"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sulp_t&gt;</td></tr>
 <tr class="memdesc:ga8c7d48b6fe0b1111e63719dc666f9d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the classical unit in the last place (Kahan) or the harrisson version multiplied by the sign of the input.  <br /></td></tr>
-<tr class="memitem:ga36017626c633cde2a07146d49d9ccbe7" id="r_ga36017626c633cde2a07146d49d9ccbe7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga36017626c633cde2a07146d49d9ccbe7.html#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sum_of_prod_t&gt;</td></tr>
+<tr class="memitem:ga36017626c633cde2a07146d49d9ccbe7" id="r_ga36017626c633cde2a07146d49d9ccbe7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sum_of_prod_t&gt;</td></tr>
 <tr class="memdesc:ga36017626c633cde2a07146d49d9ccbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the sum of products operation with better accuracy than the naive formula.  <br /></td></tr>
-<tr class="memitem:gabacbafd11abd5e82e49aa6ab394cd10e" id="r_gabacbafd11abd5e82e49aa6ab394cd10e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_gabacbafd11abd5e82e49aa6ab394cd10e.html#gabacbafd11abd5e82e49aa6ab394cd10e">eve::three_fma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;three_fma_t&gt;</td></tr>
+<tr class="memitem:gabacbafd11abd5e82e49aa6ab394cd10e" id="r_gabacbafd11abd5e82e49aa6ab394cd10e"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gabacbafd11abd5e82e49aa6ab394cd10e">eve::three_fma</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;three_fma_t&gt;</td></tr>
 <tr class="memdesc:gabacbafd11abd5e82e49aa6ab394cd10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> triplet of an fma value f and two errors e1 and e2 such that \(ax+y = f+r_1+r_2\).  <br /></td></tr>
-<tr class="memitem:ga3a5c4b16896174afe9e63b05e1f9b011" id="r_ga3a5c4b16896174afe9e63b05e1f9b011"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga3a5c4b16896174afe9e63b05e1f9b011.html#ga3a5c4b16896174afe9e63b05e1f9b011">eve::two_add</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_add_t&gt;</td></tr>
+<tr class="memitem:ga3a5c4b16896174afe9e63b05e1f9b011" id="r_ga3a5c4b16896174afe9e63b05e1f9b011"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga3a5c4b16896174afe9e63b05e1f9b011">eve::two_add</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_add_t&gt;</td></tr>
 <tr class="memdesc:ga3a5c4b16896174afe9e63b05e1f9b011"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair consisting of the sum and its resulting rounding error.  <br /></td></tr>
-<tr class="memitem:gadd6ab7f52e4d422e1edddc72e49cda2f" id="r_gadd6ab7f52e4d422e1edddc72e49cda2f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_gadd6ab7f52e4d422e1edddc72e49cda2f.html#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_div_approx_t&gt;</td></tr>
+<tr class="memitem:gadd6ab7f52e4d422e1edddc72e49cda2f" id="r_gadd6ab7f52e4d422e1edddc72e49cda2f"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_div_approx_t&gt;</td></tr>
 <tr class="memdesc:gadd6ab7f52e4d422e1edddc72e49cda2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of division and error,.  <br /></td></tr>
-<tr class="memitem:ga507d7656a3022987da7ac91e88b511b6" id="r_ga507d7656a3022987da7ac91e88b511b6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga507d7656a3022987da7ac91e88b511b6.html#ga507d7656a3022987da7ac91e88b511b6">eve::two_fma_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_fma_approx_t&gt;</td></tr>
+<tr class="memitem:ga507d7656a3022987da7ac91e88b511b6" id="r_ga507d7656a3022987da7ac91e88b511b6"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga507d7656a3022987da7ac91e88b511b6">eve::two_fma_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_fma_approx_t&gt;</td></tr>
 <tr class="memdesc:ga507d7656a3022987da7ac91e88b511b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> triplet of an fma value f and two errors e1 and e2 such that \(ax+y = f+r_1+r_2\).  <br /></td></tr>
-<tr class="memitem:ga255bfbae7d6cf4b43a63d8f834e907b4" id="r_ga255bfbae7d6cf4b43a63d8f834e907b4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga255bfbae7d6cf4b43a63d8f834e907b4.html#ga255bfbae7d6cf4b43a63d8f834e907b4">eve::two_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_prod_t&gt;</td></tr>
+<tr class="memitem:ga255bfbae7d6cf4b43a63d8f834e907b4" id="r_ga255bfbae7d6cf4b43a63d8f834e907b4"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga255bfbae7d6cf4b43a63d8f834e907b4">eve::two_prod</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_prod_t&gt;</td></tr>
 <tr class="memdesc:ga255bfbae7d6cf4b43a63d8f834e907b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of product and error,.  <br /></td></tr>
-<tr class="memitem:ga57d4a0b8b8199497a2c4860e594fc4c7" id="r_ga57d4a0b8b8199497a2c4860e594fc4c7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga57d4a0b8b8199497a2c4860e594fc4c7.html#ga57d4a0b8b8199497a2c4860e594fc4c7">eve::two_sqrt_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sqrt_approx_t&gt;</td></tr>
+<tr class="memitem:ga57d4a0b8b8199497a2c4860e594fc4c7" id="r_ga57d4a0b8b8199497a2c4860e594fc4c7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga57d4a0b8b8199497a2c4860e594fc4c7">eve::two_sqrt_approx</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sqrt_approx_t&gt;</td></tr>
 <tr class="memdesc:ga57d4a0b8b8199497a2c4860e594fc4c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of square root and error,.  <br /></td></tr>
-<tr class="memitem:ga8e384bfd5e06145bdca49fa9da74cfcd" id="r_ga8e384bfd5e06145bdca49fa9da74cfcd"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga8e384bfd5e06145bdca49fa9da74cfcd.html#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sub_t&gt;</td></tr>
+<tr class="memitem:ga8e384bfd5e06145bdca49fa9da74cfcd" id="r_ga8e384bfd5e06145bdca49fa9da74cfcd"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sub_t&gt;</td></tr>
 <tr class="memdesc:ga8e384bfd5e06145bdca49fa9da74cfcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair consisting of the difference of the parameters and its resulting rounding error.  <br /></td></tr>
-<tr class="memitem:ga9234fd48e496db5dd743b5494a4a932d" id="r_ga9234fd48e496db5dd743b5494a4a932d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="group__eve__core__accuracy_ga9234fd48e496db5dd743b5494a4a932d.html#ga9234fd48e496db5dd743b5494a4a932d">eve::veltkamp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;veltkamp_t&gt;</td></tr>
-<tr class="memdesc:ga9234fd48e496db5dd743b5494a4a932d"><td class="mdescLeft">&#160;</td><td class="mdescRight">split a loating-point number with radix 2 and p mantissa bits x into two floating-point numbers <span class="tt">xh</span> and <span class="tt">xl</span> such that, the significand of xh fits in <span class="tt">p-floor(p/2)</span>, the significand of xl fits in <span class="tt"><a class="el" href="group__eve__core__arithmetic_gad11a9abc8d039fa20ad0b7c1f307133d.html#gad11a9abc8d039fa20ad0b7c1f307133d" title="elementwise_callable object computing the largest integer not greater than the input.">floor</a>(p/2)</span> digits, and <span class="tt">x = xh + xl</span> exactly. Where p is the number of mantissa bits of the floating type element.  <br /></td></tr>
+<tr class="memitem:ga9234fd48e496db5dd743b5494a4a932d" id="r_ga9234fd48e496db5dd743b5494a4a932d"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga9234fd48e496db5dd743b5494a4a932d">eve::veltkamp</a> = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;veltkamp_t&gt;</td></tr>
+<tr class="memdesc:ga9234fd48e496db5dd743b5494a4a932d"><td class="mdescLeft">&#160;</td><td class="mdescRight">split a loating-point number with radix 2 and p mantissa bits x into two floating-point numbers <span class="tt">xh</span> and <span class="tt">xl</span> such that, the significand of xh fits in <span class="tt">p-floor(p/2)</span>, the significand of xl fits in <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#gad11a9abc8d039fa20ad0b7c1f307133d" title="elementwise_callable object computing the largest integer not greater than the input.">floor</a>(p/2)</span> digits, and <span class="tt">x = xh + xl</span> exactly. Where p is the number of mantissa bits of the floating type element.  <br /></td></tr>
 </table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="gab21bf1ebf628243f28a10f05ce66f820" name="gab21bf1ebf628243f28a10f05ce66f820"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab21bf1ebf628243f28a10f05ce66f820">&#9670;&#160;</a></span>diff_of_prod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::diff_of_prod = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;diff_of_prod_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the difference of products operation with better accuracy than the naive formula. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">diff_of_prod</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                               <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">diff_of_prod</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                        <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic exclusive options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">diff_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                    <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">diff_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                         <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
+<div class="ttc" id="aconcepteve_1_1floating__value_html"><div class="ttname"><a href="concepteve_1_1floating__value.html">eve::floating_value</a></div><div class="ttdoc">The concept floating_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type...</div><div class="ttdef"><b>Definition</b> value.hpp:116</div></div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_gab21bf1ebf628243f28a10f05ce66f820"><div class="ttname"><a href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a></div><div class="ttdeci">constexpr auto diff_of_prod</div><div class="ttdoc">elementwise_callable object computing the difference of products operation with better accuracy than ...</div><div class="ttdef"><b>Definition</b> diff_of_prod.hpp:84</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gab99e44220c7f6c31754e4fbadec3403a"><div class="ttname"><a href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a></div><div class="ttdeci">constexpr auto raw</div><div class="ttdoc">Performs the operation minimally, trading accuracy for speed.</div><div class="ttdef"><b>Definition</b> core.hpp:95</div></div>
+<div class="ttc" id="agroup__eve__core__decorators_html_gaf3483e5e000367c812b507ed46399367"><div class="ttname"><a href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a></div><div class="ttdeci">constexpr auto pedantic</div><div class="ttdoc">Follows the corner cases of the corresponding standard function.</div><div class="ttdef"><b>Definition</b> core.hpp:91</div></div>
+<div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:19</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>, <span class="tt">t</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating values</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x*y-z*t</span>, with better precision if correct fma is available, is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>computes a raw version of diff_of_prod, i.e. the naive formula (in fact <span class="tt"><a class="el" href="group__eve__core__fma__family.html#ga92b3e10cb0fda10eec419cb96378a5f5" title="strict_elementwise_callable computing the fused multiply subtract of its three parameters.">fms(x, y, z*t)</a></span>)</li>
+<li>computes a pedantic version of <span class="tt"><a class="el" href="#gab21bf1ebf628243f28a10f05ce66f820" title="elementwise_callable object computing the difference of products operation with better accuracy than ...">diff_of_prod</a></span> ensuring better accuracy in any case.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3, 2, 1, 0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4, 1, 2, 100};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2 = wf0+4*<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf3 = wf1-4*<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                              = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                              = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                              = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf3                                              = &quot;</span> &lt;&lt; wf3 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_of_prod(wf0, wf1, wf2, wf3)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a>(wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_of_prod[ignore_last(2)](wf0, wf1, wf2, wf3) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_of_prod[raw](wf0, wf1, wf2, wf3)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; diff_of_prod[pedantic](wf0, wf1, wf2, wf3)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gab21bf1ebf628243f28a10f05ce66f820">eve::diff_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga3a08ea3bf1e679ed4ef0576ddffff08a"><div class="ttname"><a href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a></div><div class="ttdeci">constexpr auto eps</div><div class="ttdoc">Computes a constant to the machine epsilon.</div><div class="ttdef"><b>Definition</b> eps.hpp:74</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gad1203df175a5c37630dd175a41b94ae1" name="gad1203df175a5c37630dd175a41b94ae1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad1203df175a5c37630dd175a41b94ae1">&#9670;&#160;</a></span>safe_scale</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::safe_scale = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;safe_scale_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing underflow-safe and almost overflow-free scaling factor for the input. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">safe_scale</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x)                 <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">safe_scale</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">safe_scale</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">safe_scale</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="aconcepteve_1_1logical__value_html"><div class="ttname"><a href="concepteve_1_1logical__value.html">eve::logical_value</a></div><div class="ttdoc">The concept logical_value&lt;T&gt; is satisfied if and only if T satisfies eve::value and the element type ...</div><div class="ttdef"><b>Definition</b> value.hpp:134</div></div>
+<div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_gad1203df175a5c37630dd175a41b94ae1"><div class="ttname"><a href="#gad1203df175a5c37630dd175a41b94ae1">eve::safe_scale</a></div><div class="ttdeci">constexpr auto safe_scale</div><div class="ttdoc">elementwise_callable object computing underflow-safe and almost overflow-free scaling factor for the ...</div><div class="ttdef"><b>Definition</b> safe_scale.hpp:84</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p><ol type="1">
+<li>provide a value s such that |x|/s, is much above the underflow threshold and much below the overflow threshold (so that, for example, we can safely square it); (return maxflint for 0); moreover it is an integer power of 2 (in order to avoid rounding errors when multiplying or dividing by it).</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>same as 1. but return 1 for 0</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://members.loria.fr/PZimmermann/papers/split.pdf">HAL: On various ways to split a floating-point number</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = { 1.0, 42.0, 1.0e-300, 1.0e300,</div>
+<div class="line">                   0.0, -1.0e-200, <a class="code hl_variable" href="group__eve__core__constants.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()), <a class="code hl_variable" href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>()) };</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf             = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; safe_scale(wf) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad1203df175a5c37630dd175a41b94ae1">eve::safe_scale</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga85073f11abb76d43faf07742435ea083"><div class="ttname"><a href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a></div><div class="ttdeci">constexpr auto valmax</div><div class="ttdoc">Computes the greatest representable value.</div><div class="ttdef"><b>Definition</b> valmax.hpp:67</div></div>
+<div class="ttc" id="agroup__eve__core__constants_html_gadf2de69a7c166758ea2c4643e0fae62e"><div class="ttname"><a href="group__eve__core__constants.html#gadf2de69a7c166758ea2c4643e0fae62e">eve::smallestposval</a></div><div class="ttdeci">constexpr auto smallestposval</div><div class="ttdoc">Computes the smallest normal positive value.</div><div class="ttdef"><b>Definition</b> smallestposval.hpp:71</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga86420153c2918b16aee8fa6f4f2d0194" name="ga86420153c2918b16aee8fa6f4f2d0194"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga86420153c2918b16aee8fa6f4f2d0194">&#9670;&#160;</a></span>sufp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::sufp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sufp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the signed unit value in the first place of the input i.e. the greatest integer power of 2 less than or equal to |x|, multiplied by the sign of x. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">sufp</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">sufp</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">sufp</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">sufp</a>[kahan](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                   <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">sufp</a>[harrison](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga86420153c2918b16aee8fa6f4f2d0194"><div class="ttname"><a href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a></div><div class="ttdeci">constexpr auto sufp</div><div class="ttdoc">elementwise_callable object computing the signed unit value in the first place of the input i....</div><div class="ttdef"><b>Definition</b> sufp.hpp:84</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p><ol type="1">
+<li>the signed unit value in the first place of the input. I.e. the greatest integer power of the base (2) less than or equal to |x| multiplied by the sign of x. (Kahan- definition)<ol type="a">
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>The same value up to a factor 2, but with faster computation. (the result is times 2 is the input is not a power of 2).</li>
+</ol>
+</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>invalid entries return NaN</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="//!https://en.wikipedia.org/wiki/Unit_in_the_last_place">wikipedia</a></li>
+<li><a href="https://members.loria.fr/PZimmermann/papers/split.pdf">HAL: On various ways to split a floating-point number</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 10.0, 100.0, -1.0e8, -2.0e5, -30.0, 10*<a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(-4.0))};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::hexfloat &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                          = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[kahan](wf0)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[eve::kahan](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[harrisson](wf0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[eve::harrisson](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[wf0 != 1.0f](wf0)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[wf0 != 1](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[wu0 != 2](wu0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[wu0 != 2](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sufp[wi0 != 3](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga86420153c2918b16aee8fa6f4f2d0194">eve::sufp</a>[wi0 != 3](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__constants_html_ga7820cea96e7dff960d4b1ac9becbd84b"><div class="ttname"><a href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a></div><div class="ttdeci">constexpr auto mindenormal</div><div class="ttdoc">Computes the smallest denormal positive value.</div><div class="ttdef"><b>Definition</b> mindenormal.hpp:71</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga8c7d48b6fe0b1111e63719dc666f9d9c" name="ga8c7d48b6fe0b1111e63719dc666f9d9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">&#9670;&#160;</a></span>sulp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::sulp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sulp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the classical unit in the last place (Kahan) or the harrisson version multiplied by the sign of the input. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">sulp</a>(<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">sulp</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">sulp</a>[<a class="code hl_concept" href="concepteve_1_1logical__value.html">logical_value</a> <span class="keyword">auto</span> m](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)    <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">sulp</a>[kahan](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                    <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">sulp</a>[harrison](<a class="code hl_concept" href="concepteve_1_1value.html">value</a> <span class="keyword">auto</span> x)                 <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga8c7d48b6fe0b1111e63719dc666f9d9c"><div class="ttname"><a href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a></div><div class="ttdeci">constexpr auto sulp</div><div class="ttdoc">elementwise_callable object computing the classical unit in the last place (Kahan) or the harrisson v...</div><div class="ttdef"><b>Definition</b> sulp.hpp:84</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1value.html" title="eve::value">value</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The distance of x to the next representable element in the type of <span class="tt">x</span> in the x direction. (Kahan definition)</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>The distance of x to the nearest representable element in the type of <span class="tt">x</span>, not equal to x. (Harrisson definition).</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>invalid entries return NaN</dd></dl>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="//!https://en.wikipedia.org/wiki/Unit_in_the_last_place">wikipedia</a></li>
+<li><a href="https://hal.science/inria-00070503">HAL: On the definition of ulp(x)</a></li>
+<li><a href="https://members.loria.fr/PZimmermann/papers/split.pdf">HAL: On various ways to split a floating-point number</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0{0.0, 1.0, 2.0, 3.0, -1.0, -2.0, -3.0, 10*<a class="code hl_variable" href="group__eve__core__constants.html#ga7820cea96e7dff960d4b1ac9becbd84b">eve::mindenormal</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(-4.0))};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wu0{0u, 1u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                          = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                          = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wu0                          = &quot;</span> &lt;&lt; wu0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp(wf0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[kahan](wf0)          = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[eve::kahan](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[harrisson](wf0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[eve::harrisson](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[ignore_last(2)](wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[wf0 != 1.0f](wf0)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[wf0 != 1](wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp(wu0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>(wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[ignore_last(2)](wu0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[wu0 != 2](wu0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[wu0 != 2](wu0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp(wi0)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>(wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[ignore_last(2)](wi0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sulp[wi0 != 3](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[wi0 != 3](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>[eve::kahan](wf0)/<a class="code hl_variable" href="#ga8c7d48b6fe0b1111e63719dc666f9d9c">eve::sulp</a>(wf0) &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga36017626c633cde2a07146d49d9ccbe7" name="ga36017626c633cde2a07146d49d9ccbe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga36017626c633cde2a07146d49d9ccbe7">&#9670;&#160;</a></span>sum_of_prod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::sum_of_prod = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;sum_of_prod_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><span class="tt"><a class="el" href="structeve_1_1elementwise__callable.html" title="CRTP base class giving an EVE&#39;s Callable Object the elementwise function semantic.">elementwise_callable</a></span> object computing the sum of products operation with better accuracy than the naive formula. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">sum_of_prod</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                              <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                          <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Lanes masking</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">sum_of_prod</a>[<a class="code hl_concept" href="concepteve_1_1conditional__expr.html">conditional_expr</a> <span class="keyword">auto</span> c](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                                       <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t) <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic exclusive options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">sum_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                   <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                     <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">sum_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y,</div>
+<div class="line">                                        <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> z, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> t)                <span class="keyword">noexcept</span>; <span class="comment">// 4</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga36017626c633cde2a07146d49d9ccbe7"><div class="ttname"><a href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a></div><div class="ttdeci">constexpr auto sum_of_prod</div><div class="ttdoc">elementwise_callable object computing the sum of products operation with better accuracy than the nai...</div><div class="ttdef"><b>Definition</b> sum_of_prod.hpp:88</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>, <span class="tt">z</span>, <span class="tt">t</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating value arguments</a>.</li>
+<li><span class="tt">c</span>: <a class="el" href="concepteve_1_1conditional__expr.html" title="eve::conditional_expr">Conditional expression</a> masking the operation.</li>
+<li><span class="tt">m</span>: <a class="el" href="concepteve_1_1logical__value.html" title="eve::logical_value">Logical value</a> masking the operation.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>The value of <span class="tt">x*y-z*t</span>, with better precision if correct fma is available, is returned.</li>
+<li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a>.</li>
+<li>computes a raw version of sum_of_prod, i.e. the naive formula (in fact <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma(x, y, z*t)</a></span>)</li>
+<li>computes a pedantic version of <span class="tt"><a class="el" href="#gab21bf1ebf628243f28a10f05ce66f820" title="elementwise_callable object computing the difference of products operation with better accuracy than ...">diff_of_prod</a></span> ensuring better accuracy in any case.</li>
+</ol>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line"> </div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3, 2, 1, 0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4, 1, 2, 100};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2 = -wf0-4*<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf3 = -wf1+4*<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>());</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                                             = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                                             = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                                             = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf3                                             = &quot;</span> &lt;&lt; wf3 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sum_of_prod(wf0, wf1, wf2, wf3)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a>(wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sum_of_prod[ignore_last(2)](wf0, wf1, wf2, wf3) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sum_of_prod[raw](wf0, wf1, wf2, wf3)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sum_of_prod[pedantic](wf0, wf1, wf2, wf3)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga36017626c633cde2a07146d49d9ccbe7">eve::sum_of_prod</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](wf0, wf1, wf2, wf3) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gabacbafd11abd5e82e49aa6ab394cd10e" name="gabacbafd11abd5e82e49aa6ab394cd10e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabacbafd11abd5e82e49aa6ab394cd10e">&#9670;&#160;</a></span>three_fma</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::three_fma = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;three_fma_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> triplet of an fma value f and two errors e1 and e2 such that \(ax+y = f+r_1+r_2\). </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gabacbafd11abd5e82e49aa6ab394cd10e">three_fma</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> a, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> b, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> c) <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gabacbafd11abd5e82e49aa6ab394cd10e">three_fma</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)  <span class="keyword">noexcept</span>;            <span class="comment">//2</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_gabacbafd11abd5e82e49aa6ab394cd10e"><div class="ttname"><a href="#gabacbafd11abd5e82e49aa6ab394cd10e">eve::three_fma</a></div><div class="ttdeci">constexpr auto three_fma</div><div class="ttdoc">Computes the elementwise triplet of an fma value f and two errors e1 and e2 such that .</div><div class="ttdef"><b>Definition</b> three_fma.hpp:77</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">a</span>, <span class="tt">b</span>, 'c': <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<ol type="1">
+<li>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a triplet of values <span class="tt">[f, r1, r2]</span> such that:<ul>
+<li><span class="tt">f</span> is <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma(a, x, y)</a></span></li>
+<li><span class="tt">\f$ a\otimes x\oplus y = r1\oplus r2\oplus r3\f$ exactly</span></li>
+<li><span class="tt"></span> \( |r1 \oplus r2| \le ulp(r1)/2\)</li>
+<li><span class="tt">\f$ |r2| \le ulp(r2)/2\f$  </span></li>
+</ul>
+</li>
+<li>take care of overflow</li>
+</ol>
+<p>where \(\oplus\) (resp. \(\otimes\)) adds (resp. multiplies) its two parameters with infinite precision.</p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Error free transformations](<a href="https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf">https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf</a></li>
+<li><a href="https://inria.hal.science/inria-00429617/document">Exact and Approximated error of the FMA</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {30.0, 2.5, -32.7, 1.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2, 1.5, -100.834, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())/2};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf2 = {2.0, 1.234, -2.0,  <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                      = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                      = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf2                      = &quot;</span> &lt;&lt; wf2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; three_fma(wf0, wf1, wf2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gabacbafd11abd5e82e49aa6ab394cd10e">eve::three_fma</a>(wf0, wf1, wf2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  <span class="keyword">using </span>f_t =  <a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a>;</div>
+<div class="line">  f_t aa(1000);</div>
+<div class="line">  <span class="keyword">auto</span> [a, b, c] = <a class="code hl_variable" href="#gabacbafd11abd5e82e49aa6ab394cd10e">eve::three_fma</a>(aa, aa, -aa);</div>
+<div class="line">  std::cout &lt;&lt; float(a) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; float(b) &lt;&lt; <span class="stringliteral">&quot; &quot;</span> &lt;&lt; float(c) &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructeve_1_1float16__t_html"><div class="ttname"><a href="structeve_1_1float16__t.html">eve::float16_t</a></div><div class="ttdoc">IEEE 754 binary16 floating-point type.</div><div class="ttdef"><b>Definition</b> float16.hpp:189</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga3a5c4b16896174afe9e63b05e1f9b011" name="ga3a5c4b16896174afe9e63b05e1f9b011"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a5c4b16896174afe9e63b05e1f9b011">&#9670;&#160;</a></span>two_add</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_add = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_add_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair consisting of the sum and its resulting rounding error. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3a5c4b16896174afe9e63b05e1f9b011">two_add</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)            <span class="keyword">noexcept</span>; <span class="comment">// 1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3a5c4b16896174afe9e63b05e1f9b011">two_add</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)       <span class="keyword">noexcept</span>; <span class="comment">// 2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga3a5c4b16896174afe9e63b05e1f9b011">two_add</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)  <span class="keyword">noexcept</span>; <span class="comment">// 3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga3a5c4b16896174afe9e63b05e1f9b011"><div class="ttname"><a href="#ga3a5c4b16896174afe9e63b05e1f9b011">eve::two_add</a></div><div class="ttdeci">constexpr auto two_add</div><div class="ttdoc">Computes the elementwise pair consisting of the sum and its resulting rounding error.</div><div class="ttdef"><b>Definition</b> two_add.hpp:84</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating-point arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a,e]</span> such that:</p><ul>
+<li><span class="tt">a</span> is <span class="tt">x+y</span></li>
+<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is equal to <span class="tt">x</span> \(\oplus\)<span class="tt">y</span>, where \(\oplus\) adds its two parameters with infinite precision.</li>
+</ul>
+<ol type="1">
+<li>Classical algorithm, always valid.</li>
+<li>'Fast' algorithm, valid only if |x| &lt; |y|.</li>
+<li>Handles overflow.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://www.vinc17.net/research/papers/rr_ccrsums2.pdf">On the Computation of Correctly-Rounded Sums</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, -32.7f, 1.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2f, 1.5f, -100.834f, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1               = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_add(wf0, wf1)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3a5c4b16896174afe9e63b05e1f9b011">eve::two_add</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_add[raw](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3a5c4b16896174afe9e63b05e1f9b011">eve::two_add</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="gadd6ab7f52e4d422e1edddc72e49cda2f" name="gadd6ab7f52e4d422e1edddc72e49cda2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gadd6ab7f52e4d422e1edddc72e49cda2f">&#9670;&#160;</a></span>two_div_approx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_div_approx = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_div_approx_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of division and error,. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">two_div_approx</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_gadd6ab7f52e4d422e1edddc72e49cda2f"><div class="ttname"><a href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a></div><div class="ttdeci">constexpr auto two_div_approx</div><div class="ttdoc">Computes the elementwise pair of division and error,.</div><div class="ttdef"><b>Definition</b> two_div_approx.hpp:70</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a,e]</span> such that:</p><ul>
+<li><span class="tt">a</span> is <span class="tt">x/y</span></li>
+<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is an approximation in doubled precision to <span class="tt">x</span> \(\odiv\)<span class="tt">y</span>, where \(\oplus\) (resp. \(\odiv\)) adds (resp. divides) its two parameters with infinite precision.</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, -32.7f, 1.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2f, 1.5f, -100.834f, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_div_approx(wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> [d, e] = <a class="code hl_variable" href="#gadd6ab7f52e4d422e1edddc72e49cda2f">eve::two_div_approx</a>(1.0f, 3.0f);</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(15);</div>
+<div class="line">  std::cout &lt;&lt; double(d) &lt;&lt; <span class="stringliteral">&quot; + &quot;</span> &lt;&lt; double(e) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; double(e)+double(d) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; 1.0/3.0 &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; 1.0f/3.0f &lt;&lt;  std::endl;</div>
+<div class="line">  std::cout &lt;&lt;  1.0/3.0 - (double(e)+double(d))&lt;&lt; std::endl;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga507d7656a3022987da7ac91e88b511b6" name="ga507d7656a3022987da7ac91e88b511b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga507d7656a3022987da7ac91e88b511b6">&#9670;&#160;</a></span>two_fma_approx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_fma_approx = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_fma_approx_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> triplet of an fma value f and two errors e1 and e2 such that \(ax+y = f+r_1+r_2\). </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga507d7656a3022987da7ac91e88b511b6">two_fma_approx</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> a, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> b, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> c) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga507d7656a3022987da7ac91e88b511b6"><div class="ttname"><a href="#ga507d7656a3022987da7ac91e88b511b6">eve::two_fma_approx</a></div><div class="ttdeci">constexpr auto two_fma_approx</div><div class="ttdoc">Computes the elementwise triplet of an fma value f and two errors e1 and e2 such that .</div><div class="ttdef"><b>Definition</b> two_fma_approx.hpp:70</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">a</span>, <span class="tt">b</span>, 'c': <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[f, e1]</span> such that:</p>
+<ul>
+<li><span class="tt">f</span> is <span class="tt"><a class="el" href="group__eve__core__fma__family.html#gae79b56378eacf4c4f3b3d7e128facb07" title="strict_elementwise_callable computing the fused multiply add of its three parameters.">fma(a, x, y)</a></span></li>
+<li><span class="tt">\f$ a\otimes x\oplus y = r1\oplus e1\f$</span> with a very small error (less than 14*eps)</li>
+</ul>
+<p>where \(\oplus\) (resp. \(\otimes\)) adds (resp. multiplies) its two parameters with infinite precision.</p>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://inria.hal.science/inria-00429617/document">Exact and Approximated error of the FMA</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> a = {1.0, 2.0, 3.0, 1.0e8};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> x = {0.1, 0.2, 0.3, 1.0e-8};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> y = {1.0e-20, 1.0, 2.0, 1.0};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- a                        = &quot;</span> &lt;&lt; a &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- x                        = &quot;</span> &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- y                        = &quot;</span> &lt;&lt; y &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> [f, e1] = <a class="code hl_variable" href="#ga507d7656a3022987da7ac91e88b511b6">eve::two_fma_approx</a>(a, x, y);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; f  (the fma itself)      = &quot;</span> &lt;&lt; f  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; e1 (the rounding error)  = &quot;</span> &lt;&lt; e1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga255bfbae7d6cf4b43a63d8f834e907b4" name="ga255bfbae7d6cf4b43a63d8f834e907b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga255bfbae7d6cf4b43a63d8f834e907b4">&#9670;&#160;</a></span>two_prod</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_prod = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_prod_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of product and error,. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga255bfbae7d6cf4b43a63d8f834e907b4">two_prod</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga255bfbae7d6cf4b43a63d8f834e907b4"><div class="ttname"><a href="#ga255bfbae7d6cf4b43a63d8f834e907b4">eve::two_prod</a></div><div class="ttdeci">constexpr auto two_prod</div><div class="ttdoc">Computes the elementwise pair of product and error,.</div><div class="ttdef"><b>Definition</b> two_prod.hpp:72</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a,e]</span> such that:</p><ul>
+<li><span class="tt">a</span> is <span class="tt">x*y</span></li>
+<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is equal to <span class="tt">x</span> \(\otimes\)<span class="tt">y</span>, where \(\oplus\) (resp. \(\otimes\)) adds (resp. multiplies) its two parameters with infinite precision.</li>
+</ul>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li>[Error free transformations](<a href="https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf">https://www-pequan.lip6.fr/~graillat/papers/nolta07.pdf</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0, 2.5, -32.7, 1.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2, 1.5, -100.834, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_prod(wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga255bfbae7d6cf4b43a63d8f834e907b4">eve::two_prod</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga57d4a0b8b8199497a2c4860e594fc4c7" name="ga57d4a0b8b8199497a2c4860e594fc4c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga57d4a0b8b8199497a2c4860e594fc4c7">&#9670;&#160;</a></span>two_sqrt_approx</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_sqrt_approx = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sqrt_approx_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair of square root and error,. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga57d4a0b8b8199497a2c4860e594fc4c7">two_sqrt_approx</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga57d4a0b8b8199497a2c4860e594fc4c7"><div class="ttname"><a href="#ga57d4a0b8b8199497a2c4860e594fc4c7">eve::two_sqrt_approx</a></div><div class="ttdeci">constexpr auto two_sqrt_approx</div><div class="ttdoc">Computes the elementwise pair of square root and error,.</div><div class="ttdef"><b>Definition</b> two_sqrt_approx.hpp:67</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a,e]</span> such that:</p><ul>
+<li><span class="tt">a</span> is <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37" title="Computes the elementwise square root of the parameter.">eve::sqrt(x)</a></span></li>
+<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is an approximation in doubled precision to \(\sqrt\)<span class="tt">x</span>, where \(\oplus\) (resp. \(\sqrt\)) adds (resp. take the square roots of) its parameters with infinite precision.</li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, 32.7f, 1.0f};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_sqrt_approx(wf0) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga57d4a0b8b8199497a2c4860e594fc4c7">eve::two_sqrt_approx</a>(wf0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> [d, e] = <a class="code hl_variable" href="#ga57d4a0b8b8199497a2c4860e594fc4c7">eve::two_sqrt_approx</a>(3.0f);</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(15);</div>
+<div class="line">  std::cout &lt;&lt; double(d) &lt;&lt; <span class="stringliteral">&quot; + &quot;</span> &lt;&lt; double(e) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; double(e)+double(d) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(3.0) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(3.0f) &lt;&lt;  std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(3.0) - (double(e)+double(d))&lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga641aa98b8a2c05bf5bfb4907d15faf37"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a></div><div class="ttdeci">constexpr auto sqrt</div><div class="ttdoc">Computes the elementwise square root of the parameter.</div><div class="ttdef"><b>Definition</b> sqrt.hpp:86</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga8e384bfd5e06145bdca49fa9da74cfcd" name="ga8e384bfd5e06145bdca49fa9da74cfcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8e384bfd5e06145bdca49fa9da74cfcd">&#9670;&#160;</a></span>two_sub</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::two_sub = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;two_sub_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> pair consisting of the difference of the parameters and its resulting rounding error. </p>
+<h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="comment">// Regular overload</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">two_sub</a>(<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)            <span class="keyword">noexcept</span>; <span class="comment">//1</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">two_sub</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">raw</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)       <span class="keyword">noexcept</span>; <span class="comment">//2</span></div>
+<div class="line"> </div>
+<div class="line">   <span class="comment">// Semantic options</span></div>
+<div class="line">   <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">two_sub</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">pedantic</a>](<a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> x, <a class="code hl_concept" href="concepteve_1_1floating__value.html">floating_value</a> <span class="keyword">auto</span> y)  <span class="keyword">noexcept</span>; <span class="comment">//3</span></div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga8e384bfd5e06145bdca49fa9da74cfcd"><div class="ttname"><a href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a></div><div class="ttdeci">constexpr auto two_sub</div><div class="ttdoc">Computes the elementwise pair consisting of the difference of the parameters and its resulting roundi...</div><div class="ttdef"><b>Definition</b> two_sub.hpp:80</div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span>, <span class="tt">y</span>: <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating-point arguments</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[a, e]</span> such that:</p>
+<ul>
+<li><span class="tt">a</span> is <span class="tt">x - y</span></li>
+<li><span class="tt">e</span> is a value such that <span class="tt">a</span> \(\oplus\)<span class="tt">e</span> is equal to <span class="tt">x</span> \(\oplus\)<span class="tt">(-y)</span> where \(\oplus\) adds its two parameters with infinite precision.</li>
+</ul>
+<ol type="1">
+<li>Classical algorithm, always valid.</li>
+<li>'Fast' algorithm, valid only if |x| &lt; |y|.</li>
+<li>Handles overflow.</li>
+</ol>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://www.vinc17.net/research/papers/rr_ccrsums2.pdf">On the Computation of Correctly-Rounded Sums</a></li>
+</ul>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 1</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf0 = {3.0f, 2.5f, -32.7f, 1.0f};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1 = {4.2f, 1.5f, -100.834f, <a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;float&gt;</a>())/2};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0               = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1               = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_sub(wf0, wf1)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a>(wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; two_sub[raw](wf0, wf1) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga8e384bfd5e06145bdca49fa9da74cfcd">eve::two_sub</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](wf0, wf1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga9234fd48e496db5dd743b5494a4a932d" name="ga9234fd48e496db5dd743b5494a4a932d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9234fd48e496db5dd743b5494a4a932d">&#9670;&#160;</a></span>veltkamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto eve::veltkamp = <a class="el" href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">functor</a>&lt;veltkamp_t&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>split a loating-point number with radix 2 and p mantissa bits x into two floating-point numbers <span class="tt">xh</span> and <span class="tt">xl</span> such that, the significand of xh fits in <span class="tt">p-floor(p/2)</span>, the significand of xl fits in <span class="tt"><a class="el" href="group__eve__core__arithmetic.html#gad11a9abc8d039fa20ad0b7c1f307133d" title="elementwise_callable object computing the largest integer not greater than the input.">floor</a>(p/2)</span> digits, and <span class="tt">x = xh + xl</span> exactly. Where p is the number of mantissa bits of the floating type element. </p>
+<h2 class="groupheader">Example </h2>
+<div class="fragment"><div class="line"><span class="comment">// revision 0</span></div>
+<div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main()</div>
+<div class="line">{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf = {1.0, 0.1, 3.14159265358979, 1.0e10};</div>
+<div class="line"> </div>
+<div class="line">  std::cout &lt;&lt; std::setprecision(20);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf            = &quot;</span> &lt;&lt; wf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; veltkamp(wf)  = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga9234fd48e496db5dd743b5494a4a932d">eve::veltkamp</a>(wf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">  <span class="keyword">auto</span> [xh, xl] = <a class="code hl_variable" href="#ga9234fd48e496db5dd743b5494a4a932d">eve::veltkamp</a>(wf);</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;   xh            = &quot;</span> &lt;&lt; xh &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;   xl            = &quot;</span> &lt;&lt; xl &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;   xh + xl       = &quot;</span> &lt;&lt; xh + xl &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__core__accuracy_html_ga9234fd48e496db5dd743b5494a4a932d"><div class="ttname"><a href="#ga9234fd48e496db5dd743b5494a4a932d">eve::veltkamp</a></div><div class="ttdeci">constexpr auto veltkamp</div><div class="ttdoc">split a loating-point number with radix 2 and p mantissa bits x into two floating-point numbers xh an...</div><div class="ttdef"><b>Definition</b> veltkamp.hpp:70</div></div>
+</div><!-- fragment --><h2 class="groupheader">Header file </h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
+<div class="line">{</div>
+<div class="line">   <span class="keyword">template</span>&lt;eve::<span class="keywordtype">float</span>ing_value T, eve::<span class="keywordtype">float</span>ing_value U  &gt;</div>
+<div class="line">   <span class="keyword">constexpr</span> <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple&lt;T, T&gt;</a> <a class="code hl_variable" href="#ga9234fd48e496db5dd743b5494a4a932d">veltkamp</a>(T x) <span class="keyword">noexcept</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="astructkumi_1_1tuple_html"><div class="ttname"><a href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a></div></div>
+</div><!-- fragment --><p><b>Parameters</b></p>
+<ul>
+<li><span class="tt">x</span> : <a class="el" href="concepteve_1_1value.html" title="eve::value">argument</a>.</li>
+</ul>
+<p><b>Return value</b></p>
+<p>Computes <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> a pair of values <span class="tt">[xh, xl]</span> such that:</p>
+<ul>
+<li>'xh+xl' is 'x', but each has much less significant digits.</li>
+</ul>
+<h2 class="groupheader">External references </h2>
+<ul>
+<li><a href="https://members.loria.fr/PZimmermann/papers/split.pdf">HAL: On various ways to split a floating-point number</a> </li>
+</ul>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,14 +125,10 @@ $(function(){initNavTree('structeve_1_1algo_1_1views_1_1zip__range.html','','str
   <div class="headertitle"><div class="title">eve::algo::views::zip_range&lt; Rngs &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__algorithms.html">Algorithms and Views</a> &raquo; <a class="el" href="group__eve__views.html">Views</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>A <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> on top of multiple <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span>. All individual components have to have the same size. Should probably never be created directly, instead use <span class="tt"><a class="el" href="group__eve__views_ga9fe872c127004c688d3091b488e53fa8.html#ga9fe872c127004c688d3091b488e53fa8" title="Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....">zip</a></span>.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/module/algo/algo/views/zip.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="structrelaxed__range.html">relaxed_range</a> ... Rngs&gt;<br />
-struct eve::algo::views::zip_range&lt; Rngs &gt;</div><p>You can rezip the components with new traits by using <span class="tt">operator[]</span>: <a class="el" href="structeve_1_1algo_1_1views_1_1zip__range.html" title="A relaxed_range on top of multiple relaxed_range. All individual components have to have the same siz...">zip_range&lt;Components...&gt;</a>[<a class="el" href="structeve_1_1common__type.html" title="Computes a type that can represent all values in a list of types.">common_type</a>] will convert all components to a common type between them, for example.</p>
+struct eve::algo::views::zip_range&lt; Rngs &gt;</div><p>A <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span> on top of multiple <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span>. All individual components have to have the same size. Should probably never be created directly, instead use <span class="tt"><a class="el" href="group__eve__views.html#ga9fe872c127004c688d3091b488e53fa8" title="Given relaxed_iterors and relaxed ranges, zips them together (creates a single object)....">zip</a></span>. </p>
+<p>You can rezip the components with new traits by using <span class="tt">operator[]</span>: <a class="el" href="structeve_1_1algo_1_1views_1_1zip__range.html" title="A relaxed_range on top of multiple relaxed_range. All individual components have to have the same siz...">zip_range&lt;Components...&gt;</a>[<a class="el" href="structeve_1_1common__type.html" title="Computes a type that can represent all values in a list of types.">common_type</a>] will convert all components to a common type between them, for example.</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/algo/algo/views/zip.hpp&gt;</span></p>
 <p>Has a shorthand <span class="tt"><a class="el" href="structeve_1_1views_1_1zip__range.html" title="A relaxed_range on top of multiple relaxed_range. All individual components have to have the same siz...">eve::views::zip_range</a></span> in <span class="tt">&lt;eve/views/zip.hpp&gt;</span>. </p>
 </div></div><!-- contents -->

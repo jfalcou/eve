@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -124,13 +126,9 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
   <div class="headertitle"><div class="title">eve::conditional_option Struct Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__extensions.html">Extensions points</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Option specification for decoration via conditional value and expressions.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/traits/overload/supports.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><b>Defined in Header</b></p>
+<div class="textblock"><p>Option specification for decoration via conditional value and expressions. </p>
+<p><b>Defined in Header</b></p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 </div><!-- fragment --><p><a class="el" href="structeve_1_1conditional__option.html" title="Option specification for decoration via conditional value and expressions.">eve::conditional_option</a> is an option specification that can be used when defining a <a class="el" href="structeve_1_1callable.html" title="CRTP base class defining an EVE&#39;s Callable Object.">eve::callable</a> type to make it supports decoration via <span class="tt">bool</span>, eve::logical, any <a class="el" href="concepteve_1_1conditional__expr.html" title="Specifies that a type is a Conditional Expression.">eve::conditional_expr</a> or <a class="el" href="concepteve_1_1relative__conditional__expr.html" title="Specifies that a type is a Conditional Expression using relative mask.">eve::relative_conditional_expr</a>.</p>
 <h2 class="groupheader">Example </h2>
@@ -149,7 +147,7 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">    <span class="comment">// Note that decoration doesn&#39;t impact signature declaration</span></div>
 <div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
 <div class="line">    EVE_FORCEINLINE T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
-<div class="line">    <a class="code hl_define" href="group__eve__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(func_t, func_);</div>
+<div class="line">    <a class="code hl_define" href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(func_t, func_);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Build the callable object from the function object type</span></div>
@@ -161,7 +159,7 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">    <span class="comment">// Note that decoration doesn&#39;t impact signature declaration</span></div>
 <div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
 <div class="line">    EVE_FORCEINLINE T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
-<div class="line">    <a class="code hl_define" href="group__eve__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(other_func_t, other_func_);</div>
+<div class="line">    <a class="code hl_define" href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(other_func_t, other_func_);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Build the callable object from the function object type</span></div>
@@ -174,19 +172,19 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">  <span class="keyword">auto</span> func_(<a class="code hl_define" href="group__eve__extensions.html#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp; opts, eve::integral_value <span class="keyword">auto</span> x)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// See RABERU documentation to check and access options inside a decorator.</span></div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> mask = opts[<a class="code hl_variable" href="group__eve__extensions_ga28f160dc16e57390e8d479cc62d89af6.html#ga28f160dc16e57390e8d479cc62d89af6">condition_key</a>];</div>
+<div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> mask = opts[<a class="code hl_variable" href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">condition_key</a>];</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<span class="keyword">decltype</span>(mask)::is_complete) <span class="keywordflow">return</span> x*x;</div>
-<div class="line">    <span class="keywordflow">else</span>                                      <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic_ga19c1e5e8e7a04678ee99fdc2bbff0e7b.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a>[mask](10,x);</div>
+<div class="line">    <span class="keywordflow">else</span>                                      <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a>[mask](10,x);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> other_func_(<a class="code hl_define" href="group__eve__extensions.html#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a>(cpu_), eve::callable_options <span class="keyword">auto</span> <span class="keyword">const</span>&amp; opts, eve::integral_value <span class="keyword">auto</span> x)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// See RABERU documentation to check and access options inside a decorator.</span></div>
-<div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> mask = opts[<a class="code hl_variable" href="group__eve__extensions_ga28f160dc16e57390e8d479cc62d89af6.html#ga28f160dc16e57390e8d479cc62d89af6">condition_key</a>];</div>
+<div class="line">    <span class="keyword">auto</span> <span class="keyword">const</span> mask = opts[<a class="code hl_variable" href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">condition_key</a>];</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> <span class="keyword">constexpr</span>(<span class="keyword">decltype</span>(mask)::is_complete) <span class="keywordflow">return</span> x/10;</div>
-<div class="line">    <span class="keywordflow">else</span>                                      <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic_ga19c1e5e8e7a04678ee99fdc2bbff0e7b.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a>[mask](x,x);</div>
+<div class="line">    <span class="keywordflow">else</span>                                      <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a>[mask](x,x);</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -220,9 +218,9 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">            &lt;&lt; std::boolalpha &lt;&lt; can_be_decorated_with&lt;eve::tag_t&lt;eve::other_func&gt;, <a class="code hl_struct" href="structeve_1_1keep__between.html">eve::keep_between</a>&gt;</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__core__arithmetic_ga19c1e5e8e7a04678ee99fdc2bbff0e7b_html_ga19c1e5e8e7a04678ee99fdc2bbff0e7b"><div class="ttname"><a href="group__eve__core__arithmetic_ga19c1e5e8e7a04678ee99fdc2bbff0e7b.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a></div><div class="ttdeci">constexpr auto mul</div><div class="ttdoc">tuple_callable computing the product of its arguments.</div><div class="ttdef"><b>Definition</b> mul.hpp:128</div></div>
-<div class="ttc" id="agroup__eve__extensions_ga28f160dc16e57390e8d479cc62d89af6_html_ga28f160dc16e57390e8d479cc62d89af6"><div class="ttname"><a href="group__eve__extensions_ga28f160dc16e57390e8d479cc62d89af6.html#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a></div><div class="ttdeci">constexpr _::condition_key_t condition_key</div><div class="ttdoc">Keyword for retrieving conditionals decorator.</div><div class="ttdef"><b>Definition</b> supports.hpp:213</div></div>
-<div class="ttc" id="agroup__eve__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd_html_ga3d0c2dd0a42392476adec67bcd45d3bd"><div class="ttname"><a href="group__eve__extensions_ga3d0c2dd0a42392476adec67bcd45d3bd.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a></div><div class="ttdeci">#define EVE_CALLABLE_OBJECT(TYPE, NAME)</div><div class="ttdoc">Generate the generic function interface for an actual eve::callable.</div><div class="ttdef"><b>Definition</b> protocol.hpp:157</div></div>
+<div class="ttc" id="agroup__eve__core__arithmetic_html_ga19c1e5e8e7a04678ee99fdc2bbff0e7b"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a></div><div class="ttdeci">constexpr auto mul</div><div class="ttdoc">tuple_callable computing the product of its arguments.</div><div class="ttdef"><b>Definition</b> mul.hpp:128</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_ga28f160dc16e57390e8d479cc62d89af6"><div class="ttname"><a href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a></div><div class="ttdeci">constexpr _::condition_key_t condition_key</div><div class="ttdoc">Keyword for retrieving conditionals decorator.</div><div class="ttdef"><b>Definition</b> supports.hpp:213</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_ga3d0c2dd0a42392476adec67bcd45d3bd"><div class="ttname"><a href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a></div><div class="ttdeci">#define EVE_CALLABLE_OBJECT(TYPE, NAME)</div><div class="ttdoc">Generate the generic function interface for an actual eve::callable.</div><div class="ttdef"><b>Definition</b> protocol.hpp:157</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_ga406269d77123b31f9bc18b38b78c8e25"><div class="ttname"><a href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">eve::functor</a></div><div class="ttdeci">constexpr auto functor</div><div class="ttdoc">EVE&#39;s Callable Object generator.</div><div class="ttdef"><b>Definition</b> supports.hpp:107</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_gaa3458167ed8a49f4d2bcc308470b0d75"><div class="ttname"><a href="group__eve__extensions.html#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a></div><div class="ttdeci">#define EVE_REQUIRES(ARCH)</div><div class="ttdoc">Flag a function to support delayed calls on given architecture.</div><div class="ttdef"><b>Definition</b> protocol.hpp:226</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_gaf0beae174fce698157d30319be9355d0"><div class="ttname"><a href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a></div><div class="ttdeci">#define EVE_DISPATCH_CALL(...)</div><div class="ttdoc">Generate the proper call to current EVE&#39;s Callable Object implementation.</div><div class="ttdef"><b>Definition</b> protocol.hpp:194</div></div>

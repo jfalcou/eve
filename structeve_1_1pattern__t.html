@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -127,14 +129,10 @@ $(function(){initNavTree('structeve_1_1pattern__t.html','','structeve_1_1pattern
   <div class="headertitle"><div class="title">eve::pattern_t&lt; I &gt; Struct Template Reference<div class="ingroups"><a class="el" href="group__eve__simd.html">EVE</a> &raquo; <a class="el" href="group__eve__simd__types.html">SIMD related types</a></div></div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Shuffling pattern.  
- <a href="#details">More...</a></p>
-
-<p><code>#include &lt;eve/pattern.hpp&gt;</code></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;std::ptrdiff_t... I&gt;<br />
-struct eve::pattern_t&lt; I &gt;</div><p>Holds the index describing a compile-time shuffling pattern.</p>
+struct eve::pattern_t&lt; I &gt;</div><p>Shuffling pattern. </p>
+<p>Holds the index describing a compile-time shuffling pattern.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">I</td><td>Index of the shuffling pattern </td></tr>
@@ -200,11 +198,78 @@ template&lt;std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
 <tr class="memitem:aac580eb9f0d080a624c6daff238715ef template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><b>pattern_clamp</b> (Pattern const &amp;) noexcept</td></tr>
 <tr class="memdesc:aac580eb9f0d080a624c6daff238715ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clamps a pattern to a given size. <br /></td></tr>
 <tr class="memitem:aba2457c37b6001a44f3c682466fd4e36" id="r_aba2457c37b6001a44f3c682466fd4e36"><td class="memTemplParams" colspan="2">template&lt;std::ptrdiff_t B, std::ptrdiff_t E, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
-<tr class="memitem:aba2457c37b6001a44f3c682466fd4e36 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1pattern__t_aba2457c37b6001a44f3c682466fd4e36.html#aba2457c37b6001a44f3c682466fd4e36">pattern_view</a> (Pattern const &amp;) noexcept</td></tr>
+<tr class="memitem:aba2457c37b6001a44f3c682466fd4e36 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#aba2457c37b6001a44f3c682466fd4e36">pattern_view</a> (Pattern const &amp;) noexcept</td></tr>
 <tr class="memdesc:aba2457c37b6001a44f3c682466fd4e36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a sub-pattern from an existing pattern.  <br /></td></tr>
 <tr class="memitem:ad209f6cc99dbfc1a50994908c70159d5" id="r_ad209f6cc99dbfc1a50994908c70159d5"><td class="memTemplParams" colspan="2">template&lt;std::ptrdiff_t O, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </td></tr>
-<tr class="memitem:ad209f6cc99dbfc1a50994908c70159d5 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1pattern__t_ad209f6cc99dbfc1a50994908c70159d5.html#ad209f6cc99dbfc1a50994908c70159d5">slide_pattern</a> (Pattern) noexcept</td></tr>
+<tr class="memitem:ad209f6cc99dbfc1a50994908c70159d5 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ad209f6cc99dbfc1a50994908c70159d5">slide_pattern</a> (Pattern) noexcept</td></tr>
 </table>
+<a name="doc-related-members" id="doc-related-members"></a><h2 id="header-doc-related-members" class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="aba2457c37b6001a44f3c682466fd4e36" name="aba2457c37b6001a44f3c682466fd4e36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba2457c37b6001a44f3c682466fd4e36">&#9670;&#160;</a></span>pattern_view()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::ptrdiff_t B, std::ptrdiff_t E, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto pattern_view </td>
+          <td>(</td>
+          <td class="paramtype">Pattern const &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel related">related</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extracts a sub-pattern from an existing pattern. </p>
+<p>Constructs a pattern by extracting all index from a pattern of size <span class="tt">N</span> between <span class="tt">B</span> and <span class="tt">E</span>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">B</td><td>Position of first index to extract </td></tr>
+    <tr><td class="paramname">E</td><td>Position of last index to extract </td></tr>
+    <tr><td class="paramname">N</td><td>Size of the pattern to extract from </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad209f6cc99dbfc1a50994908c70159d5" name="ad209f6cc99dbfc1a50994908c70159d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad209f6cc99dbfc1a50994908c70159d5">&#9670;&#160;</a></span>slide_pattern()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::ptrdiff_t O, std::ptrdiff_t N, shuffle_pattern Pattern&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto slide_pattern </td>
+          <td>(</td>
+          <td class="paramtype">Pattern</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel related">related</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Slide the values of an existing pattern </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

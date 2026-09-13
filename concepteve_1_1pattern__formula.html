@@ -13,10 +13,12 @@
 <script type="text/javascript" src="godbolt.js"></script>
 <script type="text/javascript" src="fragment.js"></script>
 <script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
 <script type="text/javascript">
   DoxygenAwesomeParagraphLink.init()
   DoxygenAwesomeFragmentCopyButton.init()
   SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
 </script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="navtreedata.js"></script>
@@ -123,10 +125,10 @@ $(function(){initNavTree('concepteve_1_1pattern__formula.html','',''); });
 <div class="contents">
 
 <p>what callable can be a pattern formula  
-</p>
-
-<p><code>#include &lt;eve/pattern.hpp&gt;</code></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>what callable can be a pattern formula </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> F&gt;</div>
 <div class="line">  <span class="keyword">concept </span><a class="code hl_concept" href="concepteve_1_1pattern__formula.html">pattern_formula</a> = std::constructible_from&lt;F&gt; &amp;&amp; std::regular_invocable&lt;F, int, int&gt;</div>
 <div class="line">    &amp;&amp; !<span class="keyword">requires</span> { { F::size() }; }</div>
