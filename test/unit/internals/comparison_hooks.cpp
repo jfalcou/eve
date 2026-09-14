@@ -99,7 +99,7 @@ TTS_CASE_TPL("tts::comparison<eve::logical>::bit_equal reads the lanes, not the 
 
   auto const lanes_agree = [](l_t const& a, l_t const& b)
   {
-    for(std::size_t i = 0; i < l_t::size(); ++i)
+    for(std::size_t i = 0; i < static_cast<std::size_t>(l_t::size()); ++i)
       if(a.get(i) != b.get(i)) return false;
 
     return true;
@@ -108,8 +108,8 @@ TTS_CASE_TPL("tts::comparison<eve::logical>::bit_equal reads the lanes, not the 
   std::array<l_t, 5> masks {l_t {true}, l_t {false}, l_t {false}, l_t {false}, l_t {false}};
 
   masks[2].set(0, true);
-  masks[3].set(l_t::size() / 2, true);
-  masks[4].set(l_t::size() - 1, true);
+  masks[3].set(static_cast<std::size_t>(l_t::size() / 2), true);
+  masks[4].set(static_cast<std::size_t>(l_t::size() - 1), true);
 
   for(auto const& a : masks)
     for(auto const& b : masks) TTS_EQUAL(tts::_::bit_eq(a, b), lanes_agree(a, b));
