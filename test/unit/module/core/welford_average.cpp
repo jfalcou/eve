@@ -44,9 +44,9 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of welford_average(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T  a0, T a1, T a2)
 {
 
@@ -56,14 +56,31 @@ TTS_CASE_WITH("Check behavior of welford_average(wide)",
 
   using eve::kahan;
   using eve::as;
-  TTS_ULP_EQUAL(welford_average(a0, a1).average, (a0+a1)/2, 15.0);
-  TTS_ULP_EQUAL(welford_average(a0, a1, a2).average,(a0+a1+a2)/3, 15.0);
+  auto prec = tts::prec<T>();
+  // The mean crosses zero, where an ULP is meaningless: the relative distance keeps its meaning.
+  TTS_RELATIVE_EQUAL(welford_average(a0, a1).average, (a0+a1)/2, prec);
+  TTS_RELATIVE_EQUAL(welford_average(a0, a1, a2).average, (a0+a1+a2)/3, prec);
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
   {
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average, eve::downgrade(average[widen](a0, a1, a2)), 15.0);
-    TTS_ULP_EQUAL(welford_average(a0, a1, a2).average, average[kahan](a0, a1, a2), 15.0);
-    TTS_ULP_EQUAL(welford_average[widen](a0, a1, a2).average, average[kahan][widen](a0, a1, a2), 15.0);
+    TTS_RELATIVE_EQUAL(welford_average(a0, a1, a2).average, eve::downgrade(average[widen](a0, a1, a2)), prec);
+    TTS_RELATIVE_EQUAL(welford_average(a0, a1, a2).average, average[kahan](a0, a1, a2), prec);
+    TTS_RELATIVE_EQUAL(welford_average[widen](a0, a1, a2).average, average[kahan][widen](a0, a1, a2), prec);
   }
   TTS_ULP_EQUAL(welford_average(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f).average,eve::average(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f), 15.0);
 
+};
+
+//==================================================================================================
+// Same-sign data cannot cancel, so an ULP claim holds here.
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of welford_average(wide) without cancellation",
+              eve::test::simd::ieee_reals,
+              tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.))
+<typename T>(T a0, T a1, T a2)
+{
+  using eve::welford_average;
+  TTS_ULP_EQUAL(welford_average(a0, a1).average, (a0+a1)/2, 2.0);
+  TTS_ULP_EQUAL(welford_average(a0, a1, a2).average, (a0+a1+a2)/3, 2.0);
 };

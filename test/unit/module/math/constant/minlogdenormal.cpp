@@ -54,8 +54,8 @@ TTS_CASE_TPL("Check behavior of minlogdenormal on scalar", eve::test::simd::ieee
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of minlogdenormal[mask] on :wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

@@ -21,8 +21,8 @@ struct obj_const_fraction
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of lentz_a on reals",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 4.0)
-                           )
+              tts::randoms(1.0, 4.0)
+                           
              )
   <typename T>(T const& a1)
 {

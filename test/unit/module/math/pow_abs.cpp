@@ -46,10 +46,10 @@ template < typename T> T std_pow_abs(T a,  T b)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of pow_abs on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1, 10),
+              tts::randoms(1, 10),
                             tts::randoms(-1.0, 1.0),
                             tts::randoms(-1.0, 1.0),
-                            tts::randoms(-1.0, 1.0)))
+                            tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   TTS_ULP_EQUAL(eve::pow_abs(a0, a1), std_pow_abs(a0, a1), 32);
@@ -143,9 +143,9 @@ TTS_CASE_TPL("Check limits of pow_abs", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::maskedeve::pow_abs(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

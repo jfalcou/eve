@@ -71,8 +71,8 @@ TTS_CASE_TPL("Check return types of negatenz", eve::test::simd::all_types_wf16)
 
 TTS_CASE_WITH("Check behavior of negatenz(wide)",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::negatenz;
@@ -86,9 +86,9 @@ TTS_CASE_WITH("Check behavior of negatenz(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::negatenz)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

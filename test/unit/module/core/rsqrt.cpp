@@ -35,11 +35,11 @@ TTS_CASE_TPL("Check return types of rsqrt", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 //== rsqrt  tests
 //==================================================================================================
-auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
+constexpr auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 TTS_CASE_WITH("Check behavior of rsqrt on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::smallestposval, maxi)))
+              tts::randoms(eve::smallestposval, maxi))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -75,8 +75,8 @@ TTS_CASE_TPL("Check behavior of pedantic(rsqrt)", eve::test::simd::ieee_reals_wf
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::rsqrt[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

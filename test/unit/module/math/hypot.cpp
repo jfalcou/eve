@@ -78,9 +78,9 @@ TTS_CASE_TPL("Check return types of hypot", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of hypot(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-100.0, 100.0),
+              tts::randoms(-100.0, 100.0),
                             tts::randoms(-100.0, 100.0),
-                            tts::randoms(-100.0, 100.0)))
+                            tts::randoms(-100.0, 100.0))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::hypot;
@@ -128,7 +128,7 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100.0, 100.0)))
+              tts::randoms(-100.0, 100.0))
 <typename T>(T const& a0)
 {
   auto cases = tts::limits(tts::type<T> {});
@@ -180,9 +180,9 @@ TTS_CASE_WITH("Check corner-cases behavior of eve::hypot variants on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::hypot)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

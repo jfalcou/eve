@@ -31,8 +31,8 @@ TTS_CASE_TPL("Check return types of heaviside", eve::test::simd::all_types_wf16)
 
 TTS_CASE_WITH("Check behavior of heaviside(wide) on all types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10.0, 10.0),
-                            tts::randoms(-4.0, 2.0))
+              tts::randoms(-10.0, 10.0),
+                            tts::randoms(-4.0, 2.0)
              )
   <typename T>(T const& a0, T const& a1)
 {
@@ -52,9 +52,9 @@ TTS_CASE_WITH("Check behavior of heaviside(wide) on all types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::heaviside)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10.0, 10.0),
+              tts::randoms(-10.0, 10.0),
                             tts::randoms(-10.0, 10.0),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            T const& a1,
                            M const& mask)

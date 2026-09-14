@@ -26,7 +26,7 @@ TTS_CASE_TPL("Check return types of bit_reverse", eve::test::simd::unsigned_inte
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of bit_reverse(simd) on integral types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename U>(T const& a0, U const& t)
 {
   using v_t = eve::element_type_t<T>;

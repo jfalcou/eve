@@ -63,11 +63,11 @@ TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals)
 //==================================================================================================
 // trunc signed tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&) { return eve::signed_value<T> ? -50 : 0; };
+constexpr auto mini = []<typename T>(eve::as<T> const&) { return eve::signed_value<T> ? -50 : 0; };
 
 TTS_CASE_WITH("Check behavior of trunc on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(tts::constant(mini), +50)))
+              tts::randoms(tts::constant(mini), +50))
 <typename T>(T const& a0)
 {
    using wi_t  = eve::as_integer_t<T, signed>;
@@ -110,8 +110,8 @@ TTS_CASE_TPL(" fuzzy Check ", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::trunc)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-10000.0, 10000.0),
-              tts::logicals(0, 3)))
+              tts::randoms(-10000.0, 10000.0),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

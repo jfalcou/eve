@@ -45,6 +45,6 @@ main()
             << in
             << "\n";
   std::cout << " -> split = "
-            << tts::as_string(split_by(in, ' '))
+            << tts::as_text(split_by(in, ' '))
             << "\n";
 }

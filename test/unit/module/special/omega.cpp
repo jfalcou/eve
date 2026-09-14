@@ -28,9 +28,9 @@ TTS_CASE_TPL("Check return types of omega", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of omega on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 1000),
+              tts::randoms(1.0, 1000),
                             tts::randoms(0.01, 1.0),
-                            tts::randoms(-10.0, 0.0)))
+                            tts::randoms(-10.0, 0.0))
 <typename T>(T a0, T a1, T a2)
 {
   using elt_t = eve::element_type_t<T>;
@@ -70,8 +70,8 @@ TTS_CASE_WITH("Check behavior of omega on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::omega)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0),
-              tts::logicals(0, 3)))
+              tts::randoms(0.0, 10.0),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

@@ -33,10 +33,10 @@ TTS_CASE_TPL("Check return types of nthroot", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of nthroot on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100.0, 100.0),
+              tts::randoms(-100.0, 100.0),
                             tts::randoms(0, eve::valmax),
                             tts::as_integer(tts::randoms(1, 5)),
-                            tts::as_integer(tts::randoms(1, 10))))
+                            tts::as_integer(tts::randoms(1, 10)))
 <typename T, typename U>(T const& a0, T const& a1, U const& a2, U const& a3)
 {
   using v_t = eve::element_type_t<T>;
@@ -76,8 +76,8 @@ TTS_CASE_TPL("Check special cases of  nthroot", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::nthroot)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

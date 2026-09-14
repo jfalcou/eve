@@ -27,11 +27,11 @@ TTS_CASE_TPL("Check return types of sinhc", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sinhc  tests
 //==================================================================================================
-auto mini = tts::constant([]<typename T>(eve::as<T> const& tgt) { return -eve::maxlog(tgt); });
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const& tgt) { return -eve::maxlog(tgt); });
 
 TTS_CASE_WITH("Check behavior of sinhc on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(mini, eve::maxlog), tts::randoms(-10.0, 10.0)))
+              tts::randoms(mini, eve::maxlog), tts::randoms(-10.0, 10.0))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinhc;
@@ -48,8 +48,8 @@ TTS_CASE_WITH("Check behavior of sinhc on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sinhc)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, 
                          M const& mask)
 {

@@ -12,7 +12,7 @@
 
 TTS_CASE_WITH ( "Check _::to_logical"
               , eve::test::simd::all_types
-              , ::tts::generate ( tts::randoms{0,2} )
+              , :: tts::randoms{0,2} 
               )
 <typename T>(T mixed_values)
 {

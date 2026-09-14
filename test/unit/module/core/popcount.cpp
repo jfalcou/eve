@@ -58,7 +58,7 @@ TTS_CASE_TPL( "Pseudo-exhaustive behavior check of eve::popcount(simd)"
 
 TTS_CASE_WITH("Check behavior of eve::popcount(simd)",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const&)
 {
   using i_t  = eve::as_integer_t<T, unsigned>;

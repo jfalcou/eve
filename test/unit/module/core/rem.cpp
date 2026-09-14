@@ -39,14 +39,14 @@ TTS_CASE_TPL("Check return types of rem", eve::test::simd::all_types)
 //==================================================================================================
 //==  rem simd tests
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -100 : 0; };
 
 TTS_CASE_WITH("Check behavior of rem on wide",
               eve::test::simd::ieee_reals // all_types
               ,
-              tts::generate(tts::randoms(tts::constant(mini), 100),
-                            tts::randoms(tts::constant(mini), 100)))
+              tts::randoms(tts::constant(mini), 100),
+                            tts::randoms(tts::constant(mini), 100))
 <typename T>(T a0, T a1)
 {
   using eve::rem;
@@ -97,9 +97,9 @@ TTS_CASE_TPL("Check fixed-cases behavior of eve::rem", eve::test::simd::all_type
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of rem on signed types",
               eve::test::simd::signed_types,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
+              tts::randoms(tts::constant(mini), 127),
                             tts::randoms(1, 127),
-                            tts::randoms(tts::constant(mini), 127)))
+                            tts::randoms(tts::constant(mini), 127))
   <typename T>(T a0, T a1, T a2)
 {
   using eve::is_nez;
@@ -144,9 +144,9 @@ TTS_CASE_WITH("Check behavior of rem on signed types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::rem)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

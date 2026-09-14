@@ -27,17 +27,17 @@ TTS_CASE_TPL("Check return types of secpi", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // secpi  tests
 //==================================================================================================
-auto mmed = []<typename T>(eve::as<T> const& tgt)
+constexpr auto mmed = []<typename T>(eve::as<T> const& tgt)
 { return -eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
-auto med = []<typename T>(eve::as<T> const& tgt)
+constexpr auto med = []<typename T>(eve::as<T> const& tgt)
 { return eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
 
 TTS_CASE_WITH("Check behavior of secpi on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-0.25, 0.25),
+              tts::randoms(-0.25, 0.25),
                             tts::randoms(-0.5, 0.5),
                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using eve::secpi;
@@ -70,8 +70,8 @@ TTS_CASE_WITH("Check behavior of secpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::secpi)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

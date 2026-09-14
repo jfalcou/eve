@@ -10,7 +10,7 @@
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_all/ignore_none)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0), tts::ramp(10))
+        ,  tts::ramp(0), tts::ramp(10)
         )
 <typename T>(T data, T replacement)
 {
@@ -23,7 +23,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_all/ignore_none)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_last)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0) )
+        ,  tts::ramp(0) 
         )
 <typename T>(T data)
 {
@@ -40,7 +40,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_last)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(keep_last)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0), tts::ramp(100) )
+        ,  tts::ramp(0), tts::ramp(100) 
         )
 <typename T>(T data, T replacement)
 {
@@ -55,7 +55,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(keep_last)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_first)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0) )
+        ,  tts::ramp(0) 
         )
 <typename T>(T data)
 {
@@ -73,7 +73,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_first)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(keep_first)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0), tts::ramp(100) )
+        ,  tts::ramp(0), tts::ramp(100) 
         )
 <typename T>(T data, T replacement)
 {
@@ -90,7 +90,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(keep_first)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(keep_between)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0) )
+        ,  tts::ramp(0) 
         )
 <typename T>(T data)
 {
@@ -111,7 +111,7 @@ TTS_CASE_WITH( "Check behavior of replace_ignored(keep_between)"
 
 TTS_CASE_WITH( "Check behavior of replace_ignored(ignore_extrema)"
         , eve::test::simd::all_types
-        , tts::generate ( tts::ramp(0) )
+        ,  tts::ramp(0) 
         )
 <typename T>(T data)
 {

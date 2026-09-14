@@ -18,7 +18,7 @@
 //==================================================================================================
 TTS_CASE_WITH( "Check load to logical from aligned pointer with alternatives"
         , eve::test::simd::all_types
-        , tts::generate(tts::logicals(1,2))
+        , tts::logicals(1,2)
         )
 <typename T>(T others)
 {

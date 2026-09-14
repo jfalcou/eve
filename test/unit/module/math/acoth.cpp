@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of acoth", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of acoth on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 1e20)))
+              tts::randoms(1.0, 1e20))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -43,8 +43,8 @@ TTS_CASE_WITH("Check behavior of acoth on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acoth)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, 
                          M const& mask)
 {

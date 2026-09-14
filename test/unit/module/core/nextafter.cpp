@@ -30,8 +30,8 @@ TTS_CASE_TPL("Check return types of eve::nextafter", eve::test::simd::all_types_
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::nextafter",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -66,9 +66,9 @@ TTS_CASE_WITH("Check behavior of eve::nextafter",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::nextafter)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)

@@ -56,6 +56,8 @@ int main()
 
 #include <eve/module/algo.hpp>
 
+#include <vector>
+
 void
 how_to_keep_track_of_index()
 {

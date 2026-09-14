@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of legendre on wide", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of legendre p on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1, 1), tts::as_integer(tts::ramp(0))))
+              tts::between(-1, 1), tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, I const& i0)
 {
   using v_t           = eve::element_type_t<T>;
@@ -74,7 +74,7 @@ TTS_CASE_WITH("Check behavior of legendre p on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of legendre q on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0), tts::as_integer(tts::ramp(0))))
+              tts::between(-1.0, 1.0), tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, I const& i0)
 {
   using v_t           = eve::element_type_t<T>;
@@ -110,9 +110,9 @@ TTS_CASE_WITH("Check behavior of legendre q on wide",
 // TODO: FIX LATER
 TTS_CASE_WITH("Check behavior of associated legendre p on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-1.0, 1.0),
+              tts::between(-1.0, 1.0),
                             tts::as_integer(tts::ramp(0)),
-                            tts::as_integer(tts::reverse_ramp(0)))
+                            tts::as_integer(tts::reverse_ramp(0))
              )
 <typename T, typename I>(T a0, I i0 , I j0)
 {
@@ -139,9 +139,9 @@ TTS_CASE_WITH("Check behavior of associated legendre p on wide",
 /////////////spherical legendre
 TTS_CASE_WITH("Check behavior of spherical legendre on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(0, 3.14159),
+              tts::between(0, 3.14159),
                             tts::as_integer(tts::ramp(0)),
-                            tts::as_integer(tts::reverse_ramp(0))))
+                            tts::as_integer(tts::reverse_ramp(0)))
   <typename T, typename I>(T a0, I i0, I j0)
 {
   using e_t = eve::element_type_t<T>;

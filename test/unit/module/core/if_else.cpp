@@ -62,11 +62,11 @@ TTS_CASE_TPL("Check return types of eve::if_else", eve::test::simd::all_types_wf
 TTS_CASE_WITH(
     "Check behavior of eve::if_else(logical,logical,logical) and eve::if_else(logical,wide,wide)",
     eve::test::simd::all_types_wf16,
-    tts::generate(tts::randoms(eve::valmin, eve::valmax),
+    tts::randoms(eve::valmin, eve::valmax),
                   tts::randoms(eve::valmin, eve::valmax),
                   tts::logicals(0, 3),
                   tts::logicals(0, 3),
-                  tts::logicals(0, 3)))
+                  tts::logicals(0, 3))
 <typename T, typename M>(T const& a1, T const& a2, M const& m0, M const& m1, M const& m2)
 {
   using eve::allbits;
@@ -130,7 +130,7 @@ TTS_CASE_WITH(
 
 TTS_CASE_WITH("Check behavior of eve::if_else(conditional, a, b)",
               eve::test::wides<tts::types<std::uint8_t>>::type,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
 <typename T, typename L>(T const& a,L const& l)
 {
   {

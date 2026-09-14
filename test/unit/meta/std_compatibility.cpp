@@ -5,8 +5,8 @@
   SPDX-License-Identifier: BSL-1.0
 **/
 //==================================================================================================
-#include "test.hpp"
 #include <eve/std.hpp>
+#include "test.hpp"
 
 TTS_CASE_TPL( "Check for experimental::simd compliance", ::tts::arithmetic_types)
 <typename T>(::tts::type<T>)

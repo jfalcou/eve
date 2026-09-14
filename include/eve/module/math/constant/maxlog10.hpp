@@ -19,7 +19,11 @@ struct maxlog10_t : constant_callable<maxlog10_t, Options, lower_option, upper_o
   template<typename T, typename Opts>
   static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
   {
-    if constexpr(std::same_as<T, float>)
+    if constexpr(std::same_as<T, eve::float16_t>)
+    {
+      return T(0x1.20fd22p+2);
+    }
+    else if constexpr(std::same_as<T, float>)
     {
       return T(0x1.31d8b2p+5);
     }
