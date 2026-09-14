@@ -226,9 +226,10 @@ namespace eve::algo::views
       return convert(base.cardinal_cast(N), eve::as<T>{});
     }
 
+    // Spelled from T and I rather than from converting_iterator, which is still being defined here.
     template<callable_options O>
     requires iterator<I>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<converting_iterator>>) const
+    EVE_FORCEINLINE auto load(O const& opts, as<as_wide_t<T, iterator_cardinal_t<I>>>) const
     {
       auto new_c = map_alternative(
         opts[condition_key],
@@ -238,9 +239,13 @@ namespace eve::algo::views
       return eve::convert(eve::load[opts][new_c](base, as<wide_value_type_t<I>>{}), as<T>{});
     }
 
+    // V is deduced so that this signature names no trait of the class being defined; the constraint
+    // pins it to the one type the friend ever took.
+    template<typename V>
+      requires ( iterator<I> && std::same_as<V, as_wide_t<T, iterator_cardinal_t<I>>> )
     EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
-                                                wide_value_type_t<converting_iterator> v,
+                                                V v,
                                                 converting_iterator self)
     {
       auto c1 = map_alternative(

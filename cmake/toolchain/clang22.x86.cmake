@@ -3,6 +3,7 @@
 ##  Copyright : EVE Project Contributors
 ##  SPDX-License-Identifier: BSL-1.0
 ##==================================================================================================
-#!/bin/sh
+set(CMAKE_C_COMPILER    clang-22   )
+set(CMAKE_CXX_COMPILER  clang++-22 )
 
-qemu-aarch64 -cpu max,sve256=on $@
+set(CMAKE_CXX_FLAGS     "-DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )

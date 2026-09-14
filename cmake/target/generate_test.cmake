@@ -21,6 +21,11 @@ function(generate_test root rootpath dep file)
 
   add_executable( ${test}  "${rootpath}${file}")
 
+  ## A target the measurement found heavy waits for a slot rather than piling onto the others.
+  if( EVE_HEAVY_POOL GREATER 0 AND ${test} IN_LIST EVE_HEAVY_TARGETS )
+    set_target_properties(${test} PROPERTIES JOB_POOL_COMPILE heavy)
+  endif()
+
   if( ${ARGC} EQUAL 5)
     target_compile_definitions( ${test} PUBLIC ${ARGV4})
   endif()
