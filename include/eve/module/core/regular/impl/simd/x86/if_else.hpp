@@ -15,7 +15,7 @@
 namespace eve::_
 {
 template<scalar_value T, typename N, callable_options O>
-EVE_FORCEINLINE constexpr
+ constexpr
 wide<T,N> if_else_(EVE_REQUIRES(sse4_1_), O, logical<wide<T,N>> v0,wide<T,N> v1,wide<T,N> v2) noexcept
 requires x86_abi<abi_t<T,N>>
 {
@@ -103,7 +103,7 @@ requires x86_abi<abi_t<T,N>>
 }
 
 template<typename T, typename N, callable_options O>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 if_else_(EVE_REQUIRES(sse2_), O, logical<wide<T,N>> v0, logical<wide<T,N>> v1, logical<wide<T,N>> v2) noexcept
 requires x86_abi<abi_t<T,N>>
 {

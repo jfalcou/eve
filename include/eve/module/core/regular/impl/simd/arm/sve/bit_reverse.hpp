@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),
+   wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),
                                           O          const&,
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
@@ -23,7 +23,7 @@ namespace eve::_
   }
 
   template<conditional_expr C, unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),
+   wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),
                                           C          const& mask,
                                           wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>

@@ -29,7 +29,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+   constexpr auto add_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if      constexpr (O::contains(widen))                       return add[o.drop(widen)](upgrade(ts)...);
@@ -38,7 +38,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+   constexpr auto add_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr(O::contains(mod))
     {
@@ -112,7 +112,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T0>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
+   constexpr auto add_(EVE_REQUIRES(cpu_), O const&, T0 a) noexcept
   {
     if constexpr(O::contains(widen))
       return upgrade(a);
@@ -122,13 +122,13 @@ namespace eve::_
 
   template<typename O> struct add_kahan_helper_t
   {
-    static EVE_FORCEINLINE auto get_fn() noexcept
+    static  auto get_fn() noexcept
     {
       if constexpr(O::contains(raw)) return two_add[raw];
       else return two_add[pedantic];
     };
 
-    static EVE_FORCEINLINE auto pair_add(auto pair0, auto ri) noexcept
+    static  auto pair_add(auto pair0, auto ri) noexcept
     {
       auto [a0, e0] = pair0;
       auto [s, e1] = get_fn()(a0, ri);
@@ -137,7 +137,7 @@ namespace eve::_
   };
 
   template<typename T0, typename T1, typename ... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
+   constexpr auto add_(EVE_REQUIRES(cpu_), O const & o, T0 r0, T1 r1, Ts... rs) noexcept
   requires(sizeof...(Ts) != 0)
   {
     using r_t = eve::common_value_t<T0, T1, Ts...>;

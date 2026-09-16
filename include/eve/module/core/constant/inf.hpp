@@ -17,14 +17,14 @@ namespace eve
   struct inf_t : constant_callable<inf_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       if constexpr (std::same_as<T, eve::float16_t>) return _::float16_from_bits(0x7C00);
       else                                        return std::numeric_limits<T>::infinity();
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(inf_t, inf_);
   };

@@ -15,8 +15,7 @@ namespace eve::_
 {
 
 template<typename T>
-EVE_FORCEINLINE T
-sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
+T sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
 {
   constexpr auto c = categorize<T>();
 
@@ -42,8 +41,7 @@ sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
 }
 
 template<eve::integral_simd_value T>
-EVE_FORCEINLINE T
-iota_(EVE_REQUIRES(sve_), eve::callable_options auto const& opts, eve::as<T> tgt)
+T iota_(EVE_REQUIRES(sve_), eve::callable_options auto const& opts, eve::as<T> tgt)
 {
   using C = decltype(opts[condition_key]);
 

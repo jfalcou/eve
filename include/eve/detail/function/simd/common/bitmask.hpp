@@ -17,7 +17,7 @@ namespace eve::_
   // Logical to Bits
   //================================================================================================
   template<typename Wide>
-  EVE_FORCEINLINE auto to_bits( cpu_ const&, Wide const& p ) noexcept
+   auto to_bits( cpu_ const&, Wide const& p ) noexcept
   {
     using type = typename Wide::bits_type;
 
@@ -36,7 +36,7 @@ namespace eve::_
   // Logical to Mask
   //================================================================================================
   template<typename Wide>
-  EVE_FORCEINLINE auto to_mask(cpu_ const&, Wide const& p ) noexcept
+   auto to_mask(cpu_ const&, Wide const& p ) noexcept
   {
     using type = typename Wide::mask_type;
 
@@ -55,7 +55,7 @@ namespace eve::_
   // Logical to Bitmap
   //================================================================================================
   template<typename Wide>
-  EVE_FORCEINLINE auto to_bitmap( cpu_ const&, Wide const& p ) noexcept
+   auto to_bitmap( cpu_ const&, Wide const& p ) noexcept
   {
     if constexpr(Wide::size() <= 64)
     {

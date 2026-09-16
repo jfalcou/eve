@@ -16,8 +16,7 @@ namespace eve::_
 {
 
 template<eve::arithmetic_simd_value T>
-EVE_FORCEINLINE T
-iota_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opts, eve::as<T> tgt)
+T iota_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opts, eve::as<T> tgt)
 {
   const auto cx = opts[condition_key];
   using C       = decltype(cx);

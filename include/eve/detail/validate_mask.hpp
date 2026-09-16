@@ -21,7 +21,7 @@
 namespace eve::_
 {
   template<typename C, typename T>
-  EVE_FORCEINLINE constexpr bool validate_mask_for() noexcept
+   constexpr bool validate_mask_for() noexcept
   {
     if constexpr (scalar_value<T>)
     {
@@ -36,14 +36,14 @@ namespace eve::_
   }
 
   template<callable_options O, typename T>
-  constexpr EVE_FORCEINLINE bool validate_mask_for() noexcept
+  constexpr  bool validate_mask_for() noexcept
   {
     if constexpr (O::contains(condition_key)) return validate_mask_for<rbr::result::fetch_t<condition_key, O>, T>();
     else                                      return true;
   }
 
   template<conditional_expr C, typename T0, typename... Ts>
-  constexpr EVE_FORCEINLINE bool bit_validate_mask_for() noexcept
+  constexpr  bool bit_validate_mask_for() noexcept
   {
     if constexpr (std::same_as<C, ignore_none_>) return true;
     else if constexpr (C::has_alternative)
@@ -69,7 +69,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T0, typename... Ts>
-  constexpr EVE_FORCEINLINE bool bit_validate_mask_for() noexcept
+  constexpr  bool bit_validate_mask_for() noexcept
   {
     if constexpr (O::contains(condition_key)) return bit_validate_mask_for<rbr::result::fetch_t<condition_key, O>, T0, Ts...>();
     else                                      return true;

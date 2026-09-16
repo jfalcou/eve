@@ -20,7 +20,7 @@ struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option,
                                     lower_option, upper_option, strict_option, mod_option>
 {
   template<eve::value T>
-  constexpr EVE_FORCEINLINE upgrade_if_t<Options,T>  operator()(T v) const noexcept
+  EVE_ABI constexpr upgrade_if_t<Options,T> operator()(T v) const noexcept
   { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(rec_t, rec_);

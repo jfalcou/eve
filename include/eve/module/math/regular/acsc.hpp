@@ -20,7 +20,7 @@ namespace eve
                                        rad_option, radpi_option, deg_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acsc_t, acsc_);
 };
@@ -94,7 +94,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acsc_(EVE_REQUIRES(cpu_), O const& o, T const& a)
+    constexpr T acsc_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
       return eve::asin[o](rec[pedantic](a));
     }

@@ -24,7 +24,7 @@ namespace eve::_
 
 template<arithmetic_scalar_value T, typename N>
 requires rvv_abi<abi_t<T, N>>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 rvv_make_splat(eve::as<wide<T, N>>, T x) noexcept
 {
   constexpr auto c    = categorize<wide<T, N>>();
@@ -149,7 +149,7 @@ EVE_FORCEINLINE wide<T, N>
 
 template<arithmetic_scalar_value T, typename N, arithmetic_scalar_value... Vs>
 requires rvv_abi<abi_t<T, N>>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 rvv_make_enumerated(eve::as<wide<T, N>>, Vs... vs)
 {
   static_assert(sizeof...(Vs) == N::value, "[eve::make] - Invalid number of arguments");
@@ -159,7 +159,7 @@ EVE_FORCEINLINE wide<T, N>
 
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V1, typename... Vs>
 requires rvv_abi<abi_t<T, N>>
-EVE_FORCEINLINE auto
+ auto
 make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) noexcept
 {
   if constexpr( sizeof...(Vs) == 0 ) return rvv_make_splat(tgt, v1);
@@ -170,7 +170,7 @@ make_(EVE_REQUIRES(rvv_), O const&, eve::as<wide<T, N>> tgt, V1 v1, Vs... vs) no
 // logical cases
 //================================================================================================
 template<callable_options O, arithmetic_scalar_value T, typename N, typename V1, typename... Vs>
-EVE_FORCEINLINE logical<wide<T, N>>
+ logical<wide<T, N>>
 make_(EVE_REQUIRES(rvv_), O const&, as<logical<wide<T, N>>>, V1 v1, Vs... vs) noexcept
 requires rvv_abi<abi_t<T, N>>
 {

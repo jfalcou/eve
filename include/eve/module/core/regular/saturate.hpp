@@ -27,7 +27,7 @@ namespace eve
   struct saturate_t : strict_elementwise_callable<saturate_t, Options>
   {
     template<value U, scalar_value T>
-    EVE_FORCEINLINE constexpr U operator()(U t0, as<T> target) const noexcept
+    EVE_ABI constexpr U operator()(U t0, as<T> target) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, target);
     }
@@ -109,7 +109,7 @@ namespace eve
     }
 
     template<typename U, typename Target, callable_options O>
-    EVE_FORCEINLINE constexpr U saturate_(EVE_REQUIRES(cpu_),
+    constexpr U saturate_(EVE_REQUIRES(cpu_),
                                                O const &,
                                                U const & a0,
                                                as<Target> tgt) noexcept

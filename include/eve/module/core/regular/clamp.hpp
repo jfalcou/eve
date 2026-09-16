@@ -22,7 +22,7 @@ namespace eve
   {
     template<value T, value U, value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
+    EVE_ABI constexpr common_value_t<T, U, V>
     operator()(T a, U low, V high) const noexcept
     {
       EVE_ASSERT(eve::all(low <= high), "[eve::clamp] bounds are not correctly ordered");
@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
+    constexpr auto clamp_(EVE_REQUIRES(cpu_), O const &, T a, T l, T h) noexcept
     {
       return eve::min(eve::max(a, l), h);
     }

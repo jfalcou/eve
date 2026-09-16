@@ -18,7 +18,7 @@ namespace eve::_
 {
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
+ auto
 all_(EVE_REQUIRES(neon128_),
     O const           & opts,
     logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_64_>
@@ -44,7 +44,7 @@ all_(EVE_REQUIRES(neon128_),
 }
 
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
+ auto
 all_(EVE_REQUIRES(neon128_),
     O const            & opts,
     logical<wide<T, N>> v0) noexcept requires std::same_as<abi_t<T, N>, arm_128_>

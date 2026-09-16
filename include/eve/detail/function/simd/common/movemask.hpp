@@ -18,7 +18,7 @@ namespace eve::_
   // For emulated, N <= 64 is enforced in top bits.
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto movemask( eve::logical<eve::wide<T, N>> const& v ) noexcept
+   auto movemask( eve::logical<eve::wide<T, N>> const& v ) noexcept
   {
     static_assert ( !has_aggregated_abi_v<wide<T, N>>, "movemask is an internal function that does not make sense for aggregated" );
 

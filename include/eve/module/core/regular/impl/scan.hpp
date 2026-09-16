@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<int group_size, simd_value Wide, typename Op>
-  EVE_FORCEINLINE Wide scan_common_impl(Wide x, Op op)
+   Wide scan_common_impl(Wide x, Op op)
   {
     if constexpr( group_size == 1 ) return x;
     else
@@ -25,7 +25,7 @@ namespace eve::_
   }
 
   template<int group_size, simd_value Wide, typename Op>
-  EVE_FORCEINLINE Wide scan_common_impl(Wide x, Op op, Wide z)
+   Wide scan_common_impl(Wide x, Op op, Wide z)
   {
     if constexpr( group_size == 1 ) return x;
     else
@@ -36,7 +36,7 @@ namespace eve::_
   }
 
   template<callable_options O, simd_value Wide, typename Op, typename Zero>
-  EVE_FORCEINLINE Wide scan_(EVE_REQUIRES(cpu_), O const&, Wide v, Op op, Zero z) noexcept
+   Wide scan_(EVE_REQUIRES(cpu_), O const&, Wide v, Op op, Zero z) noexcept
   {
     if constexpr( Wide::size() == 1 ) return v;
     else if constexpr( has_emulated_abi_v<Wide> )

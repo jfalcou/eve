@@ -21,7 +21,7 @@
 namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),
+   as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),
                                  O          const& o,
                                  wide<T, N> const& a0) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -47,7 +47,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),
+   as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),
                                                  C const         & mask,
                                                  O          const& o,
                                                  wide<T, N> const& v) noexcept

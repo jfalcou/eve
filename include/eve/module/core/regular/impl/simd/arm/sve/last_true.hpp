@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
+   std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, logical<wide<T, N>> m) noexcept
   {
     using L = logical<wide<T, N>>;
     using C = rbr::result::fetch_t<condition_key, O>;
@@ -62,7 +62,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
+   std::optional<std::ptrdiff_t> last_true_(EVE_REQUIRES(sve_), O const& opts, top_bits<logical<wide<T, N>>> m) noexcept
   {
     return last_true.behavior(current_api, opts, to_logical(m));
   }

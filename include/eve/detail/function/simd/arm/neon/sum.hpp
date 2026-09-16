@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<typename T, typename N>
-  EVE_FORCEINLINE wide<T,N> arm_sum_impl(wide<T,N> v) noexcept
+   wide<T,N> arm_sum_impl(wide<T,N> v) noexcept
   {
     constexpr auto c = categorize<wide<T, N>>();
 
@@ -28,7 +28,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto sum_(EVE_REQUIRES(neon128_), O const& opts, wide<T,N> v) noexcept
+   auto sum_(EVE_REQUIRES(neon128_), O const& opts, wide<T,N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     if      constexpr (!match_option<condition_key, O, ignore_none_>) return sum.behavior(cpu_{}, opts, v);

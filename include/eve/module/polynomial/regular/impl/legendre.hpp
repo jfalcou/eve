@@ -16,7 +16,7 @@ namespace eve::_
 {
   // Recurrence relation for legendre polynomials of all kinds
   template<typename L, typename T, callable_options O>
-  constexpr EVE_FORCEINLINE as_wide_as_t<T, L>
+  constexpr  as_wide_as_t<T, L>
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, T x, T pl, T plm1)
     requires(O::contains(successor))
   {
@@ -119,7 +119,7 @@ namespace eve::_
 
   // Recurrence relation for associated p legendre polynomials
   template<typename L, typename M, typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+   constexpr T
   legendre_(EVE_REQUIRES(cpu_), O const&, L l, M m, T x, T pl, T plm1)
     requires(O::contains(successor)&& O::contains(associated))
   {

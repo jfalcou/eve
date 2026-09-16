@@ -18,7 +18,7 @@ namespace eve::_
 {
 
 template<typename T, std::ptrdiff_t G, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
+ auto
 native_shuffle_lookup_(EVE_SUPPORTS(cpu_), pattern_t<I...>, fixed<G> g, T x, auto... xs)
 {
   constexpr auto p = expanded_pattern<T, G, I...>;

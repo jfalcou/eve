@@ -25,7 +25,7 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
     I              first;
     std::ptrdiff_t chunk_offset;
 
-    EVE_FORCEINLINE
+    EVE_ABI
     bool operator()(std::ptrdiff_t i) { return loop_body(first + (chunk_offset + i)); }
   };
 
@@ -37,7 +37,7 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
     ProcessedI processed_first;
     I          first;
 
-    EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
+    EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
       auto loaded = eve::load[ignore](it);
       std::ptrdiff_t chunk_offset = it - processed_first;   // safe: ProcessedI is a raw-pointer-based
@@ -47,14 +47,14 @@ template<typename TraitsSupport> struct for_each_selected_ : TraitsSupport
       return was_stopped;
     }
 
-    EVE_FORCEINLINE bool unrolled_step(auto arr)
+    EVE_ABI bool unrolled_step(auto arr)
     {
       return unroll_by_calling_single_step {}(arr, *this);
     }
   };
 
   template<relaxed_range Rng, typename P, irregular_predicate<unaligned_iterator_t<Rng>> LoopBody>
-  EVE_FORCEINLINE bool operator()(Rng&& rng, P is_selected, LoopBody&& loop_body) const
+  EVE_ABI bool operator()(Rng&& rng, P is_selected, LoopBody&& loop_body) const
   {
     if( rng.begin() == rng.end() ) return false;
     auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));

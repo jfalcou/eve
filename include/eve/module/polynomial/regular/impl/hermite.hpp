@@ -13,7 +13,7 @@ namespace eve::_
 {
   //Recurrence relation for hermite polynomials:
   template<value N, floating_value T, callable_options O> //successor
-  constexpr EVE_FORCEINLINE as_wide_as_t<T, N>
+  constexpr as_wide_as_t<T, N>
   hermite_(EVE_REQUIRES(cpu_), O const&, N n, T x, T hn, T hnm1)
   {
     auto z = fms(x, hn, T(n) * hnm1);

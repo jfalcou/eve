@@ -25,7 +25,7 @@ namespace eve::_
 {
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(emulated_), O const& o, T a) noexcept
+   constexpr auto rec_(EVE_REQUIRES(emulated_), O const& o, T a) noexcept
     requires (_::fp16_should_apply<common_value_t<T>>)
   {
     if      constexpr (O::contains(widen))                       return rec[o.drop(widen)](upgrade(a));
@@ -100,7 +100,7 @@ namespace eve::_
 
 
   template<callable_options O, floating_value T>
-  EVE_FORCEINLINE constexpr auto rec_(EVE_REQUIRES(cpu_), O const& o, T a ) noexcept
+   constexpr auto rec_(EVE_REQUIRES(cpu_), O const& o, T a ) noexcept
   requires(O::contains(mod))
   {
     auto p = o[mod].value(as(a));

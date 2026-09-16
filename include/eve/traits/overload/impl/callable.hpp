@@ -13,7 +13,7 @@ namespace eve
 {
   namespace _
   {
-    inline constexpr struct { EVE_FORCEINLINE auto operator()(auto, auto x) const { return x; } } return_2nd = {};
+    inline constexpr struct {  auto operator()(auto, auto x) const { return x; } } return_2nd = {};
 
     struct ignore { template<typename T> operator T() { return T{}; } };
   }
@@ -51,7 +51,7 @@ namespace eve
   {
     using base = decorated_with<OptionsValues, Options...>;
 
-    template<callable_options O> EVE_FORCEINLINE constexpr auto operator[](O const& opts) const
+    template<callable_options O> EVE_ABI constexpr auto operator[](O const& opts) const
     {
       auto merged_opts = rbr::merge(opts, this->options());
       options<decltype(merged_opts)> new_opts{merged_opts};
@@ -59,36 +59,36 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
+    EVE_ABI constexpr auto operator[](T t) const requires( requires(base const& b) { b[t];} )
     {
       auto new_traits = base::operator[](t);
       return  Func<decltype(new_traits)>{new_traits};
     }
 
     // TEMPORARY - Map old decorator to the new ones
-    template<typename T> EVE_FORCEINLINE auto operator[](T const& t) const requires(decorator<T>)
+    template<typename T> EVE_ABI auto operator[](T const& t) const requires(decorator<T>)
     {
       return (*this)[as_option(t)];
     }
 
-    template<typename T> EVE_FORCEINLINE void operator[](T const& t) const
+    template<typename T> EVE_ABI void operator[](T const& t) const
     // This requires is also TEMPORARY
     requires( !callable_options<T> && !requires(base const& b) { b[t];} && !decorator<T>) =delete;
 
     template<typename... Args>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, Args&&... args) const
+    EVE_ABI constexpr auto behavior(auto arch, Args&&... args) const
     {
       return Func<OptionsValues>::deferred_call(arch, EVE_FWD(args)...);
     }
 
     template<typename... Args>
-    EVE_FORCEINLINE constexpr auto retarget(auto arch, Args&&... args) const
+    EVE_ABI constexpr auto retarget(auto arch, Args&&... args) const
     {
       return Func<OptionsValues>::deferred_call(arch, this->options(), EVE_FWD(args)...);
     }
 
     protected:
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     Func<OptionsValues> const& derived() const { return static_cast<Func<OptionsValues>const&>(*this); }
 
     //! Checks if two callable are instances of the same function

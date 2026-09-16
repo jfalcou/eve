@@ -1056,7 +1056,7 @@ namespace eve::algo
   //! @see drop_key_if
   //================================================================================================
   template <typename K, typename Traits>
-  EVE_FORCEINLINE constexpr auto drop_key(K k, Traits tr)
+  EVE_ABI constexpr auto drop_key(K k, Traits tr)
   {
     using settings_t = decltype(rbr::drop(k, tr));
     return traits<settings_t>(rbr::drop(k, tr));
@@ -1073,7 +1073,7 @@ namespace eve::algo
   //! Keeps an `if constexpr` out of the call site.
   //================================================================================================
   template <bool cond, typename K, typename Traits>
-  EVE_FORCEINLINE constexpr auto drop_key_if(K k, Traits tr)
+  EVE_ABI constexpr auto drop_key_if(K k, Traits tr)
   {
     if constexpr( cond ) return drop_key(k, tr);
     else                 return tr;

@@ -20,12 +20,12 @@ namespace eve
   struct am_t : elementwise_callable<am_t, Options, threshold_option, modular_option, eccentric_option>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     T operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     template<eve::floating_value T0, eve::floating_value T1>
     requires (same_lanes_or_scalar<T0, T1>)
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     eve::common_value_t<T0, T1> operator()(T0 a, T1 b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 

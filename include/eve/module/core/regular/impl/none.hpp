@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template <callable_options O, typename T>
-  EVE_FORCEINLINE auto none_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+   auto none_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   {
     return !any[opts](v);
   }

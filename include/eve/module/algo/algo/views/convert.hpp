@@ -114,11 +114,11 @@ namespace eve::algo::views
     using types_to_consider = kumi::result::cat_t<
       kumi::tuple<T>, types_to_consider_for_t<R>>;
 
-    EVE_FORCEINLINE auto begin() const { return convert(base.begin(), eve::as<T>{}); }
-    EVE_FORCEINLINE auto end()   const { return convert(base.end(),   eve::as<T>{}); }
+    EVE_ABI auto begin() const { return convert(base.begin(), eve::as<T>{}); }
+    EVE_ABI auto end()   const { return convert(base.end(),   eve::as<T>{}); }
 
     template<typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
+    EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits tr, converting_range self)
     {
       auto tr_with_cardinal = default_to(tr, traits {consider_types<T>});
       auto processed        = preprocess_range(tr_with_cardinal, self.base);
@@ -141,43 +141,43 @@ namespace eve::algo::views
 
     converting_iterator() = default;
 
-    EVE_FORCEINLINE explicit converting_iterator(I b) : base(b) {}
+    EVE_ABI explicit converting_iterator(I b) : base(b) {}
 
     template <std::convertible_to<I> I1>
     converting_iterator(converting_iterator<I1, T> x) : base(x.base) {}
 
-    EVE_FORCEINLINE auto unalign() const noexcept { return convert(eve::unalign(base), as<T>{}); }
-    EVE_FORCEINLINE auto read()    const noexcept { return eve::convert(eve::read(base)   , as<T>{}); }
+    EVE_ABI auto unalign() const noexcept { return convert(eve::unalign(base), as<T>{}); }
+    EVE_ABI auto read()    const noexcept { return eve::convert(eve::read(base)   , as<T>{}); }
 
-    EVE_FORCEINLINE void write(T v) const noexcept
+    EVE_ABI void write(T v) const noexcept
     {
       eve::write(eve::convert(v, as<value_type_t<I>>{}),base);
     }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE bool operator==(converting_iterator<I1, T> y) const
+    EVE_ABI bool operator==(converting_iterator<I1, T> y) const
     {
       return base == y.base;
     }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE auto operator<=>(converting_iterator<I1, T> y) const
+    EVE_ABI auto operator<=>(converting_iterator<I1, T> y) const
     {
       return spaceship_helper(base, y.base);
     }
 
-    EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)
+    EVE_ABI auto& operator+=(std::ptrdiff_t n)
     {
       base += n;
       return *this;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(converting_iterator const & x, converting_iterator const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(converting_iterator const & x, converting_iterator const & y)
     {
       return x.base - y.base;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(converting_iterator const & x, unaligned_me const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(converting_iterator const & x, unaligned_me const & y)
       requires (!std::same_as<I, unaligned_t<I>>)
     {
       return x.base - y.base;
@@ -186,7 +186,7 @@ namespace eve::algo::views
     // not eve::iterator
 
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr,
                                 converting_iterator f, converting_iterator l)
       requires (!iterator<I>)
@@ -195,7 +195,7 @@ namespace eve::algo::views
     }
 
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr,
                                 converting_iterator f, unaligned_me l)
       requires (!iterator<I>) && (!std::same_as<I, unaligned_t<I>>)
@@ -204,13 +204,13 @@ namespace eve::algo::views
     }
 
     // eve::iterator -------------
-    EVE_FORCEINLINE auto previous_partially_aligned() const
+    EVE_ABI auto previous_partially_aligned() const
       requires iterator<I>
     {
       return convert(base.previous_partially_aligned(), eve::as<T>{});
     }
 
-    EVE_FORCEINLINE auto next_partially_aligned() const
+    EVE_ABI auto next_partially_aligned() const
       requires iterator<I>
     {
       return convert(base.next_partially_aligned(), eve::as<T>{});
@@ -220,7 +220,7 @@ namespace eve::algo::views
     { return I::iterator_cardinal(); }
 
     template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    EVE_ABI auto cardinal_cast(_Cardinal N) const
       requires iterator<I>
     {
       return convert(base.cardinal_cast(N), eve::as<T>{});
@@ -228,7 +228,7 @@ namespace eve::algo::views
 
     template<callable_options O>
     requires iterator<I>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<converting_iterator>>) const
+    EVE_ABI auto load(O const& opts, as<wide_value_type_t<converting_iterator>>) const
     {
       auto new_c = map_alternative(
         opts[condition_key],
@@ -238,7 +238,7 @@ namespace eve::algo::views
       return eve::convert(eve::load[opts][new_c](base, as<wide_value_type_t<I>>{}), as<T>{});
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
+    EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
                                                 wide_value_type_t<converting_iterator> v,
                                                 converting_iterator self)

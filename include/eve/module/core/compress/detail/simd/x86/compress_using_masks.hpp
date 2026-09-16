@@ -51,7 +51,7 @@ namespace eve::_
     pattern_8_elements(idxs_dwords<T>);
 
   template <typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
+   wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
     requires (current_api >= avx2)
   {
          if constexpr ( std::integral<T>       ) return _mm256_permutevar8x32_epi32(v, pattern);
@@ -65,7 +65,6 @@ namespace eve::_
   }
 
   template <typename T, typename N>
-  EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(avx2_), wide<T, N> v, std::ptrdiff_t num) noexcept
     requires ( std::same_as<abi_t<T, N>, x86_256_> )
   {
@@ -89,7 +88,6 @@ namespace eve::_
 
 
   template <typename T, typename N>
-  EVE_FORCEINLINE
   wide<T, N> compress_using_masks_to_left_(EVE_SUPPORTS(avx_), wide<T, N> v)
     requires ( std::same_as<abi_t<T, N>, x86_256_> && sizeof(T) <= 4 )
   {
@@ -116,7 +114,7 @@ namespace eve::_
     std::ptrdiff_t lo_idx, hi_idx;
 
     template <typename T, typename N>
-    EVE_FORCEINLINE auto operator()(wide<T, N> v) const
+    auto operator()(wide<T, N> v) const
     {
       using half_wide = wide<T, eve::fixed<N() / 2>>;
 
@@ -162,7 +160,6 @@ namespace eve::_
 
 
   template <typename T, typename N, typename U>
-  EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(ssse3_), ignore_none_ c, wide<T, N> v, logical<wide<U, N>> mask)
     requires ( N() == 16 ) && (max_scalar_size_v<T> <= 2)
   {

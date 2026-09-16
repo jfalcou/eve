@@ -15,7 +15,7 @@ namespace _
   struct two_stage_iteration_common
   {
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits, I& f, S l, Delegate& delegate) const
+     bool main_loop(Traits, I& f, S l, Delegate& delegate) const
     {
       // does not support unrolling at the moment
       while( true )
@@ -59,7 +59,7 @@ namespace _
                      << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
     }
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       main_loop(traits, f, l, delegate);
     }
@@ -75,7 +75,7 @@ namespace _
 
     two_stage_iteration_precise_f(Traits t, I i, S s) : traits(t), base(i), f(i), l(s) {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       I precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
 
@@ -103,7 +103,7 @@ namespace _
         , l(s)
     {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();

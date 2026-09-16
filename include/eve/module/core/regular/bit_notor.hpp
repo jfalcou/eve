@@ -16,7 +16,7 @@ namespace eve
   struct bit_notor_t : bit_callable<bit_notor_t, Options>
   {
     template<value T0, value... Ts>
-    EVE_FORCEINLINE constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
+    EVE_ABI constexpr bit_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
       static_assert(_::bit_validate_mask_for<decltype(this->options()), T0, Ts...>(),
         "[eve::bit_notor] - Masking is not supported for inputs of different lane count");
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<eve::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
+    EVE_ABI constexpr kumi::apply_traits_t<bit_value, Tup> operator()(Tup const& t) const noexcept
     {
       static_assert(_::bit_validate_mask_for<decltype(this->options()), Tup>(),
         "[eve::bit_notor] - Masking is not supported for inputs of different lane count");

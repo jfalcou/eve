@@ -13,7 +13,7 @@
 namespace eve::_
 {
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE T
+ T
 extract_(EVE_REQUIRES(rvv_), O const&, wide<T, N> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -30,7 +30,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE void
+ void
 insert_(EVE_REQUIRES(rvv_),
         O const&,
         wide<T, N>                & v,
@@ -44,7 +44,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE logical<T>
+ logical<T>
 extract_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v, std::size_t i) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -56,7 +56,7 @@ requires rvv_abi<abi_t<T, N>>
 }
 
 template<callable_options O, typename T, typename N>
-EVE_FORCEINLINE void
+ void
 insert_(EVE_REQUIRES(rvv_),
         O const&,
         logical<wide<T, N>>          & v,

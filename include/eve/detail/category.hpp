@@ -102,23 +102,23 @@ namespace eve::_
     uint64x8  = uint64 | 8
   };
 
-  EVE_FORCEINLINE constexpr std::uint32_t to_int(category a) noexcept
+  constexpr std::uint32_t to_int(category a) noexcept
   {
     return static_cast<std::uint32_t>(a);
   }
 
-  EVE_FORCEINLINE constexpr category operator|(category a, category b) noexcept
+  constexpr category operator|(category a, category b) noexcept
   {
     return static_cast<category>(to_int(a) | to_int(b));
   }
 
   template<typename... Cat>
-  EVE_FORCEINLINE constexpr bool match(category a, Cat... tst) noexcept
+  constexpr bool match(category a, Cat... tst) noexcept
   {
     return (((to_int(a) & to_int(tst)) == to_int(tst)) || ...);
   }
 
-  template<typename W> EVE_FORCEINLINE constexpr category categorize() noexcept
+  template<typename W> constexpr category categorize() noexcept
   {
     if constexpr( has_native_abi_v<W> )
     {

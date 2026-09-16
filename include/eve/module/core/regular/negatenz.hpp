@@ -19,7 +19,7 @@ namespace eve
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T a, U b) const
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(negatenz_t, negatenz_);
@@ -75,8 +75,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    negatenz_(EVE_REQUIRES(cpu_), O const &o, T const &a, T const &b) noexcept
+    constexpr T negatenz_(EVE_REQUIRES(cpu_), O const &o, T const &a, T const &b) noexcept
     {
       if constexpr( signed_value<T> )
         return a * signnz[o](b);

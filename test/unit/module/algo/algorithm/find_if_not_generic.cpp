@@ -16,7 +16,7 @@ template <typename TraitsSupport>
 struct find_if_with_find_if_not_ : TraitsSupport
 {
   template <typename Rng, typename P>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+  EVE_ABI auto operator()(Rng&& rng, P p) const
   {
     return eve::algo::find_if_not[TraitsSupport::get_traits()](std::forward<Rng>(rng),
       [p](auto x) { return !p(x); });

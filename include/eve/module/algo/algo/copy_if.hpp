@@ -30,7 +30,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
       return eve::compress_copy[eve::unsafe][density];
     }
 
-    EVE_FORCEINLINE
+    EVE_ABI
     bool tail(auto f, auto ignore)
     {
       auto loaded = eve::load[ignore](f);
@@ -41,10 +41,10 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
       return of == ol;
     }
 
-    EVE_FORCEINLINE
+    EVE_ABI
     std::ptrdiff_t left_for_stage1() const { return ol - of; }
 
-    EVE_FORCEINLINE
+    EVE_ABI
     bool step_1(auto f)
     {
       auto loaded = eve::load(f);
@@ -53,7 +53,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
       return false;
     }
 
-    EVE_FORCEINLINE
+    EVE_ABI
     bool step_2(auto f)
     {
       auto loaded = eve::load(f);
@@ -65,7 +65,7 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
   };
 
   template<relaxed_range In, relaxed_range Out, typename P>
-  EVE_FORCEINLINE auto operator()(In&& in, Out&& out, P p) const -> unaligned_iterator_t<Out>
+  EVE_ABI auto operator()(In&& in, Out&& out, P p) const -> unaligned_iterator_t<Out>
   {
     if( in.begin() == in.end() || out.begin() == out.end() ) return out.begin();
 

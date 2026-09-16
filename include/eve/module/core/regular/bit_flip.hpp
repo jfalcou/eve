@@ -21,7 +21,7 @@ namespace eve
   struct bit_flip_t : strict_elementwise_callable<bit_flip_t, Options>
   {
     template<eve::value T, integral_value I>
-    constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
+    EVE_ABI constexpr T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
     EVE_CALLABLE_OBJECT(bit_flip_t, bit_flip_);
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, integral_value I, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     bit_flip_(EVE_REQUIRES(cpu_), O const&, T const& a, I const & i) noexcept
     {
       [[maybe_unused]] constexpr std::ptrdiff_t S8 = sizeof(element_type_t<T>)*8;

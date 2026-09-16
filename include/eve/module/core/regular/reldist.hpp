@@ -22,7 +22,7 @@ namespace eve
   {
     template<floating_value T,  floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(reldist_t, reldist_);

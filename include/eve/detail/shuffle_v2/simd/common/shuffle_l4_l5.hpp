@@ -15,7 +15,7 @@ namespace eve::_
 {
 
 template<typename P, simd_value T, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_broadcast_lane_set_get(P, fixed<G>, T x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);

@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<typename T, typename S, callable_options O>
-  constexpr EVE_FORCEINLINE as_wide_as_t<T,S> rotl_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
+  constexpr  as_wide_as_t<T,S> rotl_(EVE_REQUIRES(cpu_), O const& o, T v, S s)
   {
     if constexpr(scalar_value<S>)
     {
@@ -31,7 +31,7 @@ namespace eve::_
   }
 
   template<typename T, auto S, callable_options O>
-  constexpr EVE_FORCEINLINE T rotl_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
+  constexpr  T rotl_(EVE_REQUIRES(cpu_), O const& o, T v, index_t<S>)
   {
     return rotl[o](v, S);
   }

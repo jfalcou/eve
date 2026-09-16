@@ -18,7 +18,7 @@ namespace eve
   struct bernoulli_t : elementwise_callable<bernoulli_t, Options>
   {
     template<eve::unsigned_value T>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     as_wide_as_t<double, T> operator()(T v) const noexcept  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bernoulli_t, bernoulli_);
@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    constexpr EVE_FORCEINLINE auto
+    EVE_ABI constexpr auto
     bernoulli_(EVE_REQUIRES(cpu_), O const&, T n)
     {
       constexpr double dbernoulli_b2ns[130] = {

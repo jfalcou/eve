@@ -16,7 +16,7 @@
 namespace eve::_
 {
 template<typename T, typename N>
-EVE_FORCEINLINE auto
+ auto
 to_logical(wide<T, N> const& v) noexcept
 requires rvv_abi<abi_t<T, N>>
 {

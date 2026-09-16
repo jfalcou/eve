@@ -19,7 +19,7 @@ namespace eve::_
   // Interleave pairs of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
+   auto interleave_(EVE_REQUIRES(sse2_) , O const& o, wide<T,N> v0, wide<T,N> v1) noexcept
   requires (N::value > 1) && x86_abi<abi_t<T,N>>
   {
     using type = wide<T,N>;
@@ -177,7 +177,7 @@ namespace eve::_
   }
 
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+   auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
                                   , logical<wide<T,N>> v0, logical<wide<T,N>> v1
                                   ) noexcept
@@ -224,7 +224,7 @@ namespace eve::_
   // Interleave triplets of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+   auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
                                   , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2
                                   ) noexcept
@@ -275,7 +275,7 @@ namespace eve::_
   // Interleave quadruplets of wides
   //================================================================================================
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE auto interleave_( EVE_REQUIRES(sse2_)
+   auto interleave_( EVE_REQUIRES(sse2_)
                                   , O const& o
                                   , wide<T,N> v0, wide<T,N> v1, wide<T,N> v2, wide<T,N> v3
                                   ) noexcept

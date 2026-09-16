@@ -52,7 +52,7 @@ struct identity_swizzle
     return os << "identity_swizzle";
   }
 
-  template<typename Wide, typename Pattern> EVE_FORCEINLINE auto operator()(Wide v, Pattern p) const
+  template<typename Wide, typename Pattern>  auto operator()(Wide v, Pattern p) const
   {
     constexpr auto cd = cardinal_v<Wide>;
     constexpr auto sz = Pattern::size();
@@ -70,7 +70,7 @@ struct zero_swizzle
   friend auto& operator<<(std::basic_ostream<C, Ct>& os, zero_swizzle) { return os << "zero_swizzle"; }
 
   template<typename Wide, typename Cardinal>
-  EVE_FORCEINLINE auto operator()([[maybe_unused]] Wide w, Cardinal) const
+   auto operator()([[maybe_unused]] Wide w, Cardinal) const
   {
     using w_t = as_wide_t<Wide, Cardinal>;
     if constexpr( is_bundle_v<typename Wide::abi_type> )
@@ -88,7 +88,7 @@ template<typename Callable, typename... Args> struct bound
 {
   constexpr bound(Callable, Args...) {}
 
-  template<typename W> EVE_FORCEINLINE auto operator()(W w) const noexcept
+  template<typename W>  auto operator()(W w) const noexcept
   {
     return Callable {}(w, Args {}...);
   }

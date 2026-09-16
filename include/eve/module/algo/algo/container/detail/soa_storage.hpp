@@ -29,7 +29,7 @@ namespace eve::algo::_
     }
 
     template <typename T, typename U>
-    static EVE_FORCEINLINE auto align_to_cacheline(U* p) noexcept
+    EVE_ABI static auto align_to_cacheline(U* p) noexcept
     {
       return eve::as_aligned(reinterpret_cast<T*>(p), eve::_::cache_line_cardinal<T>{});
     }
@@ -100,20 +100,20 @@ namespace eve::algo::_
     soa_storage(soa_storage&&)            = default;
     soa_storage& operator=(soa_storage&&) = default;
 
-    EVE_FORCEINLINE auto data_aligned()
+    EVE_ABI auto data_aligned()
     {
       auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
-    EVE_FORCEINLINE auto data_aligned() const
+    EVE_ABI auto data_aligned() const
     {
       auto ptrs = kumi::map([]( auto p) { return as_aligned_pointer( p ); }, *this);
       return kumi::apply(eve::algo::views::zip, ptrs);
     }
 
-    EVE_FORCEINLINE auto data()       { return eve::unalign(data_aligned()); }
-    EVE_FORCEINLINE auto data() const { return eve::unalign(data_aligned()); }
+    EVE_ABI auto data()       { return eve::unalign(data_aligned()); }
+    EVE_ABI auto data() const { return eve::unalign(data_aligned()); }
 
     void swap(soa_storage& other) noexcept
     {
@@ -179,7 +179,7 @@ namespace eve::algo::_
     data_ptr_type data_;
     std::size_t   capacity_;
 
-    template<typename T> static EVE_FORCEINLINE auto as_aligned_pointer(T* ptr)
+    template<typename T> EVE_ABI static auto as_aligned_pointer(T* ptr)
     {
       return eve::as_aligned(ptr, eve::_::cache_line_cardinal<T>{});
     }

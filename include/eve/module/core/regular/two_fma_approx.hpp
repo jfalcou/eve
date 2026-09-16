@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::floating_value T, eve::floating_value U, eve::floating_value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
-      constexpr EVE_FORCEINLINE zipped<common_value_t<T, U, V>, common_value_t<T, U, V>>
+    EVE_ABI constexpr zipped<common_value_t<T, U, V>, common_value_t<T, U, V>>
     operator()(T t, U u, V v) const noexcept
     { return EVE_DISPATCH_CALL(t, u, v); }
 
@@ -80,7 +80,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE auto two_fma_approx_(EVE_REQUIRES(cpu_), O const&, T a, T b, T c) noexcept
+    auto two_fma_approx_(EVE_REQUIRES(cpu_), O const&, T a, T b, T c) noexcept
     {
       T d = fma(a, b, c);
       auto [v1, v2] = two_prod(a, b);

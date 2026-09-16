@@ -19,14 +19,14 @@ namespace eve::algo
   struct copy_ : TraitsSupport
   {
     template <zipped_range_pair R>
-    EVE_FORCEINLINE void operator()(R r) const
+    EVE_ABI void operator()(R r) const
     {
       return transform_to[TraitsSupport::get_traits()](r, do_nothing{});
     }
 
     template <typename R1, typename R2>
     requires zip_to_range<R1, R2>
-    EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
+    EVE_ABI void operator()(R1&& r1, R2&& r2) const
     {
       operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)));
     }
@@ -82,7 +82,7 @@ namespace eve::algo
   struct copy_backward_ : TraitsSupport
   {
     template <zipped_range_pair R>
-    EVE_FORCEINLINE void operator()(R r) const
+    EVE_ABI void operator()(R r) const
     {
       auto [from, to] = r;
       return copy[TraitsSupport::get_traits()](views::backward(from), views::backward(to));
@@ -90,7 +90,7 @@ namespace eve::algo
 
     template <typename R1, typename R2>
     requires zip_to_range<R1, R2>
-    EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2) const
+    EVE_ABI void operator()(R1&& r1, R2&& r2) const
     {
       static_assert(!relaxed_iterator<R2>, "Behavior of std::copy_backward and eve::algo::copy_backward"
                                            " would differ for a second parameter iterator."

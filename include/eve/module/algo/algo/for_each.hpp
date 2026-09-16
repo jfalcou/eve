@@ -45,14 +45,14 @@ namespace eve::algo
 
       explicit delegate(Op o) : op(o) {}
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
+      EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
         op(it, ignore);
         return false;
       }
 
       template<typename I, std::size_t size>
-      EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+      EVE_ABI bool unrolled_step(std::array<I, size> arr)
       {
         array_map(arr, call_single_step(this));
         return false;
@@ -60,7 +60,7 @@ namespace eve::algo
     };
 
     template <relaxed_range Rng, typename Op>
-    EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
+    EVE_ABI void operator()(Rng&& rng, Op op) const
     {
       auto processed = preprocess_range(TraitsSupport::get_traits(), EVE_FWD(rng));
       if( processed.begin() == processed.end() ) return;

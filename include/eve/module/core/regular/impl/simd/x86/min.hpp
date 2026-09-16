@@ -19,14 +19,14 @@
 namespace eve::_
 {
   template<eve::simd_value Wide>
-  EVE_FORCEINLINE Wide
+   Wide
   if_else_min(Wide x, Wide y)
   {
     return eve::if_else(x > y, y, x);
   }
 
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> min_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
+   wide<T, N> min_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v0, wide<T, N> v1) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))
@@ -120,7 +120,7 @@ namespace eve::_
   // -----------------------------------------------------------------------------------------------
   // Masked case
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> min_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
+   wide<T, N> min_(EVE_REQUIRES(avx512_), C const& cx, O const& opts, wide<T, N> const& v, wide<T, N> const& w) noexcept
   requires x86_abi<abi_t<T, N>>
   {
     if constexpr(O::contains(numeric) || O::contains(pedantic))

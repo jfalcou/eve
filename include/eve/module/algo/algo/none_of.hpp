@@ -18,7 +18,7 @@ namespace eve::algo
 {
 template<typename TraitsSupport> struct none_of_ : TraitsSupport
 {
-  template<relaxed_range Rng, typename P> EVE_FORCEINLINE bool operator()(Rng&& rng, P p) const
+  template<relaxed_range Rng, typename P> EVE_ABI bool operator()(Rng&& rng, P p) const
   {
     return !any_of[TraitsSupport::get_traits()](EVE_FWD(rng), p);
   }

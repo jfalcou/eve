@@ -23,7 +23,7 @@ namespace eve
   struct heaviside_t : elementwise_callable<heaviside_t, Options>
   {
     template<value T>
-    constexpr EVE_FORCEINLINE T
+    EVE_ABI constexpr T
     operator()(T a) const noexcept
     {
       return EVE_DISPATCH_CALL(a);
@@ -31,7 +31,7 @@ namespace eve
 
     template<value T, value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U>
+    EVE_ABI constexpr common_value_t<T, U>
     operator()(T a, U s) const noexcept
     {
       return EVE_DISPATCH_CALL(a, s);
@@ -98,7 +98,7 @@ namespace eve
   {
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
+    constexpr auto heaviside_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > 0;
@@ -107,7 +107,7 @@ namespace eve
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto heaviside_(EVE_REQUIRES(cpu_), O, T a, T s) noexcept
+    constexpr auto heaviside_(EVE_REQUIRES(cpu_), O, T a, T s) noexcept
     {
       if constexpr(scalar_value<T>)
         return a > s;

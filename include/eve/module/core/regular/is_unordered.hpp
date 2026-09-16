@@ -19,7 +19,7 @@ namespace eve
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_logical_t<T,U>  operator()(T a, U b) const
+    EVE_ABI constexpr common_logical_t<T,U>  operator()(T a, U b) const
     {
       return EVE_DISPATCH_CALL(a, b);
     }
@@ -76,7 +76,7 @@ namespace eve
   namespace _
   {
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     is_unordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   logical<T> const& , logical<U> const& ) noexcept
@@ -87,7 +87,7 @@ namespace eve
 
 
     template<value T, value U, callable_options O>
-    EVE_FORCEINLINE constexpr common_logical_t<T,U>
+    constexpr common_logical_t<T,U>
     is_unordered_(EVE_REQUIRES(cpu_),
                   O const & ,
                   T const& aa, U const& bb) noexcept

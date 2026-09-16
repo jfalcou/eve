@@ -19,7 +19,7 @@ namespace eve
   struct byte_swap_adjacent_t : strict_elementwise_callable<byte_swap_adjacent_t, Options>
   {
     template<eve::integral_value T, integral_value I>
-    constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
+    EVE_ABI constexpr T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
     EVE_CALLABLE_OBJECT(byte_swap_adjacent_t, byte_swap_adjacent_);
@@ -82,8 +82,7 @@ namespace eve
   namespace _
   {
     template<typename T, integral_value N, callable_options O>
-    EVE_FORCEINLINE constexpr T
-    byte_swap_adjacent_(EVE_REQUIRES(cpu_), O const&, T const& x, N const & n) noexcept
+    constexpr T byte_swap_adjacent_(EVE_REQUIRES(cpu_), O const&, T const& x, N const & n) noexcept
     {
     using v_t = element_type_t<T>;
     if constexpr(sizeof(v_t) == 0) return x;

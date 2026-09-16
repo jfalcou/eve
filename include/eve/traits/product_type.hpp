@@ -149,7 +149,7 @@ namespace eve
     using tuple_type = kumi::tuple<Fields...>;
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator+(Z1 x, Z2 y) requires requires { x += x; }
+    EVE_ABI friend auto operator+(Z1 x, Z2 y) requires requires { x += x; }
     {
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
@@ -164,7 +164,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator-(Z1 x, Z2 y) requires requires { x -= x; }
+    EVE_ABI friend auto operator-(Z1 x, Z2 y) requires requires { x -= x; }
     {
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
@@ -180,7 +180,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator*(Z1 x, Z2 y) requires requires { x *= x; }
+    EVE_ABI friend auto operator*(Z1 x, Z2 y) requires requires { x *= x; }
     {
       // Check which one is actually the product_type
       if constexpr(product_type<element_type_t<Z1>>)
@@ -195,7 +195,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator/(Z1 x, Z2 y)
+    EVE_ABI friend auto operator/(Z1 x, Z2 y)
     requires requires { x /= x; }
     {
       // Check which one is actually the product_type
@@ -212,7 +212,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator%(Z1 x, Z2 y)
+    EVE_ABI friend auto operator%(Z1 x, Z2 y)
     requires requires { x %= x; }
     {
       // Check which one is actually the product_type
@@ -229,7 +229,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator^(Z1 x, Z2 y)
+    EVE_ABI friend auto operator^(Z1 x, Z2 y)
     requires requires { x ^= x; }
     {
       // Check which one is actually the product_type
@@ -246,7 +246,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator&(Z1 x, Z2 y)
+    EVE_ABI friend auto operator&(Z1 x, Z2 y)
     requires requires { x &= x; }
     {
       // Check which one is actually the product_type
@@ -263,7 +263,7 @@ namespace eve
     }
 
     template<like<Self> Z1, like<Self> Z2>
-    EVE_FORCEINLINE friend auto operator|(Z1 x, Z2 y)
+    EVE_ABI friend auto operator|(Z1 x, Z2 y)
     requires requires { x |= x; }
     {
       // Check which one is actually the product_type
@@ -280,7 +280,7 @@ namespace eve
     }
 
     template<like<Self> Z1, integral_value Z2>
-    EVE_FORCEINLINE friend auto operator<<(Z1 x, Z2 y)
+    EVE_ABI friend auto operator<<(Z1 x, Z2 y)
     requires requires { x <<= y; }
     {
       x <<= y;
@@ -288,7 +288,7 @@ namespace eve
     }
 
     template<like<Self> Z1, integral_value Z2>
-    EVE_FORCEINLINE friend auto operator>>(Z1 x, Z2 y)
+    EVE_ABI friend auto operator>>(Z1 x, Z2 y)
     requires requires { x >>= y; }
     {
       x >>= y;

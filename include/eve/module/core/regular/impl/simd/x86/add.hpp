@@ -17,14 +17,14 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+   upgrade_t<wide<T, N>> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && O::contains(widen))
   {
     return add.behavior(cpu_{}, opts, v, w);
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
+   wide<T, N> add_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -125,7 +125,7 @@ namespace eve::_
   }
 
   template<conditional_expr C, typename T, typename N, callable_options O>
-  EVE_FORCEINLINE
+  
   wide<T, N> add_(EVE_REQUIRES(avx512_), C cx, O const& opts, wide<T, N> v, wide<T, N> w) noexcept
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {

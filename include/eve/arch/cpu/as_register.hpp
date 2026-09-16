@@ -64,7 +64,7 @@ namespace eve
 
       storage_type storage;
 
-      EVE_FORCEINLINE void assign_parts(subvalue_type const& l, subvalue_type const& h)
+      void assign_parts(subvalue_type const& l, subvalue_type const& h)
       {
         auto src = reinterpret_cast<std::byte const*>(&l);
         auto dst = reinterpret_cast<std::byte*>(this);
@@ -75,7 +75,7 @@ namespace eve
         std::memcpy(dst2, src2, sizeof(*this) / 2);
       }
 
-      EVE_FORCEINLINE auto slice() const
+      auto slice() const
       {
         std::array<subvalue_type, 2> data{};
 
@@ -91,25 +91,25 @@ namespace eve
       }
 
       // Return a view of the blob as a collection of wide of the expected cardinal for this type.
-      EVE_FORCEINLINE auto slice_to_expected() const noexcept { return storage; }
+      auto slice_to_expected() const noexcept { return storage; }
 
       template<std::size_t I>
-      friend EVE_FORCEINLINE auto&        get(blob& b) noexcept       { return kumi::get<I>(b.storage); }
+      friend  auto&        get(blob& b) noexcept       { return kumi::get<I>(b.storage); }
 
       template<std::size_t I>
-      friend EVE_FORCEINLINE auto const&  get(blob const& b) noexcept { return kumi::get<I>(b.storage); }
+      friend  auto const&  get(blob const& b) noexcept { return kumi::get<I>(b.storage); }
 
       template<typename Func>
-      EVE_FORCEINLINE void for_each(Func f, auto... w)       { kumi::for_each(f, *this, w.storage()...); }
+      void for_each(Func f, auto... w)       { kumi::for_each(f, *this, w.storage()...); }
 
       template<typename Func>
-      EVE_FORCEINLINE void for_each(Func f, auto... w) const { kumi::for_each(f, *this, w.storage()...); }
+      void for_each(Func f, auto... w) const { kumi::for_each(f, *this, w.storage()...); }
 
       template<typename Func>
-      EVE_FORCEINLINE decltype(auto) apply(Func f)        { return kumi::apply(f,*this); }
+      decltype(auto) apply(Func f)        { return kumi::apply(f,*this); }
 
       template<typename Func>
-      EVE_FORCEINLINE decltype(auto) apply(Func f) const  { return kumi::apply(f,*this); }
+      decltype(auto) apply(Func f) const  { return kumi::apply(f,*this); }
     };
   }
 

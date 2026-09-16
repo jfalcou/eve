@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N, typename U>
-  EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
+   logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, wide<T, N> a, U b) noexcept
     requires (rvv_abi<abi_t<T, N>> && (std::same_as<wide<T, N>, U> || scalar_value<U>))
   {
     constexpr auto c = categorize<wide<T, N>>();
@@ -29,14 +29,14 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, scalar_value U>
-  EVE_FORCEINLINE logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, U a, wide<T, N> b) noexcept
+   logical<wide<T, N>> is_equal_(EVE_REQUIRES(rvv_), O const& opts, U a, wide<T, N> b) noexcept
     requires (rvv_abi<abi_t<T, N>>)
   {
     return is_equal.behavior(current_api, opts, b, a);
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>>
+   logical<wide<T, N>>
   is_equal_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept
   requires(rvv_abi<abi_t<T, N>>)
   {

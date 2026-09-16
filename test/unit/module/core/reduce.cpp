@@ -90,7 +90,7 @@ namespace eve
     struct proxy : conditional_callable<proxy, Options, splat_option>
     {
       template <typename T>
-      EVE_FORCEINLINE auto operator()(T v) const noexcept { return eve::reduce[this->options()](v, callable, neutral); }
+      EVE_ABI auto operator()(T v) const noexcept { return eve::reduce[this->options()](v, callable, neutral); }
     };
   };
 
@@ -98,7 +98,7 @@ namespace eve
   struct reduce_proxy_scalar_logical : conditional_callable<reduce_proxy_scalar_logical, Options, splat_option>
   {
     template <logical_simd_value T>
-    EVE_FORCEINLINE auto operator()(T v) const noexcept
+    EVE_ABI auto operator()(T v) const noexcept
     {
       return eve::reduce[this->options()](v, eve::logical_xor, eve::element_type_t<T>{ true });
     }
@@ -108,7 +108,7 @@ namespace eve
   struct reduce_proxy_adv_t : conditional_callable<reduce_proxy_adv_t, Options, splat_option>
   {
     template <typename T>
-    EVE_FORCEINLINE auto operator()(T v) const noexcept { return eve::reduce[this->options()](v, eve::mul); }
+    EVE_ABI auto operator()(T v) const noexcept { return eve::reduce[this->options()](v, eve::mul); }
   };
 }
 

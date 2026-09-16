@@ -17,14 +17,14 @@ namespace eve
   struct oneotwoeps_t : constant_callable<oneotwoeps_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       if constexpr(std::same_as<T, float>)  return T(0x1p22);
       else                                  return T(0x1p51);
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(oneotwoeps_t, oneotwoeps_);
   };

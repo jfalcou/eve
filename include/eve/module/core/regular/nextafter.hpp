@@ -21,7 +21,7 @@ namespace eve
   {
     template<eve::value T, eve::value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U> operator()(T t, U u) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T t, U u) const noexcept
     { return EVE_DISPATCH_CALL(t, u); }
 
     EVE_CALLABLE_OBJECT(nextafter_t, nextafter_);
@@ -81,14 +81,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto nextafter_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto nextafter_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return _::map(nextafter[o], ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     nextafter_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const & b) noexcept
     {
       if constexpr( scalar_value<T> )

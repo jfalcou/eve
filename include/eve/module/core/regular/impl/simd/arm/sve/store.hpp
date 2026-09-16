@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-  EVE_FORCEINLINE void store_impl(sve_, C const& cx, wide<T, N> v, Ptr p)
+   void store_impl(sve_, C const& cx, wide<T, N> v, Ptr p)
     requires (sve_abi<abi_t<T, N>> && !has_store_equivalent<wide<T, N>, Ptr>)
   {
     if constexpr (C::has_alternative) store_common(cpu_{}, cx, v, p);

@@ -182,7 +182,7 @@ constexpr bool bit_test_has_alternative() noexcept
 }
 
 template<conditional_expr C, typename Tgt, typename Arg>
-EVE_FORCEINLINE Tgt bit_compatible_alternative(C const& c, Arg a0, as<Tgt>)
+EVE_ABI Tgt bit_compatible_alternative(C const& c, Arg a0, as<Tgt>)
 {
   auto cast = [](auto v) {
     using T = std::remove_cvref_t<decltype(v)>;

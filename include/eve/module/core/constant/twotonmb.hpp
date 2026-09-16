@@ -17,7 +17,7 @@ namespace eve
   struct twotonmb_t : constant_callable<twotonmb_t, Options, lower_option, upper_option>
   {
     template<floating_value T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, Opts const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, Opts const&)
     {
       if      constexpr(std::same_as<T, eve::float16_t>) return T(0x1p+10f);
       else if constexpr(std::same_as<T, float>)          return T(0x1p+23f);
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(twotonmb_t, twotonmb_);
   };

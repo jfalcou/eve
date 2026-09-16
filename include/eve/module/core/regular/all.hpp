@@ -16,7 +16,7 @@ namespace eve
   struct all_t : conditional_callable<all_t, Options, splat_option>
   {
     template<relaxed_logical_value T>
-    EVE_FORCEINLINE bool operator()(T v) const noexcept
+    EVE_ABI bool operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
@@ -26,14 +26,14 @@ namespace eve
     }
 
     template<logical_simd_value T>
-    EVE_FORCEINLINE bool operator()(top_bits<T> v) const noexcept
+    EVE_ABI bool operator()(top_bits<T> v) const noexcept
       requires (!Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);
     }
 
     template<logical_simd_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI T operator()(T v) const noexcept
       requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);

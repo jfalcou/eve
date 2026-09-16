@@ -20,14 +20,14 @@ namespace eve
   {
     template<eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<Ts...>)
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     eve::common_value_t<Ts ...> operator()(Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(b...);
     }
     template<eve::integral_value T0, eve::floating_value ...Ts>
     requires (same_lanes_or_scalar<T0, Ts...>)
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr
     as_wide_as_t<eve::common_value_t<Ts ...>, T0> operator()(T0 a, Ts...b) const noexcept
     {
       return EVE_DISPATCH_CALL(a, b...);

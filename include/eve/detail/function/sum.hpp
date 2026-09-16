@@ -16,7 +16,7 @@ namespace eve::_
   struct sum_t : conditional_callable<sum_t, Options, splat_option>
   {
     template<arithmetic_value T>
-    EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
+     element_type_t<T> operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
@@ -26,7 +26,7 @@ namespace eve::_
     }
 
     template<arithmetic_simd_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept
+     T operator()(T v) const noexcept
       requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);

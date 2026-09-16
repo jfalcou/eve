@@ -18,13 +18,13 @@ namespace eve
   struct nan_t : constant_callable<nan_t, Options, lower_option, upper_option>
   {
     template<typename T>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> const&, auto const&)
+    EVE_ABI static constexpr T value(eve::as<T> const&, auto const&)
     {
       return allbits(eve::as<T>());
    }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> const& v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(nan_t, nan_);
   };

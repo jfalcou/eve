@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<callable_options O, typename W>
-  EVE_FORCEINLINE as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept
+   as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept
     requires sve_abi<typename W::abi_type>
   {
     const auto mask = keep_first(W::size()).mask(as(a));
@@ -26,7 +26,7 @@ namespace eve::_
   }
 
   template<callable_options O, conditional_expr C, typename W>
-  EVE_FORCEINLINE as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), C const& cx, O const& opts, W a, W b) noexcept
+   as_logical_t<W> is_not_equal_(EVE_REQUIRES(sve_), C const& cx, O const& opts, W a, W b) noexcept
     requires sve_abi<typename W::abi_type>
   {
     const auto mask = expand_mask(cx, as(a));

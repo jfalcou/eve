@@ -16,7 +16,7 @@ namespace eve
   struct firstbitset_t : elementwise_callable<firstbitset_t, Options>
   {
     template<eve::integral_value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const
+    EVE_ABI constexpr T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(firstbitset_t, firstbitset_);
@@ -73,7 +73,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     firstbitset_(EVE_REQUIRES(cpu_), O const &, T a0) noexcept
     {
       return a0 & inc(~a0);

@@ -19,7 +19,7 @@ namespace eve
   struct radindeg_t : elementwise_callable<radindeg_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(radindeg_t, radindeg_);
   };
@@ -73,7 +73,7 @@ namespace eve
   namespace _
   {
     template<floating_value T, callable_options O>
-    EVE_FORCEINLINE constexpr T radindeg_(EVE_REQUIRES(cpu_), O const &o, T const& a) noexcept
+    constexpr T radindeg_(EVE_REQUIRES(cpu_), O const &o, T const& a) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
         return eve::_::apply_fp16_as_fp32(eve::radindeg[o], a);

@@ -23,7 +23,7 @@ namespace eve
                                           >
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     zipped<T,T,T> operator()(T v) const  noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(rempio2_t, rempio2_);
@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE auto
+    constexpr auto
     rempio2_(EVE_REQUIRES(cpu_), O const&, T const& x) noexcept
     {
       if      constexpr( O::contains(quarter_circle))  return rempio2_half_circle(x);

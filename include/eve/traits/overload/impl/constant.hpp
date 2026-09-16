@@ -51,7 +51,7 @@ namespace eve
     using constant_callable_tag = void;
 
     template<typename O, typename T>
-    EVE_FORCEINLINE constexpr auto behavior(auto arch, O const& opts, as<T> target) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, as<T> target) const
     {
       using func_t                =  Func<OptionsValues>;
       if constexpr( requires{ func_t::deferred_call(arch, opts, target); } )

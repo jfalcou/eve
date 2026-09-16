@@ -13,7 +13,7 @@ namespace eve::_
 {
 
 template<relative_conditional_expr C, typename T, typename U, typename N>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(cpu_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 {
   if constexpr( C::is_complete && !C::is_inverted )
@@ -28,7 +28,7 @@ template<typename L> struct compress_bits_to_logical
 {
   // unfortunately, we are not consistent with integer types
   template<typename T, typename N, std::integral I>
-  EVE_FORCEINLINE auto operator()(kumi::tuple<wide<T, N>, I> bits_offset)
+  auto operator()(kumi::tuple<wide<T, N>, I> bits_offset)
   {
     auto [bits, offset] = bits_offset;
 
@@ -42,7 +42,7 @@ template<typename L> struct compress_bits_to_logical
 };
 
 template<relative_conditional_expr C, logical_simd_value T, logical_simd_value L>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(cpu_), C c, T v, L mask) noexcept
 requires(T::size() == L::size())
 {
@@ -51,7 +51,7 @@ requires(T::size() == L::size())
 }
 
 template<relative_conditional_expr C, simd_value T, logical_simd_value L>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(cpu_), C, T, L) noexcept
 requires(T::size() == L::size()) && (has_bundle_abi_v<T>)
 {
@@ -59,7 +59,7 @@ requires(T::size() == L::size()) && (has_bundle_abi_v<T>)
 }
 
 template<simd_value T, logical_simd_value L>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(cpu_), T v, L mask) noexcept
 requires(T::size() == L::size())
 {

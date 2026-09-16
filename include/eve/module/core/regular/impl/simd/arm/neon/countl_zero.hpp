@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> countl_zero_(EVE_REQUIRES(neon128_),
+   wide<T, N> countl_zero_(EVE_REQUIRES(neon128_),
                                           O          const& ,
                                           wide<T, N> const& a0) noexcept
   requires arm_abi<abi_t<T, N>>

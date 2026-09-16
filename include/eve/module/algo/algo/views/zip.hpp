@@ -82,7 +82,7 @@ namespace eve::algo::views
   {
    private:
      template <typename ...Components>
-     EVE_FORCEINLINE std::ptrdiff_t compute_distance(Components&& ... components) const
+     EVE_ABI std::ptrdiff_t compute_distance(Components&& ... components) const
      {
        std::ptrdiff_t res = -1;
        auto process_one = [&]<typename C>(C const& c) mutable {
@@ -99,7 +99,7 @@ namespace eve::algo::views
      }
 
      template <typename ...Components>
-     EVE_FORCEINLINE auto perform_replacements(std::ptrdiff_t distance, Components&& ... components) const
+     EVE_ABI auto perform_replacements(std::ptrdiff_t distance, Components&& ... components) const
      {
        return kumi::tuple{
          [&]<typename C>(C&& c)
@@ -111,7 +111,7 @@ namespace eve::algo::views
      }
 
     template <typename ...Components>
-    EVE_FORCEINLINE auto type_to_convert_to(Components&&...) const
+    EVE_ABI auto type_to_convert_to(Components&&...) const
     {
       using t_t = typename TraitsSupport::traits_type;
 
@@ -138,7 +138,7 @@ namespace eve::algo::views
 
     template <typename ...Components>
       requires ((relaxed_range<Components> || relaxed_iterator<Components>) && ...)
-    EVE_FORCEINLINE auto operator()(Components&& ... components) const;
+    EVE_ABI auto operator()(Components&& ... components) const;
   };
 
   inline constexpr auto zip = function_with_traits<zip_>;
@@ -146,7 +146,7 @@ namespace eve::algo::views
   template <typename TraitsSupport>
   template<typename... Components>
     requires((relaxed_range<Components> || relaxed_iterator<Components>)&&...)
-  EVE_FORCEINLINE auto zip_<TraitsSupport>::operator()(Components &&...components) const
+  EVE_ABI auto zip_<TraitsSupport>::operator()(Components &&...components) const
   {
     using t_t = typename TraitsSupport::traits_type;
 
@@ -175,42 +175,42 @@ namespace eve::algo::views
     using is_non_owning = void;
     using types_to_consider = kumi::result::cat_t<types_to_consider_for_t<Rngs>...>;
 
-    EVE_FORCEINLINE zip_range(kumi::tuple<Rngs...> ranges):
+    EVE_ABI zip_range(kumi::tuple<Rngs...> ranges):
       kumi::tuple<Rngs...>(ranges)
     {
     }
 
     // Traits support
     template<typename Settings>
-    EVE_FORCEINLINE auto operator[](traits<Settings> tr) const
+    EVE_ABI auto operator[](traits<Settings> tr) const
     {
       return kumi::apply(zip[tr], *this);
     }
 
     template <rbr::concepts::option Trait>
-    EVE_FORCEINLINE auto operator[](Trait one_tr) const
+    EVE_ABI auto operator[](Trait one_tr) const
     {
       return operator[](eve::algo::traits(one_tr));
     }
 
-    EVE_FORCEINLINE auto begin() const
+    EVE_ABI auto begin() const
     {
       return kumi::apply(zip, kumi::map([](auto r) { return r.begin(); }, *this));
     }
 
-    EVE_FORCEINLINE auto end() const
+    EVE_ABI auto end() const
     {
       return kumi::apply(zip, kumi::map([](auto r) { return r.end(); }, *this));
     }
 
     template <typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
+    EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits tr, zip_range self)
     {
       return _::preprocess_zip_range(tr, self);
     }
 
     template <typename T>
-    EVE_FORCEINLINE friend auto tagged_dispatch(convert_, zip_range self, eve::as<T> tgt)
+    EVE_ABI friend auto tagged_dispatch(convert_, zip_range self, eve::as<T> tgt)
     {
       return _::convert_zipped(self, tgt);
     }
@@ -235,7 +235,7 @@ namespace std
 namespace eve::algo::views::_
 {
   template<typename Self, typename T>
-  EVE_FORCEINLINE auto convert_zipped(Self self, eve::as<T> tgt)
+   auto convert_zipped(Self self, eve::as<T> tgt)
   {
     if constexpr( std::same_as<value_type_t<Self>, T> ) return self;
     else

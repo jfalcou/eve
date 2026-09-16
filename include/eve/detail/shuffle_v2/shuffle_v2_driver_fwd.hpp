@@ -49,7 +49,7 @@ template<typename NativeSelector> struct shuffle_v2_driver
   NativeSelector selector;
 
   template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T, typename... Ts>
-  EVE_FORCEINLINE auto operator()(pattern_t<I...> p, eve::fixed<G> g, T x, Ts... xs) const noexcept
+   auto operator()(pattern_t<I...> p, eve::fixed<G> g, T x, Ts... xs) const noexcept
   {
     if constexpr( G <= 0 ) return not_positive_group_size<G> {};
     else if constexpr( !(std::same_as<T, Ts> && ...) )
@@ -65,20 +65,20 @@ template<typename NativeSelector> struct shuffle_v2_driver
   }
 
   template<pattern_formula Gen, std::ptrdiff_t G, simd_value T, typename... Ts>
-  EVE_FORCEINLINE auto operator()(Gen, eve::fixed<G> g, T x, Ts... xs) const noexcept
+   auto operator()(Gen, eve::fixed<G> g, T x, Ts... xs) const noexcept
       -> decltype(operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...))
   {
     return operator()(fix_pattern<T::size() / G>(Gen {}), g, x, xs...);
   }
 
   template<std::ptrdiff_t... I>
-  EVE_FORCEINLINE auto operator()(pattern_t<I...> p, simd_value auto x, auto... xs) const noexcept
+   auto operator()(pattern_t<I...> p, simd_value auto x, auto... xs) const noexcept
       -> decltype(operator()(p, eve::lane<1>, x, xs...))
   {
     return operator()(p, eve::lane<1>, x, xs...);
   }
 
-  EVE_FORCEINLINE auto
+   auto
   operator()(pattern_formula auto gen, simd_value auto x, auto... xs) const noexcept
       -> decltype(operator()(gen, eve::lane<1>, x, xs...))
   {
@@ -90,18 +90,18 @@ template<typename Internal> struct shuffle_reverse_arguments
 {
   Internal internal;
 
-  template<typename... Ts> EVE_FORCEINLINE auto impl(Ts... args) const noexcept
+  template<typename... Ts>  auto impl(Ts... args) const noexcept
   {
     return kumi::apply(internal, kumi::reverse(kumi::tuple {args...}));
   }
 
-  EVE_FORCEINLINE auto operator()(auto... args) const noexcept
+   auto operator()(auto... args) const noexcept
   requires(matched_shuffle<decltype(get<0>(impl(args...)))>)
   {
     return impl(args...);
   }
 
-  EVE_FORCEINLINE auto operator()(auto... args) const noexcept
+   auto operator()(auto... args) const noexcept
   requires(shuffle_user_error<decltype(impl(args...))>)
   {
     auto error = impl(args...);

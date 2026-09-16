@@ -16,7 +16,7 @@
 namespace eve::_
 {
  template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
+   auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
     if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm_popcnt_epi8(x);
@@ -51,7 +51,7 @@ namespace eve::_
   }
 
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
+   auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
     if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi8(x);
@@ -89,7 +89,7 @@ namespace eve::_
   }
 
   template<unsigned_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
+   auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_512_>
   {
     if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi8(x);

@@ -24,35 +24,34 @@ namespace eve
   {
     template<floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
-      EVE_FORCEINLINE eve::upgrade_if_t<Options, common_value_t<Ts...>>
-    constexpr operator()(Ts...ts) const noexcept
+    EVE_ABI constexpr eve::upgrade_if_t<Options, common_value_t<Ts...>>
+    operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<eve::non_empty_product_type Tup1, eve::non_empty_product_type Tup2>
     requires(eve::same_lanes_or_scalar_tuple<Tup1> && eve::same_lanes_or_scalar_tuple<Tup2>)
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value, kumi::result::cat_t<Tup1, Tup2>>>
     operator()(Tup1 const& t1, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(t1, t2); }
 
     template<floating_value H, eve::non_empty_product_type Tup2>
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_if_t<Options, common_value_t<H, kumi::apply_traits_t<eve::common_value,  Tup2>>>
     operator()(H const& h, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(h, t2); }
 
 
     template<typename F, eve::non_empty_product_type Tup2>
     requires(!value<F> && !eve::non_empty_product_type<F>)
-      EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     eve::upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,  Tup2>>
     operator()(F const& f, Tup2 const& t2) const noexcept { return EVE_DISPATCH_CALL(f, t2); }
-
 
     EVE_CALLABLE_OBJECT(trapz_t, trapz_);
   };
@@ -125,14 +124,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto trapz_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+    constexpr auto trapz_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
     requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
     {
       return trapz[o.drop(widen)](upgrade(ts)...);
     }
 
     template<eve::non_empty_product_type PT , callable_options O>
-     EVE_FORCEINLINE constexpr auto
+    constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, PT tup) noexcept
     {
       if constexpr(O::contains(widen))
@@ -142,7 +141,7 @@ namespace eve
     }
 
     template<floating_value... Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, Ts... args) noexcept
     {
       using r_t =  eve::common_value_t<Ts...>;
@@ -153,7 +152,7 @@ namespace eve
     }
 
     template<typename HPT1 ,eve::non_empty_product_type PT2, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     trapz_(EVE_REQUIRES(cpu_), O const & o, HPT1 x, PT2 y) noexcept
     {
       auto upgrade = [](auto a){ return eve::convert(a, eve::as<eve::element_type_t<eve::upgrade_t<decltype(a)>>>()); };

@@ -25,17 +25,17 @@ namespace eve
 
     template<eve::floating_value T0, floating_value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 1))
-      EVE_FORCEINLINE common_value_t<T0,  Ts...> constexpr operator()(T0 t0, Ts...ts) const  noexcept
+    EVE_ABI constexpr common_value_t<T0,  Ts...> operator()(T0 t0, Ts...ts) const  noexcept
     { return EVE_DISPATCH_CALL(t0, ts...); }
 
     template<eve::floating_value T0, eve::non_empty_product_type Tup>
-    requires(eve::same_lanes_or_scalar_tuple<Tup>) EVE_FORCEINLINE constexpr
+    requires(eve::same_lanes_or_scalar_tuple<Tup>) EVE_ABI constexpr
      common_value_t<T0, kumi::apply_traits_t<eve::common_value, Tup>>  operator()(T0 x, Tup const& tup) const  noexcept
     { return EVE_DISPATCH_CALL(x, tup); }
 
     template<eve::floating_value T0, eve::non_empty_product_type Tup0, eve::non_empty_product_type Tup1>
     requires(eve::same_lanes_or_scalar_tuple<Tup0> && eve::same_lanes_or_scalar_tuple<Tup1>)
-      EVE_FORCEINLINE constexpr
+      EVE_ABI constexpr
     common_value_t<T0,
                    kumi::apply_traits_t<eve::common_value, Tup0>,
                    kumi::apply_traits_t<eve::common_value, Tup1>
@@ -94,7 +94,7 @@ namespace eve
   {
 
     template<floating_value T, floating_value... XsYs,  callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     neville_(EVE_REQUIRES(cpu_), O const & o, T x, XsYs... xsys) noexcept
     requires(sizeof...(XsYs)%2 == 0)
      {
@@ -130,7 +130,7 @@ namespace eve
     }
 
     template<floating_value T,  eve::non_empty_product_type PT , callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     neville_(EVE_REQUIRES(cpu_), O const & o, T x, PT tup) noexcept
     {
       return kumi::apply([x, o](auto ... m){return neville[o](x, m...); }, tup);
@@ -138,7 +138,7 @@ namespace eve
 
 
     template<floating_value T,  eve::non_empty_product_type PT0,  eve::non_empty_product_type PT1 , callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     neville_(EVE_REQUIRES(cpu_), O const & o, T x, PT0 tx, PT1 ty) noexcept
     requires(PT1::size() == PT0::size())
     {

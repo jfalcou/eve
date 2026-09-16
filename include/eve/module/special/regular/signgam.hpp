@@ -17,7 +17,7 @@ namespace eve
   struct signgam_t : elementwise_callable<signgam_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(signgam_t, signgam_);
   };
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T
+    EVE_ABI constexpr T
     signgam_(EVE_REQUIRES(cpu_), O const &, T a0)
     {
       auto isleza0 = is_ngtz(a0);

@@ -26,7 +26,7 @@ namespace eve::algo
 
       explicit transform_delegate(Op o) : op(o) {}
 
-      EVE_FORCEINLINE void operator()(auto it, eve::relative_conditional_expr auto ignore)
+       void operator()(auto it, eve::relative_conditional_expr auto ignore)
       {
         auto load_it  = LoadStore::load_it(it);
         auto store_it = LoadStore::store_it(it);
@@ -62,7 +62,7 @@ namespace eve::algo
   struct transform_inplace_ : TraitsSupport
   {
     template <relaxed_range Rng, typename Op>
-    EVE_FORCEINLINE void operator()(Rng&& rng, Op op) const
+    EVE_ABI void operator()(Rng&& rng, Op op) const
     {
       _::transform_delegate<inplace_load_store, Op> d{op};
       for_each[TraitsSupport::get_traits()](EVE_FWD(rng), d);
@@ -95,7 +95,7 @@ namespace eve::algo
   struct transform_to_ : TraitsSupport
   {
     template <zipped_range_pair R, typename Op>
-    EVE_FORCEINLINE void operator()(R r, Op op) const
+    EVE_ABI void operator()(R r, Op op) const
     {
       _::transform_delegate<to_load_store, Op> d{op};
       for_each[TraitsSupport::get_traits()](r, d);
@@ -103,7 +103,7 @@ namespace eve::algo
 
     template <typename R1, typename R2, typename Op>
       requires zip_to_range<R1, R2>
-    EVE_FORCEINLINE void operator()(R1&& r1, R2&& r2, Op op) const
+    EVE_ABI void operator()(R1&& r1, R2&& r2, Op op) const
     {
       operator()(views::zip(EVE_FWD(r1), EVE_FWD(r2)), op);
     }

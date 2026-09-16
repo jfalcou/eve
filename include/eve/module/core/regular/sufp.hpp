@@ -22,7 +22,7 @@ namespace eve
   struct sufp_t : elementwise_callable<sufp_t, Options, kahan_option, harrisson_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
+    EVE_ABI constexpr T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(sufp_t, sufp_);
@@ -89,7 +89,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto sufp_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr auto sufp_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       if constexpr(integral_value<T>)
         return eve::sign(a0)*eve::bit_floor(eve::abs(a0));

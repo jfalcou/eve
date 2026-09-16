@@ -15,12 +15,12 @@
 namespace eve::_
 {
   template<callable_options O, scalar_value T>
-  EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
+   auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v) noexcept
   {
     return as_wide_t<T>{v};
   }
   template<callable_options O, scalar_value T, std::ptrdiff_t N>
-  EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v, fixed<N>) noexcept
+   auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v, fixed<N>) noexcept
   {
     return as_wide_t<T, fixed<N>>{v};
   }
@@ -32,7 +32,7 @@ namespace eve::_
 
   // TODO: Remove as being duplicates
   template<callable_options O, simd_value Wide>
-  EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index) noexcept
+   auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index) noexcept
   {
     if constexpr( is_bundle_v<typename Wide::abi_type> )
     {
@@ -42,7 +42,7 @@ namespace eve::_
   }
 
   template<callable_options O, simd_value Wide, std::ptrdiff_t N>
-  EVE_FORCEINLINE auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index, fixed<N>) noexcept
+   auto broadcast_(EVE_REQUIRES(cpu_), O const&, Wide v, auto Index, fixed<N>) noexcept
   {
     using that_t = as_wide_t<Wide, fixed<N>>;
 

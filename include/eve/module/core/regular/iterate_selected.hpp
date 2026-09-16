@@ -18,19 +18,19 @@ struct iterate_selected_t
     : callable<iterate_selected_t, Options, relative_conditional_no_alternative_option>
 {
   template<eve::logical_simd_value L, irregular_predicate<std::ptrdiff_t> F>
-  EVE_FORCEINLINE bool operator()(L l, F&& f) const noexcept
+  EVE_ABI bool operator()(L l, F&& f) const noexcept
   {
     return EVE_DISPATCH_CALL_NT(translate(l), f);
   }
 
   template<eve::logical_simd_value L, irregular_predicate<std::ptrdiff_t> F>
-  EVE_FORCEINLINE bool operator()(top_bits<L> l, F&& f) const noexcept
+  EVE_ABI bool operator()(top_bits<L> l, F&& f) const noexcept
   {
     return EVE_DISPATCH_CALL_NT(translate(l), f);
   }
 
   template<irregular_predicate<std::ptrdiff_t> F>
-  EVE_FORCEINLINE bool operator()(bool l, F&& f) const noexcept
+  EVE_ABI bool operator()(bool l, F&& f) const noexcept
   {
     return EVE_DISPATCH_CALL_NT(translate(l), f);
   }

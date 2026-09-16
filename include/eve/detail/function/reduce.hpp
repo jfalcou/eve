@@ -17,7 +17,7 @@ namespace eve::_
   //================================================================================================
   // reduce toward wide using a generic butterfly algorithm
   template<simd_value Wide, typename Callable>
-  EVE_FORCEINLINE auto butterfly_reduction(Wide v, Callable f) noexcept
+   auto butterfly_reduction(Wide v, Callable f) noexcept
   {
     if constexpr( Wide::size() == 1 )
     {
@@ -36,7 +36,7 @@ namespace eve::_
   }
 
   template <simd_value Wide, typename Callable>
-  EVE_FORCEINLINE auto call_butterfly_reduction(Wide w, Callable f) noexcept
+   auto call_butterfly_reduction(Wide w, Callable f) noexcept
   {
     return butterfly_reduction(w, f);
   }

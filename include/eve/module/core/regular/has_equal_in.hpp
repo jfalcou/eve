@@ -22,14 +22,14 @@ namespace eve
   struct has_equal_in_t : callable<has_equal_in_t, Options>
   {
     template<simd_value T, simd_value U, simd_predicate<T, U> Op>
-    constexpr EVE_FORCEINLINE std::invoke_result_t<Op, T, U> operator()(T x, U match_against, Op op) const noexcept
+    EVE_ABI constexpr std::invoke_result_t<Op, T, U> operator()(T x, U match_against, Op op) const noexcept
       requires (same_lanes<T, U>)
     {
       return EVE_DISPATCH_CALL(x, match_against, op);
     }
 
     template<simd_value T>
-    constexpr EVE_FORCEINLINE as_logical_t<T> operator()(T x, T match_against) const noexcept
+    EVE_ABI constexpr as_logical_t<T> operator()(T x, T match_against) const noexcept
     {
       return EVE_DISPATCH_CALL(x, match_against, is_equal);
     }

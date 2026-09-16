@@ -18,7 +18,7 @@ namespace eve::_
   //================================================================================================
   // Unaligned pointer
   template<callable_options O, typename U, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const *ptr, wide<T, N> v) noexcept
+   auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const *ptr, wide<T, N> v) noexcept
   {
     if constexpr (match_option<condition_key, O, ignore_none_>)
     {
@@ -44,7 +44,7 @@ namespace eve::_
   //================================================================================================
   // Aligned pointer
   template<callable_options O, typename U, typename S, integral_scalar_value T, typename N>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, wide<T, N> v) noexcept
+   auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, wide<T, N> v) noexcept
   {
     return gather.behavior(current_api, opts, ptr.get(), v);
   }
@@ -54,7 +54,7 @@ namespace eve::_
   //================================================================================================
   // Unaligned pointer
   template<callable_options O, typename U, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
+   auto gather_(EVE_REQUIRES(cpu_), O const& opts, U const* ptr, T v) noexcept
   {
     if constexpr (match_option<condition_key, O, ignore_none_>) return ptr[v];
     else
@@ -68,7 +68,7 @@ namespace eve::_
   //================================================================================================
   // Aligned pointer
   template<callable_options O, typename U, typename S, integral_scalar_value T>
-  EVE_FORCEINLINE auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
+   auto gather_(EVE_REQUIRES(cpu_), O const& opts, aligned_ptr<U, S> ptr, T v) noexcept
   {
     return gather.behavior(current_api, opts, ptr.get(), v);
   }

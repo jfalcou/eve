@@ -14,7 +14,7 @@
 namespace eve::_
 {
 template<callable_options O, arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+ std::optional<std::ptrdiff_t>
                 last_true_(EVE_REQUIRES(neon128_),
                           O const& opts,
                           logical<wide<T, N>> const                &v0) noexcept requires std::same_as<abi_t<T, N>, arm_128_>

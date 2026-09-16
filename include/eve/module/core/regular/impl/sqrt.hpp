@@ -22,7 +22,7 @@
 namespace eve::_
 {
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr auto sqrt_(EVE_REQUIRES(emulated_), O const& o, T const& a0) noexcept
+   constexpr auto sqrt_(EVE_REQUIRES(emulated_), O const& o, T const& a0) noexcept
     requires(_::fp16_should_apply<T>)
   {
     if constexpr(O::contains(lower) || O::contains(upper)) return _::map(sqrt[o], a0);
@@ -30,7 +30,7 @@ namespace eve::_
   }
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T sqrt_(EVE_REQUIRES(cpu_),
+   constexpr T sqrt_(EVE_REQUIRES(cpu_),
                                     O const& o,
                                     T const& a0) noexcept
   {

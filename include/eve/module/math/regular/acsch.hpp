@@ -19,7 +19,7 @@ namespace eve
   struct acsch_t : elementwise_callable<acsch_t, Options>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(acsch_t, acsch_);
 };
@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T acsch_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    constexpr T acsch_(EVE_REQUIRES(cpu_), O const&, T const& a)
     {
       return asinh(rec[pedantic](a));
     }
