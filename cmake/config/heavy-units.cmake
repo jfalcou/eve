@@ -1,0 +1,90 @@
+##====================================================================================================================
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+##====================================================================================================================
+
+## Targets peaking at 1.5 GiB or more, from the last measurement on main.
+## Regenerate with: tools/compile_cost.py <csv> --heavy cmake/config/heavy-units.cmake
+
+set( EVE_HEAVY_TARGETS
+     unit.algo.algorithm.copy_backward_generic.exe
+     unit.algo.algorithm.copy_generic.exe
+     unit.algo.algorithm.equal_generic.exe
+     unit.algo.algorithm.inclusive_scan_to_generic.exe
+     unit.algo.algorithm.mismatch_generic.exe
+     unit.algo.algorithm.reverse_copy_generic.exe
+     unit.algo.algorithm.swap_ranges_generic.exe
+     unit.algo.algorithm.transform_to_generic.exe
+     unit.algo.views.converting_eve_iterator.exe
+     unit.algo.views.map_eve_iterator.exe
+     unit.algo.views.zip_iterator.exe
+     unit.api.compress.compress_copy_scalar_wide.large.exe
+     unit.api.compress.compress_copy_scalar_wide.small.exe
+     unit.api.compress.compress_copy_simd_tuple.small.exe
+     unit.api.compress.compress_copy_simd_wide.large.exe
+     unit.api.compress.compress_copy_simd_wide.small.exe
+     unit.api.compress.compress_copy_wide.large.exe
+     unit.api.compress.compress_copy_wide.small.exe
+     unit.api.compress.compress_logical.exe
+     unit.api.regular.interleave.exe
+     unit.api.regular.shuffle_v2.blend.exe
+     unit.api.regular.shuffle_v2.broadcast_lane.exe
+     unit.api.regular.shuffle_v2.reverse_in_subgroups.exe
+     unit.api.regular.shuffle_v2.shuffle_v2_driver.exe
+     unit.api.regular.shuffle_v2.shuffle_v2_driver_intergration.exe
+     unit.api.regular.shuffle_v2.slide_left_1.exe
+     unit.api.regular.swizzle.broadcast.exe
+     unit.api.translation.ctor.exe
+     unit.api.tuple.swizzle.broadcast.exe
+     unit.core.absmax.exe
+     unit.core.absmin.exe
+     unit.core.add.exe
+     unit.core.average.exe
+     unit.core.bit_and.exe
+     unit.core.bit_andnot.exe
+     unit.core.bit_notand.exe
+     unit.core.bit_notor.exe
+     unit.core.bit_or.exe
+     unit.core.bit_ornot.exe
+     unit.core.bit_ternary.exe
+     unit.core.bit_xor.exe
+     unit.core.dec.exe
+     unit.core.decorated.div.exe
+     unit.core.decorated.rem.exe
+     unit.core.div.exe
+     unit.core.fam.exe
+     unit.core.fanm.exe
+     unit.core.fma.exe
+     unit.core.fms.exe
+     unit.core.fnma.exe
+     unit.core.fnms.exe
+     unit.core.fsm.exe
+     unit.core.fsnm.exe
+     unit.core.inc.exe
+     unit.core.is_equal.exe
+     unit.core.is_not_equal.exe
+     unit.core.logical_and.exe
+     unit.core.logical_andnot.exe
+     unit.core.logical_notand.exe
+     unit.core.logical_notor.exe
+     unit.core.logical_or.exe
+     unit.core.logical_ornot.exe
+     unit.core.logical_xor.exe
+     unit.core.max.exe
+     unit.core.maxabs.exe
+     unit.core.maxmag.exe
+     unit.core.min.exe
+     unit.core.minabs.exe
+     unit.core.minmax.exe
+     unit.core.mul.exe
+     unit.core.rec.exe
+     unit.core.reduce.exe
+     unit.core.sort.exe
+     unit.core.sqr.exe
+     unit.core.sub.exe
+     unit.internals.aggregation.exe
+     unit.memory.load.aligned.arithmetic_if.exe
+     unit.memory.load.aligned.logical_if.exe
+     unit.memory.stack_buffer.exe
+   )

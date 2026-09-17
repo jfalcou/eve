@@ -70,6 +70,26 @@ def module_of(unit):
     return "/".join(parts[:2]) if len(parts) > 2 else (parts[0] if len(parts) > 1 else "top level")
 
 
+def read_targets(path):
+    """Peak RSS and CPU of every compilation, keyed by the target the object belongs to.
+
+    A pool is set on a target, where the rest of this tool reasons in translation units.
+    """
+    out = {}
+    with open(path, newline="") as f:
+        for row in csv.reader(f):
+            if len(row) != FIELDS or row[0] not in COMPILERS:
+                continue
+            i, j = row[1].find("CMakeFiles/"), row[1].find(".dir/")
+            if i < 0 or j < 0:
+                continue
+            try:
+                out[row[1][i + len("CMakeFiles/"):j]] = (int(row[4]), int(row[3]))
+            except ValueError:
+                continue
+    return out
+
+
 def read(path, strip="", linking=False):
     """Peak RSS in KiB and CPU microseconds, keyed by the unit or by the target.
 
@@ -186,6 +206,30 @@ def headline(measures, title, level, grew_line=None, noun="translation unit", gr
     return "\n".join(out) + "\n"
 
 
+def write_heavy(measures, path, threshold_gib):
+    """The CMake list of targets a job pool has to hold back.
+
+    A pool is sized against a worst case, so the bound is only worth what the list is: a unit that
+    crosses the threshold without being written here brings the unlucky draw back.
+    """
+    kib = threshold_gib * 1024 * 1024
+    heavy = sorted((k for k, v in measures.items() if v[0] >= kib))
+    with open(path, "w") as f:
+        f.write("##" + "=" * 116 + "\n")
+        f.write("##  EVE - Expressive Vector Engine\n")
+        f.write("##  Copyright : EVE Project Contributors\n")
+        f.write("##  SPDX-License-Identifier: BSL-1.0\n")
+        f.write("##" + "=" * 116 + "\n\n")
+        f.write("## Targets peaking at %.1f GiB or more, from the last measurement on main.\n"
+                "## Regenerate with: tools/compile_cost.py <csv> --heavy %s\n\n"
+                % (threshold_gib, path))
+        f.write("set( EVE_HEAVY_TARGETS\n")
+        for name in heavy:
+            f.write("     %s\n" % name)
+        f.write("   )\n")
+    return len(heavy)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("current")
@@ -195,7 +239,15 @@ def main():
     ap.add_argument("--full", help="write the complete per-unit table, as Markdown, to this file")
     ap.add_argument("--summary", help="write the summary to this file rather than to stdout")
     ap.add_argument("--strip", default="", help="path segment a multi-config generator adds, e.g. Debug/")
+    ap.add_argument("--heavy", help="write the CMake list of pooled targets to this file")
+    ap.add_argument("--heavy-threshold", type=float, default=1.5, help="GiB above which a target is pooled (default 1.5)")
     args = ap.parse_args()
+
+    if args.heavy:
+        targets = read_targets(args.current)
+        n = write_heavy(targets, args.heavy, args.heavy_threshold)
+        print("%d targets at or above %.1f GiB written to %s" % (n, args.heavy_threshold, args.heavy))
+        return 0
 
     out = open(args.summary, "w") if args.summary else sys.stdout
 
