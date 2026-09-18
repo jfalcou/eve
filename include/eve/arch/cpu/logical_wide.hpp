@@ -10,7 +10,7 @@
 #include <eve/arch/as_register.hpp>
 #include <eve/arch/cpu/base.hpp>
 #include <eve/arch/cpu/logical.hpp>
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>

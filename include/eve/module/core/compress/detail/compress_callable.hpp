@@ -7,8 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/regular/safe.hpp>
-#include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 
 namespace eve
 {

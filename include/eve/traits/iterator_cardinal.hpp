@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/traits/value_type.hpp>
 
 namespace eve
@@ -15,7 +15,7 @@ namespace eve
   namespace _
   {
     template <typename T>
-    constexpr auto iterator_cardinal_impl()
+    consteval auto iterator_cardinal_impl()
     {
       if constexpr ( requires { T::iterator_cardinal(); } ) return decltype(T::iterator_cardinal()){};
       else                                                  return expected_cardinal_t<value_type_t<T>>{};

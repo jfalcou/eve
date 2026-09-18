@@ -20,13 +20,10 @@ namespace eve
   struct lo_t : elementwise_callable<lo_t, Options>
   {
     template<typename T>
-    struct result
-    {
-      using type = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
-    };
+    using result = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
 
     template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type
+    constexpr EVE_FORCEINLINE result<T>
     operator()(T a) const noexcept { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(lo_t, lo_);

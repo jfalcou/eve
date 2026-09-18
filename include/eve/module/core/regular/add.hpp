@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/apply_fp16.hpp>
 

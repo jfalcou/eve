@@ -25,13 +25,10 @@ namespace eve
   struct bit_swap_pairs_t : strict_elementwise_callable<bit_swap_pairs_t, Options>
   {
     template<typename T, typename I0, typename I1>
-    struct result
-    {
-      using type = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
-    };
+    using result = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
 
     template<integral_value T, integral_value I0, integral_value I1>
-    EVE_FORCEINLINE constexpr typename result<T, I0, I1>::type operator()(T v, I0 i0,  I1 i1) const noexcept
+    EVE_FORCEINLINE constexpr result<T, I0, I1> operator()(T v, I0 i0,  I1 i1) const noexcept
       requires same_lanes_or_scalar<T, I0, I1>
     {
       return EVE_DISPATCH_CALL(v, i0, i1);

@@ -15,7 +15,7 @@ struct wrapper
   using is_like = T;
 };
 
-template<> struct eve::supports_like<wrapper<int>, std::int64_t> : std::true_type {};
+template<> inline constexpr bool eve::supports_like_v<wrapper<int>, std::int64_t> = true;
 
 TTS_CASE("like concet")
 {

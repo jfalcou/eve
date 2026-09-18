@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
@@ -16,7 +16,7 @@
 #include <eve/detail/function/load.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/forward.hpp>
-#include <eve/module/core/regular/safe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <eve/traits/as_integer.hpp>
 
 namespace eve::_

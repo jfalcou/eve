@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 

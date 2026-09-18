@@ -16,7 +16,7 @@ namespace eve
   //  ============================================================================================
   // mod
 
-   struct default_mod
+  struct default_mod
   {
     friend std::ostream& operator<<(std::ostream& os, default_mod const&) { return os << "1"; }
   };

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/abi.hpp>
-#include <eve/arch/expected_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/scalar.hpp>
 

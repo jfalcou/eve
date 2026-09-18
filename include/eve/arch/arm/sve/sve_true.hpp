@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/conditional.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 
 namespace eve::_
 {

@@ -15,7 +15,7 @@
 #include <eve/as.hpp>
 
 // temporary
-#include <eve/module/core/regular/unsafe.hpp>
+#include <eve/module/core/decorator/safe.hpp>
 #include <cfenv>
 
 namespace eve
