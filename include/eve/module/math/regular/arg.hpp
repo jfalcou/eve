@@ -20,7 +20,7 @@ namespace eve
                                       rad_option, radpi_option, deg_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(arg_t, arg_);
   };
@@ -89,7 +89,7 @@ inline constexpr auto phase = functor<arg_t>;
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     arg_(EVE_REQUIRES(cpu_), O const &, T a) noexcept
     {
       auto valneg = [](auto x){

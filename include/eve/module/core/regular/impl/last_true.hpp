@@ -15,7 +15,7 @@ namespace eve::_
 {
 // Internal helper
 template<logical_simd_value Logical>
-EVE_FORCEINLINE std::ptrdiff_t
+ std::ptrdiff_t
                 last_true_guaranteed(top_bits<Logical> mmask)
 {
   if constexpr( !top_bits<Logical>::is_aggregated )
@@ -42,7 +42,7 @@ EVE_FORCEINLINE std::ptrdiff_t
 }
 
 template<callable_options O, logical_simd_value T>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+ std::optional<std::ptrdiff_t>
                 last_true_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 {
   using C = rbr::result::fetch_t<condition_key, O>;
@@ -108,7 +108,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
 }
 
 template<callable_options O, relaxed_logical_scalar_value T>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+ std::optional<std::ptrdiff_t>
                 last_true_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
@@ -123,7 +123,7 @@ EVE_FORCEINLINE std::optional<std::ptrdiff_t>
 }
 
 template<callable_options O, logical_simd_value Logical>
-EVE_FORCEINLINE std::optional<std::ptrdiff_t>
+ std::optional<std::ptrdiff_t>
                 last_true_(EVE_REQUIRES(cpu_), O const& opts, top_bits<Logical> mmask) noexcept
 {
   if constexpr (!match_option<condition_key, O, ignore_none_>)

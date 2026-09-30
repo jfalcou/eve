@@ -19,7 +19,7 @@ template <typename TraitsSupport>
 struct copy_backward_no_static_assert_ : TraitsSupport
 {
   template <typename R1, typename R2>
-  EVE_FORCEINLINE void operator()(R1&& from, R2&& to) const
+  EVE_ABI void operator()(R1&& from, R2&& to) const
   {
     if constexpr (eve::algo::relaxed_iterator<R2>)
     {

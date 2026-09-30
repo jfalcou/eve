@@ -21,21 +21,21 @@ namespace eve
                                 right_option, mod_option>
   {
     template<value T0, value... Ts>
-    EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<T0, Ts...>> constexpr operator()(T0 v0, Ts... vs) const noexcept
+    EVE_ABI upgrade_if_t<Options, common_value_t<T0, Ts...>> constexpr operator()(T0 v0, Ts... vs) const noexcept
       requires (eve::same_lanes_or_scalar<T0, Ts...> && (sizeof...(Ts) < 2))
     {
       return EVE_DISPATCH_CALL(v0, vs...);
     }
 
     template<value... Ts>
-    EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>> constexpr operator()(Ts...ts) const noexcept
+    EVE_ABI upgrade_if_t<Options, common_value_t<Ts...>> constexpr operator()(Ts...ts) const noexcept
       requires (eve::same_lanes_or_scalar<Ts...> && (sizeof...(Ts) > 2) && !Options::contains(lower) && !Options::contains(upper))
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
     template<eve::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
       requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() <= 2))
     {
@@ -43,7 +43,7 @@ namespace eve
     }
 
     template<eve::non_empty_product_type Tup>
-    EVE_FORCEINLINE constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
       requires (eve::same_lanes_or_scalar_tuple<Tup> && (Tup::size() > 2) && !Options::contains(lower) && !Options::contains(upper))
     {

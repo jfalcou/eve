@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<typename Pack, eve::invocable<typename Pack::size_type, typename Pack::size_type> Generator>
-  EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
+   Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
     using size_type = typename Pack::size_type;
 
@@ -36,7 +36,7 @@ namespace eve::_
   }
 
   template<typename Pack, eve::invocable<typename Pack::size_type> Generator>
-  EVE_FORCEINLINE Pack fill(eve::as<Pack>, Generator&& g) noexcept
+   Pack fill(eve::as<Pack>, Generator&& g) noexcept
   {
     using size_type = typename Pack::size_type;
 

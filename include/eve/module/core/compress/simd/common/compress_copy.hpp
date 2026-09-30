@@ -28,14 +28,14 @@ struct compress_copy_core
   }
 
   template<typename Settings, typename I, logical_simd_value L, typename O>
-  EVE_FORCEINLINE auto operator()(Settings settings, I f, L m, O o) const -> unaligned_t<O>
+  EVE_ABI auto operator()(Settings settings, I f, L m, O o) const -> unaligned_t<O>
   {
     constexpr auto impl = select_strategy(as<Settings> {}, as<L> {});
     return impl[settings.safety][settings.density][settings.c_in][settings.c_out](f, m, o);
   }
 
   template<typename Settings, typename I, logical_simd_value L, typename O>
-  EVE_FORCEINLINE auto operator()(Settings                                              settings,
+  EVE_ABI auto operator()(Settings                                              settings,
                                   I                                                     f,
                                   as_wide_t<value_type_t<I>, typename L::cardinal_type> preloaded,
                                   L                                                     m,

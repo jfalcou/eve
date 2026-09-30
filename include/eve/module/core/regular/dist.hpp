@@ -27,7 +27,7 @@ namespace eve
   {
     template<value T,  value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(dist_t, dist_);
@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr auto dist_(EVE_REQUIRES(emulated_), O const& o, T a, T b)
+    constexpr auto dist_(EVE_REQUIRES(emulated_), O const& o, T a, T b)
       requires(_::fp16_should_apply<T>)
     {
       if constexpr(O::contains(upper) || O::contains(lower)) return _::map(dist[o], a, b);

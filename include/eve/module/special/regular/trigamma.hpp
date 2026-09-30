@@ -17,7 +17,7 @@ template<typename Options>
 struct trigamma_t : elementwise_callable<trigamma_t, Options>
 {
   template<eve::floating_value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+  EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(trigamma_t, trigamma_);
 };

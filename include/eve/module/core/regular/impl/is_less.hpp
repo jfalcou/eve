@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr as_logical_t<T> is_less_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+   constexpr as_logical_t<T> is_less_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   {
     if constexpr (O::contains(definitely))
     {

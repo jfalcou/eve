@@ -17,14 +17,14 @@
 namespace eve::_
 {
 template <callable_options O, logical_simd_value T>
-EVE_FORCEINLINE T all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+ T all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   requires (O::contains(splat))
 {
   return T { all[opts.drop(splat)](v) };
 }
 
 template <callable_options O, logical_value T>
-EVE_FORCEINLINE bool
+ bool
 all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
   requires (!O::contains(splat))
 {
@@ -79,7 +79,7 @@ all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
 }
 
 template <callable_options O>
-EVE_FORCEINLINE bool
+ bool
 all_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
 {
   if constexpr (match_option<condition_key, O, ignore_none_>)
@@ -93,7 +93,7 @@ all_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept
 }
 
 template <callable_options O, logical_value T>
-EVE_FORCEINLINE bool
+ bool
 all_(EVE_REQUIRES(cpu_), O const& opts, top_bits<T> v) noexcept
 {
   using C = rbr::result::fetch_t<condition_key, O>;

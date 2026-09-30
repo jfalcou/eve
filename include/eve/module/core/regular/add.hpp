@@ -24,14 +24,13 @@ namespace eve
   {
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-      EVE_FORCEINLINE upgrade_if_t<Options, common_value_t<Ts...>>
-    constexpr operator()(Ts...ts) const noexcept
+    EVE_ABI constexpr upgrade_if_t<Options, common_value_t<Ts...>>
+    operator()(Ts...ts) const noexcept
     { return EVE_DISPATCH_CALL(ts...); }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-      EVE_FORCEINLINE constexpr
-    upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup const& t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
@@ -138,7 +137,7 @@ namespace eve
   {
     // This function is forward declared limited wrapper around add, so that internally we can call it anywhere.
     template<typename T, typename U>
-    EVE_FORCEINLINE auto call_add(T a, U b)
+    auto call_add(T a, U b)
     {
       return eve::add(a, b);
     }

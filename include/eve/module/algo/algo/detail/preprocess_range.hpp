@@ -33,31 +33,31 @@ namespace eve::algo
   {
     template <typename Traits, typename I, typename S>
       requires  _::pointer_iterator_sentinel<I, S>
-    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
+    EVE_ABI auto operator()(Traits traits_, I f, S l) const;
 
     template <typename Traits, std::contiguous_iterator I, typename S>
       requires ( !std::is_pointer_v<I> )
-    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
+    EVE_ABI auto operator()(Traits traits_, I f, S l) const;
 
     template <typename Traits, typename I, typename S>
       requires eve::_::tag_dispatchable<preprocess_range_, Traits, I, S>
-    EVE_FORCEINLINE auto operator()(Traits traits, I f, S l) const {
+    EVE_ABI auto operator()(Traits traits, I f, S l) const {
       return tagged_dispatch(*this, traits, f, l);
     }
 
     template <typename Traits, typename Rng>
       requires eve::_::tag_dispatchable<preprocess_range_, Traits, Rng>
-    EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
+    EVE_ABI auto operator()(Traits traits_, Rng&& rng) const {
       return tagged_dispatch(*this, traits_, EVE_FWD(rng));
     }
 
     template <typename Traits, typename Rng>
-    EVE_FORCEINLINE auto operator()(Traits traits_, Rng&& rng) const {
+    EVE_ABI auto operator()(Traits traits_, Rng&& rng) const {
       return operator()(traits_, rng.begin(), rng.end());
     }
     // Base case. Should validate that I, S are a valid iterator pair
     template <typename Traits, iterator I, sentinel_for<I> S>
-    EVE_FORCEINLINE auto operator()(Traits traits_, I f, S l) const;
+    EVE_ABI auto operator()(Traits traits_, I f, S l) const;
   };
 
   inline constexpr preprocess_range_ preprocess_range;

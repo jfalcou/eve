@@ -15,12 +15,12 @@ namespace eve::_
 
 template<std::ptrdiff_t M> struct rotate_lambda
 {
-  EVE_FORCEINLINE auto operator()(auto x) const { return rotate(x, index<M>); }
+   auto operator()(auto x) const { return rotate(x, index<M>); }
 };
 
 
 template<simd_value T, std::ptrdiff_t M>
-EVE_FORCEINLINE T rotate_(EVE_SUPPORTS(cpu_), T x, index_t<M>)
+ T rotate_(EVE_SUPPORTS(cpu_), T x, index_t<M>)
   requires (M <= T::size())
 {
        if constexpr ( M == T::size() || M == 0 ) return x;

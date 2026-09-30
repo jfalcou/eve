@@ -19,14 +19,14 @@ namespace eve
   struct minorant_t : constant_callable<minorant_t, Options, lower_option, upper_option>
   {
     template<typename T, typename Opts>
-    static EVE_FORCEINLINE constexpr T value(eve::as<T> tgt, Opts const&)
+    EVE_ABI static constexpr T value(eve::as<T> tgt, Opts const&)
     {
       if constexpr (eve::floating_value<T>) return eve::minf(tgt);
       else                                  return eve::valmin(tgt);
     }
 
     template<plain_value T>
-    EVE_FORCEINLINE constexpr T operator()(as<T> v) const { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(as<T> v) const { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(minorant_t, minorant_);
   };

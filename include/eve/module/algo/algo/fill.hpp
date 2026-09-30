@@ -38,19 +38,19 @@ namespace eve::algo
 
       eve::wide<value_type_t<I>, N> wide_value;
 
-      EVE_FORCEINLINE explicit fill_delegate(auto value) :
+      EVE_ABI explicit fill_delegate(auto value) :
         wide_value(value_type_t<I>(value))
       {
       }
 
-      EVE_FORCEINLINE void operator()(auto it, eve::relative_conditional_expr auto ignore) const
+      EVE_ABI void operator()(auto it, eve::relative_conditional_expr auto ignore) const
       {
         eve::store[ignore](wide_value, it);
       }
     };
 
     template <relaxed_range Rng, std::convertible_to<value_type_t<Rng>> T>
-    EVE_FORCEINLINE void operator()(Rng&& rng, T x) const
+    EVE_ABI void operator()(Rng&& rng, T x) const
     {
       for_each[TraitsSupport::get_traits()](EVE_FWD(rng), fill_delegate<Rng>{x});
     }

@@ -112,40 +112,40 @@ namespace eve::algo::views
 
     backward_iterator() = default;
 
-    EVE_FORCEINLINE explicit backward_iterator(I b) : base(b) {}
+    EVE_ABI explicit backward_iterator(I b) : base(b) {}
 
     template <std::convertible_to<I> I1>
-    EVE_FORCEINLINE backward_iterator(backward_iterator<I1> x) : base(x.base) {}
+    EVE_ABI backward_iterator(backward_iterator<I1> x) : base(x.base) {}
 
-    EVE_FORCEINLINE auto unalign()  const noexcept { return backward(eve::unalign(base));       }
-    EVE_FORCEINLINE auto read()     const noexcept { return eve::read(eve::unalign(base) - 1);  }
+    EVE_ABI auto unalign()  const noexcept { return backward(eve::unalign(base));       }
+    EVE_ABI auto read()     const noexcept { return eve::read(eve::unalign(base) - 1);  }
 
-    EVE_FORCEINLINE void write(value_type v) const noexcept { eve::write(v, eve::unalign(base) - 1); }
+    EVE_ABI void write(value_type v) const noexcept { eve::write(v, eve::unalign(base) - 1); }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE bool operator==(backward_iterator<I1> y) const
+    EVE_ABI bool operator==(backward_iterator<I1> y) const
     {
       return base == y.base;
     }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE auto operator<=>(backward_iterator<I1> y) const
+    EVE_ABI auto operator<=>(backward_iterator<I1> y) const
     {
       return spaceship_helper(y.base, base);
     }
 
-    EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)
+    EVE_ABI auto& operator+=(std::ptrdiff_t n)
     {
       base -= n;
       return *this;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(backward_iterator const & x, backward_iterator const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(backward_iterator const & x, backward_iterator const & y)
     {
       return y.base - x.base;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(backward_iterator const & x, backward_iterator const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(backward_iterator const & x, backward_iterator const & y)
       requires (!std::same_as<I, unaligned_t<I>>)
     {
       return y.base - x.base;
@@ -153,7 +153,7 @@ namespace eve::algo::views
 
     // not eve::iterator--------------------
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr,
                                 backward_iterator f, backward_iterator l)
       requires (!iterator<I>)
@@ -162,7 +162,7 @@ namespace eve::algo::views
     }
 
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr,
                                 backward_iterator f, unaligned_me l)
       requires (!iterator<I>) && (!std::same_as<I, unaligned_t<I>>)
@@ -171,13 +171,13 @@ namespace eve::algo::views
     }
 
     // eve::iterator -----------------
-    EVE_FORCEINLINE auto previous_partially_aligned() const
+    EVE_ABI auto previous_partially_aligned() const
       requires iterator<I>
     {
       return backward(base.next_partially_aligned());
     }
 
-    EVE_FORCEINLINE auto next_partially_aligned() const
+    EVE_ABI auto next_partially_aligned() const
       requires iterator<I>
     {
       return backward(base.previous_partially_aligned());
@@ -187,14 +187,14 @@ namespace eve::algo::views
     { return I::iterator_cardinal(); }
 
     template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    EVE_ABI auto cardinal_cast(_Cardinal N) const
       requires iterator<I>
     {
       return backward(base.cardinal_cast(N));
     }
 
     template<callable_options O>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<I>> tgt) const
+    EVE_ABI auto load(O const& opts, as<wide_value_type_t<I>> tgt) const
       requires iterator<I>
     {
       auto new_c = eve::reverse_conditional(opts[condition_key], tgt);
@@ -202,7 +202,7 @@ namespace eve::algo::views
     }
 
     template<callable_options O>
-    EVE_FORCEINLINE void store(O const& opts, wide_value_type_t<I> v) const noexcept
+    EVE_ABI void store(O const& opts, wide_value_type_t<I> v) const noexcept
       requires iterator<I>
     {
       auto c = opts[condition_key];
@@ -227,11 +227,11 @@ namespace eve::algo::views
 
     using types_to_consider = types_to_consider_for_t<R>;
 
-    EVE_FORCEINLINE auto begin() const { return backward(base.end()); }
-    EVE_FORCEINLINE auto end()   const { return backward(base.begin()); }
+    EVE_ABI auto begin() const { return backward(base.end()); }
+    EVE_ABI auto end()   const { return backward(base.begin()); }
 
     template<typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, backward_range self)
+    EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits tr, backward_range self)
     {
       auto processed        = preprocess_range(tr, self.base);
 

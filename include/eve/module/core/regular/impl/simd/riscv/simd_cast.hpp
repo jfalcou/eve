@@ -19,7 +19,7 @@ namespace eve::_
 // These functions cast logical to wide or wide to logical.
 // No additional work (e.g. filling with zeros undefined bits) is expected.
 template<scalar_value T, typename N, scalar_value U, typename M>
-EVE_FORCEINLINE logical<wide<U, M>>
+ logical<wide<U, M>>
                 rvv_simd_cast(wide<T, N> x, as<logical<wide<U, M>>> const                &tgt) noexcept
 requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>
 {
@@ -49,7 +49,7 @@ requires rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>
 }
 
 template<scalar_value T, typename N, scalar_value U, typename M>
-EVE_FORCEINLINE wide<U, M>
+ wide<U, M>
                 rvv_simd_cast(logical<wide<T, N>> x, as<wide<U, M>> const&) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
@@ -77,7 +77,7 @@ requires rvv_abi<abi_t<T, N>>
 // type.
 // * N < M: is_full false, we could cast from not full type to full one.
 template<callable_options O, scalar_value T, typename N, scalar_value U, typename M>
-EVE_FORCEINLINE logical<wide<U, M>>
+ logical<wide<U, M>>
                 simd_cast_(EVE_REQUIRES(rvv_),
                            const O&,
                            logical<wide<T, N>>            x,
@@ -91,7 +91,7 @@ requires(rvv_abi<abi_t<T, N>> && rvv_abi<abi_t<U, M>>)
 }
 
 template<typename N, typename M>
-EVE_FORCEINLINE wide<std::int8_t, M>
+ wide<std::int8_t, M>
                 rvv_lmul_trunc(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires rvv_abi<abi_t<std::int8_t, N>>
 {
@@ -105,7 +105,7 @@ requires rvv_abi<abi_t<std::int8_t, N>>
 }
 
 template<typename N, typename M>
-EVE_FORCEINLINE wide<std::int8_t, M>
+ wide<std::int8_t, M>
                 rvv_lmul_extend(wide<std::int8_t, N> a, as<wide<std::int8_t, M>>) noexcept
 requires(rvv_abi<abi_t<std::int8_t, N>> && rvv_abi<abi_t<std::int8_t, M>>)
 {
@@ -119,7 +119,7 @@ requires(rvv_abi<abi_t<std::int8_t, N>> && rvv_abi<abi_t<std::int8_t, M>>)
 }
 
 template<callable_options O, arithmetic_simd_value In, arithmetic_simd_value Out>
-EVE_FORCEINLINE Out
+ Out
 simd_cast_(EVE_REQUIRES(rvv_), const O&, In x, as<Out> const& tgt) noexcept
 requires(rvv_abi<typename In::abi_type> && rvv_abi<typename Out::abi_type>)
 {

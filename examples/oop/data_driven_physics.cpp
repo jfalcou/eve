@@ -26,22 +26,22 @@ struct ball : eve::struct_support < ball
                                   , float, float, float, std::int32_t
                                   >
 {
-  EVE_FORCEINLINE friend decltype(auto) position(eve::like<ball> auto &&self)
+  EVE_ABI friend decltype(auto) position(eve::like<ball> auto &&self)
   {
     return get<0>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) speed(eve::like<ball> auto &&self)
+  EVE_ABI friend decltype(auto) speed(eve::like<ball> auto &&self)
   {
     return get<1>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) elasticity(eve::like<ball> auto &&self)
+  EVE_ABI friend decltype(auto) elasticity(eve::like<ball> auto &&self)
   {
     return get<2>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) nb_bounces(eve::like<ball> auto &&self)
+  EVE_ABI friend decltype(auto) nb_bounces(eve::like<ball> auto &&self)
   {
     return get<3>(std::forward<decltype(self)>(self));
   }

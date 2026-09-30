@@ -13,7 +13,7 @@ namespace eve::_
 {
 
 template<simd_value T, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 try_each_group_position_aggregation(T x, eve::fixed<G> g) noexcept
 {
   auto [l, h] = x.slice();
@@ -25,7 +25,7 @@ try_each_group_position_aggregation(T x, eve::fixed<G> g) noexcept
 }
 
 template<simd_value T, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 try_each_group_position_(EVE_SUPPORTS(cpu_), T x, eve::fixed<G> g) noexcept
 {
        if constexpr( T::size() == G ) { return kumi::tuple<T> {x}; }

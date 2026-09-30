@@ -18,7 +18,7 @@ namespace eve
   struct lambert_t : elementwise_callable<lambert_t, Options>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr
+    EVE_ABI constexpr
     zipped<T,T> operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lambert_t, lambert_);
@@ -80,7 +80,7 @@ namespace eve
   namespace _
   {
     template<typename T>
-    EVE_FORCEINLINE constexpr auto lambert_serie_utility(T r)
+    EVE_ABI constexpr auto lambert_serie_utility(T r)
     {
       using elt_t = element_type_t<T>;
       using A3    = kumi::result::fill_t<3, elt_t>;

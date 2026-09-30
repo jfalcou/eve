@@ -18,19 +18,19 @@ namespace eve
   struct read_t : callable<read_t, Options>
   {
     template<typename Ptr>
-    EVE_FORCEINLINE auto operator()(Ptr ptr) const noexcept -> std::remove_cvref_t<decltype(*ptr)>
+    EVE_ABI auto operator()(Ptr ptr) const noexcept -> std::remove_cvref_t<decltype(*ptr)>
     {
       return EVE_DISPATCH_CALL(ptr);
     }
 
     template<typename Readable>
-    EVE_FORCEINLINE auto operator()(Readable ptr) const noexcept -> decltype(ptr.read())
+    EVE_ABI auto operator()(Readable ptr) const noexcept -> decltype(ptr.read())
     {
       return EVE_DISPATCH_CALL(ptr);
     }
 
     template<typename... Ptrs>
-    EVE_FORCEINLINE kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>
+    EVE_ABI kumi::result::map_t<read_t<Options>, soa_ptr<Ptrs...>>
     operator()(soa_ptr<Ptrs...> ptr) const noexcept { return EVE_DISPATCH_CALL(ptr); }
 
     EVE_CALLABLE_OBJECT(read_t, read_);
@@ -79,14 +79,14 @@ namespace eve
 namespace eve::_
 {
   template<typename Ptr, callable_options O>
-  EVE_FORCEINLINE auto read_(EVE_REQUIRES(cpu_), O const&, Ptr ptr) noexcept
+  auto read_(EVE_REQUIRES(cpu_), O const&, Ptr ptr) noexcept
   {
     if constexpr(requires { ptr.read(); })  return ptr.read();
     else                                    return *ptr;
   }
 
   template<typename... Ptrs, callable_options O>
-  EVE_FORCEINLINE auto read_(EVE_REQUIRES(cpu_), O const&, soa_ptr<Ptrs...> ptr) noexcept
+  auto read_(EVE_REQUIRES(cpu_), O const&, soa_ptr<Ptrs...> ptr) noexcept
   {
     return kumi::map(read, ptr);
   }

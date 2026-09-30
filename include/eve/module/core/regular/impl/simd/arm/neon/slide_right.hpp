@@ -14,7 +14,7 @@ namespace eve::_
 {
 
 template<typename T, typename N, std::ptrdiff_t Shift>
-EVE_FORCEINLINE wide<T, N>
+ wide<T, N>
                 slide_right_arm_extract(wide<T, N> x, wide<T, N> y, index_t<Shift>)
 {
   constexpr auto c = categorize<wide<T, N>>();
@@ -52,7 +52,7 @@ EVE_FORCEINLINE wide<T, N>
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE wide<T, N>
+     wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_),
                                  wide<T, N>     x,
                                  wide<T, N>     y,
@@ -63,7 +63,7 @@ template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t Shift>
-    EVE_FORCEINLINE wide<T, N>
+     wide<T, N>
                     slide_right_(EVE_SUPPORTS(neon128_), wide<T, N> v, index_t<Shift> s) noexcept
     requires(0 < Shift && Shift < N::value)
     && arm_abi<abi_t<T, N>>

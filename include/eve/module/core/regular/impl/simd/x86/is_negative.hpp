@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> is_negative_(EVE_REQUIRES(avx512_),
+   logical<wide<T, N>> is_negative_(EVE_REQUIRES(avx512_),
                                                    O          const & o,
                                                    wide<T, N> const &a) noexcept
   requires x86_abi<abi_t<T, N>>
@@ -50,7 +50,7 @@ namespace eve::_
 // -----------------------------------------------------------------------------------------------
 // masked  implementation
   template<conditional_expr C, floating_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE auto is_negative_(EVE_REQUIRES(avx512_),
+   auto is_negative_(EVE_REQUIRES(avx512_),
                                      C const& cx,
                                      O const& o,
                                      wide<T, N> const& v) noexcept

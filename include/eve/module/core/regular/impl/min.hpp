@@ -24,7 +24,7 @@
 namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr common_value_t<T0, Ts...>
+   constexpr common_value_t<T0, Ts...>
   min_(EVE_REQUIRES(cpu_), O const & o, T0 aa0, Ts... as) noexcept
   {
     using r_t = common_value_t<T0, Ts...>;
@@ -103,7 +103,7 @@ namespace eve::_
   // Predicate case
   //================================================================================================
   template<typename Callable>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   build_min_callable(Callable const& f) noexcept
   {
     if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::min;

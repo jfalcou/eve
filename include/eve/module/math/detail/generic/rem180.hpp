@@ -15,7 +15,7 @@
 namespace eve::_
 {
 template<floating_value T>
-EVE_FORCEINLINE auto
+ auto
 rem180(T x) noexcept
 {
   T xi     = nearest(2 * div_180(x));

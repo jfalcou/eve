@@ -17,7 +17,7 @@ namespace eve::_
   //----------------------------------------------------------------------------------------------
   // Handle Zeroing
   template<typename Pack, typename Pattern>
-  EVE_FORCEINLINE auto process_zeros( Pack const& v, Pattern p ) noexcept
+   auto process_zeros( Pack const& v, Pattern p ) noexcept
   {
     constexpr auto sz = cardinal_v<Pack>;
     using type = typename Pack::value_type;
@@ -43,7 +43,7 @@ namespace eve::_
   //----------------------------------------------------------------------------------------------
   // Pattern to Index wide conversion
   template<simd_value Wide, shuffle_pattern Pattern>
-  EVE_FORCEINLINE auto as_indexes(Pattern const&)
+   auto as_indexes(Pattern const&)
   {
     using i_t = as_integer_t<Wide>;
     using c_t = cardinal_t<Wide>;
@@ -58,7 +58,7 @@ namespace eve::_
   //----------------------------------------------------------------------------------------------
   // Index to bytes conversion
   template<typename Pack, typename Shuffler, std::size_t... I>
-  EVE_FORCEINLINE constexpr auto as_bytes_impl(Shuffler p, std::index_sequence<I...> const &)
+   constexpr auto as_bytes_impl(Shuffler p, std::index_sequence<I...> const &)
   {
     constexpr auto sz = Shuffler::size();
     constexpr auto b = sizeof(typename Pack::value_type);
@@ -67,7 +67,7 @@ namespace eve::_
   }
 
   template<typename Pack, typename Shuffler, typename Bytes>
-  EVE_FORCEINLINE constexpr auto as_bytes(Shuffler p, as<Bytes> const&) noexcept
+   constexpr auto as_bytes(Shuffler p, as<Bytes> const&) noexcept
   {
     constexpr auto bytes = as_bytes_impl<Pack>(p, std::make_index_sequence<Bytes::size()>{});
     return apply( [](auto... v) { return Bytes{ std::uint8_t(v)... }; }, bytes);

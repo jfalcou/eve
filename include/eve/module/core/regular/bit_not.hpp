@@ -22,7 +22,7 @@ namespace eve
   struct bit_not_t : bit_callable<bit_not_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(bit_not_t, bit_not_);

@@ -25,20 +25,20 @@ namespace eve
   {
     template<eve::value T0, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, Ts...>)
-    EVE_FORCEINLINE constexpr eve::common_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
+    EVE_ABI constexpr eve::common_value_t<T0, Ts...> operator()(T0 t0, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, ts...);
     }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr kumi::apply_traits_t<eve::common_value,Tup>
+    EVE_ABI constexpr kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup const & t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 
     template<typename Callable>
     requires(!eve::product_type<Callable> && !eve::value<Callable>)
-    EVE_FORCEINLINE constexpr auto operator()(Callable const & f) const noexcept{ return _::build_max_callable(f); }
+    EVE_ABI constexpr auto operator()(Callable const & f) const noexcept{ return _::build_max_callable(f); }
 
     EVE_CALLABLE_OBJECT(max_t, max_);
   };

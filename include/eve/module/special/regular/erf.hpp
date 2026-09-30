@@ -20,7 +20,7 @@ namespace eve
   struct erf_t : elementwise_callable<erf_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(erf_t, erf_);
   };

@@ -25,7 +25,7 @@ namespace eve
   struct ulpdist_t : elementwise_callable<ulpdist_t, Options>
   {
     template<value T,  value U>
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T a, U b) const noexcept
     { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(ulpdist_t, ulpdist_);
@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto ulpdist_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto ulpdist_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return _::map(ulpdist[o], ts...);

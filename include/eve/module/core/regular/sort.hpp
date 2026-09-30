@@ -19,11 +19,11 @@ namespace eve
   struct sort_t : callable<sort_t, Options>
   {
     template<eve::simd_value T, typename Less>
-    constexpr EVE_FORCEINLINE T operator()(T v, Less l) const noexcept
+    EVE_ABI constexpr T operator()(T v, Less l) const noexcept
     { return EVE_DISPATCH_CALL(v, l); }
 
-     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    template<eve::value T>
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(sort_t, sort_);
@@ -106,7 +106,7 @@ namespace eve
     };
 
     template <typename T, typename Less, std::ptrdiff_t Full, std::ptrdiff_t G>
-    constexpr EVE_FORCEINLINE
+    constexpr 
     T bitonic_merge_impl(T x, Less less, fixed<Full> full, fixed<G> g) noexcept
     {
       T ab = x;
@@ -120,7 +120,7 @@ namespace eve
 
     // G is the length of the monotonic sequence
     template <typename T, typename Less, std::ptrdiff_t G>
-    constexpr EVE_FORCEINLINE
+    constexpr 
     T bitonic_merge(T x, Less less, index_t<G>) noexcept
     {
       return bitonic_merge_impl(x, less, lane<G * 2>, lane<G>);
@@ -128,7 +128,7 @@ namespace eve
 
     // G - length of monotonic sequence
     template <simd_value T, typename Less, std::ptrdiff_t G>
-    constexpr EVE_FORCEINLINE
+    constexpr 
     T make_bitonic(T x, Less less, index_t<G>) noexcept
     {
       if constexpr (G == 1)
@@ -141,14 +141,14 @@ namespace eve
     }
 
     template <typename T, typename Less, callable_options O>
-    constexpr EVE_FORCEINLINE
+    constexpr 
     T sort_(EVE_REQUIRES(cpu_), O const &, T x, Less less) noexcept
     {
       return make_bitonic(x, less, index<T::size()>);
     }
 
     template <typename T, callable_options O>
-    constexpr EVE_FORCEINLINE
+    constexpr 
     T sort_(EVE_REQUIRES(cpu_), O const &, T x) noexcept
     {
       return sort(x, eve::is_less);

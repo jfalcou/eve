@@ -28,7 +28,7 @@ namespace eve::_
 {
 
 template<value In, scalar_value Out>
-EVE_FORCEINLINE auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
+ auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
   if constexpr (floating_value<In> && integral_scalar_value<Out>)
   {
@@ -52,7 +52,7 @@ struct convert_lambda
   Options const& opts;
 
   template <typename T, typename M>
-  EVE_FORCEINLINE constexpr void operator()(T const& in, M *res_m) const noexcept
+   constexpr void operator()(T const& in, M *res_m) const noexcept
   {
     *res_m = eve::convert[opts](in, eve::as_element<M>{});
   }
@@ -62,7 +62,7 @@ template <callable_options O, typename Tgt>
 struct maybe_saturated
 {
   template <typename T>
-  EVE_FORCEINLINE constexpr auto operator()(T const& v) const noexcept
+   constexpr auto operator()(T const& v) const noexcept
   {
     if constexpr (O::contains(saturated)) return saturate(v, as<Tgt>{});
     else                                   return v;
@@ -72,7 +72,7 @@ struct maybe_saturated
 //================================================================================================
 // logical<->logical default convert implementation
 template<value In, scalar_value Out>
-EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_unused]] as<logical<Out>> tgt) noexcept
+ auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_unused]] as<logical<Out>> tgt) noexcept
 {
   using out_t = as_wide_t<logical<Out>, cardinal_t<In>>;
 
@@ -98,7 +98,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), logical<In> v0, [[maybe_un
 //================================================================================================
 // wide<->wide default convert implementation
 template<typename In, typename Out>
-EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
+ auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
   using out_t = as_wide_t<Out, cardinal_t<In>>;
 
@@ -118,7 +118,7 @@ EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexce
 // Convert helpers
 // large<->small integers via chain
 template<integral_simd_value In, integral_scalar_value Out>
-EVE_FORCEINLINE auto convert_integers_chain(In v0, as<Out> tgt) noexcept
+ auto convert_integers_chain(In v0, as<Out> tgt) noexcept
 {
   using in_t  = element_type_t<In>;
   using out_t = element_type_t<Out>;
@@ -142,7 +142,7 @@ EVE_FORCEINLINE auto convert_integers_chain(In v0, as<Out> tgt) noexcept
 
 // Convert helpers : large->small integers via a single shuffle
 template<integral_scalar_value T, integral_scalar_value U, typename N>
-EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
+ auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 {
   static_assert((sizeof(T) / sizeof(U) >= 2),
                 "[eve::convert] - Shuffle conversion requires ration of 1:2^n between types");
@@ -162,7 +162,7 @@ EVE_FORCEINLINE auto convert_integers_shuffle(wide<T, N> v, as<U>) noexcept
 }
 
 template<typename T, typename N, typename U>
-EVE_FORCEINLINE auto convert_slice(wide<T, N> v, as<U> tgt)
+ auto convert_slice(wide<T, N> v, as<U> tgt)
 {
   if constexpr( N::value > 1 )
   {
@@ -192,7 +192,7 @@ struct pieces_t
 
 // Convert integer from 2^n -> 2^n+1
 template<typename T, typename N, typename U>
-EVE_FORCEINLINE auto convert_integers_interleave(wide<T, N> v, as<U>)
+ auto convert_integers_interleave(wide<T, N> v, as<U>)
 {
   static_assert((sizeof(U) / sizeof(T) == 2),
                 "[eve::convert] - Interleave conversion requires ration of 2:1 between types");

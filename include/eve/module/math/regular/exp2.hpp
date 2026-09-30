@@ -16,13 +16,13 @@ namespace eve
   struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, raw_option, fast_option, saturated_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr T operator()(T s) const noexcept
+    EVE_ABI constexpr T operator()(T s) const noexcept
     {
       return EVE_DISPATCH_CALL(s);
     }
 
     template<eve::integral_value T, floating_scalar_value U>
-    EVE_FORCEINLINE constexpr eve::as_wide_as_t<U, T>operator()(T v, eve::as<U> target ) const noexcept
+    EVE_ABI constexpr eve::as_wide_as_t<U, T>operator()(T v, eve::as<U> target ) const noexcept
     {
       return EVE_DISPATCH_CALL(v, target);
     }
@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     exp2_(EVE_REQUIRES(cpu_), O const& o, T x) noexcept
     {
       using elt_t = eve::element_type_t<T>;
@@ -195,7 +195,7 @@ namespace eve
       }
 
     template<value T, floating_scalar_value U, callable_options O>
-    EVE_FORCEINLINE constexpr as_wide_as_t<U, T>
+    constexpr as_wide_as_t<U, T>
     exp2_(EVE_REQUIRES(cpu_), O const& o, T xx, as<U> const & trgt) noexcept
     {
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)

@@ -21,7 +21,7 @@ namespace eve
   {
     template<value T,  value U,  value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V> operator()(T a, U b, V c) const
+    EVE_ABI constexpr common_value_t<T, U, V> operator()(T a, U b, V c) const
     { return EVE_DISPATCH_CALL(a, b, c); }
 
     EVE_CALLABLE_OBJECT(lerp_t, lerp_);
@@ -80,7 +80,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     lerp_(EVE_REQUIRES(cpu_), O const & o, T const &a,  T const &b,  T const &t) noexcept
     {
       return fma[o](t, b, fnma[o](t, a, a));

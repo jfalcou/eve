@@ -16,7 +16,7 @@ namespace eve::_
   namespace _deinterleave_groups
   {
     template <std::size_t first, std::size_t step, eve::product_type T>
-    EVE_FORCEINLINE auto select_every_step_from_tuple(T t)
+     auto select_every_step_from_tuple(T t)
     {
       return [&]<std::size_t ...i>(std::index_sequence<i...>) {
         return kumi::reorder<(first + i * step)...>(t);
@@ -26,18 +26,18 @@ namespace eve::_
     template <std::ptrdiff_t G>
     struct recurse
     {
-      EVE_FORCEINLINE auto operator()(auto ... x) const
+       auto operator()(auto ... x) const
       {
         return deinterleave_groups(lane<G>, x...);
       }
-      EVE_FORCEINLINE auto operator()(eve::product_type auto t) const
+       auto operator()(eve::product_type auto t) const
       {
         return kumi::apply(*this, t);
       }
     };
 
     template<std::ptrdiff_t G, typename T, typename... Ts>
-    EVE_FORCEINLINE
+    
     kumi::tuple<T, Ts...>
     emulate(eve::fixed<G>, T v0, Ts... vs)
     {
@@ -69,7 +69,7 @@ namespace eve::_
   }
 
   template<std::ptrdiff_t G, simd_value T, std::same_as<T>... Ts>
-  EVE_FORCEINLINE
+  
   kumi::tuple<T, Ts...>
   deinterleave_groups_(EVE_SUPPORTS(cpu_), eve::fixed<G> g, T v0, Ts... vs) noexcept
     requires ( T::size() >= G)

@@ -17,7 +17,7 @@ namespace eve
   struct combine_t : callable<combine_t, Options>
   {
     template<simd_value T>
-    constexpr EVE_FORCEINLINE typename T::combined_type operator()(T a, T b) const noexcept
+    EVE_ABI constexpr typename T::combined_type operator()(T a, T b) const noexcept
     {
       return translate_into(
         _::combine(eve::current_api, translate(a), translate(b)),
@@ -25,7 +25,7 @@ namespace eve
     }
 
     template<simd_value T0, simd_value T1, simd_value T2, simd_value... Ts>
-    constexpr EVE_FORCEINLINE typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>
+    EVE_ABI constexpr typename T0::template rescale<fixed<(T0::size() * (3 + sizeof...(Ts)))>>
     operator()(T0 a, T1 b, T2 c, Ts... ts) const noexcept
       requires (combinable<T0, T1, T2, Ts...>)
     {

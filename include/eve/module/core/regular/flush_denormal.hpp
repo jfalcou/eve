@@ -17,7 +17,7 @@ namespace eve
   struct flush_denormal_t : elementwise_callable<flush_denormal_t, Options>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(flush_denormal_t, flush_denormal_);
@@ -73,7 +73,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     flush_denormal_(EVE_REQUIRES(cpu_), O const &, T const& x) noexcept
     {
       return if_else(is_denormal(x), zero, x);

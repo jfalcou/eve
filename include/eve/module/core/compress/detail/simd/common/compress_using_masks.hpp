@@ -24,7 +24,7 @@ namespace eve::_
 // permutation masks ------------------
 
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE constexpr auto pattern_4_elements(std::array<T, 8> idxs)
+  constexpr auto pattern_4_elements(std::array<T, 8> idxs)
   {
     using row = std::array<T, 4>;
 
@@ -42,7 +42,7 @@ namespace eve::_
 
   // See compress_store_num for explanation
   template <std::unsigned_integral T>
-  EVE_FORCEINLINE constexpr auto pattern_8_elements(std::array<T, 8> idxs)
+  constexpr auto pattern_8_elements(std::array<T, 8> idxs)
   {
     using row = std::array<T, 8>;
 
@@ -116,14 +116,13 @@ namespace eve::_
   {
     std::ptrdiff_t num;
 
-    EVE_FORCEINLINE auto operator()(auto v) const
+    auto operator()(auto v) const
     {
       return compress_using_masks_shuffle(v, num);
     }
   };
 
   template <typename T, typename N>
-  EVE_FORCEINLINE
   auto compress_using_masks_shuffle_(EVE_SUPPORTS(cpu_), wide<T, N> v, std::ptrdiff_t num) noexcept
   {
     if constexpr ( eve::product_type<T> )
@@ -166,7 +165,6 @@ namespace eve::_
   }
 
   template <typename T, typename N>
-  EVE_FORCEINLINE
   auto compress_using_masks_to_left_(EVE_SUPPORTS(cpu_), wide<T, N> v)
   {
     if constexpr ( !eve::product_type<T> ) return eve::slide_left(v, eve::index<1>);
@@ -188,7 +186,6 @@ namespace eve::_
   }
 
   template<relative_conditional_expr C, typename T, typename U, typename N>
-  EVE_FORCEINLINE
   auto compress_using_masks_(EVE_SUPPORTS(cpu_),
                              C c,
                              wide<T, N> v,

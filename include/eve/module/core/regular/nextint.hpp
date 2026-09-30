@@ -22,7 +22,7 @@ namespace eve
   struct nextint_t : strict_elementwise_callable<nextint_t, Options, raw_option, saturated_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI constexpr T operator()(T v) const noexcept
     {
       return EVE_DISPATCH_CALL(v);
     }
@@ -88,14 +88,14 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename... Ts>
-    EVE_FORCEINLINE constexpr auto nextint_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+    constexpr auto nextint_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
       requires (_::fp16_should_apply<common_value_t<Ts...>>)
     {
       return nextint_(EVE_TARGETS(cpu_), o, ts...);
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T nextint_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+    constexpr T nextint_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
     {
       if constexpr (eve::floating_value<T>)
       {

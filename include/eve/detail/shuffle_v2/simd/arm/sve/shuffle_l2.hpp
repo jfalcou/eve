@@ -79,7 +79,7 @@ shuffle_l2_svext_self(P, eve::fixed<G>, eve::wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
@@ -97,7 +97,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
 {
   if constexpr( auto r = shuffle_l2_svrev(p, g, x); matched_shuffle<decltype(r)> ) { return r; }
@@ -105,7 +105,7 @@ shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   // NOTE: no zeroing blend on sve
@@ -118,7 +118,7 @@ shuffle_l2_sve_blend(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto starts_from = idxm::is_in_order(P::idxs);
@@ -132,7 +132,7 @@ shuffle_l2_sve_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_(EVE_SUPPORTS(sve_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {

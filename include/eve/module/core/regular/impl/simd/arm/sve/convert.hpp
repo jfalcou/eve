@@ -18,7 +18,7 @@ namespace eve::_
 {
 
 template<scalar_value U, typename N>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<float, N> v, as<U> tgt) noexcept
+ wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<float, N> v, as<U> tgt) noexcept
 requires sve_abi<abi_t<float, N>>
 {
   constexpr auto c_o = categorize<wide<U, N>>();
@@ -59,7 +59,7 @@ requires sve_abi<abi_t<float, N>>
 }
 
 template<scalar_value T, scalar_value U, typename N>
-EVE_FORCEINLINE wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<T, N> v, as<U> tgt) noexcept
+ wide<U, N> convert_impl(EVE_REQUIRES(sve_), wide<T, N> v, as<U> tgt) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   // TODO: OPTIMIZE
@@ -67,7 +67,7 @@ requires sve_abi<abi_t<T, N>>
 }
 
 template<scalar_value T, scalar_value U, typename N>
-EVE_FORCEINLINE auto convert_impl(EVE_REQUIRES(sve_), logical<wide<T, N>> v, as<logical<U>>) noexcept
+ auto convert_impl(EVE_REQUIRES(sve_), logical<wide<T, N>> v, as<logical<U>>) noexcept
 requires sve_abi<abi_t<T, N>>
 {
   return to_logical(convert(v.bits(), as<U>{}));

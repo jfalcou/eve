@@ -18,7 +18,7 @@ namespace eve
   struct div_180_t : elementwise_callable<div_180_t, Options>
   {
     template<eve::floating_value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(div_180_t, div_180_);
   };
@@ -73,7 +73,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T div_180_(EVE_REQUIRES(cpu_), O const&, T const& a)
+    constexpr T div_180_(EVE_REQUIRES(cpu_), O const&, T const& a)
     {
       auto test = is_nez(a);
       if constexpr( scalar_value<T> )

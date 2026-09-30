@@ -20,7 +20,7 @@ namespace eve
   struct log2_t : elementwise_callable<log2_t, Options, fast_option, raw_option, pedantic_option>
   {
     template<eve::floating_value T>
-    EVE_FORCEINLINE constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const noexcept { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(log2_t, log2_);
   };
@@ -95,7 +95,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T log2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
+    constexpr T log2_(EVE_REQUIRES(cpu_), O const& o, T a0) noexcept
     {
       using elt_t = eve::element_type_t<T>;
       if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)

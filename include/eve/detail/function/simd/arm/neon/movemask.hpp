@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template <typename T>
-  EVE_FORCEINLINE std::uint32_t every_2nd_byte_arm64(T const& v) noexcept
+   std::uint32_t every_2nd_byte_arm64(T const& v) noexcept
   {
     using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
     using u32_2 = typename T::template rebind<std::uint32_t, eve::fixed<2>>;
@@ -28,7 +28,7 @@ namespace eve::_
   }
 
   template<typename T>
-  EVE_FORCEINLINE std::uint32_t every_4th_byte_arm128(T const& v) noexcept
+   std::uint32_t every_4th_byte_arm128(T const& v) noexcept
   {
     using u8_8  = typename T::template rebind<std::uint8_t,  eve::fixed<8>>;
     using u8_16 = typename T::template rebind<std::uint8_t,  eve::fixed<16>>;
@@ -44,7 +44,7 @@ namespace eve::_
   }
 
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
+   auto movemask (logical<wide<T, N>> const &v) noexcept
     requires std::same_as<abi_t<T, N>, arm_64_>
   {
     using w_t = wide<T, N>;
@@ -82,7 +82,7 @@ namespace eve::_
   }
 
   template<arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto movemask (logical<wide<T, N>> const &v) noexcept
+   auto movemask (logical<wide<T, N>> const &v) noexcept
     requires std::same_as<abi_t<T, N>, arm_128_>
   {
     using w_t = wide<T, N>;

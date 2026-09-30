@@ -24,7 +24,7 @@ namespace eve::_
   // Regular is_equal x86
   //====================================================================================================================
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
+   as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
                                                      O          const &opts,
                                                      wide<T, N> const &v,
                                                      wide<T, N> const &w
@@ -125,7 +125,7 @@ namespace eve::_
   // Logical regular is_equal x86
   //====================================================================================================================
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
+   as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(sse2_),
                                                      O const &,
                                                      logical<wide<T, N>> const &v,
                                                      logical<wide<T, N>> const &w
@@ -148,7 +148,7 @@ namespace eve::_
   // masked  implementation for AVX512+
   //====================================================================================================================
   template<conditional_expr C, arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_),
+   as_logical_t<wide<T, N>> is_equal_(EVE_REQUIRES(avx512_),
                                                      C          const &mask,
                                                      O          const &opts,
                                                      wide<T, N> const &v,

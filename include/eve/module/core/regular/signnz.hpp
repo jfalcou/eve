@@ -21,7 +21,7 @@ namespace eve
   struct signnz_t : elementwise_callable<signnz_t, Options, pedantic_option>
   {
     template<value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const
+    EVE_ABI constexpr T operator()(T a) const
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(signnz_t, signnz_);
@@ -85,7 +85,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     signnz_(EVE_REQUIRES(cpu_), O const &, T const &a) noexcept
     {
       if constexpr( unsigned_value<T> )

@@ -13,7 +13,7 @@
 namespace eve::_
 {
 template<relative_conditional_expr C, scalar_value T, typename N, simd_compatible_ptr<wide<T, N>> Ptr>
-EVE_FORCEINLINE void store_impl(vmx_, C const& cx, wide<T, N> const& value, Ptr ptr) noexcept
+ void store_impl(vmx_, C const& cx, wide<T, N> const& value, Ptr ptr) noexcept
   requires ppc_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
   if constexpr (!std::same_as<C, ignore_none_>)

@@ -26,7 +26,7 @@ namespace eve
   {
     template<std::uint8_t K, value T0, value T1, value T2>
     requires(eve::same_lanes_or_scalar<T0, T1, T2>)
-      EVE_FORCEINLINE constexpr bit_value_t<T0, T1, T2>
+    EVE_ABI constexpr bit_value_t<T0, T1, T2>
     operator()( std::integral_constant<std::uint8_t, K> k, T0 t0, T1 t1, T2 t2) const noexcept
     {
       return EVE_DISPATCH_CALL(k, t0,  t1, t2);
@@ -104,7 +104,7 @@ namespace eve
   namespace _
   {
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_0([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_0([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x00) return zero(as(a));
       else if constexpr(K == 0x01) return bit_not(bit_or(a, b, c));
@@ -125,7 +125,7 @@ namespace eve
     };
   
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_1([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_1([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x10) return bit_notand(bit_or(b, c), a);
       else if constexpr(K == 0x11) return bit_not(bit_or(b, c));
@@ -146,7 +146,7 @@ namespace eve
     }
     
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_2([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_2([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x20) return bit_and(bit_notand(b, a), c);
       else if constexpr(K == 0x21) return bit_not(bit_or(b, bit_xor(a, c)));
@@ -167,7 +167,7 @@ namespace eve
     }
     
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_3([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_3([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x30) return bit_notand(b, a);
       else if constexpr(K == 0x31) return bit_notand(b,bit_ornot(a, c));
@@ -188,7 +188,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_4([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_4([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x40) return bit_and(bit_notand(c, a), b);
       else if constexpr(K == 0x41) return bit_not(bit_or(c, bit_xor(b, a)));
@@ -209,7 +209,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_5([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_5([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x50) return bit_notand(c, a);
       else if constexpr(K == 0x51) return bit_notand(c, bit_or(a, bit_not(b)));
@@ -230,7 +230,7 @@ namespace eve
     }
     
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_6([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_6([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x60) return bit_and(a, bit_xor(b, c));
       else if constexpr(K == 0x61) return bit_or(bit_and(a, bit_xor(b, c)), bit_notand(a, bit_not(bit_or(b, c))));
@@ -251,7 +251,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_7([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_7([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     { 
            if constexpr(K == 0x70) return bit_notand(bit_and(b, c), a);
       else if constexpr(K == 0x71) return bit_or(bit_not(bit_or(b, c)), bit_and(a, bit_xor(b, c)));
@@ -272,7 +272,7 @@ namespace eve
     }
       
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_8([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_8([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x80) return bit_and(a, b, c);
       else if constexpr(K == 0x81) return bit_notand(bit_xor(a, c), bit_xor(a, bit_not(b)));
@@ -293,7 +293,7 @@ namespace eve
     }
       
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_9([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_9([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0x90) return bit_notand(bit_xor(b, c), a);
       else if constexpr(K == 0x91) return bit_notand(bit_xor(b, c),  bit_ornot(a, b));
@@ -314,7 +314,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_a([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_a([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xa0) return bit_and(c, a);
       else if constexpr(K == 0xa1) return bit_notand(bit_xor(a, c), bit_ornot(a, b));
@@ -335,7 +335,7 @@ namespace eve
     }
      
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_b([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_b([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xb0) return bit_notand(bit_notand(c, b), a);
       else if constexpr(K == 0xb1) return bit_select(c, a, bit_not(b));
@@ -356,7 +356,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_c([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_c([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xc0) return bit_and(b, a);
       else if constexpr(K == 0xc1) return bit_notand(bit_xor(a, b), bit_or(a, bit_not(c)));
@@ -377,7 +377,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_d([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_d([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xd0) return bit_notand(bit_notand(b, c), a);
       else if constexpr(K == 0xd1) return bit_select(b, a, bit_not(c));
@@ -398,7 +398,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_e([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_e([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xe0) return bit_and(a, bit_or(b, c));
       else if constexpr(K == 0xe1) return bit_not(bit_xor(a, bit_or(b, c)));
@@ -419,7 +419,7 @@ namespace eve
     }
 
     template<std::uint8_t K, typename T>
-    EVE_FORCEINLINE auto bit_ternary_lut_f([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
+    auto bit_ternary_lut_f([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)
     {
            if constexpr(K == 0xf0) return a;
       else if constexpr(K == 0xf1) return bit_or(a, bit_not(bit_or(b, c)));
@@ -441,7 +441,7 @@ namespace eve
 
     // this is adapted from Samuel neves ternary logic for sse avx etc.
     template < std::uint8_t K, typename T0, typename T1, typename T2, callable_options O>
-    EVE_FORCEINLINE  bit_value_t<T0, T1, T2>
+    bit_value_t<T0, T1, T2>
     bit_ternary_(EVE_REQUIRES(cpu_)
                 , O const &
                 , std::integral_constant<std::uint8_t, K> const &

@@ -32,7 +32,7 @@ namespace eve::algo::views
     {
       StoreOp store_op;
 
-      EVE_FORCEINLINE auto operator()(auto v) const
+       auto operator()(auto v) const
       {
         return store_op(v, as<value_type_t<Base>>{});
       }
@@ -197,11 +197,11 @@ namespace eve::algo::views
 
     using types_to_consider = typename _::map_types_to_consider<LoadOp, R>;
 
-    EVE_FORCEINLINE auto begin() const { return map_convert(base.begin(), load_op, store_op); }
-    EVE_FORCEINLINE auto end()   const { return map_convert(base.end(),   load_op, store_op); }
+    EVE_ABI auto begin() const { return map_convert(base.begin(), load_op, store_op); }
+    EVE_ABI auto end()   const { return map_convert(base.end(),   load_op, store_op); }
 
     template<typename Traits>
-    EVE_FORCEINLINE friend auto tagged_dispatch(preprocess_range_, Traits tr, map_range self)
+    EVE_ABI friend auto tagged_dispatch(preprocess_range_, Traits tr, map_range self)
     {
       auto tr2       = default_to(tr, traits {consider_types_key = types_to_consider{}});
       auto processed = preprocess_range(tr2, self.base);
@@ -231,7 +231,7 @@ namespace eve::algo::views
 
     map_iterator() = default;
 
-    EVE_FORCEINLINE map_iterator(I b, LoadOp lo, StoreOp so)
+    EVE_ABI map_iterator(I b, LoadOp lo, StoreOp so)
         : base(b)
         , load_op(lo)
         , store_op(so)
@@ -243,50 +243,50 @@ namespace eve::algo::views
                                                         load_op(x.load_op),
                                                         store_op(x.store_op) {}
 
-    EVE_FORCEINLINE auto unalign() const noexcept { return map_convert(eve::unalign(base), load_op, store_op); }
+    EVE_ABI auto unalign() const noexcept { return map_convert(eve::unalign(base), load_op, store_op); }
 
-    EVE_FORCEINLINE auto read() const noexcept requires (!std::same_as<LoadOp, nothing_t>)
+    EVE_ABI auto read() const noexcept requires (!std::same_as<LoadOp, nothing_t>)
     {
       return load_op(eve::read(base));
     }
 
-    EVE_FORCEINLINE void write(value_type v) const noexcept
+    EVE_ABI void write(value_type v) const noexcept
     requires (!std::same_as<StoreOp, nothing_t>)
     {
       eve::write(_::bind_store_op<I>(store_op)(v),base);
     }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE bool operator==(map_iterator<I1, LoadOp, StoreOp> y) const
+    EVE_ABI bool operator==(map_iterator<I1, LoadOp, StoreOp> y) const
     {
       return base == y.base;
     }
 
     template <relaxed_sentinel_for<I> I1>
-    EVE_FORCEINLINE auto operator<=>(map_iterator<I1, LoadOp, StoreOp> y) const
+    EVE_ABI auto operator<=>(map_iterator<I1, LoadOp, StoreOp> y) const
     {
       return spaceship_helper(base, y.base);
     }
 
-    EVE_FORCEINLINE auto& operator+=(std::ptrdiff_t n)
+    EVE_ABI auto& operator+=(std::ptrdiff_t n)
     {
       base += n;
       return *this;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(map_iterator const & x, map_iterator const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(map_iterator const & x, map_iterator const & y)
     {
       return x.base - y.base;
     }
 
-    EVE_FORCEINLINE friend std::ptrdiff_t operator-(map_iterator const & x, unaligned_me const & y)
+    EVE_ABI friend std::ptrdiff_t operator-(map_iterator const & x, unaligned_me const & y)
       requires (!std::same_as<I, unaligned_t<I>>)
     {
       return x.base - y.base;
     }
 
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr, map_iterator f, map_iterator l)
       requires (!iterator<I>)
     {
@@ -294,7 +294,7 @@ namespace eve::algo::views
     }
 
     template <typename Traits>
-    EVE_FORCEINLINE
+    EVE_ABI
     friend auto tagged_dispatch(preprocess_range_, Traits tr, map_iterator f, unaligned_me l)
       requires (!iterator<I>) && (!std::same_as<I, unaligned_t<I>>)
     {
@@ -302,13 +302,13 @@ namespace eve::algo::views
     }
 
     // eve::iterator -------------
-    EVE_FORCEINLINE auto previous_partially_aligned() const
+    EVE_ABI auto previous_partially_aligned() const
       requires iterator<I>
     {
       return map_convert(base.previous_partially_aligned(), load_op, store_op);
     }
 
-    EVE_FORCEINLINE auto next_partially_aligned() const
+    EVE_ABI auto next_partially_aligned() const
       requires iterator<I>
     {
       return map_convert(base.next_partially_aligned(), load_op, store_op);
@@ -320,14 +320,14 @@ namespace eve::algo::views
     }
 
     template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    EVE_ABI auto cardinal_cast(_Cardinal N) const
       requires iterator<I>
     {
       return map_convert(base.cardinal_cast(N), load_op, store_op);
     }
 
     template<callable_options O>
-    EVE_FORCEINLINE auto load(O const& opts, as<vw_type>) const
+    EVE_ABI auto load(O const& opts, as<vw_type>) const
       requires iterator<I>
     {
       using C = rbr::result::fetch_t<condition_key, O>;
@@ -344,7 +344,7 @@ namespace eve::algo::views
     }
 
     template<callable_options O>
-    EVE_FORCEINLINE void store(O const& opts, auto v) const noexcept
+    EVE_ABI void store(O const& opts, auto v) const noexcept
       requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
     {
       auto c = opts[condition_key];
@@ -353,7 +353,7 @@ namespace eve::algo::views
       eve::store[c1](bound_store(v), base);
     }
 
-    EVE_FORCEINLINE friend auto tagged_dispatch(eve::tag::store_equivalent_,
+    EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
                                                 auto v,
                                                 map_iterator self)

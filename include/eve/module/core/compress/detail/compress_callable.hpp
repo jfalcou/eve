@@ -62,7 +62,7 @@ template<typename Callable, typename... Settings> struct compress_callable : Cal
     };
   }
 
-  EVE_FORCEINLINE auto operator()(auto ...args) const
+  auto operator()(auto ...args) const
   {
     static_assert(sizeof...(Settings) >= 1, "safe/unsafe setting is required");
     if constexpr( sizeof...(Settings) == 1 )
@@ -104,7 +104,7 @@ template<typename Callable, typename... Settings> struct compress_callable_no_de
     };
   }
 
-  EVE_FORCEINLINE auto operator()(auto ...args) const
+  auto operator()(auto ...args) const
   {
     static_assert(sizeof...(Settings) >= 1, "safe/unsafe setting is required");
     if constexpr( sizeof...(Settings) == 1 )

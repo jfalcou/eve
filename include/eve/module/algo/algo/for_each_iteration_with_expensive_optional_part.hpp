@@ -24,7 +24,7 @@ namespace _
     }
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool no_unrolling_loop(Traits, I& f, S l, Delegate& delegate) const
+     bool no_unrolling_loop(Traits, I& f, S l, Delegate& delegate) const
     {
       while( f < l )
       {
@@ -35,7 +35,7 @@ namespace _
     }
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto /*unroll_l*/, S l, Delegate& delegate) const
+     bool main_loop(Traits tr, I& f, auto /*unroll_l*/, S l, Delegate& delegate) const
     requires(get_unrolling<Traits>() == 1)
     {
       return no_unrolling_loop(tr, f, l, delegate);
@@ -46,7 +46,7 @@ namespace _
       I&        f;
       Delegate& delegate;
 
-      template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
+      template<int i>  bool operator()(std::integral_constant<int, i>)
       {
         if( delegate.step(f + i * iterator_cardinal_v<I>, eve::ignore_none) )
         {
@@ -58,7 +58,7 @@ namespace _
     };
 
     template<typename Traits, typename I, typename S, typename Delegate>
-    EVE_FORCEINLINE bool main_loop(Traits tr, I& f, auto unroll_l, S l, Delegate& delegate) const
+     bool main_loop(Traits tr, I& f, auto unroll_l, S l, Delegate& delegate) const
     {
       while( f <= unroll_l )
       {
@@ -95,7 +95,7 @@ namespace _
                      << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
     }
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       auto unroll_l = this->unroll_l(traits, f, l);
       goto main_loop;
@@ -128,7 +128,7 @@ namespace _
         , l(s)
     {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       I    precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
       auto unroll_l  = this->unroll_l(traits, f, l);
@@ -170,7 +170,7 @@ namespace _
         , l(s)
     {}
 
-    template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
+    template<typename Delegate>  void operator()(Delegate& delegate)
     {
       auto aligned_f = base;
       auto aligned_l = (f + (l - f)).previous_partially_aligned();

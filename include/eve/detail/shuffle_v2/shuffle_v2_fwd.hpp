@@ -145,7 +145,7 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //================================================================================================
 struct
 {
-  EVE_FORCEINLINE auto operator()(auto... args) const noexcept
+  EVE_ABI auto operator()(auto... args) const noexcept
   requires requires { shuffle_v2_core(args...); }
   {
     return get<0>(shuffle_v2_core(args...));
@@ -154,7 +154,7 @@ struct
 
 template<int max_level> struct shuffle_l_t
 {
-  EVE_FORCEINLINE auto operator()(auto... args) const noexcept
+  EVE_ABI auto operator()(auto... args) const noexcept
   requires requires { shuffle_v2_core(args...); }
   {
     auto [shuffled, level] = shuffle_v2_core(args...);

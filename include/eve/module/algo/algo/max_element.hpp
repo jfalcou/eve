@@ -16,7 +16,7 @@ namespace eve::algo
 template<typename TraitsSupport> struct max_element_ : TraitsSupport
 {
   template<relaxed_range Rng, typename Less>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
+  EVE_ABI auto operator()(Rng&& rng, Less less) const -> unaligned_iterator_t<Rng>
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
     auto v = *max_value[TraitsSupport::get_traits()](EVE_FWD(rng), less);
@@ -25,7 +25,7 @@ template<typename TraitsSupport> struct max_element_ : TraitsSupport
   }
 
   template<relaxed_range Rng>
-  EVE_FORCEINLINE auto operator()(Rng&& rng) const -> unaligned_iterator_t<Rng>
+  EVE_ABI auto operator()(Rng&& rng) const -> unaligned_iterator_t<Rng>
   {
     return operator()(EVE_FWD(rng), eve::is_less);
   }

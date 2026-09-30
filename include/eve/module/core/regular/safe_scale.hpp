@@ -26,7 +26,7 @@ namespace eve
   struct safe_scale_t : elementwise_callable<safe_scale_t, Options, pedantic_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T a) const noexcept
+    EVE_ABI constexpr T operator()(T a) const noexcept
     { return EVE_DISPATCH_CALL(a); }
 
     EVE_CALLABLE_OBJECT(safe_scale_t, safe_scale_);
@@ -89,7 +89,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto safe_scale_(EVE_REQUIRES(cpu_), O const&, T const& a0)
+    constexpr auto safe_scale_(EVE_REQUIRES(cpu_), O const&, T const& a0)
     {
       using e_t = eve::element_type_t<T>;
       constexpr e_t eps = eve::eps(eve::as<e_t>());

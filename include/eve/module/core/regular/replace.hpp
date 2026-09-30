@@ -19,13 +19,13 @@ namespace eve
   struct replace_ignored_t : callable<replace_ignored_t, Options>
   {
     template<simd_value T, relative_conditional_expr Ignore, value Other>
-    constexpr EVE_FORCEINLINE T operator()(T x, Ignore ignore, Other with) const noexcept
+    EVE_ABI constexpr T operator()(T x, Ignore ignore, Other with) const noexcept
     {
       return eve::if_else(ignore, x, with);
     }
 
     template<simd_value T, relative_conditional_expr Ignore, generator Other>
-    constexpr EVE_FORCEINLINE T operator()(T x, Ignore ignore, Other with) const noexcept
+    EVE_ABI constexpr T operator()(T x, Ignore ignore, Other with) const noexcept
     {
       return eve::if_else(ignore, x, with);
     }

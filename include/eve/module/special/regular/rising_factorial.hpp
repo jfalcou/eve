@@ -25,7 +25,7 @@ namespace eve
   {
     template<value I, floating_value T>
     requires (same_lanes_or_scalar<I, T>)
-     constexpr EVE_FORCEINLINE as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
+     EVE_ABI constexpr as_wide_as_t<T, I> operator()(I a, T b) const noexcept { return EVE_DISPATCH_CALL(a, b); }
 
     EVE_CALLABLE_OBJECT(rising_factorial_t, rising_factorial_);
   };
@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<typename I, typename T, callable_options O>
-    constexpr EVE_FORCEINLINE as_wide_as_t<T, I>
+    EVE_ABI constexpr as_wide_as_t<T, I>
     rising_factorial_(EVE_REQUIRES(cpu_), O const& o, I a, T x) noexcept
     {
       // Integral first parameter

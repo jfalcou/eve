@@ -39,7 +39,7 @@
 // So your struct has to expose some reflection mechanism.
 //
 // On forceinline: time and time again we stumble apon the compiler not inlining simd code very well.
-// So we recommend writing EVE_FORCEINLINE on all functions that are not the outside loop.
+// So we recommend writing EVE_ABI on all functions that are not the outside loop.
 //
 
 struct cmplx : eve::struct_support<cmplx, float, float>
@@ -48,12 +48,12 @@ struct cmplx : eve::struct_support<cmplx, float, float>
   // This will also be accessible for `eve::wide<cmplx>`.
   // `eve::like` concept will make sure that this won't kick in for anything that did not opt in.
 
-  EVE_FORCEINLINE friend decltype(auto) re(eve::like<cmplx> auto&& self)
+  EVE_ABI friend decltype(auto) re(eve::like<cmplx> auto&& self)
   {
     return get<0>(std::forward<decltype(self)>(self));
   }
 
-  EVE_FORCEINLINE friend decltype(auto) im(eve::like<cmplx> auto&& self)
+  EVE_ABI friend decltype(auto) im(eve::like<cmplx> auto&& self)
   {
     return get<1>(std::forward<decltype(self)>(self));
   }
@@ -71,28 +71,28 @@ struct cmplx : eve::struct_support<cmplx, float, float>
   // however -= will not be generated from += and unary -, we want to tap into a special instruction optimization
   using eve_disable_ordering = void;
 
-  EVE_FORCEINLINE friend auto& operator+=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
+  EVE_ABI friend auto& operator+=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
   {
     re(self) += re(other);
     im(self) += im(other);
     return self;
   }
 
-  EVE_FORCEINLINE friend auto operator-(eve::like<cmplx> auto self)
+  EVE_ABI friend auto operator-(eve::like<cmplx> auto self)
   {
     re(self) = -re(self);
     im(self) = -im(self);
     return self;
   }
 
-  EVE_FORCEINLINE friend auto& operator-=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
+  EVE_ABI friend auto& operator-=(eve::like<cmplx> auto& self, eve::like<cmplx> auto other)
   {
     re(self) -= re(other);
     im(self) -= im(other);
     return self;
   }
 
-  friend EVE_FORCEINLINE auto abs(eve::like<cmplx> auto self)
+  friend EVE_ABI auto abs(eve::like<cmplx> auto self)
   {
     return eve::hypot(re(self), im(self));
   }

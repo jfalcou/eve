@@ -21,7 +21,7 @@ struct gcd_t : elementwise_callable<gcd_t, Options>
 {
   template<eve::value T, value U>
   requires (same_lanes_or_scalar<T, U>)
-  constexpr EVE_FORCEINLINE
+  EVE_ABI constexpr
   common_value_t<T, U> operator()(T v, U w) const noexcept
   { return EVE_DISPATCH_CALL(v, w); }
 

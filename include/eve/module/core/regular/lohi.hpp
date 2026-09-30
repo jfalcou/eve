@@ -19,14 +19,10 @@ namespace eve
   struct lohi_t : elementwise_callable<lohi_t, Options>
   {
     template<typename T>
-    struct result
-    {
-      using base = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
-      using type = zipped<base, base>;
-    };
+    using result = as_wide_as_t<downgrade_t<as_integer_t<element_type_t<T>,unsigned>>,T>;
 
     template<eve::value T>
-    constexpr EVE_FORCEINLINE typename result<T>::type operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr zipped<result<T>,result<T>> operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(lohi_t, lohi_);
   };
@@ -74,7 +70,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     lohi_(EVE_REQUIRES(cpu_), O const&, T const& a0) noexcept
     {
       using elt_t = element_type_t<T>;

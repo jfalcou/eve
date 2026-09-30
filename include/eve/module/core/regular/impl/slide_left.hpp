@@ -16,7 +16,7 @@
 namespace eve::_
 {
 template<simd_value Wide, std::ptrdiff_t Shift>
-EVE_FORCEINLINE auto
+ auto
 slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift <= Wide::size())
 {
   using type = typename Wide::value_type;
@@ -55,7 +55,7 @@ slide_left_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift 
 }
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-EVE_FORCEINLINE Wide
+ Wide
 slide_left_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
     requires(Shift <= Wide::size())
 {

@@ -22,30 +22,30 @@ namespace eve
   struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option, fast_option, mod_option>
   {
     template<eve::floating_scalar_value T, eve::integral_scalar_value U>
-    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    EVE_ABI constexpr T operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<eve::floating_value T, eve::floating_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<integral_value T,  integral_scalar_value U>
-    EVE_FORCEINLINE constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U> operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<floating_simd_value T,  integral_scalar_value U>
-    EVE_FORCEINLINE constexpr T operator()(T v, U w) const noexcept
+    EVE_ABI constexpr T operator()(T v, U w) const noexcept
     {  return EVE_DISPATCH_CALL(v, w); }
 
     template<floating_value T,  integral_simd_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr  as_wide_as_t<T, U > operator()(T v, U w) const noexcept
+    EVE_ABI constexpr  as_wide_as_t<T, U > operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     template<integral_simd_value T,  integral_simd_value U>
     requires(eve::same_lanes_or_scalar<T, U>)
-    EVE_FORCEINLINE constexpr common_value_t<T, U > operator()(T v, U w) const noexcept
+    EVE_ABI constexpr common_value_t<T, U > operator()(T v, U w) const noexcept
     { return EVE_DISPATCH_CALL(v, w); }
 
     EVE_CALLABLE_OBJECT(pow_t, pow_);
@@ -133,7 +133,7 @@ namespace eve
   namespace _
   {
     template<floating_scalar_value T,  integral_scalar_value U, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
       if constexpr( std::is_unsigned_v<U> ) // U unsigned
@@ -159,7 +159,7 @@ namespace eve
     }
 
     template<floating_value T,  floating_value U, callable_options O> //3
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    constexpr common_value_t<T, U>
     pow_(EVE_REQUIRES(cpu_), O const & o, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
@@ -195,7 +195,7 @@ namespace eve
     }
 
     template<integral_scalar_value T,  integral_scalar_value U, callable_options O> //4
-    EVE_FORCEINLINE constexpr common_value_t<T, U>
+    constexpr common_value_t<T, U>
     pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t = common_value_t<T, U>;
@@ -219,7 +219,7 @@ namespace eve
     }
 
     template<floating_simd_value T, integral_scalar_value U, callable_options O>  //5
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     pow_(EVE_REQUIRES(cpu_), O const&, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;
@@ -246,7 +246,7 @@ namespace eve
     }
 
     template<floating_value T,  integral_simd_value U, callable_options O>  //6
-    EVE_FORCEINLINE constexpr as_wide_as_t<T, U >
+    constexpr as_wide_as_t<T, U >
     pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =   as_wide_as_t<T, U >;
@@ -273,7 +273,7 @@ namespace eve
     }
 
     template<integral_simd_value T,  integral_value U, callable_options O>  //7
-    EVE_FORCEINLINE constexpr common_value_t<T, U >
+    constexpr common_value_t<T, U >
     pow_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept
     {
       using r_t =  common_value_t<T, U>;

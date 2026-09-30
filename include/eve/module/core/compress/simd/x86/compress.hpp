@@ -13,7 +13,7 @@
 namespace eve::_
 {
 template<relative_conditional_expr C, typename T, typename U, typename N>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(sse2_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 requires(current_api < ssse3)
 {
@@ -22,7 +22,7 @@ requires(current_api < ssse3)
 }
 
 template<relative_conditional_expr C, typename T, typename U, typename N>
-EVE_FORCEINLINE auto
+auto
 compress_(EVE_SUPPORTS(avx2_), C c, wide<T, N> v, logical<wide<U, N>> mask) noexcept
 requires(N() >= 4 && supports_bmi_well)
 {

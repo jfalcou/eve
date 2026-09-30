@@ -20,7 +20,7 @@ namespace eve
   {
     template<value T, value U, value V>
     requires(eve::same_lanes_or_scalar<T, U, V>)
-    constexpr EVE_FORCEINLINE common_value_t<T, U, V>
+    EVE_ABI constexpr common_value_t<T, U, V>
     operator()(T a, U low, V high) const noexcept
     {
       EVE_ASSERT(eve::all(low <= high), "[eve::chi] bounds are not correctly ordered");
@@ -28,7 +28,7 @@ namespace eve
     }
 
     template<value T,  typename  B>
-    constexpr EVE_FORCEINLINE T
+    EVE_ABI constexpr T
     operator()(T a, B const & belongs) const noexcept
     {
       return EVE_DISPATCH_CALL(a, belongs);
@@ -96,7 +96,7 @@ namespace eve
   {
 
     template<typename T0, typename T1,  typename T2, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T0 a, T1 l, T2 h) noexcept
+    constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T0 a, T1 l, T2 h) noexcept
     {
       using r_t =  common_value_t<T0, T1, T2>;
       auto z = if_else( r_t(a) < r_t(h) && r_t(a) >= r_t(l), one(as<r_t>()), zero);
@@ -107,7 +107,7 @@ namespace eve
     }
 
     template<typename T, typename B, callable_options O>
-    EVE_FORCEINLINE constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T x, B const & b) noexcept
+    constexpr auto chi_(EVE_REQUIRES(cpu_), O const & c, T x, B const & b) noexcept
     {
      auto z = if_else(b(x), one(as(x)), zero);
      if constexpr(O::contains(eve::condition_key))

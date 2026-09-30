@@ -33,14 +33,14 @@ namespace eve::_
 {
 // Local helper for product_type if_else implementation
 template<typename T, eve::product_type U, eve::product_type V>
-EVE_FORCEINLINE constexpr auto tuple_select(T cond, U const& t, V const& f)
+ constexpr auto tuple_select(T cond, U const& t, V const& f)
 {
   using r_t = _::conditional_t<simd_value<U>, U, V>;
   return r_t {kumi::map([&](auto const& vv, auto const& fv) { return if_else(cond, vv, fv); }, t, f)};
 }
 
 template<scalar_value T, value U, value V, callable_options O>
-EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T cond, U const& t, V const& f)
+ constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T cond, U const& t, V const& f)
 {
   if      constexpr( simd_value<U> && simd_value<V> ) return  is_nez(cond) ? t    : f;
   else if constexpr( simd_value<U> )                  return  is_nez(cond) ? t    : U(f);
@@ -49,7 +49,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T cond, U 
 }
 
 template<simd_value T, value U, value V, callable_options O>
-EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& t, V const& f)
+ constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& t, V const& f)
 {
   if constexpr( !is_logical_v<T> ) return if_else(is_nez(cond), t, f);
   else
@@ -72,7 +72,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, T const& c
 //------------------------------------------------------------------------------------------------
 // Supports if_else(conditional_expr,a,b)
 template<conditional_expr C, typename U, typename V, callable_options O>
-EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U const& t, V const& f)
+ constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U const& t, V const& f)
 {
   if constexpr( generator<V> )
   {
@@ -107,7 +107,7 @@ EVE_FORCEINLINE constexpr auto if_else_(EVE_REQUIRES(cpu_), O const&, C cond, U 
 //------------------------------------------------------------------------------------------------
 // Optimizes if_else(c,t,constant)
 template<value T, value U, generator Constant, callable_options O>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const& v) noexcept
 {
   using tgt = as<U>;
@@ -144,7 +144,7 @@ if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, U const& u, Constant const
 //------------------------------------------------------------------------------------------------
 // Optimizes if_else(c,constant, t)
 template<value T, value U, generator Constant, callable_options O>
-EVE_FORCEINLINE constexpr auto
+ constexpr auto
 if_else_(EVE_REQUIRES(cpu_), O const&, T const& cond, Constant const& v, U const& u) noexcept
 {
   using tgt = as<U>;

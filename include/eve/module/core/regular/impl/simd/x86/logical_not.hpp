@@ -15,7 +15,7 @@
 namespace eve::_
 {
   template<arithmetic_scalar_value T, typename N, callable_options O>
-  EVE_FORCEINLINE logical<wide<T, N>> logical_not_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> v) noexcept
+   logical<wide<T, N>> logical_not_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> v) noexcept
     requires (x86_abi<abi_t<T, N>>)
   {
     using l_t = logical<wide<T, N>>;

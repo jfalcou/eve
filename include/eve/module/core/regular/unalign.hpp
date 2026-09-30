@@ -20,25 +20,25 @@ namespace eve
   struct unalign_t : callable<unalign_t, Options>
   {
     template<std::contiguous_iterator I>
-    constexpr EVE_FORCEINLINE I operator()(I ptr) const noexcept
+    EVE_ABI constexpr I operator()(I ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(ptr);
     }
 
     template<typename Ptr>
-    EVE_FORCEINLINE auto operator()(Ptr p) const noexcept -> decltype(p.unalign())
+    EVE_ABI auto operator()(Ptr p) const noexcept -> decltype(p.unalign())
     {
       return EVE_DISPATCH_CALL(p);
     }
 
     template<typename T, typename N>
-    constexpr EVE_FORCEINLINE T* operator()(aligned_ptr<T, N> p) const noexcept
+    EVE_ABI constexpr T* operator()(aligned_ptr<T, N> p) const noexcept
     {
       return EVE_DISPATCH_CALL(p);
     }
 
     template<typename... Ptrs>
-    constexpr EVE_FORCEINLINE auto operator()(soa_ptr<Ptrs...> ptr) const noexcept
+    EVE_ABI constexpr auto operator()(soa_ptr<Ptrs...> ptr) const noexcept
               -> soa_ptr<decltype(std::declval<unalign_t>()(std::declval<Ptrs>()))...>
     {
       return EVE_DISPATCH_CALL(ptr);
@@ -115,26 +115,26 @@ namespace eve
 namespace eve::_
 {
   template<std::contiguous_iterator I, callable_options O>
-  constexpr EVE_FORCEINLINE I unalign_(EVE_REQUIRES(cpu_), O const&, I i) noexcept
+  constexpr I unalign_(EVE_REQUIRES(cpu_), O const&, I i) noexcept
   {
     return i;
   }
 
   template<typename Ptr, callable_options O>
-  constexpr EVE_FORCEINLINE auto unalign_(EVE_REQUIRES(cpu_), O const&, Ptr p) noexcept
+  constexpr auto unalign_(EVE_REQUIRES(cpu_), O const&, Ptr p) noexcept
   -> decltype(p.unalign())
   {
     return p.unalign();
   }
 
   template<typename T, typename N, callable_options O>
-  constexpr EVE_FORCEINLINE T* unalign_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<T, N> p) noexcept
+  constexpr T* unalign_(EVE_REQUIRES(cpu_), O const&, aligned_ptr<T, N> p) noexcept
   {
     return p.get();
   }
 
   template<typename... Ptrs, callable_options O>
-  constexpr EVE_FORCEINLINE auto unalign_(EVE_REQUIRES(cpu_), O const&, soa_ptr<Ptrs...> p) noexcept
+  constexpr auto unalign_(EVE_REQUIRES(cpu_), O const&, soa_ptr<Ptrs...> p) noexcept
   {
     return soa_ptr<unaligned_t<Ptrs>...> {kumi::map(unalign, p)};
   }

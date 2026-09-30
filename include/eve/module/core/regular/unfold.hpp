@@ -38,14 +38,14 @@ namespace eve
       , return_type<kumi::apply_traits_t<eve::common_value, T>>>;
 
     template<value T, value ...Ts>
-    EVE_FORCEINLINE constexpr result<T, Ts...>
+    EVE_ABI constexpr result<T, Ts...>
     operator()(T t, Ts ... ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t, ts...);
     }
 
     template<non_empty_product_type T>
-    EVE_FORCEINLINE constexpr tuple_result<T>
+    EVE_ABI constexpr tuple_result<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -104,7 +104,7 @@ namespace eve
   {
 
     template<typename T, typename ...Ts, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     unfold_(EVE_REQUIRES(cpu_), O const &, T x, Ts... xs) noexcept
     {
       auto constexpr S = sizeof...(Ts);
@@ -133,7 +133,7 @@ namespace eve
     }
 
     template<non_empty_product_type T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     unfold_(EVE_REQUIRES(cpu_), O const &, T tup) noexcept
     {
       return kumi::apply([](auto ... ts){return unfold(ts...); }, tup);

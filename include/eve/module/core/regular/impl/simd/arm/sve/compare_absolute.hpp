@@ -22,7 +22,7 @@ namespace eve::_
 {
 
   template<callable_options O, floating_scalar_value T, typename N,  typename F>
-  EVE_FORCEINLINE logical<wide<T, N>>
+   logical<wide<T, N>>
   compare_absolute_(EVE_REQUIRES(sve_), O const& opts,
                     wide<T, N> v, wide<T, N> w,  F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
@@ -36,7 +36,7 @@ namespace eve::_
   }
 
   template<callable_options O, floating_scalar_value T, typename N, conditional_expr C,  typename F>
-  EVE_FORCEINLINE logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
+   logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(sve_), C const& mask, O const& opts,
                                   wide<T, N> v, wide<T, N> w, F f) noexcept
   requires (sve_abi<abi_t<T, N>>)
   {

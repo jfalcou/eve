@@ -19,12 +19,12 @@ namespace eve
   struct logical_not_t : strict_elementwise_callable<logical_not_t, Options>
   {
     template<value T>
-    constexpr EVE_FORCEINLINE as_logical_t<T> operator()(T a) const noexcept
+    EVE_ABI constexpr as_logical_t<T> operator()(T a) const noexcept
     {
       return EVE_DISPATCH_CALL(a);
     }
 
-    constexpr EVE_FORCEINLINE bool operator()(bool a) const noexcept
+    EVE_ABI constexpr bool operator()(bool a) const noexcept
     {
       return !a;
     }
@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr auto logical_not_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
+    constexpr auto logical_not_(EVE_REQUIRES(cpu_), O const&, T const& a) noexcept
       requires has_native_abi_v<T>
     {
       if      constexpr (scalar_value<T>)    return as_logical_t<T>(!a);

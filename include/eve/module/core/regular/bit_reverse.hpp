@@ -24,11 +24,11 @@ namespace eve
   struct bit_reverse_t : strict_elementwise_callable<bit_reverse_t, Options>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const
+    EVE_ABI constexpr T operator()(T v) const
     { return EVE_DISPATCH_CALL(v); }
 
     template<eve::value T, integral_scalar_value I >
-    constexpr EVE_FORCEINLINE T operator()(T v, I i) const
+    EVE_ABI constexpr T operator()(T v, I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
     EVE_CALLABLE_OBJECT(bit_reverse_t, bit_reverse_);
@@ -89,7 +89,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     bit_reverse_(EVE_REQUIRES(cpu_), O const&, T x) noexcept
     {
       using e_t =  element_type_t<T>;
@@ -130,7 +130,7 @@ namespace eve
     }
 
     template<typename T, typename I, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     bit_reverse_(EVE_REQUIRES(cpu_), O const&, T x, I n) noexcept
     {
       using e_t =  element_type_t<T>;

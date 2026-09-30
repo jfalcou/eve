@@ -18,7 +18,7 @@ namespace eve::algo
   namespace _
   {
     template <std::size_t f, std::size_t l, typename T, std::size_t N, typename Op>
-    EVE_FORCEINLINE constexpr T array_reduce_impl(std::array<T, N> const& x, Op op)
+     constexpr T array_reduce_impl(std::array<T, N> const& x, Op op)
     {
       if constexpr ((l - f) == 1) return x[f];
       else
@@ -32,7 +32,7 @@ namespace eve::algo
   }
 
   template <typename T, std::size_t N, typename F>
-  EVE_FORCEINLINE constexpr auto array_map(std::array<T, N> const& x, F f)
+  EVE_ABI constexpr auto array_map(std::array<T, N> const& x, F f)
   {
     return [&]<std::size_t ...i>(std::index_sequence<i...>){
       return std::array{ f(x[i]) ... };
@@ -40,7 +40,7 @@ namespace eve::algo
   }
 
   template <typename T, typename U, std::size_t N, typename F>
-  EVE_FORCEINLINE constexpr auto array_map(
+  EVE_ABI constexpr auto array_map(
     std::array<T, N> const& x,
     std::array<U, N> const& y,
     F f)
@@ -51,7 +51,7 @@ namespace eve::algo
   }
 
   template <typename T, std::size_t N, typename Op>
-  EVE_FORCEINLINE constexpr T array_reduce(std::array<T, N> x, Op op)
+  EVE_ABI constexpr T array_reduce(std::array<T, N> x, Op op)
     requires (N >= 1)
   {
     return _::array_reduce_impl<0, N>(x, op);
@@ -66,7 +66,7 @@ namespace eve::algo
       Op* op;
       std::size_t* res;
 
-      EVE_FORCEINLINE constexpr void operator()(std::size_t j) const
+      EVE_ABI constexpr void operator()(std::size_t j) const
       {
         if ((*op)((*x)[j])) *res = j;
       }
@@ -74,7 +74,7 @@ namespace eve::algo
 
 
     template <typename T, std::size_t N, typename Op, std::size_t...i>
-    EVE_FORCEINLINE constexpr std::size_t impl(std::array<T, N> x, Op op, std::index_sequence<i...>) const {
+    EVE_ABI constexpr std::size_t impl(std::array<T, N> x, Op op, std::index_sequence<i...>) const {
       std::size_t res = N;
       cmov_if_lambda<T, N, Op> update_res_if {&x, &op, &res };
       (update_res_if(N - i - 1), ...);
@@ -82,7 +82,7 @@ namespace eve::algo
     }
 
     template <typename T, std::size_t N, typename Op, std::size_t...idxs>
-    EVE_FORCEINLINE constexpr std::size_t operator()(std::array<T, N> x, Op op) const
+    EVE_ABI constexpr std::size_t operator()(std::array<T, N> x, Op op) const
     {
       return impl(x, op, std::make_index_sequence<N>{});
     }

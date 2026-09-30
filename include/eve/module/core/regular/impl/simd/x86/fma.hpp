@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<typename T, typename N, callable_options O>
-  EVE_FORCEINLINE wide<T, N> fma_(EVE_REQUIRES(sse2_),
+   wide<T, N> fma_(EVE_REQUIRES(sse2_),
                                   O const& opts,
                                   wide<T, N> const& a,
                                   wide<T, N> const& b,
@@ -83,7 +83,7 @@ namespace eve::_
   }
 
   template<typename T, typename N, conditional_expr C, callable_options O>
-  EVE_FORCEINLINE wide<T, N> fma_( EVE_REQUIRES(avx512_),
+   wide<T, N> fma_( EVE_REQUIRES(avx512_),
                                    C const& mask,
                                    O const& opts,
                                    wide<T, N> const& a,

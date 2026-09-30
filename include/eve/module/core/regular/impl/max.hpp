@@ -23,7 +23,7 @@
 namespace eve::_
 {
   template<typename T0, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   max_(EVE_REQUIRES(cpu_), O const & o, T0 aa0, Ts... as) noexcept
   {
     using r_t = eve::common_value_t<T0, Ts...>;
@@ -108,7 +108,7 @@ namespace eve::_
   // Predicate case
   //================================================================================================
   template<typename Callable>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   build_max_callable(Callable const & f) noexcept
   {
     if      constexpr( std::same_as<Callable, eve::is_less_t<eve::options<>>>     ) return eve::max;

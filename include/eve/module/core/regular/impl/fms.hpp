@@ -28,7 +28,7 @@
 namespace eve::_
 {
   template<callable_options O, simd_value... Ts>
-  EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+   constexpr auto fms_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
     requires (_::fp16_should_apply<Ts> && ...)
   {
     if constexpr (O::contains(upper) || O::contains(lower) || O::contains(pedantic)) return _::map(fms[o], ts...);
@@ -36,7 +36,7 @@ namespace eve::_
   }
 
   template<typename T, typename U, typename V, callable_options O>
-  EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
+   constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
     if constexpr(O::contains(promote))
@@ -57,7 +57,7 @@ namespace eve::_
   // We catch the mask + PROMOTE case and handle it properly
   // No special provision is made for PEDANTIC as it is handled in the second pass without issues.
   template<typename T, typename U, typename V, conditional_expr C, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   fms_(EVE_REQUIRES(cpu_), C const& cx, O const& o, T const& a, U const& b, V const& c)
   {
     // PROMOTE ---------------------
@@ -78,7 +78,7 @@ namespace eve::_
   }
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b, T const& c)
+   constexpr auto fms_(EVE_REQUIRES(cpu_), O const& o, T const& a, T const& b, T const& c)
   {
     // UPPER LOWER ---------------------
     if constexpr(floating_value<T> && (O::contains(upper) || O::contains(lower)))

@@ -19,7 +19,7 @@ namespace eve
   struct is_negative_t : elementwise_callable<is_negative_t, Options, pedantic_option>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    EVE_ABI constexpr as_logical_t<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -89,7 +89,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    constexpr as_logical_t<T>
     is_negative_(EVE_REQUIRES(cpu_), O const &, T const& v) noexcept
     {
       if constexpr( unsigned_value<T> )

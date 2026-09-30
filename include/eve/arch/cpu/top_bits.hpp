@@ -30,7 +30,7 @@ namespace _
            std::ptrdiff_t bits_per_e,
            typename Int,
            relative_conditional_expr C>
-  EVE_FORCEINLINE constexpr Int cond_to_int(C ignore)
+  constexpr Int cond_to_int(C ignore)
   {
     constexpr std::ptrdiff_t static_bits_size = bits_per_e * size;
     if constexpr( C::is_complete && C::is_inverted )
@@ -100,13 +100,13 @@ namespace _
     using half_logical = logical<wide<scalar_type, eve::fixed<half_size>>>;
 
    private:
-    EVE_FORCEINLINE static auto storage_type_impl()
+    EVE_ABI static auto storage_type_impl()
     {
       if constexpr ( is_aggregated )  return std::array<top_bits<half_logical>, 2>{};
       else                            return movemask(logical_type{}).first;
     }
 
-    EVE_FORCEINLINE static constexpr std::ptrdiff_t bits_per_element_impl()
+    EVE_ABI static constexpr std::ptrdiff_t bits_per_element_impl()
     {
       if constexpr ( is_aggregated ) return top_bits<half_logical>::bits_per_element;
       else                           return decltype(movemask(logical_type{}).second){}();
@@ -151,13 +151,13 @@ namespace _
 
     // constructors ---------------------------------
 
-    EVE_FORCEINLINE constexpr top_bits() = default;
+    EVE_ABI constexpr top_bits() = default;
 
-    EVE_FORCEINLINE constexpr explicit top_bits(storage_type s) : storage(s) {}
+    EVE_ABI constexpr explicit top_bits(storage_type s) : storage(s) {}
 
     // -- constructor(logical)
 
-    EVE_FORCEINLINE explicit top_bits(const logical_type& p)
+    EVE_ABI explicit top_bits(const logical_type& p)
     {
       if constexpr ( is_aggregated )
       {
@@ -175,7 +175,7 @@ namespace _
     // -- constructor(ignore)
 
     template<relative_conditional_expr C>
-    EVE_FORCEINLINE constexpr explicit top_bits(C c)
+    EVE_ABI constexpr explicit top_bits(C c)
     {
       if constexpr( !is_aggregated )
         storage = _::cond_to_int<static_size, bits_per_element, storage_type>(c);
@@ -218,14 +218,14 @@ namespace _
 
     // -- constructor: logical + ignore
 
-    EVE_FORCEINLINE explicit top_bits(const logical_type &p, relative_conditional_expr auto ignore) : top_bits(p)
+    EVE_ABI explicit top_bits(const logical_type &p, relative_conditional_expr auto ignore) : top_bits(p)
     {
       operator&=(top_bits(ignore));
     }
 
     // -- slicing
 
-    EVE_FORCEINLINE
+    EVE_ABI
     kumi::tuple<top_bits<half_logical>, top_bits<half_logical>>
     slice() const
       requires ( Logical::size() > 1 )
@@ -245,7 +245,7 @@ namespace _
     }
 
     template<std::size_t Slice>
-    EVE_FORCEINLINE
+    EVE_ABI
     top_bits<half_logical> slice(slice_t<Slice>) const
     {
       auto [l, h] = slice();
@@ -259,7 +259,7 @@ namespace _
     static constexpr std::ptrdiff_t size() { return static_size; }
 
     //! setter
-    EVE_FORCEINLINE constexpr void set(std::ptrdiff_t i, bool x)
+    EVE_ABI constexpr void set(std::ptrdiff_t i, bool x)
     {
       if constexpr ( !is_aggregated )
       {
@@ -275,7 +275,7 @@ namespace _
     }
 
     // getter
-    EVE_FORCEINLINE constexpr bool get(std::ptrdiff_t i) const
+    EVE_ABI constexpr bool get(std::ptrdiff_t i) const
     {
       if constexpr ( !is_aggregated ) return (storage & (storage_type{1} << (i * bits_per_element))) != 0;
       else
@@ -288,7 +288,7 @@ namespace _
     // miscellaneous -----------------------------------
 
     // test
-    EVE_FORCEINLINE constexpr explicit operator bool()
+    EVE_ABI constexpr explicit operator bool()
     {
       if constexpr ( !is_aggregated ) return storage != storage_type{0};
       else
@@ -298,7 +298,7 @@ namespace _
     }
 
     // if possible, return top_bits as an int.
-    EVE_FORCEINLINE constexpr auto as_int() const
+    EVE_ABI constexpr auto as_int() const
       requires (static_bits_size <= 64)
     {
       if constexpr ( is_aggregated )
@@ -314,9 +314,9 @@ namespace _
       else return storage;
     }
 
-    EVE_FORCEINLINE constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
+    EVE_ABI constexpr std::strong_ordering operator<=>(const top_bits&) const = default;
 
-    EVE_FORCEINLINE bool operator==(top_bits const& b) const
+    EVE_ABI bool operator==(top_bits const& b) const
     {
       if constexpr ( !is_aggregated ) return storage == b.storage;
       else
@@ -327,7 +327,7 @@ namespace _
 
     // bit operators ------------------------------
 
-    EVE_FORCEINLINE constexpr top_bits& operator&=(top_bits x)
+    EVE_ABI constexpr top_bits& operator&=(top_bits x)
     {
       if constexpr ( is_aggregated )
       {
@@ -338,7 +338,7 @@ namespace _
       return *this;
     }
 
-    EVE_FORCEINLINE constexpr top_bits& operator|=(top_bits x)
+    EVE_ABI constexpr top_bits& operator|=(top_bits x)
     {
       if constexpr ( is_aggregated )
       {
@@ -350,7 +350,7 @@ namespace _
     }
 
 
-    EVE_FORCEINLINE constexpr top_bits& operator^=(const top_bits& x)
+    EVE_ABI constexpr top_bits& operator^=(const top_bits& x)
     {
       if constexpr ( is_aggregated )
       {
@@ -361,7 +361,7 @@ namespace _
       return *this;
     }
 
-    EVE_FORCEINLINE constexpr top_bits operator~() const
+    EVE_ABI constexpr top_bits operator~() const
     {
       if constexpr( !is_aggregated ) { return top_bits {(storage_type)~storage} & top_bits {ignore_none_ {}}; }
       else return top_bits {{~storage[0], ~storage[1]}};
@@ -370,7 +370,7 @@ namespace _
     // streaming ----------------------------------
 
     template<typename C, typename Ct>
-    EVE_FORCEINLINE friend auto& operator<<(std::basic_ostream<C, Ct>& o, const top_bits& x)
+    EVE_ABI friend auto& operator<<(std::basic_ostream<C, Ct>& o, const top_bits& x)
     {
       if constexpr( is_aggregated ) return o << '[' << x.storage[0] << ", " << x.storage[1] << ']';
       else return o << x.storage;
@@ -378,7 +378,7 @@ namespace _
   };
 
   template<logical_simd_value L>
-  EVE_FORCEINLINE auto
+  EVE_ABI auto
   operator&(top_bits<L> x, top_bits<L> y)
   {
     x &= y;
@@ -386,7 +386,7 @@ namespace _
   }
 
   template <logical_simd_value L>
-  EVE_FORCEINLINE auto
+  EVE_ABI auto
   operator|(top_bits<L> x, top_bits<L> y)
   {
     x |= y;
@@ -394,7 +394,7 @@ namespace _
   }
 
   template<logical_simd_value L>
-  EVE_FORCEINLINE auto
+  EVE_ABI auto
   operator^(top_bits<L> x, top_bits<L> y)
   {
     x ^= y;
@@ -409,7 +409,7 @@ namespace _
 namespace eve::_ {
 
 template <logical_simd_value Logical>
-EVE_FORCEINLINE Logical to_logical(eve::top_bits<Logical> mmask) noexcept
+Logical to_logical(eve::top_bits<Logical> mmask) noexcept
 {
   using abi = typename eve::top_bits<Logical>::abi_type;
 

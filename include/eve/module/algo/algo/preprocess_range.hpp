@@ -23,20 +23,20 @@ namespace eve::algo
   namespace _
   {
     template <typename T, typename A>
-    EVE_FORCEINLINE auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
+    auto ptr_to_iterator(eve::aligned_ptr<T, A> ptr)
     {
       return ptr_iterator<eve::aligned_ptr<T, A>, A>{ptr};
     }
 
     template <typename T>
-    EVE_FORCEINLINE auto ptr_to_iterator(T* ptr)
+    auto ptr_to_iterator(T* ptr)
     {
       using N          = eve::fixed<eve::nofs_cardinal_v<std::remove_const_t<T>>>;
       return ptr_iterator<T*, N>{ptr};
     }
 
     template <typename Traits, typename I>
-    EVE_FORCEINLINE auto fix_up_cardinal(Traits, I i)
+    auto fix_up_cardinal(Traits, I i)
     {
       if constexpr( iterator_cardinal_v<I> != iteration_cardinal_t<Traits, I> {}() )
       {
@@ -53,7 +53,7 @@ namespace eve::algo
 
   template <typename Traits, typename I_, typename S_>
     requires _::pointer_iterator_sentinel<I_, S_>
-  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
+  EVE_ABI auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
     // We have to force cardinal here, because iterators
     // with different cardinals don't form a valid range.
@@ -65,7 +65,7 @@ namespace eve::algo
 
   template<typename Traits, std::contiguous_iterator I, typename S>
     requires ( !std::is_pointer_v<I> )
-  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits traits_, I f, S l) const
+  EVE_ABI auto preprocess_range_::operator()(Traits traits_, I f, S l) const
   {
     auto* raw_f = std::to_address(f);
     auto* raw_l = raw_f + (l - f);
@@ -75,7 +75,7 @@ namespace eve::algo
 
   // Base case. Should validate that I, S are a valid iterator pair
   template<typename Traits, iterator I_, sentinel_for<I_> S_>
-  EVE_FORCEINLINE auto preprocess_range_::operator()(Traits with_equivalents_, I_ f_, S_ l_) const
+  EVE_ABI auto preprocess_range_::operator()(Traits with_equivalents_, I_ f_, S_ l_) const
   {
     auto traits_ = process_equivalents(with_equivalents_);
 
@@ -99,7 +99,7 @@ namespace eve::algo
 
   // FIX: 1629 - support common type and such
   template<typename Traits, typename... Rs>
-  EVE_FORCEINLINE auto temporary_preprocess_ranges_hack(Traits tr, Rs&&...rs)
+  EVE_ABI auto temporary_preprocess_ranges_hack(Traits tr, Rs&&...rs)
   {
     constexpr auto to_consider = kumi::cat(get_types_to_consider_for<Traits, Rs> {}...);
     auto           traits2     = default_to(tr, traits {consider_types_key = to_consider});

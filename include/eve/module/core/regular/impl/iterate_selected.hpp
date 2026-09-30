@@ -20,12 +20,12 @@ template<typename F> struct plus_offset_lambda
   F&             f;
   std::ptrdiff_t offset;
 
-  EVE_FORCEINLINE
+  
   bool operator()(std::ptrdiff_t i) const { return f(i + offset); }
 };
 
 template<std::ptrdiff_t bits_per_element, std::unsigned_integral Bits>
-EVE_FORCEINLINE bool
+ bool
 iterate_selected_int(Bits bits, auto&& f)
 {
   if constexpr( bits_per_element <= 2 )
@@ -57,7 +57,7 @@ iterate_selected_int(Bits bits, auto&& f)
 }
 
 template<callable_options O, typename L, typename F>
-EVE_FORCEINLINE bool
+ bool
 iterate_selected_(EVE_REQUIRES(cpu_), O const& opts, L l, F&& f)
 {
   auto ignore = opts[condition_key];
