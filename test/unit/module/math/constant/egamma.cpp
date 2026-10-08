@@ -68,3 +68,19 @@ TTS_CASE_WITH("Check behavior of egamma[mask] on :wide)",
 {
   TTS_IEEE_EQUAL(eve::egamma[mask](eve::as(a0)), eve::if_else(mask, eve::egamma(eve::as(a0)), eve::zero));
 };
+
+//==================================================================================================
+// γ is an alias of egamma and must not drift from it
+//==================================================================================================
+TTS_CASE_TPL("Check that eve::γ matches eve::egamma", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using eve::as;
+
+  TTS_EXPR_IS(eve::γ(as<T>()), T);
+  TTS_EQUAL(eve::γ(as<T>())          , eve::egamma(as<T>()));
+  TTS_EQUAL(eve::γ(as<v_t>())        , eve::egamma(as<v_t>()));
+  TTS_EQUAL(eve::γ[eve::lower](as<T>()), eve::egamma[eve::lower](as<T>()));
+  TTS_EQUAL(eve::γ[eve::upper](as<T>()), eve::egamma[eve::upper](as<T>()));
+};

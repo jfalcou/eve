@@ -70,3 +70,14 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::arg)(eve::wide)",
   TTS_IEEE_EQUAL(eve::arg[mask](a0),
             eve::if_else(mask, eve::arg(a0), a0));
 };
+
+//==================================================================================================
+// phase is an alias of arg and must not drift from it
+//==================================================================================================
+TTS_CASE_WITH("Check that eve::phase matches eve::arg",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::between(-10.0, 10.0)))
+<typename T>(T const& a0)
+{
+  TTS_IEEE_EQUAL(eve::phase(a0), eve::arg(a0));
+};
