@@ -50,6 +50,42 @@ template<std::size_t I> struct std::tuple_element<I,udt::grid2d>    { using type
 namespace udt
 {
   //------------------------------------------------------------------------------------------------
+  // This test UDT has three members of different types, so that an ordering of more than two
+  // elements is checked against an ordering that does not come from kumi
+  //------------------------------------------------------------------------------------------------
+  struct voxel
+  {
+    float         x = 0;
+    std::int16_t  y = 0;
+    std::uint8_t  z = 0;
+
+    friend constexpr auto operator<=>(voxel,voxel) = default;
+  };
+
+  template<std::size_t I> constexpr auto& get( voxel& p) noexcept
+  {
+    if constexpr(I==0) return p.x; else if constexpr(I==1) return p.y; else return p.z;
+  }
+
+  template<std::size_t I> constexpr auto get( voxel const& p) noexcept
+  {
+    if constexpr(I==0) return p.x; else if constexpr(I==1) return p.y; else return p.z;
+  }
+
+  inline std::ostream& operator<<( std::ostream& os, voxel const& p)
+  {
+    return os << "[x: " << p.x << " - y: " << p.y << " - z: " << +p.z << "]";
+  }
+}
+
+template<>  struct std::tuple_size<udt::voxel>      : std::integral_constant<std::size_t, 3> {};
+template<>  struct std::tuple_element<0,udt::voxel> { using type = float;         };
+template<>  struct std::tuple_element<1,udt::voxel> { using type = std::int16_t;  };
+template<>  struct std::tuple_element<2,udt::voxel> { using type = std::uint8_t;  };
+
+namespace udt
+{
+  //------------------------------------------------------------------------------------------------
   // This test UDT is made to be a placeholder for easier case where one just inherits from
   // kumi::tuple and adapt its interface
   //------------------------------------------------------------------------------------------------
