@@ -28,7 +28,7 @@ TTS_CASE( "Check prebuilt ABI match expected concepts")
 TTS_CASE( "Check for detection of native ABI")
 {
   constexpr auto native = eve::wide<float>::size();
-  
+
   TTS_EXPECT_NOT(( eve::native_abi<eve::wide<float, eve::fixed<2*native>>>              ));
   TTS_EXPECT_NOT(( eve::native_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
 

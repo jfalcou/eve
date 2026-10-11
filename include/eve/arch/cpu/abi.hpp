@@ -27,9 +27,9 @@ namespace eve::_
 
   template<typename T>
   inline constexpr bool is_logical_<eve::logical<T>> = true;
-  
+
   template<typename T> concept arithmetic_ = std::is_arithmetic_v<T> || std::same_as<T, eve::float16_t>;
-  
+
   template<typename T>
   concept supported_simd_type = !std::same_as<T, eve::float16_t> || _::supports_fp16_vector_conversion;
 
@@ -39,7 +39,7 @@ namespace eve::_
   //================================================================================================
   // Select Hardware ABI from Type x Cardinal combo
   // Emulated is the default : used wether we do not have a native register or if there is no simd
-  
+
   // hardward_abi_of is made to be specialized for each and individual architecture
   template<typename T, std::ptrdiff_t Cardinal>
   inline constexpr emulated_ hardware_abi_of{};
@@ -49,28 +49,28 @@ namespace eve::_
 
   //================================================================================================
   // Checks if a Type is supported on a given architecture or if we should emulate it
-  
-  // Specializable trait, specific architecture requirements are supported 
+
+  // Specializable trait, specific architecture requirements are supported
   template<typename T>
   inline constexpr bool should_emulate_v = false;
 
   template<typename T>
   concept should_emulate = !eve::product_type<T> &&
-  (     !supports_simd 
-    ||  !supported_simd_type<T> 
+  (     !supports_simd
+    ||  !supported_simd_type<T>
     ||  std::same_as<eve::_::expected_abi_t<T>, emulated_>
     ||  should_emulate_v<T>);
 
   //================================================================================================
-  // Checks if a Type has a base abi so that we can aggregate native registers 
+  // Checks if a Type has a base abi so that we can aggregate native registers
 
   // Specializable trait for architectures supporting native aggregation like riscv
   template<typename T, std::ptrdiff_t Cardinal>
   inline constexpr bool should_aggregate_v = (width_in_bits<T,Cardinal> > spy::simd_instruction_set.width );
 
   template<typename T, std::ptrdiff_t Cardinal>
-  concept should_aggregate = !eve::product_type<T> && !should_emulate<T> && 
-  (Cardinal > eve::current_abi_type::template expected_cardinal<T>) 
+  concept should_aggregate = !eve::product_type<T> && !should_emulate<T> &&
+  (Cardinal > eve::current_abi_type::template expected_cardinal<T>)
    && should_aggregate_v<T,Cardinal>;
 
   //================================================================================================
@@ -90,7 +90,7 @@ namespace eve::_
   inline constexpr auto software_abi_of<T,Cardinal> = emulated_{};
 
   template<typename T, std::ptrdiff_t Cardinal>
-  requires( should_aggregate<T,Cardinal> ) 
+  requires( should_aggregate<T,Cardinal> )
   inline constexpr auto software_abi_of<T,Cardinal> = aggregated_{};
 }
 
@@ -113,10 +113,10 @@ namespace eve
   //================================================================================================
 #if defined (EVE_DOXYGEN_INVOKED)
   template<typename Type, typename Lanes>
-  using abi_t = /* Implementation defined */; 
+  using abi_t = /* Implementation defined */;
 #else
   template<typename Type, typename Lanes>
   requires( _::arithmetic_<Type> || eve::product_type<Type> || _::is_logical_<Type> )
-  using abi_t = std::remove_cvref_t<decltype(_::software_abi_of<translate_t<Type>, Lanes::value>)>; 
+  using abi_t = std::remove_cvref_t<decltype(_::software_abi_of<translate_t<Type>, Lanes::value>)>;
 #endif
 }

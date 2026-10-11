@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
-  requires (  (spy::simd_instruction_set >= spy::vsx_ || spy::simd_instruction_set >= spy::vmx_) 
+  requires (  (spy::simd_instruction_set >= spy::vsx_ || spy::simd_instruction_set >= spy::vmx_)
               && width_in_bits<T,Cardinal> <= 128)
   inline constexpr auto hardware_abi_of<T,Cardinal> = ppc_{};
 

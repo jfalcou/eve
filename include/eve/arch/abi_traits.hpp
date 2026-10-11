@@ -22,7 +22,7 @@ namespace eve
     typename T::abi_type;
     requires std::same_as<typename T::abi_type, bundle_>;
   };
-  
+
   //================================================================================================
   // Check for emulated_ ABI
   //================================================================================================
@@ -32,7 +32,7 @@ namespace eve
     typename T::abi_type;
     requires std::same_as<typename T::abi_type, emulated_>;
   };
-  
+
   //================================================================================================
   // Check for aggregated_ ABI
   //================================================================================================
@@ -42,7 +42,7 @@ namespace eve
     typename T::abi_type;
     requires std::same_as<typename T::abi_type, aggregated_>;
   };
- 
+
   //================================================================================================
   // Check for native ABI
   //================================================================================================
@@ -50,15 +50,15 @@ namespace eve
   concept native_abi = std::is_arithmetic_v<T> || !(emulated_abi<T> || aggregated_abi<T> || bundle_abi<T>);
 
   //================================================================================================
-  // Check for non-native ABI 
+  // Check for non-native ABI
   //================================================================================================
   template<typename T>
   concept non_native_abi = !native_abi<T>;
-  
+
   //================================================================================================
   // Concept for discriminating aggregated from non-agregated ABI
   //================================================================================================
-  template<typename T> 
+  template<typename T>
   concept regular_abi = !aggregated_abi<T>;
 
   //================================================================================================
@@ -75,5 +75,5 @@ namespace eve
 
   template<typename T>
   requires ( eve::product_type<T> )
-  inline constexpr bool has_aggregated_component_v<T> = kumi::apply_traits_t<_::has_aggregate, T>::value; 
+  inline constexpr bool has_aggregated_component_v<T> = kumi::apply_traits_t<_::has_aggregate, T>::value;
 }

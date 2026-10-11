@@ -12,7 +12,7 @@
 namespace eve::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
-  requires ( spy::simd_instruction_set == spy::avx512_ 
+  requires ( spy::simd_instruction_set == spy::avx512_
             && !std::same_as<eve::current_api_type, eve::avx2_>
             && width_in_bits<T,Cardinal> == 512 )
   inline constexpr auto hardware_abi_of<T,Cardinal> = x86_512_{};
