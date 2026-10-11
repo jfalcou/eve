@@ -35,7 +35,9 @@
 #else
 #  if defined(_MSC_VER)
 #    define EVE_ABI [[using msvc: forceinline, flatten]] inline
-#  elif defined(__GNUC__) || defined(__clang__)
+#  elif defined(__clang__)
+#    define EVE_ABI [[using gnu: always_inline, artificial]] inline
+#  elif defined(__GNUC__)
 #    define EVE_ABI [[using gnu: always_inline, flatten, artificial]] inline
 #  else
 #    define EVE_ABI inline
