@@ -38,18 +38,20 @@ namespace eve
     template<callable_options O, typename T, typename... Ts>
     EVE_ABI constexpr auto adapt_call(auto a, O const& o, T x, Ts... xs) const
     {
-      constexpr bool has_implementation          = requires{ func_t::deferred_call(a, o, x, xs...); };
-      constexpr bool has_emulated_implementation = requires{ func_t::deferred_call(emulated_{}, o, x, xs...); };
-      constexpr bool supports_map_no_conversion  = requires{ this->map(x, xs...); };
-      constexpr bool any_emulated                = (emulated_abi<T> || ... || emulated_abi<Ts>);
-      constexpr bool any_aggregated              = (aggregated_abi<T> || ... || aggregated_abi<Ts>);
+      constexpr bool any_emulated   = (emulated_abi<T> || ... || emulated_abi<Ts>);
+      constexpr bool any_aggregated = (aggregated_abi<T> || ... || aggregated_abi<Ts>);
 
-
-      if      constexpr(any_aggregated)                              return aggregate(this->derived(), x, xs...);
-      else if constexpr(any_emulated && has_emulated_implementation) return func_t::deferred_call(emulated_{}, o, x, xs...);
-      else if constexpr(any_emulated && supports_map_no_conversion)  return this->map(x, xs...);
-      else if constexpr(has_implementation)                          return func_t::deferred_call(a, o, x, xs...);
-      else                                                           return _::ignore{};
+      // The emulated and mapped paths are only resolved when an argument is emulated
+      if constexpr(any_aggregated) return aggregate(this->derived(), x, xs...);
+      else if constexpr(any_emulated)
+      {
+        if      constexpr(requires{ func_t::deferred_call(emulated_{}, o, x, xs...); }) return func_t::deferred_call(emulated_{}, o, x, xs...);
+        else if constexpr(requires{ this->map(x, xs...); })                             return this->map(x, xs...);
+        else if constexpr(requires{ func_t::deferred_call(a, o, x, xs...); })           return func_t::deferred_call(a, o, x, xs...);
+        else                                                                            return _::ignore{};
+      }
+      else if constexpr(requires{ func_t::deferred_call(a, o, x, xs...); }) return func_t::deferred_call(a, o, x, xs...);
+      else                                                                  return _::ignore{};
     }
 
     template<callable_options O, typename T, typename... Ts>
