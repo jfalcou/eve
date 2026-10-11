@@ -91,3 +91,14 @@ TTS_CASE_TPL( "Check peculiar values", eve::test::scalar::ieee_reals)
     TTS_ULP_EQUAL(eve::omega(T(0.5)), T(0.76624860816175026), 0.5);
   }
 };
+
+//==================================================================================================
+// ω is an alias of omega and must not drift from it
+//==================================================================================================
+TTS_CASE_WITH("Check that eve::ω matches eve::omega",
+              eve::test::simd::ieee_reals,
+              tts::generate(tts::between(-10.0, 10.0)))
+<typename T>(T const& a0)
+{
+  TTS_IEEE_EQUAL(eve::ω(a0), eve::omega(a0));
+};

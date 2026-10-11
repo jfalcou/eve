@@ -67,3 +67,19 @@ TTS_CASE_WITH("Check behavior of pi[mask] on :wide)",
 {
   TTS_IEEE_EQUAL(eve::pi[mask](eve::as(a0)), eve::if_else(mask, eve::pi(eve::as(a0)), eve::zero));
 };
+
+//==================================================================================================
+// π is an alias of pi and must not drift from it
+//==================================================================================================
+TTS_CASE_TPL("Check that eve::π matches eve::pi", eve::test::simd::ieee_reals)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using eve::as;
+
+  TTS_EXPR_IS(eve::π(as<T>()), T);
+  TTS_EQUAL(eve::π(as<T>())          , eve::pi(as<T>()));
+  TTS_EQUAL(eve::π(as<v_t>())        , eve::pi(as<v_t>()));
+  TTS_EQUAL(eve::π[eve::lower](as<T>()), eve::pi[eve::lower](as<T>()));
+  TTS_EQUAL(eve::π[eve::upper](as<T>()), eve::pi[eve::upper](as<T>()));
+};
