@@ -85,7 +85,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    EVE_ABI constexpr T
+    constexpr T
     prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n)
     {
       using elt_t = element_type_t<T>;
@@ -110,14 +110,14 @@ namespace eve
     }
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
-    EVE_ABI constexpr auto
+    constexpr auto
     prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       return convert(prime_ceil(convert(n, as<uint32_t>())), target);
     }
 
     template<unsigned_value T,  floating_scalar_value U, callable_options O>
-    EVE_ABI constexpr auto
+    constexpr auto
     prime_ceil_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       auto r = convert(prime_ceil(convert(n, as<uint32_t>())), target);

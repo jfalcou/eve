@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<typename I, typename T, callable_options O>
-    EVE_ABI constexpr as_wide_as_t<T, I>
+    constexpr as_wide_as_t<T, I>
     rising_factorial_(EVE_REQUIRES(cpu_), O const& o, I a, T x) noexcept
     {
       // Integral first parameter

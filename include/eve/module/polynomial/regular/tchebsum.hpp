@@ -126,7 +126,7 @@ namespace eve
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_ABI constexpr auto tchebsum_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
+  constexpr auto tchebsum_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept
   requires (O::contains(widen) && _::fp16_should_apply<common_value_t<Ts...>>)
   {
     return tchebsum[o.drop(widen)](upgrade(ts)...);

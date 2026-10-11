@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_ABI constexpr T
+    constexpr T
     erf_inv_(EVE_REQUIRES(cpu_), O const&, T a0) noexcept
     {
       using elt_t = element_type_t<T>;

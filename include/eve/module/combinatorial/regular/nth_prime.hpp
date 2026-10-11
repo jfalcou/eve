@@ -91,7 +91,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    EVE_ABI constexpr T
+    constexpr T
     nth_prime_(EVE_REQUIRES(cpu_), O const&, T nn) noexcept
     {
       // clang-format off
@@ -1299,14 +1299,14 @@ namespace eve
     }
 
     template<unsigned_value T,  unsigned_scalar_value U, callable_options O>
-    EVE_ABI constexpr auto
+    constexpr auto
     nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       return nth_prime(convert(n, target));
     }
 
     template<unsigned_value T,  floating_scalar_value U, callable_options O>
-    EVE_ABI constexpr auto
+    constexpr auto
     nth_prime_(EVE_REQUIRES(cpu_), O const&, T n, as<U> const & target) noexcept
     {
       auto r = convert(nth_prime(convert(n, as<uint32_t>())), target);
