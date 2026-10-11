@@ -13,10 +13,14 @@
 
 namespace eve::_
 {
-  struct accumulate_decorations
+  // Left fold of default_to over the option specifications, one instantiation per step
+  template<typename Acc> EVE_ABI constexpr auto apply_defaults(Acc acc) { return acc; }
+
+  template<typename Acc, typename O0, typename... Os>
+  EVE_ABI constexpr auto apply_defaults(Acc acc, O0 const& o0, Os const&... os)
   {
-    constexpr auto operator()(auto acc, auto const& m) const { return m.default_to(acc); }
-  };
+    return apply_defaults(o0.default_to(acc), os...);
+  }
 }
 
 namespace eve
@@ -169,10 +173,7 @@ namespace eve
     /// Retrieves the current options' state, including processed default
     EVE_ABI constexpr auto options() const
     {
-      return kumi::fold_left( _::accumulate_decorations{}
-                            , kumi::tuple<Options...>{}
-                            , static_cast<OptionsValues const&>(*this)
-                            );
+      return _::apply_defaults(static_cast<OptionsValues const&>(*this), Options{}...);
     }
   };
 }
