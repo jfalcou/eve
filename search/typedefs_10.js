@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['zipped_0',['zipped',['../namespaceeve.html#a1322b257556bbaaadfad2df9bdd3f4f9',1,'eve']]]
+  ['wide_5fvalue_5ftype_5ft_0',['wide_value_type_t',['../group__eve__traits.html#ga55234286d380ec9a9baef96a65649356',1,'eve']]]
 ];

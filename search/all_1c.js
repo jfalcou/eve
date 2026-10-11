@@ -9,6 +9,5 @@ var searchData=
   ['zip_5fmax_6',['zip_max',['https://jfalcou.github.io/kumi/group__kumi__generators_ga0ce4823febfb00cfb197f73332ba7309.html#ga0ce4823febfb00cfb197f73332ba7309',1,'kumi::zip_max'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga0ce4823febfb00cfb197f73332ba7309.html#ga0ce4823febfb00cfb197f73332ba7309',1,'kumi::zip_max']]],
   ['zip_5fmin_7',['zip_min',['https://jfalcou.github.io/kumi/group__kumi__generators_gaf4b9aea3cee7c30fc6a516c632805423.html#gaf4b9aea3cee7c30fc6a516c632805423',1,'kumi::zip_min'],['https://jfalcou.github.io/kumi/group__kumi__generators_gaf4b9aea3cee7c30fc6a516c632805423.html#gaf4b9aea3cee7c30fc6a516c632805423',1,'kumi::zip_min']]],
   ['zip_5frange_8',['zip_range',['../structeve_1_1algo_1_1views_1_1zip__range.html',1,'eve::algo::views::zip_range&lt; Rngs &gt;'],['../structeve_1_1views_1_1zip__range.html',1,'eve::views::zip_range&lt; Rngs &gt;'],['../structzip__range.html',1,'zip_range']]],
-  ['zipped_9',['zipped',['../namespaceeve.html#a1322b257556bbaaadfad2df9bdd3f4f9',1,'eve']]],
-  ['zipper_10',['zipper',['https://jfalcou.github.io/kumi/group__kumi__functional_gab92c8e53f4f94e60747f4bc0d5301de2.html#gab92c8e53f4f94e60747f4bc0d5301de2',1,'kumi::function']]]
+  ['zipped_9',['zipped',['../namespaceeve.html#a1322b257556bbaaadfad2df9bdd3f4f9',1,'eve']]]
 ];

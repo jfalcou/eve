@@ -22,7 +22,8 @@ var searchData=
   ['nofs_5fcardinal_5fv_19',['nofs_cardinal_v',['../group__eve__arch.html#gab4d8e703ad1e3e94918f3a3ff44e1324',1,'eve']]],
   ['none_20',['none',['https://jfalcou.github.io/kumi/group__kumi__utility.html#gae57a2a957d7c5dc2c0b3d21e0b1a98c0',1,'kumi::none'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#gae57a2a957d7c5dc2c0b3d21e0b1a98c0',1,'kumi::none'],['../group__eve__core__reduction.html#ga6c3f7d70fe96da70a69c2139a7c325ea',1,'eve::none']]],
   ['none_5fof_21',['none_of',['https://jfalcou.github.io/kumi/group__kumi__queries_ga26e030c97733248f67dd2c8fbf527602.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['https://jfalcou.github.io/kumi/group__kumi__queries_ga26e030c97733248f67dd2c8fbf527602.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['../group__eve__algos.html#ga0bd36eeeef22153e10757aae05e6a032',1,'eve::algo::none_of']]],
-  ['nth_5fprime_22',['nth_prime',['../group__eve__combinatorial.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
-  ['nthroot_23',['nthroot',['../group__eve__math__exp.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]],
-  ['numeric_24',['numeric',['../group__eve__core__decorators.html#ga493e4e10b2fd953a22f9e08305820ab3',1,'eve']]]
+  ['npos_22',['npos',['https://jfalcou.github.io/kumi/namespacekumi.html#a864eeb606afbe8cb4df27a765e0411c9',1,'kumi']]],
+  ['nth_5fprime_23',['nth_prime',['../group__eve__combinatorial.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
+  ['nthroot_24',['nthroot',['../group__eve__math__exp.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]],
+  ['numeric_25',['numeric',['../group__eve__core__decorators.html#ga493e4e10b2fd953a22f9e08305820ab3',1,'eve']]]
 ];

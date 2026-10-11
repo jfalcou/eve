@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['scalar_5ftype_0',['scalar_type',['../structeve_1_1top__bits.html#a46b500a7f5599d078b9c1069f400aa56',1,'eve::top_bits']]],
-  ['sentinel_5ft_1',['sentinel_t',['../group__eve__algo__concepts.html#ga5b4e7bedc3df8b7b9b7a778766ac301a',1,'eve::algo']]],
-  ['size_5ftype_2',['size_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ad6cf7dc0caa30cc3860f331f683f6c10',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::size_type'],['../structeve_1_1wide.html#a49b0787fd69bd2084750eb9d42cfcef4',1,'eve::wide::size_type'],['../structeve_1_1algo_1_1soa__vector.html#ad4b822a0023ad3a8cec4bc090c41b381',1,'eve::algo::soa_vector::size_type']]],
-  ['storage_5ftype_3',['storage_type',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#ac94c47f8d965d821d503a0a41818fde8',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::storage_type'],['../structeve_1_1top__bits.html#a9710f1c9c44fda47778a072781e5105a',1,'eve::top_bits::storage_type'],['../structeve_1_1wide.html#a592b87d63264bcc3271b84bc3a7a0f53',1,'eve::wide::storage_type']]]
+  ['rebind_0',['rebind',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a25b557f84e25bb1b30bb67a686d80e84',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::rebind'],['../structeve_1_1wide.html#a68f8b26fc435b652492ebb9163b30ed5',1,'eve::wide::rebind'],['../structeve_1_1aligned__ptr.html#ad093d3fbfa02d18d397c33ecbc5b81ad',1,'eve::aligned_ptr::rebind']]],
+  ['remove_5findex_5fsequence_1',['remove_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__functional_gaab08a06ed8795bacdf72336cf06b0e6a.html#gaab08a06ed8795bacdf72336cf06b0e6a',1,'kumi::function']]],
+  ['rescale_2',['rescale',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a0a505c7c261060febd032a868d28af92',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::rescale'],['../structeve_1_1wide.html#a279755384913a23181f151ece5a4658f',1,'eve::wide::rescale']]],
+  ['reverse_5findex_5fsequence_3',['reverse_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__functional_ga885127642ae710479faebf90f37ba6b8.html#ga885127642ae710479faebf90f37ba6b8',1,'kumi::function']]],
+  ['rotate_5findex_5fsequence_4',['rotate_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__functional_gaf80ca8e67a8eec3669b6e67c1a3c09ae.html#gaf80ca8e67a8eec3669b6e67c1a3c09ae',1,'kumi::function']]]
 ];

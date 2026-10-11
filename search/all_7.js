@@ -324,6 +324,5 @@ var searchData=
   ['extensions_20points_321',['Extensions points',['../group__eve__extensions.html',1,'']]],
   ['extra_5ftypes_5fto_5fconsider_322',['extra_types_to_consider',['../group__eve__algo__traits__dev.html#ga11696ac18da8fb7c68d7c38b03e7eaef',1,'eve::algo']]],
   ['extract_323',['extract',['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract']]],
-  ['extractor_324',['extractor',['https://jfalcou.github.io/kumi/group__kumi__functional_ga512329bc74afee8bbdac22c3e267c4c4.html#ga512329bc74afee8bbdac22c3e267c4c4',1,'kumi::function']]],
-  ['extreme_5fvalue_5fskewness_325',['extreme_value_skewness',['../group__eve__math__constants.html#ga8ba551f79aa6782d07eab6c3d7e0a9db',1,'eve']]]
+  ['extreme_5fvalue_5fskewness_324',['extreme_value_skewness',['../group__eve__math__constants.html#ga8ba551f79aa6782d07eab6c3d7e0a9db',1,'eve']]]
 ];

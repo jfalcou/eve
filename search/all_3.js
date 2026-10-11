@@ -21,7 +21,7 @@ var searchData=
   ['adapting_20udt_20to_20simd_20processing_18',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md106',1,'']]],
   ['add_19',['add',['../group__eve__core__arithmetic.html#gad99c93772514004f757c09fb54ac6b5f',1,'eve']]],
   ['add_20family_20',['Fused multiply add family',['../group__eve__core__fma__family.html',1,'']]],
-  ['adjacent_5funicity_5ft_21',['adjacent_unicity_t',['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1adjacent__unicity__t.html',1,'kumi::function']]],
+  ['adjacent_5findex_5fsequence_21',['adjacent_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__functional_gae8a54a1753591f4aa7594a1f419072c6.html#gae8a54a1753591f4aa7594a1f419072c6',1,'kumi::function']]],
   ['advanced_20options_22',['Advanced options',['../setup.html#autotoc_md86',1,'']]],
   ['agd_23',['agd',['../group__eve__math__invhyper.html#ga0d95c66d561a5a2a6b18cc920d5069c7',1,'eve']]],
   ['agm_24',['agm',['../group__eve__core__arithmetic.html#ga9cde656e2fe72b65fe834806bda0ade5',1,'eve']]],

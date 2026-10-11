@@ -2524,7 +2524,7 @@ For an in-place version, see <span class="tt">::transform_keep_if</span>.</dd></
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Input vector:\n  &quot;</span> &lt;&lt; tts::as_string(input) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> func = [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> x) {</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_functionRef" href="https://jfalcou.github.io/kumi/group__kumi__tuple__related_ga8570ddb839f6b158633537fd7113e795.html#ga8570ddb839f6b158633537fd7113e795">kumi::make_tuple</a>(-x, <a class="code hl_variable" href="group__eve__core__predicates.html#gae52c8a1138e8e9b6da4c0fa568d1d9db">eve::is_even</a>(x));</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__tuple__related_ga2a3a7b464afb602d8a722178ac517da8.html#ga2a3a7b464afb602d8a722178ac517da8">kumi::make_tuple</a>(-x, <a class="code hl_variable" href="group__eve__core__predicates.html#gae52c8a1138e8e9b6da4c0fa568d1d9db">eve::is_even</a>(x));</div>
 <div class="line">  };</div>
 <div class="line"> </div>
 <div class="line">  std::vector&lt;int&gt; output_big(42);</div>
@@ -2543,7 +2543,7 @@ For an in-place version, see <span class="tt">::transform_keep_if</span>.</dd></
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__algos_html_gafcdd857a5e44f0b4e512e22c9dee27c2"><div class="ttname"><a href="#gafcdd857a5e44f0b4e512e22c9dee27c2">eve::algo::iota</a></div><div class="ttdeci">constexpr auto iota</div><div class="ttdoc">SIMD version of std::iota For conversion/overflow behaviour, should follow the standard.</div><div class="ttdef"><b>Definition</b> iota.hpp:38</div></div>
 <div class="ttc" id="agroup__eve__core__predicates_html_gae52c8a1138e8e9b6da4c0fa568d1d9db"><div class="ttname"><a href="group__eve__core__predicates.html#gae52c8a1138e8e9b6da4c0fa568d1d9db">eve::is_even</a></div><div class="ttdeci">constexpr auto is_even</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is even.</div><div class="ttdef"><b>Definition</b> is_even.hpp:78</div></div>
-<div class="ttc" id="agroup__kumi__tuple__related_ga8570ddb839f6b158633537fd7113e795_html_ga8570ddb839f6b158633537fd7113e795"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__tuple__related_ga8570ddb839f6b158633537fd7113e795.html#ga8570ddb839f6b158633537fd7113e795">kumi::make_tuple</a></div><div class="ttdeci">constexpr auto make_tuple(Ts &amp;&amp;... ts) -&gt; kumi::tuple&lt; std::unwrap_ref_decay_t&lt; Ts &gt;... &gt;</div></div>
+<div class="ttc" id="agroup__kumi__tuple__related_ga2a3a7b464afb602d8a722178ac517da8_html_ga2a3a7b464afb602d8a722178ac517da8"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__tuple__related_ga2a3a7b464afb602d8a722178ac517da8.html#ga2a3a7b464afb602d8a722178ac517da8">kumi::make_tuple</a></div><div class="ttdeci">constexpr make_tuple_t make_tuple</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#ga1dfaa1ff5ad47985d1b0a624ba4404b9" title="In-place version of std::copy_if.">keep_if</a></span> </dd>
 <dd>
 <span class="tt"><a class="el" href="#gae38a65f5bbddc152a1e3b36263ab7090" title="SIMD variation on std::copy_if.">copy_if</a></span> </dd>

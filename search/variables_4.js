@@ -36,6 +36,5 @@ var searchData=
   ['exponentmask_33',['exponentmask',['../group__eve__core__constants.html#ga15630d42e0187a51aa629ecc00dbe7e7',1,'eve']]],
   ['expx2_34',['expx2',['../group__eve__math__exp.html#ga9166af39f3533cb7dd7471a25989f636',1,'eve']]],
   ['extract_35',['extract',['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract']]],
-  ['extractor_36',['extractor',['https://jfalcou.github.io/kumi/group__kumi__functional_ga512329bc74afee8bbdac22c3e267c4c4.html#ga512329bc74afee8bbdac22c3e267c4c4',1,'kumi::function']]],
-  ['extreme_5fvalue_5fskewness_37',['extreme_value_skewness',['../group__eve__math__constants.html#ga8ba551f79aa6782d07eab6c3d7e0a9db',1,'eve']]]
+  ['extreme_5fvalue_5fskewness_36',['extreme_value_skewness',['../group__eve__math__constants.html#ga8ba551f79aa6782d07eab6c3d7e0a9db',1,'eve']]]
 ];
