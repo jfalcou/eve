@@ -89,7 +89,7 @@ struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw
   namespace _
   {
     template< typename T, callable_options O>
-    EVE_ABI constexpr
+    constexpr
     auto betainc_(EVE_REQUIRES(cpu_), O const& oo, T px, T pa, T pb) noexcept
     {
       using elt_t = element_type_t<T>;

@@ -91,7 +91,7 @@ struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>
   namespace _
   {
     template<typename N, typename T, typename U, callable_options O>
-    EVE_ABI constexpr as_wide_as_t<common_value_t<T, U>, N>
+    constexpr as_wide_as_t<common_value_t<T, U>, N>
     fibonacci_(EVE_REQUIRES(cpu_), O const&, N n, T a, U b)
     {
       using c_t    = as_wide_as_t<common_value_t<T, U>, N>;

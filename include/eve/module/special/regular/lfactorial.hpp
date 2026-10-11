@@ -90,7 +90,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_ABI constexpr decltype(eve::factorial(T()))
+    constexpr decltype(eve::factorial(T()))
       lfactorial_(EVE_REQUIRES(cpu_), O const& , T n) noexcept
     {
       if constexpr(O::contains(pedantic))

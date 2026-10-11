@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<unsigned_value T, callable_options O>
-    EVE_ABI constexpr auto
+    constexpr auto
     bernoulli_(EVE_REQUIRES(cpu_), O const&, T n)
     {
       constexpr double dbernoulli_b2ns[130] = {
