@@ -6,4 +6,4 @@
 set(CMAKE_C_COMPILER    /usr/bin/clang  )
 set(CMAKE_CXX_COMPILER  /usr/bin/clang++  )
 
-set(CMAKE_CXX_FLAGS     "-DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )
+set(CMAKE_CXX_FLAGS     "${EVE_OPTIONS}" )
