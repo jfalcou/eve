@@ -92,7 +92,7 @@ struct cmplx : eve::struct_support<cmplx, float, float>
     return self;
   }
 
-  friend EVE_ABI auto abs(eve::like<cmplx> auto self)
+  EVE_ABI friend auto abs(eve::like<cmplx> auto self)
   {
     return eve::hypot(re(self), im(self));
   }
