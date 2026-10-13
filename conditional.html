@@ -125,7 +125,7 @@ $(function(){initNavTree('conditional.html','',''); });
 <div class="contents">
 <div class="textblock"><p>When you call a function on one or more <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a>, you expect the computation to be performed on every elements of its parameters. Sometimes, you may want to make the application of a given function dependent on some condition.</p>
 <p>Let's explore the functionalities <b>EVE</b> provides for achieving those results.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
 Explicit Selection</h1>
 <p>Let's say the function we want to write computes the product of two values <span class="tt">a</span> and <span class="tt">b</span> if <span class="tt">a</span> is equal to <span class="tt">b</span> and their difference otherwise.</p>
 <p>The scalar code is looking like:</p>
@@ -161,7 +161,7 @@ Explicit Selection</h1>
 <li>the value to use whenever an element of said condition evaluates to <span class="tt">false</span>, here the difference of <span class="tt">a</span> and <span class="tt">b</span></li>
 </ul>
 <dl class="section warning"><dt>Warning</dt><dd>Contrary to a <span class="tt">if ... else</span> statement, <a class="el" href="group__eve__core__logical.html#ga4883faa71d1b0e8eaea97fe7cc00b0a8" title="Select value based on conditional mask or values.">eve::if_else</a> will evaluates all its arguments before performing its selection even if potential short-cut can be applied later on.</dd></dl>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
 Conditional Function Syntax</h1>
 <p>Let's define a <span class="tt">sqrt_positive</span> function that computes the square root of its argument if it's positive or returns it unchanged otherwise. One can write:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
@@ -217,10 +217,10 @@ Conditional Function Syntax</h1>
 <div class="line">  <span class="keyword">auto</span> <span class="keyword">const</span> f = <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>[a &gt;= 0];</div>
 <div class="line">  <span class="keywordflow">return</span> f(a);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
 Conditional Expressions</h1>
 <p>If passing a simple logical expression is the most common use-case of the conditional syntax, one may requires more flexibility. To do so, <b>EVE</b> provides various objects to express more elaborated conditions.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
 Mask with alternative</h2>
 <p>One may want to use the conditional syntax to call a function but instead of returning the first argument if the condition is false, one may want to return an arbitrary value. This use case is handled by the <a class="el" href="structeve_1_1if__.html" title="Extensible wrapper for SIMD conditional.">eve::if_</a> helper by wrapping logical expression so that an alternative value can be specified.</p>
 <p>Let's modify <span class="tt">sqrt_positive</span> so that, if the argument is not positive, 0 is returned instead.</p>
@@ -247,7 +247,7 @@ Mask with alternative</h2>
 <div class="line">  std::cout &lt;&lt; sqrt_positive(v)       &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; sqrt_positive_else(v)  &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
 Context-sensitive mask</h2>
 <p>Some algorithms require conditional function calls but use logical expression relative to the element index inside a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a> rather than its value. One may want for example to not compute an expression on the first and last element of such <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a>.</p>
 <p>A frequent example is trying to load data from memory while ignoring trailing garbage or out of bounds values:</p>
@@ -308,7 +308,7 @@ Context-sensitive mask</h2>
 <div class="line">  std::cout &lt;&lt; load_between(&amp;data[0] - 1) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The output is obviously the same.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md92"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
 Conclusion</h1>
 <p>Conditional operations on <a href="../reference/concepts/simd_value.html#simd_value">SIMD values</a> is a good way to keep a high level code over some complex computations. <b>EVE</b> provides different levels of abstraction for such operations as well as various helpers to specify how the conditions can be computed based either on values or indexes. </p>
 </div></div><!-- contents -->

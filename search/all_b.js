@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['i_20know_20there_20is_20a_20match_0',['I know there is a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['i_20know_20there_20is_20a_20match_0',['I know there is a match',['../group__eve__core__reduction.html#autotoc_md17',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?']]],
   ['identifier_1',['identifier',['https://jfalcou.github.io/kumi/structkumi_1_1identifier.html',1,'kumi::identifier&lt; typename ID, typename Checker &gt;'],['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1identifier.html',1,'kumi::concepts'],['https://jfalcou.github.io/kumi/structkumi_1_1identifier.html#a1cbb7d1e8b6adafe05c6b3f43c94db5d',1,'kumi::identifier::identifier() noexcept=default'],['https://jfalcou.github.io/kumi/structkumi_1_1identifier_a3b9a31cc021cee475c3dd820c966a104.html#a3b9a31cc021cee475c3dd820c966a104',1,'kumi::identifier::identifier(ID const &amp;id, Checker const &amp;check) noexcept']]],
   ['identifier_3c_20id_2c_20checker_20_3e_2',['identifier&lt; ID, Checker &gt;',['https://jfalcou.github.io/kumi/structkumi_1_1identifier.html',1,'kumi']]],
   ['identifier_5fof_3',['identifier_of',['https://jfalcou.github.io/kumi/group__kumi__utility_gab3919ec6f8098dd1fdafe9c3a79ef0dc.html#gab3919ec6f8098dd1fdafe9c3a79ef0dc',1,'kumi::identifier_of() noexcept'],['https://jfalcou.github.io/kumi/group__kumi__utility_gab3919ec6f8098dd1fdafe9c3a79ef0dc.html#gab3919ec6f8098dd1fdafe9c3a79ef0dc',1,'kumi::identifier_of() noexcept']]],
@@ -8,7 +8,7 @@ var searchData=
   ['identity_5',['identity',['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1numeric__prod.html#a442630c534784c7794c0ced4bbaafcda',1,'kumi::function::numeric_prod::identity'],['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1boolean__xor.html#ae232a2d43a04338bb65254cbc736dbea',1,'kumi::function::boolean_xor::identity'],['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1boolean__or.html#a2f7848820b2e45a83aa776a11a4617c7',1,'kumi::function::boolean_or::identity'],['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1numeric__add.html#aa873c7638061899a652e97fdf45e1452',1,'kumi::function::numeric_add::identity'],['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1boolean__and.html#ab76cd8c8f2059169433f16b45d02eecd',1,'kumi::function::boolean_and::identity']]],
   ['identity_20elements_20the_200_20and_201_20of_20types_6',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/kumi_identity.html',1,'kumi_glossary']]],
   ['ieee_20operations_7',['IEEE operations',['../group__eve__core__internal.html',1,'']]],
-  ['if_20i_20know_20there_20is_20a_20match_8',['if I know there is a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['if_20i_20know_20there_20is_20a_20match_8',['if I know there is a match',['../group__eve__core__reduction.html#autotoc_md17',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?']]],
   ['if_5f_9',['if_',['../structeve_1_1if__.html',1,'eve::if_&lt; C &gt;'],['../structeve_1_1if__.html#a1dd72a0565bcd14b0fa5320d511f39a9',1,'eve::if_::if_()'],['https://jfalcou.github.io/kumi/group__kumi__utility_gacadc026868e6654e80c57432643c804a.html#gacadc026868e6654e80c57432643c804a',1,'kumi::if_'],['https://jfalcou.github.io/kumi/group__kumi__utility_gacadc026868e6654e80c57432643c804a.html#gacadc026868e6654e80c57432643c804a',1,'kumi::if_']]],
   ['if_5felse_10',['if_else',['../group__eve__core__logical.html#ga4883faa71d1b0e8eaea97fe7cc00b0a8',1,'eve']]],
   ['ifrexp_11',['ifrexp',['../group__eve__core__internal.html#ga6b68a3922d5bb6703692878a71fbcba8',1,'eve']]],
@@ -30,11 +30,11 @@ var searchData=
   ['indexes_27',['indexes',['https://jfalcou.github.io/kumi/group__kumi__utility_ga6882a4ada4935fa0fd4ef32ce3716ffb.html#ga6882a4ada4935fa0fd4ef32ce3716ffb',1,'kumi::indexes(Ts...) noexcept'],['https://jfalcou.github.io/kumi/group__kumi__utility_ga6882a4ada4935fa0fd4ef32ce3716ffb.html#ga6882a4ada4935fa0fd4ef32ce3716ffb',1,'kumi::indexes(Ts...) noexcept']]],
   ['indexes_5ffor_28',['indexes_for',['https://jfalcou.github.io/kumi/group__kumi__functional_ga31ec47f07956e9676243754c7ccd6227.html#ga31ec47f07956e9676243754c7ccd6227',1,'kumi::function']]],
   ['inf_29',['inf',['../group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63',1,'eve']]],
-  ['initial_20problem_30',['Initial problem',['../intro-01.html#autotoc_md94',1,'Initial problem'],['../intro-02.html#autotoc_md99',1,'Initial problem']]],
+  ['initial_20problem_30',['Initial problem',['../intro-01.html#autotoc_md92',1,'Initial problem'],['../intro-02.html#autotoc_md97',1,'Initial problem']]],
   ['inner_5fproduct_31',['inner_product',['https://jfalcou.github.io/kumi/group__kumi__reductions_ga712c681a51bdbc86d41b160deddd2e1d.html#ga712c681a51bdbc86d41b160deddd2e1d',1,'kumi::inner_product'],['https://jfalcou.github.io/kumi/group__kumi__reductions_ga712c681a51bdbc86d41b160deddd2e1d.html#ga712c681a51bdbc86d41b160deddd2e1d',1,'kumi::inner_product']]],
-  ['installation_20from_20source_32',['Installation from Source',['../setup.html#autotoc_md78',1,'']]],
+  ['installation_20from_20source_32',['Installation from Source',['../setup.html#autotoc_md76',1,'']]],
   ['installation_20quick_20start_33',['Installation &amp;amp; Quick Start',['../setup.html',1,'']]],
-  ['instruction_20set_20selection_34',['Instruction Set Selection',['../setup.html#autotoc_md83',1,'']]],
+  ['instruction_20set_20selection_34',['Instruction Set Selection',['../setup.html#autotoc_md81',1,'']]],
   ['integral_5fscalar_5fvalue_35',['integral_scalar_value',['../concepteve_1_1integral__scalar__value.html',1,'eve']]],
   ['integral_5fsimd_5fvalue_36',['integral_simd_value',['../concepteve_1_1integral__simd__value.html',1,'eve']]],
   ['integral_5fvalue_37',['integral_value',['../concepteve_1_1integral__value.html',1,'eve']]],
@@ -61,7 +61,7 @@ var searchData=
   ['iota_5fwith_5fstep_58',['iota_with_step',['../group__eve__views.html#gac2613080675f010cddeaed9159910c8e',1,'eve::algo::views']]],
   ['iota_5fwith_5fstep_5fiterator_59',['iota_with_step_iterator',['../structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html',1,'eve::algo::views::iota_with_step_iterator&lt; T, N &gt;'],['../structeve_1_1views_1_1iota__with__step__iterator.html',1,'eve::views::iota_with_step_iterator&lt; T, N &gt;'],['../structiota__with__step__iterator.html',1,'iota_with_step_iterator']]],
   ['irregular_5fpredicate_60',['irregular_predicate',['../concepteve_1_1irregular__predicate.html',1,'eve']]],
-  ['is_20a_20match_61',['is a match',['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md21',1,'What if I know there is a match?']]],
+  ['is_20a_20match_61',['is a match',['../group__eve__core__reduction.html#autotoc_md17',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?']]],
   ['is_5faggregated_62',['is_aggregated',['../structeve_1_1top__bits.html#a5154a768fbc421af8a5301e9096c7350',1,'eve::top_bits']]],
   ['is_5faligned_63',['is_aligned',['../group__eve__memory.html#gad05ab928f3e9aa972a7e7146f76cce13',1,'eve::is_aligned(aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept'],['../group__eve__memory.html#gab1add731db6f65a080c9ec8b4a125858',1,'eve::is_aligned(T v) noexcept'],['../group__eve__memory.html#ga25228d751afbdd3a2c7d09aea5f2ae74',1,'eve::is_aligned(T *ptr) noexcept'],['../group__eve__memory.html#ga3c06e236e6195d1a36a43e0fcc7c5eca',1,'eve::is_aligned(T *ptr, Lanes lanes) noexcept']]],
   ['is_5fbit_5fequal_64',['is_bit_equal',['../group__eve__core__predicates.html#ga6ec822af7cd03bc7d854a4dad197fda1',1,'eve']]],
@@ -121,7 +121,7 @@ var searchData=
   ['is_5frecord_5ftype_5fv_118',['is_record_type_v',['https://jfalcou.github.io/kumi/group__kumi__traits_ga75612200d87c3aa30f068205aa882e2a.html#ga75612200d87c3aa30f068205aa882e2a',1,'kumi::is_record_type_v'],['https://jfalcou.github.io/kumi/group__kumi__traits_ga75612200d87c3aa30f068205aa882e2a.html#ga75612200d87c3aa30f068205aa882e2a',1,'kumi::is_record_type_v']]],
   ['is_5funit_119',['is_unit',['../group__eve__core__predicates.html#ga55a97aa36ad10be2e0f6f31584df7bb6',1,'eve']]],
   ['is_5funordered_120',['is_unordered',['../group__eve__core__predicates.html#gaba27d3ee71282f573b094255e7d24c59',1,'eve']]],
-  ['issue_121',['The Issue',['../multiarch.html#autotoc_md111',1,'']]],
+  ['issue_121',['The Issue',['../multiarch.html#autotoc_md109',1,'']]],
   ['it_122',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
   ['iterate_5fselected_123',['iterate_selected',['../group__eve__core__simd.html#ga48cbc739f85673ad20ccc29debcb2183',1,'eve']]],
   ['iteration_5fcardinal_5ft_124',['iteration_cardinal_t',['../group__eve__algo__traits__dev.html#ga967c316c157e858ddb09a73a90e77896',1,'eve::algo']]],
@@ -129,5 +129,5 @@ var searchData=
   ['iterator_5faligned_126',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
   ['iterator_5fcardinal_5ft_127',['iterator_cardinal_t',['../group__eve__traits.html#ga331d84fa4b64e5deb329b1a09d60c747',1,'eve']]],
   ['iterator_5ft_128',['iterator_t',['../group__eve__algo__concepts.html#gaa7e8d090b9c040a50269d70444af720a',1,'eve::algo']]],
-  ['iterators_129',['Ranges or Iterators',['../algo_rationale.html#autotoc_md55',1,'']]]
+  ['iterators_129',['Ranges or Iterators',['../algo_rationale.html#autotoc_md53',1,'']]]
 ];

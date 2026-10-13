@@ -1,10 +1,10 @@
 var searchData=
 [
   ['native_20code_0',['Interaction with native code.',['../inter-with-native.html',1,'']]],
-  ['native_20sizes_1',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]],
-  ['new_20contributors_2',['New Contributors',['../changelog.html#autotoc_md43',1,'New Contributors'],['../changelog.html#autotoc_md46',1,'New Contributors']]],
-  ['news_20for_20this_20release_3a_20sve_3',['The One Big News for this release: SVE',['../changelog.html#autotoc_md36',1,'']]],
+  ['native_20sizes_1',['What about non-native sizes?',['../inter-with-native.html#autotoc_md91',1,'']]],
+  ['new_20contributors_2',['New Contributors',['../changelog.html#autotoc_md41',1,'New Contributors'],['../changelog.html#autotoc_md44',1,'New Contributors']]],
+  ['news_20for_20this_20release_3a_20sve_3',['The One Big News for this release: SVE',['../changelog.html#autotoc_md34',1,'']]],
   ['nomenclature_4',['Nomenclature',['https://jfalcou.github.io/kumi/kumi_nomenclature.html',1,'kumi_glossary']]],
-  ['non_20member_20function_5',['Non Member Function',['../group__eve__memory.html#autotoc_md14',1,'Non-Member Function'],['../group__eve__memory.html#autotoc_md15',1,'Non-Member Function']]],
-  ['non_20native_20sizes_6',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]]
+  ['non_20member_20function_5',['Non Member Function',['../group__eve__memory.html#autotoc_md12',1,'Non-Member Function'],['../group__eve__memory.html#autotoc_md13',1,'Non-Member Function']]],
+  ['non_20native_20sizes_6',['What about non-native sizes?',['../inter-with-native.html#autotoc_md91',1,'']]]
 ];

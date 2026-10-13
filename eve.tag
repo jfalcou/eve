@@ -1,12 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <tagfile doxygen_version="1.16.1" doxygen_gitid="669aeeefca743c148e2d935b3d3c69535c7491e6">
   <compound kind="struct">
-    <name>eve::abi</name>
-    <filename>structeve_1_1abi.html</filename>
-    <templarg>typename Type</templarg>
-    <templarg>typename Lanes</templarg>
-  </compound>
-  <compound kind="struct">
     <name>eve::aligned_allocator</name>
     <filename>structeve_1_1aligned__allocator.html</filename>
     <templarg>typename T</templarg>
@@ -4178,7 +4172,6 @@
     <name>eve</name>
     <filename>namespaceeve.html</filename>
     <namespace>eve::_</namespace>
-    <class kind="struct">eve::abi</class>
     <class kind="struct">eve::fixed</class>
     <class kind="struct">eve::logical&lt; T &gt;</class>
     <class kind="struct">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</class>
@@ -4500,6 +4493,13 @@
       <anchorfile>namespaceeve.html</anchorfile>
       <anchor>ac72f0e04016942948dc0d1bf861296f4</anchor>
       <arglist>(S, Ss...) -&gt; wide&lt; S, fixed&lt; 1+sizeof...(Ss)&gt; &gt;</arglist>
+    </member>
+    <member kind="variable">
+      <type>typedef</type>
+      <name>abi_t</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>gaea6de9e321c4ad0f6ef5224b1aeb3824</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>constexpr std::ptrdiff_t</type>
@@ -13041,7 +13041,6 @@
     <name>eve_traits</name>
     <title>Type traits</title>
     <filename>group__eve__traits.html</filename>
-    <class kind="struct">eve::abi</class>
     <class kind="struct">eve::as</class>
     <class kind="struct">eve::as_element</class>
     <class kind="struct">eve::cardinal</class>
@@ -13081,6 +13080,13 @@
       <name>eve::wide_value_type_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
       <anchor>ga55234286d380ec9a9baef96a65649356</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>typedef</type>
+      <name>eve::abi_t</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>gaea6de9e321c4ad0f6ef5224b1aeb3824</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">

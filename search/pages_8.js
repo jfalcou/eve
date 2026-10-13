@@ -1,20 +1,20 @@
 var searchData=
 [
-  ['features_0',['Features',['../changelog.html#autotoc_md38',1,'']]],
-  ['fixes_1',['Fixes',['../changelog.html#autotoc_md35',1,'Architectures/Compilers Support &amp;amp; Fixes'],['../changelog.html#autotoc_md39',1,'Bug Fixes'],['../changelog.html#autotoc_md37',1,'Other Fixes']]],
-  ['for_20any_2',['for any',['../group__eve__core__reduction.html#autotoc_md18',1,'Should you check for any?'],['../group__eve__core__reduction.html#autotoc_md20',1,'Should you check for any?']]],
+  ['features_0',['Features',['../changelog.html#autotoc_md36',1,'']]],
+  ['fixes_1',['Fixes',['../changelog.html#autotoc_md33',1,'Architectures/Compilers Support &amp;amp; Fixes'],['../changelog.html#autotoc_md37',1,'Bug Fixes'],['../changelog.html#autotoc_md35',1,'Other Fixes']]],
+  ['for_20any_2',['for any',['../group__eve__core__reduction.html#autotoc_md16',1,'Should you check for any?'],['../group__eve__core__reduction.html#autotoc_md18',1,'Should you check for any?']]],
   ['for_20testing_3',['Building for Testing',['../dev_cmake.html',1,'']]],
-  ['for_20this_20release_3a_20sve_4',['The One Big News for this release: SVE',['../changelog.html#autotoc_md36',1,'']]],
+  ['for_20this_20release_3a_20sve_4',['The One Big News for this release: SVE',['../changelog.html#autotoc_md34',1,'']]],
   ['foundations_5',['Type Theoretic Foundations',['https://jfalcou.github.io/kumi/kumi_introduction.html',1,'kumi_glossary']]],
   ['frequency_20scaling_6',['Frequency Scaling.',['../freqscale.html',1,'']]],
-  ['from_20scalar_20to_20simd_20using_20eve_3a_3awide_7',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md95',1,'']]],
-  ['from_20source_8',['Installation from Source',['../setup.html#autotoc_md78',1,'']]],
-  ['from_20static_20to_20dynamic_20dispatch_9',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
-  ['function_10',['Function',['../group__eve__memory.html#autotoc_md14',1,'Non-Member Function'],['../group__eve__memory.html#autotoc_md15',1,'Non-Member Function']]],
+  ['from_20scalar_20to_20simd_20using_20eve_3a_3awide_7',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md93',1,'']]],
+  ['from_20source_8',['Installation from Source',['../setup.html#autotoc_md76',1,'']]],
+  ['from_20static_20to_20dynamic_20dispatch_9',['From static to dynamic dispatch',['../multiarch.html#autotoc_md110',1,'']]],
+  ['function_10',['Function',['../group__eve__memory.html#autotoc_md12',1,'Non-Member Function'],['../group__eve__memory.html#autotoc_md13',1,'Non-Member Function']]],
   ['function_20customization_20via_20higher_20order_20decorator_11',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
-  ['function_20hub_12',['Writing the dynamic function hub',['../multiarch.html#autotoc_md114',1,'']]],
+  ['function_20hub_12',['Writing the dynamic function hub',['../multiarch.html#autotoc_md112',1,'']]],
   ['function_20objects_20as_20main_20api_13',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
-  ['function_20semantic_14',['Function Semantic',['../glossary_semantic.html#autotoc_md69',1,'']]],
-  ['function_20syntax_15',['Conditional Function Syntax',['../conditional.html#autotoc_md88',1,'']]],
-  ['functions_16',['Functions',['../glossary_semantic.html#glossary_arithmetic',1,'Arithmetic Functions'],['../glossary_semantic.html#glossary_bitwise',1,'Bitwise Functions'],['../glossary_semantic.html#glossary_constant',1,'Constant Functions'],['../glossary_semantic.html#glossary_logical',1,'Logical Functions'],['../group__eve__memory.html#autotoc_md22',1,'Members Functions']]]
+  ['function_20semantic_14',['Function Semantic',['../glossary_semantic.html#autotoc_md67',1,'']]],
+  ['function_20syntax_15',['Conditional Function Syntax',['../conditional.html#autotoc_md86',1,'']]],
+  ['functions_16',['Functions',['../glossary_semantic.html#glossary_arithmetic',1,'Arithmetic Functions'],['../glossary_semantic.html#glossary_bitwise',1,'Bitwise Functions'],['../glossary_semantic.html#glossary_constant',1,'Constant Functions'],['../glossary_semantic.html#glossary_logical',1,'Logical Functions'],['../group__eve__memory.html#autotoc_md20',1,'Members Functions']]]
 ];
