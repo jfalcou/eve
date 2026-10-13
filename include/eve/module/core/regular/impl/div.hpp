@@ -87,7 +87,7 @@ namespace eve::_
         if constexpr(O::contains(upper))
           return next[r < a || ((r ==  a) && is_ltz(e))](d);
         else
-          return prev[r > a || ((r ==  a) && is_ltz(e))](d);
+          return prev[r > a || ((r ==  a) && is_gtz(e))](d);
       }
     }
     else if constexpr(O::contains(saturated))
