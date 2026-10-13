@@ -49,7 +49,7 @@ TTS_CASE_TPL("Check behavior of exp on wide (edge cases)", eve::test::simd::ieee
 
   TTS_IEEE_EQUAL(eve::exp(T(0.)), T(1));
   TTS_IEEE_EQUAL(eve::exp(T(-0.)), T(1));
-  if constexpr( !eve::has_emulated_abi_v<eve::wide<eve::element_type_t<T>>> )
+  if constexpr( !eve::emulated_abi<eve::wide<eve::element_type_t<T>>> )
     TTS_ULP_EQUAL(eve::exp(eve::minlog(eve::as<T>())), T(0), 0.5);
 
   if constexpr( eve::platform::supports_invalids )

@@ -39,7 +39,7 @@ namespace eve::_
 
     if      constexpr (scalar_value<T>)                   return count_true[cx](v.value());
     else if constexpr (C::is_complete && !C::is_inverted) return 0;
-    else if constexpr (has_emulated_abi_v<T>)
+    else if constexpr (emulated_abi<T>)
     {
       std::ptrdiff_t count = 0;
 

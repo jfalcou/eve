@@ -26,7 +26,7 @@ namespace eve
     constexpr static EVE_FORCEINLINE auto process_input(T v, as<Tgt>) noexcept
     {
       using expected_t = as_wide_as_t<element_type_t<T>, Tgt>;
-      if constexpr (has_emulated_abi_v<expected_t>) return _::bit_cast_impl(current_api, v, as<as_uinteger_t<T>>{});
+      if constexpr (emulated_abi<expected_t>) return _::bit_cast_impl(current_api, v, as<as_uinteger_t<T>>{});
       else                                          return v;
     }
 
@@ -34,7 +34,7 @@ namespace eve
     constexpr static EVE_FORCEINLINE auto process_alternative(T v, as<Tgt>) noexcept
     {
       using utgt_t = as_uinteger_t<Tgt>;
-      using inner_tgt_t = std::conditional_t<has_emulated_abi_v<Tgt>, utgt_t, Tgt>;
+      using inner_tgt_t = std::conditional_t<emulated_abi<Tgt>, utgt_t, Tgt>;
 
       if constexpr (scalar_value<T>)
       {

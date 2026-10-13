@@ -26,7 +26,7 @@ basic_shuffle_(EVE_SUPPORTS(neon128_),
   constexpr Pattern q = {};
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
+  if constexpr( aggregated_abi<that_t> ) { return aggregate_shuffler(v, q); }
   else
   {
     if constexpr( std::same_as<abi_t<T, N>, arm_64_> )

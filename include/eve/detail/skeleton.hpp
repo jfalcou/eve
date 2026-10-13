@@ -183,7 +183,7 @@ namespace eve::_
       auto inner_output = kumi::apply([&](auto... m)
         {
           auto v_or_t = []<typename V>(V v) {
-            if constexpr (has_aggregated_abi_v<V>) return v.storage().slice_to_expected();
+            if constexpr (aggregated_abi<V>) return v.storage().slice_to_expected();
             else                                   return kumi::make_tuple(v);
           };
 
@@ -203,7 +203,7 @@ namespace eve::_
             {
               using inner_wide_t = kumi::element_t<I, storage_t>;
               // Whether we should re-wrap the inner storage into the proper product type.
-              if constexpr (has_aggregated_abi_v<inner_wide_t> || eve::product_type<kumi::element_t<0, decltype(inner)>>)
+              if constexpr (aggregated_abi<inner_wide_t> || eve::product_type<kumi::element_t<0, decltype(inner)>>)
               {
                 return kumi::apply([&](auto... m){ return inner_wide_t { kumi::get<I>(m.storage())... }; }, inner);
               }
@@ -242,9 +242,9 @@ namespace eve::_
 
       const auto out = rewrap(inner_output);
 
-      if constexpr (has_emulated_abi_v<wide_t> && product_type<decltype(out)>)
+      if constexpr (emulated_abi<wide_t> && product_type<decltype(out)>)
         return kumi::apply([](auto... m) { return wide_t{m...}; }, out);
-      else if constexpr (has_aggregated_abi_v<wide_t>)
+      else if constexpr (aggregated_abi<wide_t>)
         return wide_t { storage_t { out } };
       else
         return out;

@@ -26,7 +26,7 @@ basic_shuffle_(EVE_SUPPORTS(vmx_),
   constexpr Pattern q = {};
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
+  if constexpr( aggregated_abi<that_t> ) { return aggregate_shuffler(v, q); }
   else
   {
     using bytes_t = typename that_t::template rebind<std::uint8_t, fixed<16>>;

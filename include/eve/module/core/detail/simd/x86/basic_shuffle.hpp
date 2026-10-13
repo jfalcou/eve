@@ -71,7 +71,7 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
   constexpr Pattern q = {};
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
+  if constexpr( aggregated_abi<that_t> ) { return aggregate_shuffler(v, q); }
   else if constexpr( sizeof(T) == 8 )
   {
     using f_t         = as_floating_point_t<that_t>;
@@ -144,7 +144,7 @@ basic_shuffle_(EVE_SUPPORTS(avx_),
   constexpr Pattern q = {};
 
   // We're swizzling so much we aggregate the output
-  if constexpr( has_aggregated_abi_v<that_t> ) { return aggregate_shuffler(v, q); }
+  if constexpr( aggregated_abi<that_t> ) { return aggregate_shuffler(v, q); }
   else if constexpr( width_in == 64 )
   {
     /// TODO: AVX512VBMI supports 128-bits permutexvar

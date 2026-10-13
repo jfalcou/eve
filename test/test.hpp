@@ -337,7 +337,7 @@ namespace tts
 
     // Add garbage at the end of sub-native registers
     // For emulated type, there is no such gap so we don't do anything
-    if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::has_emulated_abi_v<W> )
+    if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::emulated_abi<W> )
     {
       using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
       using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;

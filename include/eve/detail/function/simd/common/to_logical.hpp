@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/detail/is_native.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
@@ -28,7 +28,7 @@ template<typename T, typename N>
 EVE_FORCEINLINE auto
 to_logical(wide<T, N> const& v) noexcept
 {
-  if constexpr( is_aggregated_v<abi_t<T, N>> )
+  if constexpr( aggregated_abi<abi_t<T, N>> )
   {
     as_logical_t<wide<T, N>> that;
     that.storage().for_each([](auto& s, auto const& o) { s = to_logical(o); }, v);
@@ -68,7 +68,7 @@ EVE_FORCEINLINE auto to_logical_impl(cpu_, C c, eve::as<T> tgt) noexcept
                                  as_integer_t<typename l_t::bits_type, signed>>;
 
   if constexpr( std::same_as<C, ignore_all_> ) return l_t {false};
-  else if constexpr (has_emulated_abi_v<T>)
+  else if constexpr (emulated_abi<T>)
   {
     l_t res;
     std::ptrdiff_t offset = c.offset(tgt);

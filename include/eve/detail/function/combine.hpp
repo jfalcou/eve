@@ -28,5 +28,4 @@
 
 #if defined(EVE_INCLUDE_RISCV_HEADER)
 #  include <eve/detail/function/simd/riscv/combine.hpp>
-
 #endif

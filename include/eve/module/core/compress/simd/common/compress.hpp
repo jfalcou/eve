@@ -53,9 +53,9 @@ requires(T::size() == L::size())
 template<relative_conditional_expr C, simd_value T, logical_simd_value L>
 EVE_FORCEINLINE auto
 compress_(EVE_SUPPORTS(cpu_), C, T, L) noexcept
-requires(T::size() == L::size()) && (has_bundle_abi_v<T>)
+requires(T::size() == L::size()) && (bundle_abi<T>)
 {
-  static_assert(!has_bundle_abi_v<T>, "FIX: 1647, eve::compress does not support bundle at the moment.");
+  static_assert(!bundle_abi<T>, "FIX: 1647, eve::compress does not support bundle at the moment.");
 }
 
 template<simd_value T, logical_simd_value L>

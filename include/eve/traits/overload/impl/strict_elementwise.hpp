@@ -7,7 +7,7 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/detail/validate_mask.hpp>
 #include <eve/traits/overload/impl/conditional.hpp>
@@ -41,8 +41,8 @@ namespace eve
       constexpr bool has_implementation          = requires{ func_t::deferred_call(a, o, x, xs...); };
       constexpr bool has_emulated_implementation = requires{ func_t::deferred_call(emulated_{}, o, x, xs...); };
       constexpr bool supports_map_no_conversion  = requires{ this->map(x, xs...); };
-      constexpr bool any_emulated                = (has_emulated_abi_v<T> || ... || has_emulated_abi_v<Ts>);
-      constexpr bool any_aggregated              = (has_aggregated_abi_v<T> || ... || has_aggregated_abi_v<Ts>);
+      constexpr bool any_emulated                = (emulated_abi<T> || ... || emulated_abi<Ts>);
+      constexpr bool any_aggregated              = (aggregated_abi<T> || ... || aggregated_abi<Ts>);
 
 
       if      constexpr(any_aggregated)                              return aggregate(this->derived(), x, xs...);

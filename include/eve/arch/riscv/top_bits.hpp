@@ -12,7 +12,7 @@ namespace eve
 {
 
 template<logical_simd_value Logical>
-requires(current_api == rvv && !has_aggregated_abi_v<Logical>)
+requires(current_api == rvv && !aggregated_abi<Logical>)
 struct top_bits<Logical>
 {
   using logical_type = Logical;

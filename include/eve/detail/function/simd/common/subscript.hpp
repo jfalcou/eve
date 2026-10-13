@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
-#include <eve/detail/has_abi.hpp>
+#include <eve/arch/abi_traits.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/as.hpp>
 #include <cstring>
@@ -24,7 +24,7 @@ namespace eve::_
   {
     using abi_t = typename Wide::abi_type;
 
-    if constexpr( has_bundle_abi_v<Wide> )
+    if constexpr( bundle_abi<Wide> )
     {
       return kumi::apply( [=](auto const&... m)
                           {
@@ -33,7 +33,7 @@ namespace eve::_
                           , p.storage()
                         );
     }
-    else if constexpr( has_aggregated_abi_v<Wide> && !abi_t::is_wide_logical )
+    else if constexpr( aggregated_abi<Wide> && !abi_t::is_wide_logical )
     {
       constexpr auto sz = Wide::size()/2;
       if(i<sz)  return extract(p.slice(lower_),i);
@@ -57,7 +57,7 @@ namespace eve::_
   {
     using type = element_type_t<Wide>;
 
-    if constexpr( has_aggregated_abi_v<Wide> )
+    if constexpr( aggregated_abi<Wide> )
     {
       using abi_t = typename Wide::abi_type;
 
@@ -77,11 +77,11 @@ namespace eve::_
         p = Wide{l,h};
       }
     }
-    else if constexpr( has_emulated_abi_v<Wide> )
+    else if constexpr( emulated_abi<Wide> )
     {
       p.storage()[i] = v;
     }
-    else if constexpr( has_bundle_abi_v<Wide> )
+    else if constexpr( bundle_abi<Wide> )
     {
       kumi::for_each( [i](auto& m, auto w) { m.set(i,w); }, p.storage(), v);
     }
