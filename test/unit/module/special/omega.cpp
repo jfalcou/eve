@@ -97,7 +97,7 @@ TTS_CASE_TPL( "Check peculiar values", eve::test::scalar::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check that eve::ω matches eve::omega",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-10.0, 10.0)))
+              tts::between(-10.0, 10.0))
 <typename T>(T const& a0)
 {
   TTS_IEEE_EQUAL(eve::ω(a0), eve::omega(a0));

@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check behavior of oneotwoeps", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of oneotwoeps[mask] on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::oneotwoeps[mask](eve::as(a0)), eve::if_else(mask, eve::oneotwoeps(eve::as(a0)), eve::zero));

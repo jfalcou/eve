@@ -55,8 +55,9 @@ TTS_CASE_TPL("Check behavior of rayleigh_skewness on wide", eve::test::simd::iee
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of rayleigh_skewness[mask] on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3)
+            )
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::rayleigh_skewness[mask](eve::as(a0)), eve::if_else(mask, eve::rayleigh_skewness(eve::as(a0)), eve::zero));

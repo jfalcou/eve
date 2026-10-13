@@ -32,7 +32,7 @@ TTS_CASE_TPL("Check return types of rempio2", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check that rempio2 reduces modulo pi/2",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 100.0)))
+              tts::randoms(0.0, 100.0))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -69,7 +69,7 @@ TTS_CASE_WITH("Check that rempio2 reduces modulo pi/2",
 //==================================================================================================
 TTS_CASE_WITH("Check the range of the rempio2 remainder",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 100.0)))
+              tts::randoms(0.0, 100.0))
 <typename T>(T const& a0)
 {
   auto [n, x, dx] = eve::rempio2(a0);
