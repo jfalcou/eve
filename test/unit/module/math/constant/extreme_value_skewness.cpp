@@ -55,8 +55,8 @@ TTS_CASE_TPL("Check behavior of extreme_value_skewness on wide", eve::test::simd
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of extreme_value_skewness[mask] on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::extreme_value_skewness[mask](eve::as(a0)), eve::if_else(mask, eve::extreme_value_skewness(eve::as(a0)), eve::zero));

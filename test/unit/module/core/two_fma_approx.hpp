@@ -13,11 +13,10 @@
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)
-                           )
-             )
+              tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.)
+              )
 <typename T>(T a0, T a1, T a2)
 {
   using eve::three_fma;
@@ -34,7 +33,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
     double db = double(b);
     double dr = double(r);
     TTS_EQUAL(eve::fma(da0, da1, da2), (da+de+df));
-    TTS_EQUAL(eve::fma(dé0, da1, da2), db+dr))
+    TTS_EQUAL(eve::fma(dï¿½0, da1, da2), db+dr))
   }
   else
   {

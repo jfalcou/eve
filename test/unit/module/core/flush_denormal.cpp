@@ -46,7 +46,7 @@ TTS_CASE_TPL("Check behavior of flush_denormal on the values it targets", eve::t
 //==================================================================================================
 TTS_CASE_WITH("Check that flush_denormal leaves normal values alone",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100.0, 100.0)))
+              tts::randoms(-100.0, 100.0))
 <typename T>(T const& a0)
 {
   TTS_IEEE_EQUAL(eve::flush_denormal(a0), a0);
@@ -57,7 +57,7 @@ TTS_CASE_WITH("Check that flush_denormal leaves normal values alone",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of flush_denormal[mask]",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-100.0, 100.0), tts::logicals(0, 3)))
+              tts::randoms(-100.0, 100.0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::flush_denormal[mask](a0), eve::if_else(mask, eve::flush_denormal(a0), a0));

@@ -76,7 +76,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::arg)(eve::wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check that eve::phase matches eve::arg",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(-10.0, 10.0)))
+              tts::between(-10.0, 10.0))
 <typename T>(T const& a0)
 {
   TTS_IEEE_EQUAL(eve::phase(a0), eve::arg(a0));

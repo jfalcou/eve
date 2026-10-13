@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of div_180", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of div_180",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000.0, 1000.0)))
+              tts::randoms(-1000.0, 1000.0))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -57,7 +57,7 @@ TTS_CASE_TPL("Check limits of div_180", eve::test::simd::ieee_reals)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of div_180[mask]",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000.0, 1000.0), tts::logicals(0, 3)))
+              tts::randoms(-1000.0, 1000.0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::div_180[mask](a0), eve::if_else(mask, eve::div_180(a0), a0));
