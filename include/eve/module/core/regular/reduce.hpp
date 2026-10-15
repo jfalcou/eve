@@ -24,7 +24,7 @@ namespace eve
   struct reduce_t : conditional_callable<reduce_t, Options, splat_option>
   {
     template<arithmetic_value T, typename Callable>
-    EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f) const noexcept
+    EVE_ABI element_type_t<T> operator()(T v, Callable f) const noexcept
       requires (!Options::contains(splat))
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
@@ -34,7 +34,7 @@ namespace eve
     }
 
     template<logical_value T, typename Callable>
-    EVE_FORCEINLINE bool operator()(T v, Callable f) const noexcept
+    EVE_ABI bool operator()(T v, Callable f) const noexcept
       requires (!Options::contains(splat))
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
@@ -44,7 +44,7 @@ namespace eve
     }
 
     template<arithmetic_value T>
-    EVE_FORCEINLINE element_type_t<T> operator()(T v) const noexcept
+    EVE_ABI element_type_t<T> operator()(T v) const noexcept
       requires (!Options::contains(splat))
     {
       static_assert(_::validate_mask_for<decltype(this->options()), T>(),
@@ -54,42 +54,42 @@ namespace eve
     }
 
     template<simd_value T, typename Callable>
-    EVE_FORCEINLINE T operator()(T v, Callable f) const noexcept
+    EVE_ABI T operator()(T v, Callable f) const noexcept
       requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v, f);
     }
 
     template<simd_value T>
-    EVE_FORCEINLINE T operator()(T v) const noexcept
+    EVE_ABI T operator()(T v) const noexcept
       requires (Options::contains(splat))
     {
       return EVE_DISPATCH_CALL(v);
     }
 
     template<arithmetic_simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE T operator()(T v, Callable f, U neutral) const noexcept
+    EVE_ABI T operator()(T v, Callable f, U neutral) const noexcept
       requires (Options::contains(splat) && (generator<U> || arithmetic_scalar_value<U>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
     }
 
     template<arithmetic_simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
+    EVE_ABI element_type_t<T> operator()(T v, Callable f, U neutral) const noexcept
       requires (!Options::contains(splat) && (generator<U> || arithmetic_scalar_value<U>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
     }
 
     template<logical_simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE T operator()(T v, Callable f, U neutral) const noexcept
+    EVE_ABI T operator()(T v, Callable f, U neutral) const noexcept
       requires (Options::contains(splat) && (generator<U> || std::same_as<U, bool> || std::same_as<U, element_type_t<T>>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
     }
 
     template<logical_simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE bool operator()(T v, Callable f, U neutral) const noexcept
+    EVE_ABI bool operator()(T v, Callable f, U neutral) const noexcept
       requires (!Options::contains(splat) && (generator<U> || std::same_as<U, bool> || std::same_as<U, element_type_t<T>>))
     {
       return EVE_DISPATCH_CALL(v, f, neutral);
@@ -161,7 +161,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename T, typename Callable>
-    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f) noexcept
+    auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f) noexcept
     {
       if      constexpr (std::same_as<Callable, tag_t<eve::add>>)         return eve::_::sum[opts](v);
       else if constexpr (std::same_as<Callable, tag_t<eve::min>>)         return eve::minimum[opts](v);
@@ -190,7 +190,7 @@ namespace eve
     }
 
     template<callable_options O, simd_value T, typename Callable, typename U>
-    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f, [[maybe_unused]] U neutral) noexcept
+    auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v, Callable f, [[maybe_unused]] U neutral) noexcept
     {
       if constexpr (match_option<condition_key, O, ignore_none_>)
       {
@@ -207,7 +207,7 @@ namespace eve
     }
 
     template<callable_options O, arithmetic_value T>
-    EVE_FORCEINLINE auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
+    auto reduce_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept
     {
       return eve::_::sum[opts](v);
     }

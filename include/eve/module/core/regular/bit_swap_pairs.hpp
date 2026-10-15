@@ -31,14 +31,14 @@ namespace eve
     };
 
     template<integral_value T, integral_value I0, integral_value I1>
-    EVE_FORCEINLINE constexpr typename result<T, I0, I1>::type operator()(T v, I0 i0,  I1 i1) const noexcept
+    EVE_ABI constexpr typename result<T, I0, I1>::type operator()(T v, I0 i0,  I1 i1) const noexcept
       requires same_lanes_or_scalar<T, I0, I1>
     {
       return EVE_DISPATCH_CALL(v, i0, i1);
     }
 
     template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-    EVE_FORCEINLINE constexpr T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
+    EVE_ABI constexpr T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
     {
       return EVE_DISPATCH_CALL(a, i0, i1);
     }
@@ -131,7 +131,7 @@ namespace eve
     }
 
     template<callable_options O, typename T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-    EVE_FORCEINLINE T bit_swap_pairs_(EVE_REQUIRES(cpu_), O const& o, T x, index_t<I0>, index_t<I1>) noexcept
+    T bit_swap_pairs_(EVE_REQUIRES(cpu_), O const& o, T x, index_t<I0>, index_t<I1>) noexcept
     {
       constexpr std::ptrdiff_t C = sizeof(element_type_t<T>) * 8;
       static_assert((I0 >= 0) && (I1 >= 0) && (I0 < C) && (I1 < C), "some index(es) are out or range");

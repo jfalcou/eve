@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<callable_options O, arithmetic_scalar_value T, typename N>
-  EVE_FORCEINLINE auto minimum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
+   auto minimum_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     using C = rbr::result::fetch_t<condition_key, O>;

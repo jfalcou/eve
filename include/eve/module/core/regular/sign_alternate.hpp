@@ -21,7 +21,7 @@ namespace eve
                                         to_nearest_option, toward_zero_option>
   {
     template<eve::signed_value T>
-    constexpr EVE_FORCEINLINE T operator()(T n) const noexcept
+    EVE_ABI constexpr T operator()(T n) const noexcept
     {
       return EVE_DISPATCH_CALL(n);
     }
@@ -84,7 +84,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     sign_alternate_(EVE_REQUIRES(cpu_), O const & o, T const& n) noexcept
     {
       if constexpr(integral_value<T>)

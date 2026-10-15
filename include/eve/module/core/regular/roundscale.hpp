@@ -18,13 +18,13 @@ namespace eve
                                                       to_nearest_option, toward_zero_option>
   {
     template<floating_value T0, integral_value T1>
-    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, T1 n) const noexcept
+    EVE_ABI constexpr T0 operator()(T0 t0, T1 n) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, n);
     }
 
     template<floating_value T0, auto N>
-    EVE_FORCEINLINE constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
+    EVE_ABI constexpr T0 operator()(T0 t0, index_t<N> const & n) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, n);
     }

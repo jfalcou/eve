@@ -201,7 +201,7 @@ namespace eve::_
   {};
 
   // Tuple free apply
-  template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
+  template<std::size_t Count, typename Func>  decltype(auto) apply(Func &&f)
   {
     const auto impl = [&]<std::size_t... I>(std::index_sequence<I...> const &)
       {
@@ -213,7 +213,7 @@ namespace eve::_
 
   // Tuple free apply from generator data
   template<template<auto...> class Generator, auto... I, typename Func>
-  EVE_FORCEINLINE decltype(auto) apply(Func &&f, Generator<I...> const& g)
+   decltype(auto) apply(Func &&f, Generator<I...> const& g)
   {
     const auto impl = [&](Generator<I...> const &)
       {
@@ -234,7 +234,7 @@ namespace eve::_
 
   // Reusable for-loop like meta-function
   template<auto Begin, auto Step, auto End, typename Func>
-  EVE_FORCEINLINE constexpr void for_(Func f)
+   constexpr void for_(Func f)
   {
     using type = decltype(Begin);
     auto body = [&]<typename N>(N)
@@ -250,14 +250,14 @@ namespace eve::_
 
   // Can't use a lambda because need to force inline
   template <auto Begin, auto Step, decltype(Begin) ... Iter, typename Func>
-  EVE_FORCEINLINE constexpr bool for_until_impl_(
+   constexpr bool for_until_impl_(
     std::integer_sequence<decltype(Begin), Iter...>, Func& f)
   {
     return ( f(std::integral_constant<decltype(Begin), Begin + Iter * Step>{} ) || ...);
   }
 
   template<auto Begin, auto Step, auto End, typename Func>
-  EVE_FORCEINLINE constexpr bool for_until_(Func f)
+   constexpr bool for_until_(Func f)
   {
     return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}, f);
   }

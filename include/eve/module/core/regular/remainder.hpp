@@ -18,7 +18,7 @@ namespace eve
   {
     template<eve::floating_value T0, floating_value T1>
     requires(eve::same_lanes_or_scalar<T0, T1>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
+    EVE_ABI constexpr common_value_t<T0, T1> operator()(T0 t0, T1 t1) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1);
     }
@@ -79,7 +79,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     remainder_(EVE_REQUIRES(cpu_), O const &, T const& a, T const& b) noexcept
     {
       return rem[to_nearest](a, b);

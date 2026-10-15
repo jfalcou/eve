@@ -59,10 +59,7 @@ jobs:
 
       ##############################################################################################
       ## The toolchain file and the ISA are those of the no_pch job, so the figures describe the
-      ## build the rest of the CI performs. Naming the compiler alone leaves CMAKE_CXX_FLAGS empty,
-      ## which drops EVE_NO_FORCEINLINE and hands always_inline back to every function EVE has: six
-      ## units out of 1543 were enough to end that build, on the runner where no_pch compiles all of
-      ## them at -j 4 in the hour.
+      ## build the rest of the CI performs.
       ##
       ## In one go rather than in the chunks no_pch uses: its target lists leave unit.regression.exe
       ## out, and a unit missing from the table reads as a unit that costs nothing. The precompiled

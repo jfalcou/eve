@@ -17,7 +17,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename U>
-  EVE_FORCEINLINE constexpr bit_value_t<T, U> bit_notor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
+   constexpr bit_value_t<T, U> bit_notor_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept
   {
     if constexpr (simd_value<T>)
     {
@@ -42,7 +42,7 @@ namespace eve::_
   }
 
   template<typename T0, typename T1, typename... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr bit_value_t<T0, T1, Ts...>
+   constexpr bit_value_t<T0, T1, Ts...>
   bit_notor_(EVE_REQUIRES(cpu_), O const &, T0 a, T1 b, Ts... args) noexcept
   {
     return bit_notor(a, bit_or(b, args...));

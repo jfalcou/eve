@@ -20,7 +20,7 @@ namespace eve
   struct cosh_t : elementwise_callable<cosh_t, Options, pedantic_option, raw_option, fast_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
+    EVE_ABI constexpr T operator()(T v) const  { return EVE_DISPATCH_CALL(v); }
 
     EVE_CALLABLE_OBJECT(cosh_t, cosh_);
   };
@@ -83,12 +83,13 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    constexpr EVE_FORCEINLINE T cosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
+    constexpr T cosh_(EVE_REQUIRES(cpu_), O const& o, T const& a0)
     {
       if constexpr( scalar_value<T> )
       {
         if( is_eqz(a0) ) return one(eve::as(a0));
-      }      //////////////////////////////////////////////////////////////////////////////
+      }      
+      //////////////////////////////////////////////////////////////////////////////
       // if x = abs(a0) according x < Threshold e =  exp(x) or exp(x/2) is
       // respectively computed
       // *  in the first case cosh (e+rec[pedantic](e))/2

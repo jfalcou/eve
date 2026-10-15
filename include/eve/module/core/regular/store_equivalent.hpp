@@ -49,7 +49,7 @@ concept has_store_equivalent = simd_compatible_ptr<Ptr, T> &&(
 namespace eve::_
 {
 template<relative_conditional_expr C, typename T, simd_compatible_ptr<T> Ptr>
-EVE_FORCEINLINE kumi::tuple<C, T, Ptr>
+kumi::tuple<C, T, Ptr>
                 store_equivalent_(EVE_SUPPORTS(cpu_), C c, T v, Ptr ptr)
 {
   return {c, v, ptr};

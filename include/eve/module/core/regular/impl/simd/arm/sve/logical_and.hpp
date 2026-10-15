@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE logical<wide<T, N>> logical_and_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept
+   logical<wide<T, N>> logical_and_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept
     requires(sve_abi<abi_t<T, N>>)
   {
     return svmov_z(v, w);

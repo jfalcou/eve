@@ -6,4 +6,4 @@
 set(CMAKE_C_COMPILER    gcc-15  )
 set(CMAKE_CXX_COMPILER  g++-15  )
 
-set(CMAKE_CXX_FLAGS     "-Wno-psabi -DEVE_NO_FORCEINLINE ${EVE_OPTIONS}" )
+set(CMAKE_CXX_FLAGS     "-Wno-psabi ${EVE_OPTIONS}" )

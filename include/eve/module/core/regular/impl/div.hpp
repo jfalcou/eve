@@ -38,7 +38,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
+   constexpr auto div_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(upper) || O::contains(lower) || O::contains(upward) || O::contains(downward) || O::contains(to_nearest))
@@ -60,7 +60,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
+   constexpr T div_(EVE_REQUIRES(cpu_), O const& o, T a, T b) noexcept
   requires(!O::contains(mod))
   {
     if constexpr(O::contains(left))
@@ -238,14 +238,14 @@ namespace eve::_
 
 
   template<callable_options O, typename T>
-  EVE_FORCEINLINE constexpr auto div_(EVE_REQUIRES(cpu_), O const& o, T a, T b ) noexcept
+   constexpr auto div_(EVE_REQUIRES(cpu_), O const& o, T a, T b ) noexcept
   requires(O::contains(mod))
   {
     return eve::mul[o](a, eve::rec[o](b));
   }
 
   template<typename T, std::same_as<T>... Ts, callable_options O>
-  EVE_FORCEINLINE constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
+   constexpr T div_(EVE_REQUIRES(cpu_), O const & o, T r0, T r1, Ts... rs) noexcept
   requires(!O::contains(left) && (sizeof...(Ts) != 0) )
   {
     auto that = mul[o](r1, rs...);
@@ -255,7 +255,7 @@ namespace eve::_
   }
 
   template<conditional_expr C, typename T, callable_options O>
-  EVE_FORCEINLINE T  div_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
+   T  div_(EVE_REQUIRES(cpu_), C const& cond, O const& o, T t, T f) noexcept
   requires(integral_value<T>)
   {
     auto g = if_else(cond, f, one);

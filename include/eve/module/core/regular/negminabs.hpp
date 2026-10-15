@@ -18,14 +18,14 @@ namespace eve
   {
     template<eve::value T0, value T1, value... Ts>
     requires(eve::same_lanes_or_scalar<T0, T1, Ts...>)
-    EVE_FORCEINLINE constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
+    EVE_ABI constexpr common_value_t<T0, T1, Ts...> operator()(T0 t0, T1 t1, Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(t0, t1, ts...);
     }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr  kumi::apply_traits_t<eve::common_value,Tup>
+    EVE_ABI constexpr  kumi::apply_traits_t<eve::common_value,Tup>
     operator()(Tup t) const noexcept  requires(kumi::size_v<Tup> >= 2) { return EVE_DISPATCH_CALL(t); }
 
     EVE_CALLABLE_OBJECT(negminabs_t, negminabs_);

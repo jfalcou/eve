@@ -19,7 +19,7 @@ namespace eve::_
 
 // TODO: this probably should not be here
 template<arithmetic_scalar_value T, typename N>
-EVE_FORCEINLINE auto
+ auto
 up_element_size(wide<T, N> x)
 {
   using T1 = _::make_integer_t<sizeof(T) * 2, unsigned>;
@@ -28,7 +28,7 @@ up_element_size(wide<T, N> x)
 }
 
 template<arithmetic_scalar_value T, typename N, std::ptrdiff_t To>
-EVE_FORCEINLINE auto
+ auto
 up_element_size_to(wide<T, N> x, eve::fixed<To>)
 {
   if constexpr( sizeof(T) == To ) return x;
@@ -36,7 +36,7 @@ up_element_size_to(wide<T, N> x, eve::fixed<To>)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l2_element_bit_shift(P, fixed<G>, wide<T, N> x)
 {
   if constexpr( P::g_size * P::most_repeated.size() > 8 ) return no_matching_shuffle;

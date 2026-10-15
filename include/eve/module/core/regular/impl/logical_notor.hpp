@@ -15,13 +15,13 @@
 namespace eve::_
 {
   template<callable_options O, relaxed_logical_value T>
-  EVE_FORCEINLINE constexpr T logical_notor_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
+   constexpr T logical_notor_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept
   {
     return logical_ornot(b, a);
   }
 
   template<callable_options O, conditional_expr C, relaxed_logical_value T>
-  EVE_FORCEINLINE constexpr T logical_notor_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, T b) noexcept
+   constexpr T logical_notor_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, T b) noexcept
   {
     return logical_ornot[cx](b, a);
   }

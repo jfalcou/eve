@@ -26,7 +26,7 @@ namespace eve
     template<eve::floating_value T0, eve::floating_value T1,
              eve::floating_value T2, eve::floating_value T3>
     requires (same_lanes_or_scalar<T0, T1, T2, T3>)
-    constexpr EVE_FORCEINLINE
+    EVE_ABI constexpr 
     eve::common_value_t<T0, T1, T2, T3> operator()(T0 a, T1 b, T2 c, T3 d) const noexcept
     { return EVE_DISPATCH_CALL(a, b, c, d); }
 

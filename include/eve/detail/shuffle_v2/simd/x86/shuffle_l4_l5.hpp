@@ -11,7 +11,7 @@ namespace eve::_
 {
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_x86_shorts_lo_hi(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
@@ -35,7 +35,7 @@ shuffle_l4_x86_shorts_lo_hi(P, fixed<G>, wide<T, N> x)
 // First shuffle 16 byte lanes and then shuffle the in betweeny thingies.
 // Only works for repeated patterns.
 template<typename P, typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
@@ -56,7 +56,7 @@ shuffle_l4_l5_x86_put_u64x2_in_position(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
@@ -77,7 +77,7 @@ shuffle_l4_l5_x86_slide_less_than_16(P, fixed<G>, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
@@ -105,7 +105,7 @@ requires(P::out_reg_size == P::reg_size)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_(EVE_SUPPORTS(avx512_), P p, fixed<G> g, logical<wide<T, N>> x)
 requires(P::out_reg_size == P::reg_size)
 {
@@ -118,7 +118,7 @@ requires(P::out_reg_size == P::reg_size)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto no = kumi::tuple {no_matching_shuffle, eve::index<-1>};
@@ -149,7 +149,7 @@ shuffle_l4_l5_x86_slide_less_than_16_x2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l4_l5_(EVE_SUPPORTS(sse2_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
