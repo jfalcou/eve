@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 
 namespace eve
 {

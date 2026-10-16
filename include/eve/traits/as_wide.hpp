@@ -14,57 +14,37 @@
 
 namespace eve
 {
-  template<typename Type, typename Size = expected_cardinal_t<Type>>
-  struct as_wide
+  namespace _
   {
-    // This case should never be picked up but clang++ insists on trying to
-    // instantiate it in place it makes no sense. We return void so clang
-    // lets the code compile as it should.
-    using type = void;
-  };
+    template<typename Type, typename Size = expected_cardinal_t<Type>>
+    extern undefined<Type, Size> as_wide;
 
-  template<typename Type, typename Size>
-  requires (arithmetic_scalar_value<Type>)
-  struct as_wide<Type,Size>
-  {
-    using type = eve::wide<Type,Size>;
-  };
+    template<typename Type, typename Size>
+    requires (arithmetic_scalar_value<Type>)
+    extern eve::wide<Type,Size> as_wide<Type,Size>;
 
-  template<typename T, typename Size>
-  struct as_wide<eve::logical<T>,Size>
-  {
-    using type = eve::logical< typename as_wide<T,Size>::type >;
-  };
+    template<typename T, typename Size>
+    extern eve::logical<decltype(as_wide<T,Size>)> as_wide<eve::logical<T>,Size>;
 
-  template<typename Type, typename N, typename Size>
-  struct as_wide<eve::wide<Type,N>,Size>
-  {
-    using type = eve::wide<Type,Size>;
-  };
+    template<typename Type, typename N, typename Size>
+    extern eve::wide<Type,Size> as_wide<eve::wide<Type,N>,Size>;
 
-  template<typename Type, typename N, typename Size>
-  struct as_wide<eve::logical<eve::wide<Type,N>>,Size>
-  {
-    using type = eve::logical<eve::wide<Type,Size>>;
-  };
+    template<typename Type, typename N, typename Size>
+    extern eve::logical<eve::wide<Type,Size>> as_wide<eve::logical<eve::wide<Type,N>>,Size>;
+
+    template<typename T, typename U>
+    extern undefined<Type, U> as_wide_as;
+
+    template<value T, typename U>
+    extern T as_wide_as<T, U>;
+
+    template<scalar_value T, simd_value U>
+    extern as_wide_t<T,cardinal_t<U>> as_wide_as<T, U>;
+  }
 
   template<typename Type, typename Size = expected_cardinal_t<Type> >
-  using as_wide_t = typename as_wide<Type, Size>::type;
+  using as_wide_t = decltype(as_wide<Type, Size>);
 
   template<typename T, typename U>
-  struct  as_wide_as;
-
-
-  template<scalar_value T, simd_value U>
-  struct as_wide_as<T, U> {
-    using type = as_wide_t<T,cardinal_t<U>>;
-  };
-
-  template<value T, typename U>
-  struct as_wide_as<T, U> {
-    using type = T;
-  };
-
-  template<typename T, typename U>
-  using as_wide_as_t = typename as_wide_as<std::remove_cvref_t<T>, std::remove_cvref_t<U>>::type;
+  using as_wide_as_t = decltype(as_wide_as<std::remove_cvref_t<T>, std::remove_cvref_t<U>>);
 }

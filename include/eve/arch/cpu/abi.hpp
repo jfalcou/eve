@@ -17,7 +17,7 @@
 
 namespace eve
 {
-    template<typename T> struct logical;
+  template<typename T> struct logical;
 }
 
 namespace eve::_

@@ -17,7 +17,7 @@
 #include <eve/module/core/constant/valmax.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/module/core/detail/modular.hpp>
+#include <eve/module/core/decorator/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
 namespace eve

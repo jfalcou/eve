@@ -20,22 +20,23 @@ namespace eve
 {
 namespace _
 {
-  template<typename T> constexpr auto value_type_impl()
-  {
-    if constexpr( requires { typename T::value_type; } )
-    {
-      return std::type_identity<typename T::value_type> {};
-    }
-    else if constexpr( std::input_or_output_iterator<T> )
-    {
-      return std::type_identity<typename std::iterator_traits<T>::value_type> {};
-    }
-    else if constexpr( range<T> )
-    {
-      using ref = std::add_lvalue_reference_t<T>;
-      return value_type_impl<decltype(std::begin(std::declval<ref>()))>();
-    }
-  }
+  template<typename... Ts>
+  struct undefined;
+
+  template<typename T>
+  extern undefined<T> value_type; 
+
+  template<typename T>
+  requires{ typename T::value_type; }
+  extern typename T::value_type value_type; 
+
+  template<typename T>
+  requires std::input_or_output_iterator<T>
+  extern typename std::iterator_traits<T>::value_type value_type; 
+
+  template<typename T>
+  requires range<T>
+  extern decltype(value_type<decltype(std::begin(std::declval<std::add_lvalue_reference_t<T>>()))>) value_type; 
 }
 
   //================================================================================================
@@ -60,10 +61,9 @@ namespace _
   //!  **Required header:** `#include <eve/traits.hpp>`
   //! @}
   //================================================================================================
-
   template<typename T>
   requires(!value<T> && !wide_cardinal<T>)
-  using value_type_t = typename decltype(_::value_type_impl<T>())::type;
+  using value_type_t = decltype(_::value_type<T>);
 
   template<typename T>
   requires(!value<T> && !wide_cardinal<T>)

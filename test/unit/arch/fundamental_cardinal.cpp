@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/wide.hpp>
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/cardinal_traits.hpp>
 
 TTS_CASE("Check for 64 bits ABI fundamental cardinal")
 {
