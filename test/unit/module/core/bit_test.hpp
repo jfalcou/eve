@@ -96,14 +96,6 @@ void bit_test_simd_return_type(F f)
   }
 }
 
-//TODO: move to TTS
-template<typename T>
-auto check_bit_equal(T a, T b)
-{
-  using u_t = eve::as_uinteger_t<T>;
-  return TTS_EQUAL(eve::bit_cast(a, as<u_t>{}), eve::bit_cast(b, as<u_t>{}));
-}
-
 template<typename T, typename F, typename TruthFn>
 void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
 {
@@ -129,17 +121,17 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
     const auto res = invoke_truth_fn(va, vb);
     const auto resi = invoke_truth_fn(vb, va);
 
-    check_bit_equal(fn(va, vb), res);
-    check_bit_equal(fn(vb, va), resi);
-    check_bit_equal(fn(kumi::make_tuple(va, vb)), res);
+    TTS_BIT_EQUAL(fn(va, vb), res);
+    TTS_BIT_EQUAL(fn(vb, va), resi);
+    TTS_BIT_EQUAL(fn(kumi::make_tuple(va, vb)), res);
 
     // 3-arg version
     const auto res3 = invoke_truth_fn(va, vb, vc);
     const auto res3i = invoke_truth_fn(vb, va, vc);
 
-    check_bit_equal(fn(va, vb, vc), res3);
-    check_bit_equal(fn(vb, va, vc), res3i);
-    check_bit_equal(fn(kumi::make_tuple(va, vb, vc)), res3);
+    TTS_BIT_EQUAL(fn(va, vb, vc), res3);
+    TTS_BIT_EQUAL(fn(vb, va, vc), res3i);
+    TTS_BIT_EQUAL(fn(kumi::make_tuple(va, vb, vc)), res3);
   };
 
   run_case(a, b, c);
@@ -236,23 +228,23 @@ void bit_test_simd_inner_cx(F fn, T a, T b, T c, Mask mask)
       const auto alt = bit_compatible_alternative(mask, va, as(res));
       const auto alti = bit_compatible_alternative(mask, vb, as(resi));
 
-      check_bit_equal(fn[mask](va, vb), eve::if_else(mask, res, alt));
-      check_bit_equal(fn[mask](vb, va), eve::if_else(mask, resi, alti));
-      check_bit_equal(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, alt));
+      TTS_BIT_EQUAL(fn[mask](va, vb), eve::if_else(mask, res, alt));
+      TTS_BIT_EQUAL(fn[mask](vb, va), eve::if_else(mask, resi, alti));
+      TTS_BIT_EQUAL(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, alt));
 
-      check_bit_equal(fn[mask](va, vb, vc), eve::if_else(mask, res3, alt));
-      check_bit_equal(fn[mask](vb, va, vc), eve::if_else(mask, res3i, alti));
-      check_bit_equal(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, alt));
+      TTS_BIT_EQUAL(fn[mask](va, vb, vc), eve::if_else(mask, res3, alt));
+      TTS_BIT_EQUAL(fn[mask](vb, va, vc), eve::if_else(mask, res3i, alti));
+      TTS_BIT_EQUAL(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, alt));
     }
     else
     {
-      check_bit_equal(fn[mask](va, vb), eve::if_else(mask, res, va));
-      check_bit_equal(fn[mask](vb, va), eve::if_else(mask, resi, vb));
-      check_bit_equal(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, va));
+      TTS_BIT_EQUAL(fn[mask](va, vb), eve::if_else(mask, res, va));
+      TTS_BIT_EQUAL(fn[mask](vb, va), eve::if_else(mask, resi, vb));
+      TTS_BIT_EQUAL(fn[mask](kumi::make_tuple(va, vb)), eve::if_else(mask, res, va));
 
-      check_bit_equal(fn[mask](va, vb, vc), eve::if_else(mask, res3, va));
-      check_bit_equal(fn[mask](vb, va, vc), eve::if_else(mask, res3i, vb));
-      check_bit_equal(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, va));
+      TTS_BIT_EQUAL(fn[mask](va, vb, vc), eve::if_else(mask, res3, va));
+      TTS_BIT_EQUAL(fn[mask](vb, va, vc), eve::if_else(mask, res3i, vb));
+      TTS_BIT_EQUAL(fn[mask](kumi::make_tuple(va, vb, vc)), eve::if_else(mask, res3, va));
     }
   };
 

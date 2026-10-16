@@ -42,7 +42,7 @@ TTS_CASE_TPL("Check return types of inc", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(-100, 100)))
+              tts::randoms(-100, 100))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -72,7 +72,7 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on signed types",
 
 TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::randoms(0, 100)))
+              tts::randoms(0, 100))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -96,7 +96,7 @@ TTS_CASE_WITH("Check behavior of inc(wide) and inc[mask](wide) on unsigned types
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of inc mod on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, 96))
+              tts::randoms(0, 96)
              )
   <typename T>(T const& ra0)
 {

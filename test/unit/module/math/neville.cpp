@@ -34,10 +34,10 @@ TTS_CASE_TPL("Check return types of neville", eve::test::simd::ieee_reals)
 
 TTS_CASE_WITH("Check behavior of neville on all types full range",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1, 10),
-                            tts::randoms(1, 10),
-                            tts::randoms(1, 10),
-                            tts::randoms(-10, 10)))
+              tts::randoms(1, 4),
+                            tts::randoms(5, 8),
+                            tts::randoms(9, 12),
+                            tts::randoms(-10, 10))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& x)
 {
   using eve::abs;
@@ -47,6 +47,7 @@ TTS_CASE_WITH("Check behavior of neville on all types full range",
   auto y1 = horner[eve::kahan](a1, 1.0, 2.0, 3.0);
   auto y2 = horner[eve::kahan](a2, 1.0, 2.0, 3.0);
 
-  TTS_ULP_EQUAL(neville[eve::pedantic](x, a0, a1, a2, y0, y1, y2), eve::horner[eve::kahan](x, 1.0, 2.0, 3.0 ),3500.0);
+  // Interpolation through colliding nodes is ill-posed, so the nodes are drawn separated.
+  TTS_ULP_EQUAL(neville[eve::pedantic](x, a0, a1, a2, y0, y1, y2), eve::horner[eve::kahan](x, 1.0, 2.0, 3.0 ), 512.0);
 
 };

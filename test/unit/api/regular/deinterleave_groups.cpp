@@ -91,11 +91,9 @@ void deinterleave_groups_test()
   TTS_EXPECT( eve::all(soa_ts == res) )
     << "\nG: "    << G
     << "\nFieldCount: " << FieldCount
-     << std::hex
     << "\naos: " << aos_ts
     << "\nsoa: " << soa_ts
-    << "\nres: " << res << "\n"
-    << std::dec;
+    << "\nres: " << res << "\n";
 
   if constexpr ( G == 1 )
   {

@@ -8,6 +8,8 @@
 #include "test.hpp"
 #include "unit/module/core/reduction_test.hpp"
 
+#include <bit>
+
 TTS_CASE_TPL("Check eve::_::sum return type (scalar)", eve::test::scalar::all_types_wf16)
 <typename T>(tts::type<T>)
 {
@@ -42,9 +44,33 @@ struct ManualSum
   }
 };
 
+// Same order as ManualSum, accumulated in double: for narrower elements this is the correctly
+// rounded sum, so a test using it measures eve's own reduction alone.
+struct DoubleAccSum
+{
+  template<typename T, typename C>
+  eve::element_type_t<T> operator()(T v, C mask) const
+  {
+    if constexpr (eve::scalar_value<T>)
+    {
+      return mask ? v : eve::zero(eve::as(v));
+    }
+    else
+    {
+      double sum = 0;
+
+      for (int i = 0; i < v.size(); ++i)
+        if (mask_at(mask, i))
+          sum += static_cast<double>(v.get(i));
+
+      return static_cast<eve::element_type_t<T>>(sum);
+    }
+  }
+};
+
 TTS_CASE_WITH("Check behavior of eve::_::sum on scalars",
               eve::test::scalar::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v);
@@ -52,7 +78,7 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on scalars",
 
 TTS_CASE_WITH("Check behavior of eve::_::sum on wides (integers)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T v)
 {
   arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v);
@@ -60,10 +86,17 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on wides (integers)",
 
 TTS_CASE_WITH("Check behavior of eve::_::sum on wides (ieee754 reals)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1, 9)))
+              tts::randoms(1, 9))
 <typename T>(T v)
 {
-  arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v, 1.0);
+  // Below double the reference is correctly rounded, leaving eve's tree alone to cover, one
+  // half-ULP per level. A double reference has no wider accumulator and keeps its (n - 1) roundings.
+  constexpr auto   n      = static_cast<std::size_t>(T::size());
+  constexpr auto   levels = std::bit_width(n) - 1;
+  constexpr double expected_ulp =
+      std::is_same_v<eve::element_type_t<T>, double> ? 0.5 * (n - 1 + levels) : 0.5 * levels + 0.5;
+
+  arithmetic_reduction_test_case<DoubleAccSum>(eve::_::sum, v, expected_ulp);
 };
 
 TTS_CASE_TPL("Check behavior of eve::_::sum on wides (conditioned ieee754 reals)", eve::test::simd::ieee_reals_wf16)

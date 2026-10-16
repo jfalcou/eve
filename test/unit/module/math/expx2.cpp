@@ -28,14 +28,14 @@ TTS_CASE_TPL("Check return types of exp", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // exp  tests
 //==================================================================================================
-auto mini =
+constexpr auto mini =
     tts::constant([]<typename T>(eve::as<T> const& tgt) { return -eve::sqrt(eve::maxlog(tgt)); });
-auto maxi =
+constexpr auto maxi =
     tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::sqrt(eve::maxlog(tgt)); });
 
 TTS_CASE_WITH("Check behavior of exp on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(mini, maxi), tts::randoms(-1.0, 1.0)))
+              tts::randoms(mini, maxi), tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1)
 {
   using v_t = eve::element_type_t<T>;
@@ -81,8 +81,8 @@ TTS_CASE_TPL("Check expx2 2 parameters", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {
@@ -94,7 +94,7 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of expx2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-5, 5), tts::randoms(-1.0, 1.0)))
+              tts::randoms(-5, 5), tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;

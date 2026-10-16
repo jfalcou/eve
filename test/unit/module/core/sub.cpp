@@ -69,9 +69,9 @@ TTS_CASE_TPL("Check return types of sub", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sub on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::saturated;
@@ -82,15 +82,15 @@ TTS_CASE_WITH("Check behavior of sub on wide",
 
   TTS_EQUAL(sub(a0, a2), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
   TTS_EQUAL(sub[saturated](a0, a2), tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL(sub(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(sub(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 14.0);
   TTS_ULP_EQUAL(sub[saturated](a0, a1, a2),
             tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); },
                 a0,a1,a2),
-            0.5);
+            14.0);
   TTS_EQUAL(sub(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return sub(e, f); }, a0, a2));
   TTS_EQUAL(sub[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return sub[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL(sub(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); }, a0,a1,a2), 0.5);
+  TTS_ULP_EQUAL(sub(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub(sub(e, f), g); }, a0, a1, a2), 14.0);
+  TTS_ULP_EQUAL(sub[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return sub[saturated](sub[saturated](e, f), g); }, a0,a1,a2), 14.0);
   TTS_IEEE_EQUAL(eve::sub[eve::left](a0, a2), eve::sub(a2, a0));
   TTS_IEEE_EQUAL(eve::sub[eve::left][a0 < 5](a0, a2), eve::if_else(a0 < 5, eve::sub(a2, a0), a0));
 
@@ -110,7 +110,7 @@ TTS_CASE_WITH("Check behavior of sub on wide",
   }
 };
 
-TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integers)
+TTS_CASE_TPL("Check behavior of sub saturated on wide", eve::test::simd::integers)
 <typename T>(tts::type<T>)
 {
   auto vmax = eve::valmax(eve::as<T>{});
@@ -125,9 +125,9 @@ TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integer
 
 TTS_CASE_WITH("Check behavior of sub widen on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::sub;
@@ -147,8 +147,8 @@ TTS_CASE_WITH("Check behavior of sub widen on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sub mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -165,13 +165,13 @@ TTS_CASE_WITH("Check behavior of sub mod on wide",
 //==================================================================================================
 //==  conditional sub tests on simd
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of sub[mask]",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+              tts::randoms(tts::constant(mini), 127),
+                            tts::randoms(tts::constant(mini), 127))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::saturated;

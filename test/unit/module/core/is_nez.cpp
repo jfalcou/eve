@@ -41,7 +41,7 @@ TTS_CASE_TPL("Check behavior of eve::is_nez (corner cases)", eve::test::simd::ie
 
 TTS_CASE_WITH("Check behavior of eve::is_nez(simd)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;

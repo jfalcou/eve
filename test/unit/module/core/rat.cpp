@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::rat(scalar)", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::rat(simd)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::ramp(1.0)))
+              tts::ramp(1.0))
 <typename T>(T const& a0)
 {
   using v_t   = eve::element_type_t<T>;
