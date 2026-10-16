@@ -43,13 +43,7 @@ namespace eve::_
   requires supports_mapping<F,Ts...>
   struct wide_result<F,Ts...>
   {
-    template<typename T>
-    static constexpr std::ptrdiff_t card() noexcept
-    {
-      if constexpr(simd_value<T>) return T::size(); else return 1;
-    }
-
-    static constexpr std::size_t card_v = std::max({card<std::decay_t<Ts>>()...});
+    static constexpr std::size_t card_v = eve::max_cardinal_v<std::remove_cvref_t<Ts>...>;
     using value_t                       = decltype(std::declval<F>()(eve::_::get_at(std::declval<Ts>(), 0)...));
     using fixed_t                       = fixed<card_v>;
 

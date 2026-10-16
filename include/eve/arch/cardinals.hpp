@@ -22,7 +22,7 @@ namespace eve
   //!
   //! eve::fixed wraps an integral power of two constant that represents the number of lanes in a
   //! given eve::simd_value type.
-  //
+  //!
   //!  @tparam Cardinal Number of lane. If `Cardinal` is not a power of two, code is invalid.
   //!
   //!  @groupheader{Member type}

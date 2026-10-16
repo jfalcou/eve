@@ -7,10 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/abi.hpp>
 #include <eve/deps/kumi.hpp>
 #include <eve/arch/float16.hpp>
-#include <eve/as.hpp>
 
 #include <type_traits>
 #include <utility>
@@ -19,186 +17,31 @@
 
 namespace eve::_
 {
-  // Values list helper
-  template<auto... Values>
-  struct values
-  {
-    static constexpr auto size = sizeof...(Values);
-  };
-
-  // Types list helper
-  template<typename... Types>
-  struct types
-  {
-    template<typename... Us> constexpr types<Types...,Us...> operator+( types<Us...> const&) const;
-  };
-
-  // Concatenate types lists
-  template<typename... Ls> struct concatenate
-  {
-    using type = decltype( (Ls{} + ...) );
-  };
-
-  template<typename... Ls>
-  using concatenate_t = typename concatenate<Ls...>::type;
-
-  // Return the first type in a type list matching a trait
-  template<bool Done, template<typename> typename Pred, typename TL>
-  struct first_with_impl;
-
-  template<template<typename> typename Pred, typename TL>
-  struct first_with;
-
-  template<template<typename> typename Pred,typename T>
-  struct first_with<Pred,types<T>> : std::conditional< Pred<T>::value, T, struct no_type_>
-  {};
-
-  template<template<typename> typename Pred,typename T>
-  using first_with_t = typename first_with<Pred,T>::type;
-
-  template<template<typename> typename Pred,typename T,typename... Ts>
-  struct first_with_impl<true,Pred,types<T,Ts...>>
-  {
-    using type = T;
-  };
-
-  template<template<typename> typename Pred,typename T,typename... Ts>
-  struct first_with_impl<false,Pred,types<T,Ts...>>
-    : first_with<Pred,types<Ts...>>
-  {};
-
-  template<template<typename> typename Pred,typename T,typename... Ts>
-  struct  first_with<Pred,types<T,Ts...>>
-    : first_with_impl<Pred<T>::value,Pred,types<T,Ts...>>
-  {};
-
-// Check if a type is contained in a types list
-  template<typename T, typename... Ts>
-  constexpr bool is_one_of(types<Ts...> const&) noexcept
-  {
-    bool found[] = { std::is_same_v<T,Ts>... };
-
-    return [&]<std::size_t... I>( std::index_sequence<I...> const&)
-    {
-      return (false || ... || found[I]);
-    }( std::make_index_sequence<sizeof...(Ts)>{} );
-  }
-
-  // Type identity
-  template<typename T>
-  struct always
-  {
-    using type = T;
-  };
-
-  // Extract abi_type from type
-  template<typename T, typename Enable = void>
-  struct abi_type
-  {
-    using type = void;
-  };
-
-  template<typename T>
-  struct abi_type<T, std::void_t<typename T::abi_type>>
-  {
-    using type = typename T::abi_type;
-  };
-
-  template<typename T>
-  using abi_type_t = typename abi_type<T>::type;
-
   // Generate integral types from sign + size
   template<std::size_t Size, typename Sign = unsigned>
-  struct make_integer;
+  extern undefined<> make_integer;
 
-  template<>
-  struct make_integer<1, signed>
-  {
-    using type = std::int8_t;
-  };
-  template<>
-  struct make_integer<2, signed>
-  {
-    using type = std::int16_t;
-  };
-  template<>
-  struct make_integer<4, signed>
-  {
-    using type = std::int32_t;
-  };
-  template<>
-  struct make_integer<8, signed>
-  {
-    using type = std::int64_t;
-  };
-  template<>
-  struct make_integer<1, unsigned>
-  {
-    using type = std::uint8_t;
-  };
-  template<>
-  struct make_integer<2, unsigned>
-  {
-    using type = std::uint16_t;
-  };
-  template<>
-  struct make_integer<4, unsigned>
-  {
-    using type = std::uint32_t;
-  };
-  template<>
-  struct make_integer<8, unsigned>
-  {
-    using type = std::uint64_t;
-  };
+  template<> inline std::int8_t  make_integer<1, signed>{};
+  template<> inline std::int16_t make_integer<2, signed>{};
+  template<> inline std::int32_t make_integer<4, signed>{};
+  template<> inline std::int64_t make_integer<8, signed>{};
+
+  template<> inline std::uint8_t  make_integer<1, unsigned>{};
+  template<> inline std::uint16_t make_integer<2, unsigned>{};
+  template<> inline std::uint32_t make_integer<4, unsigned>{};
+  template<> inline std::uint64_t make_integer<8, unsigned>{};
 
   template<std::size_t Size, typename Sign = unsigned>
-  using make_integer_t = typename make_integer<Size, Sign>::type;
-
-
-  ///////////////////////////////////////////////////////////////////
+  using make_integer_t = decltype(make_integer<Size, Sign>);
 
   // Generate floating point types from sign + size
-  template<std::size_t Size>
-  struct make_floating_point;
-
-  template<>
-  struct make_floating_point<2>
-  {
-    using type = eve::float16_t;
-  };
-
-  template<>
-  struct make_floating_point<4>
-  {
-    using type = float;
-  };
-
-  template<>
-  struct make_floating_point<8>
-  {
-    using type = double;
-  };
+  template<std::size_t Size> extern undefined<> make_floating_point;
+  template<> inline eve::float16_t make_floating_point<2>{};
+  template<> inline float make_floating_point<4>{};
+  template<> inline double make_floating_point<8>{};
 
   template<std::size_t Size>
-  using make_floating_point_t = typename make_floating_point<Size>::type;
-
-  // false_ value with dependent type
-  template<typename... T>
-  inline constexpr bool wrong = false;
-
-  // Turns a pseudo-concept into a traits
-  template<template<class...> class Concept, typename List, typename Enable = void>
-  struct as_trait_impl : std::false_type
-  {};
-
-  template<template<class...> class Concept,typename... T>
-  struct as_trait_impl<Concept, types<T...>, std::void_t<Concept<T...>> > : std::true_type
-  {};
-
-  template<template<class...> class Concept,typename... T>
-  struct as_trait : as_trait_impl<Concept, types<T...>>
-  {};
+  using make_floating_point_t = decltype(make_floating_point<Size>);
 
   // Tuple free apply
   template<std::size_t Count, typename Func> EVE_FORCEINLINE decltype(auto) apply(Func &&f)
@@ -261,33 +104,4 @@ namespace eve::_
   {
     return for_until_impl_<Begin, Step>(std::make_integer_sequence<decltype(Begin), (End - Begin + Step - 1) / Step>{}, f);
   }
-
-  // instance concept
-  template <typename T, template <typename ...> class Templ>
-  struct instance_of_impl : std::false_type {};
-
-  template <typename ...Args, template <typename ...> class Templ>
-  struct instance_of_impl<Templ<Args...>, Templ> : std::true_type {};
-
-  template <typename T, template <typename ...> class Templ>
-  concept instance_of = instance_of_impl<std::remove_cvref_t<T>, Templ>::value;
-
-  // one_of concept
-  template<typename T, typename... Ts>
-  concept one_of = (std::same_as<T,Ts> || ... || false);
-
-  template <bool>
-  struct conditional_impl_ {
-      template <typename T, typename U>
-      using type = U;
-  };
-
-  template <>
-  struct conditional_impl_<true> {
-      template <typename T, typename U>
-      using type = T;
-  };
-
-  template <bool test, typename T, typename U>
-  using conditional_t = conditional_impl_<test>:: template type<T, U>;
 }

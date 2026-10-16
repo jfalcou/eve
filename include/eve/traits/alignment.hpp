@@ -12,6 +12,25 @@
 
 namespace eve
 {
+  //================================================================================================
+  //! @addtogroup eve_traits
+  //! @{
+  //!  @typedef pointer_alignment_v
+  //!
+  //!  @tparam T Type to process
+  //!
+  //!  **Required header**: `#include <eve/traits/alignment.hpp>`,
+  //!                       `#include <eve/traits.hpp>`
+  //!   @code{.cpp}
+  //!
+  //!   template<typename T>
+  //!   inline constexpr std::size_t pointer_alignment_v = 0ULL;
+  //!
+  //!   template<typename T>
+  //!   inline constexpr std::size_t pointer_alignment_v<T*> = alignof(T);
+  //!   @endcode
+  //! @}
+  //================================================================================================
   template<typename T>
   inline constexpr std::size_t pointer_alignment_v = 0ULL;
 
@@ -21,6 +40,22 @@ namespace eve
   template<typename T>
   inline constexpr std::size_t pointer_alignment_v<T const*> = alignof(T);
 
+
+  //================================================================================================
+  //! @addtogroup eve_traits
+  //! @{
+  //!  @typedef alignment_v
+  //!
+  //!  @tparam T Type to process
+  //!
+  //!  **Required header**: `#include <eve/traits/alignment.hpp>`,
+  //!                       `#include <eve/traits.hpp>`
+  //!   @code{.cpp}
+  //!   template<typename T>
+  //!   inline constexpr std::size_t alignment_v = alignof(T);
+  //!   @endcode
+  //! @}
+  //================================================================================================
   template<typename T>
   inline constexpr std::size_t alignment_v = alignof(T);
 

@@ -76,26 +76,20 @@ namespace eve
 
   namespace _
   {
-    template <typename T>
-    consteval auto as_translated_type(as<T>)
-    {
-      if constexpr (requires { typename T::translated_type; })
-      {
-        return as<typename T::translated_type>{};
-      }
-      else if constexpr (std::is_same_v<typename translation_of<T>::type, T>)
-      {
-        return as<T>{};
-      }
-      else if constexpr (std::is_enum_v<T>)
-      {
-        return as<typename translation_of<T>::type>{};
-      }
-      else
-      {
-        return as_translated_type(as<typename translation_of<T>::type>{});
-      }
-    }
+    template<typename T>
+    extern typename translation_of<T>::type as_translated_type;
+
+    template<typename T>
+    requires { typename T::translated_type; }
+    extern typename T::translated_type as_translated_type;
+
+    template<typename T>
+    requires (std::is_same_v<typename translation_of<T>::type, T>)
+    extern T as_translated_type;
+
+    template<typename T>
+    requires (std::is_enum_v<T>)
+    extern typename translation_of<T>::type as_translated_type;
   }
 
   //================================================================================================
@@ -104,13 +98,13 @@ namespace eve
   //! Recursively resolves the translation chain until reaching a fundamental type.
   //================================================================================================
   template <translatable T>
-  using translate_t = typename decltype(_::as_translated_type(as<T>{}))::type;
+  using translate_t = decltype(_::as_translated_type<T>);
 
   // All enums are translatable into their underlying type by default.
   template <typename T>
   requires (std::is_enum_v<T>)
   struct translation_of<T>: std::underlying_type<T>
-  { };
+  {};
 
   // If `T` can be translated to `U`, then `std::array<T, N>` can be translated to `std::array<U, N>`.
   template <typename T, size_t N>

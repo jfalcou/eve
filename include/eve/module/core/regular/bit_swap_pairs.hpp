@@ -16,7 +16,6 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/constant/one.hpp>
-#include <eve/traits/max_lanes.hpp>
 
 namespace eve
 {
@@ -25,7 +24,7 @@ namespace eve
   struct bit_swap_pairs_t : strict_elementwise_callable<bit_swap_pairs_t, Options>
   {
     template<typename T, typename I0, typename I1>
-    using result = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_lanes_t<T, I0, I1>>>;
+    using result = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, fixed<max_cardinal_v<T, I0, I1>>>;
 
     template<integral_value T, integral_value I0, integral_value I1>
     EVE_FORCEINLINE constexpr result<T, I0, I1> operator()(T v, I0 i0,  I1 i1) const noexcept
@@ -103,7 +102,7 @@ namespace eve
       }
       else
       {
-        using MC = max_lanes_t<T, I0, I1>;
+        using MC = fixed<max_cardinal_v<T, I0, I1>>;
 
         auto i0m = if_else(cx, as_wide_t<I0, MC>{i0}, zero);
         auto i1m = if_else(cx, as_wide_t<I1, MC>{i1}, zero);

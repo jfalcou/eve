@@ -34,7 +34,7 @@ namespace eve::algo
     concept partially_aligned_check = std::same_as<partially_aligned_t<I>, I>;
   }
 
-   template <typename I>
+  template <typename I>
   concept iterator =
     requires(I) {
       { std::remove_cvref_t<I>::iterator_cardinal() } -> wide_cardinal;

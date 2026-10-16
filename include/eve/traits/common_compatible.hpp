@@ -90,22 +90,17 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  template<typename... Ts> struct common_compatible {};
+  template<typename... Ts> extern undefined<Ts...> common_compatible {};
 
-  template<typename T> struct common_compatible<T>
-  {
-    using type = T;
-  };
+  template<typename T> 
+  extern T common_compatible<T>;
 
   template<typename T0, typename... Ts>
   requires ( _::is_common_compatible_pack<T0, Ts...>)
-  struct common_compatible<T0,Ts...> 
-  {
-    using type = _::compact_t<T0, Ts...>;
-  };
+  extern _::compact_t<T0, Ts...> common_compatible<T0,Ts...>;
 
   template<typename... Ts>
-  using common_compatible_t = typename common_compatible<Ts...>::type;
+  using common_compatible_t = decltype(common_compatible<Ts...>);
 
   template < typename... Ts> using common_compatible_floating_t =
     as_floating_point_t<common_compatible_t<Ts...>>;

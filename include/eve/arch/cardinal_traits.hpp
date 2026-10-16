@@ -18,6 +18,11 @@
 
 namespace eve
 {
+  template<typename T> struct logical;
+}
+
+namespace eve
+{
   namespace _
   {
     template<typename T>
@@ -27,23 +32,23 @@ namespace eve
     inline constexpr std::ptrdiff_t cardinal_v<logical<T>> = cardinal_v<T>;
 
     template<typename T, typename Size>
-    inline constexpr std::ptrdiff_t cardinal_v<wide<Type,Size>> = Size{};
+    inline constexpr std::ptrdiff_t cardinal_v<wide<T,Size>> = Size{};
 
     template<regular_abi ABI>
-    struct std::ptrdiff_t find_fundamental_cardinal_t
+    struct find_fundamental_cardinal_t
     {
       template<typename T>
-      consteval auto operator()(T&&) const noexcept
+      consteval std::ptrdiff_t operator()(T&&) const noexcept
       {
         return fixed<ABI::template fundamental_cardinal<T>>{};
       }
     };
 
     template<regular_abi ABI>
-    struct std::ptrdiff_t find_expected_cardinal_t
+    struct find_expected_cardinal_t
     {
       template<typename T>
-      consteval auto operator()(T&&) const noexcept
+      consteval std::ptrdiff_t operator()(T&&) const noexcept
       {
         return fixed<ABI::template expected_cardinal<T>>{};
       }
@@ -175,5 +180,64 @@ namespace eve
 
   template<typename Type, regular_abi ABI = eve::current_abi_type>
   using expected_cardinal_t = fixed<expected_cardinal_v<Type, ABI>>;
+
+  namespace _
+  {
+    template <typename T>
+    extern expected_cardinal_t<value_type_t<T>> iterator_cardinal;
+
+    template <typename T>
+    requires requires { T::iterator_cardinal(); }
+    extern decltype(T::iterator_cardinal()) iterator_cardinal;
+  }
+  //================================================================================================
+  //! @addtogroup eve_arch
+  //! @{
+  //!  @typedef iterator_cardinal_t
+  //!
+  //!  @tparam T Type to process
+  //!
+  //!  @brief A meta-function that returns a cardinal for a relaxed iterator/range.
+  //!         If T defines a nested static function `iterator_cardinal()` (which should return eve::fixed)
+  //!         - returns it's return type.
+  //!         Otherwise returns `expected_cardinal_t<value_type_t<T>>`.
+  //!
+  //!  *NOTE*: for aligned_ptr we return expected_cardinal.
+  //!
+  //!  **Required header**: `#include <eve/traits/iterator_cardinal.hpp>`,
+  //!                       `#include <eve/traits.hpp>`
+  //!   @code{.cpp}
+  //!   template<typename T>
+  //!   inline constexpr auto iterator_cardinal_v = iterator_cardinal<T>::value;
+  //!   @endcode
+  //! @}
+  //================================================================================================
+  template <typename T>
+  using iterator_cardinal_t = decltype(_::iterator_cardinal<T>);
+
+  template <typename T>
+  constexpr std::ptrdiff_t iterator_cardinal_v = iterator_cardinal_t<T>::value;
+
+  namespace _
+  {
+    template<typename... Ts>
+    consteval std::ptrdiff_t compute_max_cardinal()
+    {
+      std::ptrdiff_t max = 0;
+      return ((max = (max > cardinal_v<Ts> ? max : cardinal_v<Ts>)), ...);
+    }
+  }
+  //================================================================================================
+  //! @addtogroup eve_arch
+  //! @{
+  //!  @var max_cardinal_v
+  //!
+  //!  @tparam Ts Types to process
+  //!
+  //!  @brief A meta function for getting a maximum lane count of given wide or scalar types.
+  //! @}
+  //================================================================================================
+  template <typename... Ts>
+  inline constexpr std::ptrdiff_t max_cardinal_v = _::compute_max_cardinal<Ts...>();
 }
 
