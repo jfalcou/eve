@@ -19,7 +19,7 @@ jobs:
   #################################################################################################
   # DOCUMENTATION TESTS
   #################################################################################################
-  macos:
+  doc-macos:
     runs-on: [macos-15]
     strategy:
       fail-fast: false
@@ -39,7 +39,7 @@ jobs:
       - name: Run Documentation Tests
         run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
 
-  generic:
+  doc-linux:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10
@@ -70,7 +70,7 @@ jobs:
   ##################################################################################################
   ## The documentation examples on Windows
   ##################################################################################################
-  windows:
+  doc-windows:
     runs-on: [windows-2022]
     defaults:
       run:
@@ -97,7 +97,7 @@ jobs:
   # Not part of the required checks: a warning here never blocks a merge, it only says the
   # generated documentation lost something on the way.
   #################################################################################################
-  doxygen:
+  doc-doxygen:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10
