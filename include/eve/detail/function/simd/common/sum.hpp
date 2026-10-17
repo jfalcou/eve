@@ -56,13 +56,8 @@ namespace eve::_
         constexpr auto N = T::size();
         using r_t = element_type_t<T>;
 
-<<<<<<< HEAD
-          if constexpr( N::value == 1 )         return v.get(0);
-        else  if constexpr( emulated_abi<abi_t<r_t, N>> )
-=======
           if constexpr( N == 1 )         return v.get(0);
-        else  if constexpr( is_emulated_v<abi_t<r_t, N>> )
->>>>>>> d3a3e16bc (Use a NTTP as wide template parameter)
+        else  if constexpr( emulated_abi<abi_t<r_t, N>> )
         {
           r_t r = v.get(0);
 
