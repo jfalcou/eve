@@ -51,6 +51,7 @@ if( EVE_BUILD_TEST )
   include(config/proc-stat)
   include(config/time-trace)
   include(config/job-pools)
+  include(config/test-lots)
 
   include(target/add_parent_target)
   include(target/targets)

@@ -156,6 +156,46 @@ namespace tts
 
 namespace eve::test
 {
+  // The cardinals of the test type lists, chosen by EVE_TEST_LOT in cmake.
+  enum class lot
+  {
+    all,      // every cardinal from 1 to twice the native one
+    family,   // the cardinals whose code path differs on this ABI, native included
+    native,   // the native cardinal alone
+    extra     // the family without the native cardinal
+  };
+#if   defined(EVE_TEST_LOT_NATIVE)
+  inline constexpr lot current_lot = lot::native;
+#elif defined(EVE_TEST_LOT_EXTRA)
+  inline constexpr lot current_lot = lot::extra;
+#elif defined(EVE_TEST_LOT_FAMILY)
+  inline constexpr lot current_lot = lot::family;
+#else
+  inline constexpr lot current_lot = lot::all;
+#endif
+#if defined(EVE_TEST_WITH_AGGREGATED)
+  inline constexpr bool with_aggregated = true;
+#else
+  inline constexpr bool with_aggregated = false;
+#endif
+
+  template<typename W> struct in_lot
+  {
+    using e_t = element_type_t<W>;
+    static constexpr std::ptrdiff_t n      = cardinal_v<W>;
+    static constexpr std::ptrdiff_t native = expected_cardinal_v<e_t>;
+    // Under AVX2 a 128-bit wide takes the SSE paths, except float16 through F16C. Under AVX512
+    // every width down to 128 bits has its own k-masks and VL forms.
+    static constexpr bool narrower = (current_api >= avx512) ? (2 * n == native || 4 * n == native)
+                                   : (current_api == avx2)   ? (std::same_as<e_t, float16_t> && n < native)
+                                                             : 2 * n == native;
+    static constexpr bool twice    = with_aggregated && n == 2 * native;
+    static constexpr bool value    = (current_lot == lot::native) ? n == native
+                                   : (current_lot == lot::extra)  ? narrower || twice
+                                   : (current_lot == lot::family) ? n == native || narrower || twice
+                                                                  : true;
+  };
+
   template<typename T, typename Indexes> struct to_wide;
 
   template<typename T, std::size_t... N>
@@ -191,6 +231,14 @@ namespace eve::test
     using type_all =
         tts::concatenate_t<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
 
+    // A lot that leaves no cardinal for a type keeps the native one: TTS reports a case run on
+    // an empty list as invalid.
+    template<typename T> struct lot_of
+    {
+      using lot  = typename tts::filter<in_lot, to_wide_t<T, std::make_index_sequence<cardinals()[sizeof(T)]>>>::type;
+      using type = std::conditional_t<std::same_as<lot, tts::types<>>, tts::types<as_wide_t<T>>, lot>;
+    };
+
     template<typename Type> struct rvv_pred
     {
       static consteval bool is_enabled()
@@ -212,10 +260,11 @@ namespace eve::test
 
       static constexpr bool value = is_enabled();
     };
+    using type_lot = tts::concatenate_t<typename lot_of<Ts>::type...>;
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
     using type = tts::filter<rvv_pred, type_all>::type;
 #else
-    using type                 = type_all;
+    using type = type_lot;
 #endif
   };
 
