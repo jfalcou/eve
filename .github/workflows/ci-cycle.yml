@@ -1,0 +1,74 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+## Once every unit workflow of a commit is complete, one comment on the pull request gives the
+## wall time of the cycle and its chart, an SVG kept on the branch ci-cycle.
+name: EVE - CI Cycle
+on:
+  workflow_run:
+    workflows:
+      - EVE - Unit Tests x86
+      - EVE - Unit Tests ARM
+      - EVE - Unit Tests PowerPC and RISC-V
+      - EVE - Unit Tests Build Modes
+      - EVE - Unit Tests AVX512
+      - EVE - Unit Tests macOS
+      - EVE - Unit Tests Windows
+    types: [completed]
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  cycle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch the tool
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: tools/ci_cycle.py
+          sparse-checkout-cone-mode: false
+      ## Exit 3 says a unit workflow is still running: the next completion will report.
+      - name: Measure the cycle of ${{ github.event.workflow_run.head_sha }}
+        id: cycle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          python3 tools/ci_cycle.py "$GITHUB_REPOSITORY" "${{ github.event.workflow_run.head_sha }}" --svg ci-cycle.svg --markdown ci-cycle.md | tee -a "$GITHUB_STEP_SUMMARY"
+          status=${PIPESTATUS[0]}
+          if [ "$status" = "3" ]; then echo "complete=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "complete=true" >> "$GITHUB_OUTPUT"
+          exit $status
+      ## The comment embeds the chart by its raw URL, which GitHub serves for a file of a branch.
+      - name: Keep the chart
+        if: steps.cycle.outputs.complete == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          remote="https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY"
+          git init -q chart && cd chart
+          git fetch -q --depth 1 "$remote" ci-cycle && git checkout -q FETCH_HEAD || git checkout -q --orphan ci-cycle
+          cp ../ci-cycle.svg "$SHA.svg"
+          git -c user.name=github-actions -c user.email=github-actions@github.com add "$SHA.svg"
+          git -c user.name=github-actions -c user.email=github-actions@github.com commit -q -m "Cycle of $SHA"
+          git push -q "$remote" HEAD:ci-cycle
+      - name: Comment the pull request
+        if: steps.cycle.outputs.complete == 'true' && github.event.workflow_run.pull_requests[0].number
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.workflow_run.pull_requests[0].number }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          printf '\n![Cycle of %s](https://raw.githubusercontent.com/%s/ci-cycle/%s.svg)\n' "$SHA" "$GITHUB_REPOSITORY" "$SHA" >> ci-cycle.md
+          existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments?per_page=100" --jq '[.[] | select(.body | startswith("<!-- ci-cycle -->"))][0].id')
+          if [ -n "$existing" ] && [ "$existing" != "null" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$existing" -F body=@ci-cycle.md > /dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@ci-cycle.md > /dev/null
+          fi
