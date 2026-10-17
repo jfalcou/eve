@@ -28,14 +28,14 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
     b_ = T{0xB0};
   }
 
-  eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>
+  eve::wide<eve::element_type_t<T>, T::size() * 2>
    expected { [](int i, int size) {
     if (i < size / 2 || size == 1) return 0xA0 | (i & 7);
     i -= size / 2;
     return 0xB0 | (i & 7);
   }};
 
-  auto actual = eve::deinterleave_groups_shuffle(a_, b_, eve::lane<1>);
+  auto actual = eve::deinterleave_groups_shuffle(a_, b_, eve::lanes<1>);
 
   TTS_EQUAL(expected, actual)
     << std::hex
@@ -50,24 +50,24 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle group size 1, shuffl
 TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle N <= G < 2 * N , shuffle", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
+  using res_t = eve::wide<eve::element_type_t<T>, T::size() * 2>;
 
   res_t expected { [](int i, int) { return i;  }};
 
   auto [av, bv] = expected.slice();
 
-  res_t actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size()>);
+  res_t actual = eve::deinterleave_groups_shuffle(av, bv, eve::lanes<T::size()>);
 
   TTS_EQUAL(expected, actual);
 
-  actual = eve::deinterleave_groups_shuffle(av, bv, eve::lane<T::size() * 2>);
+  actual = eve::deinterleave_groups_shuffle(av, bv, eve::lanes<T::size() * 2>);
   TTS_EQUAL(expected, actual);
 };
 
 TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  using res_t = eve::wide<eve::element_type_t<T>, eve::fixed<T::size() * 2>>;
+  using res_t = eve::wide<eve::element_type_t<T>, T::size() * 2>;
 
   res_t expected { [](int i, int size) {
     if (i < size / 2) return 0xA0 | (i & 0xf);
@@ -76,7 +76,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
 
   [&]<std::size_t... I>( std::index_sequence<I...>)
   {
-    auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
+    auto test = [&]<std::ptrdiff_t G>(eve::lanes_t<G>)
     {
       res_t a_b { [](int i, int) {
         int group_idx    = i / G;
@@ -88,7 +88,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
       }};
       auto [av, bv] = a_b.slice();
 
-      auto r = eve::deinterleave_groups_shuffle(av, bv, eve::lane<G>);
+      auto r = eve::deinterleave_groups_shuffle(av, bv, eve::lanes<G>);
 
       TTS_EQUAL(expected, r)
           << "\nG: " << G
@@ -100,6 +100,6 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle 1 <= G < N, shuffle"
           << '\n' << std::dec;
     };
 
-    (test( eve::lane<1 << I> ), ... );
+    (test( eve::lanes<1 << I> ), ... );
   }( std::make_index_sequence<std::bit_width( std::size_t(T::size()) )>{} );
 };

@@ -29,7 +29,7 @@ namespace eve::algo::views
   //! @{
   //!    @struct zip_iterator
   //!    @brief  A `relaxed_iterator` on top of multiple `relaxed_iterator`.
-  //!            If all of the components are `iterator` they have to have the same cardinal
+  //!            If all of the components are `iterator` they have to have the same width
   //!            and the `zip_iterator` will model `iterator`.
   //!            Should probably never be created directly, use `zip`.
   //!
@@ -232,7 +232,7 @@ namespace eve::algo::views
       //
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
-      template <callable_options O, typename N>
+      template <callable_options O, width_type N>
       EVE_FORCEINLINE auto store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
@@ -250,7 +250,7 @@ namespace eve::algo::views
         }
       }
 
-      template <relative_conditional_expr C, typename N>
+      template <relative_conditional_expr C, width_type N>
       EVE_FORCEINLINE friend auto tagged_dispatch( eve::tag::store_equivalent_,
                                                    C c,
                                                    wide<value_type, N> v,
@@ -301,7 +301,7 @@ namespace eve::algo::views
   {
     using base = _::zip_iterator_common<I, Is...>;
 
-    static_assert((std::same_as<iterator_cardinal_t<I>, iterator_cardinal_t<Is>> && ...));
+    static_assert((std::same_as<iterator_width_t<I>, iterator_width_t<Is>> && ...));
 
     using base::base;
 
@@ -355,13 +355,13 @@ namespace eve::algo::views
       }
     }
 
-    static iterator_cardinal_t<I> iterator_cardinal() { return{}; }
+    static iterator_width_t<I> iterator_width() { return{}; }
 
-    template <typename _Cardinal>
-    EVE_FORCEINLINE auto cardinal_cast(_Cardinal N) const
+    template <typename _Width>
+    EVE_FORCEINLINE auto width_cast(_Width N) const
     {
-      return zip_iterator<decltype(I{}.cardinal_cast(N)), decltype(Is{}.cardinal_cast(N))...> {
-        kumi::map([&](auto x) { return x.cardinal_cast(N); }, *this)
+      return zip_iterator<decltype(I{}.width_cast(N)), decltype(Is{}.width_cast(N))...> {
+        kumi::map([&](auto x) { return x.width_cast(N); }, *this)
       };
     }
 

@@ -82,7 +82,7 @@ namespace eve::algo
   //!    * returns void.
   //!    * default unrolling is 4.
   //!    * will align by default.
-  //!    * the output type of the operation, is not considered in cardinal computation.
+  //!    * the output type of the operation, is not considered in width computation.
   //!      (otherwise we'd have to require the predicate to be a template).
   //!    * if the operation output type differs from the output range type, converts.
   //!

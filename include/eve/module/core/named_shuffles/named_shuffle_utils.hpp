@@ -27,13 +27,13 @@ namespace eve::_
  * struct shuffle_name_t : _::named_shuffle_1<shuffle_name_t>
  * {
  *   template <simd_value T, std::ptrdiff_t G>
- *   static constexpr std::ptrdiff_t level(eve::as<T>, eve::fixed<G>, auto ...args)
+ *   static constexpr std::ptrdiff_t level(eve::as<T>, eve::lanes_t<G>, auto ...args)
  *   {
  *     //
  *     return 2;
  *   }
  *
- *   static constexpr auto pattern(eve::at<T>, eve::fixed<G>, auto ... args)
+ *   static constexpr auto pattern(eve::at<T>, eve::lanes_t<G>, auto ... args)
  *   {
  *     return eve::fix_pattern<T::size() / G>([](int i, int size) {...});
  *   }
@@ -43,7 +43,7 @@ namespace eve::_
 template<typename Name> struct named_shuffle_1 : Name
 {
   template<simd_value T, std::ptrdiff_t G, typename... Args>
-  EVE_FORCEINLINE auto operator()(T x, eve::fixed<G> g, Args... args) const
+  EVE_FORCEINLINE auto operator()(T x, eve::lanes_t<G> g, Args... args) const
   requires requires { Name::pattern(eve::as<T> {}, g, args...); }
   {
     if constexpr( G <= 0 ) { static_assert(G > 0, "Group size <= 0 is not supported"); }
@@ -52,16 +52,16 @@ template<typename Name> struct named_shuffle_1 : Name
 
   template<simd_value T, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, eve::lane<1>, args...); }
+  requires requires { Name::pattern(eve::as<T> {}, eve::lanes<1>, args...); }
   {
-    return operator()(x, eve::lane<1>, args...);
+    return operator()(x, eve::lanes<1>, args...);
   }
 };
 
 template<typename Name> struct named_shuffle_2 : Name
 {
   template<simd_value T, std::ptrdiff_t G, typename... Args>
-  EVE_FORCEINLINE auto operator()(T x, T y, eve::fixed<G> g, Args... args) const
+  EVE_FORCEINLINE auto operator()(T x, T y, eve::lanes_t<G> g, Args... args) const
   requires requires { Name::pattern(eve::as<T> {}, eve::as<T> {}, g, args...); }
   {
     if constexpr( G <= 0 ) { static_assert(G > 0, "Group size <= 0 is not supported"); }
@@ -70,9 +70,9 @@ template<typename Name> struct named_shuffle_2 : Name
 
   template<simd_value T, typename... Args>
   EVE_FORCEINLINE auto operator()(T x, T y, Args... args) const
-  requires requires { Name::pattern(eve::as<T> {}, eve::as<T> {}, eve::lane<1>, args...); }
+  requires requires { Name::pattern(eve::as<T> {}, eve::as<T> {}, eve::lanes<1>, args...); }
   {
-    return operator()(x, y, eve::lane<1>, args...);
+    return operator()(x, y, eve::lanes<1>, args...);
   }
 };
 

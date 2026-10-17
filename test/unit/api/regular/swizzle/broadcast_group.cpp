@@ -13,7 +13,7 @@
 
 //================================================================================================
 // Premade pattern generator
-template<std::ptrdiff_t G, std::ptrdiff_t I, std::ptrdiff_t N>
+template<std::ptrdiff_t G, std::ptrdiff_t I, eve::width_type N>
 inline constexpr auto broadcast_group_n = eve::fix_pattern<N>( [](auto i, auto) { return I*G + i%G; } );
 
 //==================================================================================================
@@ -50,13 +50,13 @@ TTS_CASE_WITH( "Check behavior of broadcast_groups swizzle"
                 };
 
       constexpr auto grp = (T::size()/(1<<Group::value));
-      TTS_EQUAL ( eve::broadcast_group( simd, eve::lane<grp>
-                                      , eve::index<Index::value>, eve::lane<T::size()>
+      TTS_EQUAL ( eve::broadcast_group( simd, eve::lanes<grp>
+                                      , eve::index<Index::value>, eve::lanes<T::size()>
                                       )
                 , ref
                 );
-      TTS_EQUAL ( eve::broadcast_group( logicals, eve::lane<grp>
-                                      , eve::index<Index::value>, eve::lane<T::size()>
+      TTS_EQUAL ( eve::broadcast_group( logicals, eve::lanes<grp>
+                                      , eve::index<Index::value>, eve::lanes<T::size()>
                                       )
                 , lref
                 );

@@ -122,12 +122,12 @@ TTS_CASE_WITH(
   not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_all);
   not_equal_masked_test_cases(a0, a1, l0, l1, eve::keep_first(0));
 
-  constexpr auto cardinal = eve::cardinal_v<T>;
-  if constexpr (cardinal >= 2)
+  constexpr auto width = eve::width_v<T>;
+  if constexpr (width >= 2)
   {
     not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(1, 1));
-    not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(cardinal / 2, cardinal / 2));
-    not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(cardinal / 4, cardinal / 4));
+    not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(width / 2, width / 2));
+    not_equal_masked_test_cases(a0, a1, l0, l1, eve::ignore_extrema(width / 4, width / 4));
   }
 };
 

@@ -54,9 +54,9 @@ TTS_CASE_TPL( "Check store behavior with soa_ptr", eve::test::scalar::all_types_
                 std::array<T          , w_t::size()> target1, ctarget1;
   alignas(alg2) std::array<double     , w_t::size()> target2, ctarget2;
 
-  auto dst = eve::soa_ptr    ( eve::as_aligned(&target0[0], eve::cardinal_t<w_t>{})
+  auto dst = eve::soa_ptr    ( eve::as_aligned(&target0[0], eve::width_t<w_t>{})
                               , &target1[0]
-                              , eve::as_aligned(&target2[0], eve::cardinal_t<w_t>{})
+                              , eve::as_aligned(&target2[0], eve::width_t<w_t>{})
                               );
 
   eve::store(data, dst);
@@ -65,9 +65,9 @@ TTS_CASE_TPL( "Check store behavior with soa_ptr", eve::test::scalar::all_types_
   TTS_ALL_EQUAL(target1, ref1);
   TTS_ALL_EQUAL(target2, ref2);
 
-  auto cdst = eve::soa_ptr   ( eve::as_aligned(&ctarget0[0], eve::cardinal_t<w_t>{})
+  auto cdst = eve::soa_ptr   ( eve::as_aligned(&ctarget0[0], eve::width_t<w_t>{})
                               , &ctarget1[0]
-                              , eve::as_aligned(&ctarget2[0], eve::cardinal_t<w_t>{})
+                              , eve::as_aligned(&ctarget2[0], eve::width_t<w_t>{})
                               );
 
   {

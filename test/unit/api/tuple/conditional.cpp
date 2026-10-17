@@ -21,7 +21,6 @@ TTS_CASE_TPL( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
 {
   using s_t = tuple_t<T>;
   using w_t = eve::wide<tuple_t<T>>;
-  using c_t = eve::cardinal_t<w_t>;
 
   w_t lhs = [](auto i, auto)  { return s_t  { static_cast<std::int8_t>(i%3)
                                             , static_cast<T>(i%5)
@@ -35,7 +34,7 @@ TTS_CASE_TPL( "Check eve::wide<tuple> if_else", eve::test::scalar::all_types)
                                             };
                               };
 
-  eve::logical<eve::wide<float,c_t>> mask = [](auto i, auto) { return i%2 == 1; };
+  eve::logical<eve::wide<float, w_t::size()>> mask = [](auto i, auto) { return i%2 == 1; };
 
   w_t ref_mask = [&](int i, int) { return mask.get(i) ? lhs.get(i) : rhs.get(i); };
   TTS_EQUAL( eve::if_else(mask, lhs,rhs), ref_mask );

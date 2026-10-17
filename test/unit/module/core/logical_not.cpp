@@ -47,12 +47,12 @@ TTS_CASE_WITH("Check behavior of eve::logical_not(simd)",
   T m = tts::poison(T{ [](auto i, auto) { return i % 2 == 0; } });
   TTS_EQUAL(eve::logical_not[m](a0), eve::if_else(m, base, alt));
 
-  constexpr auto cardinal = eve::cardinal_v<T>;
+  constexpr auto width = eve::width_v<T>;
 
-  if constexpr (cardinal >= 2)
+  if constexpr (width >= 2)
   {
     TTS_EQUAL(eve::logical_not[eve::ignore_extrema(1, 1)](a0), eve::if_else(eve::ignore_extrema(1, 1), base, alt));
-    TTS_EQUAL(eve::logical_not[eve::ignore_extrema(cardinal / 2, cardinal / 2)](a0), eve::if_else(eve::ignore_extrema(cardinal / 2, cardinal / 2), base, alt));
-    TTS_EQUAL(eve::logical_not[eve::ignore_extrema(cardinal / 4, cardinal / 4)](a0), eve::if_else(eve::ignore_extrema(cardinal / 4, cardinal / 4), base, alt));
+    TTS_EQUAL(eve::logical_not[eve::ignore_extrema(width / 2, width / 2)](a0), eve::if_else(eve::ignore_extrema(width / 2, width / 2), base, alt));
+    TTS_EQUAL(eve::logical_not[eve::ignore_extrema(width / 4, width / 4)](a0), eve::if_else(eve::ignore_extrema(width / 4, width / 4), base, alt));
   }
 };

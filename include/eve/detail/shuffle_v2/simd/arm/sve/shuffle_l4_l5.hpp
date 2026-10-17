@@ -10,9 +10,9 @@
 namespace eve::_
 {
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l4_l5_(EVE_SUPPORTS(sve_), P p, fixed<G> g, logical<wide<T, N>> x)
+shuffle_l4_l5_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, logical<wide<T, N>> x)
 {
   if constexpr( auto r = shuffle_l4_broadcast_lane_set_get(p, g, x);
                 matched_shuffle<decltype(get<0>(r))> )

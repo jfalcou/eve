@@ -20,7 +20,7 @@ namespace _
   {
     template<typename Traits, typename I, typename S> auto unroll_l(Traits, I f, S l)
     {
-      return eve::unalign(f) + (l - f - get_unrolling<Traits>() * iterator_cardinal_v<I>);
+      return eve::unalign(f) + (l - f - get_unrolling<Traits>() * iterator_width_v<I>);
     }
 
     template<typename Traits, typename I, typename S, typename Delegate>
@@ -29,7 +29,7 @@ namespace _
       while( f < l )
       {
         if( delegate.step(f, eve::ignore_none) ) return true;
-        f += iterator_cardinal_v<I>;
+        f += iterator_width_v<I>;
       }
       return false;
     }
@@ -48,9 +48,9 @@ namespace _
 
       template<int i> EVE_FORCEINLINE bool operator()(std::integral_constant<int, i>)
       {
-        if( delegate.step(f + i * iterator_cardinal_v<I>, eve::ignore_none) )
+        if( delegate.step(f + i * iterator_width_v<I>, eve::ignore_none) )
         {
-          f += i * iterator_cardinal_v<I>;
+          f += i * iterator_width_v<I>;
           return true;
         }
         return false;
@@ -67,7 +67,7 @@ namespace _
         {
           return true;
         }
-        f += get_unrolling<Traits>() * iterator_cardinal_v<I>;
+        f += get_unrolling<Traits>() * iterator_width_v<I>;
       }
 
       return no_unrolling_loop(tr, f, l, delegate);
@@ -89,10 +89,10 @@ namespace _
         , f(i)
         , l(s)
     {
-      EVE_ASSERT(((l - f) % iterator_cardinal_v<I> == 0),
-                 " len of the range is no divisible by cardinal "
-                     << "when `divisible by cardinal is passed`: " << "l - f: " << (l - f)
-                     << " iterator_cardinal_v<I>: " << iterator_cardinal_v<I>);
+      EVE_ASSERT(((l - f) % iterator_width_v<I> == 0),
+                 " len of the range is no divisible by width "
+                     << "when `divisible by width is passed`: " << "l - f: " << (l - f)
+                     << " iterator_width_v<I>: " << iterator_width_v<I>);
     }
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
@@ -105,7 +105,7 @@ namespace _
         // expensive part before main loop should help when expensive part
         // it forms a separate while loop.
         if( delegate.expensive_part(f) ) return;
-        f += iterator_cardinal_v<I>;
+        f += iterator_width_v<I>;
       main_loop:
         if( !this->main_loop(traits, f, unroll_l, l, delegate) ) return;
       }
@@ -130,7 +130,7 @@ namespace _
 
     template<typename Delegate> EVE_FORCEINLINE void operator()(Delegate& delegate)
     {
-      I    precise_l = f + (((l - f) / iterator_cardinal_v<I>)*iterator_cardinal_v<I>);
+      I    precise_l = f + (((l - f) / iterator_width_v<I>)*iterator_width_v<I>);
       auto unroll_l  = this->unroll_l(traits, f, l);
       goto main_loop;
 
@@ -138,7 +138,7 @@ namespace _
     // it forms a separate while loop.
     expensive_part:
       if( delegate.expensive_part(f) ) return;
-      f += iterator_cardinal_v<I>;
+      f += iterator_width_v<I>;
     main_loop:
       if( this->main_loop(traits, f, unroll_l, precise_l, delegate) ) { goto expensive_part; }
 
@@ -185,7 +185,7 @@ namespace _
           ignore_first        = eve::ignore_first {0};
           if( !first_step_res )
           {
-            aligned_f += iterator_cardinal_v<I>;
+            aligned_f += iterator_width_v<I>;
             goto main_loop;
           }
         }
@@ -194,7 +194,7 @@ namespace _
       // it forms a separate while loop.
       expensive_part:
         if( delegate.expensive_part(aligned_f) ) return;
-        aligned_f += iterator_cardinal_v<I>;
+        aligned_f += iterator_width_v<I>;
       main_loop:
         // handles aligned_f == aligned_l
         if( this->main_loop(traits, aligned_f, unroll_l, aligned_l, delegate) ) goto expensive_part;
@@ -202,7 +202,7 @@ namespace _
 
       if( aligned_l == l ) return;
       {
-        eve::ignore_last ignore_last {aligned_l + iterator_cardinal_v<I> - l};
+        eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
         if( !delegate.step(aligned_l, ignore_first && ignore_last) ) return;
         l = aligned_l; // hack that pevents comming here after the expensive part
         goto expensive_part;
@@ -244,7 +244,7 @@ struct
     {
       return _::for_each_iteration_with_expensive_optional_part_aligning {traits, f, l};
     }
-    else if constexpr( Traits::contains(divisible_by_cardinal) )
+    else if constexpr( Traits::contains(divisible_by_width) )
     {
       return _::for_each_iteration_with_expensive_optional_part_precise_f_l {traits, f, l};
     }

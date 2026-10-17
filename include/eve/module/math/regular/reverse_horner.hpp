@@ -103,7 +103,7 @@ namespace eve
 //!        This is intended to insure more accurate computations where needed. This has no cost (and is
 //!        automatically done) if the system has hard wired `fma` but is very expansive if it is not the case.
 //!
-//!    @note If the coefficients are simd values of cardinal N, this means you simultaneously
+//!    @note If the coefficients are simd values of width N, this means you simultaneously
 //!      compute the values of N polynomials.
 //!        *  If x is scalar, the polynomials are all computed at the same point
 //!        *  If x is simd, the nth polynomial is computed on the nth value of x

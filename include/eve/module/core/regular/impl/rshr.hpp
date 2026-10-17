@@ -38,7 +38,7 @@ namespace eve::_
     }
     else if constexpr (scalar_value<T> && simd_value<U>)
     {
-      return rshr(wide<T, cardinal_t<U>>{a0}, a1);
+      return rshr(wide<T, U::size()>{a0}, a1);
     }
     else if constexpr (scalar_value<U> && simd_value<T>)
     {

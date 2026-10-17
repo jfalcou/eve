@@ -23,13 +23,13 @@
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/cardinal.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/traits/common_type.hpp>
 #include <eve/traits/common_value.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/is_logical.hpp>
-#include <eve/traits/iterator_cardinal.hpp>
+#include <eve/traits/iterator_width.hpp>
 #include <eve/traits/max_scalar_size.hpp>
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/underlying_type.hpp>

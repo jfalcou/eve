@@ -15,7 +15,7 @@ namespace eve::_
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
 EVE_FORCEINLINE auto
-is_na_or_we_mask(eve::pattern_t<I...>, eve::fixed<G>, eve::as<T> tgt)
+is_na_or_we_mask(eve::pattern_t<I...>, eve::lanes_t<G>, eve::as<T> tgt)
 {
   if constexpr( G == 1 && logical_simd_value<T> ) return T {I >= 0 ...};
   else if constexpr( G == 1 )
@@ -27,13 +27,13 @@ is_na_or_we_mask(eve::pattern_t<I...>, eve::fixed<G>, eve::as<T> tgt)
   else
   {
     constexpr std::array idxs {I...};
-    return is_na_or_we_mask(idxm::to_pattern<idxm::expand_group<G>(idxs)>(), eve::lane<1>, tgt);
+    return is_na_or_we_mask(idxm::to_pattern<idxm::expand_group<G>(idxs)>(), eve::lanes<1>, tgt);
   }
 }
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
 EVE_FORCEINLINE auto
-is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt)
+is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::lanes_t<G> g, eve::as<T> tgt)
 {
   if constexpr( !logical_simd_value<T> ) return is_na_or_we_mask(p, g, eve::as<logical<T>> {});
   else return is_na_or_we_mask(p, g, tgt);
@@ -41,14 +41,14 @@ is_na_or_we_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt
 
 template<std::ptrdiff_t G, std::ptrdiff_t... I, simd_value T>
 EVE_FORCEINLINE auto
-is_na_logical_mask(eve::pattern_t<I...> p, eve::fixed<G> g, eve::as<T> tgt)
+is_na_logical_mask(eve::pattern_t<I...> p, eve::lanes_t<G> g, eve::as<T> tgt)
 {
   if constexpr( !logical_simd_value<T> ) return is_na_logical_mask(p, g, eve::as<logical<T>> {});
   else if constexpr( G == 1 ) return T {I == na_ ...};
   else
   {
     constexpr std::array idxs {I...};
-    return is_na_logical_mask(idxm::to_pattern<idxm::expand_group<G>(idxs)>(), eve::lane<1>, tgt);
+    return is_na_logical_mask(idxm::to_pattern<idxm::expand_group<G>(idxs)>(), eve::lanes<1>, tgt);
   }
 }
 
@@ -91,7 +91,7 @@ struct expanded_pattern_t : pattern_t<I...>
   static constexpr auto shuffle_4in4   = idxm::group_within_group<4 / g_size>(idxs);
   static constexpr auto shuffle_2in2   = idxm::group_within_group<2 / g_size>(idxs);
 
-  template<std::ptrdiff_t N> static constexpr auto shuffle_NinN(eve::fixed<N>)
+  template<std::ptrdiff_t N> static constexpr auto shuffle_NinN(eve::lanes_t<N>)
   {
     if constexpr( N == 16 ) return shuffle_16in16;
     if constexpr( N == 8 ) return shuffle_8in8;
@@ -107,7 +107,7 @@ constexpr expanded_pattern_t<T, G, I...> expanded_pattern;
 
 template<simd_value T, std::ptrdiff_t G, std::ptrdiff_t... I>
 EVE_FORCEINLINE auto
-shuffle_2_using_or(pattern_t<I...>, fixed<G> g, T x, T y)
+shuffle_2_using_or(pattern_t<I...>, lanes_t<G> g, T x, T y)
 {
   constexpr std::array idxs {I...};
   auto [x_, xl] = shuffle_v2_core(x, g, idxm::to_pattern<idxm::just_first_shuffle(idxs, na_)>());

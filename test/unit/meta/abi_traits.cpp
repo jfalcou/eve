@@ -29,11 +29,11 @@ TTS_CASE( "Check for detection of native ABI")
 {
   constexpr auto native = eve::wide<float>::size();
 
-  TTS_EXPECT_NOT(( eve::native_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-  TTS_EXPECT_NOT(( eve::native_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+  TTS_EXPECT_NOT(( eve::native_abi<eve::wide<float, 2*native>>              ));
+  TTS_EXPECT_NOT(( eve::native_abi<eve::logical<eve::wide<float, 2*native>>>));
 
-  TTS_EXPECT(( eve::non_native_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-  TTS_EXPECT(( eve::non_native_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+  TTS_EXPECT(( eve::non_native_abi<eve::wide<float, 2*native>>              ));
+  TTS_EXPECT(( eve::non_native_abi<eve::logical<eve::wide<float, 2*native>>>));
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
@@ -65,13 +65,13 @@ TTS_CASE( "Check for detection of aggregated ABI")
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT_NOT(( eve::aggregated_abi<eve::logical<eve::wide<float, 2*native>>>));
   }
   else
   {
-    TTS_EXPECT(( eve::aggregated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT(( eve::aggregated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT(( eve::aggregated_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT(( eve::aggregated_abi<eve::logical<eve::wide<float, 2*native>>>));
   }
 
   TTS_EXPECT_NOT( eve::aggregated_abi<eve::wide<float>>                );
@@ -87,13 +87,13 @@ TTS_CASE( "Check for detection of regular ABI")
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT(( eve::regular_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT(( eve::regular_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT(( eve::regular_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT(( eve::regular_abi<eve::logical<eve::wide<float, 2*native>>>));
   }
   else
   {
-    TTS_EXPECT_NOT(( eve::regular_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT_NOT(( eve::regular_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT_NOT(( eve::regular_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT_NOT(( eve::regular_abi<eve::logical<eve::wide<float, 2*native>>>));
   }
 
   TTS_EXPECT( eve::regular_abi<eve::wide<float>>                );
@@ -109,16 +109,16 @@ TTS_CASE( "Check for detection of emulated ABI")
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT(( eve::emulated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT(( eve::emulated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT(( eve::emulated_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT(( eve::emulated_abi<eve::logical<eve::wide<float, 2*native>>>));
 
     TTS_EXPECT( eve::emulated_abi<eve::wide<float>>                );
     TTS_EXPECT( eve::emulated_abi<eve::logical<eve::wide<float>>>  );
   }
   else
   {
-    TTS_EXPECT_NOT(( eve::emulated_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT_NOT(( eve::emulated_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT_NOT(( eve::emulated_abi<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT_NOT(( eve::emulated_abi<eve::logical<eve::wide<float, 2*native>>>));
 
     TTS_EXPECT_NOT( eve::emulated_abi<eve::wide<float>>                );
     TTS_EXPECT_NOT( eve::emulated_abi<eve::logical<eve::wide<float>>>  );
@@ -134,8 +134,8 @@ TTS_CASE( "Check for detection of bundle ABI")
   using tuple_t = kumi::tuple<double, float, std::int8_t>;
   using layer_t = kumi::tuple<int, tuple_t, std::int8_t>;
 
-  TTS_EXPECT_NOT(( eve::bundle_abi<eve::wide<float, eve::fixed<2*native>>>              ));
-  TTS_EXPECT_NOT(( eve::bundle_abi<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+  TTS_EXPECT_NOT(( eve::bundle_abi<eve::wide<float, 2*native>>              ));
+  TTS_EXPECT_NOT(( eve::bundle_abi<eve::logical<eve::wide<float, 2*native>>>));
 
   TTS_EXPECT_NOT( eve::bundle_abi<eve::wide<float>>                 );
   TTS_EXPECT_NOT( eve::bundle_abi<eve::logical<eve::wide<float>>>   );
@@ -152,15 +152,15 @@ TTS_CASE( "Check for detection of aggregated ABI in product type")
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
-    TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
+    TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT_NOT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float,2*native>>>));
   }
   else
   {
-    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<float, eve::fixed<2*native>>>              ));
-    TTS_EXPECT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float, eve::fixed<2*native>>>>));
-    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<tuple_t, eve::fixed<2*native>>> ));
-    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<layer_t, eve::fixed<2*native>>> ));
+    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<float, 2*native>>              ));
+    TTS_EXPECT(( eve::has_aggregated_component_v<eve::logical<eve::wide<float, 2*native>>>));
+    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<tuple_t,2*native>> ));
+    TTS_EXPECT(( eve::has_aggregated_component_v<eve::wide<layer_t,2*native>> ));
   }
 
   TTS_EXPECT_NOT( eve::has_aggregated_component_v<eve::wide<tuple_t>>             );

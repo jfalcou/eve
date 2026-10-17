@@ -42,13 +42,13 @@ TTS_CASE_WITH( "Check store behavior with aligned pointers"
   alignas(algt) std::array<eve::element_type_t<T>, 3 * T::size()> target;
   alignas(algt) std::array<eve::element_type_t<L>, 3 * T::size()> logical_target;
 
-  eve::store(data, eve::as_aligned(&target[ 0            ], eve::cardinal_t<T>{}) );
-  eve::store(data, eve::as_aligned(&target[ T::size()    ], eve::cardinal_t<T>{}) );
-  eve::store(data, eve::as_aligned(&target[ 2 * T::size()], eve::cardinal_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ 0            ], eve::width_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ T::size()    ], eve::width_t<T>{}) );
+  eve::store(data, eve::as_aligned(&target[ 2 * T::size()], eve::width_t<T>{}) );
 
-  eve::store(logical_data, eve::as_aligned(&logical_target[ 0            ], eve::cardinal_t<T>{}) );
-  eve::store(logical_data, eve::as_aligned(&logical_target[ T::size()    ], eve::cardinal_t<T>{}) );
-  eve::store(logical_data, eve::as_aligned(&logical_target[ 2 * T::size()], eve::cardinal_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 0            ], eve::width_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ T::size()    ], eve::width_t<T>{}) );
+  eve::store(logical_data, eve::as_aligned(&logical_target[ 2 * T::size()], eve::width_t<T>{}) );
 
   TTS_ALL_EQUAL(target        , ref         );
   TTS_ALL_EQUAL(logical_target, logical_ref );
@@ -66,9 +66,9 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   std::array<eve::element_type_t<T>, 256> ref;
   std::array<eve::element_type_t<L>, 256> logical_ref;
 
-  auto test = [&]<typename D, std::ptrdiff_t A>(eve::fixed<A>, auto f, D d)
+  auto test = [&]<typename D, std::ptrdiff_t A>(eve::lanes_t<A>, auto f, D d)
   {
-    if (!eve::is_aligned(f, eve::fixed<A>{}))   return;
+    if (!eve::is_aligned(f, eve::lanes_t<A>{}))   return;
 
     if constexpr (A*sizeof(eve::element_type_t<D>) >= T::alignment())
     {
@@ -76,7 +76,7 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
         std::cout << "With alignment: " << A << std::endl;
 
       using d_t = eve::element_type_t<D>;
-      eve::aligned_ptr<d_t, eve::fixed<A>> ptr{f};
+      eve::aligned_ptr<d_t, A> ptr{f};
       eve::store(d, ptr);
       TTS_EQUAL(D{f}, d);
       eve::store(D{d_t{0}}, ptr);
@@ -94,7 +94,7 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, &ref[i], data),...);
+      (test(eve::lanes<(1<<(N+2))>, &ref[i], data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 
@@ -102,7 +102,7 @@ TTS_CASE_WITH( "Check store behavior with pointer of different alignment"
   {
     [&]<std::ptrdiff_t...N>( std::integer_sequence<std::ptrdiff_t,N...> )
     {
-      (test(eve::lane<(1<<(N+2))>, &logical_ref[i], logical_data),...);
+      (test(eve::lanes<(1<<(N+2))>, &logical_ref[i], logical_data),...);
     }( std::make_integer_sequence<std::ptrdiff_t,5>{});
   }
 };

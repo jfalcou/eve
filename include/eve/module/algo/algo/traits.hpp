@@ -12,7 +12,7 @@
 
 #include <eve/deps/raberu.hpp>
 
-#include <eve/arch/cardinals.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/traits.hpp>
 
 #include <type_traits>
@@ -171,46 +171,33 @@ namespace eve::algo
   //============================================================================
   template<int N> inline constexpr auto unroll = (unroll_key = eve::index<N>);
 
-  struct force_cardinal_key_t : rbr::as_keyword<force_cardinal_key_t>
+  struct force_width_key_t : rbr::as_keyword<force_width_key_t>
   {
     template<typename Value> constexpr auto operator=(Value const&) const noexcept
     {
-      return rbr::option<force_cardinal_key_t,Value>{};
+      return rbr::option<force_width_key_t,Value>{};
     }
   };
-  inline constexpr force_cardinal_key_t force_cardinal_key;
+  inline constexpr force_width_key_t force_width_key;
 
   //=============================================================================
   //! @defgroup eve_algo_force_cardinal force_cardinal
   //! @ingroup eve_algo_options_types
   //! @brief Overrides the cardinal an algorithm iterates with.
   //! @{
-  //!   @var force_cardinal
+  //!   @var force_width
   //!
-  //!   @headerfile{eve/module/algo.hpp}
-  //!
-  //!   <div class="synopsis">
-  //!   @code{.cpp}
-  //!   namespace eve::algo
-  //!   {
-  //!     template<int N> inline constexpr auto force_cardinal = eve_implementation_defined;
-  //!   }
-  //!   @endcode
-  //!   </div>
-  //!
-  //!   @tparam N Lanes handled at once.
-  //!
-  //!   Sets the cardinal of the loop, the number of lanes handled at once, to @b N. By default the
-  //!   cardinal comes from the types the range carries and from whether frequency scaling is
-  //!   allowed. Interacting with hand-written register code requires the trait, the register width
-  //!   being fixed there.
+  //!   @brief A trait that overrides all other width selection and just says
+  //!   to use a certain one. The main use-case for this is ease of interaction with
+  //!   native register code.
   //!
   //!   @snippet tutorial/interacting_with_native.cpp interacting_with_native_algo
   //!
-  //!   @see consider_types, allow_frequency_scaling
+  //!   @see consider_types if maybe using some extra type is the reason you want
+  //!   to change width.
   //! @}
   //=============================================================================
-  template<int N> inline constexpr auto force_cardinal = (force_cardinal_key = eve::fixed<N>{});
+  template<int N> inline constexpr auto force_width = (force_width_key = eve::lanes_t<N>{});
 
   struct consider_types_key_t {};
   inline constexpr auto consider_types_key = ::rbr::keyword( consider_types_key_t{} );
@@ -222,7 +209,9 @@ namespace eve::algo
   //! @{
   //!   @var consider_types
   //!
-  //!   @headerfile{eve/module/algo.hpp}
+  //!   @brief A trait that tells the algorithm to take an extra type into account when
+  //!   selecting a width. This is, for example, used by `reduce` algorithm
+  //!   to consider the sum type.
   //!
   //!   <div class="synopsis">
   //!   @code{.cpp}
@@ -386,16 +375,16 @@ namespace eve::algo
   //=============================================================================
   inline constexpr auto common_type = common_with_types<>;
 
-  struct divisible_by_cardinal_tag {};
+  struct divisible_by_width_tag {};
 
   //=============================================================================
   //! @defgroup eve_algo_divisible_by_cardinal divisible_by_cardinal
   //! @ingroup eve_algo_options_data
   //! @brief States that a range holds a whole number of SIMD registers.
   //! @{
-  //!   @var divisible_by_cardinal
+  //!    @var divisible_by_width
   //!
-  //!   @headerfile{eve/module/algo.hpp}
+  //!    @brief an trait to tell that the input data is strictly divisible by width.
   //!
   //!   <div class="synopsis">
   //!   @code{.cpp}
@@ -411,8 +400,9 @@ namespace eve::algo
   //!   register, and the tail handling returns. The trait therefore takes effect on an unaligned
   //!   pointer, or with eve::algo::no_aligning.
   //!
-  //!   A range whose two ends are aligned pointers with an alignment at least the cardinal carries
-  //!   this trait already, deduced.
+  //!    @note this trait is deduced automatically if both begin and end of the range are
+  //!    aligned_ptr with alignment >= width. If you are using this, consider aligning
+  //!    your data too.
   //!
   //!   @code
   //!   std::vector<float> data(1024);
@@ -425,7 +415,7 @@ namespace eve::algo
   //!   @see no_aligning
   //! @}
   //=============================================================================
-  inline constexpr auto divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} );
+  inline constexpr auto divisible_by_width = ::rbr::flag( divisible_by_width_tag{} );
 
   struct no_aligning_tag {};
 
@@ -927,31 +917,21 @@ namespace eve::algo
 
   namespace _ {
     template <typename Traits, typename RorI>
-    using default_cardinal_to_use_t = eve::fixed<
+    using default_width_to_use_t = eve::lanes_t<
       Traits::contains(allow_frequency_scaling) ?
-        expected_cardinal_v<get_types_to_consider_for<Traits, RorI>> :
-        nofs_cardinal_v    <get_types_to_consider_for<Traits, RorI>>
+        expected_width_v<get_types_to_consider_for<Traits, RorI>> :
+        nofs_width_v    <get_types_to_consider_for<Traits, RorI>>
     >;
   }
 
   //================================================================================================
-  //! @ingroup eve_algo_traits_dev
-  //! @brief Cardinal an algorithm iterates with.
-  //!
-  //! @tparam Traits Trait set to read.
-  //! @tparam RorI   Range or iterator the algorithm walks.
-  //!
-  //! | Trait set                          | Result                                        |
-  //! |:-----------------------------------|:----------------------------------------------|
-  //! | carries eve::algo::force_cardinal  | that cardinal                                 |
-  //! | carries allow_frequency_scaling    | expected cardinal of the considered types     |
-  //! | otherwise                          | cardinal that avoids frequency scaling        |
-  //!
-  //! @see get_types_to_consider_for
+  //! @addtogroup eve_algo_traits
+  //! @brief returns width which should be used.
+  //! @tparam Traits, RangeOrIterator
   //================================================================================================
   template <typename Traits, typename RorI>
-  using iteration_cardinal_t =
-    rbr::result::fetch_t< (force_cardinal_key | _::default_cardinal_to_use_t<Traits, RorI>{})
+  using iteration_width_t =
+    rbr::result::fetch_t< (force_width_key | _::default_width_to_use_t<Traits, RorI>{})
                         , Traits
                         >;
 

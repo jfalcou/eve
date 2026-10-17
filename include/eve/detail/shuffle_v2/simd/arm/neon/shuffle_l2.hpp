@@ -16,11 +16,11 @@ namespace eve::_
 
 // NOTE: using no_matching_shuffle_t {} because otherwise apple clang crashes.
 
-template<typename T, typename N, std::ptrdiff_t S>
+template<typename T, width_type N, std::ptrdiff_t S>
 EVE_FORCEINLINE auto
 vext(eve::wide<T, N> x, eve::wide<T, N> y, eve::index_t<S>)
 {
-  if constexpr( sizeof(T) * N() == 8 )
+  if constexpr( sizeof(T) * N == 8 )
   {
     if constexpr( sizeof(T) == 8 ) return vext_u64(x, y, S);
     else if constexpr( sizeof(T) == 4 ) return vext_u32(x, y, S);
@@ -36,11 +36,11 @@ vext(eve::wide<T, N> x, eve::wide<T, N> y, eve::index_t<S>)
   }
 }
 
-template<typename T, typename N, std::ptrdiff_t To, std::ptrdiff_t From>
+template<typename T, width_type N, std::ptrdiff_t To, std::ptrdiff_t From>
 EVE_FORCEINLINE auto
 vcopy_lane(eve::wide<T, N> x, eve::index_t<To>, eve::wide<T, N> y, eve::index_t<From>)
 {
-  if constexpr( sizeof(T) * N() == 8 )
+  if constexpr( sizeof(T) * N == 8 )
   {
     if constexpr( sizeof(T) == 8 ) return vcopy_lane_u64(x, To, y, From);
     else if constexpr( sizeof(T) == 4 ) return vcopy_lane_u32(x, To, y, From);
@@ -57,9 +57,9 @@ vcopy_lane(eve::wide<T, N> x, eve::index_t<To>, eve::wide<T, N> y, eve::index_t<
 }
 
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_set_one_zero(P, fixed<G>, wide<T, N> x)
+shuffle_l2_neon_set_one_zero(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto pos = eve::_::idxm::is_just_setting_one_zero(P::idxs);
 
@@ -83,15 +83,15 @@ shuffle_l2_neon_set_one_zero(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_rev(P, fixed<G>, wide<T, N> x)
+shuffle_l2_neon_rev(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr std::array idxs = P::most_repeated;
 
   if constexpr( P::g_size * idxs.size() > 8 ) return no_matching_shuffle_t {};
   else if constexpr( !idxm::is_reverse(idxs) ) return no_matching_shuffle_t {};
-  else if constexpr( sizeof(T) * N::value == 8 )
+  else if constexpr( sizeof(T) * N == 8 )
   {
     if constexpr( sizeof(T) == 4 && idxs.size() == 2 ) return vrev64_u32(x);
     else if constexpr( sizeof(T) == 2 && idxs.size() == 2 ) return vrev32_u16(x);
@@ -111,9 +111,9 @@ shuffle_l2_neon_rev(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
+shuffle_l2_neon_dup_lane(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto lane = idxm::is_lane_broadcast(P::idxs);
 
@@ -122,7 +122,7 @@ shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
   {
     constexpr int m = *lane;
 
-    if constexpr( sizeof(T) * N::value == 8 )
+    if constexpr( sizeof(T) * N == 8 )
     {
       if constexpr( sizeof(T) == 4 ) return vdup_lane_u32(x, m);
       else if constexpr( sizeof(T) == 2 ) return vdup_lane_u16(x, m);
@@ -139,18 +139,18 @@ shuffle_l2_neon_dup_lane(P, fixed<G>, wide<T, N> x)
   }
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_ext_self(P, fixed<G>, wide<T, N> x)
+shuffle_l2_neon_ext_self(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto point = idxm::is_rotate(P::idxs);
   if constexpr( !point ) return no_matching_shuffle_t {};
   else return vext(x, x, eve::index<P::idxs.size() - *point>);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_copy_lane_self(P, fixed<G>, wide<T, N> x)
+shuffle_l2_neon_copy_lane_self(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto to_from = idxm::is_just_setting_one_lane(P::idxs);
 
@@ -158,9 +158,9 @@ shuffle_l2_neon_copy_lane_self(P, fixed<G>, wide<T, N> x)
   else return vcopy_lane(x, eve::index<(*to_from)[0]>, x, eve::index<(*to_from)[1]>);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x)
+shuffle_l2_(EVE_SUPPORTS(neon128_), P p, lanes_t<G> g, wide<T, N> x)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_element_bit_shift(p, g, x); matched_shuffle<decltype(r)> )
@@ -193,9 +193,9 @@ requires(P::out_reg_size == P::reg_size)
 
 // 2 register shuffles ---------------------------------------------------------
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_copy_lane_other(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l2_neon_copy_lane_other(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto to_from0 = idxm::is_just_setting_one_lane(P::idxs);
   constexpr auto to_from1 = idxm::is_just_setting_one_lane(P::xy_swapped);
@@ -203,27 +203,27 @@ shuffle_l2_neon_copy_lane_other(P, fixed<G>, wide<T, N> x, wide<T, N> y)
   if constexpr( current_api < asimd ) return no_matching_shuffle_t {};
   else if constexpr( to_from0 )
   {
-    return vcopy_lane(x, eve::index<(*to_from0)[0]>, y, eve::index<(*to_from0)[1] - N::value * G>);
+    return vcopy_lane(x, eve::index<(*to_from0)[0]>, y, eve::index<(*to_from0)[1] - N * G>);
   }
   else if constexpr( to_from1 )
   {
-    return vcopy_lane(y, eve::index<(*to_from1)[0]>, x, eve::index<(*to_from1)[1] - N::value * G>);
+    return vcopy_lane(y, eve::index<(*to_from1)[0]>, x, eve::index<(*to_from1)[1] - N * G>);
   }
   else return no_matching_shuffle_t {};
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_neon_ext_2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+shuffle_l2_neon_ext_2(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
 {
   constexpr auto starts_from = idxm::is_in_order(P::idxs);
   if constexpr( !starts_from ) return no_matching_shuffle_t {};
   else return vext(x, y, eve::index<*starts_from>);
 }
 
-template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 EVE_FORCEINLINE auto
-shuffle_l2_(EVE_SUPPORTS(neon128_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+shuffle_l2_(EVE_SUPPORTS(neon128_), P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l2_neon_copy_lane_other(p, g, x, y); matched_shuffle<decltype(r)> )

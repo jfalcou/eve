@@ -36,7 +36,7 @@ TTS_CASE("eve.algo for_each_iteration_fixed_overflow, selection")
 
   // precise f, l
   {
-    auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_cardinal);
+    auto tr  = eve::algo::traits(eve::algo::no_aligning, eve::algo::divisible_by_width);
     auto sel = eve::algo::for_each_iteration_fixed_overflow(tr, f, l);
 
     TTS_TYPE_IS(decltype(sel),
@@ -147,7 +147,7 @@ TTS_CASE("eve.algo for_each_iteration overflow, divisible, unroll 1, overflow 1 
                        eve::algo::unroll<1>,
                        eve::algo::overflow<4>,
                        eve::algo::no_aligning,
-                       eve::algo::divisible_by_cardinal);
+                       eve::algo::divisible_by_width);
   };
 
   TTS_EQUAL(run(0, 8),
@@ -201,7 +201,7 @@ TTS_CASE("eve.algo for_each_iteration overflow, divisible, unroll 4, overflow 4 
                        eve::algo::unroll<4>,
                        eve::algo::overflow<16>,
                        eve::algo::no_aligning,
-                       eve::algo::divisible_by_cardinal);
+                       eve::algo::divisible_by_width);
   };
 
   TTS_EQUAL(run(0, 32),

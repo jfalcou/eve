@@ -13,15 +13,15 @@
 
 namespace eve::_
 {
-template<callable_options O, scalar_value T, typename N>
+template<callable_options O, scalar_value T, width_type N>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, wide<T, N> vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  return __riscv_vmerge_tu(vt, vf, vt, c, N::value);
+  return __riscv_vmerge_tu(vt, vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, typename N, scalar_value U>
+template<callable_options O, scalar_value T, width_type N, scalar_value U>
 EVE_FORCEINLINE wide<T, N>
 if_else_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> c, U vt, wide<T, N> vf) noexcept
 requires rvv_abi<abi_t<T, N>>
@@ -31,14 +31,14 @@ requires rvv_abi<abi_t<T, N>>
   {
     const auto w = bit_cast(vf, as<wide<std::uint16_t, N>>{});
     const auto s = bit_cast(vt, as<std::uint16_t>{});
-    const auto r = __riscv_vmerge(w, s, c, N::value);
+    const auto r = __riscv_vmerge(w, s, c, N);
     return bit_cast(wide<std::uint16_t, N>{ r }, as<wide<T, N>>{});
   }
-  else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N::value);
-  else return __riscv_vmerge(vf, vt, c, N::value);
+  else if constexpr( floating_scalar_value<T> ) return __riscv_vfmerge(vf, vt, c, N);
+  else return __riscv_vmerge(vf, vt, c, N);
 }
 
-template<callable_options O, scalar_value T, typename N>
+template<callable_options O, scalar_value T, width_type N>
 EVE_FORCEINLINE logical<wide<T, N>>
                 if_else_( EVE_REQUIRES(rvv_),
                           O const&,
@@ -48,10 +48,10 @@ EVE_FORCEINLINE logical<wide<T, N>>
                         ) noexcept
 requires rvv_abi<abi_t<T, N>>
 {
-  auto needed_vt = __riscv_vmand(c, vt, N::value);
-  auto neg_mask  = __riscv_vmnot(c, N::value);
-  auto needed_vf = __riscv_vmand(neg_mask, vf, N::value);
-  return __riscv_vmor(needed_vt, needed_vf, N::value);
+  auto needed_vt = __riscv_vmand(c, vt, N);
+  auto neg_mask  = __riscv_vmnot(c, N);
+  auto needed_vf = __riscv_vmand(neg_mask, vf, N);
+  return __riscv_vmor(needed_vt, needed_vf, N);
 }
 
 }

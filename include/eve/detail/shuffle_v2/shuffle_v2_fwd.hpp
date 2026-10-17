@@ -113,9 +113,9 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //!
 //!    Even within this not all patterns are supported.
 //!
-//!    (1) shuffle_v2(T ... xs, eve::fixed<GroupSize>, eve::pattern_t<idxs...>);
+//!    (1) shuffle_v2(T ... xs, eve::lanes_t<GroupSize>, eve::pattern_t<idxs...>);
 //!    (2) shuffle_v2(T ... xs, eve::pattern_t<idxs...>);
-//!    (3) shuffle_v2(T ... xs, eve::fixed<GroupSize>, pattern_formula auto formula);
+//!    (3) shuffle_v2(T ... xs, eve::lanes_t<GroupSize>, pattern_formula auto formula);
 //!    (4) shuffle_v2(T ... xs, pattern_formula auto formula);
 //!
 //!   (2) and (4) call (1) and (3) with GroupSize = 1.
@@ -124,8 +124,8 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //!   Parameters:
 //!    * xs... - variadic pack of registers to shuffle.
 //!    * GroupSize - a parameter that allows you to specify pattern in groups of multiple
-//!      elements. Example: passing eve::lane<1>, eve::pattern<2, 3, 0, 1> is the same as
-//!                                 eve::lane<2>, eve::pattern<1, 0>
+//!      elements. Example: passing eve::lanes<1>, eve::pattern<2, 3, 0, 1> is the same as
+//!                                 eve::lanes<2>, eve::pattern<1, 0>
 //!    * pattern_t<idxs...> - the indexes you want in the result. All lanes in
 //!      all xs are numbered from 0 to `T::size()` * sizeof...(xs);
 //!      ** if pattern_t<idxs...>::size() <= T::size() it has to be a power of 2
@@ -133,10 +133,10 @@ constexpr auto shuffle_v2_core = _::make_shuffle_v2(_::native_shuffle_lookup);
 //!
 //!    Return type:
 //!     * `pattern_t<>::size()` < `T::size()` then it has to be a power of 2 and
-//!        the result is as_wide_t<element_type_t<T>, eve::fixed<pattern_t<>::size()>>
+//!        the result is as_wide_t<element_type_t<T>, eve::lanes_t<pattern_t<>::size()>>
 //!     * `pattern_t<>::size()` == `T::size()` -> T
 //!     * `pattern_t<>::size()` > `T::size()` -> wide<kumi::tuple<eve::element_type_t<T> ...>,
-//!     T::cardinal_type>
+//!     T::width_type>
 //!        You can use just decompones it as a tuple: `auto [r0, r1, r2] = shuffle(pattern, x)`
 //!        if all you want is the produced registers.
 //!        But in a common case of deconstructing incoming data with some semantic,
