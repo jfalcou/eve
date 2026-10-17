@@ -96,7 +96,11 @@ namespace eve
     template<typename T, callable_options O>
     constexpr EVE_FORCEINLINE T asec_(EVE_REQUIRES(cpu_), O const& o, T const& a)
     {
-      return eve::acos[o](rec[pedantic](a));
+      // Rounding 1 / a to float16 before acos costs several ULP near 1: the whole chain runs in float.
+      if constexpr(std::same_as<eve::element_type_t<T>, eve::float16_t>)
+        return eve::_::apply_fp16_as_fp32(eve::asec[o], a);
+      else
+        return eve::acos[o](rec[pedantic](a));
     }
   }
   constexpr auto asecd = eve::asec[eve::deg];
