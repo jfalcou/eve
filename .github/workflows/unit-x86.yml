@@ -1,0 +1,136 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Unit Tests x86
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: unit-x86-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ##################################################################################################
+  ## The native cardinal alone, compiled first: every other job of this file waits for it.
+  ##################################################################################################
+  native-x86:
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: x86    , opts: "-msse4.2"               }
+        - { comp: gcc  , arch: x86    , opts: "-msse4.2"               }
+        - { comp: clang, arch: x86    , opts: "-mavx2"                 }
+        - { comp: gcc  , arch: x86    , opts: "-mavx2 -mf16c"          }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile
+        run:  |
+          cd build
+          ninja unit.exe -j 8
+      - name: Run
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 1 - Pre-Skylake SIMD ISA - clang
+  ##################################################################################################
+  x86-clang:
+    needs: native-x86
+    name: x86-clang (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.cfg.opts }})
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86, opts: -msse4.2    , lot: extra  }
+        - { comp: clang , arch: x86, opts: -mavx -mf16c, lot: family }
+        - { comp: clang , arch: x86, opts: -mavx2      , lot: extra  }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_TEST_LOT=${{ matrix.cfg.lot }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 8
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 1 - Pre-Skylake SIMD ISA - g++
+  ##################################################################################################
+  x86-gcc:
+    needs: native-x86
+    name: x86-gcc (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.cfg.opts }})
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc , arch: x86, opts: -msse4.2     , lot: extra  }
+        - { comp: gcc , arch: x86, opts: -mavx        , lot: family }
+        - { comp: gcc , arch: x86, opts: -mavx2 -mf16c, lot: extra  }
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_TEST_LOT=${{ matrix.cfg.lot }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 8
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## AVX2 with BMI, on legend
+  ##################################################################################################
+  other-cases:
+    needs: native-x86
+    runs-on: [self-hosted, generic-x86]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+        - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 8
+      - name: Running Unit Tests
+        run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe
