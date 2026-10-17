@@ -31,13 +31,16 @@ struct ManualSum
     }
     else
     {
-      auto sum = eve::zero(eve::as<eve::element_type_t<T>>{});
+      // A float16 sum is exact in float, so the reference carries no rounding of its own.
+      using e_t = eve::element_type_t<T>;
+      using s_t = std::conditional_t<sizeof(e_t) == 2 && std::floating_point<e_t>, float, e_t>;
+      auto sum = eve::zero(eve::as<s_t>{});
 
       for (int i = 0; i < v.size(); ++i)
         if (mask_at(mask, i))
-          sum += v.get(i);
+          sum += static_cast<s_t>(v.get(i));
 
-      return sum;
+      return static_cast<e_t>(sum);
     }
   }
 };
@@ -63,7 +66,9 @@ TTS_CASE_WITH("Check behavior of eve::_::sum on wides (ieee754 reals)",
               tts::generate(tts::randoms(1, 9)))
 <typename T>(T v)
 {
-  arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v, 1.0);
+  // A float16 sum done in float16 rounds at every level of its tree.
+  constexpr double ulp = sizeof(eve::element_type_t<T>) == 2 ? 1.0 + std::bit_width(std::size_t{T::size()}) / 2.0 : 1.0;
+  arithmetic_reduction_test_case<ManualSum>(eve::_::sum, v, ulp);
 };
 
 TTS_CASE_TPL("Check behavior of eve::_::sum on wides (conditioned ieee754 reals)", eve::test::simd::ieee_reals_wf16)
