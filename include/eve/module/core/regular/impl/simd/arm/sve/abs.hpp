@@ -18,7 +18,7 @@ namespace eve::_
   template<arithmetic_scalar_value T, typename N, conditional_expr C, callable_options O>
   EVE_FORCEINLINE wide<T, N> abs_(EVE_REQUIRES(sve_),
                                   C          const& mask,
-                                  O          const&,
+                                  O          const& opts,
                                   wide<T, N> const& v) noexcept
   requires sve_abi<abi_t<T, N>>
   {
@@ -27,6 +27,7 @@ namespace eve::_
 
     if      constexpr( C::is_complete )                 return src;
     else if constexpr( match(c, category::unsigned_) )  return if_else(mask, v, src);
+    else if constexpr( O::contains(saturated) )         return if_else(mask, abs.behavior(cpu_{}, opts, v), src);
     else                                                return svabs_m(src,expand_mask(mask, as(v)),v);
   }
 
