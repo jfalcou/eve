@@ -1,0 +1,103 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Unit Tests Windows
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: unit-windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ##################################################################################################
+  ## Windows Targets
+  ##################################################################################################
+  native-windows:
+    name: native-windows (${{ matrix.cfg.name }}, ${{ matrix.chunk.name }})
+    runs-on: [windows-2022]
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
+        # - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL -DEVE_USE_PCH=OFF"}
+        ## One runner per chunk. They used to be seven steps of one job, each cleaning the build the
+        ## previous one left, because a single runner has a single disk.
+        chunk:
+        - {name: core , targets: "unit.core.exe"                                                                                  , tests: "unit.core"}
+        - {name: api  , targets: "unit.api.exe unit.memory.exe unit.math.exe"                                                          , tests: "unit.api|unit.memory|unit.math"}
+        - {name: algo , targets: "unit.algo.exe unit.arch.exe unit.internals.exe unit.meta.exe unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe examples.exe", tests: "unit.algo|unit.arch|unit.internals|unit.meta|unit.bessel|unit.combinatorial|unit.elliptic|unit.polynomial|unit.special|examples"}
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      ## Ninja needs the MSVC environment already loaded, where the Visual Studio generator found it
+      ## on its own.
+      - name: Load the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
+        run: |
+          cmake -G Ninja -DEVE_TEST_LOT=native -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+
+      - name: Compiling ${{ matrix.chunk.name }}
+        run: |
+          cd build
+          for target in ${{ matrix.chunk.targets }}; do
+            cmake --build . --target $target --parallel 4
+          done
+
+      - name: Running ${{ matrix.chunk.name }}
+        run: |
+          cd build
+          ctest --output-on-failure -R "${{ matrix.chunk.tests }}" --parallel 4
+
+  windows:
+    needs: native-windows
+    name: windows (${{ matrix.cfg.name }}, ${{ matrix.chunk.name }})
+    runs-on: [windows-2022]
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
+        # - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL -DEVE_USE_PCH=OFF"}
+        ## One runner per chunk. They used to be seven steps of one job, each cleaning the build the
+        ## previous one left, because a single runner has a single disk.
+        chunk:
+        - {name: core , targets: "unit.core.exe"                                                                                  , tests: "unit.core"}
+        - {name: api  , targets: "unit.api.exe unit.memory.exe unit.math.exe"                                                          , tests: "unit.api|unit.memory|unit.math"}
+        - {name: algo , targets: "unit.algo.exe unit.arch.exe unit.internals.exe unit.meta.exe unit.bessel.exe unit.combinatorial.exe unit.elliptic.exe unit.polynomial.exe unit.special.exe examples.exe", tests: "unit.algo|unit.arch|unit.internals|unit.meta|unit.bessel|unit.combinatorial|unit.elliptic|unit.polynomial|unit.special|examples"}
+
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      ## Ninja needs the MSVC environment already loaded, where the Visual Studio generator found it
+      ## on its own.
+      - name: Load the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
+        run: |
+          cmake -G Ninja -DEVE_TEST_LOT=extra -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+
+      - name: Compiling ${{ matrix.chunk.name }}
+        run: |
+          cd build
+          for target in ${{ matrix.chunk.targets }}; do
+            cmake --build . --target $target --parallel 4
+          done
+
+      - name: Running ${{ matrix.chunk.name }}
+        run: |
+          cd build
+          ctest --output-on-failure -R "${{ matrix.chunk.tests }}" --parallel 4

@@ -72,7 +72,7 @@ jobs:
         run: |
           cmake -S . -B build -G Ninja -DEVE_PROC_STAT=ON -DEVE_BUILD_DOCUMENTATION=OFF \
                 -DCMAKE_TOOLCHAIN_FILE=cmake/toolchain/clang.x86.cmake                  \
-                -DEVE_OPTIONS="-msse2" -DEVE_USE_PCH=0
+                -DEVE_OPTIONS="-msse2" -DEVE_USE_PCH=0 -DEVE_TEST_LOT=native
           cmake --build build -j 2 --target unit.exe
 
       ##############################################################################################

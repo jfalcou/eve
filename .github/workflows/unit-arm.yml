@@ -1,0 +1,106 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Unit Tests ARM
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: unit-arm-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ##################################################################################################
+  ## ARM SVE256/512 Tests, under qemu
+  ##################################################################################################
+  other-arch:
+    name: other-arch (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.chunk.name }})
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        ## A hosted runner per chunk, ten per target: under qemu a chunk of a whole module runs over an hour.
+        ## unit.algo.algorithm is built for every qemu target but runs on the native targets only: the algorithms have no code per architecture.
+        ## api-rest compiles two units at a time on sve: four swizzle units each peak near 5 GiB under gcc, and a hosted runner has 16 GiB.
+        include:
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: core-a, targets: "unit.core.exe", tests: "^unit\\.core\\.[a-i]" } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: core-b, targets: "unit.core.exe", tests: "^unit\\.core\\.[j-z]" } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: compress-scalar, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_scalar_" } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: compress-simd, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_simd_" } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: compress-rest, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_[ltw]|^unit\\.api\\.compress\\.compress_[lw]" } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: api-rest, jobs: 2, targets: "unit.api.regular.exe unit.api.translation.exe unit.api.tuple.exe unit.api.udt.exe", tests: "^unit\\.api\\.regular\\.|^unit\\.api\\.translation\\.|^unit\\.api\\.tuple\\.|^unit\\.api\\.udt\\." } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: math  , targets: "unit.math.exe", tests: "^unit\\.math\\." } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: rest-a, targets: "unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe", tests: "^unit\\.arch\\.|^unit\\.meta\\.|^unit\\.internals\\.|^unit\\.polynomial\\.|^unit\\.combinatorial\\." } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: rest-b, targets: "unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe", tests: "^unit\\.bessel\\.|^unit\\.elliptic\\.|^unit\\.memory\\.|^unit\\.special\\." } }
+        - { cfg: { comp: gcc, arch: sve  , opts: -Wno-psabi }, chunk: { name: rest-c, targets: "unit.algo.exe examples.exe", tests: "^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: core-a, targets: "unit.core.exe", tests: "^unit\\.core\\.[a-i]" } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: core-b, targets: "unit.core.exe", tests: "^unit\\.core\\.[j-z]" } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: compress-scalar, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_scalar_" } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: compress-simd, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_simd_" } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: compress-rest, targets: "unit.api.compress.exe", tests: "^unit\\.api\\.compress\\.compress_copy_[ltw]|^unit\\.api\\.compress\\.compress_[lw]" } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: api-rest, targets: "unit.api.regular.exe unit.api.translation.exe unit.api.tuple.exe unit.api.udt.exe", tests: "^unit\\.api\\.regular\\.|^unit\\.api\\.translation\\.|^unit\\.api\\.tuple\\.|^unit\\.api\\.udt\\." } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: math  , targets: "unit.math.exe", tests: "^unit\\.math\\." } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: rest-a, targets: "unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe", tests: "^unit\\.arch\\.|^unit\\.meta\\.|^unit\\.internals\\.|^unit\\.polynomial\\.|^unit\\.combinatorial\\." } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: rest-b, targets: "unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe", tests: "^unit\\.bessel\\.|^unit\\.elliptic\\.|^unit\\.memory\\.|^unit\\.special\\." } }
+        - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: rest-c, targets: "unit.algo.exe examples.exe", tests: "^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." } }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile ${{ matrix.chunk.name }}
+        run:  |
+          cd build
+          ninja ${{ matrix.chunk.targets }} -j ${{ matrix.chunk.jobs || 4 }}
+      - name: Run ${{ matrix.chunk.name }}
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "${{ matrix.chunk.tests }}"
+
+  ##################################################################################################
+  ## ARMv7, under qemu
+  ##################################################################################################
+  armv7:
+    name: armv7 (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.chunk.name }})
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: clang, arch: arm  , opts: -Wno-psabi }
+        ## One hosted runner per chunk: a qemu run of the whole family would hold one for hours.
+        chunk:
+        - { name: core, targets: "unit.core.exe", tests: "^unit\\.core\\." }
+        - { name: api , targets: "unit.api.exe unit.math.exe", tests: "^unit\\.api\\.|^unit\\.math\\." }
+        - { name: rest, targets: "unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe", tests: "^unit\\.arch\\.|^unit\\.meta\\.|^unit\\.internals\\.|^unit\\.polynomial\\.|^unit\\.combinatorial\\.|^unit\\.bessel\\.|^unit\\.elliptic\\.|^unit\\.memory\\.|^unit\\.special\\.|^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run:  |
+          mkdir build
+          cd build
+          cmake ..  -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+                    -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compile ${{ matrix.chunk.name }}
+        run:  |
+          cd build
+          ninja ${{ matrix.chunk.targets }} -j 4
+      - name: Run ${{ matrix.chunk.name }}
+        run:  |
+          cd build
+          ctest --output-on-failure -j 4 --timeout 3600 -R "${{ matrix.chunk.tests }}"
