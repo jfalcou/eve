@@ -99,10 +99,11 @@ TTS_CASE_WITH("Check behavior of hypot(wide)",
   using v_t = eve::element_type_t<T>;
   TTS_ULP_EQUAL(
       hypot(a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 1.5) << a0 << " -- " << a1 << '\n';
+  // sqrt(a * a + b * b) rounds twice, and the armv7 square root is an estimate refined by Newton.
   TTS_ULP_EQUAL(
-    hypot[eve::pedantic](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 0.5);
+    hypot[eve::pedantic](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 1.0);
   TTS_ULP_EQUAL(
-    hypot[eve::raw](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 0.5);
+    hypot[eve::raw](a0, a1), tts::map([std_hypot](auto e, auto f) -> v_t { return std_hypot(e, f); }, a0, a1), 1.0);
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(hypot(a0, a1, a2),

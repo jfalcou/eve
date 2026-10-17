@@ -72,8 +72,13 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
 //==================================================================================================
 //= Tests with kahan vs widen
 //==================================================================================================
+using float16_wides = tts::types< eve::wide<eve::float16_t, eve::fixed<1>>
+                                , eve::wide<eve::float16_t, eve::fixed<2>>
+                                , eve::wide<eve::float16_t, eve::fixed<4>>
+                                >;
+
 TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
-              eve::test::simd::ieee_reals_wf16,
+              float16_wides,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax)))
@@ -83,9 +88,6 @@ TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
   using eve::widen;
   using eve::kahan;
   using eve::as;
-  if constexpr(sizeof(eve::element_type_t<T>) == 2 && eve::cardinal_v<T> < 8)
-  {
-    TTS_ULP_EQUAL(manhattan[kahan](a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
-    TTS_ULP_EQUAL(manhattan(a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
-  }
+  TTS_ULP_EQUAL(manhattan[kahan](a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
+  TTS_ULP_EQUAL(manhattan(a0, a1, a2), eve::downgrade(manhattan[widen](a0, a1, a2)), 0.5);
 };
