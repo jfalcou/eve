@@ -92,9 +92,15 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::expx2)(eve::wide)",
 
 
 
+// float16 overflows from 3.33 on, where the raw path rounds to infinity at another point.
+constexpr auto raw_maxi = tts::constant([]<typename T>(eve::as<T> const& tgt)
+                                        { return eve::min(T(5), eve::sqrt(eve::maxlog(tgt))); });
+constexpr auto raw_mini = tts::constant([]<typename T>(eve::as<T> const& tgt)
+                                        { return -eve::min(T(5), eve::sqrt(eve::maxlog(tgt))); });
+
 TTS_CASE_WITH("Check behavior of expx2 on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::randoms(-5, 5), tts::randoms(-1.0, 1.0))
+              tts::randoms(raw_mini, raw_maxi), tts::randoms(-1.0, 1.0))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
