@@ -365,10 +365,13 @@ namespace eve::algo::views
       };
     }
 
+    // zip_iterator is still incomplete here, so the type comes from the base, which is complete.
+    using wide_value_type = as_wide_t<typename base::value_type, iterator_cardinal_t<I>>;
+
     template<callable_options O>
-    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type_t<zip_iterator>>) const
+    EVE_FORCEINLINE auto load(O const& opts, as<wide_value_type>) const
     {
-      wide_value_type_t<zip_iterator> res;
+      wide_value_type res;
 
       using C = rbr::result::fetch_t<condition_key, O>;
       auto c = opts[condition_key];
