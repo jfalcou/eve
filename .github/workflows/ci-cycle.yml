@@ -32,13 +32,20 @@ jobs:
   cycle:
     ## A cancelled run leaves its cycle without a report, and a skipped job waits for no runner.
     if: github.event.workflow_run.conclusion != 'cancelled'
-    runs-on: ubuntu-latest
+    ## On a hosted runner, the report waits for the pool the unit workflows fill, for hours.
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root
     steps:
       - name: Fetch the tool
         uses: actions/checkout@v6
         with:
           sparse-checkout: tools/ci_cycle.py
           sparse-checkout-cone-mode: false
+      ## The image has no gh, which the tool and the comment call.
+      - name: Fetch gh
+        run: curl -sSL https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_linux_amd64.tar.gz | tar -xz -C /usr/local --strip-components=1
       ## Exit 3 says a job still runs, and the next completion will report. Exit 4 says a newer push
       ## cancelled the cycle, which has no report.
       - name: Measure the cycle of ${{ github.event.workflow_run.head_sha }}
