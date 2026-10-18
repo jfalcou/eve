@@ -145,7 +145,7 @@ TTS_CASE_TPL( "keep_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -199,7 +199,7 @@ TTS_CASE_TPL( "ignore_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -253,7 +253,7 @@ TTS_CASE_TPL( "keep_last behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -309,7 +309,7 @@ TTS_CASE_TPL( "ignore_first behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -369,7 +369,7 @@ TTS_CASE_TPL( "keep_between behavior", eve::test::simd::all_types)
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
@@ -444,7 +444,7 @@ TTS_CASE_TPL( "ignore_first+last/ignore_extrema behavior", eve::test::simd::all_
 
   // For half_c wide, checks we don't have spurious true in the outside values
   using e_t  = eve::element_type_t<type>;
-  if constexpr(    !eve::emulated_abi<type>() && type::abi_type::has_defined_logical_tail
+  if constexpr(    !eve::emulated_abi<type> && type::abi_type::has_defined_logical_tail
                 && (eve::width_v<type> < eve::fundamental_width_v<e_t>) )
   {
     for(std::ptrdiff_t i = 0;i <= type::size();i++)
