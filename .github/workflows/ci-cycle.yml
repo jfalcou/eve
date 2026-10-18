@@ -62,6 +62,8 @@ jobs:
           git fetch -q --depth 1 "$remote" ci-cycle && git checkout -q FETCH_HEAD || git checkout -q --orphan ci-cycle
           cp ../ci-cycle.svg "$SHA.svg"
           git -c user.name=github-actions -c user.email=github-actions@github.com add "$SHA.svg"
+          ## A run on a cycle already kept stages nothing, and an empty commit fails.
+          git diff --cached --quiet && exit 0
           git -c user.name=github-actions -c user.email=github-actions@github.com commit -q -m "Cycle of $SHA"
           git push -q "$remote" HEAD:ci-cycle
       - name: Comment the pull request
