@@ -32,10 +32,14 @@ TTS_CASE_TPL("Check return types of lambert", eve::test::simd::ieee_reals)
 //==================================================================================================
 // lambert  tests
 //==================================================================================================
+// Near -1.6e-38, W-1 is about -90 and exp(W-1) is denormal, where armv7 answers NaN. eve promises
+// nothing on denormals, so the negative draws stop at -eps.
+constexpr auto minus_eps = tts::constant([](auto tgt) { return -eve::eps(tgt); });
+
 TTS_CASE_WITH("Check behavior of lambert on wide",
               eve::test::simd::ieee_reals,
               tts::randoms(-0.367879, 0.367879),
-                            tts::randoms(-0.367879, 0.0),
+                            tts::randoms(-0.367879, minus_eps),
                             tts::randoms(0, 10.0),
                             tts::randoms(-0.367879, -0.367879 + 1.0e-6))
 <typename T>(T a0, T a1, T a2, T a3)
@@ -107,7 +111,7 @@ TTS_CASE_WITH("Check behavior of lambert on wide",
 TTS_CASE_WITH("Check behavior of lambert on wide",
               eve::test::simd::ieee_reals,
               tts::randoms(-0.367879, 0.367879),
-                            tts::randoms(-0.367879, 0.0),
+                            tts::randoms(-0.367879, minus_eps),
                             tts::randoms(0, 10.0),
                             tts::randoms(-0.367879, -0.367879 + 1.0e-6))
 <typename T>(T a0, T a1, T a2, T a3)
