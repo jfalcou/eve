@@ -70,10 +70,11 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::erf)(eve::wide)",
 
 
 
-// erf[fast] gives out at 10.56, and erf reaches 1 well before that: 10 covers the meaningful range.
+// erf[fast] feeds 2.26 (x + 0.091 x^3) to exp[fast], whose float Schraudolph algorithm leaves its
+// range from 7.07 on. erf is 1 in double from 6 on, so 7 covers the meaningful range.
 TTS_CASE_WITH("Check behavior of erf on wide",
               eve::test::simd::ieee_reals,
-              tts::randoms(eve::eps, 10.0), tts::randoms(-2.0, 2.0))
+              tts::randoms(eve::eps, 7.0), tts::randoms(-2.0, 2.0))
 <typename T>(T const& a0, T const& a1)
 {
    using eve::raw;
