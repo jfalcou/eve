@@ -18,6 +18,11 @@ on:
       - EVE - Unit Tests Windows
     types: [completed]
 
+## Each unit workflow that ends starts this one: only the last report of a commit matters.
+concurrency:
+  group: ci-cycle-${{ github.event.workflow_run.head_sha }}
+  cancel-in-progress: true
+
 permissions:
   actions: read
   contents: write
@@ -32,7 +37,8 @@ jobs:
         with:
           sparse-checkout: tools/ci_cycle.py
           sparse-checkout-cone-mode: false
-      ## Exit 3 says a unit workflow is still running: the next completion will report.
+      ## Exit 3 says a job still runs, and the next completion will report. Exit 4 says a newer push
+      ## cancelled the cycle, which has no report.
       - name: Measure the cycle of ${{ github.event.workflow_run.head_sha }}
         id: cycle
         env:
@@ -41,7 +47,7 @@ jobs:
           set +e
           python3 tools/ci_cycle.py "$GITHUB_REPOSITORY" "${{ github.event.workflow_run.head_sha }}" --svg ci-cycle.svg --markdown ci-cycle.md | tee -a "$GITHUB_STEP_SUMMARY"
           status=${PIPESTATUS[0]}
-          if [ "$status" = "3" ]; then echo "complete=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ "$status" = "3" ] || [ "$status" = "4" ]; then echo "complete=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           echo "complete=true" >> "$GITHUB_OUTPUT"
           exit $status
       ## The comment embeds the chart by its raw URL, which GitHub serves for a file of a branch.
