@@ -55,11 +55,9 @@ jobs:
       run:
         shell: bash
     steps:
+      ## A checkout here would leave the runner's workspace sparse for the eve job that follows on it.
       - name: Fetch the tool
-        uses: actions/checkout@v6
-        with:
-          sparse-checkout: tools/ci_cycle.py
-          sparse-checkout-cone-mode: false
+        run: curl -sSfL -o ci_cycle.py "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/tools/ci_cycle.py"
       ## The image has no gh, which the tool and the comment call.
       - name: Fetch gh
         run: curl -sSL https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_linux_amd64.tar.gz | tar -xz -C /usr/local --strip-components=1
@@ -71,7 +69,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set +e
-          python3 tools/ci_cycle.py "$GITHUB_REPOSITORY" "$SHA" --svg ci-cycle.svg --markdown ci-cycle.md | tee -a "$GITHUB_STEP_SUMMARY"
+          python3 ci_cycle.py "$GITHUB_REPOSITORY" "$SHA" --svg ci-cycle.svg --markdown ci-cycle.md | tee -a "$GITHUB_STEP_SUMMARY"
           status=${PIPESTATUS[0]}
           if [ "$status" = "3" ] || [ "$status" = "4" ]; then echo "complete=false" >> "$GITHUB_OUTPUT"; exit 0; fi
           echo "complete=true" >> "$GITHUB_OUTPUT"
