@@ -62,6 +62,9 @@ TTS_CASE_WITH("Check behavior of two_sqrt_approx(scalar)",
     ld_t da = ld_t(a);
     ld_t de = ld_t(e);
     ld_t da0 = ld_t(a0);
-    TTS_LESS(double(std::abs(std::sqrt(da0) - (da+de))), 6.0e-32);
+    // The pair is within a few u^2 of the root in relative terms, u being double's unit roundoff:
+    // ppc64's long double holds 106 bits and sees the error grow with the root, x86's 64 cannot.
+    ld_t u = ld_t(eve::eps(eve::as<double>{})) / 2;
+    TTS_LESS(double(std::abs(std::sqrt(da0) - (da+de)) / std::sqrt(da0)), double(4 * u * u));
   }
 };
