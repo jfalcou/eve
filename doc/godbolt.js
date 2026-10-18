@@ -97,7 +97,7 @@ class SendToGodbolt extends HTMLElement {
               "source": textContent,
               "compiler": "clang2010",
               "options": {
-                "userArguments": "-O0 -std=c++20 -DEVE_NO_FORCEINLINE",
+                "userArguments": "-O0 -std=c++20",
                 "compilerOptions": { "executorRequest": true },
                 "filters": { "execute": true },
                 "libraries": [
@@ -167,7 +167,7 @@ class SendToGodbolt extends HTMLElement {
                   { "id": "eve", "version": "trunk" },
                   { "id": "tts", "version": "trunk" }
                 ],
-                "options": "-O0 -std=c++20 -DEVE_NO_FORCEINLINE"
+                "options": "-O0 -std=c++20"
               }
             }
           ]
