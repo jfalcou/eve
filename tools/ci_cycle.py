@@ -12,7 +12,7 @@ Usage::
 
 A unit workflow is one whose name contains ``--workflow``, Unit Tests by
 default. ``--style`` reads a JSON object whose keys replace those of STYLE.
-The exit status is 3 while a job still runs.
+The exit status is 3 while a job still runs, and 4 when a run was cancelled.
 
 The doctests run with ``python3 -m doctest tools/ci_cycle.py``.
 """
@@ -26,6 +26,8 @@ from datetime import datetime, timezone
 
 UNIT = "Unit Tests"
 PENDING = 3
+LEAD = 5
+CANCELLED = 4
 
 # The colors of the chart, by name. The runners list colors each runner in
 # the order of its first job.
@@ -58,12 +60,17 @@ class Job:
 
     @property
     def duration(self):
-        """Minutes from the runner pick-up to the end, None while running.
+        """Minutes from the runner pick-up to the end, None while running or
+        for a job that never had a runner.
 
         >>> Job("x86", "native", "", 0, 2, 20, "success").duration
         18
+        >>> Job("x86", "native", "", 0, None, 22, "cancelled").duration is None
+        True
         """
-        return None if self.ended is None else self.ended - self.started
+        if self.started is None or self.ended is None:
+            return None
+        return self.ended - self.started
 
 
 @dataclass
@@ -85,6 +92,15 @@ class Cycle:
     @property
     def done(self):
         return [j for j in self.jobs if j.ended is not None]
+
+    @property
+    def cancelled(self):
+        """True when a run of the cycle was cancelled, by a newer push.
+
+        >>> Cycle("eve", "abc", None, {"x86": "cancelled"}, []).cancelled
+        True
+        """
+        return "cancelled" in self.status.values()
 
     @property
     def pending(self):
@@ -112,7 +128,8 @@ class Cycle:
 
     @property
     def natives(self):
-        """Minutes at which the last native job ended, None without one.
+        """Minutes at which the last native job ended, None while one has not
+        run to its end or without any.
 
         >>> c = Cycle("eve", "abc", None, {}, [
         ...     Job("x86", "native-x86", "", 0, 0, 18, "success"),
@@ -120,9 +137,29 @@ class Cycle:
         ...     Job("x86", "x86-gcc", "", 22, 22, 50, "success")])
         >>> c.natives
         22
+        >>> gone = Job("macOS", "native-macos", "", 0, None, 30, "cancelled")
+        >>> c.jobs.append(gone)
+        >>> c.natives is None
+        True
         """
-        ends = [j.ended for j in self.done if j.name.startswith("native")]
-        return max(ends, default=None)
+        natives = [j for j in self.jobs if j.name.startswith("native")]
+        if any(j.duration is None for j in natives):
+            return None
+        return max((j.ended for j in natives), default=None)
+
+    def natives_text(self):
+        """How far the native jobs are, for the reports.
+
+        >>> Cycle("eve", "abc", None, {}, []).natives_text()
+        'no native job'
+        """
+        natives = [j for j in self.jobs if j.name.startswith("native")]
+        if not natives:
+            return "no native job"
+        if self.natives is None:
+            done = sum(j.duration is not None for j in natives)
+            return "natives %d of %d done" % (done, len(natives))
+        return "natives done at %.0f min" % self.natives
 
     def workflows(self):
         """Per workflow, its status, its end and its longest job.
@@ -136,7 +173,8 @@ class Cycle:
         rows = []
         for workflow in sorted(self.status):
             done = [j for j in self.done if j.workflow == workflow]
-            longest = max(done, key=lambda j: j.duration, default=None)
+            ran = [j for j in done if j.duration is not None]
+            longest = max(ran, key=lambda j: j.duration, default=None)
             rows.append((workflow, self.status[workflow],
                          max((j.ended for j in done), default=0),
                          longest.name if longest else "",
@@ -208,9 +246,19 @@ def gh(path):
     return merged
 
 
+def is_pull_request(ref):
+    """Whether a ref names a pull request: a sha has seven characters at least,
+    and may hold nothing but digits.
+
+    >>> is_pull_request("2345"), is_pull_request("565936663")
+    (True, False)
+    """
+    return ref.isdigit() and len(ref) < 7
+
+
 def head_sha(repo, ref):
     """The full commit a pull request number or a short sha names."""
-    if ref.isdigit():
+    if is_pull_request(ref):
         return gh("repos/%s/pulls/%s" % (repo, ref))["head"]["sha"]
     return gh("repos/%s/commits/%s" % (repo, ref))["sha"]
 
@@ -233,11 +281,14 @@ def fetch(repo, ref, unit=UNIT):
     jobs, status, opened = [], {}, {}
     for run in runs:
         workflow = run["name"]
-        status[workflow] = run["status"]
+        status[workflow] = run["conclusion"] or run["status"]
         opened[workflow] = minutes(run["created_at"])
         path = "repos/%s/actions/runs/%d/jobs?per_page=100" % (repo, run["id"])
         for job in gh(path)["jobs"]:
-            started, ended = job["started_at"], job["completed_at"]
+            # A job GitHub never gave a runner reports its creation as its
+            # start, queued as well as cancelled before it ran.
+            started = job["started_at"] if job["runner_name"] else None
+            ended = job["completed_at"]
             jobs.append(Job(workflow, job["name"], ",".join(job["labels"]),
                             minutes(job["created_at"]),
                             minutes(started) if started else None,
@@ -254,14 +305,17 @@ def summary(cycle):
         return datetime.fromtimestamp(moment).strftime("%H:%M")
 
     zone = cycle.start.astimezone().tzname()
-    natives = ("no native job" if cycle.natives is None
-               else "natives done at %.0f min" % cycle.natives)
+    natives = cycle.natives_text()
     so_far = "so far " if cycle.pending else ""
+    # While a job runs or waits, the cycle lasts until the reading.
+    span = cycle.now if cycle.pending else cycle.span
     running = (", %d jobs still running" % cycle.pending
                if cycle.pending else "")
+    if cycle.cancelled:
+        running += ", cancelled"
     lines = ["%s %s  from %s to %s %s  %s%.0f min, %s%s"
-             % (cycle.repo, cycle.sha[:9], local(0), local(cycle.span), zone,
-                so_far, cycle.span, natives, running)]
+             % (cycle.repo, cycle.sha[:9], local(0), local(span), zone,
+                so_far, span, natives, running)]
     for workflow, status, end, job, minutes in cycle.workflows():
         head = "  %-26s %-11s ends at %3.0f min" % (workflow, status, end)
         lines.append(head + "   longest job %3.0f min  %s" % (minutes, job))
@@ -287,8 +341,7 @@ def markdown(cycle):
         moment = cycle.start.timestamp() + 60 * minutes
         return datetime.fromtimestamp(moment, timezone.utc).strftime("%H:%M")
 
-    natives = ("no native job" if cycle.natives is None
-               else "natives done at %.0f min" % cycle.natives)
+    natives = cycle.natives_text()
     lines = ["<!-- ci-cycle -->",
              "**CI cycle of %s: %.0f min**, %s to %s UTC, %s."
              % (cycle.sha[:9], cycle.span, utc(0), utc(cycle.span), natives),
@@ -355,7 +408,8 @@ text {{ font-family: {font}; }}
 def chart(cycle, colors=STYLE):
     """A standalone SVG with one row per job, grouped by runner: a dotted
     line while the job waits for the jobs it needs, a pale bar while it waits
-    for a runner, a full one while it runs.
+    for a runner, a full one while it runs. A job still queued has no full
+    bar, and reads queued.
 
     >>> native = Job("x86", "native-x86", "generic-x86", 0, 0, 18, "success")
     >>> gated = Job("x86", "x86-gcc", "generic-x86", 18, 25, 50, "success")
@@ -366,26 +420,55 @@ def chart(cycle, colors=STYLE):
     True
     >>> svg.count('class="needs"'), svg.count('class="wait"')
     (1, 1)
+    >>> queued = Job("x86", "x86-clang", "generic-x86", 18, None, None, "")
+    >>> c = Cycle("eve", "abc", None, {"x86": "in_progress"}, [native, queued],
+    ...           now=30, opened={"x86": 0})
+    >>> svg = chart(c)
+    >>> svg.count('class="run'), svg.count('class="wait"')
+    (1, 1)
+    >>> "queued</text>" in svg
+    True
+    >>> gone = Job("x86", "x86-gcc", "generic-x86", 18, None, 22, "cancelled")
+    >>> "cancelled</text>" in chart(Cycle("eve", "abc", None, {}, [gone]))
+    True
+
+    The axis opens on the last tick five minutes or more before the first job
+    a runner took.
+
+    >>> late = Job("x86", "native-x86", "generic-x86", 0, 64, 80, "success")
+    >>> svg = chart(Cycle("eve", "abc", None, {"x86": "success"}, [late]))
+    >>> 'class="tick">0</text>' in svg, 'class="tick">50</text>' in svg
+    (False, True)
     """
     left, width, row, top = 340, 820, 13, 72
-    # A job still waiting for a runner has no bar yet.
-    jobs = [j for j in cycle.jobs if j.started is not None]
+    jobs = list(cycle.jobs)
+
+    def begin(job):
+        return job.created if job.started is None else job.started
+
     first = {}
-    for job in sorted(jobs, key=lambda j: j.started):
-        first.setdefault(machine(job.labels), job.started)
+    for job in sorted(jobs, key=begin):
+        first.setdefault(machine(job.labels), begin(job))
     order = sorted(first, key=lambda m: (first[m], m))
     runners = colors["runners"]
     color = {m: runners[k % len(runners)] for k, m in enumerate(order)}
-    jobs.sort(key=lambda j: (order.index(machine(j.labels)), j.started,
-                             j.name))
+    jobs.sort(key=lambda j: (order.index(machine(j.labels)), begin(j), j.name))
     running = [cycle.now for j in jobs if j.ended is None]
     span = max([cycle.span, 1] + running) * 1.02
     bottom = top + row * len(jobs) + 2
+    # The axis opens a few minutes before the first job a runner took, so a
+    # long wait for runners does not push every bar to the right.
+    ran = [j.started for j in jobs if j.started is not None]
+    origin = max(0.0, min(ran, default=0.0) - LEAD)
+    step = 10 if span - origin <= 120 else 30
+    origin -= origin % step
 
     def x(minutes):
-        return left + width * minutes / span
+        return left + width * (max(minutes, origin) - origin) / (span - origin)
 
-    title = "%s %s, %.0f min" % (cycle.repo, cycle.sha[:9], cycle.span)
+    span_now = cycle.now if cycle.pending else cycle.span
+    title = "%s %s, %.0f min%s" % (cycle.repo, cycle.sha[:9], span_now,
+                                   " so far" if cycle.pending else "")
     out = ['<text x="%d" y="18" class="ttl">%s</text>'
            % (left, html.escape(title))]
     for k, name in enumerate(order):
@@ -393,7 +476,7 @@ def chart(cycle, colors=STYLE):
                    '<text x="%d" y="35" class="tick">%s</text>'
                    % (left + 120 * k, color[name], left + 120 * k + 14,
                       html.escape(name)))
-    for m in range(0, int(span) + 1, 10 if span <= 120 else 30):
+    for m in range(int(origin), int(span) + 1, step):
         out.append('<line x1="%.1f" y1="%d" x2="%.1f" y2="%d" class="grid"/>'
                    '<text x="%.1f" y="%d" text-anchor="middle" class="tick">'
                    '%d</text>'
@@ -417,14 +500,23 @@ def chart(cycle, colors=STYLE):
         opened = cycle.opened.get(job.workflow, 0)
         if job.created > opened + 0.3:
             out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" '
-                       'class="needs" stroke="%s"/>'
+                       'class="needs" stroke="%s" stroke-opacity="0.5"/>'
                        % (x(opened), y + row / 2, x(job.created), y + row / 2,
                           fill))
-        if job.started > job.created + 0.3:
+        if job.started is not None:
+            start = job.started
+        else:
+            start = cycle.now if job.ended is None else job.ended
+        if start > job.created + 0.3:
             out.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%d" '
-                       'class="wait" fill="%s"/>'
-                       % (x(job.created), y + 2,
-                          x(job.started) - x(job.created), row - 4, fill))
+                       'class="wait" fill="%s" fill-opacity="0.25"/>'
+                       % (x(job.created), y + 2, x(start) - x(job.created),
+                          row - 4, fill))
+        if job.started is None:
+            out.append('<text x="%.1f" y="%.1f" class="dur">%s</text>'
+                       % (x(start) + 4, y + row - 3,
+                          "queued" if job.ended is None else job.state))
+            continue
         bar = max(1.5, x(ended) - x(job.started))
         out.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%d" '
                    'class="run%s" fill="%s"/>'
@@ -463,6 +555,9 @@ def main():
     repo = args.repo if "/" in args.repo else "jfalcou/" + args.repo
     cycle = fetch(repo, args.ref, args.workflow)
     print(summary(cycle))
+    if cycle.cancelled:
+        print("cancelled: no report for a cycle a newer push replaced")
+        sys.exit(CANCELLED)
     if args.svg:
         with open(args.svg, "w") as out:
             out.write(chart(cycle, colors))
