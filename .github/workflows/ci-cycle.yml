@@ -37,6 +37,10 @@ jobs:
     container:
       image: ghcr.io/jfalcou/compilers:v10
       options: -u root
+    ## A container runs the steps under sh, and the measure step reads PIPESTATUS.
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Fetch the tool
         uses: actions/checkout@v6
