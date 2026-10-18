@@ -41,35 +41,6 @@ namespace tts
 #endif
 namespace tts::_
 {
-  template<typename T>
-  concept stream = requires(T& os) {
-    { os.copyfmt(os) };
-    { os.fill(0) };
-  };
-  template<typename T>
-  concept string = requires(T const& s) {
-    typename T::size_type;
-    typename T::value_type;
-    { s[ 0 ] } -> std::convertible_to<typename T::value_type>;
-    { s.data() } -> std::convertible_to<typename T::value_type const*>;
-    { s.size() } -> std::same_as<typename T::size_type>;
-    { s.find_first_of(typename T::value_type {}) } -> std::same_as<typename T::size_type>;
-  };
-  template<typename T>
-  concept optional = requires(T const& o) {
-    typename T::value_type;
-    { o.has_value() } -> std::convertible_to<bool>;
-    { o.value() } -> std::convertible_to<typename T::value_type>;
-    { o.value_or(0) };
-  };
-  template<typename T>
-  concept sequence = requires(T const& s) {
-    { s.begin() };
-    { s.end() };
-  };
-}
-namespace tts::_
-{
   template<typename T> using identity_t = T;
   template<typename, typename = void> extern identity_t<void (*)() noexcept> declval;
   template<typename T> extern identity_t<T && (*)() noexcept> declval<T, std::void_t<T&&>>;
@@ -158,6 +129,149 @@ namespace tts::_
 #define TTS_MAYBE_STRIP_PARENS_1(x)          x
 #define TTS_MAYBE_STRIP_PARENS_2(x)          TTS_APPLY(TTS_MAYBE_STRIP_PARENS_2_I, x)
 #define TTS_MAYBE_STRIP_PARENS_2_I(...)      __VA_ARGS__
+#if defined(__clang__) && !defined(__APPLE__) && __clang_major__ >= 22
+#pragma clang diagnostic ignored "-Wc2y-extensions"
+#endif
+namespace tts::_
+{
+  template<typename Signature> struct erased;
+  template<typename R, typename... Args> struct erased<R(Args...)>
+  {
+    using signature_t = R (*)(void*, Args...);
+    using cleanup_t   = void (*)(void*);
+    erased()          = default;
+    erased(R (*f)(Args...))
+        : payload {reinterpret_cast<void*>(f)}
+        , cleanup {destroy_nothing}
+        , invoker {invoke_ptr}
+    {
+    }
+    template<typename Function>
+    erased(Function f)
+        : payload {new Function {TTS_MOVE(f)}}
+        , cleanup {destroy<Function>}
+        , invoker {invoke<Function>}
+    {
+    }
+    erased(erased&& other) noexcept
+        : payload {other.payload}
+        , cleanup {other.cleanup}
+        , invoker {other.invoker}
+    {
+      other.payload = nullptr;
+    }
+    erased& operator=(erased&& other) noexcept
+    {
+      if(payload) cleanup(payload);
+      payload       = other.payload;
+      cleanup       = other.cleanup;
+      invoker       = other.invoker;
+      other.payload = nullptr;
+      return *this;
+    }
+    erased(erased const&)            = delete;
+    erased& operator=(erased const&) = delete;
+    ~erased()
+    {
+      if(payload) cleanup(payload);
+    }
+    R operator()(Args... args) const
+    {
+      assert(payload);
+      return invoker(payload, args...);
+    }
+    explicit operator bool() const
+    {
+      return payload != nullptr;
+    }
+    void*       payload = nullptr;
+    cleanup_t   cleanup = nullptr;
+    signature_t invoker = nullptr;
+  private:
+    template<typename T> static R invoke(void* data, Args... args)
+    {
+      return (*static_cast<T*>(data))(args...);
+    }
+    static R invoke_ptr(void* data, Args... args)
+    {
+      return reinterpret_cast<R (*)(Args...)>(data)(args...);
+    }
+    template<typename T> static void destroy(void* data)
+    {
+      delete static_cast<T*>(data);
+    }
+    static void destroy_nothing(void*)
+    {
+    }
+  };
+  using callable = erased<void()>;
+}
+namespace tts::_
+{
+  using abort_handler                  = erased<void(int)>;
+  inline callable      abort_epilogue  = {};
+  inline abort_handler abort_action    = {};
+  inline int           abort_exit_code = 1;
+  [[noreturn]] inline void exit_now()
+  {
+    fflush(stdout);
+    fflush(stderr);
+    std::_Exit(abort_exit_code);
+  }
+  [[noreturn]] inline void perform_abort(int reason)
+  {
+    if(abort_epilogue) abort_epilogue();
+    if(abort_action) abort_action(reason);
+    exit_now();
+  }
+}
+namespace tts
+{
+  template<typename Handler> inline _::abort_handler set_abort_handler(Handler h)
+  {
+    _::abort_handler previous = TTS_MOVE(_::abort_action);
+    _::abort_action           = _::abort_handler {TTS_MOVE(h)};
+    return previous;
+  }
+}
+#if defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+#include <profileapi.h>
+#else
+#include <time.h>
+#endif
+namespace tts::_
+{
+  template<typename T>
+  concept stream = requires(T& os) {
+    { os.copyfmt(os) };
+    { os.fill(0) };
+  };
+  template<typename T>
+  concept string = requires(T const& s) {
+    typename T::size_type;
+    typename T::value_type;
+    { s[ 0 ] } -> std::convertible_to<typename T::value_type>;
+    { s.data() } -> std::convertible_to<typename T::value_type const*>;
+    { s.size() } -> std::same_as<typename T::size_type>;
+    { s.find_first_of(typename T::value_type {}) } -> std::same_as<typename T::size_type>;
+  };
+  template<typename T>
+  concept optional = requires(T const& o) {
+    typename T::value_type;
+    { o.has_value() } -> std::convertible_to<bool>;
+    { o.value() } -> std::convertible_to<typename T::value_type>;
+    { o.value_or(0) };
+  };
+  template<typename T>
+  concept sequence = requires(T const& s) {
+    { s.begin() };
+    { s.end() };
+  };
+}
+#include <cstdarg>
 TTS_DISABLE_WARNING_PUSH
 TTS_DISABLE_WARNING_CRT_SECURE
 namespace tts
@@ -187,17 +301,7 @@ namespace tts
     explicit text(char const* format, Args... args)
         : text()
     {
-      int len = snprintf(nullptr, 0, format, args...);
-      if(len > 0)
-      {
-        auto sz = static_cast<std::size_t>(len);
-        data_   = reinterpret_cast<char*>(malloc(sz + 1));
-        if(data_)
-        {
-          size_ = sz;
-          snprintf(data_, size_ + 1, format, args...);
-        }
-      }
+      assign(format, args...);
     }
     text(text const& other)
         : text()
@@ -322,6 +426,26 @@ namespace tts
       return a <=> text {b};
     }
   private:
+    void assign(char const* format, ...)
+    {
+      va_list args;
+      va_list probe;
+      va_start(args, format);
+      va_copy(probe, args);
+      int len = vsnprintf(nullptr, 0, format, probe);
+      va_end(probe);
+      if(len > 0)
+      {
+        auto sz = static_cast<std::size_t>(len);
+        data_   = reinterpret_cast<char*>(malloc(sz + 1));
+        if(data_)
+        {
+          size_ = sz;
+          vsnprintf(data_, size_ + 1, format, args);
+        }
+      }
+      va_end(args);
+    }
     char*  data_ = nullptr;
     size_t size_ = 0;
   };
@@ -344,6 +468,37 @@ namespace tts
   }
 }
 TTS_DISABLE_WARNING_POP
+namespace tts
+{
+  using nanoseconds = unsigned long long;
+  using counter = unsigned long long;
+}
+namespace tts::_
+{
+  inline nanoseconds now_ns()
+  {
+#if defined(_WIN32)
+    LARGE_INTEGER freq;
+    LARGE_INTEGER count;
+    QueryPerformanceFrequency(&freq);
+    QueryPerformanceCounter(&count);
+    return static_cast<nanoseconds>(static_cast<double>(count.QuadPart) * 1e9 /
+                                    static_cast<double>(freq.QuadPart));
+#else
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC, &ts);
+    return static_cast<nanoseconds>(ts.tv_sec) * 1'000'000'000ULL +
+           static_cast<nanoseconds>(ts.tv_nsec);
+#endif
+  }
+  inline ::tts::text format_duration(double duration_ns)
+  {
+    if(duration_ns < 999.5) return ::tts::text {"%.0f ns", duration_ns};
+    if(duration_ns < 999'999.5) return ::tts::text {"%.3f us", duration_ns / 1'000.0};
+    if(duration_ns < 999'999'500.0) return ::tts::text {"%.3f ms", duration_ns / 1'000'000.0};
+    return ::tts::text {"%.3f s", duration_ns / 1'000'000'000.0};
+  }
+}
 namespace tts::_
 {
   struct verbosity
@@ -396,19 +551,19 @@ namespace tts
                                   [[maybe_unused]] bool        fatal)
     {
     }
-    virtual void test_finished([[maybe_unused]] text const&        name,
-                               [[maybe_unused]] bool               passed,
-                               [[maybe_unused]] bool               invalid,
-                               [[maybe_unused]] unsigned long long duration_ns)
+    virtual void test_finished([[maybe_unused]] text const& name,
+                               [[maybe_unused]] bool        passed,
+                               [[maybe_unused]] bool        invalid,
+                               [[maybe_unused]] nanoseconds duration_ns)
     {
     }
-    virtual void suite_finished([[maybe_unused]] unsigned long long fail_count,
-                                [[maybe_unused]] unsigned long long invalid_count)
+    virtual void suite_finished([[maybe_unused]] counter fail_count,
+                                [[maybe_unused]] counter invalid_count)
     {
     }
-    virtual void suite_metric([[maybe_unused]] outcome            kind,
-                              [[maybe_unused]] unsigned long long count,
-                              [[maybe_unused]] unsigned long long total)
+    virtual void suite_metric([[maybe_unused]] outcome kind,
+                              [[maybe_unused]] counter count,
+                              [[maybe_unused]] counter total)
     {
     }
     virtual void suite_aborted()
@@ -501,15 +656,15 @@ namespace tts
     {
       sink_->assertion_failed(location, message, fatal);
     }
-    void test_finished(text const& name, bool passed, bool invalid, unsigned long long duration_ns)
+    void test_finished(text const& name, bool passed, bool invalid, nanoseconds duration_ns)
     {
       sink_->test_finished(name, passed, invalid, duration_ns);
     }
-    void suite_finished(unsigned long long fail_count, unsigned long long invalid_count)
+    void suite_finished(counter fail_count, counter invalid_count)
     {
       sink_->suite_finished(fail_count, invalid_count);
     }
-    void suite_metric(outcome kind, unsigned long long count, unsigned long long total)
+    void suite_metric(outcome kind, counter count, counter total)
     {
       sink_->suite_metric(kind, count, total);
     }
@@ -571,500 +726,6 @@ namespace tts::_
     if(printable)
       ::tts::output().writeln(
       "--------------------------------------------------------------------------------");
-  }
-}
-namespace tts
-{
-  struct colorized_sink : output_sink
-  {
-    explicit colorized_sink(output_sink& target = output_handler::default_sink())
-        : target_(&target)
-    {
-    }
-    void write(text const& t) override
-    {
-      char const* s = t.data();
-      if(strcmp(s, "\n") == 0)
-      {
-        if(color_applied_) target_->write(text {"\033[0m"});
-        color_applied_ = false;
-        target_->write(t);
-        return;
-      }
-      if(active_color_ && !color_applied_)
-      {
-        target_->write(text {active_color_});
-        color_applied_ = true;
-      }
-      target_->write(t);
-      if(revert_to_)
-      {
-        active_color_  = revert_to_;
-        color_applied_ = false;
-        revert_to_     = nullptr;
-      }
-    }
-    void test_started([[maybe_unused]] text const& name) override
-    {
-      set_color(nullptr);
-    }
-    void assertion_failed([[maybe_unused]] text const& location,
-                          [[maybe_unused]] text const& message,
-                          [[maybe_unused]] bool        fatal) override
-    {
-      set_color("\033[31m");
-    }
-    void test_finished([[maybe_unused]] text const&        name,
-                       bool                                passed,
-                       bool                                invalid,
-                       [[maybe_unused]] unsigned long long duration_ns) override
-    {
-      if(invalid) set_color("\033[33m");
-      else if(passed) set_color("\033[32m");
-      else set_color(nullptr);
-    }
-    void suite_finished([[maybe_unused]] unsigned long long fail_count,
-                        [[maybe_unused]] unsigned long long invalid_count) override
-    {
-      set_color("\033[1m");
-    }
-    void suite_metric(outcome                             kind,
-                      [[maybe_unused]] unsigned long long count,
-                      [[maybe_unused]] unsigned long long total) override
-    {
-      using enum outcome;
-      revert_to_ = active_color_;
-      switch(kind)
-      {
-      case success: set_color("\033[1;32m"); break;
-      case failure: set_color("\033[1;31m"); break;
-      case invalid: set_color("\033[1;33m"); break;
-      }
-    }
-    void suite_aborted() override
-    {
-      set_color("\033[31m");
-    }
-    void flush() override
-    {
-      target_->flush();
-    }
-  private:
-    void set_color(char const* color)
-    {
-      active_color_  = color;
-      color_applied_ = false;
-    }
-    output_sink* target_;
-    char const*  active_color_  = nullptr;
-    bool         color_applied_ = false;
-    char const*  revert_to_     = nullptr;
-  };
-}
-namespace tts
-{
-  struct diagnostics_sink : output_sink
-  {
-    explicit diagnostics_sink(output_sink& target = output_handler::default_sink())
-        : target_(&target)
-    {
-    }
-    void write(text const& t) override
-    {
-      target_->write(t);
-    }
-    void assertion_failed(text const& location, text const& message, bool fatal) override
-    {
-      char const* loc = location.data();
-      std::size_t len = strlen(loc);
-      target_->write(text {"%.*s: %s: %s\n",
-                           static_cast<int>(len - 2),
-                           loc + 1,
-                           fatal ? "fatal error" : "error",
-                           message.data()});
-    }
-    void flush() override
-    {
-      target_->flush();
-    }
-  private:
-    output_sink* target_;
-  };
-}
-TTS_DISABLE_WARNING_PUSH
-TTS_DISABLE_WARNING_CRT_SECURE
-namespace tts::_
-{
-  inline ::tts::text json_escape(::tts::text const& t)
-  {
-    ::tts::text out;
-    for(char c: t)
-    {
-      switch(c)
-      {
-      case '"': out += R"(\")"; break;
-      case '\\': out += R"(\\)"; break;
-      case '\n': out += "\\n"; break;
-      case '\r': out += "\\r"; break;
-      case '\t': out += "\\t"; break;
-      default:
-        if(static_cast<unsigned char>(c) < 0x20)
-          out += ::tts::text {"\\u%04x", static_cast<unsigned>(static_cast<unsigned char>(c))};
-        else out += ::tts::text {"%c", c};
-        break;
-      }
-    }
-    return out;
-  }
-}
-namespace tts
-{
-  struct json_sink : output_sink
-  {
-    explicit json_sink(output_sink& target = output_handler::default_sink())
-        : target_(&target)
-    {
-    }
-    void write(text const&) override
-    {
-    }
-    void assertion_failed(text const& location, text const& message, bool fatal) override
-    {
-      char const* loc      = location.data();
-      std::size_t len      = strlen(loc);
-      auto        stripped = text {"%.*s", static_cast<int>(len - 2), loc + 1};
-      char const* colon    = strrchr(stripped.data(), ':');
-      text        file =
-      colon ? text {"%.*s", static_cast<int>(colon - stripped.data()), stripped.data()} : stripped;
-      int line = 0;
-      if(colon) sscanf(colon + 1, "%d", &line);
-      if(!current_failures_.is_empty()) current_failures_ += ",";
-      current_failures_ += text {R"({"location":{"file":"%s","line":%d},"message":"%s",)"
-                                 R"("fatal":%s})",
-                                 _::json_escape(file).data(),
-                                 line,
-                                 _::json_escape(message).data(),
-                                 fatal ? "true" : "false"};
-    }
-    void test_finished(text const&        name,
-                       bool               passed,
-                       bool               invalid,
-                       unsigned long long duration_ns) override
-    {
-      char const* status = "failed";
-      if(invalid)
-      {
-        status = "invalid";
-        ++invalid_count_;
-      }
-      else if(passed)
-      {
-        status = "passed";
-        ++passed_count_;
-      }
-      else ++failed_count_;
-      total_duration_ns_ += duration_ns;
-      if(!body_.is_empty()) body_ += ",";
-      body_ += text {R"({"name":"%s","status":"%s","duration_ns":%llu,"failures":[%s]})",
-                     _::json_escape(name).data(),
-                     status,
-                     duration_ns,
-                     current_failures_.data()};
-      current_failures_ = text {};
-    }
-    text render() const
-    {
-      unsigned long long total = passed_count_ + failed_count_ + invalid_count_;
-      return text {R"({"tests":[%s],"summary":{"total":%llu,"passed":%llu,"failed":%llu,)"
-                   R"("invalid":%llu,"duration_ns":%llu}})",
-                   body_.data(),
-                   total,
-                   passed_count_,
-                   failed_count_,
-                   invalid_count_,
-                   total_duration_ns_};
-    }
-    void dump(output_sink& target)
-    {
-      target.write(render());
-      clear();
-    }
-    void dump()
-    {
-      stdout_sink target;
-      dump(target);
-    }
-    void clear()
-    {
-      body_              = text {};
-      current_failures_  = text {};
-      passed_count_      = 0;
-      failed_count_      = 0;
-      invalid_count_     = 0;
-      total_duration_ns_ = 0;
-    }
-    void finish() override
-    {
-      dump(*target_);
-    }
-  private:
-    output_sink*       target_;
-    text               body_;
-    text               current_failures_;
-    unsigned long long passed_count_      = 0;
-    unsigned long long failed_count_      = 0;
-    unsigned long long invalid_count_     = 0;
-    unsigned long long total_duration_ns_ = 0;
-  };
-}
-TTS_DISABLE_WARNING_POP
-namespace tts::_
-{
-  inline ::tts::text xml_escape(::tts::text const& t)
-  {
-    ::tts::text out;
-    for(char c: t)
-    {
-      switch(c)
-      {
-      case '&': out += "&amp;"; break;
-      case '<': out += "&lt;"; break;
-      case '>': out += "&gt;"; break;
-      case '"': out += "&quot;"; break;
-      case '\'': out += "&apos;"; break;
-      default:
-        if(static_cast<unsigned char>(c) >= 0x20 || c == '\t' || c == '\n' || c == '\r')
-          out += ::tts::text {"%c", c};
-        break;
-      }
-    }
-    return out;
-  }
-}
-namespace tts
-{
-  struct junit_sink : output_sink
-  {
-    explicit junit_sink(output_sink& target = output_handler::default_sink())
-        : target_(&target)
-    {
-    }
-    void write(text const&) override
-    {
-    }
-    void assertion_failed(text const&           location,
-                          text const&           message,
-                          [[maybe_unused]] bool fatal) override
-    {
-      char const* loc = location.data();
-      std::size_t len = strlen(loc);
-      if(!current_failures_.is_empty()) current_failures_ += "&#10;";
-      current_failures_ +=
-      text {"%.*s: %s", static_cast<int>(len - 2), loc + 1, _::xml_escape(message).data()};
-      if(first_failure_.is_empty()) first_failure_ = _::xml_escape(message);
-    }
-    void test_finished(text const&        name,
-                       bool               passed,
-                       bool               invalid,
-                       unsigned long long duration_ns) override
-    {
-      if(invalid) ++invalid_count_;
-      else if(passed) ++passed_count_;
-      else ++failed_count_;
-      total_duration_ns_ += duration_ns;
-      auto escaped_name   = _::xml_escape(name);
-      auto seconds        = text {"%.6f", static_cast<double>(duration_ns) / 1'000'000'000.0};
-      if(invalid)
-      {
-        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"><skipped/></testcase>)"
-                       "\n",
-                       escaped_name.data(),
-                       escaped_name.data(),
-                       seconds.data()};
-      }
-      else if(!passed)
-      {
-        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"><failure )"
-                       R"(message="%s">%s</failure></testcase>)"
-                       "\n",
-                       escaped_name.data(),
-                       escaped_name.data(),
-                       seconds.data(),
-                       first_failure_.data(),
-                       current_failures_.data()};
-      }
-      else
-      {
-        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"/>)"
-                       "\n",
-                       escaped_name.data(),
-                       escaped_name.data(),
-                       seconds.data()};
-      }
-      current_failures_ = text {};
-      first_failure_    = text {};
-    }
-    text render() const
-    {
-      unsigned long long total   = passed_count_ + failed_count_ + invalid_count_;
-      double             seconds = static_cast<double>(total_duration_ns_) / 1'000'000'000.0;
-      return text {"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                   R"(<testsuites><testsuite name="TTS" tests="%llu" failures="%llu" errors="0")"
-                   R"( skipped="%llu" time="%.6f">)"
-                   "\n%s  </testsuite></testsuites>\n",
-                   total,
-                   failed_count_,
-                   invalid_count_,
-                   seconds,
-                   body_.data()};
-    }
-    void dump(output_sink& target)
-    {
-      target.write(render());
-      clear();
-    }
-    void dump()
-    {
-      stdout_sink target;
-      dump(target);
-    }
-    void clear()
-    {
-      body_              = text {};
-      current_failures_  = text {};
-      first_failure_     = text {};
-      passed_count_      = 0;
-      failed_count_      = 0;
-      invalid_count_     = 0;
-      total_duration_ns_ = 0;
-    }
-    void finish() override
-    {
-      dump(*target_);
-    }
-  private:
-    output_sink*       target_;
-    text               body_;
-    text               current_failures_;
-    text               first_failure_;
-    unsigned long long passed_count_      = 0;
-    unsigned long long failed_count_      = 0;
-    unsigned long long invalid_count_     = 0;
-    unsigned long long total_duration_ns_ = 0;
-  };
-}
-namespace tts
-{
-  struct tap_sink : output_sink
-  {
-    explicit tap_sink(output_sink& target = output_handler::default_sink())
-        : target_(&target)
-    {
-    }
-    void write(text const&) override
-    {
-    }
-    void test_finished(text const&                         name,
-                       bool                                passed,
-                       [[maybe_unused]] bool               invalid,
-                       [[maybe_unused]] unsigned long long duration_ns) override
-    {
-      ++count_;
-      body_ += passed ? text {"ok %zu - %s\n", count_, name.data()}
-                      : text {"not ok %zu - %s\n", count_, name.data()};
-    }
-    text render() const
-    {
-      return text {"1..%zu\n", count_} + body_;
-    }
-    void dump(output_sink& target)
-    {
-      target.write(render());
-      clear();
-    }
-    void dump()
-    {
-      stdout_sink target;
-      dump(target);
-    }
-    void clear()
-    {
-      body_  = text {};
-      count_ = 0;
-    }
-    void finish() override
-    {
-      dump(*target_);
-    }
-  private:
-    output_sink* target_;
-    text         body_;
-    std::size_t  count_ = 0;
-  };
-}
-namespace tts::_
-{
-  inline constexpr auto usage_text =
-  R"(
-Flags:
-  -h, --help        Display this help message
-  -x, --hex         Print the floating results in hexfloat mode
-  -s, --scientific  Print the floating results in scientific mode
-  -v, --verbose     Display tests results regardless of their status.
-  -q, --quiet       Display only test failures percentage.
-  --allow-empty     Do not fail when the test suite registered zero test.
-  --dry             Print registered test names without running them.
-Parameters:
-  --precision=arg   Set the precision for displaying floating pint values
-  --seed=arg        Set the PRNG seeds (default is time-based)
-  --capture=path    Capture this run's output and write it to path instead of stdout
-  --shard=i/n       Only run the tests in shard i of n (0 <= i < n), for CI parallelization
-Range specifics Parameters:
-  --block=arg       Set size of range checks samples (min. 32)
-  --loop=arg        Repeat each range checks arg times
-  --ulpmax=arg      Set global failure ulp threshold for range tests (default is 2.0)
-  --valmax=arg      Set maximal value for range tests (default is code)
-  --valmin=arg      Set minimal value for range tests (default is code)
-)";
-  inline int usage(char const* name)
-  {
-    printf("TTS Unit Tests Driver\nUsage: %s [OPTION...]", name);
-    puts(usage_text);
-    return 0;
-  }
-}
-#if defined(_WIN32)
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <windows.h>
-#include <profileapi.h>
-#else
-#include <time.h>
-#endif
-namespace tts::_
-{
-  inline unsigned long long now_ns()
-  {
-#if defined(_WIN32)
-    LARGE_INTEGER freq;
-    LARGE_INTEGER count;
-    QueryPerformanceFrequency(&freq);
-    QueryPerformanceCounter(&count);
-    return static_cast<unsigned long long>(static_cast<double>(count.QuadPart) * 1e9 /
-                                           static_cast<double>(freq.QuadPart));
-#else
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC, &ts);
-    return static_cast<unsigned long long>(ts.tv_sec) * 1'000'000'000ULL +
-           static_cast<unsigned long long>(ts.tv_nsec);
-#endif
-  }
-  inline ::tts::text format_duration(double duration_ns)
-  {
-    if(duration_ns < 999.5) return ::tts::text {"%.0f ns", duration_ns};
-    if(duration_ns < 999'999.5) return ::tts::text {"%.3f us", duration_ns / 1'000.0};
-    if(duration_ns < 999'999'500.0) return ::tts::text {"%.3f ms", duration_ns / 1'000'000.0};
-    return ::tts::text {"%.3f s", duration_ns / 1'000'000'000.0};
   }
 }
 TTS_DISABLE_WARNING_PUSH
@@ -1274,7 +935,7 @@ namespace tts::_
     {
       unexpected_count++;
     }
-    int report(unsigned long long fails, unsigned long long invalids) const
+    int report(counter fails, counter invalids) const
     {
       auto  test_txt = test_count > 1 ? "s" : "";
       auto  pass_txt = success_count > 1 ? "es" : "";
@@ -1322,14 +983,14 @@ namespace tts::_
       if(!fails && !invalids) return unexpected_count == 0 ? 0 : 1;
       else return (failure_count == fails && invalid_count == invalids) ? 0 : 1;
     }
-    unsigned long long test_count        = 0;
-    unsigned long long success_count     = 0;
-    unsigned long long failure_count     = 0;
-    unsigned long long fatal_count       = 0;
-    unsigned long long invalid_count     = 0;
-    unsigned long long unexpected_count  = 0;
-    unsigned long long total_duration_ns = 0;
-    bool               fail_status       = false;
+    counter     test_count        = 0;
+    counter     success_count     = 0;
+    counter     failure_count     = 0;
+    counter     fatal_count       = 0;
+    counter     invalid_count     = 0;
+    counter     unexpected_count  = 0;
+    nanoseconds total_duration_ns = 0;
+    bool        fail_status       = false;
   };
 }
 namespace tts
@@ -1337,7 +998,7 @@ namespace tts
   inline _::env global_runtime       = {};
   inline bool   fatal_error_status   = false;
   inline bool   global_logger_status = false;
-  inline int report(unsigned long long fails, unsigned long long invalids)
+  inline int report(counter fails, counter invalids)
   {
     return global_runtime.report(fails, invalids);
   }
@@ -1747,17 +1408,17 @@ namespace tts
   template<typename T> class buffer
   {
     static constexpr bool over_aligned = alignof(T) > alignof(std::max_align_t);
-    static T*             allocate(std::size_t n) noexcept
+    static T* allocate(std::size_t n) noexcept
     {
       if constexpr(over_aligned)
         return static_cast<T*>(
         ::operator new(sizeof(T) * n, std::align_val_t {alignof(T)}, std::nothrow));
-      else return static_cast<T*>(::operator new(sizeof(T) * n, std::nothrow));
+      else return static_cast<T*>(malloc(sizeof(T) * n));
     }
     static void deallocate(T* p) noexcept
     {
       if constexpr(over_aligned) ::operator delete(p, std::align_val_t {alignof(T)});
-      else ::operator delete(p);
+      else free(p);
     }
   public:
     buffer()
@@ -1946,89 +1607,6 @@ namespace tts
     }
   };
 }
-namespace tts::_
-{
-  struct callable
-  {
-  public:
-    using signature_t   = void (*)(void*);
-    signature_t invoker = {};
-    signature_t cleanup = {};
-    void*       payload = {};
-    callable()
-        : invoker {nullptr}
-        , cleanup {nullptr}
-        , payload {nullptr}
-    {
-    }
-    callable(void (*f)())
-        : invoker {invoke_ptr}
-        , cleanup {cleanup_ptr}
-        , payload {reinterpret_cast<void*>(f)}
-    {
-    }
-    template<typename Function>
-    callable(Function f)
-        : invoker {invoke<Function>}
-        , cleanup {destroy<Function>}
-        , payload {new Function {TTS_MOVE(f)}}
-    {
-    }
-    constexpr callable(callable&& other) noexcept
-        : invoker {TTS_MOVE(other.invoker)}
-        , cleanup {TTS_MOVE(other.cleanup)}
-        , payload {TTS_MOVE(other.payload)}
-    {
-      other.payload = {};
-    }
-    ~callable()
-    {
-      if(payload) cleanup(payload);
-    }
-    callable(callable const&)            = delete;
-    callable& operator=(callable const&) = delete;
-    callable& operator=(callable&& other) noexcept
-    {
-      payload       = TTS_MOVE(other.payload);
-      other.payload = {};
-      invoker       = TTS_MOVE(other.invoker);
-      cleanup       = TTS_MOVE(other.cleanup);
-      return *this;
-    }
-    void operator()()
-    {
-      assert(payload);
-      invoker(payload);
-    }
-    void operator()() const
-    {
-      assert(payload);
-      invoker(payload);
-    }
-    explicit operator bool() const
-    {
-      return payload != nullptr;
-    }
-  private:
-    template<typename T>
-    static void invoke(void* data)
-    {
-      (*static_cast<T*>(data))();
-    }
-    template<typename T>
-    static void destroy(void* data)
-    {
-      delete static_cast<T*>(data);
-    }
-    static void invoke_ptr(void* data)
-    {
-      reinterpret_cast<void (*)()>(data)();
-    }
-    static void cleanup_ptr(void*)
-    {
-    }
-  };
-}
 namespace tts
 {
   enum class expected_outcome
@@ -2042,10 +1620,13 @@ namespace tts
 namespace tts::_
 {
   inline char const* current_test = "";
+  inline ::tts::expected_outcome current_tag = expected_outcome::pass;
   struct tagged_id
   {
     char const*             name;
     ::tts::expected_outcome tag;
+    nanoseconds             timeout_ns  = 0;
+    bool                    timeout_set = false;
   };
   inline char const* tag_name(::tts::expected_outcome tag)
   {
@@ -2064,13 +1645,16 @@ namespace tts::_
     void operator()()
     {
       current_test = name;
+      current_tag  = tag;
       behaviour();
     }
     static inline bool      acknowledge(test&& f);
     char const*             name;
     tts::_::callable        behaviour;
-    tts::text               types = {};
-    ::tts::expected_outcome tag   = ::tts::expected_outcome::pass;
+    tts::text               types       = {};
+    ::tts::expected_outcome tag         = ::tts::expected_outcome::pass;
+    nanoseconds             timeout_ns  = 0;
+    bool                    timeout_set = false;
   };
   inline buffer<test>& suite()
   {
@@ -2089,124 +1673,34 @@ namespace tts
   {
     return {id, expected_outcome::xfail};
   }
+  inline _::tagged_id expect_fail(_::tagged_id const& id)
+  {
+    return {id.name, expected_outcome::xfail, id.timeout_ns, id.timeout_set};
+  }
   inline _::tagged_id may_fail(char const* id)
   {
     return {id, expected_outcome::may_fail};
+  }
+  inline _::tagged_id may_fail(_::tagged_id const& id)
+  {
+    return {id.name, expected_outcome::may_fail, id.timeout_ns, id.timeout_set};
   }
   inline _::tagged_id expect_invalid(char const* id)
   {
     return {id, expected_outcome::xinvalid};
   }
-}
-namespace tts::_
-{
-  struct shard_spec
+  inline _::tagged_id expect_invalid(_::tagged_id const& id)
   {
-    bool         active = false;
-    unsigned int index  = 0;
-    unsigned int total  = 1;
-    bool         selects(std::size_t position) const
-    {
-      return !active || (position % total == index);
-    }
-    std::size_t count(std::size_t suite_size) const
-    {
-      if(!active) return suite_size;
-      if(suite_size <= index) return 0;
-      return (suite_size - index - 1) / total + 1;
-    }
-  };
-  TTS_DISABLE_WARNING_PUSH
-  TTS_DISABLE_WARNING_CRT_SECURE
-  inline shard_spec parse_shard(bool& ok)
-  {
-    ok              = true;
-    ::tts::text raw = ::tts::arguments().value<::tts::text>("--shard");
-    if(raw.is_empty()) return {};
-    unsigned int i = 0;
-    unsigned int n = 0;
-    if(sscanf(raw.data(), "%u/%u", &i, &n) != 2 || n == 0 || i >= n)
-    {
-      ok = false;
-      return {};
-    }
-    return {true, i, n};
+    return {id.name, expected_outcome::xinvalid, id.timeout_ns, id.timeout_set};
   }
-  TTS_DISABLE_WARNING_POP
-}
-#include <array>
-namespace tts::_
-{
-  inline constexpr std::array<char const*, 5> sink_names {"colored",
-                                                          "tap",
-                                                          "diagnostics",
-                                                          "json",
-                                                          "junit"};
-  inline ::tts::text validate_sink_name(::tts::text const& name, bool& ok)
+  inline _::tagged_id with_timeout(unsigned long long ms, char const* id)
   {
-    ok = name.is_empty();
-    for(auto candidate: sink_names)
-      ok = ok || (name == ::tts::text {candidate});
-    if(ok) return {};
-    ::tts::text expected;
-    for(std::size_t i = 0; i < sink_names.size(); ++i)
-      expected += ::tts::text {i ? ", %s" : "%s", sink_names[ i ]};
-    return ::tts::text {
-    "Unknown --sink value '%s', expected one of: %s", name.data(), expected.data()};
+    return {id, expected_outcome::pass, ms * 1'000'000, true};
   }
-}
-#include <cstdio>
-namespace tts::_
-{
-  TTS_DISABLE_WARNING_PUSH
-  TTS_DISABLE_WARNING_CRT_SECURE
-  class file_guard
+  inline _::tagged_id with_timeout(unsigned long long ms, _::tagged_id const& id)
   {
-  public:
-    file_guard() = default;
-    explicit file_guard(FILE* f)
-        : file_(f)
-    {
-    }
-    file_guard(file_guard const&)            = delete;
-    file_guard& operator=(file_guard const&) = delete;
-    file_guard(file_guard&& other) noexcept
-        : file_guard()
-    {
-      swap(other);
-    }
-    file_guard& operator=(file_guard&& other) noexcept
-    {
-      file_guard {TTS_MOVE(other)}.swap(*this);
-      return *this;
-    }
-    ~file_guard()
-    {
-      close();
-    }
-    void swap(file_guard& other) noexcept
-    {
-      FILE* tmp   = file_;
-      file_       = other.file_;
-      other.file_ = tmp;
-    }
-    FILE* get() const
-    {
-      return file_;
-    }
-    explicit operator bool() const
-    {
-      return file_ != nullptr;
-    }
-  private:
-    void close()
-    {
-      if(file_) fclose(file_);
-      file_ = nullptr;
-    }
-    FILE* file_ = nullptr;
-  };
-  TTS_DISABLE_WARNING_POP
+    return {id.name, id.tag, ms * 1'000'000, true};
+  }
 }
 namespace tts::_
 {
@@ -2526,6 +2020,906 @@ namespace tts::_
 }
 #endif
 #if defined(TTS_MAIN)
+namespace tts::_
+{
+  inline std::size_t remaining_tests = 0;
+  inline void        report_abort(char const* headline, char const* reason)
+  {
+    using enum ::tts::expected_outcome;
+    ::tts::global_runtime.fatal();
+    if(current_tag != xfail && current_tag != may_fail) ::tts::global_runtime.unexpected();
+    ::tts::output().writeln(headline);
+    ::tts::output().suite_aborted();
+    ::tts::output().writeln(
+    "@@ ABORTING DUE TO %s @@ - %d Tests not run", reason, static_cast<int>(remaining_tests));
+    abort_exit_code = ::tts::report(0, 0);
+    ::tts::output().finish();
+  }
+}
+#if defined(__EMSCRIPTEN__)
+#elif defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+#include <csignal>
+#else
+#include <csignal>
+#endif
+namespace tts::_
+{
+  inline bool crash_guard_enabled()
+  {
+    static bool that = !::tts::arguments()("--no-crash-guard");
+    return that;
+  }
+  inline void report_crash(char const* cause, void const* address)
+  {
+    ::tts::text line =
+    address ? ::tts::text {"TEST: '%s' - @@ CRASHED @@ %s at %p", current_test, cause, address}
+            : ::tts::text {"TEST: '%s' - @@ CRASHED @@ %s", current_test, cause};
+    report_abort(line.data(), "CRASH");
+  }
+}
+#if defined(__EMSCRIPTEN__)
+namespace tts::_
+{
+  struct crash_guard
+  {
+  };
+}
+#elif defined(_WIN32)
+namespace tts::_
+{
+  inline LONG WINAPI crash_filter(PEXCEPTION_POINTERS info)
+  {
+    auto        code  = info->ExceptionRecord->ExceptionCode;
+    char const* cause = nullptr;
+    switch(code)
+    {
+    case EXCEPTION_ACCESS_VIOLATION: cause = "access violation"; break;
+    case EXCEPTION_STACK_OVERFLOW: cause = "stack overflow"; break;
+    case EXCEPTION_INT_DIVIDE_BY_ZERO: cause = "integer divide by zero"; break;
+    case EXCEPTION_ILLEGAL_INSTRUCTION: cause = "illegal instruction"; break;
+    default: return EXCEPTION_CONTINUE_SEARCH;
+    }
+    static bool reporting = false;
+    if(reporting) exit_now();
+    reporting = true;
+    report_crash(cause, info->ExceptionRecord->ExceptionAddress);
+    perform_abort(static_cast<int>(code));
+  }
+  inline constexpr int         crash_signals[] = {
+                                                  SIGSEGV,
+                                                  SIGFPE,
+                                                  SIGILL,
+                                                  SIGABRT};
+  inline constexpr std::size_t crash_signal_count =
+  sizeof(crash_signals) / sizeof(crash_signals[ 0 ]);
+  inline char const* signal_name(int sig)
+  {
+    switch(sig)
+    {
+    case SIGSEGV: return "SIGSEGV";
+    case SIGFPE: return "SIGFPE";
+    case SIGILL: return "SIGILL";
+    case SIGABRT: return "SIGABRT";
+    default: return "signal";
+    }
+  }
+}
+extern "C"
+{
+  [[noreturn]] inline void tts_crash_on_signal(int sig)
+  {
+    static bool reporting = false;
+    if(reporting) ::tts::_::exit_now();
+    reporting = true;
+    ::tts::_::report_crash(::tts::_::signal_name(sig), nullptr);
+    ::tts::_::perform_abort(sig);
+  }
+}
+namespace tts::_
+{
+  inline bool stack_reserve_ready()
+  {
+    static bool const that = []
+    {
+      ULONG guarantee = 64u * 1024u;
+      return SetThreadStackGuarantee(&guarantee) != 0;
+    }();
+    return that;
+  }
+  struct crash_guard
+  {
+    crash_guard()
+    {
+      if(!armed_) return;
+      stack_reserve_ready();
+      handle_ = AddVectoredExceptionHandler(1, &crash_filter);
+      for(std::size_t i = 0; i < crash_signal_count; ++i)
+        previous_[ i ] = signal(crash_signals[ i ], &tts_crash_on_signal);
+    }
+    ~crash_guard()
+    {
+      if(!armed_) return;
+      if(handle_) RemoveVectoredExceptionHandler(handle_);
+      for(std::size_t i = 0; i < crash_signal_count; ++i)
+        if(previous_[ i ] && previous_[ i ] != SIG_ERR) signal(crash_signals[ i ], previous_[ i ]);
+    }
+    crash_guard(crash_guard const&)            = delete;
+    crash_guard& operator=(crash_guard const&) = delete;
+    PVOID        handle_                       = nullptr;
+    using handler_t                            = void (*)(int);
+    handler_t previous_[ crash_signal_count ]  = {};
+    bool      armed_                           = crash_guard_enabled();
+  };
+}
+#else
+namespace tts::_
+{
+  inline constexpr int         crash_signals[] = {
+                                                  SIGSEGV,
+                                                  SIGBUS,
+                                                  SIGFPE,
+                                                  SIGILL,
+                                                  SIGABRT};
+  inline constexpr std::size_t crash_signal_count =
+  sizeof(crash_signals) / sizeof(crash_signals[ 0 ]);
+  inline char const* signal_name(int sig)
+  {
+    switch(sig)
+    {
+    case SIGSEGV: return "SIGSEGV";
+    case SIGBUS: return "SIGBUS";
+    case SIGFPE: return "SIGFPE";
+    case SIGILL: return "SIGILL";
+    case SIGABRT: return "SIGABRT";
+    default: return "signal";
+    }
+  }
+}
+extern "C"
+{
+  [[noreturn]] inline void
+  tts_crash_handler(int sig, siginfo_t* info, void*)
+  {
+    static sig_atomic_t volatile reporting = 0;
+    if(reporting)
+    {
+      signal(sig, SIG_DFL);
+      raise(sig);
+      ::tts::_::exit_now();
+    }
+    reporting = 1;
+    ::tts::_::report_crash(::tts::_::signal_name(sig), sig == SIGABRT ? nullptr : info->si_addr);
+    ::tts::_::perform_abort(sig);
+  }
+}
+namespace tts::_
+{
+  inline bool alternate_stack_ready()
+  {
+    alignas(16) static char buffer[ 64u * 1024u ] = {};
+    static bool const       that                  = []
+    {
+      stack_t alt  = {};
+      alt.ss_sp    = buffer;
+      alt.ss_size  = sizeof(buffer);
+      alt.ss_flags = 0;
+      return sigaltstack(&alt, nullptr) == 0;
+    }();
+    return that;
+  }
+  struct crash_guard
+  {
+    crash_guard()
+    {
+      if(!armed_) return;
+      struct sigaction action = {};
+      action.sa_sigaction     = &tts_crash_handler;
+      action.sa_flags         = SA_SIGINFO | (alternate_stack_ready() ? SA_ONSTACK : 0);
+      sigemptyset(&action.sa_mask);
+      for(std::size_t i = 0; i < crash_signal_count; ++i)
+        sigaction(crash_signals[ i ], &action, &previous_[ i ]);
+    }
+    ~crash_guard()
+    {
+      if(!armed_) return;
+      for(std::size_t i = 0; i < crash_signal_count; ++i)
+        sigaction(crash_signals[ i ], &previous_[ i ], nullptr);
+    }
+    crash_guard(crash_guard const&)            = delete;
+    crash_guard& operator=(crash_guard const&) = delete;
+  private:
+    struct sigaction previous_[ crash_signal_count ] = {};
+    bool             armed_                          = crash_guard_enabled();
+  };
+}
+#endif
+#if defined(__EMSCRIPTEN__)
+#elif defined(_WIN32)
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
+#include <windows.h>
+#else
+#include <csignal>
+#include <sys/time.h>
+#endif
+namespace tts::_
+{
+  inline nanoseconds watchdog_ns = 0;
+  inline nanoseconds default_timeout_ns()
+  {
+    static nanoseconds that = ::tts::arguments().value<unsigned long long>("--timeout") * 1'000'000;
+    return that;
+  }
+  inline void report_timeout()
+  {
+    ::tts::text line {"TEST: '%s' - @@ TIMEOUT @@ still running after %s",
+                      current_test,
+                      format_duration(static_cast<double>(watchdog_ns)).data()};
+    report_abort(line.data(), "TIMEOUT");
+  }
+}
+#if defined(__EMSCRIPTEN__)
+namespace tts::_
+{
+  struct watchdog
+  {
+    explicit watchdog(nanoseconds)
+    {
+    }
+  };
+}
+#elif defined(_WIN32)
+namespace tts::_
+{
+  inline VOID CALLBACK watchdog_expired(PVOID, BOOLEAN)
+  {
+    static bool reporting = false;
+    if(reporting) exit_now();
+    reporting = true;
+    report_timeout();
+    perform_abort(0);
+  }
+  struct watchdog
+  {
+    explicit watchdog(nanoseconds ns)
+    {
+      if(!ns) return;
+      watchdog_ns = ns;
+      CreateTimerQueueTimer(&timer_,
+                            nullptr,
+                            &watchdog_expired,
+                            nullptr,
+                            static_cast<DWORD>(ns / 1'000'000u),
+                            0,
+                            WT_EXECUTEINTIMERTHREAD);
+    }
+    ~watchdog()
+    {
+      if(timer_) DeleteTimerQueueTimer(nullptr, timer_, INVALID_HANDLE_VALUE);
+    }
+    watchdog(watchdog const&)            = delete;
+    watchdog& operator=(watchdog const&) = delete;
+    HANDLE    timer_                     = nullptr;
+  };
+}
+#else
+extern "C"
+{
+  [[noreturn]] inline void tts_watchdog_expired(int)
+  {
+    static bool reporting = false;
+    if(reporting) ::tts::_::exit_now();
+    reporting = true;
+    ::tts::_::report_timeout();
+    ::tts::_::perform_abort(0);
+  }
+}
+namespace tts::_
+{
+  struct watchdog
+  {
+    explicit watchdog(nanoseconds ns)
+    {
+      if(!ns) return;
+      watchdog_ns             = ns;
+      struct sigaction action = {};
+      action.sa_handler       = &tts_watchdog_expired;
+      action.sa_flags         = 0;
+      sigemptyset(&action.sa_mask);
+      sigaction(SIGALRM, &action, &previous_);
+      itimerval deadline {};
+      deadline.it_value.tv_sec  = static_cast<time_t>(ns / 1'000'000'000u);
+      deadline.it_value.tv_usec = static_cast<suseconds_t>((ns % 1'000'000'000u) / 1000u);
+      setitimer(ITIMER_REAL, &deadline, nullptr);
+      armed_ = true;
+    }
+    ~watchdog()
+    {
+      if(!armed_) return;
+      itimerval off {};
+      setitimer(ITIMER_REAL, &off, nullptr);
+      sigaction(SIGALRM, &previous_, nullptr);
+    }
+    watchdog(watchdog const&)            = delete;
+    watchdog& operator=(watchdog const&) = delete;
+  private:
+    struct sigaction previous_ = {};
+    bool             armed_    = false;
+  };
+}
+#endif
+namespace tts::_
+{
+  struct shard_spec
+  {
+    bool         active = false;
+    unsigned int index  = 0;
+    unsigned int total  = 1;
+    bool         selects(std::size_t position) const
+    {
+      return !active || (position % total == index);
+    }
+    std::size_t count(std::size_t suite_size) const
+    {
+      if(!active) return suite_size;
+      if(suite_size <= index) return 0;
+      return (suite_size - index - 1) / total + 1;
+    }
+  };
+  TTS_DISABLE_WARNING_PUSH
+  TTS_DISABLE_WARNING_CRT_SECURE
+  inline shard_spec parse_shard(bool& ok)
+  {
+    ok              = true;
+    ::tts::text raw = ::tts::arguments().value<::tts::text>("--shard");
+    if(raw.is_empty()) return {};
+    unsigned int i = 0;
+    unsigned int n = 0;
+    if(sscanf(raw.data(), "%u/%u", &i, &n) != 2 || n == 0 || i >= n)
+    {
+      ok = false;
+      return {};
+    }
+    return {true, i, n};
+  }
+  TTS_DISABLE_WARNING_POP
+}
+namespace tts::_
+{
+  inline constexpr char const* sink_names[] = {
+                                               "colored",
+                                               "tap",
+                                               "diagnostics",
+                                               "json",
+                                               "junit"};
+  inline constexpr std::size_t sink_count   = sizeof(sink_names) / sizeof(sink_names[ 0 ]);
+  inline ::tts::text validate_sink_name(::tts::text const& name, bool& ok)
+  {
+    ok = name.is_empty();
+    for(auto candidate: sink_names)
+      ok = ok || (name == ::tts::text {candidate});
+    if(ok) return {};
+    ::tts::text expected;
+    for(std::size_t i = 0; i < sink_count; ++i)
+      expected += ::tts::text {i ? ", %s" : "%s", sink_names[ i ]};
+    return ::tts::text {
+    "Unknown --sink value '%s', expected one of: %s", name.data(), expected.data()};
+  }
+}
+namespace tts::_
+{
+  inline constexpr auto usage_text =
+  R"(
+Flags:
+  -h, --help        Display this help message
+  -x, --hex         Print the floating results in hexfloat mode
+  -s, --scientific  Print the floating results in scientific mode
+  -v, --verbose     Display tests results regardless of their status.
+  -q, --quiet       Display only test failures percentage.
+  --allow-empty     Do not fail when the test suite registered zero test.
+  --dry             Print registered test names without running them.
+  --no-crash-guard  Leave a crash to the system instead of naming the case that caused it.
+Parameters:
+  --precision=arg   Set the precision for displaying floating pint values
+  --seed=arg        Set the PRNG seeds (default is time-based)
+  --capture=path    Capture this run's output and write it to path instead of stdout
+  --shard=i/n       Only run the tests in shard i of n (0 <= i < n), for CI parallelization
+  --timeout=arg     Kill the run when a case is still going after arg milliseconds
+Range specifics Parameters:
+  --block=arg       Set size of range checks samples (min. 32)
+  --loop=arg        Repeat each range checks arg times
+  --ulpmax=arg      Set global failure ulp threshold for range tests (default is 2.0)
+  --valmax=arg      Set maximal value for range tests (default is code)
+  --valmin=arg      Set minimal value for range tests (default is code)
+)";
+  inline int usage(char const* name)
+  {
+    printf("TTS Unit Tests Driver\nUsage: %s [OPTION...]", name);
+    puts(usage_text);
+    return 0;
+  }
+}
+namespace tts
+{
+  struct colorized_sink : output_sink
+  {
+    explicit colorized_sink(output_sink& target = output_handler::default_sink())
+        : target_(&target)
+    {
+    }
+    void write(text const& t) override
+    {
+      char const* s = t.data();
+      if(strcmp(s, "\n") == 0)
+      {
+        if(color_applied_) target_->write(text {"\033[0m"});
+        color_applied_ = false;
+        target_->write(t);
+        return;
+      }
+      if(active_color_ && !color_applied_)
+      {
+        target_->write(text {active_color_});
+        color_applied_ = true;
+      }
+      target_->write(t);
+      if(revert_to_)
+      {
+        active_color_  = revert_to_;
+        color_applied_ = false;
+        revert_to_     = nullptr;
+      }
+    }
+    void test_started([[maybe_unused]] text const& name) override
+    {
+      set_color(nullptr);
+    }
+    void assertion_failed([[maybe_unused]] text const& location,
+                          [[maybe_unused]] text const& message,
+                          [[maybe_unused]] bool        fatal) override
+    {
+      set_color("\033[31m");
+    }
+    void test_finished([[maybe_unused]] text const& name,
+                       bool                         passed,
+                       bool                         invalid,
+                       [[maybe_unused]] nanoseconds duration_ns) override
+    {
+      if(invalid) set_color("\033[33m");
+      else if(passed) set_color("\033[32m");
+      else set_color(nullptr);
+    }
+    void suite_finished([[maybe_unused]] counter fail_count,
+                        [[maybe_unused]] counter invalid_count) override
+    {
+      set_color("\033[1m");
+    }
+    void suite_metric(outcome                  kind,
+                      [[maybe_unused]] counter count,
+                      [[maybe_unused]] counter total) override
+    {
+      using enum outcome;
+      revert_to_ = active_color_;
+      switch(kind)
+      {
+      case success: set_color("\033[1;32m"); break;
+      case failure: set_color("\033[1;31m"); break;
+      case invalid: set_color("\033[1;33m"); break;
+      }
+    }
+    void suite_aborted() override
+    {
+      set_color("\033[31m");
+    }
+    void flush() override
+    {
+      target_->flush();
+    }
+  private:
+    void set_color(char const* color)
+    {
+      active_color_  = color;
+      color_applied_ = false;
+    }
+    output_sink* target_;
+    char const*  active_color_  = nullptr;
+    bool         color_applied_ = false;
+    char const*  revert_to_     = nullptr;
+  };
+}
+namespace tts
+{
+  struct diagnostics_sink : output_sink
+  {
+    explicit diagnostics_sink(output_sink& target = output_handler::default_sink())
+        : target_(&target)
+    {
+    }
+    void write(text const& t) override
+    {
+      target_->write(t);
+    }
+    void assertion_failed(text const& location, text const& message, bool fatal) override
+    {
+      char const* loc = location.data();
+      std::size_t len = strlen(loc);
+      target_->write(text {"%.*s: %s: %s\n",
+                           static_cast<int>(len - 2),
+                           loc + 1,
+                           fatal ? "fatal error" : "error",
+                           message.data()});
+    }
+    void flush() override
+    {
+      target_->flush();
+    }
+  private:
+    output_sink* target_;
+  };
+}
+TTS_DISABLE_WARNING_PUSH
+TTS_DISABLE_WARNING_CRT_SECURE
+namespace tts::_
+{
+  inline ::tts::text json_escape(::tts::text const& t)
+  {
+    ::tts::text out;
+    for(char c: t)
+    {
+      switch(c)
+      {
+      case '"': out += R"(\")"; break;
+      case '\\': out += R"(\\)"; break;
+      case '\n': out += "\\n"; break;
+      case '\r': out += "\\r"; break;
+      case '\t': out += "\\t"; break;
+      default:
+        if(static_cast<unsigned char>(c) < 0x20)
+          out += ::tts::text {"\\u%04x", static_cast<unsigned>(static_cast<unsigned char>(c))};
+        else out += ::tts::text {"%c", c};
+        break;
+      }
+    }
+    return out;
+  }
+}
+namespace tts
+{
+  struct json_sink : output_sink
+  {
+    explicit json_sink(output_sink& target = output_handler::default_sink())
+        : target_(&target)
+    {
+    }
+    void write(text const&) override
+    {
+    }
+    void assertion_failed(text const& location, text const& message, bool fatal) override
+    {
+      char const* loc      = location.data();
+      std::size_t len      = strlen(loc);
+      auto        stripped = text {"%.*s", static_cast<int>(len - 2), loc + 1};
+      char const* colon    = strrchr(stripped.data(), ':');
+      text        file =
+      colon ? text {"%.*s", static_cast<int>(colon - stripped.data()), stripped.data()} : stripped;
+      int line = 0;
+      if(colon) sscanf(colon + 1, "%d", &line);
+      if(!current_failures_.is_empty()) current_failures_ += ",";
+      current_failures_ += text {R"({"location":{"file":"%s","line":%d},"message":"%s",)"
+                                 R"("fatal":%s})",
+                                 _::json_escape(file).data(),
+                                 line,
+                                 _::json_escape(message).data(),
+                                 fatal ? "true" : "false"};
+    }
+    void
+    test_finished(text const& name, bool passed, bool invalid, nanoseconds duration_ns) override
+    {
+      char const* status = "failed";
+      if(invalid)
+      {
+        status = "invalid";
+        ++invalid_count_;
+      }
+      else if(passed)
+      {
+        status = "passed";
+        ++passed_count_;
+      }
+      else ++failed_count_;
+      total_duration_ns_ += duration_ns;
+      if(!body_.is_empty()) body_ += ",";
+      body_ += text {R"({"name":"%s","status":"%s","duration_ns":%llu,"failures":[%s]})",
+                     _::json_escape(name).data(),
+                     status,
+                     duration_ns,
+                     current_failures_.data()};
+      current_failures_ = text {};
+    }
+    text render() const
+    {
+      counter total = passed_count_ + failed_count_ + invalid_count_;
+      return text {R"({"tests":[%s],"summary":{"total":%llu,"passed":%llu,"failed":%llu,)"
+                   R"("invalid":%llu,"duration_ns":%llu}})",
+                   body_.data(),
+                   total,
+                   passed_count_,
+                   failed_count_,
+                   invalid_count_,
+                   total_duration_ns_};
+    }
+    void dump(output_sink& target)
+    {
+      target.write(render());
+      clear();
+    }
+    void dump()
+    {
+      stdout_sink target;
+      dump(target);
+    }
+    void clear()
+    {
+      body_              = text {};
+      current_failures_  = text {};
+      passed_count_      = 0;
+      failed_count_      = 0;
+      invalid_count_     = 0;
+      total_duration_ns_ = 0;
+    }
+    void finish() override
+    {
+      dump(*target_);
+    }
+  private:
+    output_sink* target_;
+    text         body_;
+    text         current_failures_;
+    counter      passed_count_      = 0;
+    counter      failed_count_      = 0;
+    counter      invalid_count_     = 0;
+    nanoseconds  total_duration_ns_ = 0;
+  };
+}
+TTS_DISABLE_WARNING_POP
+namespace tts::_
+{
+  inline ::tts::text xml_escape(::tts::text const& t)
+  {
+    ::tts::text out;
+    for(char c: t)
+    {
+      switch(c)
+      {
+      case '&': out += "&amp;"; break;
+      case '<': out += "&lt;"; break;
+      case '>': out += "&gt;"; break;
+      case '"': out += "&quot;"; break;
+      case '\'': out += "&apos;"; break;
+      default:
+        if(static_cast<unsigned char>(c) >= 0x20 || c == '\t' || c == '\n' || c == '\r')
+          out += ::tts::text {"%c", c};
+        break;
+      }
+    }
+    return out;
+  }
+}
+namespace tts
+{
+  struct junit_sink : output_sink
+  {
+    explicit junit_sink(output_sink& target = output_handler::default_sink())
+        : target_(&target)
+    {
+    }
+    void write(text const&) override
+    {
+    }
+    void assertion_failed(text const&           location,
+                          text const&           message,
+                          [[maybe_unused]] bool fatal) override
+    {
+      char const* loc = location.data();
+      std::size_t len = strlen(loc);
+      if(!current_failures_.is_empty()) current_failures_ += "&#10;";
+      current_failures_ +=
+      text {"%.*s: %s", static_cast<int>(len - 2), loc + 1, _::xml_escape(message).data()};
+      if(first_failure_.is_empty()) first_failure_ = _::xml_escape(message);
+    }
+    void
+    test_finished(text const& name, bool passed, bool invalid, nanoseconds duration_ns) override
+    {
+      if(invalid) ++invalid_count_;
+      else if(passed) ++passed_count_;
+      else ++failed_count_;
+      total_duration_ns_ += duration_ns;
+      auto escaped_name   = _::xml_escape(name);
+      auto seconds        = text {"%.6f", static_cast<double>(duration_ns) / 1'000'000'000.0};
+      if(invalid)
+      {
+        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"><skipped/></testcase>)"
+                       "\n",
+                       escaped_name.data(),
+                       escaped_name.data(),
+                       seconds.data()};
+      }
+      else if(!passed)
+      {
+        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"><failure )"
+                       R"(message="%s">%s</failure></testcase>)"
+                       "\n",
+                       escaped_name.data(),
+                       escaped_name.data(),
+                       seconds.data(),
+                       first_failure_.data(),
+                       current_failures_.data()};
+      }
+      else
+      {
+        body_ += text {R"(    <testcase name="%s" classname="%s" time="%s"/>)"
+                       "\n",
+                       escaped_name.data(),
+                       escaped_name.data(),
+                       seconds.data()};
+      }
+      current_failures_ = text {};
+      first_failure_    = text {};
+    }
+    text render() const
+    {
+      counter total   = passed_count_ + failed_count_ + invalid_count_;
+      double  seconds = static_cast<double>(total_duration_ns_) / 1'000'000'000.0;
+      return text {"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                   R"(<testsuites><testsuite name="TTS" tests="%llu" failures="%llu" errors="0")"
+                   R"( skipped="%llu" time="%.6f">)"
+                   "\n%s  </testsuite></testsuites>\n",
+                   total,
+                   failed_count_,
+                   invalid_count_,
+                   seconds,
+                   body_.data()};
+    }
+    void dump(output_sink& target)
+    {
+      target.write(render());
+      clear();
+    }
+    void dump()
+    {
+      stdout_sink target;
+      dump(target);
+    }
+    void clear()
+    {
+      body_              = text {};
+      current_failures_  = text {};
+      first_failure_     = text {};
+      passed_count_      = 0;
+      failed_count_      = 0;
+      invalid_count_     = 0;
+      total_duration_ns_ = 0;
+    }
+    void finish() override
+    {
+      dump(*target_);
+    }
+  private:
+    output_sink* target_;
+    text         body_;
+    text         current_failures_;
+    text         first_failure_;
+    counter      passed_count_      = 0;
+    counter      failed_count_      = 0;
+    counter      invalid_count_     = 0;
+    nanoseconds  total_duration_ns_ = 0;
+  };
+}
+namespace tts
+{
+  struct tap_sink : output_sink
+  {
+    explicit tap_sink(output_sink& target = output_handler::default_sink())
+        : target_(&target)
+    {
+    }
+    void write(text const&) override
+    {
+    }
+    void test_finished(text const&                  name,
+                       bool                         passed,
+                       [[maybe_unused]] bool        invalid,
+                       [[maybe_unused]] nanoseconds duration_ns) override
+    {
+      ++count_;
+      body_ += passed ? text {"ok %zu - %s\n", count_, name.data()}
+                      : text {"not ok %zu - %s\n", count_, name.data()};
+    }
+    text render() const
+    {
+      return text {"1..%zu\n", count_} + body_;
+    }
+    void dump(output_sink& target)
+    {
+      target.write(render());
+      clear();
+    }
+    void dump()
+    {
+      stdout_sink target;
+      dump(target);
+    }
+    void clear()
+    {
+      body_  = text {};
+      count_ = 0;
+    }
+    void finish() override
+    {
+      dump(*target_);
+    }
+  private:
+    output_sink* target_;
+    text         body_;
+    std::size_t  count_ = 0;
+  };
+}
+#include <cstdio>
+namespace tts::_
+{
+  TTS_DISABLE_WARNING_PUSH
+  TTS_DISABLE_WARNING_CRT_SECURE
+  class file_guard
+  {
+  public:
+    file_guard() = default;
+    explicit file_guard(FILE* f)
+        : file_(f)
+    {
+    }
+    file_guard(file_guard const&)            = delete;
+    file_guard& operator=(file_guard const&) = delete;
+    file_guard(file_guard&& other) noexcept
+        : file_guard()
+    {
+      swap(other);
+    }
+    file_guard& operator=(file_guard&& other) noexcept
+    {
+      file_guard {TTS_MOVE(other)}.swap(*this);
+      return *this;
+    }
+    ~file_guard()
+    {
+      close();
+    }
+    void swap(file_guard& other) noexcept
+    {
+      FILE* tmp   = file_;
+      file_       = other.file_;
+      other.file_ = tmp;
+    }
+    FILE* get() const
+    {
+      return file_;
+    }
+    explicit operator bool() const
+    {
+      return file_ != nullptr;
+    }
+  private:
+    void close()
+    {
+      if(file_) fclose(file_);
+      file_ = nullptr;
+    }
+    FILE* file_ = nullptr;
+  };
+  TTS_DISABLE_WARNING_POP
+}
 TTS_DISABLE_WARNING_PUSH
 TTS_DISABLE_WARNING_CRT_SECURE
 int TTS_CUSTOM_DRIVER_FUNCTION([[maybe_unused]] int argc, [[maybe_unused]] char const** argv)
@@ -2599,6 +2993,16 @@ int TTS_CUSTOM_DRIVER_FUNCTION([[maybe_unused]] int argc, [[maybe_unused]] char 
                             shard.total,
                             nb_tests,
                             nb_tests > 1 ? "s" : "");
+  ::tts::_::abort_epilogue =
+  ::tts::_::callable {[ &capture_file, &capture_sink ]()
+                      {
+                        if(capture_file)
+                        {
+                          ::tts::output().sink(::tts::output_handler::default_sink());
+                          fputs(capture_sink.content().data(),
+                                capture_file.get());
+                        }
+                      }};
   try
   {
     std::size_t position = 0;
@@ -2611,8 +3015,14 @@ int TTS_CUSTOM_DRIVER_FUNCTION([[maybe_unused]] int argc, [[maybe_unused]] char 
       ::tts::output().test_started(::tts::text {t.name});
       if(!::tts::is_quiet()) ::tts::output().writeln("TEST: '%s'", t.name);
       ::tts::output().flush();
+      ::tts::_::remaining_tests = nb_tests - done_tests - 1;
       auto start_ns = ::tts::_::now_ns();
-      t();
+      {
+        [[maybe_unused]] ::tts::_::crash_guard guard {};
+        [[maybe_unused]] ::tts::_::watchdog    deadline {
+        t.timeout_set ? t.timeout_ns : ::tts::_::default_timeout_ns()};
+        t();
+      }
       auto duration_ns = ::tts::_::now_ns() - start_ns;
       done_tests++;
       ::tts::global_runtime.total_duration_ns += duration_ns;
@@ -3001,9 +3411,9 @@ namespace tts
         , step(st)
     {
     }
-    template<typename D> D operator()(tts::type<D>, auto idx, auto sz, auto...) const
+    template<typename D, typename I> D operator()(tts::type<D>, I idx, auto sz, auto...) const
     {
-      auto const rev = static_cast<decltype(idx)>(sz) - 1 - idx;
+      auto const rev = static_cast<I>(sz) - 1 - idx;
       return ::tts::convert_as(start + rev * step, type<D> {});
     }
     template<typename D> D operator()(tts::type<D>) const
@@ -3125,14 +3535,18 @@ namespace tts::_
     capture(tagged_id id)
         : name(id.name)
         , tag(id.tag)
+        , timeout_ns(id.timeout_ns)
+        , timeout_set(id.timeout_set)
     {
     }
     auto operator+(auto body) const
     {
-      return test::acknowledge({name, body,  {}, tag});
+      return test::acknowledge({name, body,  {}, tag, timeout_ns, timeout_set});
     }
     char const*             name;
-    ::tts::expected_outcome tag = ::tts::expected_outcome::pass;
+    ::tts::expected_outcome tag         = ::tts::expected_outcome::pass;
+    nanoseconds             timeout_ns  = 0;
+    bool                    timeout_set = false;
   };
   inline text current_type = {};
   inline text joined_type_names()
@@ -3158,6 +3572,8 @@ namespace tts::_
     captures(tagged_id id)
         : name(id.name)
         , tag(id.tag)
+        , timeout_ns(id.timeout_ns)
+        , timeout_set(id.timeout_set)
     {
     }
     auto operator+(auto body) const
@@ -3176,10 +3592,14 @@ namespace tts::_
          current_type = text {""};
        },
        joined_type_names<Types...>(),
-       tag});
+       tag,
+       timeout_ns,
+       timeout_set});
     }
     char const*             name;
-    ::tts::expected_outcome tag = ::tts::expected_outcome::pass;
+    ::tts::expected_outcome tag         = ::tts::expected_outcome::pass;
+    nanoseconds             timeout_ns  = 0;
+    bool                    timeout_set = false;
   };
   template<typename... Types> struct captures<types<Types...>> : captures<Types...>
   {
@@ -3194,7 +3614,9 @@ namespace tts::_
   struct test_generators<types<Type...>, Generators...>
   {
     char const*             name;
-    ::tts::expected_outcome tag = ::tts::expected_outcome::pass;
+    ::tts::expected_outcome tag         = ::tts::expected_outcome::pass;
+    nanoseconds             timeout_ns  = 0;
+    bool                    timeout_set = false;
     test_generators(char const* id)
         : name(id)
     {
@@ -3202,6 +3624,8 @@ namespace tts::_
     test_generators(tagged_id id)
         : name(id.name)
         , tag(id.tag)
+        , timeout_ns(id.timeout_ns)
+        , timeout_set(id.timeout_set)
     {
     }
     template<typename... Args> static void process_call(auto body, Args&&... args)
@@ -3223,7 +3647,9 @@ namespace tts::_
                                   current_type = text {""};
                                 },
                                 joined_type_names<Type...>(),
-                                tg.tag});
+                                tg.tag,
+                                tg.timeout_ns,
+                                tg.timeout_set});
     }
   };
 }
@@ -3265,6 +3691,73 @@ namespace tts::_
 #define TTS_XINVALID(ID) ::tts::expect_invalid(ID)
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
+#define TTS_TIMEOUT(MS, ID)
+#else
+#define TTS_TIMEOUT(MS, ID) ::tts::with_timeout(MS, ID)
+#endif
+namespace tts::_
+{
+  struct check_site
+  {
+    char const* file;
+    int         line;
+    bool        fatal;
+    char const* lhs     = "";
+    char const* op      = "";
+    char const* rhs     = "";
+    char const* negated = "";
+  };
+  inline bool check_passed()
+  {
+    ::tts::global_runtime.pass();
+    return ::tts::is_detailed();
+  }
+  inline void check_report(check_site const& site, ::tts::text const& message)
+  {
+    report_pass(source_location::current(site.file, site.line).data(), message.data());
+  }
+  inline logger check_failed(check_site const& site, ::tts::text const& message)
+  {
+    ::tts::global_runtime.fail();
+    if(!::tts::global_runtime.fail_status) ::tts::global_runtime.fail_status = true;
+    auto location = source_location::current(site.file, site.line);
+    if(site.fatal)
+    {
+      report_fatal(location.data(), message.data(), current_type);
+      ::tts::fatal_error_status = true;
+      [[maybe_unused]] logger local_tts_fail_hard {};
+    }
+    else
+    {
+      report_fail(location.data(), message.data(), current_type);
+    }
+    return logger {};
+  }
+}
+#define TTS_CHECK_SITE(FAILURE, LHS, OP, RHS, NEGATED)                                             \
+  ::tts::_::check_site                                                                             \
+  {                                                                                                \
+    __builtin_FILE(), __builtin_LINE(), TTS_IS_FATAL_##FAILURE, LHS, OP, RHS, NEGATED              \
+  }
+#define TTS_IS_FATAL_TTS_FAIL  false
+#define TTS_IS_FATAL_TTS_FATAL true
+namespace tts::_
+{
+  inline logger
+  check_expect(bool value, bool expected, check_site const& site, char const* kind = "Expression")
+  {
+    if(value == expected)
+    {
+      if(check_passed())
+        check_report(
+        site, ::tts::text {"%s: %s evaluates to %s.", kind, site.lhs, expected ? "true" : "false"});
+      return logger {false};
+    }
+    return check_failed(
+    site, ::tts::text {"%s: %s evaluates to %s.", kind, site.lhs, value ? "true" : "false"});
+  }
+}
+#if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_EXPECT(EXPR, ...)
 #else
 #define TTS_EXPECT(EXPR, ...) TTS_EXPECT_##__VA_ARGS__(EXPR)
@@ -3272,19 +3765,10 @@ namespace tts::_
 #define TTS_EXPECT_(EXPR)         TTS_EXPECT_IMPL((EXPR), TTS_FAIL)
 #define TTS_EXPECT_REQUIRED(EXPR) TTS_EXPECT_IMPL((EXPR), TTS_FATAL)
 #define TTS_EXPECT_IMPL(EXPR, FAILURE)                                                             \
-  [ & ](auto&& local_tts_expr)                                                                     \
-  {                                                                                                \
-    if(local_tts_expr)                                                                             \
-    {                                                                                              \
-      TTS_PASS("Expression: %s evaluates to true.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));          \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expression: %s evaluates to false.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));          \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(EXPR) 
+  ::tts::_::check_expect(                                                                          \
+  static_cast<bool>(EXPR),                                                                         \
+  true,                                                                                            \
+  TTS_CHECK_SITE(FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", "")) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_EXPECT_NOT(EXPR, ...)
 #else
@@ -3293,19 +3777,10 @@ namespace tts::_
 #define TTS_EXPECT_NOT_(EXPR)         TTS_EXPECT_NOT_IMPL(EXPR, TTS_FAIL)
 #define TTS_EXPECT_NOT_REQUIRED(EXPR) TTS_EXPECT_NOT_IMPL(EXPR, TTS_FATAL)
 #define TTS_EXPECT_NOT_IMPL(EXPR, FAILURE)                                                         \
-  [ & ](auto&& local_tts_expr)                                                                     \
-  {                                                                                                \
-    if(!local_tts_expr)                                                                            \
-    {                                                                                              \
-      TTS_PASS("Expression: %s evaluates to false.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));         \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expression: %s evaluates to true.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));           \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(EXPR) 
+  ::tts::_::check_expect(                                                                          \
+  static_cast<bool>(EXPR),                                                                         \
+  false,                                                                                           \
+  TTS_CHECK_SITE(FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", "")) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_CONSTEXPR_EXPECT(EXPR, ...)
 #else
@@ -3314,25 +3789,10 @@ namespace tts::_
 #define TTS_CEXPR_EXPECT_(EXPR)         TTS_CEXPR_EXPECT_IMPL(EXPR, TTS_FAIL)
 #define TTS_CEXPR_EXPECT_REQUIRED(EXPR) TTS_CEXPR_EXPECT_IMPL(EXPR, TTS_FATAL)
 #define TTS_CEXPR_EXPECT_IMPL(EXPR, FAILURE)                                                       \
-  ::tts::global_logger_status = false;                                                             \
-  do                                                                                               \
-  {                                                                                                \
-    constexpr auto local_tts_expr = EXPR;                                                          \
-    if constexpr(local_tts_expr)                                                                   \
-    {                                                                                              \
-      TTS_PASS("Constant expression: %s evaluates to true.", TTS_STRING(TTS_REMOVE_PARENS(EXPR))); \
-      ::tts::global_logger_status = false;                                                         \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Constant expression: %s evaluates to false.", TTS_STRING(TTS_REMOVE_PARENS(EXPR))); \
-      ::tts::global_logger_status = true;                                                          \
-    }                                                                                              \
-  } while(0);                                                                                      \
-  ::tts::_::logger                                                                                 \
-  {                                                                                                \
-    ::tts::global_logger_status                                                                    \
-  }
+  ::tts::_::check_expect(std::bool_constant<static_cast<bool>(EXPR)>::value,                       \
+                         true,                                                                     \
+                         TTS_CHECK_SITE(FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", ""), \
+                         "Constant expression")
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_CONSTEXPR_EXPECT_NOT(EXPR, ...)
 #else
@@ -3341,60 +3801,51 @@ namespace tts::_
 #define TTS_CEXPR_EXPECT_NOT_(EXPR)         TTS_CEXPR_EXPECT_NOT_IMPL(EXPR, TTS_FAIL)
 #define TTS_CEXPR_EXPECT_NOT_REQUIRED(EXPR) TTS_CEXPR_EXPECT_NOT_IMPL(EXPR, TTS_FATAL)
 #define TTS_CEXPR_EXPECT_NOT_IMPL(EXPR, FAILURE)                                                   \
-  ::tts::global_logger_status = false;                                                             \
-  do                                                                                               \
-  {                                                                                                \
-    constexpr auto local_tts_expr = EXPR;                                                          \
-    if constexpr(!local_tts_expr)                                                                  \
-    {                                                                                              \
-      TTS_PASS("Constant expression: %s evaluates to false.",                                      \
-               TTS_STRING(TTS_REMOVE_PARENS(EXPR)));                                               \
-      ::tts::global_logger_status = false;                                                         \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Constant expression: %s evaluates to true.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));  \
-      ::tts::global_logger_status = true;                                                          \
-    }                                                                                              \
-  } while(0);                                                                                      \
-  ::tts::_::logger                                                                                 \
-  {                                                                                                \
-    ::tts::global_logger_status                                                                    \
-  }                                                                                                \
-  
+  ::tts::_::check_expect(std::bool_constant<static_cast<bool>(EXPR)>::value,                       \
+                         false,                                                                    \
+                         TTS_CHECK_SITE(FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", ""), \
+                         "Constant expression") 
+namespace tts::_
+{
+  inline logger check_throw(bool caught, check_site const& site)
+  {
+    if(caught)
+    {
+      if(check_passed())
+        check_report(site, ::tts::text {"Expected: %s throws %s.", site.lhs, site.rhs});
+      return logger {false};
+    }
+    return check_failed(site, ::tts::text {"Expected: %s failed to throw %s.", site.lhs, site.rhs});
+  }
+  inline logger check_no_throw(bool caught, check_site const& site)
+  {
+    if(!caught)
+    {
+      if(check_passed()) check_report(site, ::tts::text {"Expected: %s does not throw.", site.lhs});
+      return logger {false};
+    }
+    return check_failed(site, ::tts::text {"Expected: %s throws unexpectedly.", site.lhs});
+  }
+}
 #define TTS_THROW_IMPL(EXPR, EXCEPTION, FAILURE)                                                   \
-  [ & ]()                                                                                          \
+  ::tts::_::check_throw(                                                                           \
+  [ & ]() -> bool                                                                                  \
   {                                                                                                \
-    bool tts_caught = false;                                                                       \
-                                                                                                   \
     try                                                                                            \
     {                                                                                              \
       EXPR;                                                                                        \
     }                                                                                              \
     catch(EXCEPTION&)                                                                              \
     {                                                                                              \
-      tts_caught = true;                                                                           \
+      return true;                                                                                 \
     }                                                                                              \
     catch(...)                                                                                     \
     {                                                                                              \
     }                                                                                              \
-                                                                                                   \
-    if(tts_caught)                                                                                 \
-    {                                                                                              \
-      TTS_PASS("Expected: %s throws %s.",                                                          \
-               TTS_STRING(TTS_REMOVE_PARENS(EXPR)),                                                \
-               TTS_STRING(TTS_REMOVE_PARENS(EXCEPTION)));                                          \
-      ::tts::global_runtime.pass();                                                                \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expected: %s failed to throw %s.",                                                  \
-              TTS_STRING(TTS_REMOVE_PARENS(EXPR)),                                                 \
-              TTS_STRING(TTS_REMOVE_PARENS(EXCEPTION)));                                           \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }()
+    return false;                                                                                  \
+  }(),                                                                                             \
+  TTS_CHECK_SITE(                                                                                  \
+  FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", TTS_STRING(TTS_REMOVE_PARENS(EXCEPTION)), ""))
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_THROW(EXPR, EXCEPTION, ...)
 #else
@@ -3403,31 +3854,20 @@ namespace tts::_
 #define TTS_THROW_(EXPR, EXCEPTION)         TTS_THROW_IMPL(EXPR, EXCEPTION, TTS_FAIL)
 #define TTS_THROW_REQUIRED(EXPR, EXCEPTION) TTS_THROW_IMPL(EXPR, EXCEPTION, TTS_FATAL)
 #define TTS_NO_THROW_IMPL(EXPR, FAILURE)                                                           \
-  [ & ]()                                                                                          \
+  ::tts::_::check_no_throw(                                                                        \
+  [ & ]() -> bool                                                                                  \
   {                                                                                                \
-    bool tts_caught = false;                                                                       \
-                                                                                                   \
     try                                                                                            \
     {                                                                                              \
       EXPR;                                                                                        \
     }                                                                                              \
     catch(...)                                                                                     \
     {                                                                                              \
-      tts_caught = true;                                                                           \
+      return true;                                                                                 \
     }                                                                                              \
-                                                                                                   \
-    if(!tts_caught)                                                                                \
-    {                                                                                              \
-      TTS_PASS("Expected: %s does not throw.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));               \
-      ::tts::global_runtime.pass();                                                                \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expected: %s throws unexpectedly.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));           \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }()
+    return false;                                                                                  \
+  }(),                                                                                             \
+  TTS_CHECK_SITE(FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", ""))
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_NO_THROW(EXPR, ...)
 #else
@@ -3470,112 +3910,174 @@ namespace tts
 }
 namespace tts::_
 {
-  template<typename L, typename R> inline constexpr bool bit_eq(L const& l, R const& r)
+  struct bit_eq_t
   {
-    if constexpr(requires { comparison<L, R>::bit_equal(l, r); })
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
     {
-      return comparison<L, R>::bit_equal(l, r);
+      if constexpr(requires { comparison<L, R>::bit_equal(l, r); })
+      {
+        return comparison<L, R>::bit_equal(l, r);
+      }
+      else
+      {
+        static_assert(
+        !requires { comparison<L, R>::bit_equal; },
+        "[TTS] tts::comparison<L, R>::bit_equal does not accept the two operands.");
+        return builtin_comparison<L, R>::bit_equal(l, r);
+      }
+    }
+  };
+  inline constexpr bit_eq_t bit_eq {};
+  struct bit_neq_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      return !bit_eq(l, r);
+    }
+  };
+  inline constexpr bit_neq_t bit_neq {};
+  struct eq_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      if constexpr(requires { comparison<L, R>::equal(l, r); })
+      {
+        return comparison<L, R>::equal(l, r);
+      }
+      else
+      {
+        static_assert(
+        !requires { comparison<L, R>::equal; },
+        "[TTS] tts::comparison<L, R>::equal does not accept the two operands.");
+        return builtin_comparison<L, R>::equal(l, r);
+      }
+    }
+  };
+  inline constexpr eq_t eq {};
+  struct neq_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      return !eq(l, r);
+    }
+  };
+  inline constexpr neq_t neq {};
+  struct lt_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      if constexpr(requires { comparison<L, R>::less(l, r); })
+      {
+        return comparison<L, R>::less(l, r);
+      }
+      else
+      {
+        static_assert(
+        !requires { comparison<L, R>::less; },
+        "[TTS] tts::comparison<L, R>::less does not accept the two operands.");
+        return builtin_comparison<L, R>::less(l, r);
+      }
+    }
+  };
+  inline constexpr lt_t lt {};
+  struct le_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      return lt(l, r) || eq(l, r);
+    }
+  };
+  inline constexpr le_t le {};
+  struct gt_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      return !le(l, r);
+    }
+  };
+  inline constexpr gt_t gt {};
+  struct ge_t
+  {
+    template<typename L, typename R> constexpr bool operator()(L const& l, R const& r) const
+    {
+      return !lt(l, r);
+    }
+  };
+  inline constexpr ge_t ge {};
+}
+namespace tts::_
+{
+  template<typename A, typename B>
+  logger relation_failed(A const& a, B const& b, check_site const& site, char const* kind)
+  {
+    return check_failed(site,
+                        ::tts::text {"%s: %s %s %s is false because %s %s %s.",
+                                     kind,
+                                     site.lhs,
+                                     site.op,
+                                     site.rhs,
+                                     ::tts::as_text(a).data(),
+                                     site.negated,
+                                     ::tts::as_text(b).data()});
+  }
+  template<typename Relation, typename A, typename B>
+  logger check_relation(Relation relation, A const& a, B const& b, check_site const& site)
+  {
+    if(relation(a, b))
+    {
+      if(check_passed())
+        check_report(site,
+                     ::tts::text {"Expression: %s %s %s is true.", site.lhs, site.op, site.rhs});
+      return logger {false};
+    }
+    return relation_failed(a, b, site, "Expression");
+  }
+  template<typename A, typename B> logger types_differ(check_site const& site)
+  {
+    return check_failed(site,
+                        ::tts::text {"'%s %s %s' is false because '%.*s' is not '%.*s'.",
+                                     site.lhs,
+                                     site.op,
+                                     site.rhs,
+                                     ::tts::typename_<A>.size(),
+                                     ::tts::typename_<A>.data(),
+                                     ::tts::typename_<B>.size(),
+                                     ::tts::typename_<B>.data()});
+  }
+  template<typename Relation, typename A, typename B>
+  logger check_typed_relation(Relation relation, A const& a, B const& b, check_site const& site)
+  {
+    if constexpr(!std::same_as<A, B>) return types_differ<A, B>(site);
+    else return check_relation(relation, a, b, site);
+  }
+  template<bool Holds, typename A, typename B>
+  logger check_constant_relation(A const& a, B const& b, check_site const& site)
+  {
+    if constexpr(Holds)
+    {
+      if(check_passed())
+        check_report(
+        site, ::tts::text {"Constant expression: %s %s %s is true.", site.lhs, site.op, site.rhs});
+      return logger {false};
     }
     else
     {
-      static_assert(
-      !requires { comparison<L, R>::bit_equal; },
-      "[TTS] tts::comparison<L, R>::bit_equal does not accept the two operands.");
-      return builtin_comparison<L, R>::bit_equal(l, r);
+      return relation_failed(a, b, site, "Constant expression");
     }
   }
-  template<typename L, typename R> inline constexpr bool bit_neq(L const& l, R const& r)
+  template<bool Holds, typename A, typename B>
+  logger check_typed_constant_relation(A const& a, B const& b, check_site const& site)
   {
-    return !bit_eq(l, r);
-  }
-  template<typename L, typename R> inline constexpr bool eq(L const& l, R const& r)
-  {
-    if constexpr(requires { comparison<L, R>::equal(l, r); })
-    {
-      return comparison<L, R>::equal(l, r);
-    }
-    else
-    {
-      static_assert(
-      !requires { comparison<L, R>::equal; },
-      "[TTS] tts::comparison<L, R>::equal does not accept the two operands.");
-      return builtin_comparison<L, R>::equal(l, r);
-    }
-  }
-  template<typename L, typename R> inline constexpr bool neq(L const& l, R const& r)
-  {
-    return !eq(l, r);
-  }
-  template<typename L, typename R> inline constexpr bool lt(L const& l, R const& r)
-  {
-    if constexpr(requires { comparison<L, R>::less(l, r); })
-    {
-      return comparison<L, R>::less(l, r);
-    }
-    else
-    {
-      static_assert(
-      !requires { comparison<L, R>::less; },
-      "[TTS] tts::comparison<L, R>::less does not accept the two operands.");
-      return builtin_comparison<L, R>::less(l, r);
-    }
-  }
-  template<typename L, typename R> inline constexpr bool le(L const& l, R const& r)
-  {
-    return lt(l, r) || eq(l, r);
-  }
-  template<typename L, typename R> inline constexpr bool gt(L const& l, R const& r)
-  {
-    return !le(l, r);
-  }
-  template<typename L, typename R> inline constexpr bool ge(L const& l, R const& r)
-  {
-    return !lt(l, r);
+    if constexpr(!std::same_as<A, B>) return types_differ<A, B>(site);
+    else return check_constant_relation<Holds>(a, b, site);
   }
 }
-#define TTS_RELATION_BASE(A, B, OP, T, F, FAILURE)                                                 \
-  if(::tts::_::OP(local_tts_a, local_tts_b))                                                       \
-  {                                                                                                \
-    TTS_PASS("Expression: %s %s %s is true.", TTS_STRING(A), T, TTS_STRING(B));                    \
-    return ::tts::_::logger {false};                                                               \
-  }                                                                                                \
-  else                                                                                             \
-  {                                                                                                \
-    FAILURE("Expression: %s %s %s is false because %s %s %s.",                                     \
-            TTS_STRING(A),                                                                         \
-            T,                                                                                     \
-            TTS_STRING(B),                                                                         \
-            ::tts::as_text(local_tts_a).data(),                                                    \
-            F,                                                                                     \
-            ::tts::as_text(local_tts_b).data());                                                   \
-    return ::tts::_::logger {};                                                                    \
-  }                                                                                                \
-  
-#define TTS_CEXPR_RELATION_BASE(A, B, OP, T, F, FAILURE)                                           \
-  constexpr auto local_tts_expr = ::tts::_::OP(A, B);                                              \
-  if constexpr(local_tts_expr)                                                                     \
-  {                                                                                                \
-    TTS_PASS("Constant expression: %s %s %s is true.", TTS_STRING(A), T, TTS_STRING(B));           \
-    ::tts::global_logger_status = false;                                                           \
-  }                                                                                                \
-  else                                                                                             \
-  {                                                                                                \
-    FAILURE("Constant expression: %s %s %s is false because %s %s %s.",                            \
-            TTS_STRING(A),                                                                         \
-            T,                                                                                     \
-            TTS_STRING(B),                                                                         \
-            ::tts::as_text(A).data(),                                                              \
-            F,                                                                                     \
-            ::tts::as_text(B).data());                                                             \
-    ::tts::global_logger_status = true;                                                            \
-  }                                                                                                \
-  
 #define TTS_RELATION(A, B, OP, T, F, ...)     TTS_RELATION_##__VA_ARGS__(A, B, OP, T, F)
 #define TTS_RELATION_(A, B, OP, T, F)         TTS_RELATION_IMPL(A, B, OP, T, F, TTS_FAIL)
 #define TTS_RELATION_REQUIRED(A, B, OP, T, F) TTS_RELATION_IMPL(A, B, OP, T, F, TTS_FATAL)
 #define TTS_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                                 \
-  [ & ](auto const& local_tts_a, auto const& local_tts_b)                                          \
-  { TTS_RELATION_BASE(A, B, OP, T, F, FAILURE) }(A, B) 
+  ::tts::_::check_relation(                                                                        \
+  ::tts::_::OP, A, B, TTS_CHECK_SITE(FAILURE, TTS_STRING(A), T, TTS_STRING(B), F)) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_BIT_EQUAL(LHS, RHS, ...)
 #else
@@ -3614,35 +4116,15 @@ namespace tts::_
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_GREATER_EQUAL(LHS, RHS, ...)
 #else
-#define TTS_GREATER_EQUAL(LHS, RHS, ...) TTS_RELATION(LHS, RHS, ge, ">=", "<=", __VA_ARGS__)
+#define TTS_GREATER_EQUAL(LHS, RHS, ...) TTS_RELATION(LHS, RHS, ge, ">=", "<", __VA_ARGS__)
 #endif
 #define TTS_TYPED_RELATION(A, B, OP, T, F, ...) TTS_TYPED_RELATION_##__VA_ARGS__(A, B, OP, T, F)
 #define TTS_TYPED_RELATION_(A, B, OP, T, F)     TTS_TYPED_RELATION_IMPL(A, B, OP, T, F, TTS_FAIL)
 #define TTS_TYPED_RELATION_REQUIRED(A, B, OP, T, F)                                                \
   TTS_TYPED_RELATION_IMPL(A, B, OP, T, F, TTS_FATAL)
 #define TTS_TYPED_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                           \
-  [ & ](auto&& local_tts_a, auto&& local_tts_b)                                                    \
-  {                                                                                                \
-    using type_a = std::remove_cvref_t<decltype(local_tts_a)>;                                     \
-    using type_b = std::remove_cvref_t<decltype(local_tts_b)>;                                     \
-                                                                                                   \
-    if constexpr(!std::same_as<type_a, type_b>)                                                    \
-    {                                                                                              \
-      FAILURE("'%s %s %s' is false because '%.*s' is not '%.*s'.",                                 \
-              TTS_STRING(A),                                                                       \
-              T,                                                                                   \
-              TTS_STRING(B),                                                                       \
-              ::tts::typename_<type_a>.size(),                                                     \
-              ::tts::typename_<type_a>.data(),                                                     \
-              ::tts::typename_<type_b>.size(),                                                     \
-              ::tts::typename_<type_b>.data());                                                    \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      TTS_RELATION_BASE(A, B, OP, T, F, FAILURE)                                                   \
-    }                                                                                              \
-  }(A, B) 
+  ::tts::_::check_typed_relation(                                                                  \
+  ::tts::_::OP, A, B, TTS_CHECK_SITE(FAILURE, TTS_STRING(A), T, TTS_STRING(B), F)) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_TYPED_EQUAL(LHS, RHS, ...)
 #else
@@ -3673,23 +4155,15 @@ namespace tts::_
 #define TTS_TYPED_GREATER_EQUAL(LHS, RHS, ...)
 #else
 #define TTS_TYPED_GREATER_EQUAL(LHS, RHS, ...)                                                     \
-  TTS_TYPED_RELATION(LHS, RHS, ge, ">=", "<=", __VA_ARGS__)
+  TTS_TYPED_RELATION(LHS, RHS, ge, ">=", "<", __VA_ARGS__)
 #endif
 #define TTS_CEXPR_RELATION(A, B, OP, T, F, ...) TTS_CEXPR_RELATION_##__VA_ARGS__(A, B, OP, T, F)
 #define TTS_CEXPR_RELATION_(A, B, OP, T, F)     TTS_CEXPR_RELATION_IMPL(A, B, OP, T, F, TTS_FAIL)
 #define TTS_CEXPR_RELATION_REQUIRED(A, B, OP, T, F)                                                \
   TTS_CEXPR_RELATION_IMPL(A, B, OP, T, F, TTS_FATAL)
 #define TTS_CEXPR_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                           \
-  ::tts::global_logger_status = false;                                                             \
-  do                                                                                               \
-  {                                                                                                \
-    TTS_CEXPR_RELATION_BASE(A, B, OP, T, F, FAILURE)                                               \
-  } while(0);                                                                                      \
-  ::tts::_::logger                                                                                 \
-  {                                                                                                \
-    ::tts::global_logger_status                                                                    \
-  }                                                                                                \
-
+  ::tts::_::check_constant_relation<(::tts::_::OP(A, B))>(                                         \
+  A, B, TTS_CHECK_SITE(FAILURE, TTS_STRING(A), T, TTS_STRING(B), F)) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_CONSTEXPR_EQUAL(LHS, RHS, ...)
 #else
@@ -3722,7 +4196,7 @@ namespace tts::_
 #define TTS_CONSTEXPR_GREATER_EQUAL(LHS, RHS, ...)
 #else
 #define TTS_CONSTEXPR_GREATER_EQUAL(LHS, RHS, ...)                                                 \
-  TTS_CEXPR_RELATION(LHS, RHS, ge, ">=", "<=", __VA_ARGS__)
+  TTS_CEXPR_RELATION(LHS, RHS, ge, ">=", "<", __VA_ARGS__)
 #endif
 #define TTS_TYPED_CEXPR_RELATION(A, B, OP, T, F, ...)                                              \
   TTS_TYPED_CEXPR_RELATION_##__VA_ARGS__(A, B, OP, T, F)
@@ -3731,34 +4205,8 @@ namespace tts::_
 #define TTS_TYPED_CEXPR_RELATION_REQUIRED(A, B, OP, T, F)                                          \
   TTS_TYPED_CEXPR_RELATION_IMPL(A, B, OP, T, F, TTS_FATAL)
 #define TTS_TYPED_CEXPR_RELATION_IMPL(A, B, OP, T, F, FAILURE)                                     \
-  ::tts::global_logger_status = false;                                                             \
-  do                                                                                               \
-  {                                                                                                \
-    using type_a = std::remove_cvref_t<decltype(A)>;                                               \
-    using type_b = std::remove_cvref_t<decltype(B)>;                                               \
-                                                                                                   \
-    if(!std::same_as<type_a, type_b>)                                                              \
-    {                                                                                              \
-      FAILURE("'%s %s %s' is false because '%.*s' is not '%.*s'.",                                 \
-              TTS_STRING(A),                                                                       \
-              T,                                                                                   \
-              TTS_STRING(B),                                                                       \
-              ::tts::typename_<type_a>.size(),                                                     \
-              ::tts::typename_<type_a>.data(),                                                     \
-              ::tts::typename_<type_b>.size(),                                                     \
-              ::tts::typename_<type_b>.data());                                                    \
-      ::tts::global_logger_status = false;                                                         \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      TTS_CEXPR_RELATION_BASE(A, B, OP, T, F, FAILURE)                                             \
-    }                                                                                              \
-  } while(0);                                                                                      \
-  ::tts::_::logger                                                                                 \
-  {                                                                                                \
-    ::tts::global_logger_status                                                                    \
-  }                                                                                                \
-  
+  ::tts::_::check_typed_constant_relation<(::tts::_::OP(A, B))>(                                   \
+  A, B, TTS_CHECK_SITE(FAILURE, TTS_STRING(A), T, TTS_STRING(B), F)) 
 #define TTS_TYPED_CONSTEXPR_EQUAL(LHS, RHS, ...)                                                   \
   TTS_TYPED_CEXPR_RELATION(LHS, RHS, eq, "==", "!=", __VA_ARGS__)
 #define TTS_TYPED_CONSTEXPR_NOT_EQUAL(LHS, RHS, ...)                                               \
@@ -3770,7 +4218,52 @@ namespace tts::_
 #define TTS_TYPED_CONSTEXPR_LESS_EQUAL(LHS, RHS, ...)                                              \
   TTS_TYPED_CEXPR_RELATION(LHS, RHS, le, "<=", ">", __VA_ARGS__)
 #define TTS_TYPED_CONSTEXPR_GREATER_EQUAL(LHS, RHS, ...)                                           \
-  TTS_TYPED_CEXPR_RELATION(LHS, RHS, ge, ">=", "<=", __VA_ARGS__)
+  TTS_TYPED_CEXPR_RELATION(LHS, RHS, ge, ">=", "<", __VA_ARGS__)
+namespace tts::_
+{
+  template<typename T, typename R> logger check_type(check_site const& site, bool expression)
+  {
+    if constexpr(std::is_same_v<T, R>)
+    {
+      if(check_passed())
+        check_report(site,
+                     expression
+                     ? ::tts::text {"Expression: '%s' is of type '%s'.", site.lhs, site.rhs}
+                     : ::tts::text {"Type: '%s' is '%s'.", site.lhs, site.rhs});
+      return logger {false};
+    }
+    else
+    {
+      char const* format = expression
+                           ? "Expression: '%s' is not of type '%s' because '%.*s' is not '%.*s'."
+                           : "Type: '%s' is not the same as '%s' because '%.*s' is not '%.*s'.";
+      return check_failed(site,
+                          ::tts::text {format,
+                                       site.lhs,
+                                       site.rhs,
+                                       ::tts::typename_<T>.size(),
+                                       ::tts::typename_<T>.data(),
+                                       ::tts::typename_<R>.size(),
+                                       ::tts::typename_<R>.data()});
+    }
+  }
+  inline logger check_compiles(bool compiles, bool expected, check_site const& site)
+  {
+    if(compiles == expected)
+    {
+      if(check_passed())
+        check_report(site,
+                     ::tts::text {compiles ? "Expression: '%s' compiles as expected."
+                                           : "Expression: '%s' does not compile as expected.",
+                                  site.lhs});
+      return logger {false};
+    }
+    return check_failed(site,
+                        ::tts::text {compiles ? "Expression: '%s' compiles unexpectedly."
+                                              : "Expression: '%s' does not compile as expected.",
+                                     site.lhs});
+  }
+}
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_TYPE_IS(TYPE, REF, ...)
 #else
@@ -3779,27 +4272,10 @@ namespace tts::_
 #define TTS_TYPE_IS_(TYPE, REF)         TTS_TYPE_IS_IMPL(TYPE, REF, TTS_FAIL)
 #define TTS_TYPE_IS_REQUIRED(TYPE, REF) TTS_TYPE_IS_IMPL(TYPE, REF, TTS_FATAL)
 #define TTS_TYPE_IS_IMPL(TYPE, REF, FAILURE)                                                       \
-  [ & ]<typename TTS_T, typename TTS_R>(::tts::type<TTS_T>, ::tts::type<TTS_R>)                    \
-  {                                                                                                \
-    if constexpr(std::is_same_v<TTS_T, TTS_R>)                                                     \
-    {                                                                                              \
-      TTS_PASS("Type: '%s' is '%s'.",                                                              \
-               TTS_STRING(TTS_REMOVE_PARENS(TYPE)),                                                \
-               TTS_STRING(TTS_REMOVE_PARENS(REF)));                                                \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Type: '%s' is not the same as '%s' because '%.*s' is not '%.*s'.",                  \
-              TTS_STRING(TTS_REMOVE_PARENS(TYPE)),                                                 \
-              TTS_STRING(TTS_REMOVE_PARENS(REF)),                                                  \
-              ::tts::typename_<TTS_T>.size(),                                                      \
-              ::tts::typename_<TTS_T>.data(),                                                      \
-              ::tts::typename_<TTS_R>.size(),                                                      \
-              ::tts::typename_<TTS_R>.data());                                                     \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(::tts::type<TTS_REMOVE_PARENS(TYPE)> {}, ::tts::type<TTS_REMOVE_PARENS(REF)> {}) 
+  ::tts::_::check_type<TTS_REMOVE_PARENS(TYPE), TTS_REMOVE_PARENS(REF)>(                           \
+  TTS_CHECK_SITE(                                                                                  \
+  FAILURE, TTS_STRING(TTS_REMOVE_PARENS(TYPE)), "", TTS_STRING(TTS_REMOVE_PARENS(REF)), ""),       \
+  false) 
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_EXPR_IS(EXPR, TYPE, ...)
 #else
@@ -3808,44 +4284,19 @@ namespace tts::_
 #define TTS_EXPR_IS_(EXPR, TYPE)         TTS_EXPR_IS_IMPL(EXPR, TYPE, TTS_FAIL)
 #define TTS_EXPR_IS_REQUIRED(EXPR, TYPE) TTS_EXPR_IS_IMPL(EXPR, TYPE, TTS_FATAL)
 #define TTS_EXPR_IS_IMPL(EXPR, TYPE, FAILURE)                                                      \
-  [ & ]<typename TTS_T, typename TTS_R>(::tts::type<TTS_T>, ::tts::type<TTS_R>)                    \
-  {                                                                                                \
-    if constexpr(std::is_same_v<TTS_T, TTS_R>)                                                     \
-    {                                                                                              \
-      TTS_PASS("Expression: '%s' is of type '%s'.",                                                \
-               TTS_STRING(TTS_REMOVE_PARENS(EXPR)),                                                \
-               TTS_STRING(TTS_REMOVE_PARENS(TYPE)));                                               \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expression: '%s' is not of type '%s' because '%.*s' is not '%.*s'.",                \
-              TTS_STRING(TTS_REMOVE_PARENS(EXPR)),                                                 \
-              TTS_STRING(TTS_REMOVE_PARENS(TYPE)),                                                 \
-              ::tts::typename_<TTS_T>.size(),                                                      \
-              ::tts::typename_<TTS_T>.data(),                                                      \
-              ::tts::typename_<TTS_R>.size(),                                                      \
-              ::tts::typename_<TTS_R>.data());                                                     \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(::tts::type<decltype(TTS_REMOVE_PARENS(EXPR))> {},                                             \
-    ::tts::type<TTS_REMOVE_PARENS(TYPE)> {}) 
+  ::tts::_::check_type<decltype(TTS_REMOVE_PARENS(EXPR)), TTS_REMOVE_PARENS(TYPE)>(                \
+  TTS_CHECK_SITE(                                                                                  \
+  FAILURE, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", TTS_STRING(TTS_REMOVE_PARENS(TYPE)), ""),      \
+  true) 
 #define TTS_EXPECT_COMPILES_IMPL(EXPR, ...)                                                        \
   TTS_DISABLE_WARNING_PUSH                                                                         \
   TTS_DISABLE_WARNING_SHADOW                                                                       \
   [ & ](TTS_ARG(__VA_ARGS__))                                                                      \
   {                                                                                                \
-    if constexpr(requires TTS_REMOVE_PARENS(EXPR))                                                 \
-    {                                                                                              \
-      TTS_PASS("Expression: '%s' compiles as expected.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));     \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      TTS_FAIL("Expression: '%s' does not compile as expected.",                                   \
-               TTS_STRING(TTS_REMOVE_PARENS(EXPR)));                                               \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
+    return ::tts::_::check_compiles(                                                               \
+    requires TTS_REMOVE_PARENS(EXPR),                                                              \
+    true,                                                                                          \
+    TTS_CHECK_SITE(TTS_FAIL, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", ""));                    \
     TTS_DISABLE_WARNING_POP                                                                        \
   }(__VA_ARGS__) 
 #if defined(TTS_DOXYGEN_INVOKED)
@@ -3858,17 +4309,10 @@ namespace tts::_
   TTS_DISABLE_WARNING_SHADOW                                                                       \
   [ & ](TTS_ARG(__VA_ARGS__))                                                                      \
   {                                                                                                \
-    if constexpr(!(requires TTS_REMOVE_PARENS(EXPR)))                                              \
-    {                                                                                              \
-      TTS_PASS("Expression: '%s' does not compile as expected.",                                   \
-               TTS_STRING(TTS_REMOVE_PARENS(EXPR)));                                               \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      TTS_FAIL("Expression: '%s' compiles unexpectedly.", TTS_STRING(TTS_REMOVE_PARENS(EXPR)));    \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
+    return ::tts::_::check_compiles(                                                               \
+    requires TTS_REMOVE_PARENS(EXPR),                                                              \
+    false,                                                                                         \
+    TTS_CHECK_SITE(TTS_FAIL, TTS_STRING(TTS_REMOVE_PARENS(EXPR)), "", "", ""));                    \
     TTS_DISABLE_WARNING_POP                                                                        \
   }(__VA_ARGS__) 
 #if defined(TTS_DOXYGEN_INVOKED)
@@ -4083,48 +4527,103 @@ namespace tts
     else return _::eq(a, b);
   }
 }
-#define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, FUNC, PREC, FAILURE)                                 \
-  [ & ](auto local_tts_a, auto local_tts_b)                                                        \
-  {                                                                                                \
-    auto r = FUNC(local_tts_a, local_tts_b);                                                       \
-                                                                                                   \
-    if(r <= N)                                                                                     \
-    {                                                                                              \
-      TTS_PASS("Expression: %s == %s within %.*g %s (over %.*g %s).",                              \
-               TTS_STRING(LHS),                                                                    \
-               TTS_STRING(RHS),                                                                    \
-               PREC,                                                                               \
-               r,                                                                                  \
-               UNIT,                                                                               \
-               PREC,                                                                               \
-               static_cast<double>(N),                                                             \
-               UNIT);                                                                              \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expected: %s == %s but %s == %s within %.*g %s when  %.*g %s were expected.",       \
-              TTS_STRING(LHS),                                                                     \
-              TTS_STRING(RHS),                                                                     \
-              ::tts::as_text(local_tts_a).data(),                                                  \
-              ::tts::as_text(local_tts_b).data(),                                                  \
-              PREC,                                                                                \
-              r,                                                                                   \
-              UNIT,                                                                                \
-              PREC,                                                                                \
-              static_cast<double>(N),                                                              \
-              UNIT);                                                                               \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(LHS, RHS) 
+namespace tts::_::measure
+{
+  struct absolute
+  {
+    template<typename A, typename B> static double of(A const& a, B const& b)
+    {
+      return ::tts::absolute_check(a, b);
+    }
+  };
+  struct relative
+  {
+    template<typename A, typename B> static double of(A const& a, B const& b)
+    {
+      return ::tts::relative_check(a, b);
+    }
+  };
+  struct ulp
+  {
+    template<typename A, typename B> static double of(A const& a, B const& b)
+    {
+      return ::tts::ulp_check(a, b);
+    }
+  };
+}
+namespace tts::_
+{
+  template<typename Measure, typename A, typename B, typename N>
+  logger check_precision(A const&          a,
+                         B const&          b,
+                         N const&          n,
+                         char const*       unit,
+                         int               digits,
+                         check_site const& site)
+  {
+    double distance = Measure::of(a, b);
+    if(distance <= n)
+    {
+      if(check_passed())
+        check_report(site,
+                     ::tts::text {"Expression: %s == %s within %.*g %s (over %.*g %s).",
+                                  site.lhs,
+                                  site.rhs,
+                                  digits,
+                                  distance,
+                                  unit,
+                                  digits,
+                                  static_cast<double>(n),
+                                  unit});
+      return logger {false};
+    }
+    return check_failed(
+    site,
+    ::tts::text {"Expected: %s == %s but %s == %s within %.*g %s when  %.*g %s were expected.",
+                 site.lhs,
+                 site.rhs,
+                 ::tts::as_text(a).data(),
+                 ::tts::as_text(b).data(),
+                 digits,
+                 distance,
+                 unit,
+                 digits,
+                 static_cast<double>(n),
+                 unit});
+  }
+  template<typename A, typename B> logger check_ieee(A const& a, B const& b, check_site const& site)
+  {
+    if(::tts::ieee_check(a, b))
+    {
+      if(check_passed())
+        check_report(site, ::tts::text {"Expression: %s == %s.", site.lhs, site.rhs});
+      return logger {false};
+    }
+    return check_failed(site,
+                        ::tts::text {"Expression: %s == %s is false because %s != %s.",
+                                     site.lhs,
+                                     site.rhs,
+                                     ::tts::as_text(a).data(),
+                                     ::tts::as_text(b).data()});
+  }
+  inline logger check_percent_tolerance(double n, check_site const& site)
+  {
+    return check_failed(
+    site,
+    ::tts::text {
+    "Tolerance %.*g reads as a percentage: TTS 4 compares a ratio, divide it by a hundred.", 8, n});
+  }
+}
+#define TTS_PRECISION_IMPL(LHS, RHS, N, UNIT, MEASURE, PREC, FAILURE)                              \
+  ::tts::_::check_precision<::tts::_::measure::MEASURE>(                                           \
+  LHS, RHS, N, UNIT, PREC, TTS_CHECK_SITE(FAILURE, TTS_STRING(LHS), "", TTS_STRING(RHS), "")) 
 #define TTS_PRECISION(L, R, N, U, F, P, ...)     TTS_PRECISION_##__VA_ARGS__(L, R, N, U, F, P)
 #define TTS_PRECISION_(L, R, N, U, F, P)         TTS_PRECISION_IMPL(L, R, N, U, F, P, TTS_FAIL)
 #define TTS_PRECISION_REQUIRED(L, R, N, U, F, P) TTS_PRECISION_IMPL(L, R, N, U, F, P, TTS_FATAL)
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ABSOLUTE_EQUAL(L, R, N, ...)
 #else
-#define TTS_ABSOLUTE_EQUAL(L, R, N, ...)                                                           \
-  TTS_PRECISION(L, R, N, "unit", ::tts::absolute_check, 8, __VA_ARGS__)
+#define TTS_ABSOLUTE_EQUAL(L, R, N, ...) TTS_PRECISION(L, R, N, "unit", absolute, 8, __VA_ARGS__)
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_RELATIVE_EQUAL(L, R, N, ...)
@@ -4133,42 +4632,21 @@ namespace tts
   (                                                                                                \
   ::tts::_::reads_as_percent<decltype(L)>(N)                                                       \
   ? TTS_PERCENT_TOLERANCE_##__VA_ARGS__(N)                                                         \
-  : TTS_PRECISION(L, R, N, "rel", ::tts::relative_check, 8, __VA_ARGS__))
+  : TTS_PRECISION(L, R, N, "rel", relative, 8, __VA_ARGS__))
 #define TTS_PERCENT_TOLERANCE_(N)         TTS_PERCENT_TOLERANCE_IMPL(N, TTS_FAIL)
 #define TTS_PERCENT_TOLERANCE_REQUIRED(N) TTS_PERCENT_TOLERANCE_IMPL(N, TTS_FATAL)
 #define TTS_PERCENT_TOLERANCE_IMPL(N, FAILURE)                                                     \
-  [ & ]()                                                                                          \
-  {                                                                                                \
-    FAILURE("Tolerance %.*g reads as a percentage: TTS 4 compares a ratio, divide it by a "        \
-            "hundred.",                                                                            \
-            8,                                                                                     \
-            static_cast<double>(N));                                                               \
-    return ::tts::_::logger {};                                                                    \
-  }()
+  ::tts::_::check_percent_tolerance(static_cast<double>(N),                                        \
+                                    TTS_CHECK_SITE(FAILURE, "", "", "", "")) 
 #endif
 #if defined(TTS_DOXYGEN_INVOKED)
 #define TTS_ULP_EQUAL(L, R, N, ...)
 #else
-#define TTS_ULP_EQUAL(L, R, N, ...) TTS_PRECISION(L, R, N, "ULP", ::tts::ulp_check, 2, __VA_ARGS__)
+#define TTS_ULP_EQUAL(L, R, N, ...) TTS_PRECISION(L, R, N, "ULP", ulp, 2, __VA_ARGS__)
 #endif
 #define TTS_DO_IEEE_EQUAL_IMPL(LHS, RHS, FAILURE)                                                  \
-  [ & ](auto local_tts_a, auto local_tts_b)                                                        \
-  {                                                                                                \
-    if(::tts::ieee_check(local_tts_a, local_tts_b))                                                \
-    {                                                                                              \
-      TTS_PASS("Expression: %s == %s.", TTS_STRING(LHS), TTS_STRING(RHS));                         \
-      return ::tts::_::logger {false};                                                             \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-      FAILURE("Expression: %s == %s is false because %s != %s.",                                   \
-              TTS_STRING(LHS),                                                                     \
-              TTS_STRING(RHS),                                                                     \
-              ::tts::as_text(local_tts_a).data(),                                                  \
-              ::tts::as_text(local_tts_b).data());                                                 \
-      return ::tts::_::logger {};                                                                  \
-    }                                                                                              \
-  }(LHS, RHS) 
+  ::tts::_::check_ieee(                                                                            \
+  LHS, RHS, TTS_CHECK_SITE(FAILURE, TTS_STRING(LHS), "", TTS_STRING(RHS), "")) 
 #define TTS_DO_IEEE_EQUAL(L, R, ...)     TTS_DO_IEEE_EQUAL_##__VA_ARGS__(L, R)
 #define TTS_DO_IEEE_EQUAL_(L, R)         TTS_DO_IEEE_EQUAL_IMPL(L, R, TTS_FAIL)
 #define TTS_DO_IEEE_EQUAL_REQUIRED(L, R) TTS_DO_IEEE_EQUAL_IMPL(L, R, TTS_FATAL)
@@ -4232,35 +4710,35 @@ namespace tts::_
       return ::tts::_::logger {};                                                                  \
     }                                                                                              \
                                                                                                    \
-    auto        ba = tts::_::begin(local_tts_a);                                                   \
-    auto        bb = tts::_::begin(local_tts_b);                                                   \
-    auto        ea = tts::_::end(local_tts_a);                                                     \
+    auto        local_tts_ba = tts::_::begin(local_tts_a);                                         \
+    auto        local_tts_bb = tts::_::begin(local_tts_b);                                         \
+    auto        local_tts_ea = tts::_::end(local_tts_a);                                           \
                                                                                                    \
-    std::size_t i  = 0;                                                                            \
-    ::tts::text failures("");                                                                      \
+    std::size_t local_tts_i  = 0;                                                                  \
+    ::tts::text local_tts_failures("");                                                            \
                                                                                                    \
-    while(ba != ea)                                                                                \
+    while(local_tts_ba != local_tts_ea)                                                            \
     {                                                                                              \
-      auto local_tts_err = OP(*ba, *bb);                                                           \
+      auto local_tts_err = OP(*local_tts_ba, *local_tts_bb);                                       \
       if(local_tts_err > N)                                                                        \
       {                                                                                            \
-        failures += ::tts::text("      @[%ld] : %s and %s differs by %s %s.\n",                    \
-                                i++,                                                               \
-                                ::tts::as_text(*ba).data(),                                        \
-                                ::tts::as_text(*bb).data(),                                        \
-                                ::tts::as_text(local_tts_err).data(),                              \
-                                UNIT);                                                             \
+        local_tts_failures += ::tts::text("      @[%ld] : %s and %s differs by %s %s.\n",          \
+                                          local_tts_i++,                                           \
+                                          ::tts::as_text(*local_tts_ba).data(),                    \
+                                          ::tts::as_text(*local_tts_bb).data(),                    \
+                                          ::tts::as_text(local_tts_err).data(),                    \
+                                          UNIT);                                                   \
       }                                                                                            \
-      ba++;                                                                                        \
-      bb++;                                                                                        \
+      local_tts_ba++;                                                                              \
+      local_tts_bb++;                                                                              \
     }                                                                                              \
                                                                                                    \
-    if(!failures.is_empty())                                                                       \
+    if(!local_tts_failures.is_empty())                                                             \
     {                                                                                              \
       FAILURE("Expected: %s == %s but found the following errors:\n%s",                            \
               TTS_STRING(SEQ1),                                                                    \
               TTS_STRING(SEQ2),                                                                    \
-              failures.data());                                                                    \
+              local_tts_failures.data());                                                          \
       return ::tts::_::logger {};                                                                  \
     }                                                                                              \
                                                                                                    \
@@ -4508,14 +4986,14 @@ namespace tts
                             TTS_STRING(NewFunc),                                                   \
                             TTS_STRING(TTS_REMOVE_PARENS(NewType)));                               \
                                                                                                    \
-    auto generator = TTS_REMOVE_PARENS(Producer);                                                  \
-    ::tts::_::print_producer(generator, TTS_STRING(TTS_REMOVE_PARENS(Producer)));                  \
+    auto local_tts_generator = TTS_REMOVE_PARENS(Producer);                                        \
+    ::tts::_::print_producer(local_tts_generator, TTS_STRING(TTS_REMOVE_PARENS(Producer)));        \
                                                                                                    \
     double tts_ulp_max         = Ulpmax;                                                           \
     double local_tts_threshold = ::tts::arguments().value(tts_ulp_max, "--ulpmax");                \
     double local_tts_max_ulp =                                                                     \
     ::tts::ulp_histogram<TTS_REMOVE_PARENS(RefType), TTS_REMOVE_PARENS(NewType)>(                  \
-    generator, RefFunc, NewFunc);                                                                  \
+    local_tts_generator, RefFunc, NewFunc);                                                        \
                                                                                                    \
     if(local_tts_max_ulp <= local_tts_threshold)                                                   \
     {                                                                                              \
