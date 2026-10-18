@@ -9,7 +9,9 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/constant/maxflint.hpp>
 #include <eve/module/core/constant/one.hpp>
+#include <eve/module/core/regular/abs.hpp>
 #include <eve/module/core/regular/is_even.hpp>
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
@@ -81,11 +83,8 @@ namespace eve
     EVE_FORCEINLINE constexpr as_logical_t<T>
     is_odd_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
-      if constexpr( floating_value<T> )
-      {
-        auto da = dec(a);
-        return (a != da) && is_even(da);
-      }
+      // From maxflint on every value is even, while dec(a) may round to an even neighbor.
+      if constexpr( floating_value<T> ) return (eve::abs(a) < maxflint(as(a))) && is_even(dec(a));
       else if constexpr( scalar_value<T> )
         return (a & one(eve::as(a)));
       else return

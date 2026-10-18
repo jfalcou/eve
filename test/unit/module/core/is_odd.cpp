@@ -57,4 +57,11 @@ TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals_wf16)
   TTS_EQUAL(eve::is_odd(cases.nan), eve::logical<T>{ false });
   TTS_EQUAL(eve::is_odd(cases.inf), eve::logical<T>{ false });
   TTS_EQUAL(eve::is_odd(cases.minf), eve::logical<T>{ false });
+
+  // From maxflint on every value is even, and dec(maxflint + 2) rounds down to maxflint.
+  auto const m = eve::maxflint(eve::as<T>{});
+  TTS_EQUAL(eve::is_odd(m - T(1)), eve::logical<T>{ true });
+  TTS_EQUAL(eve::is_odd(m), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(m + T(2)), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(-(m + T(2))), eve::logical<T>{ false });
 };
