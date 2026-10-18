@@ -74,6 +74,7 @@ auto call_add(T, U);
 template <typename T, typename U>
 auto call_sub(T, U);
 
-
+template<typename O, typename T, typename U>
+auto call_sub(O o, T a, U b);
 
 }
