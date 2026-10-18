@@ -13,9 +13,7 @@
 namespace eve
 {
   template<std::size_t Slice>
-  struct  slice_t
-        : std::integral_constant<std::size_t, Slice>
-  {};
+  using slice_t = std::integral_constant<std::size_t, Slice>;
 
   using upper_slice_t = slice_t<1>;
   using lower_slice_t = slice_t<0>;
@@ -25,10 +23,10 @@ namespace eve
   //! @{
   //================================================================================================
   //! @brief Tag to select the upper slice of a simd_value
-  inline constexpr upper_slice_t const upper_ = {};
+  inline constexpr upper_slice_t upper_ = {};
 
   //! @brief Tag to select the lower slice of a simd_value
-  inline constexpr lower_slice_t const lower_ = {};
+  inline constexpr lower_slice_t lower_ = {};
   //================================================================================================
   //! @}
   //================================================================================================
@@ -38,10 +36,8 @@ namespace eve
     template<typename Options>
     struct slice_callable_t : callable<slice_callable_t, Options>
     {
-      template<typename W> struct result
-      {
-        using type = typename W::template rescale<typename W::cardinal_type::split_type>;
-      };
+      template<typename W> 
+      using result = typename W::template rescale<typename W::cardinal_type::split_type>;
 
       template<typename W>
       EVE_FORCEINLINE constexpr std::array<typename result<W>::type,2> operator()(W v) const noexcept

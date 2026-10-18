@@ -13,36 +13,29 @@
 
 namespace eve
 {
+  namespace _
+  {
+    template<typename T>
+    extern logical<T> as_logical;
+
+    template<typename T>
+    requires(std::same_as<T,bool>)
+    extern bool as_logical<T>;
+
+    template<typename T>
+    extern logical<T> as_logical<logical<T>>;
+
+    template<has_plain_translation T>
+    extern decltype(as_logical<translate_t<T>>) as_logical<T>;
+
+    template<eve::product_type T>
+    extern kumi::apply_traits<common_logical, T> as_logical<T>;
+  }
+
   // forward declare common_logical
   template<typename... Ts>
   struct common_logical;
 
   template<typename T>
-  struct as_logical
-  {
-    using type = logical<T>;
-  };
-
-  template<>
-  struct as_logical<bool>
-  {
-    using type = bool;
-  };
-
-  template<typename T>
-  struct as_logical<logical<T>>
-  {
-    using type = logical<T>;
-  };
-
-  template<has_plain_translation T>
-  struct as_logical<T> : as_logical< translate_t<T> >
-  {};
-
-  template<eve::product_type T>
-  struct as_logical<T>: kumi::apply_traits<common_logical, T>
-  {};
-
-  template<typename T>
-  using as_logical_t = typename as_logical<T>::type;
+  using as_logical_t = decltype(as_logical<T>);
 }

@@ -13,6 +13,20 @@
 
 namespace eve
 {
+  namespace _
+  {
+    template<typename T>
+    extern T element_type;
+
+    template<typename T, typename N> 
+    extern T element_type<wide<T,N>>;
+
+    template<typename T> 
+    extern T element_type<wide<T>>;
+
+    template<typename T>
+    extern logical<decltype(element_type<T>)> element_type<logical<T>>;
+  }
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
@@ -41,19 +55,7 @@ namespace eve
   //! @}
   //================================================================================================
   template<typename T>
-  struct element_type
-  {
-    using type = T;
-  };
-
-  template<typename T, typename N>             struct element_type<wide<T,N>>   { using type = T; };
-  template<typename T>                         struct element_type<wide<T>>     { using type = T; };
-
-  template<typename T>
-  struct element_type<logical<T>>     { using type = logical<typename element_type<T>::type>; };
-
-  template<typename T>
-  using element_type_t = typename element_type<std::remove_cvref_t<T>>::type;
+  using element_type_t = decltype(_::element_type<std::remove_cvref_t<T>>);
 
   // Translate an element_type directly
   template <typename T>

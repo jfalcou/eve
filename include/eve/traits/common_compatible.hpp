@@ -34,26 +34,14 @@ namespace eve::_
       else                                  return cmn<B,S2,V2>{};
     }
 
-  // Use a layer of std::void_t to make common_compatible SFINAE-friendly
-  template<typename L, typename Enable = void>
-  struct  common_compatible_impl
-  {};
-
   template<typename T>
   using cmn_t = _::cmn<T, scalar_value<T>, simd_value<T>>;
 
   template<typename... Ts>
-  auto compact(){ return (cmn_t<Ts>{} % ... ); }
+  using compact_t = decltype((cmn_t<Ts>{} % ...));
 
   template<typename... Ts>
-  struct  common_compatible_impl
-          < types<Ts...>
-          , std::enable_if_t<decltype( compact<Ts...>() )::is_valid>
-          >
-  {
-    using base = decltype(compact<Ts...>());
-    using type = typename base::type;
-  };
+  inline constexpr bool is_common_compatible_pack = compact_t<Ts...>::is_valid;
 }
 
 namespace eve
@@ -102,19 +90,17 @@ namespace eve
   //!
   //! @}
   //================================================================================================
-  template<typename... Ts> struct common_compatible {};
+  template<typename... Ts> extern undefined<Ts...> common_compatible {};
 
-  template<typename T> struct common_compatible<T>
-  {
-    using type = T;
-  };
+  template<typename T> 
+  extern T common_compatible<T>;
 
   template<typename T0, typename... Ts>
-  struct common_compatible<T0,Ts...> : _::common_compatible_impl<_::types<T0,Ts...>>
-  {};
+  requires ( _::is_common_compatible_pack<T0, Ts...>)
+  extern _::compact_t<T0, Ts...> common_compatible<T0,Ts...>;
 
   template<typename... Ts>
-  using common_compatible_t = typename common_compatible<Ts...>::type;
+  using common_compatible_t = decltype(common_compatible<Ts...>);
 
   template < typename... Ts> using common_compatible_floating_t =
     as_floating_point_t<common_compatible_t<Ts...>>;

@@ -18,42 +18,30 @@ namespace eve
   namespace _
   {
     template<typename T>
-    struct  default_as_integer_sign : std::conditional<signed_value<T>, signed, unsigned>
-    {
-    };
+    extern unsigned integer_sign;
 
-    template<typename T>
-    struct default_as_integer_sign<logical<T>> : default_as_integer_sign<T> {};
+    template<signed_value T>
+    extern signed integer_sign<T>;
+
+    template<signed_value T>
+    extern decltype(integer_sign<T>) integer_sign<logical<T>>;
 
     template <typename T>
-    using default_as_integer_sign_t = typename default_as_integer_sign<T>::type;
+    using integer_sign_t = decltype(integer_sign<T>);
+
+    template<typename T, typename Sign = _::integer_sign_t<T>>
+    extern _::make_integer_t<sizeof(T), Sign> as_integer;
+
+    template<typename T, typename N, typename Sign>
+    extern wide<decltype(as_integer<T,Sign>), N> as_integer<wide<T,N>, Sign>;
+
+    template<typename T, typename Sign>
+    extern logical<decltype(as_integer<T,Sign>)> as_integer<logical<T>, Sign>;
   }
 
-  template<typename T, typename Sign = _::default_as_integer_sign_t<T>>
-  struct as_integer
-  {
-    using type = _::make_integer_t<sizeof(T), Sign>;
-  };
-
-  template<typename T, typename N, typename Sign>
-  struct as_integer<wide<T,N>, Sign>
-  {
-    using type = wide<typename as_integer<T,Sign>::type, N>;
-  };
-
-  template<typename T, typename Sign>
-  struct as_integer<logical<T>, Sign>
-  {
-    using type = logical< typename as_integer<T,Sign>::type >;
-  };
-
-  template<typename T, typename Sign = _::default_as_integer_sign_t<T>>
-  using as_integer_t = typename as_integer<T, Sign>::type;
+  template<typename T, typename Sign = _::integer_sign_t<T>>
+  using as_integer_t = decltype(_::as_integer<T, Sign>);
 
   template<typename T>
-  struct as_uinteger : as_integer<T,unsigned>
-  {};
-
-  template<typename T>
-  using as_uinteger_t = typename as_uinteger<T>::type;
+  using as_uinteger_t = decltype(_::as_integer<T,unsigned>);
 }

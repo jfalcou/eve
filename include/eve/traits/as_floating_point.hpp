@@ -13,34 +13,17 @@
 
 namespace eve
 {
-  template<typename T>
-  struct  as_floating_point
-        : _::make_floating_point<(sizeof(T) <= 2) ? 2: sizeof(T)>
-  {};
-
-  template<>
-  struct as_floating_point<short>
+  namespace _
   {
-    using type =  eve::float16_t;
-  };
+    template<typename T>
+    extern _::make_floating_point<(sizeof(T) <= 2) ? 2 : sizeof(T)> as_floating_point;
 
-  template<>
-  struct as_floating_point<unsigned short>
-  {
-    using type = eve::float16_t;
-  };
+    template<typename T, typename N>
+    extern wide<decltype(as_floating_point<T>), N> as_floating_point<wide<T,N>>;
 
-  template<typename T, typename N>
-  struct as_floating_point<wide<T,N>>
-  {
-    using type = wide<typename as_floating_point<T>::type, N>;
-  };
-
-  template<typename T>
-  struct as_floating_point<logical<T>>
-  {
-    using type = logical< typename as_floating_point<T>::type >;
-  };
+    template<typename T>
+    extern logical<decltype(as_floating_point<T>)> as_floating_point<logical<T>>;
+  }
 
   template<typename T>
   using as_floating_point_t = typename as_floating_point<T>::type;

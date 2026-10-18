@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/max.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/module/core/detail/tolerance.hpp>
+#include <eve/module/core/decorator/tolerance.hpp>
 
 namespace eve
 {
