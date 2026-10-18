@@ -8,6 +8,8 @@
 ## Setup a test with many option
 ##==================================================================================================
 function(generate_test root rootpath dep file)
+  ## AGGREGATED gives the test twice the native cardinal.
+  cmake_parse_arguments(GT "AGGREGATED" "" "" ${ARGN})
   string(REPLACE ".cpp"    ".exe" base ${file})
   string(REPLACE "/"       "."    base ${base})
   string(REPLACE "\\"      "."    base ${base})
@@ -26,8 +28,10 @@ function(generate_test root rootpath dep file)
     set_target_properties(${test} PROPERTIES JOB_POOL_COMPILE heavy)
   endif()
 
-  if( ${ARGC} EQUAL 5)
-    target_compile_definitions( ${test} PUBLIC ${ARGV4})
+  set(pch test_pch)
+  if( GT_AGGREGATED OR ${test} IN_LIST EVE_AGGREGATED_TARGETS )
+    target_compile_definitions( ${test} PRIVATE EVE_TEST_WITH_AGGREGATED)
+    set(pch test_pch_aggregated)
   endif()
 
   target_link_libraries(${test} PUBLIC eve_test)
@@ -68,8 +72,8 @@ function(generate_test root rootpath dep file)
     endif()
 
     if( EVE_USE_PCH )
-      target_precompile_headers(${test} REUSE_FROM test_pch)
-      add_dependencies(${test} test_pch)
+      target_precompile_headers(${test} REUSE_FROM ${pch})
+      add_dependencies(${test} ${pch})
     endif()
   endif()
 
@@ -101,8 +105,19 @@ endfunction()
 ## Generate tests from a GLOB
 ##==================================================================================================
 function(glob_unit root relative  pattern)
-  file(GLOB files CONFIGURE_DEPENDS RELATIVE ${relative} ${pattern})
+  ## RECURSE globs the subdirectories too, and AGGREGATED gives every test twice the native
+  ## cardinal.
+  cmake_parse_arguments(GU "RECURSE;AGGREGATED" "" "" ${ARGN})
+  if( GU_RECURSE )
+    file(GLOB_RECURSE files CONFIGURE_DEPENDS RELATIVE ${relative} ${pattern})
+  else()
+    file(GLOB files CONFIGURE_DEPENDS RELATIVE ${relative} ${pattern})
+  endif()
+  set(aggregated "")
+  if( GU_AGGREGATED )
+    set(aggregated AGGREGATED)
+  endif()
   foreach(file ${files})
-    generate_test("${root}" "" "" ${file})
+    generate_test("${root}" "" "" ${file} ${aggregated})
   endforeach()
 endfunction()

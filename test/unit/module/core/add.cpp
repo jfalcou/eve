@@ -85,15 +85,19 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::upper;
   using eve::strict;
 
+  // On float16 without F16C, add(a, b, c) is computed in float and rounded once, add(add(a, b), c)
+  // twice: one ULP apart.
+  constexpr double tol = sizeof(eve::element_type_t<T>) == 2 ? 1.0 : 0.5;
+
   TTS_EQUAL( add(a0), a0);
   TTS_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), tol);
   TTS_EQUAL( add(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), tol);
 
   if constexpr (eve::floating_value<T>)
   {
@@ -172,7 +176,7 @@ TTS_CASE_WITH("Check behavior of add mod on wide",
   using e_t =  eve::element_type_t<T>;
   e_t p = 97;
   auto z = a0+a1;
-  TTS_ULP_EQUAL(add[mod = p](a0, a1), eve::if_else(z > p, z-p, p), 0.5);
+  TTS_ULP_EQUAL(add[mod = p](a0, a1), eve::if_else(z >= p, z-p, p), 0.5);
 };
 
 //==================================================================================================

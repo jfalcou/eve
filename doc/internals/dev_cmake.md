@@ -47,6 +47,36 @@ generator.
 Once run, your build folder should contain all the necessary artifact to compile and run **EVE**
 test suite.
 
+## Cardinals of the tests
+
+A unit test instantiates its cases on a list of `eve::wide` types from `test/test.hpp`, a type
+per element type and cardinal. The cache variable `EVE_TEST_LOT` selects the cardinals of those
+lists:
+
+- `all`: every cardinal from 1 to twice the native one, the default.
+- `family`: the cardinals whose code path differs on the current ABI, native included. On a 128-bit
+  ABI, the native cardinal and its half. Under AVX2, the native cardinal alone, as a 128-bit wide
+  runs the SSE code. Under AVX512, the native cardinal, its half and its quarter, as every width has
+  its own masks. About half the compile time of `all`.
+- `native`: the native cardinal alone. About 40% of the compile time of `all`.
+- `extra`: the family without the native cardinal. A type the family tests at the native cardinal
+  alone keeps it, so that no test runs on an empty list.
+
+The tests of the wide API, the memory functions and the conversions keep twice the native cardinal
+in every lot but `native`, and `cmake/config/aggregated-units.cmake` names the few others.
+
+This configuration compiles the native lot alone under SSE4.2:
+
+@verbatim
+cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS='-msse4.2' \
+         -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake
+@endverbatim
+
+## Heavy translation units
+
+`EVE_HEAVY_POOL=N` limits to N the translation units of `cmake/config/heavy-units.cmake`, the ones
+peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines.
+
 # Compiling EVE Unit Tests
 
 **EVE** provides a large number of test targets that are grouped by theme. Each of these themes
@@ -94,6 +124,12 @@ Once compiled, the test executable are located in the `unit` folder and can be r
 ./unit/unit.core.abs.exe
 @endverbatim
 
+`ctest` runs every test built so far, or those a regular expression selects:
+
+@verbatim
+ctest --output-on-failure -R '^unit\.core\.'
+@endverbatim
+
 The `unit.exe` target is very large and requires a comfortable amount of CPUs to be compiled in
 parallel.
 
@@ -131,5 +167,5 @@ ninja random.core.abs.exe
 Once compiled, the test executable are located in the `unit` folder and can be run via:
 
 @verbatim
-./unit/unit.core.abs.exe
+./unit/random.core.abs.exe
 @endverbatim

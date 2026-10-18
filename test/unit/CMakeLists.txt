@@ -11,18 +11,7 @@ set(module_root "${PROJECT_SOURCE_DIR}/test/unit/module")
 ##==================================================================================================
 add_custom_target(unit.api.exe         )
 add_dependencies(unit.exe unit.api.exe )
-glob_unit("unit" ${unit_root} "api/compress/*.cpp")
-glob_unit("unit" ${unit_root} "api/regular/*.cpp")
-glob_unit("unit" ${unit_root} "api/translation/*.cpp")
-glob_unit("unit" ${unit_root} "api/regular/shuffle/*.cpp")
-glob_unit("unit" ${unit_root} "api/regular/shuffle_v2/*.cpp")
-glob_unit("unit" ${unit_root} "api/regular/swizzle/*.cpp")
-glob_unit("unit" ${unit_root} "api/tuple/*.cpp")
-glob_unit("unit" ${unit_root} "api/tuple/algorithm/*.cpp")
-glob_unit("unit" ${unit_root} "api/tuple/constant/*.cpp")
-glob_unit("unit" ${unit_root} "api/tuple/shuffle/*.cpp")
-glob_unit("unit" ${unit_root} "api/tuple/swizzle/*.cpp")
-glob_unit("unit" ${unit_root} "api/udt/*.cpp")
+glob_unit("unit" ${unit_root} "api/*.cpp" RECURSE AGGREGATED)
 
 ##==================================================================================================
 ## GLOB and process arch unit tests
@@ -43,11 +32,7 @@ glob_unit("unit" ${unit_root} "internals/*.cpp")
 ##==================================================================================================
 add_custom_target(unit.memory.exe         )
 add_dependencies(unit.exe unit.memory.exe )
-glob_unit("unit" ${unit_root} "memory/*.cpp"                )
-glob_unit("unit" ${unit_root} "memory/load/*.cpp"           )
-glob_unit("unit" ${unit_root} "memory/load/aligned/*.cpp"   )
-glob_unit("unit" ${unit_root} "memory/load/unaligned/*.cpp" )
-glob_unit("unit" ${unit_root} "memory/store/*.cpp"          )
+glob_unit("unit" ${unit_root} "memory/*.cpp" RECURSE AGGREGATED)
 
 ##==================================================================================================
 ## GLOB and process meta unit tests
@@ -79,7 +64,7 @@ add_custom_target(unit.core.exe         )
 add_dependencies(unit.exe unit.core.exe )
 glob_unit("unit" ${unit_root} "module/core/*.cpp"          )
 glob_unit("unit" ${unit_root} "module/core/constant/*.cpp"  )
-glob_unit("unit" ${unit_root} "module/core/convert/*.cpp"  )
+glob_unit("unit" ${unit_root} "module/core/convert/*.cpp"   AGGREGATED)
 glob_unit("unit" ${unit_root} "module/core/saturate/*.cpp" )
 
 add_custom_target(unit.combinatorial.exe         )

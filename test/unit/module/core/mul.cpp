@@ -81,14 +81,18 @@ TTS_CASE_WITH("Check behavior of mul on wide",
   using eve::lower;
   using eve::upper;
   using eve::strict;
+
+  // On float16 without F16C, mul(a, b, c) is computed in float and rounded once, mul(mul(a, b), c)
+  // twice: one ULP apart.
+  constexpr double tol = sizeof(eve::element_type_t<T>) == 2 ? 1.0 : 0.5;
   TTS_ULP_EQUAL(mul(a0, a2), tts::map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](a0, a2), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL(mul(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(mul[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL(mul[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), tol);
   TTS_ULP_EQUAL(mul(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return mul(e, f); }, a0, a2), 0.5);
   TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return mul[saturated](e, f); }, a0, a2), 0.5);
-  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), 0.5);
-  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), 0.5);
+  TTS_ULP_EQUAL(mul(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul(mul(e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL(mul[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return mul[saturated](mul[saturated](e, f), g); }, a0, a1, a2), tol);
   if constexpr (eve::floating_value<T>)
   {
     TTS_EXPECT(eve::all(mul[upper](a0, a1)  >=  mul[lower](a0, a1)));

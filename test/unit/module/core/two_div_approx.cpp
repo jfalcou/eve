@@ -30,7 +30,9 @@ TTS_CASE_WITH("Check behavior of two_div_approx(wide)",
     auto de = eve::upgrade(e);
     auto da0 = eve::upgrade(a0);
     auto da1 = eve::upgrade(a1);
-    TTS_ULP_EQUAL(da0/da1, (da+de), 40.0);
+    // armv7 divides by an estimate refined by Newton, and the error term inherits its last bit.
+    constexpr double ulp = (eve::current_api == eve::neon) ? 128.0 : 40.0;
+    TTS_ULP_EQUAL(da0/da1, (da+de), ulp);
   }
 };
 

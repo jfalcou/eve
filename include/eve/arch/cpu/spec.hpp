@@ -20,6 +20,13 @@
 namespace eve
 {
   inline constexpr bool supports_fma3               = spy::supports::fma_;
+  // Where the vector fma fuses, the scalar one has to as well: a wide and a scalar route of the
+  // same call would round differently.
+#if defined(__FMA__) || defined(__ARM_FEATURE_FMA) || defined(__VSX__) || defined(__riscv_f)
+  inline constexpr bool supports_hardware_fma       = true;
+#else
+  inline constexpr bool supports_hardware_fma       = false;
+#endif
   inline constexpr bool supports_avx512bw           = spy::supports::avx512::bw_;
   inline constexpr bool supports_avx512cd           = spy::supports::avx512::cd_;
   inline constexpr bool supports_avx512dq           = spy::supports::avx512::dq_;

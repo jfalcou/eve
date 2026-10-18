@@ -133,6 +133,10 @@ namespace eve::_
       else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
+    else if constexpr (supports_hardware_fma && (std::same_as<T, float> || std::same_as<T, double>))
+    {
+      return std::fma(a, b, -c);
+    }
     else if constexpr (simd_value<T> || floating_scalar_value<T>)
     {
       return a * b - c;
