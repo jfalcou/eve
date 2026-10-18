@@ -7,8 +7,8 @@ var searchData=
   ['gd_4',['gd',['../group__eve__math__hyper.html#gac2f0fbac24a6b4ca2f12dcdd07c054bc',1,'eve']]],
   ['gegenbauer_5',['gegenbauer',['../group__eve__polynomial.html#ga654af420c26859a9b088461f2b49d336',1,'eve']]],
   ['general_20concepts_6',['General concepts',['../algo_rationale.html#autotoc_md54',1,'']]],
-  ['general_20principles_7',['General Principles',['../algo_rationale.html#autotoc_md50',1,'General Principles'],['../glossary_semantic.html#autotoc_md68',1,'General Principles']]],
-  ['generalized_20element_20access_8',['Generalized Element Access',['../glossary_semantic.html#autotoc_md66',1,'']]],
+  ['general_20principles_7',['General Principles',['../algo_rationale.html#autotoc_md50',1,'General Principles'],['../glossary_semantic.html#autotoc_md70',1,'General Principles']]],
+  ['generalized_20element_20access_8',['Generalized Element Access',['../glossary_semantic.html#autotoc_md68',1,'']]],
   ['generalized_20reductions_9',['Product Type Generalized Reductions',['https://jfalcou.github.io/kumi/group__kumi__reductions.html',1,'']]],
   ['generate_10',['generate',['https://jfalcou.github.io/kumi/group__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate'],['https://jfalcou.github.io/kumi/group__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f',1,'kumi::generate']]],
   ['generator_11',['generator',['../concepteve_1_1generator.html',1,'eve']]],
@@ -25,7 +25,7 @@ var searchData=
   ['get_5foverflow_22',['get_overflow',['../group__eve__algo__traits__dev.html#gabb968c59d60f3a6e7becd4f2a5ac8fa4',1,'eve::algo']]],
   ['get_5ftypes_5fto_5fconsider_5ffor_23',['get_types_to_consider_for',['../group__eve__algo__traits__dev.html#gaea3dda7eb8ca3268808caac3dd41fdcc',1,'eve::algo']]],
   ['get_5funrolling_24',['get_unrolling',['../group__eve__algo__traits__dev.html#ga83d5cdb35c43f00ca4be317ad32e69fd',1,'eve::algo']]],
-  ['github_25',['Github',['../setup.html#autotoc_md72',1,'']]],
+  ['github_25',['Github',['../setup.html#autotoc_md74',1,'']]],
   ['glaisher_26',['glaisher',['../group__eve__math__constants.html#ga389fcb593b079afea5381d192593443e',1,'eve']]],
   ['glossary_27',['Glossary',['https://jfalcou.github.io/kumi/kumi_glossary.html',1,'']]]
 ];

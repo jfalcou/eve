@@ -4,7 +4,7 @@ var searchData=
   ['welford_5faverage_1',['welford_average',['../group__eve__core__arithmetic.html#ga935d879e3e80d5355e3bd8757ce86b80',1,'eve']]],
   ['welford_5fcovariance_2',['welford_covariance',['../group__eve__core__arithmetic.html#ga3fee14a8a396f4ac89e650e0fb0768f7',1,'eve']]],
   ['welford_5fvariance_3',['welford_variance',['../group__eve__core__arithmetic.html#ga6cfd55c36f3ce4f4137aa7b14f74f5ce',1,'eve']]],
-  ['what_20about_20non_20native_20sizes_4',['What about non-native sizes?',['../inter-with-native.html#autotoc_md91',1,'']]],
+  ['what_20about_20non_20native_20sizes_4',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]],
   ['what_20if_20i_20know_20there_20is_20a_20match_5',['What if I know there is a match',['../group__eve__core__reduction.html#autotoc_md17',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?']]],
   ['what_20s_20changed_6',['What s Changed',['../changelog.html#autotoc_md31',1,'What&apos;s Changed'],['../changelog.html#autotoc_md40',1,'What&apos;s Changed'],['../changelog.html#autotoc_md43',1,'What&apos;s Changed'],['../changelog.html#autotoc_md46',1,'What&apos;s Changed']]],
   ['wide_7',['wide',['../structeve_1_1wide.html',1,'eve::wide&lt; Type, Cardinal &gt;'],['../structeve_1_1wide.html#a361d5a9fd15f6b2e4a86ec5ae2880e06',1,'eve::wide::wide()'],['../structeve_1_1wide.html#a4c3c77232aadeb56066359ff149af963',1,'eve::wide::wide()'],['../structeve_1_1wide.html#a4ad46a6f998bb898592da9625181634d',1,'eve::wide::wide(storage_type const &amp;r) noexcept'],['../structeve_1_1wide.html#aa4cbde97fec5ebba311f78f757384bb3',1,'eve::wide::wide(Range &amp;&amp;r) noexcept'],['../structeve_1_1wide.html#a9e8f8635331b18d7ce9e1c28019722be',1,'eve::wide::wide(Ptr ptr) noexcept'],['../structeve_1_1wide.html#a31d05c169f1e12cad3c2818ef506261d',1,'eve::wide::wide(eve::soa_ptr&lt; Ptr... &gt; ptr) noexcept'],['../structeve_1_1wide.html#a6c8db8292774ad2de873023619cf1456',1,'eve::wide::wide(S const &amp;v) noexcept'],['../structeve_1_1wide.html#adf12020cb7ac67cc5ee1c165c2b563d7',1,'eve::wide::wide(S0 v0, S1 v1, Ss... vs) noexcept'],['../structeve_1_1wide.html#aedbf2986f6d9bb3c0968d6659f9b8ff1',1,'eve::wide::wide(S0 const &amp;v0, Ss const &amp;...vs) noexcept'],['../structeve_1_1wide.html#a007581d779fcbfc70bfcee970ee95451',1,'eve::wide::wide(Generator &amp;&amp;g) noexcept'],['../structeve_1_1wide.html#a007581d779fcbfc70bfcee970ee95451',1,'eve::wide::wide(Generator &amp;&amp;g) noexcept'],['../structeve_1_1wide.html#a3f8ec537fe171202703714d1b1fb2678',1,'eve::wide::wide(W0 w0, W1 w1, Ws... ws) noexcept'],['../namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892',1,'eve::wide(S const &amp;) -&gt; wide&lt; S, expected_cardinal_t&lt; S &gt; &gt;'],['../namespaceeve.html#ac72f0e04016942948dc0d1bf861296f4',1,'eve::wide(S, Ss...) -&gt; wide&lt; S, fixed&lt; 1+sizeof...(Ss)&gt; &gt;']]],
@@ -34,11 +34,11 @@ var searchData=
   ['widen_31',['widen',['../group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a',1,'eve']]],
   ['windows_32',['windows',['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
   ['wise_20operations_33',['Element-wise Operations',['../glossary_semantic.html#glossary_elementwise',1,'']]],
-  ['with_20alternative_34',['Mask with alternative',['../conditional.html#autotoc_md88',1,'']]],
-  ['with_20cmake_35',['Use with CMake',['../setup.html#autotoc_md83',1,'']]],
+  ['with_20alternative_34',['Mask with alternative',['../conditional.html#autotoc_md90',1,'']]],
+  ['with_20cmake_35',['Use with CMake',['../setup.html#autotoc_md85',1,'']]],
   ['with_20native_20code_36',['Interaction with native code.',['../inter-with-native.html',1,'']]],
   ['without_20building_20it_37',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
   ['write_38',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]],
-  ['writing_20the_20dynamic_20function_20hub_39',['Writing the dynamic function hub',['../multiarch.html#autotoc_md112',1,'']]],
-  ['writing_20the_20kernel_40',['Writing the kernel',['../multiarch.html#autotoc_md111',1,'']]]
+  ['writing_20the_20dynamic_20function_20hub_39',['Writing the dynamic function hub',['../multiarch.html#autotoc_md114',1,'']]],
+  ['writing_20the_20kernel_40',['Writing the kernel',['../multiarch.html#autotoc_md113',1,'']]]
 ];

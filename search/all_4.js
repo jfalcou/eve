@@ -67,7 +67,7 @@ var searchData=
   ['builder_64',['builder',['https://jfalcou.github.io/kumi/structkumi_1_1builder.html',1,'kumi']]],
   ['building_20for_20testing_65',['Building for Testing',['../dev_cmake.html',1,'']]],
   ['building_20it_66',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
-  ['building_20the_20documentation_67',['Building the Documentation',['../setup.html#autotoc_md78',1,'']]],
+  ['building_20the_20documentation_67',['Building the Documentation',['../setup.html#autotoc_md80',1,'']]],
   ['byte_5freverse_68',['byte_reverse',['../group__eve__core__bitops.html#gab21caf2aeece0c2486bd80d7e5d9dc2c',1,'eve']]],
   ['byte_5fswap_5fadjacent_69',['byte_swap_adjacent',['../group__eve__core__bitops.html#ga26b08595fa85a206ed5bd09848338f55',1,'eve']]],
   ['byte_5fswap_5fpairs_70',['byte_swap_pairs',['../group__eve__core__bitops.html#ga030e462fe0a8e9815b08326264d106bd',1,'eve']]]

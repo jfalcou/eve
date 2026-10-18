@@ -174,7 +174,23 @@ CMake setup</h1>
 <td class="markdownTableBodyNone">RISC-V (rvv-256)  </td><td class="markdownTableBodyNone">cmake .. -G Ninja -DEVE_RUNNER_SCRIPT=run_rvv256 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.riscv.cmake -DEVE_OPTIONS='-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3'  </td></tr>
 </table>
 <p>Once run, your build folder should contain all the necessary artifact to compile and run <b>EVE</b> test suite.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+Cardinals of the tests</h2>
+<p>A unit test instantiates its cases on a list of <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></span> types from <span class="tt">test/test.hpp</span>, a type per element type and cardinal. The cache variable <span class="tt">EVE_TEST_LOT</span> selects the cardinals of those lists:</p>
+<ul>
+<li><span class="tt">all</span>: every cardinal from 1 to twice the native one, the default.</li>
+<li><span class="tt">family</span>: the cardinals whose code path differs on the current ABI, native included. On a 128-bit ABI, the native cardinal and its half. Under AVX2, the native cardinal alone, as a 128-bit wide runs the SSE code. Under AVX512, the native cardinal, its half and its quarter, as every width has its own masks. About half the compile time of <span class="tt">all</span>.</li>
+<li><span class="tt">native</span>: the native cardinal alone. About 40% of the compile time of <span class="tt">all</span>.</li>
+<li><span class="tt">extra</span>: the family without the native cardinal. A type the family tests at the native cardinal alone keeps it, so that no test runs on an empty list.</li>
+</ul>
+<p>The tests of the wide API, the memory functions and the conversions keep twice the native cardinal in every lot but <span class="tt">native</span>, and <span class="tt">cmake/config/aggregated-units.cmake</span> names the few others.</p>
+<p>This configuration compiles the native lot alone under SSE4.2:</p>
+<pre class="fragment">cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS='-msse4.2' \
+         -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake
+</pre><h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
+Heavy translation units</h2>
+<p><span class="tt">EVE_HEAVY_POOL=N</span> limits to N the translation units of <span class="tt">cmake/config/heavy-units.cmake</span>, the ones peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
 Compiling EVE Unit Tests</h1>
 <p><b>EVE</b> provides a large number of test targets that are grouped by theme. Each of these themes and tests with a theme can be compiled with a proper target.</p>
 <p>In term of options, we encourage you to use the <span class="tt">-DEVE_NO_FORCEINLINE</span> macro that prevents costly optimization to be used during the compilation of tests.</p>
@@ -229,8 +245,10 @@ Compiling EVE Unit Tests</h1>
 <pre class="fragment">ninja unit.core.abs.exe
 </pre><p>Once compiled, the test executable are located in the <span class="tt">unit</span> folder and can be run via:</p>
 <pre class="fragment">./unit/unit.core.abs.exe
+</pre><p><span class="tt">ctest</span> runs every test built so far, or those a regular expression selects:</p>
+<pre class="fragment">ctest --output-on-failure -R '^unit\.core\.'
 </pre><p>The <span class="tt">unit.exe</span> target is very large and requires a comfortable amount of CPUs to be compiled in parallel.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
 Compiling EVE Random Tests</h1>
 <p>Random tests run a given function over a samples of random values to test its relative precision. The following table list the main high-level random target.</p>
 <table class="markdownTable">
@@ -272,7 +290,7 @@ Compiling EVE Random Tests</h1>
 <p>For example, all the random tests for the <span class="tt">abs</span> function, which is a member of the arithmetic module, can be compiled via:</p>
 <pre class="fragment">ninja random.core.abs.exe
 </pre><p>Once compiled, the test executable are located in the <span class="tt">unit</span> folder and can be run via:</p>
-<pre class="fragment">./unit/unit.core.abs.exe
+<pre class="fragment">./unit/random.core.abs.exe
 </pre> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
