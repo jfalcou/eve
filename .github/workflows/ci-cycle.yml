@@ -30,6 +30,8 @@ permissions:
 
 jobs:
   cycle:
+    ## A cancelled run leaves its cycle without a report, and a skipped job waits for no runner.
+    if: github.event.workflow_run.conclusion != 'cancelled'
     runs-on: ubuntu-latest
     steps:
       - name: Fetch the tool
