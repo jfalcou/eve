@@ -15,7 +15,7 @@
 //==================================================================================================
 // Types tests
 //==================================================================================================
-TTS_CASE_TPL("Check return types of sinc", eve::test::simd::ieee_reals)
+TTS_CASE_TPL("Check return types of sinc", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -31,15 +31,21 @@ auto mini = tts::constant([](auto tgt) { return eve::next(eve::mindenormal(tgt))
 auto maxi = tts::constant([](auto tgt) { return eve::valmax(tgt) / 2; });
 
 TTS_CASE_WITH("Check behavior of sinc on wide",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0)))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::sinc;
 
   using v_t = eve::element_type_t<T>;
+  // float16 has no std::sin: its reference is computed in float and rounded once.
+  using c_t = std::conditional_t<std::same_as<v_t, eve::float16_t>, float, v_t>;
 
-  auto ref = [](auto e) -> v_t { return e ? std::sin(e) / e : v_t(1); };
+  auto ref = [](auto e) -> v_t
+  {
+    auto x = static_cast<c_t>(e);
+    return x ? static_cast<v_t>(std::sin(x) / x) : v_t(1);
+  };
   TTS_ULP_EQUAL(sinc(a0), tts::map(ref, a0), 2);
   TTS_ULP_EQUAL(sinc(a1), tts::map(ref, a1), 2);
 };
@@ -49,7 +55,7 @@ TTS_CASE_WITH("Check behavior of sinc on wide",
 // Tests for masked sinc
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sinc)(eve::wide)",
-              eve::test::simd::ieee_reals,
+              eve::test::simd::ieee_reals_wf16,
               tts::generate(tts::randoms(eve::valmin, eve::valmax),
               tts::logicals(0, 3)))
 <typename T, typename M>(T const& a0,
