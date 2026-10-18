@@ -76,7 +76,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
+          cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
         run:  |
@@ -161,7 +161,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
+          cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }} -DEVE_USE_EXTERNAL_DEPENDENCIES" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
 
       - name: "Chunk 1: Compile"
@@ -225,7 +225,7 @@ jobs:
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
         run: |
           mkdir build && cd build
-          cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+          cmake .. -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
         run:  |
           cd build
@@ -283,7 +283,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+          cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
         run:  |
           cd build
