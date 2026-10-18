@@ -18,7 +18,7 @@ TTS_CASE("Check behavior of hurwitz on wide")
 {
   using eve::hurwitz;
   using e_t = double;
-  using T   = eve::wide<e_t, eve::fixed<1>>;
+  using T   = eve::wide<e_t, 1>;
 
   auto ulp = 2.0;
   if constexpr( eve::platform::supports_invalids )

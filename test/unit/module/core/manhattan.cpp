@@ -72,9 +72,9 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::manhattan)(eve::wide)",
 //==================================================================================================
 //= Tests with kahan vs widen
 //==================================================================================================
-using float16_wides = tts::types< eve::wide<eve::float16_t, eve::fixed<1>>
-                                , eve::wide<eve::float16_t, eve::fixed<2>>
-                                , eve::wide<eve::float16_t, eve::fixed<4>>
+using float16_wides = tts::types< eve::wide<eve::float16_t, 1>
+                                , eve::wide<eve::float16_t, 2>
+                                , eve::wide<eve::float16_t, 4>
                                 >;
 
 TTS_CASE_WITH("Check behavior of manhattan kahan on wide",
