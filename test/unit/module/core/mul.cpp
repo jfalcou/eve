@@ -67,13 +67,39 @@ TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types_wf16)
 };
 
 //==================================================================================================
+// Three factors agree only while every partial product is representable: past valmax, widen and
+// kahan answer infinity against NaN, and mul(mul(a, b), c) infinity where mul(a, b, c) is finite.
+//==================================================================================================
+constexpr auto cubic_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::cbrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_cubic_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -cubic_root_of_valmax(tgt); };
+
+// Only floats turn a partial product into infinity, so integers keep their whole range.
+constexpr auto factor_maxi = []<typename T>(eve::as<T> const& tgt)
+{
+  if constexpr(eve::floating_value<T>) return cubic_root_of_valmax(tgt);
+  else                                 return eve::valmax(tgt);
+};
+
+constexpr auto factor_mini = []<typename T>(eve::as<T> const& tgt)
+{
+  if constexpr(eve::floating_value<T>) return minus_cubic_root_of_valmax(tgt);
+  else                                 return eve::valmin(tgt);
+};
+
+//==================================================================================================
 //==  mul simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mul on wide",
               eve::test::simd::all_types_wf16,
-              tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)),
+                            tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)),
+                            tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)))
   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;
@@ -215,18 +241,6 @@ TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
   TTS_IEEE_EQUAL(eve::mul[mask](a0, a1),
                  eve::if_else(mask, eve::mul(a0, a1), a0));
 };
-
-//==================================================================================================
-// widen and kahan agree only while the product is representable: past it, infinity against NaN.
-//==================================================================================================
-constexpr auto cubic_root_of_valmax = []<typename T>(eve::as<T> const&)
-{
-  using v_t = eve::element_type_t<T>;
-  return T(static_cast<v_t>(std::cbrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
-};
-
-constexpr auto minus_cubic_root_of_valmax =
-    []<typename T>(eve::as<T> const& tgt) { return -cubic_root_of_valmax(tgt); };
 
 TTS_CASE_WITH("Check behavior of mul kahan on wide",
               eve::test::simd::ieee_reals,
