@@ -302,7 +302,7 @@ namespace eve::test
     // an empty list as invalid.
     template<typename T> struct lot_of
     {
-      using lot  = typename tts::filter<in_lot, to_wide_t<T, std::make_index_sequence<cardinals()[sizeof(T)]>>>::type;
+      using lot  = typename tts::filter<in_lot, to_wide_t<T, std::make_index_sequence<cardinals()[sizeof(T)]>>>::types_list;
       using type = std::conditional_t<std::same_as<lot, tts::types<>>, tts::types<as_wide_t<T>>, lot>;
     };
 
@@ -327,7 +327,7 @@ namespace eve::test
 
       static constexpr bool value = is_enabled();
     };
-    using type_lot = tts::concatenate_t<typename lot_of<Ts>::type...>;
+    using type_lot = tts::concatenate<typename lot_of<Ts>::type...>;
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
     using type = tts::filter<rvv_pred, type_all>::types_list;
 #else
