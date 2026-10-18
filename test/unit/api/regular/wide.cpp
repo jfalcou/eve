@@ -43,7 +43,7 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
     for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
     {
       TTS_EQUAL(fsimd.get(i), v_t(0));
-      TTS_EQUAL(flogical.get(i), false);
+      if constexpr( T::abi_type::has_defined_logical_tail ) { TTS_EQUAL(flogical.get(i), false); }
     }
   }
 };
@@ -102,7 +102,7 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
     for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
     {
       TTS_EQUAL(fsimd.get(i), v_t(0));
-      TTS_EQUAL(flogical.get(i), false);
+      if constexpr( T::abi_type::has_defined_logical_tail ) { TTS_EQUAL(flogical.get(i), false); }
     }
   }
 };
