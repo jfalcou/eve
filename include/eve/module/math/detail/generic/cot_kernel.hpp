@@ -58,7 +58,7 @@ namespace eve
       using elt_t =  element_type_t<T>;
       constexpr elt_t c0(1);
       constexpr elt_t c2(-0.332867);
-      constexpr elt_t c4(-0.24369);
+      constexpr elt_t c4(-0.024369);
       return reverse_horner(sqr(a0), c0, c2, c4); //relative error less than 3.0e-5
     }
   }
