@@ -23,6 +23,8 @@ namespace eve
     static constexpr std::size_t bits            = vector_register_bit_size * max_lmul;
     static constexpr std::size_t bytes           = bits / 8;
     static constexpr bool        is_wide_logical = false;
+    // RVV leaves the tail of a mask destination agnostic whatever vta says.
+    static constexpr bool        has_defined_logical_tail = false;
   
     template<typename Type>
     static constexpr std::size_t fundamental_vector_size =
