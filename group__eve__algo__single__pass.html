@@ -157,7 +157,7 @@ Variables</h2></td></tr>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga595b740184ec13567d04b391145f2a19">single_pass</a> = eve_implementation_defined;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__single__pass_html_ga595b740184ec13567d04b391145f2a19"><div class="ttname"><a href="#ga595b740184ec13567d04b391145f2a19">eve::algo::single_pass</a></div><div class="ttdeci">constexpr auto single_pass</div><div class="ttdef"><b>Definition</b> traits.hpp:576</div></div>
+<div class="ttc" id="agroup__eve__algo__single__pass_html_ga595b740184ec13567d04b391145f2a19"><div class="ttname"><a href="#ga595b740184ec13567d04b391145f2a19">eve::algo::single_pass</a></div><div class="ttdeci">constexpr auto single_pass</div><div class="ttdef"><b>Definition</b> traits.hpp:566</div></div>
 </div><!-- fragment --> </div><p>Makes a search track the index of its candidate as the loop runs, rather than search for it afterwards. By default <a class="el" href="group__eve__algos.html#ga49074f455a196a7f40e25fa7dc16ffcc" title="SIMD version of std::min_element.">eve::algo::min_element</a> and <a class="el" href="group__eve__algos.html#gaa90a6e15c02d3781403a02347bd8d043" title="SIMD variation on std::max_element not exact match.">eve::algo::max_element</a> are two passes, the value then its position, which is faster on eve's benchmarks; the trait is for a body that is expensive enough for a second pass to cost more than the tracking.</p>
 <div class="fragment"><div class="line">std::vector&lt;float&gt; data(1024);</div>
 <div class="line"> </div>

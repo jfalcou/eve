@@ -128,13 +128,20 @@ $(function(){initNavTree('group__eve__algo__traits.html','',''); });
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Options that tune how an algorithm runs. </p>
+<p>returns width which should be used.</p>
 <p>An option tunes the way an algorithm runs: the width of its loop step, the type it computes in, what it may assume of its ranges. Every algorithm carries a default set, tuned for the common case, and takes options between brackets, before its arguments, one pair per option; those a call passes override the defaults, and those it leaves out keep their default value:</p>
 <div class="fragment"><div class="line"><a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[<a class="code hl_variable" href="group__eve__algo__unroll.html#gaa0edcdf11a934c3303c8dbac175f5340">unroll&lt;8&gt;</a>][<a class="code hl_variable" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">expensive_callable</a>](data, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x &gt; 0.f; });</div>
-<div class="ttc" id="agroup__eve__algo__expensive__callable_html_ga03487a05ad7b38febedbf22e671dcf93"><div class="ttname"><a href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdef"><b>Definition</b> traits.hpp:538</div></div>
+<div class="ttc" id="agroup__eve__algo__expensive__callable_html_ga03487a05ad7b38febedbf22e671dcf93"><div class="ttname"><a href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">eve::algo::expensive_callable</a></div><div class="ttdeci">constexpr auto expensive_callable</div><div class="ttdef"><b>Definition</b> traits.hpp:528</div></div>
 <div class="ttc" id="agroup__eve__algo__unroll_html_gaa0edcdf11a934c3303c8dbac175f5340"><div class="ttname"><a href="group__eve__algo__unroll.html#gaa0edcdf11a934c3303c8dbac175f5340">eve::algo::unroll</a></div><div class="ttdeci">constexpr auto unroll</div><div class="ttdef"><b>Definition</b> traits.hpp:172</div></div>
 <div class="ttc" id="agroup__eve__algos_html_gadf0762ce0ad64c41ff1eb704a436894d"><div class="ttname"><a href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition</b> find.hpp:130</div></div>
 </div><!-- fragment --><p>The options come in three kinds, listed below: the lanes and the types an algorithm computes on, the shape of its loop, and the preconditions a call asserts on its ranges.</p>
-<dl class="section note"><dt>Note</dt><dd><a class="el" href="structeve_1_1algo_1_1traits.html" title="Compile time set of tuning parameters an algorithm accepts.">eve::algo::traits</a>, the set of options several calls share, the two sets the library predefines, and the reading of options from within an algorithm are the developer's side, <a class="el" href="group__eve__algo__traits__dev.html" title="Algorithm Traits">Algorithm Traits</a>. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><a class="el" href="structeve_1_1algo_1_1traits.html" title="Compile time set of tuning parameters an algorithm accepts.">eve::algo::traits</a>, the set of options several calls share, the two sets the library predefines, and the reading of options from within an algorithm are the developer's side, <a class="el" href="group__eve__algo__traits__dev.html" title="Algorithm Traits">Algorithm Traits</a>.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Traits,RangeOrIterator</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-groups" class="groupheader"><a id="groups" name="groups"></a>
 Contents</h2></td></tr>

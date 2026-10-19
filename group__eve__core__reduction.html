@@ -226,7 +226,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__core__reduction_html_gaf7f045ef2ed35833e8c3dc0228de48b8"><div class="ttname"><a href="#gaf7f045ef2ed35833e8c3dc0228de48b8">eve::maximum</a></div><div class="ttdeci">constexpr auto maximum</div><div class="ttdoc">Computes the maximal value in a simd vector or valmin if the input is fully masked.</div><div class="ttdef"><b>Definition</b> maximum.hpp:83</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -498,7 +498,7 @@ What if I know there is a match?</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int32_t, eve::fixed&lt;8&gt;</a>&gt; w = {1, 0, 3, 0, 5, 0, 0, 8};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int32_t, 8&gt;</a> w = {1, 0, 3, 0, 5, 0, 0, 8};</div>
 <div class="line">  <span class="keyword">auto</span> m = w &gt; 0;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- w                              = &quot;</span> &lt;&lt; w &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -801,8 +801,8 @@ What if I know there is a match?</h2>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>

@@ -20,7 +20,7 @@ var searchData=
   ['architectures_20compilers_20support_20fixes_17',['Architectures/Compilers Support &amp;amp; Fixes',['../changelog.html#autotoc_md33',1,'']]],
   ['arithmetic_20functions_18',['Arithmetic Functions',['../glossary_semantic.html#glossary_arithmetic',1,'']]],
   ['as_20main_20api_19',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
-  ['as_20type_20x_20cardinal_20',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
+  ['as_20type_20x_20width_20',['SIMD registers as Type x Width',['../design_rationale.html#rationale-simd',1,'']]],
   ['aur_21',['AUR',['../setup.html#autotoc_md77',1,'']]],
   ['aware_20udt_22',['Creating SIMD-aware UDT',['../intro-04.html#autotoc_md107',1,'']]]
 ];

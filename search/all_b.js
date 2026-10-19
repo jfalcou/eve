@@ -63,7 +63,7 @@ var searchData=
   ['irregular_5fpredicate_60',['irregular_predicate',['../concepteve_1_1irregular__predicate.html',1,'eve']]],
   ['is_20a_20match_61',['is a match',['../group__eve__core__reduction.html#autotoc_md17',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md19',1,'What if I know there is a match?']]],
   ['is_5faggregated_62',['is_aggregated',['../structeve_1_1top__bits.html#a5154a768fbc421af8a5301e9096c7350',1,'eve::top_bits']]],
-  ['is_5faligned_63',['is_aligned',['../group__eve__memory.html#gad05ab928f3e9aa972a7e7146f76cce13',1,'eve::is_aligned(aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept'],['../group__eve__memory.html#gab1add731db6f65a080c9ec8b4a125858',1,'eve::is_aligned(T v) noexcept'],['../group__eve__memory.html#ga25228d751afbdd3a2c7d09aea5f2ae74',1,'eve::is_aligned(T *ptr) noexcept'],['../group__eve__memory.html#ga3c06e236e6195d1a36a43e0fcc7c5eca',1,'eve::is_aligned(T *ptr, Lanes lanes) noexcept']]],
+  ['is_5faligned_63',['is_aligned',['../group__eve__memory.html#gad05ab928f3e9aa972a7e7146f76cce13',1,'eve::is_aligned(aligned_ptr&lt; T, Other &gt; const &amp;ptr) noexcept'],['../group__eve__memory.html#gab1add731db6f65a080c9ec8b4a125858',1,'eve::is_aligned(T v) noexcept'],['../group__eve__memory.html#ga25228d751afbdd3a2c7d09aea5f2ae74',1,'eve::is_aligned(T *ptr) noexcept'],['../group__eve__memory.html#ga13a0d8e8825a7ee05e9f6a7e246405b2',1,'eve::is_aligned(T *ptr, Lanes n) noexcept']]],
   ['is_5fbit_5fequal_64',['is_bit_equal',['../group__eve__core__predicates.html#ga6ec822af7cd03bc7d854a4dad197fda1',1,'eve']]],
   ['is_5fcheap_65',['is_cheap',['../structeve_1_1top__bits.html#a8b4e478b0579d0a46ccef25e51b58be9',1,'eve::top_bits']]],
   ['is_5fcontainer_5fv_66',['is_container_v',['https://jfalcou.github.io/kumi/group__kumi__traits_ga02b588394b12893e71b1d6162db0b4b4.html#ga02b588394b12893e71b1d6162db0b4b4',1,'kumi::is_container_v'],['https://jfalcou.github.io/kumi/group__kumi__traits_ga02b588394b12893e71b1d6162db0b4b4.html#ga02b588394b12893e71b1d6162db0b4b4',1,'kumi::is_container_v']]],
@@ -88,7 +88,7 @@ var searchData=
   ['is_5fless_5fequal_85',['is_less_equal',['../group__eve__core__predicates.html#ga9344864ee9268d43aa1e8defdfd292c3',1,'eve']]],
   ['is_5flessgreater_86',['is_lessgreater',['../group__eve__core__predicates.html#ga46f7779bc0bc962904db287b4f356f55',1,'eve']]],
   ['is_5flez_87',['is_lez',['../group__eve__core__predicates.html#gaceb6deba8172c276ce8444224ef5b7ef',1,'eve']]],
-  ['is_5flike_88',['is_like',['../structeve_1_1wide.html#aff3a86e07d2a7b5aac81be591630dc0c',1,'eve::wide']]],
+  ['is_5flike_88',['is_like',['../structeve_1_1wide.html#afe1d75da19900fb06c9cfb0a4c89348a',1,'eve::wide']]],
   ['is_5fltz_89',['is_ltz',['../group__eve__core__predicates.html#ga7671d935e3e1036b64c20aa1e58c9177',1,'eve']]],
   ['is_5fminf_90',['is_minf',['../group__eve__core__predicates.html#ga553ea3bc7c8408ff19b87aec1d03a651',1,'eve']]],
   ['is_5fnan_91',['is_nan',['../group__eve__core__predicates.html#gaa9f5fcd9c22232d6bef49e308c6df357',1,'eve']]],
@@ -124,10 +124,9 @@ var searchData=
   ['issue_121',['The Issue',['../multiarch.html#autotoc_md111',1,'']]],
   ['it_122',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
   ['iterate_5fselected_123',['iterate_selected',['../group__eve__core__simd.html#ga48cbc739f85673ad20ccc29debcb2183',1,'eve']]],
-  ['iteration_5fcardinal_5ft_124',['iteration_cardinal_t',['../group__eve__algo__traits__dev.html#ga967c316c157e858ddb09a73a90e77896',1,'eve::algo']]],
-  ['iterator_125',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
-  ['iterator_5faligned_126',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
-  ['iterator_5fcardinal_5ft_127',['iterator_cardinal_t',['../group__eve__traits.html#ga331d84fa4b64e5deb329b1a09d60c747',1,'eve']]],
-  ['iterator_5ft_128',['iterator_t',['../group__eve__algo__concepts.html#gaa7e8d090b9c040a50269d70444af720a',1,'eve::algo']]],
-  ['iterators_129',['Ranges or Iterators',['../algo_rationale.html#autotoc_md53',1,'']]]
+  ['iterator_124',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
+  ['iterator_5faligned_125',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],
+  ['iterator_5ft_126',['iterator_t',['../group__eve__algo__concepts.html#gaa7e8d090b9c040a50269d70444af720a',1,'eve::algo']]],
+  ['iterator_5fwidth_5ft_127',['iterator_width_t',['../group__eve__traits.html#ga7ae3e81e8c073ad31b70c384a2774336',1,'eve']]],
+  ['iterators_128',['Ranges or Iterators',['../algo_rationale.html#autotoc_md53',1,'']]]
 ];

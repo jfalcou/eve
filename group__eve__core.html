@@ -182,7 +182,7 @@ Variables</h2></td></tr>
 <p>Callabe object that deinterleaves values in n wides. </p>
 <p>This is a generalization of deinterleave_groups_shuffle for n wides.</p>
 <p>The different name comes from for 2 wides - this returns a tuple of 2 wides and a shuffle returns an aggregate</p>
-<p>First parameter is <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">fixed&lt;N&gt;</a> group_size - how many elements we consider one element After that you pass n simd values. Together those n simd values have interleaved values. We return a tuple of wides, where all values are separated between individual wides.</p>
+<p>First parameter is <a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">lanes_t&lt;N&gt;</a> group_size - how many elements we consider one element After that you pass n simd values. Together those n simd values have interleaved values. We return a tuple of wides, where all values are separated between individual wides.</p>
 <p>NOTE: you can think of this function as AoS to SoA, where all fields have the same size. group is the size of the field in wide elements.</p>
 <p>Examples (one letter is a group - first parameter, group order is preserved): ABAB'ABAB ABAB'ABAB =&gt; [AAAA'AAAA BBBB'BBBB] ABCA BCAB CABC =&gt; [AAAA BBBB CCCC] ABCD'EABC DEAB'CDEA BCDE'ABCD EABC'DEA BCDE'ABCD =&gt; [Ax8 Bx8 Cx8 Dx8 Ex8]</p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/module/core.hpp&gt;</span> </p>
@@ -229,7 +229,7 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint64_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -244,7 +244,7 @@ Variables</h2></td></tr>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; rotate(x, eve::index&lt;4&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga2b09f7ec6c1c06462052833c3d08cefb">eve::rotate</a>(x, eve::index&lt;4&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line"> </div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -274,7 +274,7 @@ Variables</h2></td></tr>
 <p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">argument</a>.</li>
-<li><span class="tt"><a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">fixed</a>&lt;N&gt;</span> : number of elements in group</li>
+<li><span class="tt"><a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">lanes_t</a>&lt;N&gt;</span> : number of elements in group</li>
 </ul>
 <p><b>Return value</b></p>
 <p><a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> of all results</p>
@@ -282,7 +282,7 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -290,8 +290,8 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;&lt;- x                                        = &quot;</span> &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lane&lt;1&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lane&lt;1&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lane&lt;2&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lane&lt;2&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lanes&lt;1&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lanes&lt;1&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">            &lt;&lt; <span class="stringliteral">&quot;-&gt; try_each_group_position(x, eve::lanes&lt;2&gt;) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a>(x, eve::lanes&lt;2&gt;) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__core_html_ga721ccc166a96634b64bb08c83ae7e0ed"><div class="ttname"><a href="#ga721ccc166a96634b64bb08c83ae7e0ed">eve::try_each_group_position</a></div><div class="ttdeci">constexpr callable_try_each_group_position_ try_each_group_position</div><div class="ttdoc">For a given simd_value and a group size returns a tuple of (x::size() / group_size) permuatitions for...</div><div class="ttdef"><b>Definition</b> try_each_group_position.hpp:51</div></div>
 </div><!-- fragment --> 

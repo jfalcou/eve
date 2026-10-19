@@ -4,7 +4,7 @@
     <name>eve::aligned_allocator</name>
     <filename>structeve_1_1aligned__allocator.html</filename>
     <templarg>typename T</templarg>
-    <templarg>typename Lanes</templarg>
+    <templarg>std::ptrdiff_t Lanes</templarg>
     <class kind="struct">eve::aligned_allocator::rebind</class>
     <member kind="typedef">
       <type>T</type>
@@ -67,7 +67,7 @@
     <name>eve::aligned_ptr</name>
     <filename>structeve_1_1aligned__ptr.html</filename>
     <templarg>typename Type</templarg>
-    <templarg>typename Lanes</templarg>
+    <templarg>width_type Lanes</templarg>
     <member kind="typedef">
       <type>std::remove_const_t&lt; Type &gt;</type>
       <name>value_type</name>
@@ -240,8 +240,8 @@
       <type>aligned_ptr&lt; Type, Lanes &gt;</type>
       <name>as_aligned</name>
       <anchorfile>structeve_1_1aligned__ptr.html</anchorfile>
-      <anchor>a52d5ad94329c310ad8cb583b4e3f19f1</anchor>
-      <arglist>(Type *ptr, Lanes lanes) noexcept</arglist>
+      <anchor>a41c7c7bbc482cc664d7d78ecf8d5d82a</anchor>
+      <arglist>(Type *ptr, lanes_t&lt; Lanes &gt; n) noexcept</arglist>
     </member>
     <member kind="function">
       <type>aligned_ptr&lt; Type &gt;</type>
@@ -254,8 +254,8 @@
       <type>auto</type>
       <name>previous_aligned_address</name>
       <anchorfile>structeve_1_1aligned__ptr.html</anchorfile>
-      <anchor>a28fd884a05e3b74a5252025c69239e7f</anchor>
-      <arglist>(T *p, Lanes width) noexcept</arglist>
+      <anchor>accbf862e285f0cb837598587d2676f77</anchor>
+      <arglist>(T *p, lanes_t&lt; Lanes &gt; width) noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
@@ -268,8 +268,8 @@
       <type>auto</type>
       <name>next_aligned_address</name>
       <anchorfile>structeve_1_1aligned__ptr.html</anchorfile>
-      <anchor>af5f46ed7531da24993e83cbd4ac128c0</anchor>
-      <arglist>(T *p, Lanes width) noexcept</arglist>
+      <anchor>a0f64619517f37ee3eb1a98d71aee8d8b</anchor>
+      <arglist>(T *p, lanes_t&lt; Lanes &gt; width) noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
@@ -507,12 +507,6 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>eve::cardinal</name>
-    <filename>structeve_1_1cardinal.html</filename>
-    <templarg>typename Type</templarg>
-    <base>eve::fixed&lt; 1 &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>eve::common_compatible</name>
     <filename>structeve_1_1common__compatible.html</filename>
     <templarg>typename... Ts</templarg>
@@ -639,20 +633,15 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>eve::fixed</name>
-    <filename>structeve_1_1fixed.html</filename>
-    <templarg>std::ptrdiff_t Cardinal</templarg>
-  </compound>
-  <compound kind="struct">
     <name>eve::float16_t</name>
     <filename>structeve_1_1float16__t.html</filename>
   </compound>
   <compound kind="struct">
-    <name>eve::fundamental_cardinal</name>
-    <filename>structeve_1_1fundamental__cardinal.html</filename>
+    <name>eve::fundamental_width</name>
+    <filename>structeve_1_1fundamental__width.html</filename>
     <templarg>typename Type</templarg>
     <templarg>regular_abi ABI</templarg>
-    <base>eve::fixed&lt; eve::current_abi_type::template fundamental_cardinal&lt; Type &gt; &gt;</base>
+    <base>eve::lanes_t&lt; eve::current_abi_type::template fundamental_width&lt; Type &gt; &gt;</base>
   </compound>
   <compound kind="struct">
     <name>eve::if_</name>
@@ -900,13 +889,13 @@
     <name>eve::algo::views::iota_with_step_iterator</name>
     <filename>structeve_1_1algo_1_1views_1_1iota__with__step__iterator.html</filename>
     <templarg>typename T</templarg>
-    <templarg>typename N</templarg>
+    <templarg>width_type N</templarg>
   </compound>
   <compound kind="struct">
     <name>eve::views::iota_with_step_iterator</name>
     <filename>structeve_1_1views_1_1iota__with__step__iterator.html</filename>
     <templarg>typename T</templarg>
-    <templarg>typename N</templarg>
+    <templarg>width_type N</templarg>
   </compound>
   <compound kind="struct">
     <name>iota_with_step_iterator</name>
@@ -1037,6 +1026,11 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>eve::lanes_t</name>
+    <filename>structeve_1_1lanes__t.html</filename>
+    <templarg>width_type Width</templarg>
+  </compound>
+  <compound kind="struct">
     <name>eve::logical&lt; T &gt;</name>
     <filename>structeve_1_1logical_3_01T_01_4.html</filename>
     <templarg>plain_scalar_value T</templarg>
@@ -1126,114 +1120,100 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</name>
-    <filename>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</filename>
+    <name>eve::logical&lt; wide&lt; Type, Width &gt; &gt;</name>
+    <filename>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</filename>
     <templarg>arithmetic_scalar_value Type</templarg>
-    <templarg>typename Cardinal</templarg>
-    <base>eve::_::wide_storage&lt; as_logical_register_t&lt; translate_t&lt; Type &gt;, Cardinal, abi_t&lt; translate_t&lt; Type &gt;, Cardinal &gt; &gt; &gt;</base>
+    <templarg>width_type Width</templarg>
+    <base>eve::_::wide_storage&lt; as_logical_register_t&lt; translate_t&lt; Type &gt;, Width, abi_t&lt; translate_t&lt; Type &gt;, Width &gt; &gt; &gt;</base>
     <member kind="typedef">
       <type>logical&lt; translate_t&lt; Type &gt; &gt;</type>
       <name>translated_element_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>af762237b37ee7ef715219473e509a84d</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a14a1a372334fc7d8e3992b57fe6001a6</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>logical&lt; typename wide&lt; Type, Cardinal &gt;::translated_type &gt;</type>
+      <type>logical&lt; typename wide&lt; Type, Width &gt;::translated_type &gt;</type>
       <name>translated_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a815b515edafa5a1fd54dfa58284cc2b1</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a13c1634f321cb2ad1e59419dcd53d9b0</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>logical&lt; Type &gt;</type>
       <name>value_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a949b3a102b27d4c7a290ea89caf45e12</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a2f2580305dae47b708f8c22172ec02cc</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>abi_t&lt; translated_element_type, Cardinal &gt;</type>
+      <type>abi_t&lt; translated_element_type, Width &gt;</type>
       <name>abi_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a0d9bc318a83f4b89872d44cf4371e66a</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae1c0e18fb146ff655a2a112caf4c0281</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>typename storage_base::storage_type</type>
       <name>storage_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ac94c47f8d965d821d503a0a41818fde8</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>adda55c086e787842f413cb78589f9a5c</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>Cardinal</type>
-      <name>cardinal_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a1c043e9a2264e6257e715022ffbbe9a9</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>std::ptrdiff_t</type>
-      <name>size_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ad6cf7dc0caa30cc3860f331f683f6c10</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>wide&lt; _::make_integer_t&lt; sizeof(translated_element_type), unsigned &gt;, Cardinal &gt;</type>
+      <type>wide&lt; _::make_integer_t&lt; sizeof(translated_element_type), unsigned &gt;, Width &gt;</type>
       <name>bits_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a47cfdf76d5854ca2f0d4257ebdb333c0</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a7e332d900d54698c21a7111d3e4c13bc</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>wide&lt; Type, Cardinal &gt;</type>
+      <type>wide&lt; Type, Width &gt;</type>
       <name>mask_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a552251c1f51965f56d96414cc8f933c8</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>add850a104892c22e327ed011a132deac</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>logical&lt; wide&lt; Type, typename Cardinal::combined_type &gt; &gt;</type>
+      <type>logical&lt; wide&lt; Type, Width *2 &gt; &gt;</type>
       <name>combined_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ae260f1484d40666e5196dbddc10b2ec1</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>abd380a08791b9d199ef844df75c7058d</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>logical&lt; wide&lt; T, N &gt; &gt;</type>
       <name>rebind</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a25b557f84e25bb1b30bb67a686d80e84</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a631d07482c8a606a1d70452355773cd4</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>logical&lt; wide&lt; Type, N &gt; &gt;</type>
       <name>rescale</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a0a505c7c261060febd032a868d28af92</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>aac657fc391d24329544b8d0aa5e2fdba</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
       <type>bits_type</type>
       <name>bits</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a127ae630365d174c7d5f8f3332de79dc</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a3eeb9355a5a49de4a0951b725ba08440</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>mask_type</type>
       <name>mask</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a6327cd272b2b30fb1841e218c06a332d</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae83cf0c823949bc2ad0f7bbde668e07f</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>bitmap</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a53088b65fa4bba929183f9c4d5792dea</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a14f6a05bdec793fa1557bd8a8d749615</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
@@ -1281,428 +1261,400 @@
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab42e96c04ba7d545273a8411e2172411</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a25a0ef5899bdc221cf48102b9c798fef</anchor>
       <arglist>()=default</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a19f9305f2be6c493a6e86c236fcf4f9e</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a5b5f93ccaddf8370ac88b4e51c559f50</anchor>
       <arglist>(storage_type const &amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>abed0447593ed96d503e1b0ca6eac54fb</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a0096814337af73c802c01f48b85dcc6d</anchor>
       <arglist>(Range &amp;&amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab463edf2bbe092c328f8dc599e49ce8f</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a1a38f07f8e0124726c0bf0820170d223</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab463edf2bbe092c328f8dc599e49ce8f</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a1a38f07f8e0124726c0bf0820170d223</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ae122bd7fa34698be443c7b6e4482f984</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae28591f03fc622ce2986b40331a3e6eb</anchor>
       <arglist>(logical&lt; U &gt; v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a32b6d03c03af2e64979367f6d68d7016</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a88d6c4303a972f83cbac3c134f878f15</anchor>
       <arglist>(std::same_as&lt; bool &gt; auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a3a83d0ff7cbb1ed2e9fc62dec58f7aaa</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ad6902639442665107f68a05b3353d0e8</anchor>
       <arglist>(T0 const &amp;v0, T1 const &amp;v1, Ts const &amp;... vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a84ea3b085a785e085cbb9a9ffba1c4a4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a91473a762e7401868ca8c2e0c2830e50</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a84ea3b085a785e085cbb9a9ffba1c4a4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a91473a762e7401868ca8c2e0c2830e50</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a767f16dc3944e89d8047d55cb73ea20d</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae4cedc33287cedb5cd1205367884e82d</anchor>
       <arglist>(WL0 wl0, WL1 wl1, WLs... wls) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a21ab888a7a1c9d785657e01d74e12540</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a53006699c3ddbf9162c5d64e97299f15</anchor>
       <arglist>(logical&lt; Type &gt; v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a83aa966901ef9fa80aaf45518c57b1f7</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a789c95c84b2f7eaf32208f3b5e8a2df2</anchor>
       <arglist>(bool v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a64946da0cd3477cab6fb2c5132b7fc22</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a03e641d3219f98584cef5c9f47866ca5</anchor>
       <arglist>(storage_type const &amp;r)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>swap</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ae56f9b89b700d9668b761c6d5a3167b4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a5d08ae696a1aebc471c6f15c85df0fe1</anchor>
       <arglist>(logical &amp;other)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>set</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>af0263a92fa0c41d2252b3a7595695fa7</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a587f10721797ccc31cadf05c037a8f87</anchor>
       <arglist>(std::size_t i, std::convertible_to&lt; bool &gt; auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>get</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a7e669e8b662996c0cb3553c33a09dedc</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a041968de5884b6279cd8875b52b3119c</anchor>
       <arglist>(std::size_t i) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>back</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a43db7ec7fb3a32fe5b649f4e8a85ab95</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ad65ea204c013d992f37c9221486d3024</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>front</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a7de72be98e577d883e5d4e13487bcb20</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a7697c63969d3167aa6d72d75d77aaafc</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>aa9cd862159f14c1959ab479dc243a310</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae1abea8033a311379fbc318d921aad1d</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a71e274784f66b6d8f845129e580ae02a</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a180ffeeafd750ba2605040e4dcb64181</anchor>
       <arglist>(slice_t&lt; Slice &gt; s) const</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static constexpr auto</type>
       <name>alignment</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a618532fc6332155edaf4aca72b5b93aa</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a275e133913c6d4a667f27e87ceb252d9</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
+      <type>static constexpr width_type</type>
       <name>size</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ad4d0897d94f1786e153dcd05ab059be5</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
-      <name>max_size</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a626f66c1c0e65886dda45ba50cac4439</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr bool</type>
-      <name>empty</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>abbbe1a87460349d94895917816d5577a</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a0ab5d5bafc036058de24437084d0b636</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="friend">
-      <type>friend common_logical_t&lt; logical, logical&lt; wide&lt; U, Cardinal &gt; &gt; &gt;</type>
+      <type>friend common_logical_t&lt; logical, logical&lt; wide&lt; U, Width &gt; &gt; &gt;</type>
       <name>operator&amp;&amp;</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a96233062a69c6e1eefe7c3ad03332165</anchor>
-      <arglist>(logical const &amp;a, logical&lt; wide&lt; U, Cardinal &gt; &gt; const &amp;b) noexcept</arglist>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>abde6a8dbc4ca944d02f116b2070d8425</anchor>
+      <arglist>(logical const &amp;a, logical&lt; wide&lt; U, Width &gt; &gt; const &amp;b) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend common_logical_t&lt; logical, S &gt;</type>
       <name>operator&amp;&amp;</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>a9e795a28664e04873c84933c24412dd3</anchor>
       <arglist>(logical const &amp;w, S s) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend common_logical_t&lt; S, logical &gt;</type>
       <name>operator&amp;&amp;</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>aa97147cd59c2f7695c4b5155ba461791</anchor>
       <arglist>(S s, logical const &amp;w) noexcept</arglist>
     </member>
     <member kind="friend">
-      <type>friend common_logical_t&lt; logical, logical&lt; wide&lt; U, Cardinal &gt; &gt; &gt;</type>
+      <type>friend common_logical_t&lt; logical, logical&lt; wide&lt; U, Width &gt; &gt; &gt;</type>
       <name>operator||</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a1012cb5c0551a192d0d9890b850ed212</anchor>
-      <arglist>(logical const &amp;a, logical&lt; wide&lt; U, Cardinal &gt; &gt; const &amp;b) noexcept</arglist>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a2357b32c62a79fa933f8fa410fb5efd7</anchor>
+      <arglist>(logical const &amp;a, logical&lt; wide&lt; U, Width &gt; &gt; const &amp;b) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend common_logical_t&lt; logical, S &gt;</type>
       <name>operator||</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>ab5b6c22941f4d42421943daee8f3e7f1</anchor>
       <arglist>(logical const &amp;w, S s) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend common_logical_t&lt; S, logical &gt;</type>
       <name>operator||</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>acb3f345b5c49092876e239870521eb37</anchor>
       <arglist>(S s, logical const &amp;w) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend auto</type>
       <name>operator!</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>a1bdaef9f0529757040060f464139e90f</anchor>
       <arglist>(logical const &amp;v) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend void</type>
       <name>swap</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>a7cec0220f0393e97f10e78ea89c112a0</anchor>
       <arglist>(logical &amp;lhs, logical &amp;rhs) noexcept</arglist>
     </member>
     <member kind="friend">
       <type>friend auto</type>
       <name>operator==</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>afccc614d090f5ed1046fb73afa650494</anchor>
       <arglist>(logical w, S s) noexcept -&gt; decltype(is_equal(w, s))</arglist>
     </member>
     <member kind="friend">
       <type>friend auto</type>
       <name>operator!=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>af9781f0446ba35ad5bd552cc4a27410e</anchor>
       <arglist>(logical w, S s) noexcept -&gt; decltype(is_not_equal(w, s))</arglist>
     </member>
     <member kind="friend">
       <type>friend auto</type>
       <name>operator!=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>afe4168d85e4249d0e5b0857f86c3674a</anchor>
       <arglist>(S s, logical w) noexcept -&gt; decltype(is_not_equal(w, s))</arglist>
     </member>
     <member kind="friend">
       <type>friend auto &amp;</type>
       <name>operator&lt;&lt;</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>a28c1bda76458566e049f1c9dd20463a6</anchor>
       <arglist>(std::basic_ostream&lt; C, Ct &gt; &amp;os, logical const &amp;p)</arglist>
     </member>
     <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
+      <type>static constexpr width_type</type>
       <name>size</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ad4d0897d94f1786e153dcd05ab059be5</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
-      <name>max_size</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a626f66c1c0e65886dda45ba50cac4439</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr bool</type>
-      <name>empty</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>abbbe1a87460349d94895917816d5577a</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a0ab5d5bafc036058de24437084d0b636</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab42e96c04ba7d545273a8411e2172411</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a25a0ef5899bdc221cf48102b9c798fef</anchor>
       <arglist>()=default</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a19f9305f2be6c493a6e86c236fcf4f9e</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a5b5f93ccaddf8370ac88b4e51c559f50</anchor>
       <arglist>(storage_type const &amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>abed0447593ed96d503e1b0ca6eac54fb</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a0096814337af73c802c01f48b85dcc6d</anchor>
       <arglist>(Range &amp;&amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab463edf2bbe092c328f8dc599e49ce8f</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a1a38f07f8e0124726c0bf0820170d223</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ab463edf2bbe092c328f8dc599e49ce8f</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a1a38f07f8e0124726c0bf0820170d223</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ae122bd7fa34698be443c7b6e4482f984</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae28591f03fc622ce2986b40331a3e6eb</anchor>
       <arglist>(logical&lt; U &gt; v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a32b6d03c03af2e64979367f6d68d7016</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a88d6c4303a972f83cbac3c134f878f15</anchor>
       <arglist>(std::same_as&lt; bool &gt; auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a3a83d0ff7cbb1ed2e9fc62dec58f7aaa</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ad6902639442665107f68a05b3353d0e8</anchor>
       <arglist>(T0 const &amp;v0, T1 const &amp;v1, Ts const &amp;... vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a84ea3b085a785e085cbb9a9ffba1c4a4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a91473a762e7401868ca8c2e0c2830e50</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a84ea3b085a785e085cbb9a9ffba1c4a4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a91473a762e7401868ca8c2e0c2830e50</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>logical</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a767f16dc3944e89d8047d55cb73ea20d</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae4cedc33287cedb5cd1205367884e82d</anchor>
       <arglist>(WL0 wl0, WL1 wl1, WLs... wls) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a21ab888a7a1c9d785657e01d74e12540</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a53006699c3ddbf9162c5d64e97299f15</anchor>
       <arglist>(logical&lt; Type &gt; v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a83aa966901ef9fa80aaf45518c57b1f7</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a789c95c84b2f7eaf32208f3b5e8a2df2</anchor>
       <arglist>(bool v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>logical &amp;</type>
       <name>operator=</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a64946da0cd3477cab6fb2c5132b7fc22</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a03e641d3219f98584cef5c9f47866ca5</anchor>
       <arglist>(storage_type const &amp;r)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>swap</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>ae56f9b89b700d9668b761c6d5a3167b4</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a5d08ae696a1aebc471c6f15c85df0fe1</anchor>
       <arglist>(logical &amp;other)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>set</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>af0263a92fa0c41d2252b3a7595695fa7</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a587f10721797ccc31cadf05c037a8f87</anchor>
       <arglist>(std::size_t i, std::convertible_to&lt; bool &gt; auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>get</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a7e669e8b662996c0cb3553c33a09dedc</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a041968de5884b6279cd8875b52b3119c</anchor>
       <arglist>(std::size_t i) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>back</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a43db7ec7fb3a32fe5b649f4e8a85ab95</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ad65ea204c013d992f37c9221486d3024</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>front</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a7de72be98e577d883e5d4e13487bcb20</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a7697c63969d3167aa6d72d75d77aaafc</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>aa9cd862159f14c1959ab479dc243a310</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>ae1abea8033a311379fbc318d921aad1d</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html</anchorfile>
-      <anchor>a71e274784f66b6d8f845129e580ae02a</anchor>
+      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
+      <anchor>a180ffeeafd750ba2605040e4dcb64181</anchor>
       <arglist>(slice_t&lt; Slice &gt; s) const</arglist>
     </member>
   </compound>
@@ -2014,7 +1966,7 @@
     <name>eve::algo::ptr_iterator</name>
     <filename>structeve_1_1algo_1_1ptr__iterator.html</filename>
     <templarg>typename Ptr</templarg>
-    <templarg>typename Cardinal</templarg>
+    <templarg>width_type Width</templarg>
   </compound>
   <compound kind="struct">
     <name>eve::algo::range_ref_wrapper</name>
@@ -2816,10 +2768,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>logical&lt; wide&lt; scalar_type, eve::fixed&lt; half_size &gt; &gt; &gt;</type>
+      <type>logical&lt; wide&lt; scalar_type, half_size &gt; &gt;</type>
       <name>half_logical</name>
       <anchorfile>structeve_1_1top__bits.html</anchorfile>
-      <anchor>a448b36c0f435bda8170fabbe183de7be</anchor>
+      <anchor>a635df1ca3b5523b9ab8138ba1d4f7b30</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -2905,83 +2857,69 @@
     <name>eve::wide</name>
     <filename>structeve_1_1wide.html</filename>
     <templarg>arithmetic_scalar_value Type</templarg>
-    <templarg>typename Cardinal</templarg>
-    <base>eve::_::wide_storage&lt; as_register_t&lt; translate_t&lt; Type &gt;, Cardinal, abi_t&lt; translate_t&lt; Type &gt;, Cardinal &gt; &gt; &gt;</base>
+    <templarg>width_type Width</templarg>
+    <base>eve::_::wide_storage&lt; as_register_t&lt; translate_t&lt; Type &gt;, Width, abi_t&lt; translate_t&lt; Type &gt;, Width &gt; &gt; &gt;</base>
     <member kind="typedef">
       <type>Type</type>
       <name>value_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>ad6e0f9fd221ca191f42484f47660662c</anchor>
+      <anchor>a2740dd8299a097b7ebe8ed830a1e3ee7</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>translate_t&lt; Type &gt;</type>
       <name>translated_element_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a6f964ba2b4950d9916b5d280c88e8d6f</anchor>
+      <anchor>ad0df603299c19ad7f556355f90c032b2</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>wide&lt; translated_element_type, Cardinal &gt;</type>
+      <type>wide&lt; translated_element_type, Width &gt;</type>
       <name>translated_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa09188474474c521bce2199283dd0557</anchor>
+      <anchor>a67012b548e215ea014d317885b588fdf</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>abi_t&lt; translated_element_type, Cardinal &gt;</type>
+      <type>abi_t&lt; translated_element_type, Width &gt;</type>
       <name>abi_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a18742aec2dcd5edb3fd2266adecbc270</anchor>
+      <anchor>a630e3fb8df6a6a1b01c04da87ec1ec1b</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>typename storage_base::storage_type</type>
       <name>storage_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a592b87d63264bcc3271b84bc3a7a0f53</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>Cardinal</type>
-      <name>cardinal_type</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a920f3e350e21c8f5c217d7e199efc299</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>std::ptrdiff_t</type>
-      <name>size_type</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a49b0787fd69bd2084750eb9d42cfcef4</anchor>
+      <anchor>ae78a44f87494299a80288651af66ebbb</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>value_type</type>
       <name>is_like</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aff3a86e07d2a7b5aac81be591630dc0c</anchor>
+      <anchor>afe1d75da19900fb06c9cfb0a4c89348a</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>wide&lt; Type, typename Cardinal::combined_type &gt;</type>
+      <type>wide&lt; Type, Width *2 &gt;</type>
       <name>combined_type</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>ab21c115bbd0b073881a3f8754a8d2f96</anchor>
+      <anchor>a759d945025b465dc7c7163d5d39e4884</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
       <type>wide&lt; T, N &gt;</type>
       <name>rebind</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a68f8b26fc435b652492ebb9163b30ed5</anchor>
+      <anchor>afc787275cca26def77f1c4c7798a03e7</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>wide&lt; Type, N &gt;</type>
+      <type>wide&lt; Type, S &gt;</type>
       <name>rescale</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a279755384913a23181f151ece5a4658f</anchor>
+      <anchor>a5a5d237d787f726cc9a7c6c269a24941</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -3030,196 +2968,182 @@
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a361d5a9fd15f6b2e4a86ec5ae2880e06</anchor>
+      <anchor>a9f1fc5e9c0b8a99c69d513c60152d61a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a4c3c77232aadeb56066359ff149af963</anchor>
+      <anchor>a74ae4ddd6869e9c622613c4659684fea</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a4ad46a6f998bb898592da9625181634d</anchor>
+      <anchor>a1c31ff087ca8f7a5a4f89bbbb7a0e445</anchor>
       <arglist>(storage_type const &amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa4cbde97fec5ebba311f78f757384bb3</anchor>
+      <anchor>aa57429282610a20ee45502d18f9d881c</anchor>
       <arglist>(Range &amp;&amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a9e8f8635331b18d7ce9e1c28019722be</anchor>
+      <anchor>a56847b7282c4b6f705ccaa838254bb38</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a31d05c169f1e12cad3c2818ef506261d</anchor>
+      <anchor>a80cc319a462b4be4e11d217b5b8f6f3b</anchor>
       <arglist>(eve::soa_ptr&lt; Ptr... &gt; ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a6c8db8292774ad2de873023619cf1456</anchor>
+      <anchor>a7ea2c6fd33567a3b9cf995ce50ff5fea</anchor>
       <arglist>(S const &amp;v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>adf12020cb7ac67cc5ee1c165c2b563d7</anchor>
+      <anchor>a6ca1d003070d2fe73d0e4430313785ca</anchor>
       <arglist>(S0 v0, S1 v1, Ss... vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aedbf2986f6d9bb3c0968d6659f9b8ff1</anchor>
+      <anchor>acd8a5dafbdc45601c61df84c1678bd67</anchor>
       <arglist>(S0 const &amp;v0, Ss const &amp;...vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a007581d779fcbfc70bfcee970ee95451</anchor>
+      <anchor>aa0582457c0bd1d399c937dc730c45466</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a007581d779fcbfc70bfcee970ee95451</anchor>
+      <anchor>aa0582457c0bd1d399c937dc730c45466</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a3f8ec537fe171202703714d1b1fb2678</anchor>
+      <anchor>a73d34e67fdba2cb5f764fe75ab13ba8d</anchor>
       <arglist>(W0 w0, W1 w1, Ws... ws) noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator=</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aba9bb24eb9587da6113d66145fe55966</anchor>
+      <anchor>a2d55aeff59f8b4e67887a4a9d9322833</anchor>
       <arglist>(storage_type const &amp;r)</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator=</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa76549abd93145924149aba145078104</anchor>
+      <anchor>a080282502e7852747123d740089079d6</anchor>
       <arglist>(S v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>set</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a0c558b1099d1ab8939c82b766f12355a</anchor>
+      <anchor>adef0e914a96d1fa6636d3fe912bdb9ee</anchor>
       <arglist>(std::size_t i, scalar_value auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>get</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a6ab6d5f972abe85345b3ba9e5f2db10e</anchor>
+      <anchor>a9e202729c7a7b5cebdc0d3c7774e23ca</anchor>
       <arglist>(std::size_t i) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>back</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a2ffca3c478214bf4b4ace457e492a100</anchor>
+      <anchor>a836d7e07025a7730c60b7a1d1e114e1e</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>front</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa279df4c99dbc46206e9f70b44b1f769</anchor>
+      <anchor>a182f651a9d868db19242c5cdd7b665f7</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>ac2088fca71239dcd0ab7e7eaa37fb1ca</anchor>
+      <anchor>a2a91e76c58b7e86b3c7a5f406af07d9e</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a452a5c32d8a4f59a03610431e9a951a4</anchor>
+      <anchor>a9da899623415088fc01e89d8f69205b3</anchor>
       <arglist>(slice_t&lt; Slice &gt; s) const</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>swap</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a55d8e55d3b731a5c3c9e87a6f464faea</anchor>
+      <anchor>a4f3955389b15a24214bb9e1692afd61b</anchor>
       <arglist>(wide &amp;other)</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator++</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aef65082a19780da5397211d2cd070564</anchor>
+      <anchor>a24def81f76a4aeb5d36cad9f0f536704</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator--</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a18191cf0606c11d4334837659121f274</anchor>
+      <anchor>a4f81bedb601b1e4be29a210bd22bd433</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide</type>
       <name>operator++</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a926c371e6e63f7c8bbe921b4e66ca41f</anchor>
+      <anchor>a27c194bc9707b710bc5a4085fec7a8a2</anchor>
       <arglist>(int) noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide</type>
       <name>operator--</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a31cc77d8a8f3300e7e810036f7065aa9</anchor>
+      <anchor>a4fc75db7b1a768fbe93df17b6ed16488</anchor>
       <arglist>(int) noexcept</arglist>
     </member>
     <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
+      <type>static constexpr width_type</type>
       <name>size</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a1d3739186033f12c8fe47755f598b60b</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
-      <name>max_size</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a21322b111e584432db366e3cc3ff7011</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr bool</type>
-      <name>empty</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a1d49e69b0ec9ecbabcbffef68eba84eb</anchor>
+      <anchor>a4c5abb1c30d231b46212e2f7d61855a0</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="friend">
@@ -3258,10 +3182,10 @@
       <arglist>(wide const &amp;w, S s) noexcept</arglist>
     </member>
     <member kind="friend">
-      <type>friend wide&lt; S, Cardinal &gt;</type>
+      <type>friend wide&lt; S, Width &gt;</type>
       <name>operator&amp;</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a0ea5a43a912220dc1046cf4d54785615</anchor>
+      <anchor>ae8a581c90be36d9bceb6cabc0c5289d8</anchor>
       <arglist>(S s, wide const &amp;w) noexcept</arglist>
     </member>
     <member kind="friend">
@@ -3286,10 +3210,10 @@
       <arglist>(wide const &amp;w, S s) noexcept</arglist>
     </member>
     <member kind="friend">
-      <type>friend wide&lt; S, Cardinal &gt;</type>
+      <type>friend wide&lt; S, Width &gt;</type>
       <name>operator|</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>abe226796fe038be31f1cd40c4c5c5f46</anchor>
+      <anchor>a0faf5fef6ce9009beccb361b3b99959b</anchor>
       <arglist>(S s, wide const &amp;w) noexcept</arglist>
     </member>
     <member kind="friend">
@@ -3314,10 +3238,10 @@
       <arglist>(wide const &amp;w, S s) noexcept</arglist>
     </member>
     <member kind="friend">
-      <type>friend wide&lt; S, Cardinal &gt;</type>
+      <type>friend wide&lt; S, Width &gt;</type>
       <name>operator^</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a4b0be51d4fbb68efaf0d4b3d9946df9e</anchor>
+      <anchor>a7689298134998da2f2808e7034e97419</anchor>
       <arglist>(S s, wide const &amp;w) noexcept</arglist>
     </member>
     <member kind="friend">
@@ -3671,199 +3595,185 @@
       <arglist>(std::basic_ostream&lt; C, Ct &gt; &amp;os, wide p)</arglist>
     </member>
     <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
+      <type>static constexpr width_type</type>
       <name>size</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a1d3739186033f12c8fe47755f598b60b</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr size_type</type>
-      <name>max_size</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a21322b111e584432db366e3cc3ff7011</anchor>
-      <arglist>() noexcept</arglist>
-    </member>
-    <member kind="function" static="yes">
-      <type>static constexpr bool</type>
-      <name>empty</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a1d49e69b0ec9ecbabcbffef68eba84eb</anchor>
+      <anchor>a4c5abb1c30d231b46212e2f7d61855a0</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a361d5a9fd15f6b2e4a86ec5ae2880e06</anchor>
+      <anchor>a9f1fc5e9c0b8a99c69d513c60152d61a</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a4c3c77232aadeb56066359ff149af963</anchor>
+      <anchor>a74ae4ddd6869e9c622613c4659684fea</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a4ad46a6f998bb898592da9625181634d</anchor>
+      <anchor>a1c31ff087ca8f7a5a4f89bbbb7a0e445</anchor>
       <arglist>(storage_type const &amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa4cbde97fec5ebba311f78f757384bb3</anchor>
+      <anchor>aa57429282610a20ee45502d18f9d881c</anchor>
       <arglist>(Range &amp;&amp;r) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a9e8f8635331b18d7ce9e1c28019722be</anchor>
+      <anchor>a56847b7282c4b6f705ccaa838254bb38</anchor>
       <arglist>(Ptr ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a31d05c169f1e12cad3c2818ef506261d</anchor>
+      <anchor>a80cc319a462b4be4e11d217b5b8f6f3b</anchor>
       <arglist>(eve::soa_ptr&lt; Ptr... &gt; ptr) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a6c8db8292774ad2de873023619cf1456</anchor>
+      <anchor>a7ea2c6fd33567a3b9cf995ce50ff5fea</anchor>
       <arglist>(S const &amp;v) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>adf12020cb7ac67cc5ee1c165c2b563d7</anchor>
+      <anchor>a6ca1d003070d2fe73d0e4430313785ca</anchor>
       <arglist>(S0 v0, S1 v1, Ss... vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aedbf2986f6d9bb3c0968d6659f9b8ff1</anchor>
+      <anchor>acd8a5dafbdc45601c61df84c1678bd67</anchor>
       <arglist>(S0 const &amp;v0, Ss const &amp;...vs) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a007581d779fcbfc70bfcee970ee95451</anchor>
+      <anchor>aa0582457c0bd1d399c937dc730c45466</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a007581d779fcbfc70bfcee970ee95451</anchor>
+      <anchor>aa0582457c0bd1d399c937dc730c45466</anchor>
       <arglist>(Generator &amp;&amp;g) noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a3f8ec537fe171202703714d1b1fb2678</anchor>
+      <anchor>a73d34e67fdba2cb5f764fe75ab13ba8d</anchor>
       <arglist>(W0 w0, W1 w1, Ws... ws) noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator=</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aba9bb24eb9587da6113d66145fe55966</anchor>
+      <anchor>a2d55aeff59f8b4e67887a4a9d9322833</anchor>
       <arglist>(storage_type const &amp;r)</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator=</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa76549abd93145924149aba145078104</anchor>
+      <anchor>a080282502e7852747123d740089079d6</anchor>
       <arglist>(S v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>set</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a0c558b1099d1ab8939c82b766f12355a</anchor>
+      <anchor>adef0e914a96d1fa6636d3fe912bdb9ee</anchor>
       <arglist>(std::size_t i, scalar_value auto v) noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>get</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a6ab6d5f972abe85345b3ba9e5f2db10e</anchor>
+      <anchor>a9e202729c7a7b5cebdc0d3c7774e23ca</anchor>
       <arglist>(std::size_t i) const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>back</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a2ffca3c478214bf4b4ace457e492a100</anchor>
+      <anchor>a836d7e07025a7730c60b7a1d1e114e1e</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>Type</type>
       <name>front</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aa279df4c99dbc46206e9f70b44b1f769</anchor>
+      <anchor>a182f651a9d868db19242c5cdd7b665f7</anchor>
       <arglist>() const noexcept</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>ac2088fca71239dcd0ab7e7eaa37fb1ca</anchor>
+      <anchor>a2a91e76c58b7e86b3c7a5f406af07d9e</anchor>
       <arglist>() const</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>slice</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a452a5c32d8a4f59a03610431e9a951a4</anchor>
+      <anchor>a9da899623415088fc01e89d8f69205b3</anchor>
       <arglist>(slice_t&lt; Slice &gt; s) const</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>swap</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a55d8e55d3b731a5c3c9e87a6f464faea</anchor>
+      <anchor>a4f3955389b15a24214bb9e1692afd61b</anchor>
       <arglist>(wide &amp;other)</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator++</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>aef65082a19780da5397211d2cd070564</anchor>
+      <anchor>a24def81f76a4aeb5d36cad9f0f536704</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide &amp;</type>
       <name>operator--</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a18191cf0606c11d4334837659121f274</anchor>
+      <anchor>a4f81bedb601b1e4be29a210bd22bd433</anchor>
       <arglist>() noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide</type>
       <name>operator++</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a926c371e6e63f7c8bbe921b4e66ca41f</anchor>
+      <anchor>a27c194bc9707b710bc5a4085fec7a8a2</anchor>
       <arglist>(int) noexcept</arglist>
     </member>
     <member kind="function">
       <type>wide</type>
       <name>operator--</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a31cc77d8a8f3300e7e810036f7065aa9</anchor>
+      <anchor>a4fc75db7b1a768fbe93df17b6ed16488</anchor>
       <arglist>(int) noexcept</arglist>
     </member>
   </compound>
@@ -3913,6 +3823,12 @@
       <anchor>a24c364353e6976cead7dcecebdfa788e</anchor>
       <arglist>() &amp;&amp;noexcept</arglist>
     </member>
+  </compound>
+  <compound kind="struct">
+    <name>eve::width</name>
+    <filename>structeve_1_1width.html</filename>
+    <templarg>typename Type</templarg>
+    <base>eve::lanes_t&lt; 1 &gt;</base>
   </compound>
   <compound kind="struct">
     <name>eve::algo::views::zip_iterator</name>
@@ -4165,21 +4081,21 @@
     <filename>concepteve_1_1value.html</filename>
   </compound>
   <compound kind="concept">
-    <name>eve::wide_cardinal</name>
-    <filename>concepteve_1_1wide__cardinal.html</filename>
+    <name>eve::wide_width</name>
+    <filename>concepteve_1_1wide__width.html</filename>
   </compound>
   <compound kind="namespace">
     <name>eve</name>
     <filename>namespaceeve.html</filename>
     <namespace>eve::_</namespace>
-    <class kind="struct">eve::fixed</class>
     <class kind="struct">eve::logical&lt; T &gt;</class>
-    <class kind="struct">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</class>
+    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
     <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::wide</class>
     <class kind="struct">eve::float16_t</class>
-    <class kind="struct">eve::fundamental_cardinal</class>
+    <class kind="struct">eve::fundamental_width</class>
     <class kind="struct">eve::platform</class>
+    <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::as</class>
     <class kind="struct">eve::as_element</class>
     <class kind="struct">eve::or_</class>
@@ -4198,7 +4114,6 @@
     <class kind="struct">eve::stack_buffer</class>
     <class kind="struct">eve::pattern_t</class>
     <class kind="struct">eve::as_pattern</class>
-    <class kind="struct">eve::cardinal</class>
     <class kind="struct">eve::common_compatible</class>
     <class kind="struct">eve::common_type</class>
     <class kind="struct">eve::comparisons</class>
@@ -4215,7 +4130,8 @@
     <class kind="struct">eve::struct_support</class>
     <class kind="struct">eve::translation_of</class>
     <class kind="struct">eve::underlying_type</class>
-    <concept>eve::wide_cardinal</concept>
+    <class kind="struct">eve::width</class>
+    <concept>eve::wide_width</concept>
     <concept>eve::combinable</concept>
     <concept>eve::combinable_to</concept>
     <concept>eve::conditional_expr</concept>
@@ -4271,10 +4187,10 @@
     <concept>eve::translatable</concept>
     <concept>eve::generator_from</concept>
     <member kind="typedef">
-      <type>fixed&lt; expected_cardinal_v&lt; Type, ABI &gt; &gt;</type>
-      <name>expected_cardinal_t</name>
+      <type>lanes_t&lt; expected_width_v&lt; Type, ABI &gt; &gt;</type>
+      <name>expected_width_t</name>
       <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gab707570aa2d35678c5cd5c686a994d57</anchor>
+      <anchor>gaca2238da980f8b3f68896597be4188b8</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -4299,17 +4215,17 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>decltype(_::iterator_cardinal_impl&lt; T &gt;())</type>
-      <name>iterator_cardinal_t</name>
+      <type>decltype(_::iterator_width_impl&lt; T &gt;())</type>
+      <name>iterator_width_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga331d84fa4b64e5deb329b1a09d60c747</anchor>
+      <anchor>ga7ae3e81e8c073ad31b70c384a2774336</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>fixed&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
+      <type>lanes_t&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
       <name>max_lanes_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga4a03242c42306d4595845cb329d5d7ec</anchor>
+      <anchor>ga80306f1fa8a7aeb0e0bab1f7a333d976</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -4327,10 +4243,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>as_wide_t&lt; value_type_t&lt; T &gt;, iterator_cardinal_t&lt; T &gt; &gt;</type>
+      <type>as_wide_t&lt; value_type_t&lt; T &gt;, iterator_width_v&lt; T &gt; &gt;</type>
       <name>wide_value_type_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga55234286d380ec9a9baef96a65649356</anchor>
+      <anchor>gac7518d1b6d2c834ae512ff5d91702ee6</anchor>
       <arglist></arglist>
     </member>
     <member kind="enumeration">
@@ -4351,15 +4267,15 @@
       <type>auto</type>
       <name>operator==</name>
       <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>ga8a5020911faf4ccefcfb1d2a8b718719</anchor>
-      <arglist>(logical&lt; wide&lt; T, Cardinal &gt; &gt; a, logical&lt; wide&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
+      <anchor>ga3ef907b27509bf214214e68e2b220bf7</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>operator!=</name>
       <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>gaa3dfaa4cfdde3a9e71e878d8fe9dce3a</anchor>
-      <arglist>(logical&lt; wide&lt; T, Cardinal &gt; &gt; a, logical&lt; wide&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
+      <anchor>ga85bb6815a19a31da7c066eff02b0fe51</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
     </member>
     <member kind="function">
       <type>constexpr auto</type>
@@ -4400,8 +4316,8 @@
       <type>aligned_ptr&lt; Type const, Lanes &gt;</type>
       <name>as_aligned</name>
       <anchorfile>namespaceeve.html</anchorfile>
-      <anchor>a5c8abb85533f462eaf77e6b4bc945b7f</anchor>
-      <arglist>(Type const *ptr, Lanes) noexcept</arglist>
+      <anchor>a3c53756a9ccbe3141bd80b580ac28635</anchor>
+      <arglist>(Type const *ptr, lanes_t&lt; Lanes &gt;) noexcept</arglist>
     </member>
     <member kind="function">
       <type>aligned_ptr&lt; Type const &gt;</type>
@@ -4428,8 +4344,8 @@
       <type>constexpr bool</type>
       <name>is_aligned</name>
       <anchorfile>group__eve__memory.html</anchorfile>
-      <anchor>ga3c06e236e6195d1a36a43e0fcc7c5eca</anchor>
-      <arglist>(T *ptr, Lanes lanes) noexcept</arglist>
+      <anchor>ga13a0d8e8825a7ee05e9f6a7e246405b2</anchor>
+      <arglist>(T *ptr, Lanes n) noexcept</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -4484,15 +4400,15 @@
       <type></type>
       <name>wide</name>
       <anchorfile>namespaceeve.html</anchorfile>
-      <anchor>a69ab9db52c90128a055b0aaf62db8892</anchor>
-      <arglist>(S const &amp;) -&gt; wide&lt; S, expected_cardinal_t&lt; S &gt; &gt;</arglist>
+      <anchor>a0bb3f9282c17f1734e5606a62b6fdb0f</anchor>
+      <arglist>(S const &amp;) -&gt; wide&lt; S, expected_width_v&lt; S &gt; &gt;</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>namespaceeve.html</anchorfile>
-      <anchor>ac72f0e04016942948dc0d1bf861296f4</anchor>
-      <arglist>(S, Ss...) -&gt; wide&lt; S, fixed&lt; 1+sizeof...(Ss)&gt; &gt;</arglist>
+      <anchor>a3d0eb616e91479dc1066fd0a28fe0b40</anchor>
+      <arglist>(S, Ss...) -&gt; wide&lt; S, 1+sizeof...(Ss)&gt;</arglist>
     </member>
     <member kind="variable">
       <type>typedef</type>
@@ -4502,10 +4418,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>constexpr std::ptrdiff_t</type>
-      <name>nofs_cardinal_v</name>
+      <type>constexpr width_type</type>
+      <name>nofs_width_v</name>
       <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gab4d8e703ad1e3e94918f3a3ff44e1324</anchor>
+      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>fixed</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>gac7804356acd87a6000ca3eca9787ff10</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -8299,15 +8222,15 @@
       <type></type>
       <name>wide</name>
       <anchorfile>namespaceeve.html</anchorfile>
-      <anchor>a69ab9db52c90128a055b0aaf62db8892</anchor>
-      <arglist>(S const &amp;) -&gt; wide&lt; S, expected_cardinal_t&lt; S &gt; &gt;</arglist>
+      <anchor>a0bb3f9282c17f1734e5606a62b6fdb0f</anchor>
+      <arglist>(S const &amp;) -&gt; wide&lt; S, expected_width_v&lt; S &gt; &gt;</arglist>
     </member>
     <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>namespaceeve.html</anchorfile>
-      <anchor>ac72f0e04016942948dc0d1bf861296f4</anchor>
-      <arglist>(S, Ss...) -&gt; wide&lt; S, fixed&lt; 1+sizeof...(Ss)&gt; &gt;</arglist>
+      <anchor>a3d0eb616e91479dc1066fd0a28fe0b40</anchor>
+      <arglist>(S, Ss...) -&gt; wide&lt; S, 1+sizeof...(Ss)&gt;</arglist>
     </member>
   </compound>
   <compound kind="namespace">
@@ -8445,13 +8368,6 @@
       <name>eve::algo::get_types_to_consider_for</name>
       <anchorfile>group__eve__algo__traits__dev.html</anchorfile>
       <anchor>gaea3dda7eb8ca3268808caac3dd41fdcc</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>rbr::result::fetch_t&lt;(force_cardinal_key|eve_implementation_defined{}), Traits &gt;</type>
-      <name>eve::algo::iteration_cardinal_t</name>
-      <anchorfile>group__eve__algo__traits__dev.html</anchorfile>
-      <anchor>ga967c316c157e858ddb09a73a90e77896</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -8852,20 +8768,20 @@
     <name>eve_arch</name>
     <title>Architecture related Types and Helpers</title>
     <filename>group__eve__arch.html</filename>
-    <class kind="struct">eve::fundamental_cardinal</class>
+    <class kind="struct">eve::fundamental_width</class>
     <class kind="struct">eve::platform</class>
     <member kind="typedef">
-      <type>fixed&lt; expected_cardinal_v&lt; Type, ABI &gt; &gt;</type>
-      <name>eve::expected_cardinal_t</name>
+      <type>lanes_t&lt; expected_width_v&lt; Type, ABI &gt; &gt;</type>
+      <name>eve::expected_width_t</name>
       <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gab707570aa2d35678c5cd5c686a994d57</anchor>
+      <anchor>gaca2238da980f8b3f68896597be4188b8</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>constexpr std::ptrdiff_t</type>
-      <name>eve::nofs_cardinal_v</name>
+      <type>constexpr width_type</type>
+      <name>eve::nofs_width_v</name>
       <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gab4d8e703ad1e3e94918f3a3ff44e1324</anchor>
+      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -11933,8 +11849,8 @@
       <type>constexpr bool</type>
       <name>eve::is_aligned</name>
       <anchorfile>group__eve__memory.html</anchorfile>
-      <anchor>ga3c06e236e6195d1a36a43e0fcc7c5eca</anchor>
-      <arglist>(T *ptr, Lanes lanes) noexcept</arglist>
+      <anchor>ga13a0d8e8825a7ee05e9f6a7e246405b2</anchor>
+      <arglist>(T *ptr, Lanes n) noexcept</arglist>
     </member>
     <member kind="variable">
       <type>constexpr auto</type>
@@ -12511,7 +12427,7 @@
     <name>eve_simd_concepts</name>
     <title>SIMD Concepts</title>
     <filename>group__eve__simd__concepts.html</filename>
-    <concept>eve::wide_cardinal</concept>
+    <concept>eve::wide_width</concept>
     <concept>eve::combinable</concept>
     <concept>eve::combinable_to</concept>
     <concept>eve::irregular_predicate</concept>
@@ -12638,26 +12554,33 @@
     <title>SIMD related types</title>
     <filename>group__eve__simd__types.html</filename>
     <namespace>eve::_</namespace>
-    <class kind="struct">eve::fixed</class>
     <class kind="struct">eve::logical&lt; T &gt;</class>
-    <class kind="struct">eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;</class>
+    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
     <class kind="struct">eve::wide</class>
     <class kind="struct">eve::top_bits</class>
+    <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::pattern_t</class>
     <class kind="struct">eve::float16_t</class>
     <member kind="function">
       <type>auto</type>
       <name>eve::operator==</name>
       <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>ga8a5020911faf4ccefcfb1d2a8b718719</anchor>
-      <arglist>(logical&lt; wide&lt; T, Cardinal &gt; &gt; a, logical&lt; wide&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
+      <anchor>ga3ef907b27509bf214214e68e2b220bf7</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
     </member>
     <member kind="function">
       <type>auto</type>
       <name>eve::operator!=</name>
       <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>gaa3dfaa4cfdde3a9e71e878d8fe9dce3a</anchor>
-      <arglist>(logical&lt; wide&lt; T, Cardinal &gt; &gt; a, logical&lt; wide&lt; U, Cardinal &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
+      <anchor>ga85bb6815a19a31da7c066eff02b0fe51</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>eve::fixed</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>gac7804356acd87a6000ca3eca9787ff10</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>constexpr std::ptrdiff_t</type>
@@ -13043,29 +12966,29 @@
     <filename>group__eve__traits.html</filename>
     <class kind="struct">eve::as</class>
     <class kind="struct">eve::as_element</class>
-    <class kind="struct">eve::cardinal</class>
     <class kind="struct">eve::common_compatible</class>
     <class kind="struct">eve::common_type</class>
     <class kind="struct">eve::comparisons</class>
     <class kind="struct">eve::element_type</class>
     <class kind="struct">eve::underlying_type</class>
+    <class kind="struct">eve::width</class>
     <concept>eve::same_lanes_or_scalar</concept>
     <concept>eve::same_lanes_or_scalar_tuple</concept>
     <concept>eve::same_lanes</concept>
     <concept>eve::same_types</concept>
     <concept>eve::same_types_tuple</concept>
     <member kind="typedef">
-      <type>decltype(_::iterator_cardinal_impl&lt; T &gt;())</type>
-      <name>eve::iterator_cardinal_t</name>
+      <type>decltype(_::iterator_width_impl&lt; T &gt;())</type>
+      <name>eve::iterator_width_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga331d84fa4b64e5deb329b1a09d60c747</anchor>
+      <anchor>ga7ae3e81e8c073ad31b70c384a2774336</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>fixed&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
+      <type>lanes_t&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
       <name>eve::max_lanes_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga4a03242c42306d4595845cb329d5d7ec</anchor>
+      <anchor>ga80306f1fa8a7aeb0e0bab1f7a333d976</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -13076,10 +12999,10 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>as_wide_t&lt; value_type_t&lt; T &gt;, iterator_cardinal_t&lt; T &gt; &gt;</type>
+      <type>as_wide_t&lt; value_type_t&lt; T &gt;, iterator_width_v&lt; T &gt; &gt;</type>
       <name>eve::wide_value_type_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga55234286d380ec9a9baef96a65649356</anchor>
+      <anchor>gac7518d1b6d2c834ae512ff5d91702ee6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -13263,9 +13186,9 @@
     <filename>group__eve__algo__divisible__by__cardinal.html</filename>
     <member kind="variable">
       <type>constexpr auto</type>
-      <name>eve::algo::divisible_by_cardinal</name>
+      <name>eve::algo::divisible_by_width</name>
       <anchorfile>group__eve__algo__divisible__by__cardinal.html</anchorfile>
-      <anchor>ga01b72d95d26f28c2c8715af53bef8f53</anchor>
+      <anchor>gad013da968fe0044508d75c9e9df33dde</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -13299,9 +13222,9 @@
     <filename>group__eve__algo__force__cardinal.html</filename>
     <member kind="variable">
       <type>constexpr auto</type>
-      <name>eve::algo::force_cardinal</name>
+      <name>eve::algo::force_width</name>
       <anchorfile>group__eve__algo__force__cardinal.html</anchorfile>
-      <anchor>ga129b5b6d565ac288ce78eec6ecbb5e0b</anchor>
+      <anchor>ga2d2777d200c404a55dfb227aa00b9d82</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -13442,7 +13365,7 @@
     <title>Design Decisions</title>
     <filename>design_rationale.html</filename>
     <docanchor file="design_rationale.html" title="/__w/eve/eve/doc/internals/design.md">md__2____w_2eve_2eve_2doc_2internals_2design</docanchor>
-    <docanchor file="design_rationale.html" title="SIMD registers as Type x Cardinal">rationale-simd</docanchor>
+    <docanchor file="design_rationale.html" title="SIMD registers as Type x Width">rationale-simd</docanchor>
     <docanchor file="design_rationale.html" title="Callable Function Objects as main API">rationale-callable</docanchor>
     <docanchor file="design_rationale.html" title="Function customization via higher-order decorator">rationale-decorator</docanchor>
     <docanchor file="design_rationale.html" title="Masked operations support">rationale-mask</docanchor>

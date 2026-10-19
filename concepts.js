@@ -4,7 +4,7 @@ var concepts =
       [ "algo", null, [
         [ "non_owning_range", "concepteve_1_1algo_1_1non__owning__range.html", null ]
       ] ],
-      [ "wide_cardinal", "concepteve_1_1wide__cardinal.html", null ],
+      [ "wide_width", "concepteve_1_1wide__width.html", null ],
       [ "combinable", "concepteve_1_1combinable.html", null ],
       [ "combinable_to", "concepteve_1_1combinable__to.html", null ],
       [ "conditional_expr", "concepteve_1_1conditional__expr.html", null ],

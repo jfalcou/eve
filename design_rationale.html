@@ -126,15 +126,15 @@ $(function(){initNavTree('design_rationale.html','',''); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__2____w_2eve_2eve_2doc_2internals_2design"></a></p>
 <h1 class="doxsection"><a class="anchor" id="rationale-simd"></a>
-SIMD registers as Type x Cardinal</h1>
-<p>There is multiple way to abstract away SIMD registers. The choice made by <b>EVE</b> is to provide a type interface based on the underlying <b>type</b> and <b>cardinal</b> (or number of lanes).</p>
+SIMD registers as Type x Width</h1>
+<p>There is multiple way to abstract away SIMD registers. The choice made by <b>EVE</b> is to provide a type interface based on the underlying <b>type</b> and <b>width</b> (or number of lanes).</p>
 <p>One can then define a SIMD type by specifying:</p>
 <ul>
 <li><p class="startli"><b>Only the base type: <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float&gt;</span></b></p>
-<p class="startli">In this case, the best cardinal for the current architecture will be selected and will ensure optimal performance for the user.</p>
+<p class="startli">In this case, the best width for the current architecture will be selected and will ensure optimal performance for the user.</p>
 </li>
-<li><p class="startli"><b>The base type and cardinal: <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt; float, <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt; 8 &gt; &gt;</span></b></p>
-<p class="startli">This interface is more geared toward power users that may requires a specific cardinal for their algorithm on any architecture. In this case, <b>EVE</b> will take care of ensuring the semantic of such code is correct over any architecture. This includes emulating smaller than usual cardinal using regular registers or aggregating multiple registers to support greater than usual cardinal.</p>
+<li><p class="startli"><b>The base type and width: <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;float, 8&gt;</span></b></p>
+<p class="startli">This interface is more geared toward power users that may requires a specific width for their algorithm on any architecture. In this case, <b>EVE</b> will take care of ensuring the semantic of such code is correct over any architecture. This includes emulating smaller than usual width using regular registers or aggregating multiple registers to support greater than usual width.</p>
 </li>
 </ul>
 <p>This enables for SIMD code to be written in a complete architecture-agnostic way from the get go.</p>

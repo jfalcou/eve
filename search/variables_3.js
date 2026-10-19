@@ -15,7 +15,7 @@ var searchData=
   ['dist_12',['dist',['../group__eve__core__arithmetic.html#ga0278a079dfdeb50fcb31e27b3ac191f9',1,'eve']]],
   ['div_13',['div',['../group__eve__core__arithmetic.html#gaf14eacd69db8a64fecf63346475c37fb',1,'eve']]],
   ['div_5f180_14',['div_180',['../group__eve__math__trig.html#gae38f095b02721ec8d4e23bf613a3ddba',1,'eve']]],
-  ['divisible_5fby_5fcardinal_15',['divisible_by_cardinal',['../group__eve__algo__divisible__by__cardinal.html#ga01b72d95d26f28c2c8715af53bef8f53',1,'eve::algo']]],
+  ['divisible_5fby_5fwidth_15',['divisible_by_width',['../group__eve__algo__divisible__by__cardinal.html#gad013da968fe0044508d75c9e9df33dde',1,'eve::algo']]],
   ['dot_16',['dot',['../group__eve__core__arithmetic.html#ga9629bc8a3ce2a95e45bd49e118605156',1,'eve']]],
   ['double_5ffactorial_17',['double_factorial',['../group__eve__special.html#gaedc2bffc2e3f263e52f980f82a74d5cb',1,'eve']]],
   ['downward_18',['downward',['../group__eve__core__decorators.html#ga8e43b606df3ea6bfb3d00a9951f3e5a2',1,'eve']]]

@@ -308,7 +308,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt;:bit_and(2.1,2.,2.,2.,2.,2.,2.)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae3e108a8e508c1fb8b0aab2c4d76d00c">eve::bit_and</a>(2.1,2.,2.,2.,2.,2.,2.) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1284,7 +1284,7 @@ Variables</h2></td></tr>
 <p><b>Return value</b> The value of the selected bits is returned.</p>
 <ul>
 <li>In a short way (omitting casting details to bring all bit sizes of the parameters equal), it means that the result is composed of the bits of <span class="tt">x</span> for which the corresponding bit of <span class="tt">m</span> is set and the bits of <span class="tt">y</span> for which the corresponding bit of <span class="tt">m</span> is unset.</li>
-<li>If <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a>, the type of the result has the element type of the common type of <span class="tt">x</span> and <span class="tt">y</span> and the maximum of the cardinals of <span class="tt">m</span> and this type, otherwise it is the type of <span class="tt">x</span>.</li>
+<li>If <span class="tt">x</span> or <span class="tt">y</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a>, the type of the result has the element type of the common type of <span class="tt">x</span> and <span class="tt">y</span> and the maximum of the widths of <span class="tt">m</span> and this type, otherwise it is the type of <span class="tt">x</span>.</li>
 </ul>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="comment">// revision 2</span></div>
@@ -1425,7 +1425,7 @@ Variables</h2></td></tr>
 </ol>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The call <span class="tt"><a class="el" href="#gad35ee755a985994eb93b8dde1fac8a09" title="strict_elementwise_callable object computing a logical left shift.">bit_shl(x, n)</a></span> is equivalent to <span class="tt">x &lt;&lt; n</span> if <span class="tt">x</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a>.</li>
-<li>The types must share the same cardinal or be scalar and if \(N\) is the size in bits of the element type of <span class="tt">x</span>, all elements of n must belong to the interval \([0, N[\) or the result is undefined.</li>
+<li>The types must share the same width or be scalar and if \(N\) is the size in bits of the element type of <span class="tt">x</span>, all elements of n must belong to the interval \([0, N[\) or the result is undefined.</li>
 </ul>
 </dd></dl>
 <h2 class="groupheader">Example </h2>
@@ -1497,7 +1497,7 @@ Variables</h2></td></tr>
 </ol>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>The call <span class="tt"><a class="el" href="#gafca1861f7d0524b057e04d120df08aff" title="strict_elementwise_callable object computing a logical right shift.">bit_shr(x, n)</a></span> is equivalent to <span class="tt">x &gt;&gt; n</span> if <span class="tt">x</span> is an <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">unsigned_value</a>.</li>
-<li>The types must share the same cardinal or be scalar and if \(N\) is the size in bits of the element type of <span class="tt">T</span>, all elements of n must belong to the interval: \([0, N[\) or the result is undefined.</li>
+<li>The types must share the same width or be scalar and if \(N\) is the size in bits of the element type of <span class="tt">T</span>, all elements of n must belong to the interval: \([0, N[\) or the result is undefined.</li>
 </ul>
 </dd></dl>
 <h2 class="groupheader">Example </h2>
@@ -1645,16 +1645,16 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi0{2, 4, 9, 5};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi1{1, 3, 3, 3};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi2{0, 2, 1, 2};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; wi3{0, -2, -1, 7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a> wi0{2, 4, 9, 5};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a> wi1{1, 3, 3, 3};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a> wi2{0, 2, 1, 2};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a> wi3{0, -2, -1, 7};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; std::showbase &lt;&lt; std::hex;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi0                                           = &quot;</span> &lt;&lt; wi0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi1                                           = &quot;</span> &lt;&lt; wi1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wi2                                           = &quot;</span> &lt;&lt; wi2 &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
-<div class="line">                                                                 </div>
+<div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs(wi0, wi1, wi2)                 = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4cbb358e89585c3c8d97d0f06871237d">eve::bit_swap_pairs</a>(wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs[ignore_last(2)](wi0, wi1, wi2) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4cbb358e89585c3c8d97d0f06871237d">eve::bit_swap_pairs</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](wi0, wi1, wi2) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bit_swap_pairs[wi3 &gt; 0](wi0, wi1, wi3)        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga4cbb358e89585c3c8d97d0f06871237d">eve::bit_swap_pairs</a>[wi3 &gt;= 0](wi0, wi1, wi3) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
@@ -2844,7 +2844,7 @@ Variables</h2></td></tr>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>Bitwise rotation of each lane of <span class="tt">x</span> by <span class="tt">n</span> bits to the left. The types must share the same cardinal or be scalar and if <span class="tt">N</span> is the size in bits of the element type of <span class="tt">T</span>, all <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elements</a> of n must belong to the interval: <span class="tt">[0, N[</span> or the result is undefined.</li>
+<li>Bitwise rotation of each lane of <span class="tt">x</span> by <span class="tt">n</span> bits to the left. The types must share the same width or be scalar and if <span class="tt">N</span> is the size in bits of the element type of <span class="tt">T</span>, all <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elements</a> of n must belong to the interval: <span class="tt">[0, N[</span> or the result is undefined.</li>
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
 </ol>
 <h2 class="groupheader">Example </h2>
@@ -2911,7 +2911,7 @@ Variables</h2></td></tr>
 </ul>
 <p><b>Return value</b></p>
 <ol type="1">
-<li>Bitwise rotation of each lane of <span class="tt">x</span> by <span class="tt">n</span> bits to the right. The types must share the same cardinal or be scalar and if <span class="tt">N</span> is the size in bits of the element type of <span class="tt">T</span>, all <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elements</a> of n must belong to the interval: <span class="tt">[0, N[</span> or the result is undefined.<ol type="a">
+<li>Bitwise rotation of each lane of <span class="tt">x</span> by <span class="tt">n</span> bits to the right. The types must share the same width or be scalar and if <span class="tt">N</span> is the size in bits of the element type of <span class="tt">T</span>, all <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elements</a> of n must belong to the interval: <span class="tt">[0, N[</span> or the result is undefined.<ol type="a">
 <li><a class="el" href="conditional.html" title="Conditional operations">The operation is performed conditionally</a></li>
 </ol>
 </li>
@@ -3262,7 +3262,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>

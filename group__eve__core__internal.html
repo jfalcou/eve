@@ -257,7 +257,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; bitofsign[wi0 != 0](wi0)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae174caf55fb3f276410b94f3b7c5dbfb">eve::bitofsign</a>[wi0 != 0](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1025,7 +1025,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, eve::fixed&lt;8&gt;</a>&gt; w{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, 8&gt;</a> w{</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-0.0f),</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(0.0f),</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(32768.0f),</div>
@@ -1041,7 +1041,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[saturated](w) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[raw](w)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt; iw{0, 1, 32767, -32768};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a> iw{0, 1, 32767, -32768};</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- iw                     = &quot;</span> &lt;&lt; iw &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint(iw)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>(iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; nextint[saturated](iw) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gac2a2df9c3159d70e5e580c008fdeb66c">eve::nextint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -1289,7 +1289,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, eve::fixed&lt;8&gt;</a>&gt; w{</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;eve::float16_t, 8&gt;</a> w{</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(-0.0f),</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(0.0f),</div>
 <div class="line">    <span class="keyword">static_cast&lt;</span><a class="code hl_struct" href="structeve_1_1float16__t.html">eve::float16_t</a><span class="keyword">&gt;</span>(32768.0f),</div>
@@ -1305,7 +1305,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[saturated](w) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[raw](w)       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gab99e44220c7f6c31754e4fbadec3403a">eve::raw</a>](w) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt; iw{0, 1, 32767, -32768};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a> iw{0, 1, 32767, -32768};</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- iw                     = &quot;</span> &lt;&lt; iw &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint(iw)            = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>(iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; prevint[saturated](iw) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3ad43aa378eecf62d5b437b320d45d84">eve::prevint</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](iw) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>

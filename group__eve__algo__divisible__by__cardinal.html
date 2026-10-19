@@ -131,11 +131,12 @@ $(function(){initNavTree('group__eve__algo__divisible__by__cardinal.html','','')
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga01b72d95d26f28c2c8715af53bef8f53" id="r_ga01b72d95d26f28c2c8715af53bef8f53"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga01b72d95d26f28c2c8715af53bef8f53">eve::algo::divisible_by_cardinal</a> = ::rbr::flag( divisible_by_cardinal_tag{} )</td></tr>
+<tr class="memitem:gad013da968fe0044508d75c9e9df33dde" id="r_gad013da968fe0044508d75c9e9df33dde"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gad013da968fe0044508d75c9e9df33dde">eve::algo::divisible_by_width</a> = ::rbr::flag( divisible_by_width_tag{} )</td></tr>
+<tr class="memdesc:gad013da968fe0044508d75c9e9df33dde"><td class="mdescLeft">&#160;</td><td class="mdescRight">an trait to tell that the input data is strictly divisible by width.  <br /></td></tr>
 </table>
 <a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
-<a id="ga01b72d95d26f28c2c8715af53bef8f53" name="ga01b72d95d26f28c2c8715af53bef8f53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga01b72d95d26f28c2c8715af53bef8f53">&#9670;&#160;</a></span>divisible_by_cardinal</h2>
+<a id="gad013da968fe0044508d75c9e9df33dde" name="gad013da968fe0044508d75c9e9df33dde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad013da968fe0044508d75c9e9df33dde">&#9670;&#160;</a></span>divisible_by_width</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -144,7 +145,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::algo::divisible_by_cardinal = ::rbr::flag( divisible_by_cardinal_tag{} )</td>
+          <td class="memname">auto eve::algo::divisible_by_width = ::rbr::flag( divisible_by_width_tag{} )</td>
         </tr>
       </table>
   </td>
@@ -153,19 +154,20 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="headerfile"><b>Header file</b> <code>#include &lt;eve/module/algo.hpp&gt;</code></div><div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+
+<p>an trait to tell that the input data is strictly divisible by width. </p>
+<div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga01b72d95d26f28c2c8715af53bef8f53">divisible_by_cardinal</a> = eve_implementation_defined;</div>
+<div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> divisible_by_cardinal = eve_implementation_defined;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__divisible__by__cardinal_html_ga01b72d95d26f28c2c8715af53bef8f53"><div class="ttname"><a href="#ga01b72d95d26f28c2c8715af53bef8f53">eve::algo::divisible_by_cardinal</a></div><div class="ttdeci">constexpr auto divisible_by_cardinal</div><div class="ttdef"><b>Definition</b> traits.hpp:428</div></div>
 </div><!-- fragment --> </div><p>States that the range holds a whole number of SIMD registers, so the loop needs no tail handling. Alignment takes precedence: a loop that aligns its accesses reads a partial first register, and the tail handling returns. The trait therefore takes effect on an unaligned pointer, or with <a class="el" href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">eve::algo::no_aligning</a>.</p>
-<p>A range whose two ends are aligned pointers with an alignment at least the cardinal carries this trait already, deduced.</p>
+<dl class="section note"><dt>Note</dt><dd>this trait is deduced automatically if both begin and end of the range are <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> with alignment &gt;= width. If you are using this, consider aligning your data too.</dd></dl>
 <div class="fragment"><div class="line">std::vector&lt;float&gt; data(1024);</div>
 <div class="line"><span class="keyword">auto</span> positive = [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x &gt; 0.f; };</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// 1024 is a multiple of every cardinal: no tail, the accesses left unaligned.</span></div>
-<div class="line"><span class="keyword">auto</span> found = <a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[<a class="code hl_variable" href="#ga01b72d95d26f28c2c8715af53bef8f53">divisible_by_cardinal</a>][<a class="code hl_variable" href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">no_aligning</a>](data, positive);</div>
-<div class="ttc" id="agroup__eve__algo__no__aligning_html_ga07dd1178b2904dc377069bc34452a84e"><div class="ttname"><a href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdef"><b>Definition</b> traits.hpp:465</div></div>
+<div class="line"><span class="keyword">auto</span> found = <a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[divisible_by_cardinal][<a class="code hl_variable" href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">no_aligning</a>](data, positive);</div>
+<div class="ttc" id="agroup__eve__algo__no__aligning_html_ga07dd1178b2904dc377069bc34452a84e"><div class="ttname"><a href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdef"><b>Definition</b> traits.hpp:455</div></div>
 <div class="ttc" id="agroup__eve__algos_html_gadf0762ce0ad64c41ff1eb704a436894d"><div class="ttname"><a href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition</b> find.hpp:130</div></div>
 </div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e">no_aligning</a> </dd></dl>
 

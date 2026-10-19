@@ -1,7 +1,7 @@
 var searchData=
 [
   ['half_0',['half',['../group__eve__core__constants.html#ga615c9124768fecc05e04d58ae24f8870',1,'eve']]],
-  ['half_5flogical_1',['half_logical',['../structeve_1_1top__bits.html#a448b36c0f435bda8170fabbe183de7be',1,'eve::top_bits']]],
+  ['half_5flogical_1',['half_logical',['../structeve_1_1top__bits.html#a635df1ca3b5523b9ab8138ba1d4f7b30',1,'eve::top_bits']]],
   ['handling_2',['Precision handling',['../glossary_semantic.html#autotoc_md71',1,'']]],
   ['handling_20eve_3a_3awide_3',['Handling eve::wide',['../intro-01.html#autotoc_md96',1,'']]],
   ['handling_20multiple_20architecture_20targets_4',['Handling Multiple Architecture Targets',['../multiarch.html',1,'']]],
@@ -15,10 +15,10 @@ var searchData=
   ['has_5fzeros_12',['has_zeros',['../structeve_1_1pattern__t.html#adaf1e7da40b7b86a9e00d120044039df',1,'eve::pattern_t']]],
   ['heaviside_13',['heaviside',['../group__eve__core__arithmetic.html#ga961f3ecc560ee5d2bcabfe4dd63519d6',1,'eve']]],
   ['heavy_20translation_20units_14',['Heavy translation units',['../dev_cmake.html#autotoc_md60',1,'']]],
-  ['helper_20type_15',['Helper type',['../structeve_1_1underlying__type.html#autotoc_md29',1,'']]],
-  ['helper_20types_16',['Helper types',['../structeve_1_1fundamental__cardinal.html#autotoc_md2',1,'Helper types'],['../structeve_1_1common__compatible.html#autotoc_md24',1,'Helper types'],['../structeve_1_1element__type.html#autotoc_md27',1,'Helper types']]],
+  ['helper_20type_15',['Helper type',['../structeve_1_1underlying__type.html#autotoc_md28',1,'']]],
+  ['helper_20types_16',['Helper types',['../structeve_1_1fundamental__width.html#autotoc_md2',1,'Helper types'],['../structeve_1_1common__compatible.html#autotoc_md23',1,'Helper types'],['../structeve_1_1element__type.html#autotoc_md26',1,'Helper types']]],
   ['helper_20types_20and_20functions_17',['Helper Types and Functions',['https://jfalcou.github.io/kumi/group__kumi__functional.html',1,'Helper Types and Functions'],['https://jfalcou.github.io/kumi/group__kumi__utility.html',1,'Helper Types and Functions']]],
-  ['helper_20variable_20template_18',['Helper variable template',['../group__eve__arch.html#autotoc_md0',1,'Helper variable template'],['../structeve_1_1fundamental__cardinal.html#autotoc_md3',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md28',1,'Helper variable template']]],
+  ['helper_20variable_20template_18',['Helper variable template',['../group__eve__arch.html#autotoc_md0',1,'Helper variable template'],['../structeve_1_1fundamental__width.html#autotoc_md3',1,'Helper variable template'],['../structeve_1_1supports__ordering.html#autotoc_md27',1,'Helper variable template']]],
   ['helpers_19',['Helpers',['../group__eve__arch.html',1,'Architecture related Types and Helpers'],['../group__eve__arch.html#autotoc_md4',1,'Helpers'],['https://jfalcou.github.io/kumi/group__kumi__details.html',1,'Internal Implementation Helpers']]],
   ['helpers_20',['Accuracy helpers',['../group__eve__core__accuracy.html',1,'']]],
   ['hermite_21',['hermite',['../group__eve__polynomial.html#ga6cb61eb743e4ac43c44bd0b330f8a8c9',1,'eve']]],

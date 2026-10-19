@@ -5,5 +5,5 @@ var searchData=
   ['fill_2',['fill',['../structeve_1_1algo_1_1soa__vector.html#ab508d79bcf317cfc3a543d0c3dcb26aa',1,'eve::algo::soa_vector']]],
   ['fix_5fpattern_3',['fix_pattern',['../structeve_1_1pattern__t.html#abfc27bc9e535aab6f92c30fc1f7ec756',1,'eve::pattern_t::fix_pattern()'],['../structeve_1_1pattern__t.html#abfc27bc9e535aab6f92c30fc1f7ec756',1,'eve::fix_pattern()']]],
   ['foldable_4',['foldable',['https://jfalcou.github.io/kumi/structkumi_1_1function_1_1foldable_afcef35f6193e023d1434f2b7d45bfd1c.html#afcef35f6193e023d1434f2b7d45bfd1c',1,'kumi::function::foldable']]],
-  ['front_5',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Cardinal_01_4_01_4.html#a7de72be98e577d883e5d4e13487bcb20',1,'eve::logical&lt; wide&lt; Type, Cardinal &gt; &gt;::front()'],['../structeve_1_1wide.html#aa279df4c99dbc46206e9f70b44b1f769',1,'eve::wide::front()']]]
+  ['front_5',['front',['../structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html#a7697c63969d3167aa6d72d75d77aaafc',1,'eve::logical&lt; wide&lt; Type, Width &gt; &gt;::front()'],['../structeve_1_1wide.html#a182f651a9d868db19242c5cdd7b665f7',1,'eve::wide::front()']]]
 ];

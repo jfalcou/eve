@@ -286,7 +286,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::ω</b> = <a class="el"
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; beta[qf != 3.0f](pf, qf)    = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga82b53a249d6073de3db11e4aa3792333">eve::beta</a>[qf != 3.0f](pf, qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1478,13 +1478,13 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::ω</b> = <a class="el"
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt; z{0.125, 15, -2.45, 1.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, 4&gt;</a> z{0.125, 15, -2.45, 1.0};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=2; i &lt; 5 ; ++i)</div>
 <div class="line">  {</div>
 <div class="line">    std::cout &lt;&lt; <a class="code hl_variable" href="#gadf7af0b7e2002701bbdbb8419d6757eb">eve::hurwitz</a>(i, z) &lt;&lt; std::endl;</div>
 <div class="line">  }</div>
-<div class="line"><span class="comment">//   using w_t =  eve::wide&lt;double, eve::fixed&lt;1&gt;&gt;;</span></div>
+<div class="line"><span class="comment">//   using w_t =  eve::wide&lt;double, 1&gt;;</span></div>
 <div class="line"><span class="comment">//   std::cout &lt;&lt; eve::hurwitz(3.0, 15.0) &lt;&lt; std::endl;</span></div>
 <div class="line"><span class="comment">//   std::cout &lt;&lt; &quot; ================================ &quot;&lt;&lt; std::endl;</span></div>
 <div class="line"><span class="comment">//   std::cout &lt;&lt; eve::hurwitz(3.0, w_t(15.0)) &lt;&lt; std::endl;</span></div>
@@ -2075,7 +2075,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::ω</b> = <a class="el"
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt; z{0.125, 15, -2.45, 1.0};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, 4&gt;</a> z{0.125, 15, -2.45, 1.0};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i=0; i &lt; 5 ; ++i)</div>
 <div class="line">  {</div>

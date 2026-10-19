@@ -157,7 +157,7 @@ Variables</h2></td></tr>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga31ef5302d899fb36aeff5146a7187cef">allow_frequency_scaling</a> = eve_implementation_defined;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__allow__frequency__scaling_html_ga31ef5302d899fb36aeff5146a7187cef"><div class="ttname"><a href="#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a></div><div class="ttdeci">constexpr auto allow_frequency_scaling</div><div class="ttdef"><b>Definition</b> traits.hpp:702</div></div>
+<div class="ttc" id="agroup__eve__algo__allow__frequency__scaling_html_ga31ef5302d899fb36aeff5146a7187cef"><div class="ttname"><a href="#ga31ef5302d899fb36aeff5146a7187cef">eve::algo::allow_frequency_scaling</a></div><div class="ttdeci">constexpr auto allow_frequency_scaling</div><div class="ttdef"><b>Definition</b> traits.hpp:692</div></div>
 </div><!-- fragment --> </div><p>Allows the algorithm to use the widest registers of the target. By default the cardinal stays clear of 512 bit registers, because some Intel cores lower their clock while AVX-512 instructions run and for a while after, which slows the scalar code that follows. With this trait the algorithm takes the full width, which is worth it on a long range only. The <a class="el" href="freqscale.html" title="Frequency Scaling.">Frequency Scaling.</a> tutorial measures the effect.</p>
 <div class="fragment"><div class="line">std::vector&lt;float&gt; data(1 &lt;&lt; 20);</div>
 <div class="line"> </div>
@@ -168,7 +168,7 @@ Variables</h2></td></tr>
 <ul>
 <li><a href="https://travisdowns.github.io/blog/2020/01/17/avxfreq1.html">Travis Downs: Gathering Intel on Intel AVX-512 Transitions</a></li>
 </ul>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__force__cardinal.html#ga129b5b6d565ac288ce78eec6ecbb5e0b">force_cardinal</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd>force_cardinal </dd></dl>
 
 </div>
 </div>

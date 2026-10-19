@@ -182,32 +182,32 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt;eve::scalar_value T&gt; eve::as_wide_t&lt;T&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v) <span class="keyword">noexcept</span>;                            <span class="comment">// 1</span></div>
-<div class="line">  <span class="keyword">template</span>&lt;eve::scalar_value T, std::ptrdiff_t N&gt; as_wide_t&lt;T&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
+<div class="line">  <span class="keyword">template</span>&lt;eve::scalar_value T, std::ptrdiff_t N&gt; as_wide_t&lt;T&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, <a class="code hl_struct" href="structeve_1_1lanes__t.html">lanes_t&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;  <span class="comment">// 2</span></div>
 <div class="line">  <span class="keyword">template</span>&lt;eve::simd_value T, std::<span class="keywordtype">size_t</span> I&gt; T <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, index_t&lt;I&gt; i) <span class="keyword">noexcept</span>;                 <span class="comment">// 3</span></div>
 <div class="line">  <span class="keyword">template</span>&lt;eve::simd_value T, std::<span class="keywordtype">size_t</span> I, std::ptrdiff_t N&gt;</div>
-<div class="line">  eve::as_wide_t&lt;T,fixed&lt;N&gt;&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, index_t&lt;I&gt; i, <a class="code hl_struct" href="structeve_1_1fixed.html">fixed&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;                      <span class="comment">// 4</span></div>
+<div class="line">  eve::as_wide_t&lt;T,N&gt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">broadcast</a>(T v, index_t&lt;I&gt; i, <a class="code hl_struct" href="structeve_1_1lanes__t.html">lanes_t&lt;N&gt;</a> sz) <span class="keyword">noexcept</span>;                      <span class="comment">// 4</span></div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__core__simd_html_ga0f764f21419f124e1e29c15718520a16"><div class="ttname"><a href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a></div><div class="ttdeci">constexpr auto broadcast</div><div class="ttdoc">Computes the.</div><div class="ttdef"><b>Definition</b> broadcast.hpp:79</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi_traits.hpp:15</div></div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
+<div class="ttc" id="astructeve_1_1lanes__t_html"><div class="ttname"><a href="structeve_1_1lanes__t.html">eve::lanes_t</a></div><div class="ttdoc">SIMD register width type.</div><div class="ttdef"><b>Definition</b> widths.hpp:48</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p><ul>
 <li><span class="tt">v</span>: A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">value</a>.</li>
 <li><span class="tt">i</span>: An eve::index instance indicating which lane of <span class="tt">x</span> to broadcast.</li>
-<li><span class="tt">sz</span>: An eve::lane instance indicating how many lanes to broadcast to.</li>
+<li><span class="tt">sz</span>: An eve::lanes instance indicating how many lanes to broadcast to.</li>
 </ul>
 <p><b>Return value</b></p><ol type="1">
 <li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T&gt;{v}</span>.</li>
-<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,<a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;&gt;{v}</span>.</li>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,N&gt;{v}</span>.</li>
 <li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">T{v.get(I)}</span>.</li>
-<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,<a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>&lt;N&gt;&gt;{v.get(I)}</span>.</li>
+<li>A <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">SIMD value</a> equals to <span class="tt">eve::as_wide_t&lt;T,N&gt;{v.get(I)}</span>.</li>
 </ol>
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 8&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -215,7 +215,7 @@ Variables</h2></td></tr>
 <div class="line">  wide_it pi = {-1, 2,-3, 4,-5, 6,-7, 8};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>( 7.6 ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(7.6, eve::lane&lt;8&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(7.6, eve::lanes&lt;8&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
@@ -224,10 +224,10 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">pi</a> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span></div>
-<div class="line">            &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(pi, eve::index&lt;5&gt;, eve::lane&lt;4&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            &lt;&lt; <a class="code hl_variable" href="#ga0f764f21419f124e1e29c15718520a16">eve::broadcast</a>(pi, eve::index&lt;5&gt;, eve::lanes&lt;4&gt; ) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__math__constants_html_gad32687fc782ada2bb223abb7722ac694"><div class="ttname"><a href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">eve::pi</a></div><div class="ttdeci">constexpr auto pi</div><div class="ttdoc">Callable object computing the constant .</div><div class="ttdef"><b>Definition</b> pi.hpp:79</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -304,7 +304,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="agroup__eve__core__simd_html_gaa40b2ed752ac083e7336bfcfb216545a"><div class="ttname"><a href="#gaa40b2ed752ac083e7336bfcfb216545a">eve::combine</a></div><div class="ttdeci">constexpr auto combine</div><div class="ttdoc">Combines two SIMD values in a larger one.</div><div class="ttdef"><b>Definition</b> combine.hpp:72</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
-<li><span class="tt">a</span>, <span class="tt">b</span>: two SIMD values of the same type and cardinal</li>
+<li><span class="tt">a</span>, <span class="tt">b</span>: two SIMD values of the same type and width</li>
 </ul>
 <p><b>Return value</b></p>
 <ul>
@@ -314,7 +314,7 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -407,7 +407,7 @@ Variables</h2></td></tr>
 <div class="line">{</div>
 <div class="line">  std::vector&lt;int&gt; v{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, eve::fixed&lt;4&gt;</a>&gt; res = <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a>(v.data(), <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a>&lt;<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;{0, 2, 2, 11});</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a> res = <a class="code hl_variable" href="#ga3cbe6596b8e7ca4d4d0611ac642fcf39">eve::gather</a>(v.data(), <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;unsigned char, 4&gt;</a>{0, 2, 2, 11});</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;res -&gt; &quot;</span> &lt;&lt; res &lt;&lt; std::endl;</div>
 <div class="line">}</div>
@@ -463,7 +463,7 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint32_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -514,7 +514,7 @@ Variables</h2></td></tr>
 <div class="line">                          (<span class="keywordtype">bool</span> l, <a class="code hl_concept" href="concepteve_1_1irregular__predicate.html">irregular_predicate&lt;std::ptrdiff_t&gt;</a> <span class="keyword">auto</span>&amp;&amp; f) -&gt; <span class="keywordtype">bool</span>;           <span class="comment">// (3)</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1irregular__predicate_html"><div class="ttname"><a href="concepteve_1_1irregular__predicate.html">eve::irregular_predicate</a></div><div class="ttdoc">std::predicate but doesn&#39;t require regularity</div><div class="ttdef"><b>Definition</b> invocable.hpp:97</div></div>
-<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:63</div></div>
 <div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition</b> conditional.hpp:52</div></div>
 <div class="ttc" id="agroup__eve__core__simd_html_ga48cbc739f85673ad20ccc29debcb2183"><div class="ttname"><a href="#ga48cbc739f85673ad20ccc29debcb2183">eve::iterate_selected</a></div><div class="ttdeci">constexpr auto iterate_selected</div><div class="ttdoc">a utility to do scalar iteration over all true elements in a logical.</div><div class="ttdef"><b>Definition</b> iterate_selected.hpp:82</div></div>
 <div class="ttc" id="astructeve_1_1top__bits_html"><div class="ttname"><a href="structeve_1_1top__bits.html">eve::top_bits</a></div><div class="ttdoc">The cheapest to get bitset for simd logical.</div><div class="ttdef"><b>Definition</b> top_bits.hpp:80</div></div>
@@ -653,7 +653,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keywordtype">float</span> data[2*<a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>()] = {};</div>
+<div class="line">  <span class="keywordtype">float</span> data[2*<a class="code hl_function" href="structeve_1_1wide.html#a4c5abb1c30d231b46212e2f7d61855a0">eve::wide&lt;float&gt;::size</a>()] = {};</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int&gt;</a>   indexes  = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 2*i; };</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> values   = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.5f * (1+i); };</div>
@@ -665,7 +665,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:443</div></div>
+<div class="ttc" id="astructeve_1_1wide_html_a4c5abb1c30d231b46212e2f7d61855a0"><div class="ttname"><a href="structeve_1_1wide.html#a4c5abb1c30d231b46212e2f7d61855a0">eve::wide::size</a></div><div class="ttdeci">static constexpr width_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:438</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -809,11 +809,11 @@ Variables</h2></td></tr>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">using </span>card_t = eve::cardinal_t&lt;eve::wide&lt;double&gt;&gt;;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> card = eve::width_v&lt;eve::wide&lt;double&gt;&gt;;</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double&gt;</a> wd = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.25 * (i+1); };</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float       , card_t&gt;</a> wf = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.f/(1+i); };</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, card_t&gt;</a> wi = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i+1; };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float       , card&gt;</a> wf = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> 1.f/(1+i); };</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, card&gt;</a> wi = [](<span class="keyword">auto</span> i) { <span class="keywordflow">return</span> i+1; };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(wf0,wi,wd)                       = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(wf,wi,wd)  &lt;&lt; std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; zip(eve::as&lt;data_block&gt;(),wf,wi,wd)) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;data_block&gt;</a>(),wf,wi,wd)  &lt;&lt; std::endl;</div>

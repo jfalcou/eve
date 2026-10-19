@@ -161,11 +161,11 @@ SIMD register of tuples</h1>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>simd</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;float&gt;</a> y)</div>
+<div class="line">  <span class="keyword">auto</span> to_polar(<a class="code hl_function" href="namespaceeve.html#a0bb3f9282c17f1734e5606a62b6fdb0f">eve::wide&lt;float&gt;</a> x, <a class="code hl_function" href="namespaceeve.html#a0bb3f9282c17f1734e5606a62b6fdb0f">eve::wide&lt;float&gt;</a> y)</div>
 <div class="line">  {</div>
 <div class="line">    <span class="keyword">auto</span> rho    = <a class="code hl_variable" href="group__eve__math__exp.html#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(x, y);</div>
 <div class="line">    <span class="keyword">auto</span> theta  = <a class="code hl_variable" href="group__eve__math__invtrig.html#ga4e3cc734432c96af2f4e1bfb576ea504">eve::atan2</a>(y, x);</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a69ab9db52c90128a055b0aaf62db8892">eve::wide&lt;kumi::tuple&lt;float,float&gt;</a>&gt;{ rho, theta };</div>
+<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceeve.html#a0bb3f9282c17f1734e5606a62b6fdb0f">eve::wide&lt;kumi::tuple&lt;float,float&gt;</a>&gt;{ rho, theta };</div>
 <div class="line">  }</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>The key element is the type of the return value of the function: <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;<a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>&lt;float,float&gt;&gt;</span>. By design, <a href="https://jfalcou.github.io/kumi/"><b>kumi::tuple</b></a> is able to be used as a template parameter for <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>. How do we interpret this type ? It logically behaves a SIMD register where each lane is an instance of the <a href="https://jfalcou.github.io/kumi/"><b>kumi::tuple</b></a>. Internally, it is stored as a <a href="https://jfalcou.github.io/kumi/"><b>kumi::tuple</b></a> of <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of each tuple's element. In other words, it performs automatic Array of Structure to Structure of Array conversion.</p>

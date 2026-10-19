@@ -370,7 +370,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; abs[saturated](wi0)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga67722c49041abeb17485c8961f961cd7">eve::abs</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaada98a0e92f1b86e9a3dd930ca345b13">eve::saturated</a>](wi0) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -646,8 +646,8 @@ Variables</h2></td></tr>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))/4, -<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))/4, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt; wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt; wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, 8&gt;</a> wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, 8&gt;</a> wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; std::setprecision(16) &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                           = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; std::setprecision(16) &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                           = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -1270,8 +1270,8 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cosine_similarity(b, a) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae42f1e89f46871950b9ec3175b3f0015">eve::cosine_similarity</a>(b, a) &lt;&lt; std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::cosine_similarity(b, b) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gae42f1e89f46871950b9ec3175b3f0015">eve::cosine_similarity</a>(b, b) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// simd cosine_similarity eve::wide&lt;vec3&lt;float&gt;, eve::fixed&lt;4&gt;&gt;;</span></div>
-<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="comment">// simd cosine_similarity eve::wide&lt;vec3&lt;float&gt;, 4&gt;;</span></div>
+<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, 4&gt;;</div>
 <div class="line">  <span class="keyword">auto</span> wa = wv3_t(a, a, b, b);</div>
 <div class="line">  <span class="keyword">auto</span> wb = wv3_t(b, a, a, b);</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;wa &quot;</span> &lt;&lt; wa &lt;&lt; std::endl;</div>
@@ -1285,7 +1285,7 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#gae42f1e89f46871950b9ec3175b3f0015">eve::cosine_similarity</a>(x, y) &lt;&lt;  std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <a class="code hl_variable" href="#gae42f1e89f46871950b9ec3175b3f0015">eve::cosine_similarity</a>(y, x) &lt;&lt;  std::endl;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
 <div class="line">  <span class="keyword">auto</span> wt1 = <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f">kumi::generate&lt;11&gt;</a>([](<span class="keyword">auto</span> p){<span class="keywordflow">return</span> w_t([p](<span class="keyword">auto</span> q){<span class="keywordflow">return</span> float(p+q); }); });</div>
 <div class="line">  <span class="keyword">auto</span> wt2 = <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f">kumi::generate&lt;11&gt;</a>([](<span class="keyword">auto</span> p){<span class="keywordflow">return</span> w_t([p](<span class="keyword">auto</span> q){<span class="keywordflow">return</span> p*p/float((q+1)); }); });</div>
 <div class="line">  std::cout &lt;&lt; wt1 &lt;&lt; std::endl;</div>
@@ -1293,7 +1293,6 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f_html_gaba2efbda8df6baaccd4e35343d70163f"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__generators_gaba2efbda8df6baaccd4e35343d70163f.html#gaba2efbda8df6baaccd4e35343d70163f">kumi::generate</a></div><div class="ttdeci">constexpr generate_t&lt; N &gt; generate</div></div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1364,8 +1363,8 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::covariance[eve::unbiased](b, a) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad85b8e8aca48a5e1db5ada47d8300950">eve::covariance</a>[eve::unbiased](b, a) &lt;&lt; std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::covariance[eve::unbiased](b, b) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gad85b8e8aca48a5e1db5ada47d8300950">eve::covariance</a>[eve::unbiased](b, b) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// simd covariance eve::wide&lt;vec3&lt;float&gt;, eve::fixed&lt;4&gt;&gt;;</span></div>
-<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="comment">// simd covariance eve::wide&lt;vec3&lt;float&gt;, 4&gt;;</span></div>
+<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, 4&gt;;</div>
 <div class="line">  <span class="keyword">auto</span> wa = wv3_t(a, a, b, b);</div>
 <div class="line">  <span class="keyword">auto</span> wb = wv3_t(b, a, a, b);</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::covariance[eve::widen][eve::unbiased](wa, wb) = &quot;</span>&lt;&lt; <a class="code hl_variable" href="#gad85b8e8aca48a5e1db5ada47d8300950">eve::covariance</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a">eve::widen</a>][eve::unbiased](wa, wb) &lt;&lt; std::endl;</div>
@@ -2104,7 +2103,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>wf_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
 <div class="line">  wf_t pf = {3.2, 1.6, 3, 32700}, qf = {4.1, 2.345, 1, 100};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;---- simd&quot;</span> &lt;&lt; std::setprecision(10) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -4623,7 +4622,7 @@ Variables</h2></td></tr>
 <div class="line">  {</div>
 <div class="line">    <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> xd{1.0, 2.0};</div>
 <div class="line">    <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> yd = <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__transforms_gaeaba737291ba1085d77272eae38a016e.html#gaeaba737291ba1085d77272eae38a016e">kumi::map</a>([](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> 2*x+1; }, xd);</div>
-<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;4&gt;</a>&gt; x(0.5, 2.0, -2.5, 5.0);</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, 4&gt;</a> x(0.5, 2.0, -2.5, 5.0);</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                   = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- yd                                   = &quot;</span> &lt;&lt; yd  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -4636,7 +4635,7 @@ Variables</h2></td></tr>
 <div class="line">   {</div>
 <div class="line">    <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> xd{1.0, 2.0, 3.0, 4.0};</div>
 <div class="line">    <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> yd = <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__transforms_gaeaba737291ba1085d77272eae38a016e.html#gaeaba737291ba1085d77272eae38a016e">kumi::map</a>([](<span class="keyword">auto</span> x){<span class="keywordflow">return</span> x*x; }, xd);</div>
-<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, eve::fixed&lt;8&gt;</a>&gt; x(0.5, 2.0, -2.5, 5.0,0.5, 2.0, -2.5, 5.0 );</div>
+<div class="line">    <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, 8&gt;</a> x(0.5, 2.0, -2.5, 5.0,0.5, 2.0, -2.5, 5.0 );</div>
 <div class="line"> </div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- xd                                   = &quot;</span> &lt;&lt; xd &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- yd                                   = &quot;</span> &lt;&lt; yd  &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
@@ -5036,7 +5035,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line">  w_t <a class="code hl_variable" href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">pi</a> = {3, 2, 3, 32700}, qi = {4, 2, 1, 101},  ri = {4, 2, 0, 101};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; &lt;- pi                        = &quot;</span> &lt;&lt; <a class="code hl_variable" href="group__eve__math__constants.html#gad32687fc782ada2bb223abb7722ac694">pi</a> &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
@@ -6006,8 +6005,8 @@ Variables</h2></td></tr>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wf1{<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))/4, -<a class="code hl_variable" href="group__eve__core__constants.html#ga3a08ea3bf1e679ed4ef0576ddffff08a">eve::eps</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(1.0f))/4, 1.0f, -1.0f, 2.0f, -2.0f, 3.0f, -3.0f};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi0{0, 1, 2, 3, -1, -2, -3, -4};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> wi1{0, -4, 1, -1, 2, -2, 3, -3};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt; wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, eve::fixed&lt;8&gt;</a>&gt; wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, 8&gt;</a> wu0{65534u, 65000u, 2u, 3u, 4u, 5u, 6u, 7u};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint16_t, 8&gt;</a> wu1{2u, 6u, 5u, 4u, 3u, 2u, 1u, 0u};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; std::setprecision(15) &lt;&lt; <span class="stringliteral">&quot;&lt;- wf0                           = &quot;</span> &lt;&lt; wf0 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wf1                           = &quot;</span> &lt;&lt; wf1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -6312,10 +6311,10 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> S = eve::cardinal_v&lt;eve::wide&lt;float&gt;&gt;;</div>
+<div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> S = eve::width_v&lt;eve::wide&lt;float&gt;&gt;;</div>
 <div class="line">  <span class="keyword">auto</span> fill = [](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> i;};</div>
-<div class="line">  <span class="keyword">auto</span> fill2 = [](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> (i+S);};</div>
-<div class="line">  <span class="keyword">auto</span> fill3 = [](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> (i+2*S);};</div>
+<div class="line">  <span class="keyword">auto</span> fill2 = [&amp;](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> (i+S);};</div>
+<div class="line">  <span class="keyword">auto</span> fill3 = [&amp;](<span class="keyword">auto</span> i,  <span class="keyword">auto</span>){<span class="keywordflow">return</span> (i+2*S);};</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf(fill);</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf2(fill2);</div>
 <div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float&gt;</a> wf3(fill3);</div>
@@ -6602,8 +6601,8 @@ Variables</h2></td></tr>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::welford_covariance[eve::unbiased](b, a) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3fee14a8a396f4ac89e650e0fb0768f7">eve::welford_covariance</a>[eve::unbiased](b, a) &lt;&lt; std::endl;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;eve::welford_covariance[eve::unbiased](b, b) = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#ga3fee14a8a396f4ac89e650e0fb0768f7">eve::welford_covariance</a>[eve::unbiased](b, b) &lt;&lt; std::endl;</div>
 <div class="line"> </div>
-<div class="line">  <span class="comment">// simd welford_covariance eve::wide&lt;vec3&lt;float&gt;, eve::fixed&lt;4&gt;&gt;;</span></div>
-<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line">  <span class="comment">// simd welford_covariance eve::wide&lt;vec3&lt;float&gt;, 4&gt;;</span></div>
+<div class="line">  <span class="keyword">using </span>wv3_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;vec3&lt;float&gt;</a>, 4&gt;;</div>
 <div class="line">  <span class="keyword">auto</span> wa = wv3_t(a, a, b, b);</div>
 <div class="line">  <span class="keyword">auto</span> wb = wv3_t(b, a, a, b);</div>
 <div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;wa &quot;</span> &lt;&lt; wa &lt;&lt; std::endl;</div>

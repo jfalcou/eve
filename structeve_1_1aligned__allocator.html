@@ -132,7 +132,7 @@ $(function(){initNavTree('structeve_1_1aligned__allocator.html','','structeve_1_
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, typename Lanes = expected_cardinal_t&lt;T&gt;&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, std::ptrdiff_t Lanes = expected_width_v&lt;T&gt;&gt;<br />
 struct eve::aligned_allocator&lt; T, Lanes &gt;</div><p>Standard-compliant allocator handling the allocation and deallocation of segment of aligned memory. </p>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/memory/aligned_allocator.hpp&gt;</span></p>
 <p>By default, allocation will be aligned on current architecture's SIMD compatible alignment but can be specified otherwise.</p>
@@ -183,11 +183,11 @@ Related Symbols</h2></td></tr>
 <tr><td class="ititle" colspan="2"><p>(Note that these are not member symbols.) </p>
 </td></tr>
 <tr class="memitem:a5b517ec4c0b7a4057e37591cf5ebf87d" id="r_a5b517ec4c0b7a4057e37591cf5ebf87d"><td class="memTemplParams" colspan="2"><a id="a5b517ec4c0b7a4057e37591cf5ebf87d" name="a5b517ec4c0b7a4057e37591cf5ebf87d"></a>
-template&lt;typename T, typename U, typename A, typename B&gt; </td></tr>
+template&lt;typename T, typename U, std::ptrdiff_t A, std::ptrdiff_t B&gt; </td></tr>
 <tr class="memitem:a5b517ec4c0b7a4057e37591cf5ebf87d template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><b>operator==</b> (<a class="el" href="#ad3fc2e77e415c955d485eae055dd3a8a">aligned_allocator</a>&lt; T, A &gt; const &amp;, <a class="el" href="#ad3fc2e77e415c955d485eae055dd3a8a">aligned_allocator</a>&lt; U, B &gt; const &amp;) noexcept</td></tr>
 <tr class="memdesc:a5b517ec4c0b7a4057e37591cf5ebf87d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares aligned_allocators for equality of types and alignment constraints. <br /></td></tr>
 <tr class="memitem:a27ab460322a8ed553b665c9da4cd0e38" id="r_a27ab460322a8ed553b665c9da4cd0e38"><td class="memTemplParams" colspan="2"><a id="a27ab460322a8ed553b665c9da4cd0e38" name="a27ab460322a8ed553b665c9da4cd0e38"></a>
-template&lt;typename T, typename U, typename A, typename B&gt; </td></tr>
+template&lt;typename T, typename U, std::ptrdiff_t A, std::ptrdiff_t B&gt; </td></tr>
 <tr class="memitem:a27ab460322a8ed553b665c9da4cd0e38 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><b>operator!=</b> (<a class="el" href="#ad3fc2e77e415c955d485eae055dd3a8a">aligned_allocator</a>&lt; T, A &gt; const &amp;, <a class="el" href="#ad3fc2e77e415c955d485eae055dd3a8a">aligned_allocator</a>&lt; U, B &gt; const &amp;) noexcept</td></tr>
 <tr class="memdesc:a27ab460322a8ed553b665c9da4cd0e38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares aligned_allocators for inequality of types or alignment constraints. <br /></td></tr>
 </table>

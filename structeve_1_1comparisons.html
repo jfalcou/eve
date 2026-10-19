@@ -165,8 +165,8 @@ struct eve::comparisons&lt; T &gt;</div><p>Extension point for ordering and equa
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;8&gt;</a>&gt; a{1.2,2.3,3.4,4.5,5.6,6.7,7.8,8.9}, b{0.2,0.2,0.4,0.4,0.6,0.6,0.7,0.7};</div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int  , eve::fixed&lt;8&gt;</a>&gt; i{1,2,3,4,5,6,7,8};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 8&gt;</a> a{1.2,2.3,3.4,4.5,5.6,6.7,7.8,8.9}, b{0.2,0.2,0.4,0.4,0.6,0.6,0.7,0.7};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int  , 8&gt;</a> i{1,2,3,4,5,6,7,8};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> p1 = <a class="code hl_variable" href="group__eve__core__simd.html#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;udt::point&gt;</a>{}, i,a);</div>
 <div class="line">  <span class="keyword">auto</span> p2 = <a class="code hl_variable" href="group__eve__core__simd.html#ga35f397f99a9981ec14e2d162ce530ee9">eve::zip</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;udt::point&gt;</a>{},i,b);</div>
@@ -183,7 +183,7 @@ struct eve::comparisons&lt; T &gt;</div><p>Extension point for ordering and equa
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
 <div class="ttc" id="astructeve_1_1comparisons_html"><div class="ttname"><a href="structeve_1_1comparisons.html">eve::comparisons</a></div><div class="ttdoc">Extension point for ordering and equality computation.</div><div class="ttdef"><b>Definition</b> comparisons.hpp:43</div></div>
 <div class="ttc" id="astructeve_1_1struct__support_html"><div class="ttname"><a href="structeve_1_1struct__support.html">eve::struct_support</a></div><div class="ttdoc">CRTP base-class to declare operators for user-defined product type.</div><div class="ttdef"><b>Definition</b> product_type.hpp:148</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

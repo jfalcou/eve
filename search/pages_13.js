@@ -7,7 +7,7 @@ var searchData=
   ['references_4',['References',['../index.html#autotoc_md49',1,'Bibliographic References'],['https://jfalcou.github.io/kumi/kumi_references.html',1,'References']]],
   ['register_20of_20tuples_5',['SIMD register of tuples',['../intro-03.html#autotoc_md104',1,'']]],
   ['registers_6',['Tuple of SIMD registers',['../intro-03.html#autotoc_md103',1,'']]],
-  ['registers_20as_20type_20x_20cardinal_7',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
+  ['registers_20as_20type_20x_20width_7',['SIMD registers as Type x Width',['../design_rationale.html#rationale-simd',1,'']]],
   ['relaxed_20concepts_8',['Relaxed concepts',['../algo_rationale.html#autotoc_md55',1,'']]],
   ['release_3a_20sve_9',['The One Big News for this release: SVE',['../changelog.html#autotoc_md34',1,'']]],
   ['removal_20and_20depreciation_10',['Removal and Depreciation',['../changelog.html#autotoc_md32',1,'']]],

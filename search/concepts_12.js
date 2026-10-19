@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['wide_5fcardinal_0',['wide_cardinal',['../concepteve_1_1wide__cardinal.html',1,'eve']]]
+  ['wide_5fwidth_0',['wide_width',['../concepteve_1_1wide__width.html',1,'eve']]]
 ];

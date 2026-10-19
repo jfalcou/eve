@@ -166,7 +166,7 @@ Variables</h2></td></tr>
 <dd>
 <ul>
 <li>FIX-1647: <a class="el" href="#gafec1baa8724fc7e106d718836053db7c" title="A low level function to compress one simd value based on a mask.">eve::compress</a> doesn't support <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">wide</a>&lt;tuple&gt;</span> yet.</li>
-<li>the mask type can be any logical with the same cardinal.</li>
+<li>the mask type can be any logical with the same width.</li>
 </ul>
 </dd></dl>
 <p>Compression in simd is moving selected elements to the front of the <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a>. Unfortunately, not for all <span class="tt"><a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">simd_value</a></span>, not for all platforms that can be done efficiently. So the operation splits the input into chunks for which it's possible.</p>
@@ -187,7 +187,7 @@ Variables</h2></td></tr>
 <div class="line">             <a class="code hl_concept" href="concepteve_1_1logical__simd__value.html">logical_simd_value</a> L&gt;</div>
 <div class="line">   <span class="keyword">auto</span> <a class="code hl_variable" href="#gafec1baa8724fc7e106d718836053db7c">compress</a>[C ignore](T x, L m)              <span class="comment">// (2)</span></div>
 <div class="line">}</div>
-<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:46</div></div>
+<div class="ttc" id="aconcepteve_1_1logical__simd__value_html"><div class="ttname"><a href="concepteve_1_1logical__simd__value.html">eve::logical_simd_value</a></div><div class="ttdoc">Specify that a type represents a logical SIMD value. The concept logical_simd_value&lt;T&gt; is satisfied i...</div><div class="ttdef"><b>Definition</b> simd.hpp:63</div></div>
 <div class="ttc" id="aconcepteve_1_1relative__conditional__expr_html"><div class="ttname"><a href="concepteve_1_1relative__conditional__expr.html">eve::relative_conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression using relative mask.</div><div class="ttdef"><b>Definition</b> conditional.hpp:52</div></div>
 <div class="ttc" id="aconcepteve_1_1simd__value_html"><div class="ttname"><a href="concepteve_1_1simd__value.html">eve::simd_value</a></div><div class="ttdoc">Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...</div><div class="ttdef"><b>Definition</b> vectorized.hpp:34</div></div>
 <div class="ttc" id="agroup__eve__core__compress_html_gafec1baa8724fc7e106d718836053db7c"><div class="ttname"><a href="#gafec1baa8724fc7e106d718836053db7c">eve::compress</a></div><div class="ttdeci">constexpr callable_compress_ compress</div><div class="ttdoc">A low level function to compress one simd value based on a mask.</div><div class="ttdef"><b>Definition</b> compress.hpp:89</div></div>
@@ -230,7 +230,7 @@ Variables</h2></td></tr>
 <div class="line">    };</div>
 <div class="line">    <span class="comment">// clang-format on</span></div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">using </span>i8x8 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, eve::fixed&lt;8&gt;</a>&gt;;</div>
+<div class="line">    <span class="keyword">using </span>i8x8 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int8_t, 8&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">using </span>chunk = <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple&lt;i8x8, int&gt;</a>;  <span class="comment">// int should be ptrdiff_t - this is a bug</span></div>
 <div class="line"> </div>
@@ -282,7 +282,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> validate_compress_copy(<span class="keyword">auto</span> f)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">constexpr</span> std::size_t N = <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;int&gt;::size</a>();</div>
+<div class="line">  <span class="keyword">constexpr</span> std::size_t N = <a class="code hl_function" href="structeve_1_1wide.html#a4c5abb1c30d231b46212e2f7d61855a0">eve::wide&lt;int&gt;::size</a>();</div>
 <div class="line">  std::array&lt;int, N&gt; in = {};</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">for</span> (std::size_t i = 0; i != N; ++i) {</div>
@@ -313,8 +313,8 @@ Variables</h2></td></tr>
 <div class="ttc" id="agroup__eve__simd_html_gac2eed14dbdfb4cf1b36d157e27825cba"><div class="ttname"><a href="group__eve__simd.html#gac2eed14dbdfb4cf1b36d157e27825cba">eve::load</a></div><div class="ttdeci">constexpr auto load</div><div class="ttdoc">Loads data from a pointer or a pair of iterators into a SIMD value.</div><div class="ttdef"><b>Definition</b> load.hpp:71</div></div>
 <div class="ttc" id="agroup__kumi__transforms_ga58c4bb5e62083b4b37396d39c6446164_html_ga58c4bb5e62083b4b37396d39c6446164"><div class="ttname"><a href="https://jfalcou.github.io/kumi/group__kumi__transforms_ga58c4bb5e62083b4b37396d39c6446164.html#ga58c4bb5e62083b4b37396d39c6446164">kumi::for_each</a></div><div class="ttdeci">constexpr for_each_t for_each</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:516</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
-<div class="ttc" id="astructeve_1_1wide_html_a1d3739186033f12c8fe47755f598b60b"><div class="ttname"><a href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide::size</a></div><div class="ttdeci">static constexpr size_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:443</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
+<div class="ttc" id="astructeve_1_1wide_html_a4c5abb1c30d231b46212e2f7d61855a0"><div class="ttname"><a href="structeve_1_1wide.html#a4c5abb1c30d231b46212e2f7d61855a0">eve::wide::size</a></div><div class="ttdeci">static constexpr width_type size() noexcept</div><div class="ttdoc">Size of the wide in number of lanes.</div><div class="ttdef"><b>Definition</b> wide.hpp:438</div></div>
 <div class="ttc" id="astructkumi_1_1tuple_html"><div class="ttname"><a href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a></div></div>
 </div><!-- fragment --> 
 </div>
@@ -420,9 +420,8 @@ Masked Calls</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>n = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, n&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>l_t = eve::logical&lt;eve::wide&lt;std::uint8_t, n&gt;&gt;; <span class="comment">// Note the type mismatch</span></div>
+<div class="line"><span class="keyword">using </span>w_t = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>l_t = eve::logical&lt;eve::wide&lt;std::uint8_t, 4&gt;&gt;; <span class="comment">// Note the type mismatch</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -470,7 +469,6 @@ Masked Calls</h2>
 <div class="line">  }</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__conditional_html_gae234dce7533ecc38fe2c70fd69383633"><div class="ttname"><a href="group__eve__conditional.html#gae234dce7533ecc38fe2c70fd69383633">eve::ignore_none</a></div><div class="ttdeci">constexpr ignore_none_ ignore_none</div><div class="ttdoc">Object representing the eve::ignore_none_ conditional expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:273</div></div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
 <div class="ttc" id="astructeve_1_1keep__between_html"><div class="ttname"><a href="structeve_1_1keep__between.html">eve::keep_between</a></div><div class="ttdoc">Conditional expression keeping all lanes between two position.</div><div class="ttdef"><b>Definition</b> conditional.hpp:593</div></div>
 <div class="ttc" id="astructeve_1_1keep__first_html"><div class="ttname"><a href="structeve_1_1keep__first.html">eve::keep_first</a></div><div class="ttdoc">Conditional expression selecting the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:283</div></div>
 </div><!-- fragment --> 

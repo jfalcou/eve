@@ -133,6 +133,7 @@ $(function(){initNavTree('group__eve__algo__consider__types.html','',''); });
 Variables</h2></td></tr>
 <tr class="memitem:gaf48b5ce3d81ecae9190a95518e66c65d" id="r_gaf48b5ce3d81ecae9190a95518e66c65d"><td class="memTemplParams" colspan="2">template&lt;typename ... Ts&gt; </td></tr>
 <tr class="memitem:gaf48b5ce3d81ecae9190a95518e66c65d template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a> = ( consider_types_key = <a class="elRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a>&lt;Ts...&gt;{} )</td></tr>
+<tr class="memdesc:gaf48b5ce3d81ecae9190a95518e66c65d"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait that tells the algorithm to take an extra type into account when selecting a width. This is, for example, used by <span class="tt"><a class="el" href="group__eve__algos.html#gae0ec30b748c333d63f9cec7ccdd4cc2e" title="SIMD optimized version of std::reduce.">reduce</a></span> algorithm to consider the sum type.  <br /></td></tr>
 </table>
 <a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
 <a id="gaf48b5ce3d81ecae9190a95518e66c65d" name="gaf48b5ce3d81ecae9190a95518e66c65d"></a>
@@ -148,11 +149,13 @@ template&lt;typename ... Ts&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="headerfile"><b>Header file</b> <code>#include &lt;eve/module/algo.hpp&gt;</code></div><div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
+
+<p>A trait that tells the algorithm to take an extra type into account when selecting a width. This is, for example, used by <span class="tt"><a class="el" href="group__eve__algos.html#gae0ec30b748c333d63f9cec7ccdd4cc2e" title="SIMD optimized version of std::reduce.">reduce</a></span> algorithm to consider the sum type. </p>
+<div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ts&gt; <span class="keyword">auto</span> <a class="code hl_variable" href="#gaf48b5ce3d81ecae9190a95518e66c65d">consider_types</a> = eve_implementation_defined;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__consider__types_html_gaf48b5ce3d81ecae9190a95518e66c65d"><div class="ttname"><a href="#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a></div><div class="ttdeci">auto consider_types</div><div class="ttdef"><b>Definition</b> traits.hpp:256</div></div>
+<div class="ttc" id="agroup__eve__algo__consider__types_html_gaf48b5ce3d81ecae9190a95518e66c65d"><div class="ttname"><a href="#gaf48b5ce3d81ecae9190a95518e66c65d">eve::algo::consider_types</a></div><div class="ttdeci">auto consider_types</div><div class="ttdoc">A trait that tells the algorithm to take an extra type into account when selecting a width....</div><div class="ttdef"><b>Definition</b> traits.hpp:245</div></div>
 </div><!-- fragment --> </div><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Ts</td><td>Extra types the selection weighs.</td></tr>
@@ -172,7 +175,7 @@ template&lt;typename ... Ts&gt; </div>
 <div class="ttc" id="agroup__eve__core__conversions_html_gaa346ad56036f22b3571c873b7ae5bebd"><div class="ttname"><a href="group__eve__core__conversions.html#gaa346ad56036f22b3571c873b7ae5bebd">eve::convert</a></div><div class="ttdeci">constexpr auto convert</div><div class="ttdoc">Converts a value to another type.</div><div class="ttdef"><b>Definition</b> convert.hpp:84</div></div>
 <div class="ttc" id="agroup__eve__math__exp_html_ga01387edd49b1ff23f210c7105d65839e"><div class="ttname"><a href="group__eve__math__exp.html#ga01387edd49b1ff23f210c7105d65839e">eve::exp</a></div><div class="ttdeci">constexpr auto exp</div><div class="ttdoc">elementwise_callable object computing .</div><div class="ttdef"><b>Definition</b> exp.hpp:89</div></div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
-</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__force__cardinal.html#ga129b5b6d565ac288ce78eec6ecbb5e0b">force_cardinal</a>, <a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">eve::algo::views::convert</a> </dd></dl>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd>force_cardinal, <a class="el" href="group__eve__views.html#ga1d67fe0e91df8539083585c6e096789a" title="Takes an iterator or a range and returns an adapter that has a provided value type.">eve::algo::views::convert</a> </dd></dl>
 
 </div>
 </div>

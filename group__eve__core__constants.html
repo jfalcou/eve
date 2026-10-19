@@ -192,7 +192,7 @@ $(function(){initNavTree('group__eve__core__constants.html','',''); });
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --></div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -824,9 +824,8 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>n    = <a class="code hl_struct" href="structeve_1_1fixed.html">eve::fixed&lt;4&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>i32s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, n&gt;</a>;</div>
-<div class="line"><span class="keyword">using </span>f64s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, n&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>i32s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;int, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>f64s = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;double, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span>iota_supports = std::invocable&lt;<span class="keyword">decltype</span>(<a class="code hl_variable" href="#ga45b9b51c21e6aa1d7879dd2b68f886af">eve::iota</a>), <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>&gt;;</div>
@@ -944,7 +943,6 @@ Variables</h2></td></tr>
 <div class="ttc" id="agroup__eve__core__reduction_html_ga5cb8d1d1471423dfa2b00e7da2073169"><div class="ttname"><a href="group__eve__core__reduction.html#ga5cb8d1d1471423dfa2b00e7da2073169">eve::all</a></div><div class="ttdeci">constexpr auto all</div><div class="ttdoc">Computes a bool value which is true if and only if every elements of x evaluates to true.</div><div class="ttdef"><b>Definition</b> all.hpp:95</div></div>
 <div class="ttc" id="agroup__eve__memory_html_gad748180639cb9a4e2dbf82e48d986615"><div class="ttname"><a href="group__eve__memory.html#gad748180639cb9a4e2dbf82e48d986615">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:80</div></div>
 <div class="ttc" id="agroup__eve__simd_html_gac2eed14dbdfb4cf1b36d157e27825cba"><div class="ttname"><a href="group__eve__simd.html#gac2eed14dbdfb4cf1b36d157e27825cba">eve::load</a></div><div class="ttdeci">constexpr auto load</div><div class="ttdoc">Loads data from a pointer or a pair of iterators into a SIMD value.</div><div class="ttdef"><b>Definition</b> load.hpp:71</div></div>
-<div class="ttc" id="astructeve_1_1fixed_html"><div class="ttname"><a href="structeve_1_1fixed.html">eve::fixed</a></div><div class="ttdoc">SIMD register cardinal type.</div><div class="ttdef"><b>Definition</b> cardinals.hpp:39</div></div>
 <div class="ttc" id="astructeve_1_1if___html"><div class="ttname"><a href="structeve_1_1if__.html">eve::if_</a></div><div class="ttdoc">Extensible wrapper for SIMD conditional.</div><div class="ttdef"><b>Definition</b> conditional.hpp:111</div></div>
 <div class="ttc" id="astructeve_1_1if___html_a3c412a82b915cb199e4e120c916fb32c"><div class="ttname"><a href="structeve_1_1if__.html#a3c412a82b915cb199e4e120c916fb32c">eve::if_::else_</a></div><div class="ttdeci">auto else_(V const &amp;v) const</div><div class="ttdoc">Extends a conditional expression with an alternative value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:123</div></div>
 <div class="ttc" id="astructeve_1_1ignore__last_html"><div class="ttname"><a href="structeve_1_1ignore__last.html">eve::ignore_last</a></div><div class="ttdoc">Conditional expression ignoring the k last lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:361</div></div>
@@ -1058,8 +1056,8 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_majorant() { <span class="keywordflow">return</span> <a class="code hl_variable" href="#ga2544f12d841d878129a13f0fab8d1d21">eve::majorant</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
@@ -1882,8 +1880,8 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_minorant() { <span class="keywordflow">return</span> <a class="code hl_variable" href="#gaf7260a29fbb85cf0cfd97ad1d130c07c">eve::minorant</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
@@ -2748,8 +2746,8 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_sqrtvalmax() { <span class="keywordflow">return</span> <a class="code hl_variable" href="#gae61c7e9e1fdc501c543f2281a83242af">eve::sqrtvalmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
@@ -2960,8 +2958,8 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_valmax() { <span class="keywordflow">return</span> <a class="code hl_variable" href="#ga85073f11abb76d43faf07742435ea083">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>
@@ -3034,8 +3032,8 @@ Variables</h2></td></tr>
 <div class="line"><span class="preprocessor">#include &lt;eve/wide.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt;;</div>
-<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, eve::fixed&lt;4&gt;</a>&gt;;</div>
+<div class="line"><span class="keyword">using </span>wide_ft = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a>;</div>
+<div class="line"><span class="keyword">using </span>wide_it = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::int16_t, 4&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">consteval</span> <span class="keyword">auto</span> constexpr_valmin() { <span class="keywordflow">return</span> <a class="code hl_variable" href="#ga1fd45a655473cde0022e08497eba14c1">eve::valmin</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a>{}); }</div>

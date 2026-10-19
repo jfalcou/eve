@@ -131,12 +131,13 @@ $(function(){initNavTree('group__eve__algo__force__cardinal.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga129b5b6d565ac288ce78eec6ecbb5e0b" id="r_ga129b5b6d565ac288ce78eec6ecbb5e0b"><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
-<tr class="memitem:ga129b5b6d565ac288ce78eec6ecbb5e0b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal</a> = (force_cardinal_key = <a class="el" href="structeve_1_1fixed.html">eve::fixed</a>&lt;N&gt;{})</td></tr>
+<tr class="memitem:ga2d2777d200c404a55dfb227aa00b9d82" id="r_ga2d2777d200c404a55dfb227aa00b9d82"><td class="memTemplParams" colspan="2">template&lt;int N&gt; </td></tr>
+<tr class="memitem:ga2d2777d200c404a55dfb227aa00b9d82 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ga2d2777d200c404a55dfb227aa00b9d82">eve::algo::force_width</a> = (force_width_key = <a class="el" href="structeve_1_1lanes__t.html">eve::lanes_t</a>&lt;N&gt;{})</td></tr>
+<tr class="memdesc:ga2d2777d200c404a55dfb227aa00b9d82"><td class="mdescLeft">&#160;</td><td class="mdescRight">A trait that overrides all other width selection and just says to use a certain one. The main use-case for this is ease of interaction with native register code.  <br /></td></tr>
 </table>
 <a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
-<a id="ga129b5b6d565ac288ce78eec6ecbb5e0b" name="ga129b5b6d565ac288ce78eec6ecbb5e0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga129b5b6d565ac288ce78eec6ecbb5e0b">&#9670;&#160;</a></span>force_cardinal</h2>
+<a id="ga2d2777d200c404a55dfb227aa00b9d82" name="ga2d2777d200c404a55dfb227aa00b9d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2d2777d200c404a55dfb227aa00b9d82">&#9670;&#160;</a></span>force_width</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +148,7 @@ template&lt;int N&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::algo::force_cardinal = (force_cardinal_key = <a class="el" href="structeve_1_1fixed.html">eve::fixed</a>&lt;N&gt;{})</td>
+          <td class="memname">auto eve::algo::force_width = (force_width_key = <a class="el" href="structeve_1_1lanes__t.html">eve::lanes_t</a>&lt;N&gt;{})</td>
         </tr>
       </table>
   </td>
@@ -156,18 +157,8 @@ template&lt;int N&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="headerfile"><b>Header file</b> <code>#include &lt;eve/module/algo.hpp&gt;</code></div><div class="synopsis"> <div class="fragment"><div class="line"><span class="keyword">namespace </span>eve::algo</div>
-<div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keywordtype">int</span> N&gt; <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga129b5b6d565ac288ce78eec6ecbb5e0b">force_cardinal</a> = eve_implementation_defined;</div>
-<div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__force__cardinal_html_ga129b5b6d565ac288ce78eec6ecbb5e0b"><div class="ttname"><a href="#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal</a></div><div class="ttdeci">constexpr auto force_cardinal</div><div class="ttdef"><b>Definition</b> traits.hpp:213</div></div>
-</div><!-- fragment --> </div><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">N</td><td>Lanes handled at once.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>Sets the cardinal of the loop, the number of lanes handled at once, to <b>N</b>. By default the cardinal comes from the types the range carries and from whether frequency scaling is allowed. Interacting with hand-written register code requires the trait, the register width being fixed there.</p>
+
+<p>A trait that overrides all other width selection and just says to use a certain one. The main use-case for this is ease of interaction with native register code. </p>
 <div class="fragment"><div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
@@ -179,12 +170,12 @@ template&lt;int N&gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> remove_spaces(std::string&amp; s)</div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">using </span>u8x16 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint8_t, eve::fixed&lt;16&gt;</a>&gt;;</div>
+<div class="line">  <span class="keyword">using </span>u8x16 = <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;std::uint8_t, 16&gt;</a>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// eve only supports std::int8_t and std::uint8_t, not char.</span></div>
 <div class="line">  std::span s_bytes{<span class="keyword">reinterpret_cast&lt;</span>std::uint8_t*<span class="keyword">&gt;</span>(s.data()), s.size()};</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> end = <a class="code hl_variable" href="group__eve__algos.html#gadd433852d81668a52c92e3778111e5ac">eve::algo::remove_if</a>[<a class="code hl_variable" href="#ga129b5b6d565ac288ce78eec6ecbb5e0b">eve::algo::force_cardinal&lt;16&gt;</a>](</div>
+<div class="line">  <span class="keyword">auto</span> end = <a class="code hl_variable" href="group__eve__algos.html#gadd433852d81668a52c92e3778111e5ac">eve::algo::remove_if</a>[<a class="code hl_variable" href="#ga2d2777d200c404a55dfb227aa00b9d82">eve::algo::force_width&lt;16&gt;</a>](</div>
 <div class="line">    s_bytes,[](u8x16 v) -&gt; eve::logical&lt;u8x16&gt; {</div>
 <div class="line">    <span class="comment">// A simd is_space we took from @aqrit</span></div>
 <div class="line">    __m128i lut = _mm_setr_epi8(<span class="charliteral">&#39; &#39;</span>,    0,    0,  0,</div>
@@ -200,7 +191,7 @@ template&lt;int N&gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#endif  </span><span class="comment">// __SSSE3__</span></div>
 <div class="line"> </div>
-</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d">consider_types</a>, <a class="el" href="group__eve__algo__allow__frequency__scaling.html#ga31ef5302d899fb36aeff5146a7187cef">allow_frequency_scaling</a> </dd></dl>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__consider__types.html#gaf48b5ce3d81ecae9190a95518e66c65d" title="A trait that tells the algorithm to take an extra type into account when selecting a width....">consider_types</a> if maybe using some extra type is the reason you want to change <a class="el" href="structeve_1_1width.html" title="Computes the width of a given type.">width</a>. </dd></dl>
 
 </div>
 </div>

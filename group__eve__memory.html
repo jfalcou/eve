@@ -224,7 +224,7 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13" id="r_gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplParams" colspan="2">template&lt;std::size_t A, typename T, typename Other&gt; </td></tr>
+<tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13" id="r_gad05ab928f3e9aa972a7e7146f76cce13"><td class="memTemplParams" colspan="2">template&lt;std::size_t A, typename T, width_type Other&gt; </td></tr>
 <tr class="memitem:gad05ab928f3e9aa972a7e7146f76cce13 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#gad05ab928f3e9aa972a7e7146f76cce13">eve::is_aligned</a> (<a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a>&lt; T, Other &gt; const &amp;ptr) noexcept</td></tr>
 <tr class="memdesc:gad05ab928f3e9aa972a7e7146f76cce13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if an <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> is aligned on a given alignment.  <br /></td></tr>
 <tr class="memitem:gab1add731db6f65a080c9ec8b4a125858" id="r_gab1add731db6f65a080c9ec8b4a125858"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, std::integral T&gt; </td></tr>
@@ -233,9 +233,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74" id="r_ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="memTemplParams" colspan="2">template&lt;std::size_t Alignment, typename T&gt; </td></tr>
 <tr class="memitem:ga25228d751afbdd3a2c7d09aea5f2ae74 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga25228d751afbdd3a2c7d09aea5f2ae74">eve::is_aligned</a> (T *ptr) noexcept</td></tr>
 <tr class="memdesc:ga25228d751afbdd3a2c7d09aea5f2ae74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
-<tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca" id="r_ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="memTemplParams" colspan="2">template&lt;typename T, typename Lanes&gt; </td></tr>
-<tr class="memitem:ga3c06e236e6195d1a36a43e0fcc7c5eca template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga3c06e236e6195d1a36a43e0fcc7c5eca">eve::is_aligned</a> (T *ptr, Lanes lanes) noexcept</td></tr>
-<tr class="memdesc:ga3c06e236e6195d1a36a43e0fcc7c5eca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
+<tr class="memitem:ga13a0d8e8825a7ee05e9f6a7e246405b2" id="r_ga13a0d8e8825a7ee05e9f6a7e246405b2"><td class="memTemplParams" colspan="2">template&lt;typename T, typename Lanes&gt; </td></tr>
+<tr class="memitem:ga13a0d8e8825a7ee05e9f6a7e246405b2 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ga13a0d8e8825a7ee05e9f6a7e246405b2">eve::is_aligned</a> (T *ptr, Lanes n) noexcept</td></tr>
+<tr class="memdesc:ga13a0d8e8825a7ee05e9f6a7e246405b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a pointer satisfies an alignment constraint.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -356,7 +356,7 @@ Non-Member Function</h4>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t A, typename T, typename Other&gt; </div>
+template&lt;std::size_t A, typename T, width_type Other&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -434,8 +434,8 @@ template&lt;std::size_t Alignment, typename T&gt; </div>
 
 </div>
 </div>
-<a id="ga3c06e236e6195d1a36a43e0fcc7c5eca" name="ga3c06e236e6195d1a36a43e0fcc7c5eca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3c06e236e6195d1a36a43e0fcc7c5eca">&#9670;&#160;</a></span>is_aligned() <span class="overload">[3/4]</span></h2>
+<a id="ga13a0d8e8825a7ee05e9f6a7e246405b2" name="ga13a0d8e8825a7ee05e9f6a7e246405b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga13a0d8e8825a7ee05e9f6a7e246405b2">&#9670;&#160;</a></span>is_aligned() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -453,7 +453,7 @@ template&lt;typename T, typename Lanes&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Lanes</td>          <td class="paramname"><span class="paramname"><em>lanes</em></span>&#160;)</td>
+          <td class="paramtype">Lanes</td>          <td class="paramname"><span class="paramname"><em>n</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -467,11 +467,11 @@ template&lt;typename T, typename Lanes&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>Pointer to check </td></tr>
-    <tr><td class="paramname">lanes</td><td>Alignment constraint to verify expressed as a SIMD register number of lanes.</td></tr>
+    <tr><td class="paramname">n</td><td>Alignment constraint to verify expressed as a SIMD register number of lanes.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if <span class="tt">ptr</span> is aligned over the alignment implied by <span class="tt">lanes</span>, <span class="tt">false</span> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if <span class="tt">ptr</span> is aligned over the alignment implied by <span class="tt">n</span>, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -619,8 +619,8 @@ Members Functions</h4>
 <div class="line">  <span class="keywordtype">int</span> iarr[4];</div>
 <div class="line">  eve::logical&lt;float&gt; larr[4];</div>
 <div class="line"> </div>
-<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, eve::fixed&lt;4&gt;</a>&gt; w = {3, 2, 1, 0};</div>
-<div class="line">  eve::logical&lt;eve::wide&lt;float, eve::fixed&lt;4&gt;&gt;&gt; lw = {<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">false</span>};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide&lt;float, 4&gt;</a> w = {3, 2, 1, 0};</div>
+<div class="line">  eve::logical&lt;eve::wide&lt;float, 4&gt;&gt; lw = {<span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">false</span>};</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a>(w, arr);</div>
 <div class="line">  <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a>(lw, larr);</div>
@@ -644,7 +644,7 @@ Members Functions</h4>
 <div class="line">  }</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
+<div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:95</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -706,7 +706,7 @@ Members Functions</h4>
 <div class="line">  <span class="keyword">template</span>&lt;eve::relaxed_iterator Ptr&gt;</div>
 <div class="line">  <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(Ptr p) <span class="keyword">noexcept</span>;                 <span class="comment">// 2</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> N&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, w<span class="keywordtype">id</span>th_type N&gt;</div>
 <div class="line">  <span class="keyword">constexpr</span> T* <a class="code hl_variable" href="#ga62462e7b23d8d092781d5561a9d4c90f">unalign</a>(<a class="code hl_struct" href="structeve_1_1aligned__ptr.html">aligned_ptr&lt;T, N&gt;</a> p) <span class="keyword">noexcept</span>;     <span class="comment">// 3</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ptrs&gt;</div>

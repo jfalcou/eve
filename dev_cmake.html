@@ -175,15 +175,15 @@ CMake setup</h1>
 </table>
 <p>Once run, your build folder should contain all the necessary artifact to compile and run <b>EVE</b> test suite.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
-Cardinals of the tests</h2>
-<p>A unit test instantiates its cases on a list of <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></span> types from <span class="tt">test/test.hpp</span>, a type per element type and cardinal. The cache variable <span class="tt">EVE_TEST_LOT</span> selects the cardinals of those lists:</p>
+Test lots</h2>
+<p>A unit test instantiates its cases on a list of <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></span> types from <span class="tt">test/test.hpp</span>, a type per element type and width. The cache variable <span class="tt">EVE_TEST_LOT</span> selects the widths of those lists:</p>
 <ul>
-<li><span class="tt">all</span>: every cardinal from 1 to twice the native one, the default.</li>
-<li><span class="tt">family</span>: the cardinals whose code path differs on the current ABI, native included. On a 128-bit ABI, the native cardinal and its half. Under AVX2, the native cardinal alone, as a 128-bit wide runs the SSE code. Under AVX512, the native cardinal, its half and its quarter, as every width has its own masks. About half the compile time of <span class="tt">all</span>.</li>
-<li><span class="tt">native</span>: the native cardinal alone. About 40% of the compile time of <span class="tt">all</span>.</li>
-<li><span class="tt">extra</span>: the family without the native cardinal. A type the family tests at the native cardinal alone keeps it, so that no test runs on an empty list.</li>
+<li><span class="tt">all</span>: every width from 1 to twice the native one, the default.</li>
+<li><span class="tt">family</span>: the widths whose code path differs on the current ABI, native included. On a 128-bit ABI, the native width and its half. Under AVX2, the native width alone, as a 128-bit wide runs the SSE code. Under AVX512, the native width, its half and its quarter, as every register size has its own masks. About half the compile time of <span class="tt">all</span>.</li>
+<li><span class="tt">native</span>: the native width alone. About 40% of the compile time of <span class="tt">all</span>.</li>
+<li><span class="tt">extra</span>: the family without the native width. A type the family tests at the native width alone keeps it, so that no test runs on an empty list.</li>
 </ul>
-<p>The tests of the wide API, the memory functions and the conversions keep twice the native cardinal in every lot but <span class="tt">native</span>, and <span class="tt">cmake/config/aggregated-units.cmake</span> names the few others.</p>
+<p>The tests of the wide API, the memory functions and the conversions keep twice the native width in every lot but <span class="tt">native</span>, and <span class="tt">cmake/config/aggregated-units.cmake</span> names the few others.</p>
 <p>This configuration compiles the native lot alone under SSE4.2:</p>
 <pre class="fragment">cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS='-msse4.2' \
          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake

@@ -16,7 +16,7 @@ var searchData=
   ['simd_20processing_13',['Adapting UDT to SIMD processing',['../intro-04.html#autotoc_md106',1,'']]],
   ['simd_20register_20of_20tuples_14',['SIMD register of tuples',['../intro-03.html#autotoc_md104',1,'']]],
   ['simd_20registers_15',['Tuple of SIMD registers',['../intro-03.html#autotoc_md103',1,'']]],
-  ['simd_20registers_20as_20type_20x_20cardinal_16',['SIMD registers as Type x Cardinal',['../design_rationale.html#rationale-simd',1,'']]],
+  ['simd_20registers_20as_20type_20x_20width_16',['SIMD registers as Type x Width',['../design_rationale.html#rationale-simd',1,'']]],
   ['simd_20using_20eve_3a_3awide_17',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md95',1,'']]],
   ['sizes_18',['What about non-native sizes?',['../inter-with-native.html#autotoc_md93',1,'']]],
   ['solving_20quadratic_20equations_19',['Solving quadratic equations',['../intro-05.html',1,'']]],

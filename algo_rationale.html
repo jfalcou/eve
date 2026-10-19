@@ -150,7 +150,7 @@ General concepts</h3>
 <p>One case where it can be very awkward to use ranges instead of iterators is in multi-range algorithms , like <span class="tt">transform_to</span>. In this case, unless we have some reason no to, we allow for passing anything that zips to <span class="tt">range</span>, i.e. <span class="tt">range</span>, <span class="tt">iterator</span> or <span class="tt">iterator</span>,<span class="tt">range</span>. Exceptions are documented and have <span class="tt">static_assert</span>s that will tell you it's not supported.</p>
 <h3 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 Relaxed concepts</h3>
-<p>Many things that we want to accept in the interfaces as <span class="tt">range</span> and/or <span class="tt">iterator</span> are not ideal for writing code against. We also need to strip things like <span class="tt">vector::iterator</span> to pointers. What also we want is to associate a <span class="tt">cardinal</span> with <span class="tt">iterator</span>.</p>
+<p>Many things that we want to accept in the interfaces as <span class="tt">range</span> and/or <span class="tt">iterator</span> are not ideal for writing code against. We also need to strip things like <span class="tt">vector::iterator</span> to pointers. What also we want is to associate a <span class="tt">width</span> with <span class="tt">iterator</span>.</p>
 <p>This is why we have two layers: <span class="tt"><a class="el" href="structrelaxed__range.html" title="Any class that has begin/end and end is a relaxed_sentinel_for begin. User can customize preprocess_r...">relaxed_range</a></span>/<span class="tt"><a class="el" href="structrelaxed__iterator.html" title="anything that can be reasonably converted to an iterator: std::contigious_iterator,...">relaxed_iterator</a></span> and <span class="tt">iterator</span>. There are a few things that <span class="tt">relaxed_*</span> should be able to do but the main one is <span class="tt">preprocess_range(traits, f, l)</span> which returns enhanced <span class="tt">traits</span> and <span class="tt">iterator</span> pair.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 Customization</h1>
@@ -161,7 +161,7 @@ Algorithms traits</h2>
 <ul>
 <li><span class="tt">no_aliging</span> - stop aligning data accesses</li>
 <li><span class="tt">unroll&lt;N&gt;</span> - unroll N times (1 for no unrolling).</li>
-<li><span class="tt">force_cardinal&lt;N&gt;</span> - force how many elements in per step to process, needed for writing code dealing with intrinsics.</li>
+<li><span class="tt">force_width&lt;N&gt;</span> - force how many elements in per step to process, needed for writing code dealing with intrinsics.</li>
 </ul>
 <p>The values used by default are documented by algorithm. </p>
 </div></div><!-- contents -->

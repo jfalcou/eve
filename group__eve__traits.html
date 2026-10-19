@@ -140,8 +140,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight type-wrapper.  <a href="structeve_1_1as.html#details">More...</a><br /></td></tr>
 <tr class="memitem:eve_3A_3Aas_5Felement_3C_20T_20_3E" id="r_eve_3A_3Aas_5Felement_3C_20T_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1as__element.html">eve::as_element&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight type-wrapper over element type.  <a href="structeve_1_1as__element.html#details">More...</a><br /></td></tr>
-<tr class="memitem:eve_3A_3Acardinal_3C_20Type_20_3E" id="r_eve_3A_3Acardinal_3C_20Type_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1cardinal.html">eve::cardinal&lt; Type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cardinal of a given type.  <a href="structeve_1_1cardinal.html#details">More...</a><br /></td></tr>
 <tr class="memitem:eve_3A_3Acommon_5Fcompatible_3C_20Ts_20_3E" id="r_eve_3A_3Acommon_5Fcompatible_3C_20Ts_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1common__compatible.html">eve::common_compatible&lt; Ts &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the type compatible with a list of <a class="el" href="concepteve_1_1value.html" title="eve::value">values</a>.  <a href="structeve_1_1common__compatible.html#details">More...</a><br /></td></tr>
 <tr class="memitem:eve_3A_3Acommon_5Ftype_3C_20Ts_20_3E" id="r_eve_3A_3Acommon_5Ftype_3C_20Ts_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1common__type.html">eve::common_type&lt; Ts &gt;</a></td></tr>
@@ -152,6 +150,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the scalar part of a type.  <a href="structeve_1_1element__type.html#details">More...</a><br /></td></tr>
 <tr class="memitem:eve_3A_3Aunderlying_5Ftype_3C_20Ts_20_3E" id="r_eve_3A_3Aunderlying_5Ftype_3C_20Ts_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1underlying__type.html">eve::underlying_type&lt; Ts &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the most scalar type associated with a type.  <a href="structeve_1_1underlying__type.html#details">More...</a><br /></td></tr>
+<tr class="memitem:eve_3A_3Awidth_3C_20Type_20_3E" id="r_eve_3A_3Awidth_3C_20Type_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1width.html">eve::width&lt; Type &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the width of a given type.  <a href="structeve_1_1width.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
@@ -168,21 +168,21 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga331d84fa4b64e5deb329b1a09d60c747" id="r_ga331d84fa4b64e5deb329b1a09d60c747"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga331d84fa4b64e5deb329b1a09d60c747 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a> = decltype(_::iterator_cardinal_impl&lt;T&gt;())</td></tr>
-<tr class="memdesc:ga331d84fa4b64e5deb329b1a09d60c747"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_cardinal()</span> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>).  <br /></td></tr>
-<tr class="memitem:ga4a03242c42306d4595845cb329d5d7ec" id="r_ga4a03242c42306d4595845cb329d5d7ec"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ga4a03242c42306d4595845cb329d5d7ec template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga4a03242c42306d4595845cb329d5d7ec">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td></tr>
-<tr class="memdesc:ga4a03242c42306d4595845cb329d5d7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cardinal type of the maximum lane count of given wide or scalar types.  <br /></td></tr>
+<tr class="memitem:ga7ae3e81e8c073ad31b70c384a2774336" id="r_ga7ae3e81e8c073ad31b70c384a2774336"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:ga7ae3e81e8c073ad31b70c384a2774336 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a> = decltype(_::iterator_width_impl&lt;T&gt;())</td></tr>
+<tr class="memdesc:ga7ae3e81e8c073ad31b70c384a2774336"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_width()</span> (which should return <a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">eve::lanes_t</a>).  <br /></td></tr>
+<tr class="memitem:ga80306f1fa8a7aeb0e0bab1f7a333d976" id="r_ga80306f1fa8a7aeb0e0bab1f7a333d976"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:ga80306f1fa8a7aeb0e0bab1f7a333d976 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td></tr>
+<tr class="memdesc:ga80306f1fa8a7aeb0e0bab1f7a333d976"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width type of the maximum lane count of given wide or scalar types.  <br /></td></tr>
 <tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f" id="r_gaae6fbba5b56b9fab940a05b444c15e6f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td></tr>
 <tr class="memdesc:gaae6fbba5b56b9fab940a05b444c15e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <br /></td></tr>
-<tr class="memitem:ga55234286d380ec9a9baef96a65649356" id="r_ga55234286d380ec9a9baef96a65649356"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga55234286d380ec9a9baef96a65649356 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t</a>&lt;T&gt;&gt;</td></tr>
+<tr class="memitem:gac7518d1b6d2c834ae512ff5d91702ee6" id="r_gac7518d1b6d2c834ae512ff5d91702ee6"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
+<tr class="memitem:gac7518d1b6d2c834ae512ff5d91702ee6 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gac7518d1b6d2c834ae512ff5d91702ee6">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, iterator_width_v&lt;T&gt;&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824" id="r_gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="memTemplParams" colspan="2">template&lt;typename Type, typename Lanes&gt; </td></tr>
+<tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824" id="r_gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="memTemplParams" colspan="2">template&lt;typename Type, std::ptrdiff_t Lanes&gt; </td></tr>
 <tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaea6de9e321c4ad0f6ef5224b1aeb3824">eve::abi_t</a></td></tr>
 <tr class="memdesc:gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find proper ABI type for Type/Lanes pair.  <br /></td></tr>
 <tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92" id="r_gaa29d8cb3ef4de3080fef8b6277614d92"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
@@ -193,8 +193,8 @@ Variables</h2></td></tr>
 <tr class="memdesc:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
-<a id="ga331d84fa4b64e5deb329b1a09d60c747" name="ga331d84fa4b64e5deb329b1a09d60c747"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga331d84fa4b64e5deb329b1a09d60c747">&#9670;&#160;</a></span>iterator_cardinal_t</h2>
+<a id="ga7ae3e81e8c073ad31b70c384a2774336" name="ga7ae3e81e8c073ad31b70c384a2774336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7ae3e81e8c073ad31b70c384a2774336">&#9670;&#160;</a></span>iterator_width_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,12 +202,12 @@ Variables</h2></td></tr>
 template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a> = decltype(_::iterator_cardinal_impl&lt;T&gt;())</td>
+          <td class="memname">using <a class="el" href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a> = decltype(_::iterator_width_impl&lt;T&gt;())</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_cardinal()</span> (which should return <a class="el" href="structeve_1_1fixed.html" title="SIMD register cardinal type.">eve::fixed</a>). </p>
+<p>A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_width()</span> (which should return <a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">eve::lanes_t</a>). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>Type to process</td></tr>
@@ -215,16 +215,16 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 <ul>
-<li>returns it's return type. Otherwise returns <span class="tt"><a class="el" href="group__eve__arch.html#gab707570aa2d35678c5cd5c686a994d57" title="Computes the expected cardinal of a given type.">expected_cardinal_t</a>&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a>&lt;T&gt;&gt;</span>.</li>
+<li>returns it's return type. Otherwise returns <span class="tt"><a class="el" href="group__eve__arch.html#gaca2238da980f8b3f68896597be4188b8" title="Computes the expected width of a given type.">expected_width_t</a>&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a>&lt;T&gt;&gt;</span>.</li>
 </ul>
-<p><em>NOTE</em>: for <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> we return expected_cardinal.</p>
-<p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/iterator_cardinal.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> iterator_cardinal_v = iterator_cardinal&lt;T&gt;::value;</div>
+<p><em>NOTE</em>: for <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> we return expected_width.</p>
+<p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/iterator_width.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> iterator_width_v = iterator_width&lt;T&gt;::value;</div>
 </div><!-- fragment --> 
 </div>
 </div>
-<a id="ga4a03242c42306d4595845cb329d5d7ec" name="ga4a03242c42306d4595845cb329d5d7ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga4a03242c42306d4595845cb329d5d7ec">&#9670;&#160;</a></span>max_lanes_t</h2>
+<a id="ga80306f1fa8a7aeb0e0bab1f7a333d976" name="ga80306f1fa8a7aeb0e0bab1f7a333d976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">&#9670;&#160;</a></span>max_lanes_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,12 +232,12 @@ template&lt;typename T&gt; </div>
 template&lt;typename... Ts&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#ga4a03242c42306d4595845cb329d5d7ec">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1fixed.html">fixed</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td>
+          <td class="memname">using <a class="el" href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The cardinal type of the maximum lane count of given wide or scalar types. </p>
+<p>The width type of the maximum lane count of given wide or scalar types. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Ts</td><td>Types to process </td></tr>
@@ -286,8 +286,8 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="ga55234286d380ec9a9baef96a65649356" name="ga55234286d380ec9a9baef96a65649356"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga55234286d380ec9a9baef96a65649356">&#9670;&#160;</a></span>wide_value_type_t</h2>
+<a id="gac7518d1b6d2c834ae512ff5d91702ee6" name="gac7518d1b6d2c834ae512ff5d91702ee6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gac7518d1b6d2c834ae512ff5d91702ee6">&#9670;&#160;</a></span>wide_value_type_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +295,7 @@ template&lt;typename T&gt; </div>
 template&lt;typename T&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, <a class="el" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t</a>&lt;T&gt;&gt;</td>
+          <td class="memname">using <a class="el" href="#gac7518d1b6d2c834ae512ff5d91702ee6">eve::wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, iterator_width_v&lt;T&gt;&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -306,9 +306,9 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 <p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/wide_value_type.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#ga55234286d380ec9a9baef96a65649356">wide_value_type_t</a> = as_wide_t&lt;value_type_t&lt;T&gt;, <a class="code hl_typedef" href="#ga331d84fa4b64e5deb329b1a09d60c747">iterator_cardinal_t&lt;T&gt;</a>&gt;</div>
-<div class="ttc" id="agroup__eve__traits_html_ga331d84fa4b64e5deb329b1a09d60c747"><div class="ttname"><a href="#ga331d84fa4b64e5deb329b1a09d60c747">eve::iterator_cardinal_t</a></div><div class="ttdeci">decltype(_::iterator_cardinal_impl&lt; T &gt;()) iterator_cardinal_t</div><div class="ttdoc">A meta-function that returns a cardinal for a relaxed iterator/range. If T defines a nested static fu...</div><div class="ttdef"><b>Definition</b> iterator_cardinal.hpp:49</div></div>
-<div class="ttc" id="agroup__eve__traits_html_ga55234286d380ec9a9baef96a65649356"><div class="ttname"><a href="#ga55234286d380ec9a9baef96a65649356">eve::wide_value_type_t</a></div><div class="ttdeci">as_wide_t&lt; value_type_t&lt; T &gt;, iterator_cardinal_t&lt; T &gt; &gt; wide_value_type_t</div><div class="ttdef"><b>Definition</b> wide_value_type.hpp:33</div></div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#gac7518d1b6d2c834ae512ff5d91702ee6">wide_value_type_t</a> = as_wide_t&lt;value_type_t&lt;T&gt;, <a class="code hl_typedef" href="#ga7ae3e81e8c073ad31b70c384a2774336">iterator_width_t&lt;T&gt;</a>&gt;</div>
+<div class="ttc" id="agroup__eve__traits_html_ga7ae3e81e8c073ad31b70c384a2774336"><div class="ttname"><a href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a></div><div class="ttdeci">decltype(_::iterator_width_impl&lt; T &gt;()) iterator_width_t</div><div class="ttdoc">A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static funct...</div><div class="ttdef"><b>Definition</b> iterator_width.hpp:49</div></div>
+<div class="ttc" id="agroup__eve__traits_html_gac7518d1b6d2c834ae512ff5d91702ee6"><div class="ttname"><a href="#gac7518d1b6d2c834ae512ff5d91702ee6">eve::wide_value_type_t</a></div><div class="ttdeci">as_wide_t&lt; value_type_t&lt; T &gt;, iterator_width_v&lt; T &gt; &gt; wide_value_type_t</div><div class="ttdef"><b>Definition</b> wide_value_type.hpp:33</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -319,7 +319,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Type, typename Lanes&gt; </div>
+template&lt;typename Type, std::ptrdiff_t Lanes&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using eve::abi_t</td>

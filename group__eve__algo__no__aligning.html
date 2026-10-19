@@ -157,14 +157,14 @@ Variables</h2></td></tr>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_variable" href="#ga07dd1178b2904dc377069bc34452a84e">no_aligning</a> = eve_implementation_defined;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__algo__no__aligning_html_ga07dd1178b2904dc377069bc34452a84e"><div class="ttname"><a href="#ga07dd1178b2904dc377069bc34452a84e">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdef"><b>Definition</b> traits.hpp:465</div></div>
+<div class="ttc" id="agroup__eve__algo__no__aligning_html_ga07dd1178b2904dc377069bc34452a84e"><div class="ttname"><a href="#ga07dd1178b2904dc377069bc34452a84e">eve::algo::no_aligning</a></div><div class="ttdeci">constexpr auto no_aligning</div><div class="ttdef"><b>Definition</b> traits.hpp:455</div></div>
 </div><!-- fragment --> </div><p>Disables the alignment of memory accesses. By default a partial first register is read so that every following register is at an aligned address, and the loads are faster. With the trait the loop is started at the first element and the accesses are not aligned, which is cheaper on a short range, where the partial register is not repaid.</p>
 <div class="fragment"><div class="line">std::vector&lt;float&gt; data(24);</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// A range this short does not repay the partial first register an aligned loop reads.</span></div>
 <div class="line"><span class="keyword">auto</span> found = <a class="code hl_variable" href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">find_if</a>[<a class="code hl_variable" href="#ga07dd1178b2904dc377069bc34452a84e">no_aligning</a>](data, [](<span class="keyword">auto</span> x) { <span class="keywordflow">return</span> x &gt; 0.f; });</div>
 <div class="ttc" id="agroup__eve__algos_html_gadf0762ce0ad64c41ff1eb704a436894d"><div class="ttname"><a href="group__eve__algos.html#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a></div><div class="ttdeci">constexpr auto find_if</div><div class="ttdoc">SIMD version of std::find_if.</div><div class="ttdef"><b>Definition</b> find.hpp:130</div></div>
-</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__eve__algo__divisible__by__cardinal.html#ga01b72d95d26f28c2c8715af53bef8f53">divisible_by_cardinal</a>, <a class="el" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">expensive_callable</a> </dd></dl>
+</div><!-- fragment --><dl class="section see"><dt>See also</dt><dd>divisible_by_cardinal, <a class="el" href="group__eve__algo__expensive__callable.html#ga03487a05ad7b38febedbf22e671dcf93">expensive_callable</a> </dd></dl>
 
 </div>
 </div>

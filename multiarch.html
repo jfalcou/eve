@@ -144,7 +144,7 @@ Writing the kernel</h2>
 <div class="line"><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> <span class="keywordtype">void</span> compute_kernel(<span class="keywordtype">float</span>* data, std::size_t size)</div>
 <div class="line">{</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; compute with: &quot;</span> &lt;&lt; eve::current_api &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; eve::wide is: &quot;</span> &lt;&lt; <a class="code hl_function" href="structeve_1_1wide.html#a1d3739186033f12c8fe47755f598b60b">eve::wide&lt;float&gt;::size</a>() &lt;&lt; <span class="stringliteral">&quot; elements large.\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;&gt;&gt; eve::wide is: &quot;</span> &lt;&lt; <a class="code hl_function" href="structeve_1_1wide.html#a4c5abb1c30d231b46212e2f7d61855a0">eve::wide&lt;float&gt;::size</a>() &lt;&lt; <span class="stringliteral">&quot; elements large.\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="group__eve__algos.html#gaca82a7bc09323d8f0da1e0d3d5b0bcea">eve::algo::transform_inplace</a>( std::span{data,size}</div>
 <div class="line">                              , [](<span class="keyword">auto</span> e) { <span class="keywordflow">return</span> <a class="code hl_variable" href="group__eve__core__arithmetic.html#ga641aa98b8a2c05bf5bfb4907d15faf37">eve::sqrt</a>(e + e * 3); }</div>
