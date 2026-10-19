@@ -10,7 +10,7 @@
 #include <eve/wide.hpp>
 #include <iostream>
 
-using w_t = eve::wide<float, eve::fixed<4>>;
+using w_t = eve::wide<float, 4>;
 
 auto sqrt_positive( w_t const& a )
 {

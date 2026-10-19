@@ -9,7 +9,7 @@
 
 int main()
 {
-  EVE_VALUE lmax = eve::cardinal_v<EVE_VALUE>;
+  EVE_VALUE lmax = eve::width_v<EVE_VALUE>;
   EVE_VALUE lmin = -lmax;
   using L_TYPE = eve::logical<EVE_TYPE>;
   if (lmin > 0) lmin = 0;

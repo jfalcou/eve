@@ -36,7 +36,7 @@ TTS_CASE_TPL( "Check behavior of identity swizzle", eve::test::scalar::all_types
                 constexpr std::size_t sz = 1ULL << N;
                 if constexpr(sz <= S::size())
                 {
-                  eve::as_wide_t<S,eve::fixed<sz>> ref = [&](auto i, auto) { return simd.get(i); };
+                  eve::as_wide_t<S, sz> ref = [&](auto i, auto) { return simd.get(i); };
                   TTS_EQUAL(eve::shuffle(simd,identity<sz>), ref);
                 }
               };

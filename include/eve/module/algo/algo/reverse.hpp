@@ -48,27 +48,27 @@ namespace eve::algo
       auto rl = views::reverse(l);
 
       std::ptrdiff_t const n        = l - f;
-      std::ptrdiff_t const cardinal = iterator_cardinal_v<decltype(f)>;
+      std::ptrdiff_t const width = iterator_width_v<decltype(f)>;
 
-      std::ptrdiff_t two_register_steps = n / (2 * cardinal);
-      std::ptrdiff_t left = n - cardinal * 2 * two_register_steps;
+      std::ptrdiff_t two_register_steps = n / (2 * width);
+      std::ptrdiff_t left = n - width * 2 * two_register_steps;
 
       // We will read the overlapping middle twice if we can
       // [          (  m  )          ]
-      // This way we can treat the range as divisible by cardinal
+      // This way we can treat the range as divisible by width
 
-      if (left >= cardinal) ++two_register_steps;
+      if (left >= width) ++two_register_steps;
       else
       {
-        auto f_m      = f  + two_register_steps * cardinal;
-        auto rl_m     = rl + two_register_steps * cardinal;
+        auto f_m      = f  + two_register_steps * width;
+        auto rl_m     = rl + two_register_steps * width;
         auto loaded   = load[keep_first(left)](f_m);
         eve::store[keep_first(left)](loaded, rl_m);
       }
 
-      auto m = f + two_register_steps * cardinal;
+      auto m = f + two_register_steps * width;
 
-      swap_ranges[processed.traits()][divisible_by_cardinal](as_range(f, m), rl);
+      swap_ranges[processed.traits()][divisible_by_width](as_range(f, m), rl);
     }
   };
 

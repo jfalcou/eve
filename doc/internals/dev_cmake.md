@@ -47,22 +47,22 @@ generator.
 Once run, your build folder should contain all the necessary artifact to compile and run **EVE**
 test suite.
 
-## Cardinals of the tests
+## Test lots
 
 A unit test instantiates its cases on a list of `eve::wide` types from `test/test.hpp`, a type
-per element type and cardinal. The cache variable `EVE_TEST_LOT` selects the cardinals of those
+per element type and width. The cache variable `EVE_TEST_LOT` selects the widths of those
 lists:
 
-- `all`: every cardinal from 1 to twice the native one, the default.
-- `family`: the cardinals whose code path differs on the current ABI, native included. On a 128-bit
-  ABI, the native cardinal and its half. Under AVX2, the native cardinal alone, as a 128-bit wide
-  runs the SSE code. Under AVX512, the native cardinal, its half and its quarter, as every width has
-  its own masks. About half the compile time of `all`.
-- `native`: the native cardinal alone. About 40% of the compile time of `all`.
-- `extra`: the family without the native cardinal. A type the family tests at the native cardinal
+- `all`: every width from 1 to twice the native one, the default.
+- `family`: the widths whose code path differs on the current ABI, native included. On a 128-bit
+  ABI, the native width and its half. Under AVX2, the native width alone, as a 128-bit wide
+  runs the SSE code. Under AVX512, the native width, its half and its quarter, as every register
+  size has its own masks. About half the compile time of `all`.
+- `native`: the native width alone. About 40% of the compile time of `all`.
+- `extra`: the family without the native width. A type the family tests at the native width
   alone keeps it, so that no test runs on an empty list.
 
-The tests of the wide API, the memory functions and the conversions keep twice the native cardinal
+The tests of the wide API, the memory functions and the conversions keep twice the native width
 in every lot but `native`, and `cmake/config/aggregated-units.cmake` names the few others.
 
 This configuration compiles the native lot alone under SSE4.2:

@@ -17,7 +17,7 @@
 
 namespace eve::_
 {
-  template<floating_scalar_value T, typename N, callable_options O>
+  template<floating_scalar_value T, width_type N, callable_options O>
    wide<T, N>  sqrt_(EVE_REQUIRES(neon128_),
                                     O          const& opts,
                                     wide<T, N> const& v0) noexcept

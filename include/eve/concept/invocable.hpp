@@ -124,8 +124,8 @@ concept invocable = requires(F&& f, Args&&...args)
   //! @{
   //! @brief Specifies a predicate that returns a logical value
   //! @brief Specifies a predicate that accepts [simd values](@ref eve::simd_value) of the same
-  //!        cardinal and returns a [logical simd value](@ref eve::logical_simd_value) of the same
-  //!        cardinal.
+  //!        width and returns a [logical simd value](@ref eve::logical_simd_value) of the same
+  //!        width.
   //!
   //! @tparam Op The predicate to check
   //! @tparam Args The arguments passed to the predicate

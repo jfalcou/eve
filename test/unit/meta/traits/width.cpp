@@ -1,0 +1,36 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+**/
+//==================================================================================================
+#include "test.hpp"
+#include <eve/traits/width.hpp>
+#include <eve/logical.hpp>
+#include <eve/wide.hpp>
+
+TTS_CASE( "Check for scalar widths")
+{
+  TTS_EQUAL  ( eve::width_v<float> , 1 );
+  TTS_EQUAL  ( eve::width_v<eve::logical<float>> , 1 );
+};
+
+TTS_CASE_TPL( "Check for wide widths", eve::test::widths)
+<typename T>(::tts::type<T>)
+{
+  TTS_TYPE_IS( (eve::width_t< eve::wide<float, T::value> >), T        );
+  TTS_EQUAL  ( (eve::width_v< eve::wide<float, T::value> >), T::value );
+
+  TTS_TYPE_IS( (eve::width_t< eve::logical<eve::wide<float, T::value> >>), T        );
+  TTS_EQUAL  ( (eve::width_v< eve::logical<eve::wide<float, T::value> >>), T::value );
+};
+
+TTS_CASE_TPL( "Check for SIMD tuple-like type widths", eve::test::widths)
+<typename T>(::tts::type<T>)
+{
+  using tuple_t = kumi::tuple<float,double,std::int8_t>;
+
+  TTS_TYPE_IS( (eve::width_t<eve::wide<tuple_t, T::value>>), T        );
+  TTS_EQUAL  ( (eve::width_v<eve::wide<tuple_t, T::value>>), T::value );
+};

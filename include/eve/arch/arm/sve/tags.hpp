@@ -16,21 +16,21 @@ namespace eve
   //================================================================================================
   // ABI tags for all ARM bits SIMD registers
   //================================================================================================
-  template<std::size_t Size> struct sve_abi_
+  template<std::size_t Width> struct sve_abi_
   {
-    static constexpr std::size_t bits             = Size;
-    static constexpr std::size_t bytes            = Size/8;
+    static constexpr std::size_t bits             = Width;
+    static constexpr std::size_t bytes            = Width/8;
     static constexpr bool        is_wide_logical  = false;
     static constexpr bool        has_defined_logical_tail = true;
 
     template<typename Type>
-    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= Size/8);
+    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= Width/8);
 
     template<typename Type>
-    static constexpr std::size_t fundamental_cardinal = bytes / sizeof(Type);
+    static constexpr std::size_t fundamental_width = bytes / sizeof(Type);
 
     template<typename Type>
-    static constexpr std::size_t expected_cardinal = fundamental_cardinal<Type>;
+    static constexpr std::size_t expected_width = fundamental_width<Type>;
   };
 
   struct arm_sve_128_ : sve_abi_<128> {};

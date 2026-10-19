@@ -48,7 +48,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle size 1, swizzle", ev
     return 0xB0 | (i & 7);
   }};
 
-  T res = eve::deinterleave_groups_shuffle(in, eve::lane<1>);
+  T res = eve::deinterleave_groups_shuffle(in, eve::lanes<1>);
 
   TTS_EQUAL(expected, res)
     << "\ni : " << in
@@ -65,10 +65,10 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle G >= N, swizzle", ev
 
   if constexpr ( T::size() != 1)
   {
-    TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lane<T::size() / 2>)));
+    TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lanes<T::size() / 2>)));
   }
 
-  TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lane<T::size()>)));
+  TTS_EQUAL(expected, (eve::deinterleave_groups_shuffle(expected, eve::lanes<T::size()>)));
 };
 
 
@@ -86,7 +86,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, 
     return;
   }
 
-  auto test = [&]<std::ptrdiff_t G>(eve::fixed<G>)
+  auto test = [&]<std::ptrdiff_t G>(eve::lanes_t<G>)
   {
     T in {[](int i, int)
           {
@@ -98,7 +98,7 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, 
             return marker | (new_i & 0xf);
           }};
 
-    auto r = eve::deinterleave_groups_shuffle(in, eve::lane<G>);
+    auto r = eve::deinterleave_groups_shuffle(in, eve::lanes<G>);
 
     TTS_EQUAL(expected, r)
       << "\nG: "  << G
@@ -110,6 +110,6 @@ TTS_CASE_TPL("Check behavior of deinterleave_groups_shuffle swizzle 1 <= G < N, 
 
   [&]<std::size_t... I>( std::index_sequence<I...> )
   {
-    (test( eve::lane<1 << I> ), ... );
+    (test( eve::lanes<1 << I> ), ... );
   }( std::make_index_sequence<std::bit_width( std::size_t(T::size() / 2) )>{} );
 };

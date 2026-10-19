@@ -12,7 +12,7 @@
 //==================================================================================================
 // EVE Specific testing overloads
 //==================================================================================================
-#include <eve/arch/fundamental_cardinal.hpp>
+#include <eve/arch/fundamental_width.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>
@@ -42,7 +42,7 @@ namespace tts
 {
   //================================================================================================
   //================================================================================================
-  template<typename T, typename N>
+  template<typename T, eve::width_type N>
   struct comparison<eve::wide<T, N>, eve::wide<T, N>>
   {
     using w_t = eve::wide<T, N>;
@@ -73,7 +73,7 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, typename N>
+  template<typename T, eve::width_type N>
   struct precision<eve::wide<T, N>>
   {
     using w_t = eve::wide<T, N>;
@@ -162,7 +162,7 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, typename N> struct display<eve::wide<T, N>>
+  template<typename T, eve::width_type N> struct display<eve::wide<T, N>>
   {
     static text render(eve::wide<T, N> const& v)
     {
@@ -223,13 +223,13 @@ namespace tts
 
 namespace eve::test
 {
-  // The cardinals of the test type lists, chosen by EVE_TEST_LOT in cmake.
+  // The widths of the test type lists, chosen by EVE_TEST_LOT in cmake.
   enum class lot
   {
-    all,      // every cardinal from 1 to twice the native one
-    family,   // the cardinals whose code path differs on this ABI, native included
-    native,   // the native cardinal alone
-    extra     // the family without the native cardinal
+    all,      // every width from 1 to twice the native one
+    family,   // the widths whose code path differs on this ABI, native included
+    native,   // the native width alone
+    extra     // the family without the native width
   };
 #if   defined(EVE_TEST_LOT_NATIVE)
   inline constexpr lot current_lot = lot::native;
@@ -249,8 +249,8 @@ namespace eve::test
   template<typename W> struct in_lot
   {
     using e_t = element_type_t<W>;
-    static constexpr std::ptrdiff_t n      = cardinal_v<W>;
-    static constexpr std::ptrdiff_t native = expected_cardinal_v<e_t>;
+    static constexpr std::ptrdiff_t n      = width_v<W>;
+    static constexpr std::ptrdiff_t native = expected_width_v<e_t>;
     // Under AVX2 a 128-bit wide takes the SSE paths, except float16 through F16C. Under AVX512
     // every width down to 128 bits has its own k-masks and VL forms.
     static constexpr bool narrower = (current_api >= avx512) ? (2 * n == native || 4 * n == native)
@@ -268,7 +268,7 @@ namespace eve::test
   template<typename T, std::size_t... N>
   struct to_wide<T, std::index_sequence<N...>>
   {
-    using type = ::tts::types<as_wide_t<T,eve::fixed<1ULL << N>>...>;
+    using type = ::tts::types<as_wide_t<T, 1ULL << N>...>;
   };
 
   template<typename T, typename I>
@@ -278,9 +278,9 @@ namespace eve::test
   template<typename... Ts> struct wides<::tts::types<Ts...>>
   {
     // Precomputed # of repetitions based on ABI and sizeof(T)
-    static constexpr std::array<std::size_t,9> cardinals()
+    static constexpr std::array<std::size_t,9> widths()
     {
-      // This is a precomputed map of the maximum number of cardinal to generate depending
+      // This is a precomputed map of the maximum number of width to generate depending
       // on the current ABI bits size. This prevents us to use std::bit_width and other complex
       // computations.
       switch(eve::current_abi_type::bits)
@@ -296,13 +296,13 @@ namespace eve::test
     };
 
     using type_all =
-        tts::concatenate<to_wide_t<Ts, std::make_index_sequence<cardinals()[sizeof(Ts)]>>...>;
+        tts::concatenate<to_wide_t<Ts, std::make_index_sequence<widths()[sizeof(Ts)]>>...>;
 
-    // A lot that leaves no cardinal for a type keeps the native one: TTS reports a case run on
+    // A lot that leaves no width for a type keeps the native one: TTS reports a case run on
     // an empty list as invalid.
     template<typename T> struct lot_of
     {
-      using lot  = typename tts::filter<in_lot, to_wide_t<T, std::make_index_sequence<cardinals()[sizeof(T)]>>>::types_list;
+      using lot  = typename tts::filter<in_lot, to_wide_t<T, std::make_index_sequence<widths()[sizeof(T)]>>>::types_list;
       using type = std::conditional_t<std::same_as<lot, tts::types<>>, tts::types<as_wide_t<T>>, lot>;
     };
 
@@ -314,14 +314,14 @@ namespace eve::test
         constexpr auto bit_size = 512;
         if( sizeof(Type) <= bit_size / 8 ) return true;
         using scalar_t                   = typename Type::value_type;
-        constexpr auto cardinal          = eve::cardinal_v<Type>;
-        constexpr auto expected_cardinal = eve::expected_cardinal_v<scalar_t>;
+        constexpr auto width          = eve::width_v<Type>;
+        constexpr auto expected_width = eve::expected_width_v<scalar_t>;
         // and double, int64, uint64
         if( sizeof(scalar_t) != 8 ) return false;
-        // for expected cardinal (lmul==8)
-        if( expected_cardinal == cardinal ) return true;
+        // for expected width (lmul==8)
+        if( expected_width == width ) return true;
         // for combined type
-        if( 2 * expected_cardinal == cardinal ) return true;
+        if( 2 * expected_width == width ) return true;
         return false;
       }
 
@@ -351,17 +351,17 @@ namespace eve::test
                           , std::integral_constant<int, 1024>
                           >;
 
-  using cardinals = tts::types< eve::fixed<   1>
-                              , eve::fixed<   2>
-                              , eve::fixed<   4>
-                              , eve::fixed<   8>
-                              , eve::fixed<  16>
-                              , eve::fixed<  32>
-                              , eve::fixed<  64>
-                              , eve::fixed< 128>
-                              , eve::fixed< 256>
-                              , eve::fixed< 512>
-                              , eve::fixed<1024>
+  using widths = tts::types< eve::lanes_t<   1>
+                              , eve::lanes_t<   2>
+                              , eve::lanes_t<   4>
+                              , eve::lanes_t<   8>
+                              , eve::lanes_t<  16>
+                              , eve::lanes_t<  32>
+                              , eve::lanes_t<  64>
+                              , eve::lanes_t< 128>
+                              , eve::lanes_t< 256>
+                              , eve::lanes_t< 512>
+                              , eve::lanes_t<1024>
                               >;
 
   EVE_ABI auto is_near(auto a,  auto b){
@@ -455,10 +455,10 @@ namespace tts
 
     // Add garbage at the end of sub-native registers
     // For emulated type, there is no such gap so we don't do anything
-    if constexpr( (W::size() < eve::fundamental_cardinal_v<v_t>) && !eve::emulated_abi<W> )
+    if constexpr( (W::size() < eve::fundamental_width_v<v_t>) && !eve::emulated_abi<W> )
     {
       using p_t   = eve::as_arithmetic_t<eve::as_integer_t<v_t, unsigned>>;
-      using ftype = eve::as_wide_t<v_t, eve::fundamental_cardinal_t<v_t>>;
+      using ftype = eve::as_wide_t<v_t, eve::fundamental_width_v<v_t>>;
 
       ftype these(data.storage());
 
@@ -479,8 +479,8 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<typename T, typename N> struct base_type<eve::wide<T,N>>    { using type = T; };
-  template<typename T, typename N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
+  template<typename T, eve::width_type N> struct base_type<eve::wide<T,N>>    { using type = T; };
+  template<typename T, eve::width_type N> struct boolean_type<eve::wide<T,N>>  { using type = eve::logical<eve::wide<T,N>>; };
   template<typename T>             struct boolean_type<eve::logical<T>> { using type = eve::logical<T>; };
   template<typename T> requires(std::is_arithmetic_v<T> && !std::is_same_v<T,bool>)
   struct boolean_type<T> { using type = eve::logical<T>; };
@@ -527,7 +527,7 @@ namespace tts
       auto data = produce(type<std::array<e_t,T::size()>>{}, g, args...);
 
       using v_t = typename decltype(data)::value_type;
-      eve::as_wide_t<v_t, eve::cardinal_t<T>> that = eve::load(&data[0], eve::cardinal_t<T>{});
+      eve::as_wide_t<v_t, T::size()> that = eve::load(&data[0], eve::lanes_t<T::size()>{});
 
       return poison(that);
     }
@@ -562,23 +562,23 @@ namespace tts
 
   //================================================================================================
   //================================================================================================
-  template<std::ptrdiff_t N>
-  struct generation<eve::wide<eve::float16_t, eve::fixed<N>>>
+  template<eve::width_type N>
+  struct generation<eve::wide<eve::float16_t, N>>
   {
     static auto make(auto g, auto... args)
     {
       auto arr = produce(type<std::array<eve::float16_t, N>>{}, g, args...);
-      return poison(eve::load(arr.data(), eve::fixed<N>{}));
+      return poison(eve::load(arr.data(), eve::lanes_t<N>{}));
     }
   };
 
 
   template<typename Fn, typename Wm, typename... Args>
-  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>
+  auto map(Fn&& f, Wm&& wm, Args&&... args) -> eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::width_v<Wm>>
   {
-    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::cardinal_t<Wm>>;
+    using r_t = eve::as_wide_t<decltype(f(eve::_::get_at(wm, 0), eve::_::get_at(args, 0)...)), eve::width_v<Wm>>;
     auto call_f = [&](auto idx) { return f(eve::_::get_at(wm, idx), eve::_::get_at(args, idx)...); };
-    return eve::_::apply<eve::cardinal_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
+    return eve::_::apply<eve::width_v<Wm>>([&](auto... I) { return r_t{call_f(I)...}; });
   }
 
   template<typename L1> struct rewrap;

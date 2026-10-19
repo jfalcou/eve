@@ -16,7 +16,7 @@
 
 namespace eve::_
 {
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename N>
+template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N>
  void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
@@ -24,9 +24,9 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, typename N>
   {
     store_common(cpu_{}, cx, value, ptr);
   }
-  else if constexpr( std::is_same_v<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
+  else if constexpr( std::is_same_v<abi_t<T, N>, arm_64_> && (N * sizeof(T) != arm_64_::bytes) )
   {
-    memcpy(ptr, (T const *)(&value), N::value * sizeof(T));
+    memcpy(ptr, (T const *)(&value), N * sizeof(T));
   }
   else
   {
@@ -60,7 +60,7 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, typename N>
 }
 
 #if defined(SPY_COMPILER_IS_MSVC)
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, typename Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N, typename Lanes>
  void store_impl(neon128_, C const& cx, wide<T, N> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
@@ -68,9 +68,9 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, typ
   {
     store_common(cpu_{}, cx, value, ptr);
   }
-  else if constexpr( std::is_same<abi_t<T, N>, arm_64_> && (N::value * sizeof(T) != arm_64_::bytes) )
+  else if constexpr( std::is_same<abi_t<T, N>, arm_64_> && (N * sizeof(T) != arm_64_::bytes) )
   {
-    memcpy(ptr, (T const *)(&value), N::value * sizeof(T));
+    memcpy(ptr, (T const *)(&value), N * sizeof(T));
   }
   else
   {
@@ -103,7 +103,7 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, typename N, typ
   }
 }
 #else
-template<relative_conditional_expr C, arithmetic_scalar_value T, typename S, typename Lanes>
+template<relative_conditional_expr C, arithmetic_scalar_value T, width_type S, width_type Lanes>
  void store_impl(neon128_, C const& cx, wide<T, S> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, S>>
 {

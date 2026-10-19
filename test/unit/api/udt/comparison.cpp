@@ -144,7 +144,7 @@ TTS_CASE("Check eve::wide<udt> ordering for kumi::tuple inheritance")
 
 TTS_CASE("Check eve::wide<udt> ordering for three members of different types")
 {
-  using w_t  = eve::wide<udt::voxel, eve::fixed<32>>;
+  using w_t  = eve::wide<udt::voxel, 32>;
   using lv_t = eve::as_logical_t<w_t>;
 
   // Lane i holds the pattern i % 27 of <, == and > over the three members, every pattern once

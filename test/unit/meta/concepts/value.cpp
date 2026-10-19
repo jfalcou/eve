@@ -12,7 +12,7 @@
 TTS_CASE("Check validation of the scalar_value concept" )
 {
   using eve::logical;
-  using eve::fixed;
+  using eve::lanes_t;
   using eve::wide;
 
   TTS_EXPECT( eve::scalar_value<char>  );
@@ -27,14 +27,14 @@ TTS_CASE("Check validation of the scalar_value concept" )
 
   TTS_EXPECT_NOT( (eve::scalar_value<wide<int>>                   ) );
   TTS_EXPECT_NOT( (eve::scalar_value<logical<wide<int>>>          ) );
-  TTS_EXPECT_NOT( (eve::scalar_value<wide<std::int8_t,fixed<16>>> ) );
+  TTS_EXPECT_NOT( (eve::scalar_value<wide<std::int8_t, 16>> ) );
   TTS_EXPECT_NOT( (eve::scalar_value<wide<kumi::tuple<int,float>>>) );
 };
 
 TTS_CASE("Check validation of the simd_value" )
 {
   using eve::logical;
-  using eve::fixed;
+  using eve::lanes_t;
   using eve::wide;
 
   TTS_EXPECT_NOT( eve::simd_value<char>  );
@@ -49,6 +49,6 @@ TTS_CASE("Check validation of the simd_value" )
 
   TTS_EXPECT( (eve::simd_value<wide<int>>           ) );
   TTS_EXPECT( (eve::simd_value<logical<wide<int>>>  ) );
-  TTS_EXPECT( (eve::simd_value<wide<std::int8_t,fixed<16>>>) );
+  TTS_EXPECT( (eve::simd_value<wide<std::int8_t, 16>>) );
   TTS_EXPECT( (eve::simd_value<wide<kumi::tuple<int,float>>>) );
 };
