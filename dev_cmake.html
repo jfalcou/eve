@@ -189,11 +189,11 @@ Cardinals of the tests</h2>
          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/clang.x86.cmake
 </pre><h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 Heavy translation units</h2>
-<p><span class="tt">EVE_HEAVY_POOL=N</span> limits to N the translation units of <span class="tt">cmake/config/heavy-units.cmake</span>, the ones peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines.</p>
+<p><span class="tt">EVE_HEAVY_POOL=N</span> limits to N the translation units of <span class="tt">cmake/config/heavy-units.cmake</span>, the ones peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines and 2 on the hosted runners.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
 Compiling EVE Unit Tests</h1>
 <p><b>EVE</b> provides a large number of test targets that are grouped by theme. Each of these themes and tests with a theme can be compiled with a proper target.</p>
-<p>In term of options, we encourage you to use the <span class="tt">-DEVE_NO_FORCEINLINE</span> macro that prevents costly optimization to be used during the compilation of tests.</p>
+<p>The <span class="tt">-DEVE_NO_FORCEINLINE</span> macro reduces <span class="tt">EVE_ABI</span> to a plain <span class="tt">inline</span>, which lowers the memory g++ takes to compile a test.</p>
 <p>The following table list the main high-level themed target.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">

@@ -147,7 +147,7 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Note that decoration doesn&#39;t impact signature declaration</span></div>
 <div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
-<div class="line">    EVE_FORCEINLINE T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_ABI T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
 <div class="line">    <a class="code hl_define" href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(func_t, func_);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
@@ -159,7 +159,7 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">  {</div>
 <div class="line">    <span class="comment">// Note that decoration doesn&#39;t impact signature declaration</span></div>
 <div class="line">    <span class="keyword">template</span>&lt;eve::<span class="keywordtype">int</span>egral_value T&gt;</div>
-<div class="line">    EVE_FORCEINLINE T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
+<div class="line">    EVE_ABI T  operator()(T v)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_define" href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a>(v); }</div>
 <div class="line">    <a class="code hl_define" href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a>(other_func_t, other_func_);</div>
 <div class="line">  };</div>
 <div class="line"> </div>
@@ -220,9 +220,9 @@ $(function(){initNavTree('structeve_1_1conditional__option.html','','structeve_1
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__core__arithmetic_html_ga19c1e5e8e7a04678ee99fdc2bbff0e7b"><div class="ttname"><a href="group__eve__core__arithmetic.html#ga19c1e5e8e7a04678ee99fdc2bbff0e7b">eve::mul</a></div><div class="ttdeci">constexpr auto mul</div><div class="ttdoc">tuple_callable computing the product of its arguments.</div><div class="ttdef"><b>Definition</b> mul.hpp:128</div></div>
-<div class="ttc" id="agroup__eve__extensions_html_ga28f160dc16e57390e8d479cc62d89af6"><div class="ttname"><a href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a></div><div class="ttdeci">constexpr _::condition_key_t condition_key</div><div class="ttdoc">Keyword for retrieving conditionals decorator.</div><div class="ttdef"><b>Definition</b> supports.hpp:213</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_ga28f160dc16e57390e8d479cc62d89af6"><div class="ttname"><a href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">eve::condition_key</a></div><div class="ttdeci">constexpr _::condition_key_t condition_key</div><div class="ttdoc">Keyword for retrieving conditionals decorator.</div><div class="ttdef"><b>Definition</b> supports.hpp:214</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_ga3d0c2dd0a42392476adec67bcd45d3bd"><div class="ttname"><a href="group__eve__extensions.html#ga3d0c2dd0a42392476adec67bcd45d3bd">EVE_CALLABLE_OBJECT</a></div><div class="ttdeci">#define EVE_CALLABLE_OBJECT(TYPE, NAME)</div><div class="ttdoc">Generate the generic function interface for an actual eve::callable.</div><div class="ttdef"><b>Definition</b> protocol.hpp:157</div></div>
-<div class="ttc" id="agroup__eve__extensions_html_ga406269d77123b31f9bc18b38b78c8e25"><div class="ttname"><a href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">eve::functor</a></div><div class="ttdeci">constexpr auto functor</div><div class="ttdoc">EVE&#39;s Callable Object generator.</div><div class="ttdef"><b>Definition</b> supports.hpp:107</div></div>
+<div class="ttc" id="agroup__eve__extensions_html_ga406269d77123b31f9bc18b38b78c8e25"><div class="ttname"><a href="group__eve__extensions.html#ga406269d77123b31f9bc18b38b78c8e25">eve::functor</a></div><div class="ttdeci">constexpr auto functor</div><div class="ttdoc">EVE&#39;s Callable Object generator.</div><div class="ttdef"><b>Definition</b> supports.hpp:111</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_gaa3458167ed8a49f4d2bcc308470b0d75"><div class="ttname"><a href="group__eve__extensions.html#gaa3458167ed8a49f4d2bcc308470b0d75">EVE_REQUIRES</a></div><div class="ttdeci">#define EVE_REQUIRES(ARCH)</div><div class="ttdoc">Flag a function to support delayed calls on given architecture.</div><div class="ttdef"><b>Definition</b> protocol.hpp:226</div></div>
 <div class="ttc" id="agroup__eve__extensions_html_gaf0beae174fce698157d30319be9355d0"><div class="ttname"><a href="group__eve__extensions.html#gaf0beae174fce698157d30319be9355d0">EVE_DISPATCH_CALL</a></div><div class="ttdeci">#define EVE_DISPATCH_CALL(...)</div><div class="ttdoc">Generate the proper call to current EVE&#39;s Callable Object implementation.</div><div class="ttdef"><b>Definition</b> protocol.hpp:194</div></div>
 <div class="ttc" id="anamespaceeve_1_1___html"><div class="ttname"><a href="namespaceeve_1_1__.html">eve::_</a></div><div class="ttdef"><b>Definition</b> abi_traits.hpp:68</div></div>

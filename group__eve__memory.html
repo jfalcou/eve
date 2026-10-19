@@ -756,14 +756,14 @@ Members Functions</h4>
 <div class="line">{</div>
 <div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Ptr, scalar_value V&gt;</div>
 <div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Ptr p, V v) { *p = v; }</div>
-<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">// 1</span></div>
+<div class="line">  <span class="keywordtype">void</span> operator()(V v, Ptr p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;               <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Writeable, scalar_value V&gt;</div>
 <div class="line">  <span class="keyword">requires</span> <span class="keyword">requires</span>(Writeable p, V v) { p.write(v); }</div>
-<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, Writeable p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;         <span class="comment">// 2</span></div>
+<div class="line">  <span class="keywordtype">void</span> operator()(V v, Writeable p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;         <span class="comment">// 2</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Ptrs, <a class="code hl_concept" href="concepteve_1_1scalar__value.html">scalar_value</a> V&gt;</div>
-<div class="line">  EVE_FORCEINLINE <span class="keywordtype">void</span> operator()(V v, <a class="code hl_struct" href="structeve_1_1soa__ptr.html">soa_ptr&lt;Ptrs...&gt;</a> p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;  <span class="comment">// 3</span></div>
+<div class="line">  <span class="keywordtype">void</span> operator()(V v, <a class="code hl_struct" href="structeve_1_1soa__ptr.html">soa_ptr&lt;Ptrs...&gt;</a> p) <span class="keyword">const</span> <span class="keyword">noexcept</span>;  <span class="comment">// 3</span></div>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1scalar__value_html"><div class="ttname"><a href="concepteve_1_1scalar__value.html">eve::scalar_value</a></div><div class="ttdoc">Specify that a type represents a scalar value The concept scalar_value&lt;T&gt; is satisfied if and only if...</div><div class="ttdef"><b>Definition</b> scalar.hpp:138</div></div>
 </div><!-- fragment --><ol type="1">
