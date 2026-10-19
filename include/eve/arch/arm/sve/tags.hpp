@@ -21,6 +21,7 @@ namespace eve
     static constexpr std::size_t bits             = Size;
     static constexpr std::size_t bytes            = Size/8;
     static constexpr bool        is_wide_logical  = false;
+    static constexpr bool        has_defined_logical_tail = true;
 
     template<typename Type>
     static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= Size/8);

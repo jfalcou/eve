@@ -72,6 +72,7 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
+      static constexpr bool has_defined_logical_tail = true;
       template<typename> static constexpr bool is_full = true;
     };
 
@@ -79,6 +80,7 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
+      static constexpr bool has_defined_logical_tail = true;
       template<typename> static constexpr bool is_full = true;
     };
   }
@@ -89,6 +91,7 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
+      static constexpr bool has_defined_logical_tail = true;
       template<typename> static constexpr bool is_full = true;
     };
 
@@ -96,6 +99,7 @@ namespace eve
     {
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
+      static constexpr bool has_defined_logical_tail = true;
       template<typename> static constexpr bool is_full = true;
     };
   }
@@ -107,6 +111,7 @@ namespace eve
     static constexpr std::size_t bits             = 128;
     static constexpr std::size_t bytes            = 16;
     static constexpr bool        is_wide_logical  = true;
+    static constexpr bool        has_defined_logical_tail = true;
 
     template<typename> static constexpr bool is_full = true;
 

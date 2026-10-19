@@ -27,24 +27,28 @@ TTS_CASE_TPL("Check return types of acscpi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // acscpi  tests
 //==================================================================================================
+// acscpi is asin of a reciprocal, and armv7 NEON has no division: the estimate's error reaches asin.
+constexpr bool   rec_is_estimated = (eve::current_api >= eve::neon) && !(eve::current_api >= eve::asimd);
+constexpr double acscpi_tolerance   = rec_is_estimated ? 8.0 : 2.0;
+
 TTS_CASE_WITH("Check behavior of acscpi on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1.0, 100.0),
+              tts::randoms(1.0, 100.0),
                             tts::randoms(1.0, 1e20),
                             tts::randoms(-1e20, -1.0),
-                            tts::randoms(-100.0, -1.0)))
+                            tts::randoms(-100.0, -1.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
 
   auto sacscpi = [](auto e) -> v_t { return static_cast<v_t>(eve::radinpi(std_asin(1 / e))); };
-  TTS_ULP_EQUAL(eve::acscpi(a0), tts::map(sacscpi, a0), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a0), tts::map(sacscpi, a0), acscpi_tolerance);
 
-  TTS_ULP_EQUAL(eve::acscpi(a1), tts::map(sacscpi, a1), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a1), tts::map(sacscpi, a1), acscpi_tolerance);
 
-  TTS_ULP_EQUAL(eve::acscpi(a2), tts::map(sacscpi, a2), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a2), tts::map(sacscpi, a2), acscpi_tolerance);
 
-  TTS_ULP_EQUAL(eve::acscpi(a3), tts::map(sacscpi, a3), 2);
+  TTS_ULP_EQUAL(eve::acscpi(a3), tts::map(sacscpi, a3), acscpi_tolerance);
 };
 
 
@@ -53,8 +57,8 @@ TTS_CASE_WITH("Check behavior of acscpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::acscpi)(eve::wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

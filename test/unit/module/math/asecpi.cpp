@@ -29,15 +29,22 @@ TTS_CASE_TPL("Check return types of asecpi", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of asecpi on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(1.0, 100.0),
+              tts::randoms(1.0, 100.0),
                             tts::randoms(1.0, eve::valmax),
                             tts::randoms(eve::valmin, -1.0),
-                            tts::randoms(-100.0, -1.0)))
+                            tts::randoms(-100.0, -1.0))
 <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
 {
   using v_t = eve::element_type_t<T>;
 
-  auto sasecpi = [](auto e) -> v_t { return static_cast<v_t>(eve::radinpi(std_acos(1 / e))); };
+  // In float16, 1 / e alone loses what the check measures: the reference is computed in float.
+  auto sasecpi = [](auto e) -> v_t
+  {
+    if constexpr( sizeof(v_t) == 2 )
+      return eve::convert(eve::radinpi(std::acos(1 / eve::convert(e, eve::as<float>()))), eve::as<v_t>());
+    else
+      return static_cast<v_t>(eve::radinpi(std_acos(1 / e)));
+  };
   //TODO: check if ULP can be reduced when using fp16
   TTS_ULP_EQUAL(eve::asecpi(a0), tts::map(sasecpi, a0), 6.5);
 
@@ -54,8 +61,8 @@ TTS_CASE_WITH("Check behavior of asecpi on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::asecpi)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

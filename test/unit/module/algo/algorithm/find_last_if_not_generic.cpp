@@ -34,7 +34,7 @@ TTS_CASE_TPL("Check find_if_backward", algo_test::selected_types)
                                           TTS_EQUAL(actual - f, expected - f);
                                           if( actual != expected )
                                           {
-                                            std::cout << tts::as_string(std::vector(f, l))
+                                            std::cout << tts::as_text(std::vector(f, l))
                                                       << std::endl;
                                             std::terminate();
                                           }

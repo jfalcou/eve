@@ -36,10 +36,10 @@ TTS_CASE_TPL("Check return types of neville", eve::test::simd::ieee_reals)
 // under 45 ULP over 200 000 draws, where close nodes or an x outside reach 10^8.
 TTS_CASE_WITH("Check behavior of neville on all types full range",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(1, 3),
+              tts::randoms(1, 3),
                             tts::randoms(4, 6),
                             tts::randoms(7, 10),
-                            tts::randoms(1, 10)))
+                            tts::randoms(1, 10))
   <typename T>(T const& a0, T const& a1, T const& a2, T const& x)
 {
   using eve::abs;

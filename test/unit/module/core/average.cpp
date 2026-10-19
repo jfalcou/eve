@@ -47,26 +47,46 @@ TTS_CASE_TPL("Check return types of average", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::average;
   using v_t = eve::element_type_t<T>;
+  auto prec = tts::prec<T>();
   TTS_ULP_EQUAL(average(a0, a1), tts::map([](auto e, auto f) -> v_t { return (e+f)/2; }, a0, a1), 2);
+  if constexpr( eve::floating_value<T> )
+  {
+    TTS_RELATIVE_EQUAL(average(a0, a1, a2),
+                       tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
+                       prec);
+  }
+};
+
+//==================================================================================================
+// Same-sign data cannot cancel, so an ULP claim holds here.
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of average(wide) without cancellation",
+              eve::test::simd::ieee_reals_wf16,
+              tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.),
+                            tts::randoms(1., 1000.))
+<typename T>(T const& a0, T const& a1, T const& a2)
+{
+  using eve::average;
   if constexpr( eve::floating_value<T> )
   {
     TTS_ULP_EQUAL(average(a0, a1, a2),
                   tts::map([](auto e, auto f, auto g) { return (g + f + e) / 3; }, a0, a1, a2),
-                  48);
+                  2);
   }
 };
 
 TTS_CASE_WITH("Check behavior of average(wide)",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)
-                           , tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax)
+                           , tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1)
 {
   using eve::average;
@@ -79,7 +99,7 @@ TTS_CASE_WITH("Check behavior of average(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of  average[cond](wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(0, 127), tts::randoms(0, 127), tts::randoms(0, 127)))
+              tts::randoms(0, 127), tts::randoms(0, 127), tts::randoms(0, 127))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::average;
@@ -98,9 +118,9 @@ TTS_CASE_WITH("Check behavior of  average[cond](wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)
@@ -114,8 +134,8 @@ TTS_CASE_WITH("Check behavior of eve::masked(eve::average)(eve::wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(eve::valmin, eve::valmax),
+                            tts::randoms(eve::valmin, eve::valmax)
              )
 <typename T>(T const& a0, T const& a1)
 {
@@ -141,9 +161,9 @@ TTS_CASE_WITH("Check behavior of eve::upper(eve::average)(eve::wide)",
 
 TTS_CASE_WITH("Check behavior of average kahan on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::average;

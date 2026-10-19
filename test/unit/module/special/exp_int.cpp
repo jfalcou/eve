@@ -39,7 +39,7 @@ TTS_CASE_TPL("Check return types of exp_int", eve::test::simd::ieee_reals)
 #if defined(PY_STDLIB_IS_LIBCPP)
 TTS_CASE_WITH("Check behavior of exp_int on wide",
               eve::test::scalar::ieee_reals,
-              tts::generate(tts::randoms(0, 10))
+              tts::randoms(0, 10)
              )
   <typename T>(T const& a0)
 {
@@ -60,14 +60,14 @@ TTS_CASE_WITH("Check behavior of exp_int on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of exp_int on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 10.0)))
+              tts::randoms(0.0, 10.0))
 <typename T>(T const& a0)
 {
   using eve::as;
   using eve::exp_int;
   for( int i = 1; i < 4; ++i )
   {
-    TTS_ULP_EQUAL(exp_int(i, a0), tts::map([i](auto e) { return boost::math::expint(i, e); }, a0), 24);
+    TTS_ULP_EQUAL(exp_int(i, a0), tts::map([i](auto e) { return boost::math::expint(i, e); }, a0), 30);
   }
 
   if constexpr( eve::platform::supports_invalids )

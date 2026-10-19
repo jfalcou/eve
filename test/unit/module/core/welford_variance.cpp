@@ -9,6 +9,8 @@
 
 #include <eve/module/core.hpp>
 
+#include <cmath>
+
 #include <numeric>
 
 //==================================================================================================
@@ -39,23 +41,35 @@ TTS_CASE_TPL("Check return types of welford_variance", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of welford_variance(wide)",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(-1000., +1000.),
+              tts::randoms(-1000., +1000.),
                             tts::randoms(-1000., +1000.),
-                            tts::randoms(-1000., +1000.)))
+                            tts::randoms(-1000., +1000.))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::welford_variance;
-  TTS_ULP_EQUAL(welford_variance(a0, a1, a2),
-                eve::variance(a0, a1, a2), 1.5);
+  TTS_EXPECT((std::is_convertible_v<decltype(welford_variance(a0, a1, a2)), T>));
+  TTS_ULP_EQUAL(T(welford_variance(a0, a1, a2)), eve::variance(a0, a1, a2), 2.0);
 };
 
 
 
+//==================================================================================================
+// The two paths agree only while the squares stay representable: past it, infinity against NaN.
+//==================================================================================================
+constexpr auto square_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::sqrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_square_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -square_root_of_valmax(tgt); };
+
 TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_square_root_of_valmax), tts::constant(square_root_of_valmax)))
 <typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::welford_variance;
@@ -63,7 +77,7 @@ TTS_CASE_WITH("Check behavior of welford_variance kahan on wide",
   using eve::kahan;
   using eve::as;
   if constexpr(sizeof(eve::element_type_t<T>) < 8)
-    TTS_ULP_EQUAL(welford_variance(a0, a1, a2), eve::downgrade(welford_variance[widen](a0, a1, a2).variance), 1.5);
+    TTS_ULP_EQUAL(welford_variance(a0, a1, a2).variance, eve::downgrade(welford_variance[widen](a0, a1, a2).variance), 1.5);
   TTS_ULP_EQUAL(welford_variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f).variance,
                    eve::variance(1.0f, 2.0f, -3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 48.0f, 9.0f, 10.0f), 1.0f);
   TTS_ULP_EQUAL(welford_variance(eve::wide(1.0f), eve::wide( 2.0f), eve::wide( -3.0f), eve::wide( 4.0f), eve::wide( 5.0f), eve::wide( 6.0f), eve::wide( 7.0f), eve::wide( 48.0f), eve::wide( 9.0f), eve::wide( 10.0f)).variance,

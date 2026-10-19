@@ -38,8 +38,8 @@ TTS_CASE_TPL("Check behavior of maxrepint", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of maxrepint[mask] on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::maxrepint[mask](eve::as(a0)), eve::if_else(mask, eve::maxrepint(eve::as(a0)), eve::zero));

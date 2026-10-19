@@ -29,7 +29,7 @@ TTS_CASE_TPL("Check return types of eve::of_class(simd)", eve::test::simd::ieee_
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of of_class on wide",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax))
+              tts::randoms(eve::valmin, eve::valmax)
              )
   <typename T>(T const& a0)
 {

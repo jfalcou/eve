@@ -67,13 +67,39 @@ TTS_CASE_TPL("Check return types of mul", eve::test::simd::all_types_wf16)
 };
 
 //==================================================================================================
+// Three factors agree only while every partial product is representable: past valmax, widen and
+// kahan answer infinity against NaN, and mul(mul(a, b), c) infinity where mul(a, b, c) is finite.
+//==================================================================================================
+constexpr auto cubic_root_of_valmax = []<typename T>(eve::as<T> const&)
+{
+  using v_t = eve::element_type_t<T>;
+  return T(static_cast<v_t>(std::cbrt(static_cast<double>(eve::valmax(eve::as<v_t>())))));
+};
+
+constexpr auto minus_cubic_root_of_valmax =
+    []<typename T>(eve::as<T> const& tgt) { return -cubic_root_of_valmax(tgt); };
+
+// Only floats turn a partial product into infinity, so integers keep their whole range.
+constexpr auto factor_maxi = []<typename T>(eve::as<T> const& tgt)
+{
+  if constexpr(eve::floating_value<T>) return cubic_root_of_valmax(tgt);
+  else                                 return eve::valmax(tgt);
+};
+
+constexpr auto factor_mini = []<typename T>(eve::as<T> const& tgt)
+{
+  if constexpr(eve::floating_value<T>) return minus_cubic_root_of_valmax(tgt);
+  else                                 return eve::valmin(tgt);
+};
+
+//==================================================================================================
 //==  mul simd tests
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mul on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)),
+                            tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)),
+                            tts::randoms(tts::constant(factor_mini), tts::constant(factor_maxi)))
   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;
@@ -108,15 +134,15 @@ TTS_CASE_WITH("Check behavior of mul on wide",
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_RELATIVE_EQUAL(mul(tup), v_t(100)*std::pow(v_t(5), tup.size() - 1), tts::prec<T>());
+    TTS_RELATIVE_EQUAL(mul(tup), v_t(v_t(100)*std::pow(v_t(5), tup.size() - 1)), tts::prec<T>());
   }
 };
 
 TTS_CASE_WITH("Check behavior of mul widen on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
   <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::mul;
@@ -136,8 +162,8 @@ TTS_CASE_WITH("Check behavior of mul widen on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mul mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -155,8 +181,8 @@ TTS_CASE_WITH("Check behavior of mul mod on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of mul mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -180,14 +206,14 @@ TTS_CASE_WITH("Check behavior of mul mod on wide",
 //==================================================================================================
 //==  conditional mul tests on simd
 //==================================================================================================
-auto mini = []<typename T>(eve::as<T> const&)
+constexpr auto mini = []<typename T>(eve::as<T> const&)
 { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; };
 
 TTS_CASE_WITH("Check behavior of mul on signed types",
               eve::test::simd::signed_types,
-              tts::generate(tts::randoms(tts::constant(mini), 127),
+              tts::randoms(tts::constant(mini), 127),
                             tts::randoms(tts::constant(mini), 127),
-                            tts::randoms(tts::constant(mini), 127)))
+                            tts::randoms(tts::constant(mini), 127))
   <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::mul;
@@ -205,9 +231,9 @@ TTS_CASE_WITH("Check behavior of mul on signed types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::logicals(0, 3)))
+                            tts::logicals(0, 3))
   <typename T, typename M>(T const& a0,
                            T const& a1,
                            M const& mask)
@@ -218,9 +244,9 @@ TTS_CASE_WITH("Check behavior of eve::mul[mask](eve::wide)",
 
 TTS_CASE_WITH("Check behavior of mul kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)),
+                            tts::randoms(tts::constant(minus_cubic_root_of_valmax), tts::constant(cubic_root_of_valmax)))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::mul;

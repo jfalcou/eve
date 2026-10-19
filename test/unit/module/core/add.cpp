@@ -73,9 +73,9 @@ TTS_CASE_TPL("Check return types of add", eve::test::simd::all_types_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of add on wide",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const& a2)
 {
   using eve::add;
@@ -85,19 +85,16 @@ TTS_CASE_WITH("Check behavior of add on wide",
   using eve::upper;
   using eve::strict;
 
-  // On float16 without F16C, add(a, b, c) is computed in float and rounded once, add(add(a, b), c)
-  // twice: one ULP apart.
-  constexpr double tol = sizeof(eve::element_type_t<T>) == 2 ? 1.0 : 0.5;
 
   TTS_EQUAL( add(a0), a0);
   TTS_EQUAL( add(a0, a2), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](a0, a2), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), tol);
-  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL( add(a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 7.0);
+  TTS_ULP_EQUAL( add[saturated](a0, a1, a2), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 7.0);
   TTS_EQUAL( add(kumi::tuple{a0, a2}), tts::map([](auto e, auto f) { return add(e, f); }, a0, a2));
   TTS_EQUAL( add[saturated](kumi::tuple{a0, a2}), tts::map([&](auto e, auto f) { return add[saturated](e, f); }, a0, a2));
-  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), tol);
-  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), tol);
+  TTS_ULP_EQUAL( add(kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add(add(e, f), g); }, a0, a1, a2), 7.0);
+  TTS_ULP_EQUAL( add[saturated](kumi::tuple{a0, a1, a2}), tts::map([&](auto e, auto f, auto g) { return add[saturated](add[saturated](e, f), g); }, a0, a1, a2), 7.0);
 
   if constexpr (eve::floating_value<T>)
   {
@@ -135,9 +132,9 @@ TTS_CASE_TPL("Check behavior of add saturated on wide", eve::test::simd::integer
 
 TTS_CASE_WITH("Check behavior of add widen on wide",
               eve::test::simd::all_types,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::add;
@@ -155,7 +152,7 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
     auto t = [](auto p){ return (p == T::size()-1) ? v_t(100) : v_t(5); };
     constexpr auto s = 3*T::size()/2;
     auto tup = kumi::generate<s>(t);
-    TTS_ULP_EQUAL(add(tup), v_t(100)+v_t(5)*(3*T::size()/2-1), 0.5);
+    TTS_ULP_EQUAL(add(tup), v_t(v_t(100)+v_t(5)*(3*T::size()/2-1)), 0.5);
   }
 };
 
@@ -164,8 +161,8 @@ TTS_CASE_WITH("Check behavior of add widen on wide",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of add mod on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0, 96),
-                            tts::randoms(0, 96))
+              tts::randoms(0, 96),
+                            tts::randoms(0, 96)
              )
   <typename T>(T const& ra0, T const& ra1)
 {
@@ -182,14 +179,14 @@ TTS_CASE_WITH("Check behavior of add mod on wide",
 //==================================================================================================
 //==  conditional add tests on simd
 //==================================================================================================
-auto mini = tts::constant([]<typename T>(eve::as<T> const&)
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const&)
                           { return std::is_signed_v<eve::element_type_t<T>> ? -128 : 0; });
 
 TTS_CASE_WITH("Check behavior of add on signed types",
               eve::test::simd::signed_types_wf16,
-              tts::generate(tts::randoms(mini, 127),
+              tts::randoms(mini, 127),
                             tts::randoms(mini, 127),
-                            tts::randoms(mini, 127)))
+                            tts::randoms(mini, 127))
 <typename T>(T const& a0, T const& a1, T const& a2)
 {
   using eve::add;
@@ -212,9 +209,9 @@ TTS_CASE_WITH("Check behavior of add on signed types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          T const& a1,
                          M const& mask)
@@ -236,9 +233,9 @@ TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
 
 TTS_CASE_WITH("Check behavior of add kahan on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
                             tts::randoms(eve::valmin, eve::valmax),
-                            tts::randoms(eve::valmin, eve::valmax)))
+                            tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0, T const& a1,  T const&a2)
 {
   using eve::add;

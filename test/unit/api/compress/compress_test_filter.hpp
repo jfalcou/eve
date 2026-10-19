@@ -16,7 +16,7 @@ template<typename Type> struct rvv_compress_filter
 
 #ifdef SPY_SIMD_IS_RISCV_FIXED_RVV
 template<typename types_to_filter>
-using simd_types_for_compress = tts::filter<rvv_compress_filter, types_to_filter>::type;
+using simd_types_for_compress = tts::filter<rvv_compress_filter, types_to_filter>::types_list;
 #else
 template<typename types_to_filter> using simd_types_for_compress = types_to_filter;
 #endif

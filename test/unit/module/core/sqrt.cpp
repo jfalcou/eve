@@ -35,7 +35,7 @@ TTS_CASE_TPL("Check return types of sqrt", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0, eve::valmax)))
+              tts::randoms(0, eve::valmax))
 <typename T>(T const& a0)
 {
   using eve::rec;
@@ -53,7 +53,7 @@ TTS_CASE_WITH("Check behavior of sqrt(wide) and diff on  floating types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(0.0, eve::valmax)))
+              tts::randoms(0.0, eve::valmax))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -67,8 +67,8 @@ TTS_CASE_WITH("Check behavior of sqrt[cond](wide) on  floating types",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::sqrt)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

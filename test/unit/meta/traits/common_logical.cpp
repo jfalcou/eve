@@ -83,7 +83,7 @@ void test_with_types_simd()
   test_with_types<Lt, Wu, es_t>();
   test_with_types<T, LWu, es_t>();
   test_with_types<Lt, LWu, es_t>();
-  
+
   test_with_types<Wt, Wu, ew_t>();
   test_with_types<LWt, Wu, ew_t>();
   test_with_types<Wt, LWu, ew_t>();

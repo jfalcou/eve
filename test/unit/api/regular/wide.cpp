@@ -12,7 +12,7 @@
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide enumerating constructor"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T ref, L logical_ref)
 {
@@ -43,14 +43,14 @@ TTS_CASE_WITH( "Check eve::wide enumerating constructor"
     for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
     {
       TTS_EQUAL(fsimd.get(i), v_t(0));
-      TTS_EQUAL(flogical.get(i), false);
+      if constexpr( T::abi_type::has_defined_logical_tail ) { TTS_EQUAL(flogical.get(i), false); }
     }
   }
 };
 
 TTS_CASE_WITH( "Check eve::wide generator constructor"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T ref, L logical_ref)
 {
@@ -102,7 +102,7 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
     for(std::ptrdiff_t i = T::size(); i < w_t::size();++i)
     {
       TTS_EQUAL(fsimd.get(i), v_t(0));
-      TTS_EQUAL(flogical.get(i), false);
+      if constexpr( T::abi_type::has_defined_logical_tail ) { TTS_EQUAL(flogical.get(i), false); }
     }
   }
 };
@@ -112,7 +112,7 @@ TTS_CASE_TPL( "Check eve::wide splat constructor", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide raw storage handling"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T data, L logical_data)
 {
@@ -140,7 +140,7 @@ TTS_CASE_WITH( "Check eve::wide raw storage handling"
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide::slice behavior"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T d, L ld)
 {
@@ -180,7 +180,7 @@ TTS_CASE_WITH( "Check eve::wide::slice behavior"
 //==================================================================================================
 TTS_CASE_WITH( "Check eve::wide::combine behavior"
         , eve::test::simd::all_types
-        , tts::generate(tts::ramp(1),tts::logicals(1,2))
+        , tts::ramp(1),tts::logicals(1,2)
         )
 <typename T, typename L>(T d, L ld)
 {

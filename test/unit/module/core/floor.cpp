@@ -107,11 +107,11 @@ TTS_CASE_TPL("Check  with particular values", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // floor(simd)  tests
 //==================================================================================================
-auto mini = tts::constant([]<typename T>(eve::as<T>) { return eve::signed_value<T> ? -50 : 0; });
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T>) { return eve::signed_value<T> ? -50 : 0; });
 
 TTS_CASE_WITH("Check behavior of floor(wide)",
               eve::test::simd::all_types_wf16,
-              tts::generate(tts::randoms(mini, +50)))
+              tts::randoms(mini, +50))
 <typename T>(T const& a0)
 {
   using wi_t  = eve::as_integer_t<T>;
@@ -137,8 +137,8 @@ TTS_CASE_WITH("Check behavior of floor(wide)",
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::masked(eve::floor)(eve::wide)",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax),
-              tts::logicals(0, 3)))
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
 <typename T, typename M>(T const& a0,
                          M const& mask)
 {

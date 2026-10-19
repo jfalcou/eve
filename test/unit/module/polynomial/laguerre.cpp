@@ -43,7 +43,7 @@ TTS_CASE_TPL("Check return types of laguerre on wide", eve::test::simd::ieee_rea
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of laguerre on wide",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::between(0, 1), tts::as_integer(tts::ramp(0))))
+              tts::between(0, 1), tts::as_integer(tts::ramp(0)))
 <typename T, typename I>(T const& a0, I const& i0)
 {
   using v_t           = eve::element_type_t<T>;

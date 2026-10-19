@@ -27,7 +27,7 @@ TTS_CASE_TPL("Check return types of quadrant", eve::test::simd::all_types)
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of quadrant on integers",
               eve::test::simd::integers,
-              tts::generate(tts::randoms(eve::valmin, eve::valmax)))
+              tts::randoms(eve::valmin, eve::valmax))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
@@ -57,7 +57,7 @@ TTS_CASE_TPL("Check behavior of quadrant on floating values", eve::test::simd::i
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of quadrant[mask]",
               eve::test::simd::ieee_reals,
-              tts::generate(tts::randoms(0.0, 100.0), tts::logicals(0, 3)))
+              tts::randoms(0.0, 100.0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& mask)
 {
   TTS_IEEE_EQUAL(eve::quadrant[mask](a0), eve::if_else(mask, eve::quadrant(a0), a0));

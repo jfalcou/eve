@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of eve::is_odd(simd)", eve::test::simd::all_typ
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
               eve::test::simd::ieee_reals_wf16,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
 
 TTS_CASE_WITH("Check behavior of eve::is_odd(simd) for IEEE ",
               eve::test::simd::integers,
-              tts::generate(tts::ramp(0), tts::logicals(0, 3)))
+              tts::ramp(0), tts::logicals(0, 3))
 <typename T, typename M>(T const& a0, M const& t)
 {
   using v_t = eve::element_type_t<T>;
@@ -57,4 +57,11 @@ TTS_CASE_TPL("Check with edge cases", eve::test::simd::ieee_reals_wf16)
   TTS_EQUAL(eve::is_odd(cases.nan), eve::logical<T>{ false });
   TTS_EQUAL(eve::is_odd(cases.inf), eve::logical<T>{ false });
   TTS_EQUAL(eve::is_odd(cases.minf), eve::logical<T>{ false });
+
+  // From maxflint on every value is even, and dec(maxflint + 2) rounds down to maxflint.
+  auto const m = eve::maxflint(eve::as<T>{});
+  TTS_EQUAL(eve::is_odd(m - T(1)), eve::logical<T>{ true });
+  TTS_EQUAL(eve::is_odd(m), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(m + T(2)), eve::logical<T>{ false });
+  TTS_EQUAL(eve::is_odd(-(m + T(2))), eve::logical<T>{ false });
 };

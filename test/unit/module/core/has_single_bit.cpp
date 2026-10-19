@@ -28,7 +28,7 @@ TTS_CASE_TPL("Check return types of has_single_bit on wide", eve::test::simd::un
 //==================================================================================================
 TTS_CASE_WITH("Check behavior of has_single_bit(wide) on unsigned integral ",
               eve::test::simd::unsigned_integers,
-              tts::generate(tts::ramp(1)))
+              tts::ramp(1))
 <typename T>(T const& a0)
 {
   using v_t = eve::element_type_t<T>;
