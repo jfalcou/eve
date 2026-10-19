@@ -26,7 +26,6 @@ namespace eve::_
     static constexpr bool is_2_bits = top_bits<logical<wide<U, N>>>::bits_per_element == 2;
 
     template <eve::product_type T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       return { kumi::map (*this, v) };
@@ -65,7 +64,6 @@ namespace eve::_
     }
 
     template <typename T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       std::uint32_t m = mask.as_int();
@@ -122,14 +120,12 @@ namespace eve::_
     top_bits<logical<wide<U, N>>> mask;
 
     template <eve::product_type T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       return { kumi::map (*this, v) };
     }
 
     template <typename T>
-    EVE_FORCEINLINE
     wide<T, N> operator()(wide<T, N> v) const
     {
       constexpr auto c = categorize<wide<T, N>>();
@@ -169,7 +165,6 @@ namespace eve::_
   }
 
   template<typename T, typename U, typename N>
-  EVE_FORCEINLINE
   auto compress_using_bmi_(EVE_SUPPORTS(avx2_),
                            wide<T, N> v,
                            top_bits<logical<wide<U, N>>> mask) noexcept

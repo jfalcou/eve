@@ -17,7 +17,7 @@ namespace eve
   struct logical_and_t : elementwise_callable<logical_and_t, Options>
   {
     template<typename T, typename U>
-    constexpr EVE_FORCEINLINE common_logical_t<T, U> operator()(T a, U b) const noexcept
+    EVE_ABI constexpr common_logical_t<T, U> operator()(T a, U b) const noexcept
       requires (same_lanes_or_scalar<T, U> && relaxed_logical_value<T> && relaxed_logical_value<U>)
     {
       return EVE_DISPATCH_CALL(a, b);

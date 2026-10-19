@@ -57,7 +57,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+          cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile ${{ matrix.chunk.name }}
         run:  |
@@ -94,7 +94,7 @@ jobs:
         run:  |
           mkdir build
           cd build
-          cmake ..  -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
+          cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile ${{ matrix.chunk.name }}
         run:  |

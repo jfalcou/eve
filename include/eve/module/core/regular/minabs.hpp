@@ -22,14 +22,14 @@ namespace eve
 
     template<value... Ts>
     requires(eve::same_lanes_or_scalar<Ts...>)
-    EVE_FORCEINLINE constexpr upgrade_if_t<Options, common_value_t<Ts...>> operator()(Ts...ts) const noexcept
+    EVE_ABI constexpr upgrade_if_t<Options, common_value_t<Ts...>> operator()(Ts...ts) const noexcept
     {
       return EVE_DISPATCH_CALL(ts...);
     }
 
     template<eve::non_empty_product_type Tup>
     requires(eve::same_lanes_or_scalar_tuple<Tup>)
-    EVE_FORCEINLINE constexpr  upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
+    EVE_ABI constexpr  upgrade_if_t<Options, kumi::apply_traits_t<eve::common_value,Tup>>
     operator()(Tup t) const noexcept
     { return EVE_DISPATCH_CALL(t); }
 

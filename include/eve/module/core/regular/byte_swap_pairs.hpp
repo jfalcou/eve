@@ -16,7 +16,7 @@ namespace eve
   struct byte_swap_pairs_t : strict_elementwise_callable<byte_swap_pairs_t, Options>
   {
     template<integral_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
-    EVE_FORCEINLINE T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
+    EVE_ABI T operator()(T a, index_t<I0> i0, index_t<I1> i1) const noexcept
     {
       using e_t =  element_type_t<T>;
       constexpr auto S = sizeof(e_t);

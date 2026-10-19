@@ -12,16 +12,14 @@ namespace eve::_
 
 // Have to do the template, otherwise there is some PCH weirdness
 template<typename U8x16, std::ptrdiff_t... I>
-EVE_FORCEINLINE auto
-ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
+auto ppc_vec_perm(U8x16 x, U8x16 y, pattern_t<I...>)
 {
   U8x16 table {I...};
   return vec_perm(x.storage(), y.storage(), table.storage());
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
+auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
   else
@@ -50,8 +48,7 @@ shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !idxm::is_blend(P::idxs, N::value / G) ) return no_matching_shuffle;
   else
@@ -62,8 +59,7 @@ shuffle_l3_ppc_vec_sel(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( P::has_zeroes ) return no_matching_shuffle;
   else
@@ -81,8 +77,7 @@ shuffle_l3_ppc_vec_perm2(P, fixed<G>, wide<T, N> x, wide<T, N> y)
 }
 
 template<typename P, arithmetic_scalar_value T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
-shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
+auto shuffle_l3_(EVE_SUPPORTS(vmx_), P p, fixed<G> g, wide<T, N> x, wide<T, N> y)
 requires(P::out_reg_size == P::reg_size)
 {
   if constexpr( auto r = shuffle_l3_ppc_vec_sel(p, g, x, y); matched_shuffle<decltype(r)> )

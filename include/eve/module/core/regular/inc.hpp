@@ -24,7 +24,7 @@ namespace eve
                                       upper_option, strict_option, mod_option>
   {
     template<eve::value T>
-    constexpr EVE_FORCEINLINE T operator()(T v) const
+    EVE_ABI constexpr T operator()(T v) const
     {
       using O = decltype(this->options());
       if constexpr (O::contains(mod))
@@ -113,7 +113,7 @@ namespace eve
   namespace _
   {
     template<callable_options O, typename T>
-    EVE_FORCEINLINE constexpr auto inc_(EVE_REQUIRES(emulated_), O const& o, T v) noexcept
+    constexpr auto inc_(EVE_REQUIRES(emulated_), O const& o, T v) noexcept
       requires (_::fp16_should_apply<common_value_t<T>>)
     {
       if constexpr (O::contains(upper) || O::contains(lower)) return _::map(inc[o], v);
@@ -121,7 +121,7 @@ namespace eve
     }
 
     template<value T, callable_options O>
-    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
+    constexpr T inc_(EVE_REQUIRES(cpu_), O const& o, T const& a) noexcept
     {
       if constexpr(O::contains(mod))
       {
@@ -141,7 +141,7 @@ namespace eve
     }
 
     template<conditional_expr C, value T, callable_options O>
-    EVE_FORCEINLINE constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const& o, T const& a) noexcept
+    constexpr T inc_(EVE_REQUIRES(cpu_), C cond, O const& o, T const& a) noexcept
     {
       if constexpr(simd_value<T>)
       {

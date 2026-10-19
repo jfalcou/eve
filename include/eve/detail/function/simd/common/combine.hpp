@@ -19,14 +19,14 @@ namespace eve::_
 {
   struct local_combiner
   {
-    EVE_FORCEINLINE auto operator()(auto... v) -> decltype(auto)
+     auto operator()(auto... v) -> decltype(auto)
     {
       return combine(current_api, v...);
     }
   };
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+   auto
   combine(cpu_ const &, wide<T, N> const &l, wide<T, N> const &h) noexcept
   {
     using that_t = wide<T, typename N::combined_type>;
@@ -48,7 +48,7 @@ namespace eve::_
   }
 
   template<typename T, typename N>
-  EVE_FORCEINLINE auto
+   auto
   combine(cpu_ const &, logical<wide<T, N>> const &l, logical<wide<T, N>> const &h) noexcept
   {
     using that_t = logical<wide<T, typename N::combined_type>>;
@@ -71,7 +71,7 @@ namespace eve::_
   }
 
   template<simd_value W0, simd_value W1, simd_value W2, simd_value... Ws>
-  EVE_FORCEINLINE auto combine(cpu_, W0 w0, W1 w1, W2 w2, Ws... ws) noexcept
+   auto combine(cpu_, W0 w0, W1 w1, W2 w2, Ws... ws) noexcept
     requires (combinable<W0, W1, W2, Ws...>)
   {
     auto [ f, s ] = kumi::split(kumi::tuple{w0, w1, w2, ws...}, kumi::index<(sizeof...(Ws) + 3) / 2>);

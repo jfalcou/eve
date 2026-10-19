@@ -64,13 +64,13 @@ namespace eve::_
   };
 
   template <typename U, typename T, typename Lanes>
-  EVE_FORCEINLINE auto ptr_cast(eve::aligned_ptr<T, Lanes> p)
+  EVE_ABI auto ptr_cast(eve::aligned_ptr<T, Lanes> p)
   {
     return aligned_ptr<U, eve::fixed<Lanes() * sizeof(T) / sizeof(U)>>{(U*)(p.get())};
   }
 
   template <typename U, typename T>
-  EVE_FORCEINLINE auto ptr_cast(T* p)
+  EVE_ABI auto ptr_cast(T* p)
   {
     return (U*)p;
   }

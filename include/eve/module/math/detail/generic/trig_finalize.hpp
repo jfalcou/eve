@@ -20,7 +20,7 @@ namespace eve
   namespace _
   {
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     cos_eval(T const& z) noexcept
     {
       using elt_t = element_type_t<T>;
@@ -42,7 +42,7 @@ namespace eve
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     sin_eval(const T& z, const T& x) noexcept
     {
       // here T is float or double and x positive
@@ -64,7 +64,7 @@ namespace eve
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     tancot_eval(const T& z) noexcept
     {
       // here T is float or double and z positive
@@ -88,7 +88,7 @@ namespace eve
 
 
     template<floating_value T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     cos_finalize(const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
       auto tmp      = one[fn >= T(2)](eve::as(xr));
@@ -103,7 +103,7 @@ namespace eve
     }
 
     template<floating_value T>
-    EVE_FORCEINLINE auto
+     auto
     sincos_finalize(T a0, const T& fn, const T& xr, const T& dxr = T(0)) noexcept
     {
       auto tmp          = one[fn >= T(2)](eve::as(xr));
@@ -121,7 +121,7 @@ namespace eve
     }
 
     template<value T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     sin_finalize(T a0,  T fn,  T xr, T dxr = T(0)) noexcept
     {
       auto tmp      = one[fn >= T(2)](eve::as(xr));
@@ -136,7 +136,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     tan_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
     {
       auto aa0lteps = eve::abs(a0) < eps(as<T>());
@@ -161,7 +161,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_FORCEINLINE constexpr auto
+     constexpr auto
     cot_finalize(T a0, T fn, T xr, T dxr = T(0)) noexcept
     {
       T y = tancot_eval(xr);

@@ -15,7 +15,7 @@ namespace eve::_
 {
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_and_0(P p, fixed<G> g, wide<T, N> x)
 {
   if constexpr( !idxm::is_just_zeroes_replaced(P::idxs) ) return no_matching_shuffle;
@@ -23,7 +23,7 @@ shuffle_l3_and_0(P p, fixed<G> g, wide<T, N> x)
 }
 
 template<typename P, typename T, typename N, std::ptrdiff_t G>
-EVE_FORCEINLINE auto
+ auto
 shuffle_l3_slide_with_0(P, fixed<G> g, wide<T, N> x)
 {
   if constexpr( constexpr auto p = idxm::slide_as_slide2_with_0(P::idxs); !p )

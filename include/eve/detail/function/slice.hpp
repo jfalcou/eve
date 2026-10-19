@@ -44,13 +44,13 @@ namespace eve
       };
 
       template<typename W>
-      EVE_FORCEINLINE constexpr std::array<typename result<W>::type,2> operator()(W v) const noexcept
+       constexpr std::array<typename result<W>::type,2> operator()(W v) const noexcept
       {
         return EVE_DISPATCH_CALL(v);
       }
 
       template<typename W, std::size_t Slice>
-      EVE_FORCEINLINE constexpr typename result<W>::type operator()(W v, slice_t<Slice> s) const noexcept
+       constexpr typename result<W>::type operator()(W v, slice_t<Slice> s) const noexcept
       {
         return EVE_DISPATCH_CALL(v, s);
       }

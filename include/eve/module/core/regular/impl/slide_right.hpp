@@ -16,11 +16,11 @@ namespace eve::_
 {
 template<std::ptrdiff_t Shift> struct slide_right_lambda
 {
-  EVE_FORCEINLINE auto operator()(auto... xs) const { return slide_right(xs..., index<Shift>); }
+   auto operator()(auto... xs) const { return slide_right(xs..., index<Shift>); }
 };
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-EVE_FORCEINLINE auto
+ auto
 slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift <= Wide::size())
 {
   using type = typename Wide::value_type;
@@ -60,7 +60,7 @@ slide_right_(EVE_SUPPORTS(cpu_), Wide v, index_t<Shift>) noexcept requires(Shift
 }
 
 template<simd_value Wide, std::ptrdiff_t Shift>
-EVE_FORCEINLINE Wide
+ Wide
 slide_right_(EVE_SUPPORTS(cpu_), Wide x, Wide y, index_t<Shift>) noexcept
     requires(Shift <= Wide::size())
 {

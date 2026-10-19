@@ -27,7 +27,7 @@ namespace eve::algo
     {
       explicit delegate(UnalignedI o, Func f) : out(o), func(f) {}
 
-      EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
+      EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
       {
         auto loaded       = eve::load[ignore](it);
         auto [vals, mask] = func(loaded);
@@ -36,7 +36,7 @@ namespace eve::algo
       }
 
       template <typename I, std::size_t size>
-      EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+      EVE_ABI bool unrolled_step(std::array<I, size> arr)
       {
         array_map(arr, call_single_step(this));
         return false;
@@ -47,7 +47,7 @@ namespace eve::algo
     };
 
     template <relaxed_range Rng, typename Func>
-    EVE_FORCEINLINE auto operator()(Rng&& rng, Func func) const
+    EVE_ABI auto operator()(Rng&& rng, Func func) const
     {
       if (rng.begin() == rng.end()) return unalign(rng.begin());
 

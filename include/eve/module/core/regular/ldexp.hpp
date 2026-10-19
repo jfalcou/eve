@@ -21,7 +21,7 @@ struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, raw_option, pedan
 {
   template<eve::floating_value T, eve::value U>
   requires(eve::same_lanes_or_scalar<T, U>)
-  constexpr EVE_FORCEINLINE as_wide_as_t<T,U> operator()(T x, U n) const
+  EVE_ABI constexpr as_wide_as_t<T,U> operator()(T x, U n) const
   {
     return EVE_DISPATCH_CALL(x,n);
   }

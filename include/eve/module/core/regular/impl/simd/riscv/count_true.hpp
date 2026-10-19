@@ -14,7 +14,7 @@
 namespace eve::_
 {
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept
+   std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
     using C = rbr::result::fetch_t<condition_key, O>;
@@ -32,7 +32,7 @@ namespace eve::_
   }
 
   template<callable_options O, scalar_value T, typename N>
-  EVE_FORCEINLINE std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
+   std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, top_bits<logical<wide<T, N>>> v) noexcept
     requires rvv_abi<abi_t<T, N>>
   {
     return count_true.behavior(current_api, opts, v.storage);

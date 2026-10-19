@@ -26,7 +26,7 @@ namespace _
   {
     std::optional<std::ptrdiff_t> *match;
 
-    EVE_FORCEINLINE bool operator()(auto test) const
+    bool operator()(auto test) const
     {
       auto _m = eve::first_true(test);
       if( _m ) *match = _m;
@@ -41,7 +41,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
   {
     explicit delegate(UnalignedI f, P pf) : found(f), p(pf) {}
 
-    EVE_FORCEINLINE bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
+    EVE_ABI bool step(auto it, eve::relative_conditional_expr auto ignore, auto /*idx*/)
     {
       eve::logical  test  = p(eve::load[ignore](it));
       std::optional match = eve::first_true[ignore](test);
@@ -52,7 +52,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
     }
 
     template<typename I, std::size_t size>
-    EVE_FORCEINLINE bool unrolled_step(std::array<I, size> arr)
+    EVE_ABI bool unrolled_step(std::array<I, size> arr)
     {
       auto tests = array_map(arr, load_and_apply {p});
 
@@ -71,7 +71,7 @@ template<typename TraitsSupport> struct find_if_ : TraitsSupport
     P          p;
   };
 
-  template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+  template<relaxed_range Rng, typename P> EVE_ABI auto operator()(Rng&& rng, P p) const
     -> unaligned_iterator_t<Rng>
   {
     if( rng.begin() == rng.end() ) return unalign(rng.begin());
@@ -132,7 +132,7 @@ inline constexpr auto find_if = function_with_traits<find_if_>[default_simple_al
 template<typename TraitsSupport> struct find_ : TraitsSupport
 {
   template<relaxed_range Rng>
-  EVE_FORCEINLINE auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const
+  EVE_ABI auto operator()(Rng&& rng, eve::value_type_t<Rng> v) const
     -> unaligned_iterator_t<Rng>
   {
     return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), equal_to {v});
@@ -183,7 +183,7 @@ inline constexpr auto find = function_with_traits<find_>[find_if.get_traits()];
 
 template<typename TraitsSupport> struct find_if_not_ : TraitsSupport
 {
-  template<relaxed_range Rng, typename P> EVE_FORCEINLINE auto operator()(Rng&& rng, P p) const
+  template<relaxed_range Rng, typename P> EVE_ABI auto operator()(Rng&& rng, P p) const
     -> unaligned_iterator_t<Rng>
   {
     return find_if[TraitsSupport::get_traits()](EVE_FWD(rng), not_p {p});

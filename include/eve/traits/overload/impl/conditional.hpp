@@ -23,7 +23,7 @@ namespace eve
       using func_t =  Func<OptionsValues>;
 
       template<callable_options O, typename T, typename... Ts>
-      constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+      constexpr  auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
       {
         return func_t::deferred_call(arch, opts, x0, xs...);
       }
@@ -39,7 +39,7 @@ namespace eve
     using base_t = _::conditional_callable_impl<Func, OptionsValues, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }
@@ -54,7 +54,7 @@ namespace eve
     using base_t = _::conditional_callable_impl<Func, OptionsValues, conditional_option, relative_conditional_option, Options...>;
 
     template<callable_options O, typename T, typename... Ts>
-    constexpr EVE_FORCEINLINE auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
+    EVE_ABI constexpr auto behavior(auto arch, O const& opts, T x0, Ts... xs) const
     {
       return base_t::behavior(arch, opts, x0, xs...);
     }

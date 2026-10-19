@@ -23,7 +23,7 @@ namespace eve
   struct is_odd_t : elementwise_callable<is_odd_t, Options>
   {
     template<eve::value T>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    EVE_ABI constexpr as_logical_t<T>
     operator()(T t) const noexcept
     {
       return EVE_DISPATCH_CALL(t);
@@ -80,7 +80,7 @@ namespace eve
   namespace _
   {
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr as_logical_t<T>
+    constexpr as_logical_t<T>
     is_odd_(EVE_REQUIRES(cpu_), O const &, T const& a) noexcept
     {
       // From maxflint on every value is even, while dec(a) may round to an even neighbor.

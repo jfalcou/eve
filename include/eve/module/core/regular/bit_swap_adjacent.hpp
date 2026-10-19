@@ -19,7 +19,7 @@ namespace eve
   struct bit_swap_adjacent_t : strict_elementwise_callable<bit_swap_adjacent_t, Options>
   {
     template<eve::unsigned_value T, integral_scalar_value I>
-    constexpr EVE_FORCEINLINE T operator()(T v,  I i) const
+    EVE_ABI constexpr T operator()(T v,  I i) const
     { return EVE_DISPATCH_CALL(v, i); }
 
     EVE_CALLABLE_OBJECT(bit_swap_adjacent_t, bit_swap_adjacent_);
@@ -77,7 +77,7 @@ namespace eve
   namespace _
   {
     template<typename T, integral_scalar_value N, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     bit_swap_adjacent_(EVE_REQUIRES(cpu_), O const&, T const& x, N const & n) noexcept
     {
       EVE_ASSERT(eve::is_pow2(n) || (n == 0),  "n is not a power of 2");

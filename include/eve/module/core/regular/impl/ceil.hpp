@@ -16,7 +16,7 @@
 namespace eve::_
 {
   template<callable_options O, typename... Ts>
-  EVE_FORCEINLINE constexpr auto ceil_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
+   constexpr auto ceil_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept
     requires(_::fp16_should_apply<common_value_t<Ts...>>)
   {
     if constexpr (O::contains(almost)) return _::map(ceil[o], ts...);
@@ -24,7 +24,7 @@ namespace eve::_
   }
 
   template<typename T, callable_options O>
-  EVE_FORCEINLINE constexpr T
+   constexpr T
   ceil_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept
   {
     if constexpr(O::contains(almost))
@@ -41,7 +41,7 @@ namespace eve::_
 
 
   template<typename T, typename U, callable_options O>
-  EVE_FORCEINLINE constexpr auto
+   constexpr auto
   ceil_(EVE_REQUIRES(cpu_), O const&, T const& a0, as<U> const & ) noexcept
   {
     if constexpr(integral_value<T>)

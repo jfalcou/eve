@@ -25,7 +25,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
                                     upper_option, strict_option, mod_option>
 {
   template<eve::value T>
-  constexpr EVE_FORCEINLINE T operator()(T v) const noexcept
+  EVE_ABI constexpr T operator()(T v) const noexcept
   { return EVE_DISPATCH_CALL(v); }
 
   EVE_CALLABLE_OBJECT(sqr_t, sqr_);
@@ -104,7 +104,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
   {
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr auto
+    constexpr auto
     sqr_(EVE_REQUIRES(emulated_), O const &o, T const &a0) noexcept
       requires(_::fp16_should_apply<T>)
     {
@@ -113,7 +113,7 @@ struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_opti
     }
 
     template<typename T, callable_options O>
-    EVE_FORCEINLINE constexpr T
+    constexpr T
     sqr_(EVE_REQUIRES(cpu_), O const &o, T const &a0) noexcept
     {
       if constexpr(O::contains(saturated))

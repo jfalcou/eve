@@ -13,7 +13,7 @@
 namespace eve::_
 {
   template<callable_options O, typename T, typename N, arithmetic_scalar_value S>
-  EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, wide<S, N> s) noexcept
+   wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, wide<S, N> s) noexcept
       requires arm_abi<abi_t<T, N>>
   {
     auto const si = convert(s, as<as_integer_t<T, signed>>());
@@ -39,14 +39,14 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N, integral_scalar_value S>
-  EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> w, S s) noexcept
+   wide<T, N> shl_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> w, S s) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     return shl.behavior(current_api, opts, w, wide<as_integer_t<T, signed>, N>{s});
   }
 
   template<callable_options O, typename T, typename N, std::ptrdiff_t S>
-  EVE_FORCEINLINE wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, index_t<S>) noexcept
+   wide<T, N> shl_(EVE_REQUIRES(neon128_), O const&, wide<T, N> w, index_t<S>) noexcept
     requires arm_abi<abi_t<T, N>>
   {
     constexpr auto c = categorize<wide<T, N>>();

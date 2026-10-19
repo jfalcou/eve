@@ -22,7 +22,7 @@
 namespace eve::_
 {
   template<callable_options O, product_type T, product_type U>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
+   auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)
   {
     if constexpr( std::same_as<element_type_t<T>, U> )
     {
@@ -43,7 +43,7 @@ namespace eve::_
   }
 
   template<callable_options O, typename U, typename N>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
+   auto convert_(EVE_REQUIRES(cpu_), O const&, wide<eve::float16_t, N> v, as<U>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<U, eve::float16_t> && !O::contains(saturated))
   {
     // Because we currently only have conversion routine through floats, we make sure that we convert to/from chunks of
@@ -63,14 +63,14 @@ namespace eve::_
   }
 
   template<callable_options O, typename T, typename N>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
+   auto convert_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v, as<eve::float16_t>) noexcept
     requires (!_::supports_fp16_vector_conversion && !std::same_as<T, eve::float16_t> && !O::contains(saturated))
   {
     return _::emulated_simd_fp32_to_fp16(convert(v, as<float>{}));
   }
 
   template<callable_options O, value In, scalar_value Out>
-  EVE_FORCEINLINE auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
+   auto convert_(EVE_REQUIRES(cpu_), O const&, In v0, [[maybe_unused]] as<Out> tgt) noexcept
     requires (!product_type<In>)
   {
     constexpr maybe_saturated<O, Out> maybe_saturate;

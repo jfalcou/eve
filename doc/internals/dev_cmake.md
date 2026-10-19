@@ -75,15 +75,16 @@ cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS='-msse4.2' \
 ## Heavy translation units
 
 `EVE_HEAVY_POOL=N` limits to N the translation units of `cmake/config/heavy-units.cmake`, the ones
-peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines.
+peaking at 1.5 GiB or more, compiled at the same time. The CI sets 3 on the self-hosted machines
+and 2 on the hosted runners.
 
 # Compiling EVE Unit Tests
 
 **EVE** provides a large number of test targets that are grouped by theme. Each of these themes
 and tests with a theme can be compiled with a proper target.
 
-In term of options, we encourage you to use the `-DEVE_NO_FORCEINLINE` macro that prevents
-costly optimization to be used during the compilation of tests.
+The `-DEVE_NO_FORCEINLINE` macro reduces `EVE_ABI` to a plain `inline`, which lowers the memory
+g++ takes to compile a test.
 
 The following table list the main high-level themed target.
 
