@@ -266,7 +266,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::algo::fill</b> = <a cl
 <div class="line">  std::vector&lt;int&gt;  v = {2,5,-9,3,-8,2,-5,7,-2,3};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                  = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::all_of(v, i*i &gt;= 4)     = &quot;</span></div>
@@ -331,7 +331,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::algo::fill</b> = <a cl
 <div class="line">  std::vector&lt;int&gt;  v = {2,6,-10,32,-8,2,-6,8,-2,4};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                  = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::any_of(v, i &gt;= 4)       = &quot;</span></div>
@@ -341,7 +341,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::algo::fill</b> = <a cl
 <div class="line">            &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="#ga3cfc49607571a397add051036af9e605">eve::algo::any_of</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac4734a17484558619109e9728463636d">eve::is_odd</a>)&lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__core__predicates_html_gac4734a17484558619109e9728463636d"><div class="ttname"><a href="group__eve__core__predicates.html#gac4734a17484558619109e9728463636d">eve::is_odd</a></div><div class="ttdeci">constexpr auto is_odd</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is odd.</div><div class="ttdef"><b>Definition</b> is_odd.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__core__predicates_html_gac4734a17484558619109e9728463636d"><div class="ttname"><a href="group__eve__core__predicates.html#gac4734a17484558619109e9728463636d">eve::is_odd</a></div><div class="ttdeci">constexpr auto is_odd</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is odd.</div><div class="ttdef"><b>Definition</b> is_odd.hpp:75</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -402,19 +402,19 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::algo::fill</b> = <a cl
 <div class="line">  std::vector&lt;double&gt;  to_vector_z(from_vector.size());</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">            &lt;&lt; tts::as_text(from_vector)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="#ga03f85270a9a10ae8ab04c6ca3f211a86">eve::algo::copy</a>(from_vector, to_vector);</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
+<div class="line">            &lt;&lt; tts::as_text(to_vector)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <a class="code hl_variable" href="#ga03f85270a9a10ae8ab04c6ca3f211a86">eve::algo::copy</a>( <a class="code hl_variable" href="group__eve__views.html#ga9fe872c127004c688d3091b488e53fa8">eve::algo::views::zip</a>(from_vector, to_vector_z) );</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;to_vector (zip) = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector_z)</div>
+<div class="line">            &lt;&lt; tts::as_text(to_vector_z)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -484,11 +484,11 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::algo::fill</b> = <a cl
 <div class="line">  <a class="code hl_variable" href="#ga7eba1d00c6c74a7b73af66f1d80b5fc1">eve::algo::copy_backward</a>(from_vector, eve::algo::as_range(to_vector.end()-10, to_vector.end()) );</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(from_vector)</div>
+<div class="line">            &lt;&lt; tts::as_text(from_vector)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;from_vector     = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(to_vector)</div>
+<div class="line">            &lt;&lt; tts::as_text(to_vector)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -622,11 +622,11 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt;  w = {-9,3,-8,2,2,5,-5,7,-2,3};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; w                       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(w)</div>
+<div class="line">            &lt;&lt; tts::as_text(w)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::equal(v, v)  = &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_variable" href="#gae4cc8e2b9746638638d756b76fd49158">eve::algo::equal</a>(v, v) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
@@ -688,7 +688,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                               = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -757,7 +757,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                               = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -823,7 +823,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                               = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -889,7 +889,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -960,7 +960,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -1028,7 +1028,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt; v{12, 0, 5, -9, 3, 0, 5};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> pos   = <a class="code hl_variable" href="#gadf0762ce0ad64c41ff1eb704a436894d">eve::algo::find_if</a>(v, <a class="code hl_variable" href="group__eve__core__predicates.html#gac37d952274c06577a586a75c1f02f33e">eve::is_eqz</a>);</div>
@@ -1199,7 +1199,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">            &lt;&lt; in</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; split = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(split_by(in, <span class="charliteral">&#39; &#39;</span>))</div>
+<div class="line">            &lt;&lt; tts::as_text(split_by(in, <span class="charliteral">&#39; &#39;</span>))</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --> 
@@ -1333,7 +1333,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_text</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -1341,7 +1341,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <div class="line">  std::vector&lt;int&gt; v{ 2, 4, -1, 4, 0, 1 };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::max_value(v)                                 = &quot;</span></div>
@@ -1414,7 +1414,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_text</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -1422,7 +1422,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <div class="line">  std::vector&lt;int&gt; v{ 2, 4, -1, 4, 0, 1 };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                       = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::max_value(v)                                 = &quot;</span></div>
@@ -1493,7 +1493,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_text</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -1501,7 +1501,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <div class="line">  std::vector&lt;int&gt; v{ 2, -1, 4, -1, 0 };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                                              = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v)                                                       = &quot;</span></div>
@@ -1585,7 +1585,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <h2 class="groupheader">Example </h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;eve/module/algo.hpp&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_string</span></div>
+<div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span>  <span class="comment">// as_text</span></div>
 <div class="line"><span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
@@ -1593,7 +1593,7 @@ we assume that <span class="tt"><a class="el" href="group__eve__core__predicates
 <div class="line">  std::vector&lt;int&gt; v{ 2, -1, 4, -1, 0 };</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                                              = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::min_value(v)                                                       = &quot;</span></div>
@@ -1694,11 +1694,11 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt;  w = {2,5,-9, -9, -9,-8,2,-5,7,-2,3};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                             = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; w                             = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(w)</div>
+<div class="line">            &lt;&lt; tts::as_text(w)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> [vv, ww] = <a class="code hl_variable" href="#ga83414209854f04c4511902262483fc84">eve::algo::mismatch</a>(v, w);</div>
@@ -1767,7 +1767,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;int&gt;  v = {2,5,-9,3,-8,2,-5,7,-2,3};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                   = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::none_of(v, i == 0)       = &quot;</span></div>
@@ -1849,7 +1849,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  std::vector&lt;double&gt;  v = {1.2,2.3,3.4,4.5,5.6,6.7};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::reduce(v, 0.)                                 = &quot;</span></div>
@@ -2225,6 +2225,8 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;tts/tts.hpp&gt;</span></div>
 <div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &quot;soa_vector_text.hpp&quot;</span></div>
+<div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
 <div class="line">basic_example()</div>
 <div class="line">{</div>
@@ -2245,9 +2247,9 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  r.erase(<a class="code hl_variable" href="#ga64053b1d816e0128aa2610fe7e066edd">eve::algo::set_intersection</a>(v1, v2, r).out, r.end());</div>
 <div class="line">  TTS_EQUAL(r, (std::vector{3, 5}));</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v1:&quot;</span> &lt;&lt; tts::as_string(v1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v2:&quot;</span> &lt;&lt; tts::as_string(v2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r: &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v1:&quot;</span> &lt;&lt; tts::as_text(v1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; v2:&quot;</span> &lt;&lt; tts::as_text(v2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r: &quot;</span> &lt;&lt; tts::as_text(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> not_enough_space_example()</div>
@@ -2272,10 +2274,10 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  TTS_EQUAL(*in2, 4);</div>
 <div class="line">  TTS_EQUAL(out, r.end());</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;r:             &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;r:             &quot;</span> &lt;&lt; tts::as_text(r) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;*in1:          &quot;</span> &lt;&lt; *in1 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;*in2:          &quot;</span> &lt;&lt; *in2 &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;out == r.end() &quot;</span> &lt;&lt; tts::as_string(out == r.end()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;out == r.end() &quot;</span> &lt;&lt; tts::as_text(out == r.end()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
@@ -2318,9 +2320,9 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  <a class="code hl_class" href="structeve_1_1algo_1_1soa__vector.html">eve::algo::soa_vector&lt;pair_t&gt;</a> r_expected {{2, 2.2f}, {4, 4.4f}};</div>
 <div class="line">  TTS_EQUAL(r, r_expected);</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; pairs:   &quot;</span> &lt;&lt; tts::as_string(pairs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sclaras: &quot;</span> &lt;&lt; tts::as_string(scalars) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r:       &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; pairs:   &quot;</span> &lt;&lt; tts::as_text(pairs) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; sclaras: &quot;</span> &lt;&lt; tts::as_text(scalars) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r:       &quot;</span> &lt;&lt; tts::as_text(r) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
@@ -2361,11 +2363,11 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  r2.erase(<a class="code hl_variable" href="#ga64053b1d816e0128aa2610fe7e066edd">eve::algo::set_intersection</a>(i32, f64, r2, lt, eq).out, r2.end());</div>
 <div class="line">  TTS_EQUAL(r2, (std::vector&lt;float&gt;{20, 40}));</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; f64: &quot;</span> &lt;&lt; tts::as_string(f64) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; i32: &quot;</span> &lt;&lt; tts::as_string(i32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_string(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_string(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r2:  &quot;</span> &lt;&lt; tts::as_string(r2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; f64: &quot;</span> &lt;&lt; tts::as_text(f64) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; i32: &quot;</span> &lt;&lt; tts::as_text(i32) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_text(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_text(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r2:  &quot;</span> &lt;&lt; tts::as_text(r2) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
@@ -2383,8 +2385,8 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">  TTS_EQUAL(r0, v2);</div>
 <div class="line">  TTS_EQUAL(r1, v2);</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_string(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_string(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r0:  &quot;</span> &lt;&lt; tts::as_text(r0) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; r1:  &quot;</span> &lt;&lt; tts::as_text(r1) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span></div>
@@ -2403,7 +2405,7 @@ to better understand the <span class="tt"><a class="el" href="group__eve__core__
 <div class="line">    <a class="code hl_variable" href="#ga64053b1d816e0128aa2610fe7e066edd">eve::algo::set_intersection</a>[<a class="code hl_variable" href="group__eve__algo__sparse__output.html#ga20320b3af45c2868e9a4e6c7a5049fa9">eve::algo::sparse_output</a>](v1, v2, r).out,</div>
 <div class="line">    r.end());</div>
 <div class="line"> </div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; r: &quot;</span> &lt;&lt; tts::as_string(r) &lt;&lt; std::endl;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; r: &quot;</span> &lt;&lt; tts::as_text(r) &lt;&lt; std::endl;</div>
 <div class="line">  TTS_EQUAL(r, std::vector({0, 15, 30, 45}));</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -2522,7 +2524,7 @@ For an in-place version, see <span class="tt">::transform_keep_if</span>.</dd></
 <div class="line">{</div>
 <div class="line">  std::vector&lt;int&gt; input(16);</div>
 <div class="line">  <a class="code hl_variable" href="#gafcdd857a5e44f0b4e512e22c9dee27c2">eve::algo::iota</a>(input, 0);</div>
-<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Input vector:\n  &quot;</span> &lt;&lt; tts::as_string(input) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Input vector:\n  &quot;</span> &lt;&lt; tts::as_text(input) &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> func = [](<a class="code hl_concept" href="concepteve_1_1like.html">eve::like&lt;int&gt;</a> <span class="keyword">auto</span> x) {</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="https://jfalcou.github.io/kumi/group__kumi__tuple__related_ga2a3a7b464afb602d8a722178ac517da8.html#ga2a3a7b464afb602d8a722178ac517da8">kumi::make_tuple</a>(-x, <a class="code hl_variable" href="group__eve__core__predicates.html#gae52c8a1138e8e9b6da4c0fa568d1d9db">eve::is_even</a>(x));</div>
@@ -2531,13 +2533,13 @@ For an in-place version, see <span class="tt">::transform_keep_if</span>.</dd></
 <div class="line">  std::vector&lt;int&gt; output_big(42);</div>
 <div class="line">  output_big.erase(<a class="code hl_variable" href="#ga5f04bc8d4ca88114836570cbd5be9562">eve::algo::transform_copy_if</a>(input, output_big, func), output_big.end());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Output (opposites of even numbers):\n  &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(output_big)</div>
+<div class="line">            &lt;&lt; tts::as_text(output_big)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::vector&lt;unsigned char&gt; output_small(5);</div>
 <div class="line">  output_small.erase(<a class="code hl_variable" href="#ga5f04bc8d4ca88114836570cbd5be9562">eve::algo::transform_copy_if</a>(input, output_small, func), output_small.end());</div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot;Output on a range too small to hold all the results,\nwith conversion to unsigned char:\n  &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(output_small)</div>
+<div class="line">            &lt;&lt; tts::as_text(output_small)</div>
 <div class="line">            &lt;&lt; std::endl;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> 0;</div>
@@ -2719,7 +2721,7 @@ See <span class="tt">::transform_copy_if</span> and <span class="tt">::keep_if</
 <div class="line">  std::vector&lt;float&gt;  v = {1.0f, 2.0f, 3.0f, 4.0f, -1.0f, -2.0f, -3.0f, -4.0f, 1.0f, 2.0f, 3.0f, 4.0f};</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; v                                                                                                                        = &quot;</span></div>
-<div class="line">            &lt;&lt; tts::as_string(v)</div>
+<div class="line">            &lt;&lt; tts::as_text(v)</div>
 <div class="line">            &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  std::cout &lt;&lt; <span class="stringliteral">&quot; -&gt; eve::algo::transform_reduce(v, [](auto x) { return x + x }, 0.f)                                                         = &quot;</span></div>

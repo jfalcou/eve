@@ -415,7 +415,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">}</div>
 <div class="ttc" id="agroup__eve__core__decorators_html_ga4ff6300fe3143db3b73ebc48bbc6bc6c"><div class="ttname"><a href="group__eve__core__decorators.html#ga4ff6300fe3143db3b73ebc48bbc6bc6c">eve::lower</a></div><div class="ttdeci">constexpr auto lower</div><div class="ttdoc">Guarantees a result no greater than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:103</div></div>
 <div class="ttc" id="agroup__eve__core__decorators_html_ga8a4dcc5af0e5fab8cb537e8cbd4601f3"><div class="ttname"><a href="group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3">eve::upper</a></div><div class="ttdeci">constexpr auto upper</div><div class="ttdoc">Guarantees a result no smaller than the exact mathematical one.</div><div class="ttdef"><b>Definition</b> core.hpp:102</div></div>
-<div class="ttc" id="agroup__eve__core__predicates_html_gac4734a17484558619109e9728463636d"><div class="ttname"><a href="group__eve__core__predicates.html#gac4734a17484558619109e9728463636d">eve::is_odd</a></div><div class="ttdeci">constexpr auto is_odd</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is odd.</div><div class="ttdef"><b>Definition</b> is_odd.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__core__predicates_html_gac4734a17484558619109e9728463636d"><div class="ttname"><a href="group__eve__core__predicates.html#gac4734a17484558619109e9728463636d">eve::is_odd</a></div><div class="ttdeci">constexpr auto is_odd</div><div class="ttdoc">elementwise callable returning a logical true if and only if the element value is odd.</div><div class="ttdef"><b>Definition</b> is_odd.hpp:75</div></div>
 <div class="ttc" id="astructeve_1_1ignore__first_html"><div class="ttname"><a href="structeve_1_1ignore__first.html">eve::ignore_first</a></div><div class="ttdoc">Conditional expression ignoring the k first lanes from a eve::simd_value.</div><div class="ttdef"><b>Definition</b> conditional.hpp:516</div></div>
 <div class="ttc" id="astructeve_1_1wide_html"><div class="ttname"><a href="structeve_1_1wide.html">eve::wide</a></div><div class="ttdoc">Wrapper for SIMD registers.</div><div class="ttdef"><b>Definition</b> wide.hpp:94</div></div>
 </div><!-- fragment --> 
@@ -2862,7 +2862,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#gafa58266d667db8fb77cd37f20c2f2b69">maxlog</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_gafa58266d667db8fb77cd37f20c2f2b69"><div class="ttname"><a href="#gafa58266d667db8fb77cd37f20c2f2b69">eve::maxlog</a></div><div class="ttdeci">constexpr auto maxlog</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp is finite.</div><div class="ttdef"><b>Definition</b> maxlog.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_gafa58266d667db8fb77cd37f20c2f2b69"><div class="ttname"><a href="#gafa58266d667db8fb77cd37f20c2f2b69">eve::maxlog</a></div><div class="ttdeci">constexpr auto maxlog</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp is finite.</div><div class="ttdef"><b>Definition</b> maxlog.hpp:77</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
@@ -2931,7 +2931,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#gab48684a50934f99095f9c4a3ff2d1bdc">maxlog10</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_gab48684a50934f99095f9c4a3ff2d1bdc"><div class="ttname"><a href="#gab48684a50934f99095f9c4a3ff2d1bdc">eve::maxlog10</a></div><div class="ttdeci">constexpr auto maxlog10</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp10 is finite.</div><div class="ttdef"><b>Definition</b> maxlog10.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_gab48684a50934f99095f9c4a3ff2d1bdc"><div class="ttname"><a href="#gab48684a50934f99095f9c4a3ff2d1bdc">eve::maxlog10</a></div><div class="ttdeci">constexpr auto maxlog10</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp10 is finite.</div><div class="ttdef"><b>Definition</b> maxlog10.hpp:77</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
@@ -3000,7 +3000,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#ga93af75df7ea588f88e33d6781acae79c">maxlog2</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_ga93af75df7ea588f88e33d6781acae79c"><div class="ttname"><a href="#ga93af75df7ea588f88e33d6781acae79c">eve::maxlog2</a></div><div class="ttdeci">constexpr auto maxlog2</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp2 is finite.</div><div class="ttdef"><b>Definition</b> maxlog2.hpp:73</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_ga93af75df7ea588f88e33d6781acae79c"><div class="ttname"><a href="#ga93af75df7ea588f88e33d6781acae79c">eve::maxlog2</a></div><div class="ttdeci">constexpr auto maxlog2</div><div class="ttdoc">Callable object computing the greatest positive value for which eve::exp2 is finite.</div><div class="ttdef"><b>Definition</b> maxlog2.hpp:77</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
@@ -3069,7 +3069,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#ga6d5d71fa95856c09415f3ae7eefaea69">minlog</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_ga6d5d71fa95856c09415f3ae7eefaea69"><div class="ttname"><a href="#ga6d5d71fa95856c09415f3ae7eefaea69">eve::minlog</a></div><div class="ttdeci">constexpr auto minlog</div><div class="ttdoc">Callable object computing the least value for which eve::exp is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog.hpp:72</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_ga6d5d71fa95856c09415f3ae7eefaea69"><div class="ttname"><a href="#ga6d5d71fa95856c09415f3ae7eefaea69">eve::minlog</a></div><div class="ttdeci">constexpr auto minlog</div><div class="ttdoc">Callable object computing the least value for which eve::exp is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog.hpp:76</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
@@ -3138,7 +3138,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#ga12317003697b491ab0886a8e0ae9bf5b">minlog10</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_ga12317003697b491ab0886a8e0ae9bf5b"><div class="ttname"><a href="#ga12317003697b491ab0886a8e0ae9bf5b">eve::minlog10</a></div><div class="ttdeci">constexpr auto minlog10</div><div class="ttdoc">Callable object computing the least value for which eve::exp10 is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog10.hpp:72</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_ga12317003697b491ab0886a8e0ae9bf5b"><div class="ttname"><a href="#ga12317003697b491ab0886a8e0ae9bf5b">eve::minlog10</a></div><div class="ttdeci">constexpr auto minlog10</div><div class="ttdoc">Callable object computing the least value for which eve::exp10 is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog10.hpp:76</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
@@ -3276,7 +3276,7 @@ constexpr auto&#160;</td><td class="memItemRight"><b>eve::π</b> = <a class="el"
 <div class="line">   <span class="keyword">template</span>&lt; eve::<span class="keywordtype">float</span>ing_value T &gt;</div>
 <div class="line">   T <a class="code hl_variable" href="#gaef0f85c3c53085c44bc5aebd7b7aa03f">minlog2</a>(<a class="code hl_struct" href="structeve_1_1as.html">as&lt;T&gt;</a> x) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__math__constants_html_gaef0f85c3c53085c44bc5aebd7b7aa03f"><div class="ttname"><a href="#gaef0f85c3c53085c44bc5aebd7b7aa03f">eve::minlog2</a></div><div class="ttdeci">constexpr auto minlog2</div><div class="ttdoc">Callable object computing the least value for which eve::exp2 is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog2.hpp:68</div></div>
+<div class="ttc" id="agroup__eve__math__constants_html_gaef0f85c3c53085c44bc5aebd7b7aa03f"><div class="ttname"><a href="#gaef0f85c3c53085c44bc5aebd7b7aa03f">eve::minlog2</a></div><div class="ttdeci">constexpr auto minlog2</div><div class="ttdoc">Callable object computing the least value for which eve::exp2 is normal and not zero.</div><div class="ttdef"><b>Definition</b> minlog2.hpp:72</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
