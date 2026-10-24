@@ -99,11 +99,17 @@ template<std::ptrdiff_t Bytes> void run(ankerl::nanobench::Bench& b, T const* be
   b.run ( "load[ignore] - " + std::to_string(Bytes) + " bytes"
         , [&]
           {
+            // Locals: doNotOptimizeAway clobbers memory, going through the vectors reloads their data
+            // pointers on every load.
+            auto const* fc = first_cases.data();
+            auto const* lc = last_cases.data();
+            auto const* ec = extrema_cases.data();
+
             for( std::size_t i = 0; i < cases; ++i )
             {
-              auto f = eve::load[first_cases[i].ignore](first_cases[i].ptr, eve::as<w_t>{});
-              auto l = eve::load[last_cases[i].ignore](last_cases[i].ptr, eve::as<w_t>{});
-              auto e = eve::load[extrema_cases[i].ignore](extrema_cases[i].ptr, eve::as<w_t>{});
+              auto f = eve::load[fc[i].ignore](fc[i].ptr, eve::as<w_t>{});
+              auto l = eve::load[lc[i].ignore](lc[i].ptr, eve::as<w_t>{});
+              auto e = eve::load[ec[i].ignore](ec[i].ptr, eve::as<w_t>{});
               ankerl::nanobench::doNotOptimizeAway(f);
               ankerl::nanobench::doNotOptimizeAway(l);
               ankerl::nanobench::doNotOptimizeAway(e);
