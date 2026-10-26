@@ -21,6 +21,8 @@
 #include <eve/module/core/regular/prevint.hpp>
 #include <eve/module/core/regular/nextint.hpp>
 
+#include <limits>
+
 namespace eve
 {
   template<typename Options>
@@ -82,30 +84,62 @@ namespace eve
 
   namespace _
   {
-    template <typename T, floating_value Tgt>
-    constexpr Tgt valmax_in(as<T>, as<Tgt>) {
-      using e_t = element_type_t<T>;
-      using e_tgt = element_type_t<Tgt>;
-
-      auto vm = static_cast<long double>(valmax(as<e_t>{}));
-      auto vm_in = static_cast<e_tgt>(vm);
-      auto vm_rt = static_cast<long double>(vm_in);
-
-      if  (vm_rt > vm) return Tgt { prevint(vm_in) };
-      else             return Tgt { vm_in };
+    template <typename F>
+    consteval int flt_digits() noexcept {
+      if      constexpr (std::numeric_limits<F>::is_specialized) return std::numeric_limits<F>::digits;
+      else if constexpr (std::same_as<F, float16_t>)             return 11;
+      else static_assert(sizeof(F) == 0, "Missing numeric_limits specialization for floating type");
     }
 
-    template <typename T, floating_value Tgt>
-    constexpr Tgt valmin_in(as<T>, as<Tgt>) {
-      using e_t = element_type_t<T>;
+    template <typename F>
+    consteval int flt_max_exp() noexcept {
+      if      constexpr (std::numeric_limits<F>::is_specialized) return std::numeric_limits<F>::max_exponent;
+      else if constexpr (std::same_as<F, float16_t>)             return 16;
+      else static_assert(sizeof(F) == 0, "Missing numeric_limits specialization for floating type");
+    }
+
+    // Returns the largest value of `Tgt` that is <= `valmax(as<T>{})`.
+    template <integral_value T, floating_value Tgt>
+    constexpr Tgt valmax_in(as<T>, as<Tgt>) noexcept {
+      using e_t   = element_type_t<T>;
       using e_tgt = element_type_t<Tgt>;
 
-      auto vm = static_cast<long double>(valmin(as<e_t>{}));
-      auto vm_in = static_cast<e_tgt>(vm);
-      auto vm_rt = static_cast<long double>(vm_in);
+      constexpr int int_digits  = std::numeric_limits<e_t>::digits;
+      constexpr int flt_digits  = _::flt_digits<e_tgt>();
+      constexpr int flt_max_exp = _::flt_max_exp<e_tgt>();
 
-      if  (vm_rt < vm) return Tgt { nextint(vm_in) };
-      else             return Tgt { vm_in };
+      // Rounding 2^int_digits - 1 to a float with fewer mantissa bits rounds up to 2^int_digits.
+      // That power of two overflows e_tgt whenever int_digits >= flt_max_exp.
+      if constexpr (int_digits >= flt_max_exp) {
+        return valmax(as<Tgt>{});
+      } else {
+        // Mask out low bits beyond the float's mantissa precision so static_cast rounds down.
+        constexpr int shift = std::max(0, int_digits - flt_digits);
+        constexpr e_t max_v = static_cast<e_t>((valmax(as<e_t>{}) >> shift) << shift);
+        return Tgt{static_cast<e_tgt>(max_v)};
+      }
+    }
+
+    // Returns the lowest value of `Tgt` that is >= `valmin(as<T>{})`.
+    template <integral_value T, floating_value Tgt>
+    constexpr Tgt valmin_in(as<T>, as<Tgt>) noexcept {
+      using e_t   = element_type_t<T>;
+      using e_tgt = element_type_t<Tgt>;
+
+      if constexpr (std::is_unsigned_v<e_t>) {
+        return Tgt{0};
+      } else {
+        constexpr int int_digits  = std::numeric_limits<e_t>::digits;
+        constexpr int flt_max_exp = _::flt_max_exp<e_tgt>();
+
+        // Signed lowest() is -2^int_digits (an exact power of two, so it never needs mantissa rounding).
+        // That power of two overflows e_tgt whenever int_digits >= flt_max_exp.
+        if constexpr (int_digits >= flt_max_exp) {
+          return valmin(as<Tgt>{});
+        } else {
+          return Tgt{static_cast<e_tgt>(valmin(as<e_t>{}))};
+        }
+      }
     }
 
     template<typename U, typename Target, callable_options O>
