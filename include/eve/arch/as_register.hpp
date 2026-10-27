@@ -10,6 +10,10 @@
 #include <eve/as.hpp>
 #include <eve/arch/spec.hpp>
 
+#include <eve/arch/cpu/as_register.hpp>
+
+#include <type_traits>
+#include <utility>
 
 #if !defined(EVE_NO_SIMD)
 #  if defined(EVE_INCLUDE_X86_HEADER)
@@ -25,35 +29,55 @@
 #  endif
 #endif
 
-#include <eve/arch/cpu/as_register.hpp>
-
 namespace eve
 {
-  template<typename T> consteval auto unpack_register(T)     { return T{}; }
-  template<typename T> consteval auto unpack_register(as<T>) { return T{}; }
-
+  //================================================================================================
+  //! @addtogroup eve_traits
+  //! @{
+  //!
+  //! @typedef as_register_t
+  //! @brief Find proper register type for Type/Lanes/ABI triplet
+  //!
+  //! Computes the correct register to use to efficiently store `Lanes` elements of type `Type` in
+  //! the given ABI and returns it's type.
+  //!
+  //! @tparam Type  Type of the element to store
+  //! @tparam Lanes Number of elements to store
+  //! @tparam ABI Current ABI of the plateform
+  //! 
+  //! @}
+  //================================================================================================
+#if defined (EVE_DOXYGEN_INVOKED)
+  template<typename Type, width_type N, typename ABI>
+  using as_register_t = /* Implementation defined */;
+#else
+  // GCC 16 emits -Wignored-attributes when a SIMD register type (e.g. `__m128`) is used directly
+  // as a template argument, due to the `may-alias` attribute. `declval` removes it.
   template<typename T, width_type N, typename ABI>
-  consteval auto as_register(as<T> t, lanes_t<N> n, ABI abi)
-  {
-    using found_type = decltype(unpack_register(find_register_type(t, n, abi)));
-    static_assert(!std::same_as<found_type, void>, "[EVE] - Type is not usable in a SIMD register");
+  using as_register_t = std::remove_cvref_t<decltype(std::declval<decltype(_::as_register<T, N, ABI>)>())>;
+#endif
 
-    return found_type{};
-  }
-
+  //================================================================================================
+  //! @addtogroup eve_traits
+  //! @{
+  //!
+  //! @typedef as_logical_register_t
+  //! @brief Find proper logical register type for Type/Lanes/ABI triplet
+  //!
+  //! Computes the correct logical register to use to efficiently store `Lanes` elements of type `Type` in
+  //! the given ABI and returns it's type.
+  //!
+  //! @tparam Type  Type of the element to store
+  //! @tparam Lanes Number of elements to store
+  //! @tparam ABI Current ABI of the plateform
+  //! 
+  //! @}
+  //================================================================================================
+#if defined (EVE_DOXYGEN_INVOKED)
+  template<typename Type, width_type N, typename ABI>
+  using as_logical_register_t = /* Implementation defined */;
+#else
   template<typename T, width_type N, typename ABI>
-  using as_register_t = decltype(as_register(as<T>{}, lanes_t<N>{}, ABI{}));
-
-  template<typename T, width_type N, typename ABI>
-  consteval auto as_logical_register(as<T> t, lanes_t<N> n, ABI abi)
-  {
-    using found_type = decltype(find_logical_register_type(t, n, abi));
-    static_assert(!std::same_as<found_type, void>
-                  , "[EVE] - Type is not usable in a SIMD register");
-
-    return found_type{};
-  }
-
-  template<typename T, width_type N, typename ABI>
-  using as_logical_register_t = decltype(as_logical_register(as<T>{}, lanes_t<N>{}, ABI{}));
+  using as_logical_register_t = std::remove_cvref_t<decltype(std::declval<decltype(_::as_logical_register<T, N, ABI>)>())>;
+#endif
 }

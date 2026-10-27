@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/deps/kumi.hpp>
-#include <eve/traits/width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/concept/vectorized.hpp>
 
 namespace eve

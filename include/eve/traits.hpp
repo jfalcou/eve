@@ -23,7 +23,7 @@
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/traits/common_compatible.hpp>
 #include <eve/traits/common_type.hpp>
 #include <eve/traits/common_value.hpp>

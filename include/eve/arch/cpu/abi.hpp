@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/arch/spec.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/deps/kumi.hpp>
 
 #include <concepts>
@@ -17,7 +17,7 @@
 
 namespace eve
 {
-    template<typename T> struct logical;
+  template<typename T> struct logical;
 }
 
 namespace eve::_
@@ -42,7 +42,7 @@ namespace eve::_
 
   // hardward_abi_of is made to be specialized for each and individual architecture
   template<typename T, std::ptrdiff_t width>
-  inline constexpr emulated_ hardware_abi_of{};
+  extern emulated_ hardware_abi_of;
 
   template<typename T>
   using expected_abi_t = decltype(_::hardware_abi_of<T, eve::current_abi_type::template expected_width<T>>);
@@ -76,47 +76,20 @@ namespace eve::_
   //================================================================================================
   // Select Software ABI from Type x width combo depending on type properties
   template<typename T, std::ptrdiff_t width>
-  inline constexpr auto software_abi_of = _::hardware_abi_of<T,width>;
-
-  template<typename T, std::ptrdiff_t width>
-  inline constexpr auto software_abi_of<logical<T>,width> = software_abi_of<T, width>;
+  extern decltype(_::hardware_abi_of<T,width>) software_abi_of;
 
   template<typename T, std::ptrdiff_t width>
   requires ( eve::product_type<T> )
-  inline constexpr auto software_abi_of<T,width> = bundle_{};
+  extern bundle_ software_abi_of<T,width>;
 
   template<typename T, std::ptrdiff_t width>
   requires( should_emulate<T> )
-  inline constexpr auto software_abi_of<T,width> = emulated_{};
+  extern emulated_ software_abi_of<T,width> ;
 
   template<typename T, std::ptrdiff_t width>
   requires( should_aggregate<T,width> )
-  inline constexpr auto software_abi_of<T,width> = aggregated_{};
-}
+  extern aggregated_ software_abi_of<T,width>;
 
-namespace eve
-{
-  //================================================================================================
-  //! @addtogroup eve_traits
-  //! @{
-  //!
-  //! @typedef abi_t
-  //! @brief Find proper ABI type for Type/Lanes pair
-  //!
-  //! Computes the best ABI to use to efficiently store `Lanes` elements of type `Type` in
-  //! order to use SIMD implementations and returns it's type.
-  //!
-  //! @tparam Type  Type of the element to store
-  //! @tparam Lanes Number of elements to store
-  //!
-  //! @}
-  //================================================================================================
-#if defined (EVE_DOXYGEN_INVOKED)
-  template<typename Type, std::ptrdiff_t Lanes>
-  using abi_t = /* Implementation defined */;
-#else
-  template<typename Type, std::ptrdiff_t Lanes>
-  requires( _::arithmetic_<Type> || eve::product_type<Type> || _::is_logical_<Type> )
-  using abi_t = std::remove_cvref_t<decltype(_::software_abi_of<translate_t<Type>, Lanes>)>;
-#endif
+  template<typename T, std::ptrdiff_t width>
+  extern decltype(software_abi_of<T, width>) software_abi_of<logical<T>,width>;
 }

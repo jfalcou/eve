@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/traits/width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/traits/value_type.hpp>
 
 namespace eve
@@ -18,7 +18,7 @@ namespace eve
     constexpr auto iterator_width_impl()
     {
       if constexpr ( requires { T::iterator_width(); } ) return decltype(T::iterator_width()){};
-      else                                                  return expected_width_t<value_type_t<T>>{};
+      else                                                  return lanes_t<expected_width_v<value_type_t<T>>>{};
     }
   }
 
@@ -32,7 +32,7 @@ namespace eve
   //!  @brief A meta-function that returns a width for a relaxed iterator/range.
   //!         If T defines a nested static function `iterator_width()` (which should return eve::lanes_t)
   //!         - returns it's return type.
-  //!         Otherwise returns `expected_width_t<value_type_t<T>>`.
+  //!         Otherwise returns `lanes_t<expected_width_v<value_type_t<T>>>`.
   //!
   //!  *NOTE*: for aligned_ptr we return expected_width.
   //!

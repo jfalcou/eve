@@ -13,13 +13,13 @@ namespace eve::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( spy::simd_instruction_set.width == 128 )
-  inline constexpr auto hardware_abi_of<T,Cardinal> = arm_sve_128_{};
+  extern arm_sve_128_ hardware_abi_of<T,Cardinal>;
 
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( spy::simd_instruction_set.width == 256 )
-  inline constexpr auto hardware_abi_of<T,Cardinal> = arm_sve_256_{};
+  extern arm_sve_256_ hardware_abi_of<T,Cardinal>;
 
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( spy::simd_instruction_set.width == 512 )
-  inline constexpr auto hardware_abi_of<T,Cardinal> = arm_sve_512_{};
+  extern arm_sve_512_ hardware_abi_of<T,Cardinal>;
 }

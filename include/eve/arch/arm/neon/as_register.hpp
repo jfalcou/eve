@@ -8,105 +8,69 @@
 #pragma once
 
 #include <eve/arch/arm/predef.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
-namespace eve
-{
-  template<typename T>
-  struct logical;
-}
-
-namespace eve
+namespace eve::_
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64
-  template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, lanes_t<N>, eve::arm_64_)
-  {
-    if constexpr (std::same_as<T, eve::float16_t> && (N <= 4))
-    {
-#ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
-      return float16x4_t{};
-#else
-      static_assert(false, "Unreachable: no fp16 vector support");
-#endif
-    }
-    else if constexpr (std::same_as<T, float> && (N <= 2))
-    {
-      return float32x2_t{};
-    }
-    else if constexpr (std::same_as<T, double> && (N <= 1))
-    {
-      #if defined(SPY_SIMD_IS_ARM_ASIMD)
-      return float64x1_t{};
-      #else
-      return emulated_{};
-      #endif
-    }
-    else if constexpr (std::signed_integral<T>)
-    {
-      if      constexpr((sizeof(T) == 1) && (N <= 8)) return int8x8_t{};
-      else if constexpr((sizeof(T) == 2) && (N <= 4)) return int16x4_t{};
-      else if constexpr((sizeof(T) == 4) && (N <= 2)) return int32x2_t{};
-      else if constexpr((sizeof(T) == 8) && (N <= 1)) return int64x1_t{};
-    }
-    else if constexpr (std::unsigned_integral<T>)
-    {
-        if      constexpr((sizeof(T) == 1) && (N <= 8)) return uint8x8_t{};
-        else if constexpr((sizeof(T) == 2) && (N <= 4)) return uint16x4_t{};
-        else if constexpr((sizeof(T) == 4) && (N <= 2)) return uint32x2_t{};
-        else if constexpr((sizeof(T) == 8) && (N <= 1)) return uint64x1_t{};
-    }
-  }
+  template<typename T, width_type N> extern no_register<void> neon64_register;
 
+  template<std::signed_integral T> extern int8x8_t  neon64_register<T, 8>;
+  template<std::signed_integral T> extern int16x4_t neon64_register<T, 4>;
+  template<std::signed_integral T> extern int32x2_t neon64_register<T, 2>;
+  template<std::signed_integral T> extern int64x1_t neon64_register<T, 1>;
+
+  template<std::unsigned_integral T> extern uint8x8_t  neon64_register<T, 8>;
+  template<std::unsigned_integral T> extern uint16x4_t neon64_register<T, 4>;
+  template<std::unsigned_integral T> extern uint32x2_t neon64_register<T, 2>;
+  template<std::unsigned_integral T> extern uint64x1_t neon64_register<T, 1>;
+
+  #ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+    template<width_type N> extern float16x4_t neon64_register<eve::float16_t, N>;
+  #endif
+
+  template<width_type N> extern float32x2_t neon64_register<float, N>;
+
+  #if defined(SPY_SIMD_IS_ARM_ASIMD)
+    template<width_type N> extern float64x1_t neon64_register<double, N>;
+  #endif
+
+  template<typename T, width_type N> requires( N <= 8 / sizeof(T))
+  extern decltype(neon64_register<T, 8 / sizeof(T)>) as_register<T, N, eve::arm_64_>;
+
+  template<typename T, width_type N> requires( N <= 8 / sizeof(T))
+  extern decltype(neon64_register<as_integer_t<T, unsigned>, 8 / sizeof(T)>) as_logical_register<T, N, eve::arm_64_>;
+  
   // ---------------------------------------------------------------------------------------------
   // NEON 128
-  template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, lanes_t<N>, eve::arm_128_)
-  {
-    if constexpr (std::same_as<T, eve::float16_t>)
-    {
-#ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
-      return float16x8_t{};
-#else
-      static_assert(false, "Unreachable: no fp16 vector support");
-#endif
-    }
-    else if constexpr (std::same_as<T, float>)
-    {
-      return float32x4_t{};
-    }
-    else if constexpr (std::same_as<T, double>)
-    {
-      #if defined(SPY_SIMD_IS_ARM_ASIMD)
-      return float64x2_t{};
-      #else
-      return emulated_{};
-      #endif
-    }
-    else if constexpr (std::signed_integral<T>)
-    {
-      if      constexpr ((sizeof(T) == 1) && (N == 16)) return int8x16_t{};
-      else if constexpr ((sizeof(T) == 2) && (N == 8 )) return int16x8_t{};
-      else if constexpr ((sizeof(T) == 4) && (N == 4 )) return int32x4_t{};
-      else if constexpr ((sizeof(T) == 8) && (N == 2 )) return int64x2_t{};
-    }
-    else if constexpr (std::unsigned_integral<T>)
-    {
-      if      constexpr ((sizeof(T) == 1) && (N == 16)) return uint8x16_t{};
-      else if constexpr ((sizeof(T) == 2) && (N == 8 )) return uint16x8_t{};
-      else if constexpr ((sizeof(T) == 4) && (N == 4 )) return uint32x4_t{};
-      else if constexpr ((sizeof(T) == 8) && (N == 2 )) return uint64x2_t{};
-    }
-  }
+  template<typename T, width_type N> extern no_register<void> neon128_register;
 
-  // ---------------------------------------------------------------------------------------------
-  // logical cases
-  template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, lanes_t<N> n, arm_abi auto abi)
-  {
-    return find_register_type(as<as_integer_t<T, unsigned>>{}, n, abi);
-  }
+  template<std::signed_integral T> extern int8x16_t neon128_register<T, 16>;
+  template<std::signed_integral T> extern int16x8_t neon128_register<T,  8>;
+  template<std::signed_integral T> extern int32x4_t neon128_register<T,  4>;
+  template<std::signed_integral T> extern int64x2_t neon128_register<T,  2>;
+
+  template<std::unsigned_integral T> extern uint8x16_t neon128_register<T, 16>;
+  template<std::unsigned_integral T> extern uint16x8_t neon128_register<T,  8>;
+  template<std::unsigned_integral T> extern uint32x4_t neon128_register<T,  4>;
+  template<std::unsigned_integral T> extern uint64x2_t neon128_register<T,  2>;
+
+  #ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+    template<width_type N> extern float16x8_t neon128_register<eve::float16_t, N>;
+  #endif
+
+  template<width_type N> extern float32x4_t neon128_register<float, N>;
+
+  #if defined(SPY_SIMD_IS_ARM_ASIMD)
+    template<width_type N> extern float64x2_t neon128_register<double, N>;
+  #endif
+  
+  template<typename T, width_type N> requires( N == 16 / sizeof(T))
+  extern decltype(neon128_register<T,N>) as_register<T, N, eve::arm_128_>;
+
+  template<typename T, width_type N> requires( N == 16 / sizeof(T))
+  extern decltype(neon128_register<as_integer_t<T, unsigned>, N>) as_logical_register<T, N, eve::arm_128_>;
 }
