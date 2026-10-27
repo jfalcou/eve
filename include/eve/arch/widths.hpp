@@ -10,6 +10,10 @@
 #include <cstddef>
 #include <type_traits>
 
+#include <eve/deps/kumi.hpp>
+#include <eve/arch/spec.hpp>
+#include <eve/arch/abi.hpp>
+
 namespace eve
 {
   namespace _ {
@@ -59,16 +63,6 @@ namespace eve
     using combined_type = lanes_t<2>;
   };
 
-  namespace _ {
-
-  template <typename>
-  struct is_wide_width  : std::false_type {};
-
-  template <std::ptrdiff_t N>
-  struct is_wide_width<eve::lanes_t<N>> : std::true_type {};
-
-  }  // namespace _
-
   template<width_type Width>
   inline constexpr lanes_t<Width> const lanes = {};
 
@@ -103,6 +97,15 @@ namespace eve
     constexpr width_type cache_line_width = 64 / sizeof(T);
   }
 
+  namespace _ 
+  {
+    template <typename>
+    struct is_wide_width  : std::false_type {};
+
+    template <std::ptrdiff_t N>
+    struct is_wide_width<eve::lanes_t<N>> : std::true_type {};
+  }  // namespace _
+
   //================================================================================================
   //! @ingroup eve_simd_concepts
   //! @brief concept to determine if this is width type of a wide
@@ -115,4 +118,147 @@ namespace eve
   //================================================================================================
   template <typename T>
   concept wide_width = _::is_wide_width<T>::value;
+
+  namespace _
+  {
+    template<typename ABI, typename Leaves>
+    extern width_type fundamental_width_of_v;
+
+    template<typename ABI, typename... Ls>
+    constexpr inline width_type fundamental_width_of_v<ABI, kumi::tuple<Ls...>> =
+      kumi::_::min((ABI::template fundamental_width<Ls>)...);
+
+    template<typename ABI, typename Leaves>
+    extern width_type expected_width_of_v;
+
+    template<typename ABI, typename... Ls>
+    constexpr inline width_type expected_width_of_v<ABI, kumi::tuple<Ls...>> =
+      kumi::_::min((ABI::template expected_width<Ls>)...);
+  }
+  //================================================================================================
+  //! @addtogroup eve_arch
+  //! @{
+  //!   @struct fundamental_width
+  //!   @brief Computes the fundamental width of a given type
+  //!
+  //!   **Required header:** `#include <eve/arch/widths.hpp>`
+  //!
+  //!   eve::fundamental_width computes the width of the smallest register able to store
+  //!   values of type `Type` for a given SIMD `ABI` with no uninitialized lanes.
+  //!
+  //!   @tparam Type  Type of value to assess
+  //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi.
+  //!
+  //!   #### Member types
+  //!
+  //!   |Name   | Definition                               |
+  //!   |:------|:-----------------------------------------|
+  //!   |`type` | The type of width computed for `Type` |
+  //!
+  //!    <br/>
+  //!    #### Helper types
+  //!
+  //!    @code{.cpp}
+  //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
+  //!    using fundamental_width_t = typename fundamental_width<Type, ABI>::type;
+  //!    @endcode
+  //!
+  //!    <br/>
+  //!    #### Helper variable template
+  //!
+  //!    @code{.cpp}
+  //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
+  //!    inline constexpr auto fundamental_width_v = fundamental_width_t<Type, ABI>::value;
+  //!    @endcode
+  //!
+  //!    @code{.cpp}
+  //!    // Width template inline variable to use with functions like eve::load
+  //!    template<typename Type, typename ABI = eve::current_abi_type>
+  //!    inline constexpr fundamental_width<Type,ABI> const fundamental = {};
+  //!    @endcode
+  //! @}
+  //================================================================================================
+  template<typename Type, regular_abi ABI = eve::current_abi_type>
+  constexpr inline width_type fundamental_width_v = ABI::template fundamental_width<Type>;
+
+  template<eve::product_type Type, regular_abi ABI>
+  constexpr inline width_type fundamental_width_v<Type, ABI> = _::fundamental_width_of_v<ABI, kumi::result::flatten_all_t<Type>>;
+
+  //================================================================================================
+  //! @addtogroup eve_arch
+  //! @{
+  //!   @typedef expected_width_t
+  //!   @brief Computes the expected width of a given type
+  //!
+  //!   **Required header:** `#include <eve/arch/widths.hpp>`
+  //!
+  //!   @ref eve::expected_width_t is the exact width type of the register able to store
+  //!   values of type `Type` for a given SIMD `ABI` as a native register type.
+  //!
+  //!   @tparam Type  Type of value to assess
+  //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi.
+  //!
+  //!    #### Helper variable template
+  //!
+  //!    @code{.cpp}
+  //!    template<typename Type, regular_abi ABI = eve::current_abi_type>
+  //!    inline constexpr auto expected_width_v = expected_width_t<Type, ABI>::value;
+  //!    @endcode
+  //! @}
+  //================================================================================================
+  template<typename Type, regular_abi ABI = eve::current_abi_type>
+  inline constexpr auto expected_width_v = ABI::template expected_width<Type>;
+
+  template<eve::product_type Type, regular_abi ABI>
+  inline constexpr auto expected_width_v<Type, ABI> = _::expected_width_of_v<ABI, kumi::result::flatten_all_t<Type>>;
+}
+
+namespace eve
+{
+  //================================================================================================
+  //! @addtogroup eve_traits
+  //! @{
+  //!   @struct width
+  //!   @brief Computes the width of a given type
+  //!
+  //!   **Required header:** `#include <eve/arch/widths.hpp>`
+  //!
+  //!   For a given type `T`, computes the type of its width.
+  //!
+  //!   @tparam T Type to process
+  //!
+  //!   #### Member types
+  //!
+  //!   |Name   | Definition               |
+  //!   |:------|:-------------------------|
+  //!   |`type` | The width type of `T` |
+  //!
+  //!    <br/>
+  //!
+  //!   @groupheader{Helper types}
+  //!
+  //!   @code{.cpp}
+  //!   template<typename Type>
+  //!   using width_t = typename width<Type>::type;
+  //!   @endcode
+  //!
+  //!   @groupheader{Helper variable template}
+  //!
+  //!   @code{.cpp}
+  //!   template<typename Type>
+  //!   inline constexpr auto width_v = width<Type>::value;
+  //!   @endcode
+  //! @}
+  //================================================================================================
+  template<typename Type>
+  inline constexpr width_type width_v = 1;
+
+  template<typename Type>
+  using width_t = lanes_t<width_v<Type>>;
+
+  template<typename... Ts>
+  inline constexpr width_type max_width_v = kumi::_::max(width_v<Ts>...);
+
+  template<typename... Ts>
+  inline constexpr width_type min_width_v = kumi::_::min(width_v<Ts>...);
 }

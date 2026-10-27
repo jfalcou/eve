@@ -8,169 +8,158 @@
 #pragma once
 
 #include <eve/arch/x86/predef.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
+#include <algorithm>
 #include <compare>
-#include <type_traits>
+#include <concepts>
+#include <cstddef>
 #include <iosfwd>
 
-namespace eve
+namespace eve::_
 {
-  template<typename T>
-  struct logical;
-  struct x86_128_;
-  struct x86_256_;
-}
+  // ---------------------------------------------------------------------------------------------
+  // x86 128
+  template<typename T> extern no_register<void> x86_128_register;
 
-namespace eve
-{
-  template<typename T, width_type N, x86_abi ABI>
-  consteval auto find_register_type(as<T>, lanes_t<N>, ABI)
+  template<std::same_as<double> T>                                                extern __m128d x86_128_register<T>;
+  template<std::same_as<float> T>                                                 extern __m128  x86_128_register<T>;
+  template<std::same_as<eve::float16_t> T> requires( _::supports_fp16_vector_ops) extern __m128h x86_128_register<T>;
+  template<std::same_as<eve::float16_t> T> requires(!_::supports_fp16_vector_ops) extern __m128i x86_128_register<T>;
+  template<std::integral T>                                                       extern __m128i x86_128_register<T>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N <= 16)
+  extern decltype(x86_128_register<T>) as_register<T, N, eve::x86_128_>;
+
+  // ---------------------------------------------------------------------------------------------
+  // x86 256
+  template<typename T> extern no_register<void> x86_256_register;
+
+  template<std::same_as<double> T>                                                extern __m256d x86_256_register<T>;
+  template<std::same_as<float> T>                                                 extern __m256  x86_256_register<T>;
+  template<std::same_as<eve::float16_t> T> requires( _::supports_fp16_vector_ops) extern __m256h x86_256_register<T>;
+  template<std::same_as<eve::float16_t> T> requires(!_::supports_fp16_vector_ops) extern __m256i x86_256_register<T>;
+  template<std::integral T>                                                       extern __m256i x86_256_register<T>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N <= 32)
+  extern decltype(x86_256_register<T>) as_register<T, N, eve::x86_256_>;
+
+  // ---------------------------------------------------------------------------------------------
+  // x86 512
+  template<typename T> extern no_register<void> x86_512_register;
+
+  template<std::same_as<double> T>                                                extern __m512d x86_512_register<T>;
+  template<std::same_as<float> T>                                                 extern __m512  x86_512_register<T>;
+  template<std::same_as<eve::float16_t> T> requires( _::supports_fp16_vector_ops) extern __m512h x86_512_register<T>;
+  template<std::same_as<eve::float16_t> T> requires(!_::supports_fp16_vector_ops) extern __m512i x86_512_register<T>;
+  template<std::integral T>                                                       extern __m512i x86_512_register<T>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N <= 64)
+  extern decltype(x86_512_register<T>) as_register<T, N, eve::x86_512_>;
+
+  // ---------------------------------------------------------------------------------------------
+  // Masks
+
+  template<int N> struct as_mask;
+
+  template<int N> struct inner_mask;
+
+  template<> struct inner_mask<8>  { using type = __mmask8;  };
+  template<> struct inner_mask<16> { using type = __mmask16; };
+  template<> struct inner_mask<32> { using type = __mmask32; };
+  template<> struct inner_mask<64> { using type = __mmask64; };
+
+  template<int N>
+  struct mask_n
   {
-    constexpr size_t width = sizeof(T) * N;
+    using type = typename inner_mask<N>::type;
+    static constexpr int bits = N;
 
-    if constexpr (std::same_as<ABI, x86_128_>)
-    {
-      if constexpr (width <= 16)
-      {
-             if constexpr (std::same_as<T, double>)         return __m128d{};
-        else if constexpr (std::same_as<T, float >)         return __m128{};
-        else if constexpr (std::same_as<T, eve::float16_t>)
-        {
-          if constexpr (_::supports_fp16_vector_ops)        return __m128h{};
-          else                                              return __m128i{};
-        }
-        else if constexpr (std::is_integral_v<T>  )         return __m128i{};
-      }
-    }
-    else if constexpr (std::same_as<ABI, x86_256_>)
-    {
-      if constexpr (width <= 32)
-      {
-             if constexpr (std::same_as<T, double>)         return __m256d{};
-        else if constexpr (std::same_as<T, float >)         return __m256{};
-        else if constexpr (std::same_as<T, eve::float16_t>)
-        {
-          if constexpr (_::supports_fp16_vector_ops)        return __m256h{};
-          else                                              return __m256i{};
-        }
-        else if constexpr (std::is_integral_v<T>  )         return __m256i{};
-      }
-    }
-    else if constexpr (std::same_as<ABI, x86_512_>)
-    {
-      if constexpr (width <= 64)
-      {
-        if      constexpr (std::same_as<T, double>)         return __m512d{};
-        else if constexpr (std::same_as<T, float >)         return __m512{};
-        else if constexpr (std::same_as<T, eve::float16_t>)
-        {
-          if constexpr (_::supports_fp16_vector_ops)        return __m512h{};
-          else                                              return __m512i{};
-        }
-        else if constexpr (std::is_integral_v<T>  )         return __m512i{};
-      }
-    }
-  }
+    explicit constexpr operator type() const { return value; }
+    explicit constexpr operator bool() const { return (bool) value; }
 
-  namespace _
-  {
-    template<int N> struct as_mask;
+    // != and reverse are generated.
+    // <=> didn't work for some reason for ==
+    friend bool operator== (mask_n m, type n) { return m == mask_n{n}; }
+    friend bool operator== (mask_n  , mask_n) = default;
+    friend auto operator<=>(mask_n  , mask_n) = default;
 
-    template<int N> struct inner_mask;
+    friend constexpr mask_n operator~(mask_n m) { return mask_n{ static_cast<type>(~m.value) }; }
 
-    template<> struct inner_mask<8>  { using type = __mmask8;  };
-    template<> struct inner_mask<16> { using type = __mmask16; };
-    template<> struct inner_mask<32> { using type = __mmask32; };
-    template<> struct inner_mask<64> { using type = __mmask64; };
+    friend constexpr mask_n& operator&=(mask_n& m, mask_n n) { m.value &= n.value; return m;     }
+    friend constexpr mask_n& operator&=(mask_n& m, type   n) { m.value &= n;       return m;     }
+    friend constexpr mask_n  operator& (mask_n  m, mask_n n) { mask_n t{m}; return t &= n; }
+    friend constexpr mask_n  operator& (mask_n  m, type   n) { mask_n t{n}; return t &= m;       }
+    friend constexpr mask_n  operator& (type    m, mask_n n) { mask_n t{m}; return t &= n;       }
 
-    template<int N>
-    struct mask_n
-    {
-      using type = typename inner_mask<N>::type;
-      static constexpr int bits = N;
+    friend constexpr mask_n& operator|=(mask_n& m, mask_n n) { m.value |= n.value; return m;     }
+    friend constexpr mask_n& operator|=(mask_n& m, type   n) { m.value |= n;       return m;     }
+    friend constexpr mask_n  operator| (mask_n  m, mask_n n) { mask_n t{m}; return t |= n; }
+    friend constexpr mask_n  operator| (mask_n  m, type   n) { mask_n t{n}; return t |= m;       }
+    friend constexpr mask_n  operator| (type    m, mask_n n) { mask_n t{m}; return t |= n;       }
 
-      explicit constexpr operator type() const { return value; }
-      explicit constexpr operator bool() const { return (bool) value; }
+    friend constexpr mask_n& operator^=(mask_n& m, mask_n n) { m.value ^= n.value; return m;     }
+    friend constexpr mask_n& operator^=(mask_n& m, type   n) { m.value ^= n;       return m;     }
+    friend constexpr mask_n  operator^ (mask_n  m, mask_n n) { mask_n t{m.value}; return t ^= n; }
+    friend constexpr mask_n  operator^ (mask_n  m, type   n) { mask_n t{n}; return t ^= m;       }
+    friend constexpr mask_n  operator^ (type    m, mask_n n) { mask_n t{m}; return t ^= n;       }
 
-      // != and reverse are generated.
-      // <=> didn't work for some reason for ==
-      friend bool operator== (mask_n m, type n) { return m == mask_n{n}; }
-      friend bool operator== (mask_n  , mask_n) = default;
-      friend auto operator<=>(mask_n  , mask_n) = default;
+    friend constexpr mask_n&  operator<<=(mask_n& m, std::ptrdiff_t s) { m.value <<= s; return m; }
+    friend constexpr mask_n   operator<< (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t <<= s; }
+    friend constexpr mask_n&  operator>>=(mask_n& m, std::ptrdiff_t s) { m.value >>= s; return m; }
+    friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m}; return t >>= s; }
 
-      friend constexpr mask_n operator~(mask_n m) { return mask_n{ static_cast<type>(~m.value) }; }
+    template<typename C, typename Ct>
+    friend auto& operator<<(std::basic_ostream<C, Ct>& out, const mask_n& m) { return out << m.value; }
 
-      friend constexpr mask_n& operator&=(mask_n& m, mask_n n) { m.value &= n.value; return m;     }
-      friend constexpr mask_n& operator&=(mask_n& m, type   n) { m.value &= n;       return m;     }
-      friend constexpr mask_n  operator& (mask_n  m, mask_n n) { mask_n t{m}; return t &= n; }
-      friend constexpr mask_n  operator& (mask_n  m, type   n) { mask_n t{n}; return t &= m;       }
-      friend constexpr mask_n  operator& (type    m, mask_n n) { mask_n t{m}; return t &= n;       }
+    type value;
+  };
 
-      friend constexpr mask_n& operator|=(mask_n& m, mask_n n) { m.value |= n.value; return m;     }
-      friend constexpr mask_n& operator|=(mask_n& m, type   n) { m.value |= n;       return m;     }
-      friend constexpr mask_n  operator| (mask_n  m, mask_n n) { mask_n t{m}; return t |= n; }
-      friend constexpr mask_n  operator| (mask_n  m, type   n) { mask_n t{n}; return t |= m;       }
-      friend constexpr mask_n  operator| (type    m, mask_n n) { mask_n t{m}; return t |= n;       }
+  using mask8  = mask_n<8>;
+  using mask16 = mask_n<16>;
+  using mask32 = mask_n<32>;
+  using mask64 = mask_n<64>;
 
-      friend constexpr mask_n& operator^=(mask_n& m, mask_n n) { m.value ^= n.value; return m;     }
-      friend constexpr mask_n& operator^=(mask_n& m, type   n) { m.value ^= n;       return m;     }
-      friend constexpr mask_n  operator^ (mask_n  m, mask_n n) { mask_n t{m.value}; return t ^= n; }
-      friend constexpr mask_n  operator^ (mask_n  m, type   n) { mask_n t{n}; return t ^= m;       }
-      friend constexpr mask_n  operator^ (type    m, mask_n n) { mask_n t{m}; return t ^= n;       }
+  template<> struct as_mask<8>  { using type = mask8; };
+  template<> struct as_mask<16> { using type = mask16; };
+  template<> struct as_mask<32> { using type = mask32; };
+  template<> struct as_mask<64> { using type = mask64; };
 
-      friend constexpr mask_n&  operator<<=(mask_n& m, std::ptrdiff_t s) { m.value <<= s; return m; }
-      friend constexpr mask_n   operator<< (mask_n  m, std::ptrdiff_t s) { mask_n t{m.value}; return t <<= s; }
-      friend constexpr mask_n&  operator>>=(mask_n& m, std::ptrdiff_t s) { m.value >>= s; return m; }
-      friend constexpr mask_n   operator>> (mask_n  m, std::ptrdiff_t s) { mask_n t{m}; return t >>= s; }
+  template<int N> using as_mask_t = typename as_mask<std::max(8,N)>::type;
 
-      template<typename C, typename Ct>
-      friend auto& operator<<(std::basic_ostream<C, Ct>& out, const mask_n& m) { return out << m.value; }
-
-      type value;
-    };
-
-    using mask8  = mask_n<8>;
-    using mask16 = mask_n<16>;
-    using mask32 = mask_n<32>;
-    using mask64 = mask_n<64>;
-
-    template<> struct as_mask<8>  { using type = mask8; };
-    template<> struct as_mask<16> { using type = mask16; };
-    template<> struct as_mask<32> { using type = mask32; };
-    template<> struct as_mask<64> { using type = mask64; };
-
-    template<int N> using as_mask_t = typename as_mask<std::max(8,N)>::type;
-  }
-
+  // ---------------------------------------------------------------------------------------------
+  // Logical registers
 # if defined(SPY_SIMD_IS_X86_AVX512)
-  // logical uses different registers in AVX512
-  template<typename T, width_type N, x86_abi ABI>
-  consteval auto find_logical_register_type(as<T>, lanes_t<N>, ABI)
-  {
-    constexpr size_t width = sizeof(T) * N;
+  // logical uses different registers in AVX512: a mask whose size depends on the scalar size.
+  // The first parameter of the tables is only there to make each row a partial specialization.
+  template<typename T, std::size_t Size> extern no_register<void> x86_128_logical_register;
+  template<typename T> extern _::mask16 x86_128_logical_register<T, 1>;
+  template<typename T> extern _::mask8  x86_128_logical_register<T, 2>;
+  template<typename T> extern _::mask8  x86_128_logical_register<T, 4>;
+  template<typename T> extern _::mask8  x86_128_logical_register<T, 8>;
 
-    if constexpr (std::same_as<ABI, x86_512_> && (width == 64))
-    {
-      return _::as_mask_t<64 / sizeof(T)>{};
-    }
-    else if constexpr (std::same_as<ABI, x86_256_> && (width == 32))
-    {
-      if constexpr (N <= 8 ) return _::mask8{};
-      if constexpr (N == 16) return _::mask16{};
-      if constexpr (N == 32) return _::mask32{};
-    }
-    else if constexpr (std::same_as<ABI, x86_128_> && (width <= 16))
-    {
-      if constexpr (sizeof(T) == 1) return _::mask16{};
-      else                          return _::mask8{};
-    }
-  }
+  template<typename T, std::size_t Size> extern no_register<void> x86_256_logical_register;
+  template<typename T> extern _::mask32 x86_256_logical_register<T, 1>;
+  template<typename T> extern _::mask16 x86_256_logical_register<T, 2>;
+  template<typename T> extern _::mask8  x86_256_logical_register<T, 4>;
+  template<typename T> extern _::mask8  x86_256_logical_register<T, 8>;
+
+  template<typename T, std::size_t Size> extern no_register<void> x86_512_logical_register;
+  template<typename T> extern _::mask64 x86_512_logical_register<T, 1>;
+  template<typename T> extern _::mask32 x86_512_logical_register<T, 2>;
+  template<typename T> extern _::mask16 x86_512_logical_register<T, 4>;
+  template<typename T> extern _::mask8  x86_512_logical_register<T, 8>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N <= 16)
+  extern decltype(x86_128_logical_register<T, sizeof(T)>) as_logical_register<T, N, eve::x86_128_>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N == 32)
+  extern decltype(x86_256_logical_register<T, sizeof(T)>) as_logical_register<T, N, eve::x86_256_>;
+
+  template<typename T, width_type N> requires(sizeof(T) * N == 64)
+  extern decltype(x86_512_logical_register<T, sizeof(T)>) as_logical_register<T, N, eve::x86_512_>;
 # else
   // logical uses same registers
-  template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T> t, lanes_t<N> n, x86_abi auto a)
-  {
-    return find_register_type(t, n, a);
-  }
+  template<typename T, width_type N, x86_abi ABI>
+  extern decltype(as_register<T, N, ABI>) as_logical_register<T, N, ABI>;
 # endif
 }

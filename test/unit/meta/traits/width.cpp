@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/traits/width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/logical.hpp>
 #include <eve/wide.hpp>
 

@@ -7,15 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/deps/spy.hpp>
-#include <eve/detail/abi.hpp>
-
 namespace eve
 {
   //================================================================================================
   //! @addtogroup eve_arch
   //! @{
-  //! @struct platform
+  //! @namespace platform
   //! @brief  Platform specific constexpr information
   //!
   //! Provides constexpr information about the status (supported or not) of various platform
@@ -23,7 +20,7 @@ namespace eve
   //! some from compiler options, and some from explicit preprocessor options.
   //! @}
   //================================================================================================
-  struct platform
+  namespace platform
   {
     //! @brief Indicates if current platform supports NaN values
     //! If this value evaluates to `true`, implementation of functions will not take any special
@@ -31,9 +28,9 @@ namespace eve
     //! By default, it evaluates to `true`. This can be changed by using -ffast-math
     //! or `-DEVE_NO_NANS`.
 #if defined(EVE_NO_NANS)
-    static constexpr bool supports_nans = false;
+    inline constexpr bool supports_nans = false;
 #else
-    static constexpr bool supports_nans = true;
+    inline constexpr bool supports_nans = true;
 #endif
 
     //! @brief Indicates if current platform supports infinites values
@@ -42,9 +39,9 @@ namespace eve
     //! By default, it evaluates to `true`. This can be changed by using -ffast-math
     //! or `-DEVE_NO_INFINITIES`.
 #if defined(EVE_NO_INFINITIES)
-    static constexpr bool supports_infinites = false;
+    inline constexpr bool supports_infinites = false;
 #else
-    static constexpr bool supports_infinites = true;
+    inline constexpr bool supports_infinites = true;
 #endif
 
     //! @brief Indicates if current platform supports invalids values
@@ -52,7 +49,7 @@ namespace eve
     //! provision to handle neither NaN nor infinites input.
     //! By default, it evaluates to `true`. This can be changed by using -ffast-math
     //! , `-DEVE_NO_INFINITIES -DEVE_NO_NANS` or directly`-DEVE_NO_INVALIDS`.
-    static constexpr bool supports_invalids = supports_infinites && supports_nans;
+    inline constexpr bool supports_invalids = supports_infinites && supports_nans;
 
     //! @brief Indicates if current platform supports negative 0
     //! If this value evaluates to `true`, implementation of functions will not take any special
@@ -60,9 +57,9 @@ namespace eve
     //! By default, it evaluates to `true`. This can be changed by using -ffast-math
     //! or `-DEVE_NO_MINUSZERO`.
 #if defined(EVE_NO_MINUSZERO)
-    static constexpr bool supports_negative_zero = false;
+    inline constexpr bool supports_negative_zero = false;
 #else
-    static constexpr bool supports_negative_zero = true;
+    inline constexpr bool supports_negative_zero = true;
 #endif
 
     //! @brief Indicates if current platform supports denormal values
@@ -71,9 +68,9 @@ namespace eve
     //! By default, it evaluates to `true`. This can be changed by using -ffast-math
     //! or `-DEVE_NO_DENORMALS`.
 #if defined(EVE_NO_DENORMALS)
-    static constexpr bool supports_denormals = false;
+    inline constexpr bool supports_denormals = false;
 #else
-    static constexpr bool supports_denormals  = true;
+    inline constexpr bool supports_denormals  = true;
 #endif
   };
 }

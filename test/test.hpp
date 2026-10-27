@@ -12,7 +12,7 @@
 //==================================================================================================
 // EVE Specific testing overloads
 //==================================================================================================
-#include <eve/arch/fundamental_width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/module/core.hpp>
 #include <eve/traits.hpp>
 #include <eve/wide.hpp>

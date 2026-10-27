@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/fundamental_width.hpp>
+#include <eve/arch/widths.hpp>
 
 namespace eve::_
 {
