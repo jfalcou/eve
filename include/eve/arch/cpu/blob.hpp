@@ -1,0 +1,88 @@
+//==================================================================================================
+/*
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+*/
+//==================================================================================================
+#pragma once
+
+#include <eve/arch/widths.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/deps/kumi.hpp>
+#include <eve/arch/abi.hpp>
+#include <eve/forward.hpp>
+#include <eve/traits/as_wide.hpp>
+#include <cstring>
+#include <array>
+
+namespace eve::_
+{
+    template<typename Type, width_type Width>
+    struct blob
+    {
+      static constexpr auto replication = Width / expected_width_v<Type>;
+
+      using value_type                  = as_wide_t<Type, expected_width_v<Type>>;
+      using subvalue_type               = as_wide_t<Type, Width / 2>;
+      using storage_type                = kumi::result::fill_t<replication, value_type>;
+
+      storage_type storage;
+
+      void assign_parts(subvalue_type const& l, subvalue_type const& h)
+      {
+        auto src = reinterpret_cast<std::byte const*>(&l);
+        auto dst = reinterpret_cast<std::byte*>(this);
+        std::memcpy(dst, src, sizeof(*this) / 2);
+
+        auto src2 = reinterpret_cast<std::byte const*>(&h);
+        auto dst2 = dst + sizeof(*this) / 2;
+        std::memcpy(dst2, src2, sizeof(*this) / 2);
+      }
+
+      auto slice() const
+      {
+        std::array<subvalue_type, 2> data{};
+
+        auto src = reinterpret_cast<std::byte const*>(this);
+        auto dst = &data[0];
+        std::memcpy(dst, src, sizeof(*this) / 2);
+
+        auto src2 = src + sizeof(*this) / 2;
+        auto dst2 = &data[1];
+        std::memcpy(dst2, src2, sizeof(*this) / 2);
+
+        return data;
+      }
+
+      // Return a view of the blob as a collection of wide of the expected size for this type.
+      auto slice_to_expected() const noexcept { return storage; }
+
+      template<std::size_t I>
+      friend  auto&        get(blob& b) noexcept       { return kumi::get<I>(b.storage); }
+
+      template<std::size_t I>
+      friend  auto const&  get(blob const& b) noexcept { return kumi::get<I>(b.storage); }
+    };
+
+    template<typename T>
+    inline constexpr bool is_blob_impl = false;
+
+    template<typename Type, auto S>
+    inline constexpr bool is_blob_impl<blob<Type, S>> = true;
+
+    template<typename T>
+    concept is_blob = is_blob_impl<std::remove_cvref_t<T>>;
+  }
+
+template<std::size_t I, typename T, eve::width_type N>
+struct std::tuple_element<I, eve::_::blob<T, N>>
+{
+  using type = typename eve::_::blob<T, N>::value_type;
+};
+
+template<typename T, eve::width_type N>
+struct  std::tuple_size<eve::_::blob<T, N>>
+      : std::integral_constant<std::size_t, eve::_::blob<T, N>::replication>
+{
+};
