@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>

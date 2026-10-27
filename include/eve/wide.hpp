@@ -8,4 +8,4 @@
 #pragma once
 
 #include <eve/arch/spec.hpp>
-#include <eve/arch/wide.hpp>
+#include <eve/types/wide.hpp>

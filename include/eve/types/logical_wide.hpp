@@ -9,8 +9,8 @@
 
 #include <eve/arch/as_register.hpp>
 #include <eve/arch/cpu/base.hpp>
-#include <eve/arch/cpu/logical.hpp>
-#include <eve/arch/expected_width.hpp>
+#include <eve/types/logical.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
@@ -31,24 +31,10 @@
 #include <concepts>
 #include <type_traits>
 #include <iosfwd>
+#include <utility>
 
 namespace eve
 {
-  namespace _
-  {
-    template<typename T, width_type N>
-    struct logical_split_type_helper
-    { };
-
-    template<typename T, width_type N>
-    requires(N > 1)
-    struct logical_split_type_helper<T, N>
-    {
-      //! Type representing a logical of the same type but with a width half the size
-      using split_type = logical<wide<T, (N/2)>>;
-    };
-  }
-
   //================================================================================================
   //! @addtogroup eve_simd_types
   //! @{
@@ -68,8 +54,7 @@ namespace eve
   template<arithmetic_scalar_value Type, width_type Width>
   requires (is_valid_width<Width>)
   struct  EVE_MAY_ALIAS  logical<wide<Type, Width>>
-        : _::wide_storage<as_logical_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>,
-          _::logical_split_type_helper<Type, Width>
+      : _::wide_storage<as_logical_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>
   {
     using storage_base = _::wide_storage<as_logical_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>;
 
@@ -88,17 +73,11 @@ namespace eve
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
 
-    //! Type describing the size of the current wide
-    //using width_type = lanes_t<Width>;
-
     //! Type representing the bits of the logical value
     using bits_type = wide<_::make_integer_t<sizeof(translated_element_type), unsigned>, Width>;
 
     //! Type representing the numerical value associated to the mask
     using mask_type = wide<Type, Width>;
-
-    //! Type representing a logical wide of the same type but with a width twice the
-    using combined_type = logical<wide<Type, Width * 2>>;
 
     //! @brief Generates a eve::wide from a different type `T` and width `N`.
     //! If unspecified, `N` is computed as `expected_width_v<T>`.

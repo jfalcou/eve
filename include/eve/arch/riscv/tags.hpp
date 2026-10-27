@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/widths.hpp>
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/arch/riscv/predef.hpp>
 #include <eve/detail/meta.hpp>
@@ -69,6 +68,6 @@ namespace eve
   //================================================================================================
   // RISC-V RVV ABI concept
   //================================================================================================
-  template<typename T> concept rvv_abi = _::is_one_of<T>(_::types<riscv_> {});
+  template<typename T> concept rvv_abi = _::one_of<T, riscv_>;
   template<typename T> concept rvv_tag = requires(T) { typename T::is_rvv; };
 }
