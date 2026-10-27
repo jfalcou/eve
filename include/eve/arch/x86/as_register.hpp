@@ -58,20 +58,17 @@ namespace eve::_
 
   // ---------------------------------------------------------------------------------------------
   // Masks
+  template<int N> extern no_register<void> inner_mask;
 
-  template<int N> struct as_mask;
-
-  template<int N> struct inner_mask;
-
-  template<> struct inner_mask<8>  { using type = __mmask8;  };
-  template<> struct inner_mask<16> { using type = __mmask16; };
-  template<> struct inner_mask<32> { using type = __mmask32; };
-  template<> struct inner_mask<64> { using type = __mmask64; };
+  template<int N> requires(N ==  8) extern  __mmask8 inner_mask<N>;
+  template<int N> requires(N == 16) extern __mmask16 inner_mask<N>;
+  template<int N> requires(N == 32) extern __mmask32 inner_mask<N>;
+  template<int N> requires(N == 64) extern __mmask64 inner_mask<N>;
 
   template<int N>
   struct mask_n
   {
-    using type = typename inner_mask<N>::type;
+    using type = std::remove_cvref_t<decltype(std::declval<decltype(inner_mask<N>)>())>;
     static constexpr int bits = N;
 
     explicit constexpr operator type() const { return value; }
@@ -118,13 +115,6 @@ namespace eve::_
   using mask16 = mask_n<16>;
   using mask32 = mask_n<32>;
   using mask64 = mask_n<64>;
-
-  template<> struct as_mask<8>  { using type = mask8; };
-  template<> struct as_mask<16> { using type = mask16; };
-  template<> struct as_mask<32> { using type = mask32; };
-  template<> struct as_mask<64> { using type = mask64; };
-
-  template<int N> using as_mask_t = typename as_mask<std::max(8,N)>::type;
 
   // ---------------------------------------------------------------------------------------------
   // Logical registers

@@ -12,21 +12,9 @@
 
 namespace eve
 {
-  namespace _
-  {
-    template <typename T>
-    constexpr auto iterator_width_impl()
-    {
-      if constexpr ( requires { T::iterator_width(); } ) return decltype(T::iterator_width()){};
-      else                                                  return lanes_t<expected_width_v<value_type_t<T>>>{};
-    }
-  }
-
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!  @typedef iterator_width_t
-  //!
   //!  @tparam T Type to process
   //!
   //!  @brief A meta-function that returns a width for a relaxed iterator/range.
@@ -45,9 +33,30 @@ namespace eve
   //! @}
   //================================================================================================
 
-  template <typename T>
-  using iterator_width_t = decltype(_::iterator_width_impl<T>());
+  //================================================================================================
+  //! @addtogroup eve_traits 
+  //! @{
+  //!   @brief Computes the fundamental width of a given type
+  //!
+  //!   **Required header:** `#include <eve/traits/iteartor_width.hpp>`
+  //!
+  //!   @note For aligned_ptr we return expected_width.
+  //!
+  //!
+  //!   @ref eve::iterator_width_v returns a width for a relaxed iterator/range.
+  //!         If T defines a nested static constexpr function `iterator_width()` (which should return a eve::width_type)
+  //!         - returns the value.
+  //!         - returns `expected_width_v<value_type_t<T>>` otherwise.
+  //!
+  //!   @tparam Type  Type of value to assess
+  //!
+  //! @}
+  //================================================================================================
 
   template <typename T>
-  constexpr width_type iterator_width_v = iterator_width_t<T>::value;
+  inline constexpr width_type iterator_width_v = expected_width_v<value_type_t<T>>;
+
+  template<typename T>
+  requires requires{ typename std::integral_constant<width_type, T::iterator_width()>; }
+  inline constexpr width_type iterator_width_v<T> = T::iterator_width();
 }

@@ -65,7 +65,7 @@ void bit_test_simd_return_type(F f)
     // signedness + size diff
     if constexpr (sizeof(e_u) >= 2)
     {
-      using DT = eve::as_wide_as_t<eve::downgrade_t<e_u>, typename T::combined_type>;
+      using DT = eve::as_wide_as_t<eve::downgrade_t<e_u>, typename T::template rescale<eve::width_v<T> * 2>>;
       test_with_types<F, T, DT>(f);
     }
   }
@@ -82,7 +82,7 @@ void bit_test_simd_return_type(F f)
     // mixed + size diff
     if constexpr (sizeof(e_u) >= 2)
     {
-      using DT = eve::as_wide_as_t<eve::downgrade_t<e_u>, typename T::combined_type>;
+      using DT = eve::as_wide_as_t<eve::downgrade_t<e_u>, typename T::template rescale<eve::width_v<T> * 2>>;
       test_with_types<F, T, DT>(f);
     }
   }
@@ -91,7 +91,7 @@ void bit_test_simd_return_type(F f)
   using e_dt = eve::downgrade_t<v_t>;
   if constexpr (!std::same_as<e_dt, v_t>)
   {
-    using DT = eve::as_wide_as_t<e_dt, typename T::combined_type>;
+    using DT = eve::as_wide_as_t<e_dt, typename T::template rescale<eve::width_v<T> * 2>>;
     test_with_types<F, T, DT>(f);
   }
 }
@@ -142,7 +142,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
   using d_t  = eve::downgrade_t<v_t>;
   if constexpr (!std::same_as<d_t, v_t>)
   {
-    using DT = eve::as_wide_as_t<d_t, typename T::combined_type>;
+    using DT = eve::as_wide_as_t<d_t, typename T::template rescale<eve::width_v<T> * 2>>;
     auto db  = tts::poison(eve::bit_cast(b, eve::as<DT>{}));
     run_case(a, db, c);
   }
@@ -159,7 +159,7 @@ void bit_test_simd_inner(F fn, TruthFn truthFn, T a, T b, [[maybe_unused]] T c)
     if constexpr (sizeof(T) >= 2)
     {
       using du_t = eve::downgrade_t<u_t>;
-      using cdu_t = eve::as_wide_as_t<eve::element_type_t<du_t>, typename T::combined_type>;
+      using cdu_t = eve::as_wide_as_t<eve::element_type_t<du_t>, typename T::template rescale<eve::width_v<T> * 2>>;
       auto dub  = tts::poison(eve::bit_cast(b, eve::as<cdu_t>{}));
       run_case(a, dub, c);
     }

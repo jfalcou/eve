@@ -11,7 +11,7 @@
 #include <eve/deps/kumi.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/traits/width.hpp>
+#include <eve/arch/widths.hpp>
 #include <eve/traits/apply_fp16.hpp>
 #include <eve/arch/cpu/as_register.hpp>
 #include <type_traits>
@@ -127,7 +127,7 @@ namespace eve::_
 
     // Apply f on both side of the slices and re-combine
     using half_result_t = decltype(f(get<0>(slicer(ts))...));
-    using wide_t = typename half_result_t::combined_type;
+    using wide_t = half_result_t::template rescale<(width_v<half_result_t> * 2)>;
 
     return kumi::apply([&f](auto... m) { return wide_t { f(get<0>(m)...), f(get<1>(m)...)}; }, parts);
   }

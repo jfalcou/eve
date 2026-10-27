@@ -26,7 +26,7 @@ namespace eve
     template<typename T, typename I0, typename I1>
     struct result
     {
-      using type = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, max_width_v<T, I0, I1>>>;
+      using type = _::conditional_t<scalar_value<T> && scalar_value<I0> && scalar_value<I1>, T, as_wide_t<T, std::max({width_v<T>, width_v<I0>, width_v<I1>})>>;
     };
 
     template<integral_value T, integral_value I0, integral_value I1>
@@ -105,7 +105,7 @@ namespace eve
       }
       else
       {
-        constexpr auto MC = max_width_v<T, I0, I1>;
+        constexpr auto MC = std::max({width_v<T>, width_v<I0>, width_v<I1>});
 
         auto i0m = if_else(cx, as_wide_t<I0, MC>{i0}, zero);
         auto i1m = if_else(cx, as_wide_t<I1, MC>{i1}, zero);
