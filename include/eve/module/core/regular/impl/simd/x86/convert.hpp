@@ -507,11 +507,15 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   //==============================================================================================
        if constexpr( c_i == category::int32x4   && c_o == category::float64x2         ) return _mm_cvtepi32_pd(v);
   else if constexpr( c_i == category::int32x4   && c_o == category::float64x4         ) return _mm256_cvtepi32_pd(v);
+  else if constexpr( c_i == category::int32x8   && c_o == category::float64x8         ) return _mm512_cvtepi32_pd(v);
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float64x2 && a512 ) return _mm_cvtepu32_pd(v);
   else if constexpr( c_i == category::uint32x4  && c_o == category::float64x4 && a512 ) return _mm256_cvtepu32_pd(v);
   else if constexpr( c_i == category::uint32x4  && c_o == category::float64x4         ) return convert_slice(v, tgt);
   else if constexpr( c_i == category::uint32x8  && c_o == category::float64x8         ) return _mm512_cvtepu32_pd(v);
   else if constexpr( c_i == category::int32x4   && c_o == category::float32x4         ) return _mm_cvtepi32_ps(v);
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float32x4 && a512 ) return _mm_cvtepu32_ps(v);
   else if constexpr( c_i == category::int32x8   && c_o == category::float32x8         ) return _mm256_cvtepi32_ps(v);
+  else if constexpr( c_i == category::uint32x8  && c_o == category::float32x8 && a512 ) return _mm256_cvtepu32_ps(v);
   else if constexpr( c_i == category::uint32x8  && c_o == category::float32x8         ) return convert_slice(v, tgt);
   else if constexpr( c_i == category::int32x16  && c_o == category::float32x16        ) return _mm512_cvtepi32_ps(v);
   else if constexpr( c_i == category::uint32x16 && c_o == category::float32x16        ) return _mm512_cvtepu32_ps(v);
@@ -640,6 +644,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   constexpr auto mi8x16  = match(c_i, category::int8x16,  category::uint8x16);
   constexpr auto mo16x8  = match(c_o, category::int16x8,  category::uint16x8);
   constexpr auto mo16x16 = match(c_o, category::int16x16, category::uint16x16);
+  constexpr auto mo16x32 = match(c_o, category::int16x32, category::uint16x32);
   constexpr auto mo32x4  = match(c_o, category::int32x4,  category::uint32x4);
   constexpr auto mo32x8  = match(c_o, category::int32x8,  category::uint32x8);
   constexpr auto mo32x16 = match(c_o, category::int32x16, category::uint32x16);
@@ -656,6 +661,8 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   else if constexpr ( c_i == category::int8x16  && mo16x16 && aavx2 ) return _mm256_cvtepi8_epi16(v);
   else if constexpr ( c_i == category::uint8x16 && mo16x8 && a41    ) return _mm_cvtepu8_epi16(v);
   else if constexpr ( c_i == category::uint8x16 && mo16x16 && aavx2 ) return _mm256_cvtepu8_epi16(v);
+  else if constexpr ( c_i == category::int8x32  && mo16x32          ) return _mm512_cvtepi8_epi16(v);
+  else if constexpr ( c_i == category::uint8x32 && mo16x32          ) return _mm512_cvtepu8_epi16(v);
   else if constexpr ( c_i == category::int8x16  && mo32x4 && a41    ) return _mm_cvtepi8_epi32(v);
   else if constexpr ( c_i == category::int8x16  && mo32x8 && aavx2  ) return _mm256_cvtepi8_epi32(v);
   else if constexpr ( c_i == category::int8x16  && mo32x16          ) return _mm512_cvtepi8_epi32(v);
