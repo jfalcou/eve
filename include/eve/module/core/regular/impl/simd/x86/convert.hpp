@@ -273,6 +273,7 @@ template<arithmetic_scalar_value U, width_type N>
       if      constexpr (c_i == category::float64x2)                                   return _mm_cvtpd_ph(v);
       else if constexpr (c_i == category::float64x4)                                   return _mm256_cvtpd_ph(v);
       else if constexpr (c_i == category::float64x8)                                   return _mm512_cvtpd_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else                                                                               return convert(convert(v, as<float>{}), tgt);
   }
@@ -423,6 +424,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint64x2)                                    return _mm_cvtepu64_ph(v);
       else if constexpr (c_i == category::uint64x4)                                    return _mm256_cvtepu64_ph(v);
       else if constexpr (c_i == category::uint64x8)                                    return _mm512_cvtepu64_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<float> {}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
@@ -529,6 +531,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint32x4)                                     return _mm_cvtepu32_ph(v);
       else if constexpr (c_i == category::uint32x8)                                     return _mm256_cvtepu32_ph(v);
       else if constexpr (c_i == category::uint32x16)                                    return _mm512_cvtepu32_ph(v);
+      else                                                                              return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<float>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
@@ -613,6 +616,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint16x8 && c_o == category::float16x8)      return _mm_cvtepu16_ph(v);
       else if constexpr (c_i == category::uint16x16 && c_o == category::float16x16)    return _mm256_cvtepu16_ph(v);
       else if constexpr (c_i == category::uint16x32 && c_o == category::float16x32)    return _mm512_cvtepu16_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<upgrade_t<element_type_t<T>>>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
