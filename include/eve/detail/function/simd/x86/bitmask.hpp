@@ -40,6 +40,7 @@ namespace eve::_
       {
               if constexpr( std::same_as<T,double > ) return _mm_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm_mask_blend_ps(m,z,a);
+        else  if constexpr( std::same_as<T,eve::float16_t> && _::supports_fp16_vector_ops ) return _mm_mask_blend_ph(m,z,a);
         else  if constexpr( sizeof(T) == 8          ) return _mm_mask_blend_epi64(m,z,a);
         // g++ intrinsics for those two behaves strangely in O0
         else  if constexpr( sizeof(T) == 4          )
@@ -59,6 +60,7 @@ namespace eve::_
       {
               if constexpr( std::same_as<T,double > ) return _mm256_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm256_mask_blend_ps(m,z,a);
+        else  if constexpr( std::same_as<T,eve::float16_t> && _::supports_fp16_vector_ops ) return _mm256_mask_blend_ph(m,z,a);
         else  if constexpr( sizeof(T) == 8          ) return _mm256_mask_blend_epi64(m,z,a);
         // g++ intrinsics for those two behaves strangely in O0
         else  if constexpr( sizeof(T) == 4          )
@@ -78,6 +80,7 @@ namespace eve::_
       {
               if constexpr( std::same_as<T,double > ) return _mm512_mask_blend_pd(m,z,a);
         else  if constexpr( std::same_as<T,float  > ) return _mm512_mask_blend_ps(m,z,a);
+        else  if constexpr( std::same_as<T,eve::float16_t> && _::supports_fp16_vector_ops ) return _mm512_mask_blend_ph(m,z,a);
         else  if constexpr( sizeof(T) == 8          ) return _mm512_mask_blend_epi64(m,z,a);
         else  if constexpr( sizeof(T) == 4          ) return _mm512_mask_blend_epi32(m,z,a);
         // g++ intrinsics for those two behaves strangely in O0

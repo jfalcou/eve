@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-TTS_CASE_TPL("combine - arithmetic", eve::test::simd::all_types)
+TTS_CASE_TPL("combine - arithmetic", eve::test::simd::all_types_wf16)
 <typename W>(tts::type<W>)
 {
   constexpr std::ptrdiff_t card_out = W::size();
@@ -37,7 +37,7 @@ TTS_CASE_TPL("combine - arithmetic", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("combine - logical", eve::test::simd::all_types)
+TTS_CASE_TPL("combine - logical", eve::test::simd::all_types_wf16)
 <typename BW>(tts::type<BW>)
 {
   constexpr std::ptrdiff_t card_out = BW::size();

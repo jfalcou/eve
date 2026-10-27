@@ -50,8 +50,8 @@ namespace eve::_
       else if constexpr( c == category::float64x8 ) return _mm512_mask3_fnmsub_pd(w, x, v, m);
       else if constexpr( c == category::float32x8 ) return _mm256_mask3_fnmsub_ps(w, x, v, m);
       else if constexpr( c == category::float64x4 ) return _mm256_mask3_fnmsub_pd(w, x, v, m);
-      else if constexpr( c == category::float32x8 ) return _mm128_mask3_fnmsub_ps(w, x, v, m);
-      else if constexpr( c == category::float64x4 ) return _mm128_mask3_fnmsub_pd(w, x, v, m);
+      else if constexpr( c == category::float32x4 ) return _mm_mask3_fnmsub_ps(w, x, v, m);
+      else if constexpr( c == category::float64x2 ) return _mm_mask3_fnmsub_pd(w, x, v, m);
       else if constexpr ( match(c, category::float16))
       {
         if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(fsnm, mask, v, w, x);

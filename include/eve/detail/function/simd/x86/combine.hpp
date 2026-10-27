@@ -38,6 +38,11 @@ namespace eve::_
         auto il = _mm512_castps_si512(_mm512_castps256_ps512(l));
         return _mm512_castsi512_ps(_mm512_inserti32x8(il, _mm256_castps_si256(h), 1));
       }
+      else if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+      {
+        auto il = _mm512_castsi256_si512(_mm256_castph_si256(l));
+        return _mm512_castsi512_ph(_mm512_inserti64x4(il, _mm256_castph_si256(h), 1));
+      }
       else
       {
         return _mm512_inserti64x4(_mm512_castsi256_si512(l), h, 1);
@@ -47,12 +52,21 @@ namespace eve::_
     {
             if constexpr( std::same_as<T, double>) return _mm256_insertf128_pd   (_mm256_castpd128_pd256(l), h, 1);
       else  if constexpr( std::same_as<T, float> ) return _mm256_insertf128_ps   (_mm256_castps128_ps256(l), h, 1);
+      else  if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+      {
+        auto il = _mm256_castsi128_si256(_mm_castph_si128(l));
+        return _mm256_castsi256_ph(_mm256_insertf128_si256(il, _mm_castph_si128(h), 1));
+      }
       else                                         return _mm256_insertf128_si256(_mm256_castsi128_si256(l), h, 1);
     }
     else if constexpr( N * sizeof(T) == 8 )
     {
             if constexpr( std::same_as<T, double> ) return _mm_shuffle_pd(l, h, 0);
       else  if constexpr( std::same_as<T, float > ) return _mm_shuffle_ps(l, h, 0x44);
+      else  if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+      {
+        return _mm_castps_ph(_mm_shuffle_ps(_mm_castph_ps(l), _mm_castph_ps(h), 0x44));
+      }
       else                                          return _mm_castps_si128(_mm_shuffle_ps(_mm_castsi128_ps(l),
                                                                             _mm_castsi128_ps(h),
                                                                             0x44));
@@ -64,6 +78,11 @@ namespace eve::_
         t_t that = l.storage();
         that.set(1,h.get(0));
         return that.storage();
+      }
+      else if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+      {
+        auto shuffle_ps = _mm_shuffle_ps(_mm_castph_ps(l), _mm_castph_ps(h), 0x44);
+        return _mm_castsi128_ph(_mm_shuffle_epi32(_mm_castps_si128(shuffle_ps), 0x88));
       }
       else
       {

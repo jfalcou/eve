@@ -81,4 +81,5 @@ TTS_CASE_WITH("Check behavior of eve::rsqrt[mask](eve::wide)",
                          M const& mask)
 {
   TTS_IEEE_EQUAL(eve::rsqrt[mask](a0), eve::if_else(mask, eve::rsqrt(a0), a0));
+  TTS_IEEE_EQUAL(eve::rsqrt[eve::raw][mask](a0), eve::if_else(mask, eve::rsqrt[eve::raw](a0), a0));
 };
