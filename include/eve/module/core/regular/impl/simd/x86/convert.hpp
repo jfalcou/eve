@@ -248,6 +248,7 @@ template<arithmetic_scalar_value U, width_type N>
   else if constexpr( c_i == category::float64x4 && c_o == category::int32x4          ) return _mm256_cvttpd_epi32(v);
   else if constexpr( c_i == category::float64x8 && c_o == category::int32x8          ) return _mm512_cvttpd_epi32(v);
   else if constexpr( c_i == category::float64x2 && c_o == category::uint32x4 && a512 ) return _mm_cvttpd_epu32(v);
+  else if constexpr( c_i == category::float64x4 && c_o == category::uint32x4 && a512 ) return _mm256_cvttpd_epu32(v);
   else if constexpr( c_i == category::float64x8 && c_o == category::uint32x8         ) return _mm512_cvttpd_epu32(v);
   else if constexpr( std::same_as<U, eve::float16_t> )
   {
@@ -422,8 +423,6 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   // ===============================================================================================================
   else if constexpr( c_i == category::int64x4  && c_o == category::float64x4 && a512 ) return _mm256_cvtepi64_pd(v);
   else if constexpr( c_i == category::uint64x4 && c_o == category::float64x4 && a512 ) return _mm256_cvtepu64_pd(v);
-  else if constexpr( c_i == category::int64x4  && c_o == category::float32x4 && a512 ) return _mm256_cvtepi64_ps(v);
-  else if constexpr( c_i == category::uint64x4 && c_o == category::float32x4 && a512 ) return _mm256_cvtepu64_ps(v);
   else if constexpr( c_i == category::int64x4  && c_o == category::float32x4 && a512 ) return _mm256_cvtepi64_ps(v);
   else if constexpr( c_i == category::uint64x4 && c_o == category::float32x4 && a512 ) return _mm256_cvtepu64_ps(v);
   // ===============================================================================================================
