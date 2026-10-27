@@ -40,7 +40,6 @@
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/as_translation.hpp>
-#include <eve/types/logical_wide.hpp>
 
 #include <concepts>
 #include <iosfwd>

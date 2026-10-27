@@ -10,92 +10,132 @@
 #include <iostream>
 #include <iomanip>
 
-TTS_CASE("Static detections of API")
+namespace
 {
-  std::cout << "========================\n";
-  std::cout << "Current API: " << eve::current_api << "\n";
-  std::cout << "========================\n";
-  std::cout << "X86-like SIMD extensions\n";
-  std::cout << "SSE2        : " << std::boolalpha << (eve::current_api >= eve::sse2  ) << "\n";
-  std::cout << "SSE3        : " << std::boolalpha << (eve::current_api >= eve::sse3  ) << "\n";
-  std::cout << "SSSE3       : " << std::boolalpha << (eve::current_api >= eve::ssse3 ) << "\n";
-  std::cout << "SSE4.1      : " << std::boolalpha << (eve::current_api >= eve::sse4_1) << "\n";
-  std::cout << "SSE4.2      : " << std::boolalpha << (eve::current_api >= eve::sse4_2) << "\n";
-  std::cout << "AVX         : " << std::boolalpha << (eve::current_api >= eve::avx   ) << "\n";
-  std::cout << "FMA3        : " << std::boolalpha << eve::supports_fma3                << "\n";
-  std::cout << "AVX2        : " << std::boolalpha << (eve::current_api >= eve::avx2  ) << "\n";
-  std::cout << "AVX512      : " << std::boolalpha << (eve::current_api >= eve::avx512) << "\n";
-  std::cout << "AVX512bw    : " << std::boolalpha << eve::supports_avx512bw            << "\n";
-  std::cout << "AVX512cd    : " << std::boolalpha << eve::supports_avx512cd            << "\n";
-  std::cout << "AVX512dq    : " << std::boolalpha << eve::supports_avx512dq            << "\n";
-  std::cout << "AVX512ifma  : " << std::boolalpha << eve::supports_avx512ifma          << "\n";
-  std::cout << "AVX512pf    : " << std::boolalpha << eve::supports_avx512pf            << "\n";
-  std::cout << "AVX512vl    : " << std::boolalpha << eve::supports_avx512vl            << "\n";
-  std::cout << "AVX512pop   : " << std::boolalpha << eve::supports_avx512popcntdq_     << "\n";
-  std::cout << "AVX5124fma  : " << std::boolalpha << eve::supports_avx512_4fmaps_      << "\n";
-  std::cout << "AVX512vnniw : " << std::boolalpha << eve::supports_avx512vnniw_        << "\n";
-  std::cout << "AVX512vbmi  : " << std::boolalpha << eve::supports_avx512vbmi_         << "\n";
-  std::cout << "AVX512bf16  : " << std::boolalpha << eve::supports_avx512bf16_         << "\n";
-  std::cout << "AVX512bitalg: " << std::boolalpha << eve::supports_avx512bitalg_       << "\n";
-  std::cout << "AVX512vbmi2 : " << std::boolalpha << eve::supports_avx512vbmi2_        << "\n";
-  std::cout << "AVX512vnni  : " << std::boolalpha << eve::supports_avx512vnni_         << "\n";
-  std::cout << "AVX512vpint : " << std::boolalpha << eve::supports_avx512vpintersect_  << "\n";
-  std::cout << "\n";
-  std::cout << "========================\n";
-  std::cout << "PPC SIMD extensions\n";
-  std::cout << "VMX: "         << std::boolalpha << (eve::current_api >= eve::vmx ) << "\n";
-  std::cout << " - VMX 2.03: " << std::boolalpha << (eve::current_api >= eve::vmx_2_03 ) << "\n";
-  std::cout << " - VMX 2.05: " << std::boolalpha << (eve::current_api >= eve::vmx_2_05 ) << "\n";
-  std::cout << " - VMX 2.06: " << std::boolalpha << (eve::current_api >= eve::vmx_2_06 ) << "\n";
-  std::cout << " - VMX 2.07: " << std::boolalpha << (eve::current_api >= eve::vmx_2_07 ) << "\n";
-  std::cout << " - VMX 3.00: " << std::boolalpha << (eve::current_api >= eve::vmx_3_00 ) << "\n";
-  std::cout << " - VMX 3.01: " << std::boolalpha << (eve::current_api >= eve::vmx_3_01 ) << "\n";
-  std::cout << "VSX: "         << std::boolalpha << (eve::current_api >= eve::vsx ) << "\n";
-  std::cout << " - VSX 2.06: " << std::boolalpha << (eve::current_api >= eve::vsx_2_06 ) << "\n";
-  std::cout << " - VSX 2.07: " << std::boolalpha << (eve::current_api >= eve::vsx_2_07 ) << "\n";
-  std::cout << " - VSX 3.00: " << std::boolalpha << (eve::current_api >= eve::vsx_3_00 ) << "\n";
-  std::cout << " - VSX 3.01: " << std::boolalpha << (eve::current_api >= eve::vsx_3_01 ) << "\n";
-  std::cout << "\n";
-  std::cout << "========================\n";
-  std::cout << "ARM SIMD extensions\n";
-  std::cout << "NEON  : " << std::boolalpha << (eve::current_api >= eve::neon   ) << "\n";
-  std::cout << "ASIMD : " << std::boolalpha << (eve::current_api >= eve::asimd  )  << "\n";
-  std::cout << "========================\n";
-  std::cout << "RISCV SIMD extensions\n";
-  std::cout << "RVV  : " << std::boolalpha << (eve::current_api == eve::rvv) << "\n";
-  std::cout << "\n";
+  constexpr bool implies(bool a, bool b){ return !a || b; }
+}
 
-  TTS_PASS("All static detections - done");
+//==================================================================================================
+// Static detections
+//==================================================================================================
+TTS_CASE("Static detections of API - x86")
+{
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::avx512, eve::current_api >= eve::avx2  ));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::avx2  , eve::current_api >= eve::avx   ));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::avx   , eve::current_api >= eve::sse4_2));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::sse4_2, eve::current_api >= eve::sse4_1));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::sse4_1, eve::current_api >= eve::ssse3 ));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::ssse3 , eve::current_api >= eve::sse3  ));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::sse3  , eve::current_api >= eve::sse2  ));
+
+#if !defined(SPY_ARCH_IS_X86) && !defined(SPY_ARCH_IS_AMD64)
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api >= eve::sse2);
+#endif
 };
 
-TTS_CASE("Dynamic detections of API")
+  
+TTS_CASE("Static detections of API - x86 - AVX512 extensions")
 {
-  std::cout << "========================\n";
-  std::cout << "Current API: " << eve::current_api << "\n";
-  std::cout << "========================\n";
-  std::cout << "X86-like SIMD extensions\n";
-  std::cout << "SSE2   : " << std::boolalpha << eve::is_supported(eve::sse2) << "\n";
-  std::cout << "SSE3   : " << std::boolalpha << eve::is_supported(eve::sse3) << "\n";
-  std::cout << "SSSE3  : " << std::boolalpha << eve::is_supported(eve::ssse3) << "\n";
-  std::cout << "SSE4.1 : " << std::boolalpha << eve::is_supported(eve::sse4_1) << "\n";
-  std::cout << "SSE4.2 : " << std::boolalpha << eve::is_supported(eve::sse4_2) << "\n";
-  std::cout << "AVX    : " << std::boolalpha << eve::is_supported(eve::avx) << "\n";
-  std::cout << "FMA3   : " << std::boolalpha << eve::is_supported(eve::fma3) << "\n";
-  std::cout << "AVX2   : " << std::boolalpha << eve::is_supported(eve::avx2) << "\n";
-  std::cout << "AVX512 : " << std::boolalpha << eve::is_supported(eve::avx512) << "\n";
-  std::cout << "\n";
-  std::cout << "========================\n";
-  std::cout << "PPC SIMD extensions\n";
-  std::cout << "VMX   : " << std::boolalpha << eve::is_supported(eve::vmx) << "\n";
-  std::cout << "VSX   : " << std::boolalpha << eve::is_supported(eve::vsx) << "\n";
-  std::cout << "\n";
-  std::cout << "========================\n";
-  std::cout << "ARM SIMD extensions\n";
-  std::cout << "NEON  : " << std::boolalpha << eve::is_supported(eve::neon) << "\n";
-  std::cout << "ASIMD : " << std::boolalpha << eve::is_supported(eve::asimd) << "\n";
-  std::cout << "========================\n";
-  std::cout << "RISCV SIMD extensions\n";
-  std::cout << "RVV  : " << std::boolalpha << eve::is_supported(eve::rvv) << "\n";
+#if (defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)) && !defined(EVE_NO_SIMD)
+  // This shall be replaced by TTS_MAYFAIL in the case but at this point it still flags a fail 
+  TTS_CONSTEXPR_EQUAL(eve::supports_fma3              , eve::supports_fma3);
+  TTS_CONSTEXPR_EQUAL(eve::supports_bmi_well          , eve::supports_bmi_well);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bw          , eve::supports_avx512bw);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512cd          , eve::supports_avx512cd);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512dq          , eve::supports_avx512dq);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512ifma        , eve::supports_avx512ifma);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512pf          , eve::supports_avx512pf);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vl          , eve::supports_avx512vl);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512popcntdq_   , eve::supports_avx512popcntdq_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512_4fmaps_    , eve::supports_avx512_4fmaps_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vnniw_      , eve::supports_avx512vnniw_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vbmi_       , eve::supports_avx512vbmi_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bf16_       , eve::supports_avx512bf16_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bitalg_     , eve::supports_avx512bitalg_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vbmi2_      , eve::supports_avx512vbmi2_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vnni_       , eve::supports_avx512vnni_);
+  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vpintersect_, eve::supports_avx512vpintersect_);
+#else
+  TTS_EXPECT(true);
+#endif
+};
 
-  TTS_PASS("All dynamic detections - done");
+TTS_CASE("Static detections of API - PPC")
+{
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_3_01, eve::current_api >= eve::vmx_3_00));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_3_00, eve::current_api >= eve::vmx_2_07));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_2_07, eve::current_api >= eve::vmx_2_06));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_2_06, eve::current_api >= eve::vmx_2_05));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_2_05, eve::current_api >= eve::vmx_2_03));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vmx_2_03, eve::current_api >= eve::vmx     ));
+
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vsx_3_01, eve::current_api >= eve::vsx_3_00));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vsx_3_00, eve::current_api >= eve::vsx_2_07));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vsx_2_07, eve::current_api >= eve::vsx_2_06));
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vsx_2_06, eve::current_api >= eve::vsx     ));
+
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::vsx, eve::current_api >= eve::vmx));
+
+#if !defined(SPY_ARCH_IS_PPC)
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api >= eve::vmx);
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api >= eve::vsx);
+#endif
+};
+
+TTS_CASE("Static detections of API - ARM")
+{
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::asimd, eve::current_api >= eve::neon));
+
+#if !defined(SPY_ARCH_IS_ARM)
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api >= eve::neon );
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api >= eve::asimd);
+#endif
+};
+
+TTS_CASE("Static detections of API - RISCV")
+{
+#if !defined(SPY_ARCH_IS_RISCV)
+  TTS_CONSTEXPR_EXPECT_NOT(eve::current_api == eve::rvv);
+#endif
+};
+
+//==================================================================================================
+// Dynamic detections
+//==================================================================================================
+TTS_CASE("Dynamic detections of API - Current API")
+{
+  TTS_EXPECT(eve::is_supported(eve::current_api));
+};
+
+TTS_CASE("Dynamic detections of API - X86")
+{
+  TTS_EXPECT(implies(eve::current_api >= eve::sse2  , eve::is_supported(eve::sse2  )));
+  TTS_EXPECT(implies(eve::current_api >= eve::sse3  , eve::is_supported(eve::sse3  )));
+  TTS_EXPECT(implies(eve::current_api >= eve::ssse3 , eve::is_supported(eve::ssse3 )));
+  TTS_EXPECT(implies(eve::current_api >= eve::sse4_1, eve::is_supported(eve::sse4_1)));
+  TTS_EXPECT(implies(eve::current_api >= eve::sse4_2, eve::is_supported(eve::sse4_2)));
+  TTS_EXPECT(implies(eve::current_api >= eve::avx   , eve::is_supported(eve::avx   )));
+  TTS_EXPECT(implies(eve::current_api >= eve::avx2  , eve::is_supported(eve::avx2  )));
+  TTS_EXPECT(implies(eve::current_api >= eve::avx512, eve::is_supported(eve::avx512)));
+
+#if defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)
+  TTS_EXPECT(implies(eve::supports_fma3, eve::is_supported(eve::fma3)));
+#endif
+};
+
+TTS_CASE("Dynamic detections of API - PPC")
+{
+  TTS_EXPECT(implies(eve::current_api >= eve::vmx, eve::is_supported(eve::vmx)));
+  TTS_EXPECT(implies(eve::current_api >= eve::vsx, eve::is_supported(eve::vsx)));
+};
+
+TTS_CASE("Dynamic detections of API - ARM")
+{
+  TTS_EXPECT(implies(eve::current_api >= eve::neon , eve::is_supported(eve::neon )));
+  TTS_EXPECT(implies(eve::current_api >= eve::asimd, eve::is_supported(eve::asimd)));
+};
+
+TTS_CASE("Dynamic detections of API - RISCV")
+{
+  TTS_EXPECT(implies(eve::current_api == eve::rvv, eve::is_supported(eve::rvv)));
 };

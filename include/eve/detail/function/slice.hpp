@@ -40,7 +40,7 @@ namespace eve
     {
       template<typename W> struct result
       {
-        using type = typename W::split_type;
+        using type = typename W::template rescale<(width_v<W> / 2)>;
       };
 
       template<typename W>

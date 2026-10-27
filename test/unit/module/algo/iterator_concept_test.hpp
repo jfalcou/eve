@@ -38,8 +38,7 @@ namespace algo_test
     TTS_GREATER      (l, f);
     TTS_GREATER_EQUAL(l, f);
 
-    eve::lanes_t width = eve::iterator_width_t<I>{};
-    TTS_TYPE_IS(eve::iterator_width_t<I>, decltype(width));
+    static constexpr auto width = eve::iterator_width_v<I>;
     TTS_TYPE_IS(decltype(l - f), std::ptrdiff_t);
 
     // read test
@@ -49,17 +48,17 @@ namespace algo_test
 
     {
       I next = f;
-      next += width();
+      next += width;
 
       TTS_LESS         (f, next);
       TTS_LESS_EQUAL   (f, next);
       TTS_GREATER      (next, f);
       TTS_GREATER_EQUAL(next, f);
 
-      TTS_EQUAL(next, (f + width()));
-      TTS_EQUAL((next - f), width());
+      TTS_EQUAL(next, (f + width));
+      TTS_EQUAL((next - f), width);
 
-      next -= width();
+      next -= width;
       TTS_EQUAL(f, next);
     }
 

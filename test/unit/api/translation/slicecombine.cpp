@@ -117,8 +117,8 @@ TTS_CASE_TPL("Translatable wide - combine constructor", eve::test::simd::all_typ
     WE wt1 = [](auto i, auto) { return static_cast<E>(i + 1); };
     WE wt2 = [](auto i, auto) { return static_cast<E>(i * 2 + 3); };
 
-    typename W::combined_type wr_combined { wr1, wr2 };
-    typename WE::combined_type wt_combined { wt1, wt2 };
+    typename W::template rescale<eve::width_v<W> * 2> wr_combined { wr1, wr2 };
+    typename WE::template rescale<eve::width_v<WE> * 2> wt_combined { wt1, wt2 };
 
     TTS_EQUAL(eve::translate(wt_combined), wr_combined);
   }
@@ -128,8 +128,8 @@ TTS_CASE_TPL("Translatable wide - combine constructor", eve::test::simd::all_typ
   WT wt1 = [](auto i, auto) { return trans_t { static_cast<T>(i + 1) }; };
   WT wt2 = [](auto i, auto) { return trans_t { static_cast<T>(i * 2 + 3) }; };
 
-  typename W::combined_type wr_combined { wr1, wr2 };
-  typename WT::combined_type wt_combined { wt1, wt2 };
+  typename W::template rescale<eve::width_v<W> * 2> wr_combined { wr1, wr2 };
+  typename WT::template rescale<eve::width_v<WT> * 2> wt_combined { wt1, wt2 };
 
   TTS_EQUAL(eve::translate(wt_combined), wr_combined);
 };
@@ -151,8 +151,8 @@ TTS_CASE_TPL("Translatable logical wide - combine constructor", eve::test::simd:
     WE wt1 = [](auto i, auto) { return eve::logical<E>((i % 2) == 0); };
     WE wt2 = [](auto i, auto) { return eve::logical<E>((i % 3) == 0); };
 
-    typename eve::logical<W>::combined_type wr_combined { wr1, wr2 };
-    typename WE::combined_type wt_combined { wt1, wt2 };
+    typename eve::logical<W>::template rescale<eve::width_v<W> * 2> wr_combined { wr1, wr2 };
+    typename WE::template rescale<eve::width_v<WE> * 2> wt_combined { wt1, wt2 };
 
     TTS_EQUAL(eve::translate(wt_combined), wr_combined);
   }
@@ -162,8 +162,8 @@ TTS_CASE_TPL("Translatable logical wide - combine constructor", eve::test::simd:
   WT wt1 = [](auto i, auto) { return trans_t((i % 2) == 0); };
   WT wt2 = [](auto i, auto) { return trans_t((i % 3) == 0); };
 
-  typename eve::logical<W>::combined_type wr_combined { wr1, wr2 };
-  typename WT::combined_type wt_combined { wt1, wt2 };
+  typename eve::logical<W>::template rescale<eve::width_v<W> * 2> wr_combined { wr1, wr2 };
+  typename WT::template rescale<eve::width_v<WT> * 2> wt_combined { wt1, wt2 };
 
   TTS_EQUAL(eve::translate(wt_combined), wr_combined);
 };

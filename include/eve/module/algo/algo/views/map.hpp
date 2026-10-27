@@ -314,7 +314,7 @@ namespace eve::algo::views
       return map_convert(base.next_partially_aligned(), load_op, store_op);
     }
 
-    static auto iterator_width() requires iterator<I>
+    static constexpr width_type iterator_width() requires iterator<I>
     {
       return I::iterator_width();
     }

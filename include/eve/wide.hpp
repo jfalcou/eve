@@ -9,3 +9,4 @@
 
 #include <eve/arch/spec.hpp>
 #include <eve/types/wide.hpp>
+#include <eve/types/logical_wide.hpp>
