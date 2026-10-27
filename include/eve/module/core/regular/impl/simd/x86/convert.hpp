@@ -350,25 +350,25 @@ template<arithmetic_scalar_value U, width_type N>
     else if constexpr (c_i == category::float16x8  && c_o == category::float64x4)       return _mm256_cvtph_pd(v);
     else if constexpr (c_i == category::float16x8  && c_o == category::float64x8)       return _mm512_cvtph_pd(v);
 
-    else if constexpr (c_i == category::float16x8  && c_o == category::int16x8)         return _mm_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::int16x16)        return _mm256_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x32 && c_o == category::int16x32)        return _mm512_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int32x4)         return _mm_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int32x8)         return _mm256_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::int32x16)        return _mm512_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x2)         return _mm_cvtph_epi64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x4)         return _mm256_cvtph_epi64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x8)         return _mm512_cvtph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int16x8)         return _mm_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::int16x16)        return _mm256_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x32 && c_o == category::int16x32)        return _mm512_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int32x4)         return _mm_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int32x8)         return _mm256_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::int32x16)        return _mm512_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x2)         return _mm_cvttph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x4)         return _mm256_cvttph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x8)         return _mm512_cvttph_epi64(v);
 
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint16x8)         return _mm_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::uint16x16)        return _mm256_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x32 && c_o == category::uint16x32)        return _mm512_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x4)         return _mm_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x8)         return _mm256_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::uint32x16)        return _mm512_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x2)         return _mm_cvtph_epu64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x4)         return _mm256_cvtph_epu64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x8)         return _mm512_cvtph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint16x8)         return _mm_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::uint16x16)        return _mm256_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x32 && c_o == category::uint16x32)        return _mm512_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x4)         return _mm_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x8)         return _mm256_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::uint32x16)        return _mm512_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x2)         return _mm_cvttph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x4)         return _mm256_cvttph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x8)         return _mm512_cvttph_epu64(v);
     else if constexpr (sizeof(U) == 1)                                                   return convert(convert(v, as<upgrade_t<U>>{}), tgt);
     else if constexpr (aggregated_abi<abi_t<U, N>>)
     {
