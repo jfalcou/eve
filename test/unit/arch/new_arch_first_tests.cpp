@@ -7,7 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 
-#include <eve/arch/wide.hpp>
+#include <eve/wide.hpp>
 
 // For a new arch.
 //

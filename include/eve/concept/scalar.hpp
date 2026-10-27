@@ -11,7 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/traits/translation.hpp>
 #include <eve/concept/translation.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/concept/range.hpp>
 
 #include <cstddef>
