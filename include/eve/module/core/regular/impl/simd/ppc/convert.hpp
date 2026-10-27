@@ -45,8 +45,9 @@ requires ppc_abi<abi_t<T, N>>
 {
   if constexpr( std::is_floating_point_v<U> )
   {
-    if constexpr( sizeof(T) == sizeof(U) ) return vec_ctf(v.storage(), 0);
-    else return convert(convert(v, as<as_integer_t<U>> {}), tgt);
+    if      constexpr( sizeof(T) == sizeof(U) ) return vec_ctf(v.storage(), 0);
+    else if constexpr( sizeof(T) <  sizeof(U) ) return convert(convert(v, as<as_integer_t<U>> {}), tgt);
+    else                                        return map(convert, v, tgt);
   }
   else if constexpr( std::is_integral_v<U> )
   {

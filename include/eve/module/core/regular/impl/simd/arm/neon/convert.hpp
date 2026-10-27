@@ -164,14 +164,10 @@ template<floating_scalar_value In, width_type N, arithmetic_scalar_value Out>
     constexpr auto c_i     = categorize<wide<T, N>>();
     constexpr auto c_o     = categorize<wide<U, N>>();
     constexpr auto api_a64 = current_api >= asimd;
-    using i32_t            = as<std::int32_t>;
-    using u32_t            = as<std::uint32_t>;
     using f32_t            = as<float>;
 
     if constexpr ( c_i == category::int64x2  && c_o == category::int32x2              ) return vmovn_s64(v);
     else if constexpr ( c_i == category::uint64x2 && c_o == category::uint32x2             ) return vmovn_u64(v);
-    else if constexpr ( c_i == category::int64x2  && c_o == category::float32x2            ) return convert(convert(v, i32_t {}), tgt);
-    else if constexpr ( c_i == category::uint64x2 && c_o == category::float32x2            ) return convert(convert(v, u32_t {}), tgt);
     else if constexpr ( std::same_as<U, eve::float16_t>                                    ) return convert(convert(v, f32_t {}), tgt);
     else if constexpr ( c_i == category::int64x2  && c_o == category::float64x2 && api_a64 ) return vcvtq_f64_s64(v);
     else if constexpr ( c_i == category::uint64x2 && c_o == category::float64x2 && api_a64 ) return vcvtq_f64_u64(v);
