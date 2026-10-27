@@ -53,7 +53,7 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     }
     else if constexpr (N == 4)
     {
-      wide<Out, 2 * N> tmp = _mm_packs_epi16(v0, v0);
+      wide<Out, 2 * N> tmp = _mm_packs_epi32(v0, v0);
       auto [low, hi]       = tmp.slice();
       return low;
     }
@@ -82,6 +82,25 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
     }
   }
+  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, uint16_t> && (N <= 8) && (current_api >= sse4_1))
+  {
+    if constexpr (N == 8)
+    {
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi32(low, high);
+    }
+    else if constexpr (N == 4)
+    {
+      wide<Out, 2 * N> tmp = _mm_packus_epi32(v0, v0);
+      auto [low, hi]       = tmp.slice();
+      return low;
+    }
+    else
+    {
+      // emulated fallback
+      return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
+    }
+  }
   else
   {
     // emulated fallback
@@ -99,13 +118,13 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packs_epi16(low, high);
+      // vpack works per 128-bit lane, which leaves the quadwords interleaved
+      return _mm256_permute4x64_epi64(_mm256_packs_epi16(low, high), 0xD8);
     }
     else if constexpr (N == 16)
     {
-      wide<Out, 2 * N> tmp = _mm256_packs_epi16(v0, v0);
-      auto [low, high]     = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packs_epi16(low, high);
     }
     else if constexpr (N <= 8)
     {
@@ -118,13 +137,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr(N == 16)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packs_epi32(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packs_epi32(low, high), 0xD8);
     }
     else if constexpr( N == 8 )
     {
-      wide<Out, 2 * N> tmp = _mm256_packs_epi32(v0, v0);
-      auto [low, hi]       = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packs_epi32(low, high);
     }
     else if constexpr (N <= 4)
     {
@@ -137,13 +155,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packus_epi16(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packus_epi16(low, high), 0xD8);
     }
     else if constexpr (N == 16)
     {
-      wide<Out, 2 * N> tmp = _mm256_packus_epi16(v0, v0);
-      auto [low, hi]       = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi16(low, high);
     }
     else if constexpr (N <= 16)
     {
@@ -156,13 +173,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 16)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packus_epi32(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packus_epi32(low, high), 0xD8);
     }
     else if constexpr (N == 8)
     {
-      wide<Out, 2 * N> tmp = _mm256_packus_epi32(v0, v0);
-      auto [low, hi]                    = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi32(low, high);
     }
     else if constexpr (N <= 4)
     {

@@ -82,3 +82,23 @@ TTS_CASE_TPL("Check eve::convert logical behavior", eve::test::simd::all_types_w
 
   TTS_EQUAL(eve::convert(mixed, tgt), ref);
 };
+
+//==================================================================================================
+// Lane order with distinct values
+//==================================================================================================
+TTS_CASE_WITH("Check eve::convert lane order", eve::test::simd::all_types_wf16,
+              tts::randoms(0, 100))
+<typename T>(T const& a0)
+{
+  constexpr auto tgt = eve::as<std::uint64_t>();
+  TTS_EQUAL(eve::convert(a0, tgt), tts::map([](auto e) { return static_cast<std::uint64_t>(e); }, a0));
+};
+
+TTS_CASE_WITH("Check saturated eve::convert lane order", eve::test::simd::all_types_wf16,
+              tts::randoms(eve::valmin, eve::valmax))
+<typename T>(T const& a0)
+{
+  constexpr auto tgt = eve::as<std::uint64_t>();
+  TTS_EQUAL(eve::convert[eve::saturated](a0, tgt),
+            tts::map([](auto e) { return eve::convert[eve::saturated](e, tgt); }, a0));
+};
