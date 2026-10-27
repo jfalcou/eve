@@ -28,15 +28,37 @@ namespace eve::_
 {
 
 template<value In, scalar_value Out>
- auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
+auto convert_saturated(EVE_REQUIRES(cpu_), In v0, as<Out> tgt) noexcept
 {
   if constexpr (floating_value<In> && integral_scalar_value<Out>)
   {
-    return if_else(v0 > _::valmax_in(tgt, as(v0)),
-                  valmax(tgt),
-                  if_else(v0 < _::valmin_in(tgt, as(v0)),
-                         valmin(tgt),
-                          convert(v0, tgt)));
+    using e_in = element_type_t<In>;
+    constexpr int  d      = std::numeric_limits<Out>::digits;
+    constexpr bool exact  = d <= _::flt_digits<e_in>();   // e_in can represent valmin/valmax of Out exactly
+    constexpr bool beyond = d >= _::flt_max_exp<e_in>();  // Out's range exceeds e_in's finite range
+
+    if constexpr (beyond)
+    {
+      // Every finite e_in fits in Out (+/-inf is considered library-UB), so nothing can overflow.
+      if constexpr (std::is_signed_v<Out>) return convert(v0, tgt);
+      else                                 return convert(max(v0, zero(as(v0))), tgt); // only negatives need clamping
+    }
+    else
+    {
+      // Closest e_in values inside Out's range.
+      const auto lo = _::valmin_in(tgt, as(v0));
+      const auto hi = _::valmax_in(tgt, as(v0));
+
+      if constexpr (exact)
+      {
+        // Both bounds are exact in e_in: clamp in FP, then convert.
+        return convert(min(max(v0, lo), hi), tgt);
+      }
+      else
+      {
+        return if_else(v0 > hi, valmax(tgt), convert(max(v0, lo), tgt));
+      }
+    }
   }
   else
   {
