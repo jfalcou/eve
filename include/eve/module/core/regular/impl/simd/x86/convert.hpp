@@ -536,6 +536,13 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<float>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
   }
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float32x4 )
+  {
+    // Both 16-bit halves are exact in float, so the sum rounds once
+    auto hi = convert(bit_cast(v >> 16, as<wide<std::int32_t, N>> {}), tgt);
+    auto lo = convert(bit_cast(v & 0xFFFFu, as<wide<std::int32_t, N>> {}), tgt);
+    return hi * 65536.f + lo;
+  }
   else if constexpr( c_i == category::uint32x4  && match(c_o, category::float_) )
   {
     // From https://stackoverflow.com/a/40766669/737268
