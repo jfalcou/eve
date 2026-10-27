@@ -37,6 +37,13 @@ namespace eve::_
           if constexpr( N == 4 ) return _mm_shuffle_ps(a, a, 0x0E);
           if constexpr( N == 2 ) return _mm_shuffle_ps(a, a, 0x11);
         }
+        else  if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+        {
+          auto bits = _mm_castph_ps(a);
+          if      constexpr( N == 8 ) return _mm_castps_ph(_mm_movehl_ps(bits, bits));
+          else if constexpr( N == 4 ) return _mm_castps_ph(_mm_shuffle_ps(bits, bits, 0x01));
+          else                        return wide<T, N / 2>{a.get(1)};
+        }
         else
         {
           constexpr auto size = N * sizeof(T);
@@ -52,12 +59,20 @@ namespace eve::_
     {
             if constexpr( std::same_as<T, double> ) return _mm256_extractf128_pd(a, s);
       else  if constexpr( std::same_as<T, float>  ) return _mm256_extractf128_ps(a, s);
+      else  if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops)
+      {
+        return _mm_castps_ph(_mm256_extractf128_ps(_mm256_castph_ps(a), s));
+      }
       else                                          return _mm256_extractf128_si256(a, s);
     }
     else if constexpr( std::same_as<abi_t<T, N>,x86_512_> )
     {
             if constexpr( std::same_as<T, double> )         return _mm512_extractf64x4_pd(a, s);
       else  if constexpr( std::integral<T> && sizeof(T)==8) return _mm512_extracti64x4_epi64(a, s);
+      else  if constexpr( std::same_as<T, eve::float16_t> && _::supports_fp16_vector_ops )
+      {
+        return _mm256_castpd_ph(_mm512_extractf64x4_pd(_mm512_castph_pd(a), s));
+      }
       else  if constexpr( spy::supports::avx512::dq_ )
       {
         if constexpr( std::same_as<T, float> )  return _mm512_extractf32x8_ps(a, s);
