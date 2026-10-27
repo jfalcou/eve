@@ -119,5 +119,5 @@ TTS_CASE_WITH("Check saturated eve::convert lane order", eve::test::simd::all_ty
 {
   constexpr auto tgt = eve::as<std::int64_t>();
   TTS_EQUAL(eve::convert[eve::saturated](a0, tgt),
-            tts::map([](auto e) { return eve::convert[eve::saturated](e, tgt); }, a0));
+            tts::map([tgt](auto e) { return eve::convert[eve::saturated](e, tgt); }, a0));
 };
