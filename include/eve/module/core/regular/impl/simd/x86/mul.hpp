@@ -76,6 +76,27 @@ namespace eve::_
         else if constexpr (c == category::float16x16)         return _mm256_mul_ph(a, b);
         else if constexpr (c == category::float16x8)          return _mm_mul_ph(a, b);
       }
+      else  if constexpr( match(c, category::int64x4, category::uint64x4) && (current_api >= avx2) )
+      {
+        if constexpr( current_api >= avx512 && spy::supports::avx512::dq_ ) return _mm256_mullo_epi64(a, b);
+        else
+        {
+          // a * b mod 2^64: the low 32-bit product, plus the two cross products shifted by 32
+          auto cross = _mm256_add_epi64(_mm256_mul_epu32(_mm256_srli_epi64(a, 32), b),
+                                        _mm256_mul_epu32(a, _mm256_srli_epi64(b, 32)));
+          return _mm256_add_epi64(_mm256_mul_epu32(a, b), _mm256_slli_epi64(cross, 32));
+        }
+      }
+      else  if constexpr( match(c, category::int64x2, category::uint64x2) )
+      {
+        if constexpr( current_api >= avx512 && spy::supports::avx512::dq_ ) return _mm_mullo_epi64(a, b);
+        else
+        {
+          auto cross = _mm_add_epi64(_mm_mul_epu32(_mm_srli_epi64(a, 32), b),
+                                     _mm_mul_epu32(a, _mm_srli_epi64(b, 32)));
+          return _mm_add_epi64(_mm_mul_epu32(a, b), _mm_slli_epi64(cross, 32));
+        }
+      }
       else  if constexpr(((c == category::int32x8) || (c == category::uint32x8)) && (current_api >= avx2))
       {
         return _mm256_mullo_epi32(a, b);
