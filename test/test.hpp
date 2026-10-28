@@ -252,8 +252,10 @@ namespace eve::test
     static constexpr std::ptrdiff_t n      = width_v<W>;
     static constexpr std::ptrdiff_t native = expected_width_v<e_t>;
     // Under AVX2 a 128-bit wide takes the SSE paths, except float16 through F16C. Under AVX512
-    // every width down to 128 bits has its own k-masks and VL forms.
-    static constexpr bool narrower = (current_api >= avx512) ? (2 * n == native || 4 * n == native)
+    // every width down to 128 bits has its own k-masks and VL forms, and float16 below 128 bits
+    // its own slice forms.
+    static constexpr bool narrower = (current_api >= avx512) ? (2 * n == native || 4 * n == native
+                                                                || (std::same_as<e_t, float16_t> && n < native))
                                    : (current_api == avx2)   ? (std::same_as<e_t, float16_t> && n < native)
                                                              : 2 * n == native;
     static constexpr bool twice    = with_aggregated && n == 2 * native;
