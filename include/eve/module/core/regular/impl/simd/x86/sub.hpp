@@ -205,7 +205,6 @@ namespace eve::_
         else if constexpr( match(c,category::int32x16, category::uint32x16) ) return _mm512_mask_sub_epi32(src, m, v, w);
         else if constexpr( match(c,category::int32x8 , category::uint32x8 ) ) return _mm256_mask_sub_epi32(src, m, v, w);
         else if constexpr( match(c,category::int32x4 , category::uint32x4 ) ) return _mm_mask_sub_epi32   (src, m, v, w);
-        else if constexpr( match(c,category::int64x2 , category::uint64x2)  ) return _mm_mask_sub_epi64   (src, m, v, w);
         else if constexpr( match(c,category::int16x32, category::uint16x32) ) return _mm512_mask_sub_epi16(src, m, v, w);
         else if constexpr( match(c,category::int16x16, category::uint16x16) ) return _mm256_mask_sub_epi16(src, m, v, w);
         else if constexpr( match(c,category::int16x8 , category::uint16x8 ) ) return _mm_mask_sub_epi16   (src, m, v, w);

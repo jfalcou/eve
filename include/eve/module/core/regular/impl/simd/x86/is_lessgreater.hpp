@@ -31,7 +31,7 @@ namespace eve::_
     if constexpr (match(c, category::float16))
     {
       if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(is_lessgreater, a, b);
-      else if constexpr (c == category::float16x32)         return s_t {_mm512_cmp_ph_ph_mask(a, b, m)};
+      else if constexpr (c == category::float16x32)         return s_t {_mm512_cmp_ph_mask(a, b, m)};
       else if constexpr (c == category::float16x16)         return s_t {_mm256_cmp_ph_mask(a, b, m)};
       else if constexpr (c == category::float16x8)          return s_t {_mm_cmp_ph_mask(a, b, m)};
     }
@@ -80,7 +80,7 @@ namespace eve::_
       else if constexpr (match(c, category::float16))
       {
         if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_lessgreater, cx, v, w);
-        else if constexpr (c == category::float16x32)         return s_t {_mm512_mask_cmp_ph_ph_mask(m, v, w, f)};
+        else if constexpr (c == category::float16x32)         return s_t {_mm512_mask_cmp_ph_mask(m, v, w, f)};
         else if constexpr (c == category::float16x16)         return s_t {_mm256_mask_cmp_ph_mask(m, v, w, f)};
         else if constexpr (c == category::float16x8)          return s_t {_mm_mask_cmp_ph_mask(m, v, w, f)};
       }

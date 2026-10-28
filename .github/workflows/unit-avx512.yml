@@ -60,7 +60,6 @@ jobs:
       matrix:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
@@ -72,3 +71,30 @@ jobs:
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
         run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## Host 2 - Granite Rapids under SDE, the only build of the AVX512-FP16 branches
+  ##################################################################################################
+  gnr:
+    needs: native-avx512
+    name: gnr (${{ matrix.cfg.comp }}, x86, -march=graniterapids, sde64 -gnr)
+    runs-on: [self-hosted, avx512]
+    container:
+      image: ghcr.io/jfalcou/compilers:v10
+      options: -u root -v /home/falcou/sde:/opt/sde:ro
+    strategy:
+      fail-fast: false
+      matrix:
+        cfg:
+        - { comp: gcc   , arch: x86_gnr , opts: -march=graniterapids }
+    steps:
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        run: |
+          mkdir build && cd build
+          cmake .. -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
+      - name: Compiling Unit Tests
+        run:  cd build && ninja unit.exe -j 8
+      - name: Running Unit Tests under SDE
+        run:  cd build && PATH=/opt/sde:$PATH ctest --output-on-failure -j 4 --timeout 7200 -E ^doc.*.exe

@@ -31,7 +31,7 @@ namespace eve::_
     if      constexpr(F{} == is_less_equal)    return svacle(m, v, w);
     else if constexpr(F{} == is_less)          return svaclt(m, v, w);
     else if constexpr(F{} == is_greater_equal) return svacge(m, v, w);
-    else if constexpr(F{} == is_less_equal)    return svacgt(m, v, w);
+    else if constexpr(F{} == is_greater)       return svacgt(m, v, w);
     else return compare_absolute.behavior(cpu_{}, opts, v, w, f);
   }
 
@@ -48,7 +48,7 @@ namespace eve::_
       if      constexpr(F{} ==  is_less_equal)   return svacle(m, v, w);
       else if constexpr(F{} == is_less)          return svaclt(m, v, w);
       else if constexpr(F{} == is_greater_equal) return svacge(m, v, w);
-      else if constexpr(F{} == is_less_equal)    return svacgt(m, v, w);
+      else if constexpr(F{} == is_greater)       return svacgt(m, v, w);
       else return compare_absolute[opts][mask].retarget(cpu_{}, v, w, f);
     }
     else return compare_absolute[opts][mask].retarget(cpu_{}, v, w, f);

@@ -53,7 +53,7 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     }
     else if constexpr (N == 4)
     {
-      wide<Out, 2 * N> tmp = _mm_packs_epi16(v0, v0);
+      wide<Out, 2 * N> tmp = _mm_packs_epi32(v0, v0);
       auto [low, hi]       = tmp.slice();
       return low;
     }
@@ -82,6 +82,25 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
       return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
     }
   }
+  else if constexpr (std::is_same_v<In, int32_t> && std::is_same_v<Out, uint16_t> && (N <= 8) && (current_api >= sse4_1))
+  {
+    if constexpr (N == 8)
+    {
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi32(low, high);
+    }
+    else if constexpr (N == 4)
+    {
+      wide<Out, 2 * N> tmp = _mm_packus_epi32(v0, v0);
+      auto [low, hi]       = tmp.slice();
+      return low;
+    }
+    else
+    {
+      // emulated fallback
+      return convert_saturated(EVE_TARGETS(cpu_), v0, tgt);
+    }
+  }
   else
   {
     // emulated fallback
@@ -99,13 +118,13 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packs_epi16(low, high);
+      // vpack works per 128-bit lane, which leaves the quadwords interleaved
+      return _mm256_permute4x64_epi64(_mm256_packs_epi16(low, high), 0xD8);
     }
     else if constexpr (N == 16)
     {
-      wide<Out, 2 * N> tmp = _mm256_packs_epi16(v0, v0);
-      auto [low, high]     = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packs_epi16(low, high);
     }
     else if constexpr (N <= 8)
     {
@@ -118,13 +137,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr(N == 16)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packs_epi32(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packs_epi32(low, high), 0xD8);
     }
     else if constexpr( N == 8 )
     {
-      wide<Out, 2 * N> tmp = _mm256_packs_epi32(v0, v0);
-      auto [low, hi]       = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packs_epi32(low, high);
     }
     else if constexpr (N <= 4)
     {
@@ -137,13 +155,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 32)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packus_epi16(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packus_epi16(low, high), 0xD8);
     }
     else if constexpr (N == 16)
     {
-      wide<Out, 2 * N> tmp = _mm256_packus_epi16(v0, v0);
-      auto [low, hi]       = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi16(low, high);
     }
     else if constexpr (N <= 16)
     {
@@ -156,13 +173,12 @@ template<arithmetic_scalar_value In, width_type N, arithmetic_scalar_value Out>
     if constexpr (N == 16)
     {
       auto [low, high] = v0.slice();
-      return _mm256_packus_epi32(low, high);
+      return _mm256_permute4x64_epi64(_mm256_packus_epi32(low, high), 0xD8);
     }
     else if constexpr (N == 8)
     {
-      wide<Out, 2 * N> tmp = _mm256_packus_epi32(v0, v0);
-      auto [low, hi]                    = tmp.slice();
-      return low;
+      auto [low, high] = v0.slice();
+      return _mm_packus_epi32(low, high);
     }
     else if constexpr (N <= 4)
     {
@@ -257,6 +273,7 @@ template<arithmetic_scalar_value U, width_type N>
       if      constexpr (c_i == category::float64x2)                                   return _mm_cvtpd_ph(v);
       else if constexpr (c_i == category::float64x4)                                   return _mm256_cvtpd_ph(v);
       else if constexpr (c_i == category::float64x8)                                   return _mm512_cvtpd_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else                                                                               return convert(convert(v, as<float>{}), tgt);
   }
@@ -334,25 +351,25 @@ template<arithmetic_scalar_value U, width_type N>
     else if constexpr (c_i == category::float16x8  && c_o == category::float64x4)       return _mm256_cvtph_pd(v);
     else if constexpr (c_i == category::float16x8  && c_o == category::float64x8)       return _mm512_cvtph_pd(v);
 
-    else if constexpr (c_i == category::float16x8  && c_o == category::int16x8)         return _mm_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::int16x16)        return _mm256_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x32 && c_o == category::int16x32)        return _mm512_cvtph_epi16(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int32x4)         return _mm_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int32x8)         return _mm256_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::int32x16)        return _mm512_cvtph_epi32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x2)         return _mm_cvtph_epi64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x4)         return _mm256_cvtph_epi64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::int64x8)         return _mm512_cvtph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int16x8)         return _mm_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::int16x16)        return _mm256_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x32 && c_o == category::int16x32)        return _mm512_cvttph_epi16(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int32x4)         return _mm_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int32x8)         return _mm256_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::int32x16)        return _mm512_cvttph_epi32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x2)         return _mm_cvttph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x4)         return _mm256_cvttph_epi64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::int64x8)         return _mm512_cvttph_epi64(v);
 
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint16x8)         return _mm_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::uint16x16)        return _mm256_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x32 && c_o == category::uint16x32)        return _mm512_cvtph_epu16(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x4)         return _mm_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x8)         return _mm256_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x16 && c_o == category::uint32x16)        return _mm512_cvtph_epu32(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x2)         return _mm_cvtph_epu64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x4)         return _mm256_cvtph_epu64(v);
-    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x8)         return _mm512_cvtph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint16x8)         return _mm_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::uint16x16)        return _mm256_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x32 && c_o == category::uint16x32)        return _mm512_cvttph_epu16(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x4)         return _mm_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint32x8)         return _mm256_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x16 && c_o == category::uint32x16)        return _mm512_cvttph_epu32(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x2)         return _mm_cvttph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x4)         return _mm256_cvttph_epu64(v);
+    else if constexpr (c_i == category::float16x8  && c_o == category::uint64x8)         return _mm512_cvttph_epu64(v);
     else if constexpr (sizeof(U) == 1)                                                   return convert(convert(v, as<upgrade_t<U>>{}), tgt);
     else if constexpr (aggregated_abi<abi_t<U, N>>)
     {
@@ -407,6 +424,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint64x2)                                    return _mm_cvtepu64_ph(v);
       else if constexpr (c_i == category::uint64x4)                                    return _mm256_cvtepu64_ph(v);
       else if constexpr (c_i == category::uint64x8)                                    return _mm512_cvtepu64_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<float> {}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
@@ -491,11 +509,15 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   //==============================================================================================
        if constexpr( c_i == category::int32x4   && c_o == category::float64x2         ) return _mm_cvtepi32_pd(v);
   else if constexpr( c_i == category::int32x4   && c_o == category::float64x4         ) return _mm256_cvtepi32_pd(v);
+  else if constexpr( c_i == category::int32x8   && c_o == category::float64x8         ) return _mm512_cvtepi32_pd(v);
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float64x2 && a512 ) return _mm_cvtepu32_pd(v);
   else if constexpr( c_i == category::uint32x4  && c_o == category::float64x4 && a512 ) return _mm256_cvtepu32_pd(v);
   else if constexpr( c_i == category::uint32x4  && c_o == category::float64x4         ) return convert_slice(v, tgt);
   else if constexpr( c_i == category::uint32x8  && c_o == category::float64x8         ) return _mm512_cvtepu32_pd(v);
   else if constexpr( c_i == category::int32x4   && c_o == category::float32x4         ) return _mm_cvtepi32_ps(v);
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float32x4 && a512 ) return _mm_cvtepu32_ps(v);
   else if constexpr( c_i == category::int32x8   && c_o == category::float32x8         ) return _mm256_cvtepi32_ps(v);
+  else if constexpr( c_i == category::uint32x8  && c_o == category::float32x8 && a512 ) return _mm256_cvtepu32_ps(v);
   else if constexpr( c_i == category::uint32x8  && c_o == category::float32x8         ) return convert_slice(v, tgt);
   else if constexpr( c_i == category::int32x16  && c_o == category::float32x16        ) return _mm512_cvtepi32_ps(v);
   else if constexpr( c_i == category::uint32x16 && c_o == category::float32x16        ) return _mm512_cvtepu32_ps(v);
@@ -509,9 +531,17 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint32x4)                                     return _mm_cvtepu32_ph(v);
       else if constexpr (c_i == category::uint32x8)                                     return _mm256_cvtepu32_ph(v);
       else if constexpr (c_i == category::uint32x16)                                    return _mm512_cvtepu32_ph(v);
+      else                                                                              return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<float>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
+  }
+  else if constexpr( c_i == category::uint32x4  && c_o == category::float32x4 )
+  {
+    // Both 16-bit halves are exact in float, so the sum rounds once
+    auto hi = convert(bit_cast(v >> 16, as<wide<std::int32_t, N>> {}), tgt);
+    auto lo = convert(bit_cast(v & 0xFFFFu, as<wide<std::int32_t, N>> {}), tgt);
+    return hi * 65536.f + lo;
   }
   else if constexpr( c_i == category::uint32x4  && match(c_o, category::float_) )
   {
@@ -593,6 +623,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
       else if constexpr (c_i == category::uint16x8 && c_o == category::float16x8)      return _mm_cvtepu16_ph(v);
       else if constexpr (c_i == category::uint16x16 && c_o == category::float16x16)    return _mm256_cvtepu16_ph(v);
       else if constexpr (c_i == category::uint16x32 && c_o == category::float16x32)    return _mm512_cvtepu16_ph(v);
+      else                                                                             return convert_impl(EVE_TARGETS(cpu_), v, tgt);
     }
     else if constexpr (_::supports_fp16_vector_conversion) return convert(convert(v, as<upgrade_t<element_type_t<T>>>{}), tgt);
     else                                                        return convert_impl(EVE_TARGETS(cpu_), v, tgt);
@@ -624,6 +655,7 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   constexpr auto mi8x16  = match(c_i, category::int8x16,  category::uint8x16);
   constexpr auto mo16x8  = match(c_o, category::int16x8,  category::uint16x8);
   constexpr auto mo16x16 = match(c_o, category::int16x16, category::uint16x16);
+  constexpr auto mo16x32 = match(c_o, category::int16x32, category::uint16x32);
   constexpr auto mo32x4  = match(c_o, category::int32x4,  category::uint32x4);
   constexpr auto mo32x8  = match(c_o, category::int32x8,  category::uint32x8);
   constexpr auto mo32x16 = match(c_o, category::int32x16, category::uint32x16);
@@ -640,6 +672,8 @@ template<integral_scalar_value T, width_type N, arithmetic_scalar_value U>
   else if constexpr ( c_i == category::int8x16  && mo16x16 && aavx2 ) return _mm256_cvtepi8_epi16(v);
   else if constexpr ( c_i == category::uint8x16 && mo16x8 && a41    ) return _mm_cvtepu8_epi16(v);
   else if constexpr ( c_i == category::uint8x16 && mo16x16 && aavx2 ) return _mm256_cvtepu8_epi16(v);
+  else if constexpr ( c_i == category::int8x32  && mo16x32          ) return _mm512_cvtepi8_epi16(v);
+  else if constexpr ( c_i == category::uint8x32 && mo16x32          ) return _mm512_cvtepu8_epi16(v);
   else if constexpr ( c_i == category::int8x16  && mo32x4 && a41    ) return _mm_cvtepi8_epi32(v);
   else if constexpr ( c_i == category::int8x16  && mo32x8 && aavx2  ) return _mm256_cvtepi8_epi32(v);
   else if constexpr ( c_i == category::int8x16  && mo32x16          ) return _mm512_cvtepi8_epi32(v);

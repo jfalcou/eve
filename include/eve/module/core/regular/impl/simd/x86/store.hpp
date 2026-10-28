@@ -132,9 +132,6 @@ template<relative_conditional_expr C, scalar_value T,
       else if constexpr( c == category::float32x4 ) _mm_mask_store_ps(ptr.get(), m, v);
       else if constexpr( c == category::float32x8 ) _mm256_mask_store_ps(ptr.get(), m, v);
       else if constexpr( c == category::float32x16 ) _mm512_mask_store_ps(ptr.get(), m, v);
-      else if constexpr( c == category::float16x8 ) _mm_mask_store_epi16(ptr.get(), m, _mm_castsi128_ph(v));
-      else if constexpr( c == category::float16x16 ) _mm256_mask_store_epi16(ptr.get(), m, _mm_castsi256_ph(v));
-      else if constexpr( c == category::float16x32 ) _mm512_mask_store_epi16(ptr.get(), m, _mm_castsi512_ph(v));
       else if constexpr( match(c, category::int64x2, category::uint64x2) )
         _mm_mask_store_epi64(ptr.get(), m, v);
       else if constexpr( match(c, category::int64x4, category::uint64x4) )
@@ -162,8 +159,8 @@ template<relative_conditional_expr C, scalar_value T,
     else if constexpr( c == category::float32x8 ) _mm256_mask_storeu_ps(ptr, m, v);
     else if constexpr( c == category::float32x16 ) _mm512_mask_storeu_ps(ptr, m, v);
     else if constexpr( c == category::float16x8 ) _mm_mask_storeu_epi16(ptr, m, _mm_castph_si128(v));
-    else if constexpr( c == category::float16x16 ) _mm256_mask_storeu_epi16(ptr, m, _mm_castph_si256(v));
-    else if constexpr( c == category::float16x32 ) _mm512_mask_storeu_epi16(ptr, m, _mm_castph_si512(v));
+    else if constexpr( c == category::float16x16 ) _mm256_mask_storeu_epi16(ptr, m, _mm256_castph_si256(v));
+    else if constexpr( c == category::float16x32 ) _mm512_mask_storeu_epi16(ptr, m, _mm512_castph_si512(v));
     else if constexpr( match(c, category::int64x2, category::uint64x2) )
       _mm_mask_storeu_epi64(ptr, m, v);
     else if constexpr( match(c, category::int64x4, category::uint64x4) )

@@ -96,3 +96,15 @@ TTS_CASE_TPL("Check behavior of eve::is_not_less(simd)", eve::test::simd::ieee_r
     TTS_EQUAL(eve::is_not_less[eve::almost = ui_t(3)](v_t(1), v_t(1)), eve::true_(as<v_t>()));
   }
 };
+
+//==================================================================================================
+// Masked call
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::is_not_less[mask](wide)", eve::test::simd::all_types_wf16,
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::randoms(eve::valmin, eve::valmax),
+              tts::logicals(0, 3))
+<typename T, typename M>(T const& a0, T const& a1, M const& mask)
+{
+  TTS_EQUAL(eve::is_not_less[mask](a0, a1), eve::if_else(mask, eve::is_not_less(a0, a1), eve::false_(eve::as(a0))));
+};

@@ -39,11 +39,9 @@ namespace eve::_
       else if constexpr (match(cat, category::float16))
       {
         if      constexpr( !_::supports_fp16_vector_ops ) return apply_fp16_as_fp32(negabsmin, v0, v1);
-        else if constexpr( cat == category::float16x32 )       return _mm512_range_ph(v0, v1, ctrl);
-        else if constexpr( cat == category::float16x16 )       return _mm256_range_ph(v0, v1, ctrl);
-        else if constexpr( cat == category::float16x8  )       return _mm_range_ph(v0, v1, ctrl);
+        else return negabsmin.behavior(cpu_{}, opts, v0, v1);
       }
-      else return negabsmin.behavior(cpu_{}, v0, v1);
+      else return negabsmin.behavior(cpu_{}, opts, v0, v1);
     }
   }
 
@@ -76,9 +74,7 @@ namespace eve::_
       else if constexpr (match(c, category::float16))
       {
         if      constexpr( !_::supports_fp16_vector_ops ) return apply_fp16_as_fp32_masked(negabsmin, cx, v, w);
-        else if constexpr( c == category::float16x32 )         return _mm512_mask_range_ph(src, m, v, w, ctrl);
-        else if constexpr( c == category::float16x16 )         return _mm256_mask_range_ph(src, m, v, w, ctrl);
-        else if constexpr( c == category::float16x8  )         return _mm_mask_range_ph(src, m, v, w, ctrl);
+        else return negabsmin[opts][cx].retarget(cpu_{}, v, w);
       }
       else return negabsmin[opts][cx].retarget(cpu_{}, v, w);
     }

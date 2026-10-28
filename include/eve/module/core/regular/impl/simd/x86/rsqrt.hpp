@@ -146,10 +146,10 @@ namespace eve::_
     {
       if      constexpr( c == category::float32x16) return _mm512_mask_rsqrt14_ps(src, m, v);
       else if constexpr( c == category::float64x8 ) return _mm512_mask_rsqrt14_pd(src, m, v);
-      else if constexpr( c == category::float32x16) return _mm256_mask_rsqrt14_ps(src, m, v);
-      else if constexpr( c == category::float64x8 ) return _mm256_mask_rsqrt14_pd(src, m, v);
-      else if constexpr( c == category::float32x16) return _mm_mask_rsqrt14_ps(src, m, v);
-      else if constexpr( c == category::float64x8 ) return _mm_mask_rsqrt14_pd(src, m, v);
+      else if constexpr( c == category::float32x8 ) return _mm256_mask_rsqrt14_ps(src, m, v);
+      else if constexpr( c == category::float64x4 ) return _mm256_mask_rsqrt14_pd(src, m, v);
+      else if constexpr( c == category::float32x4 ) return _mm_mask_rsqrt14_ps(src, m, v);
+      else if constexpr( c == category::float64x2 ) return _mm_mask_rsqrt14_pd(src, m, v);
     }
     else
     {

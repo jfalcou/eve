@@ -127,17 +127,17 @@ namespace eve::_
       else if constexpr( c == category::float32x4 ) return _mm_mask_loadu_ps(src(that), mask, p);
       else if constexpr( c == category::float16x32 )
       {
-        if constexpr (has_fp16) return _mm512_castsi512_ph(_mm512_mask_loadu_epi16(src(that), mask, p));
+        if constexpr (has_fp16) return _mm512_castsi512_ph(_mm512_mask_loadu_epi16(_mm512_castph_si512(src(that)), mask, p));
         else                    return _mm512_mask_loadu_epi16(src(that), mask, p);
       }
       else if constexpr( c == category::float16x16 )
       {
-        if constexpr (has_fp16) return _mm256_castsi256_ph(_mm256_mask_loadu_epi16(src(that), mask, p));
+        if constexpr (has_fp16) return _mm256_castsi256_ph(_mm256_mask_loadu_epi16(_mm256_castph_si256(src(that)), mask, p));
         else                    return _mm256_mask_loadu_epi16(src(that), mask, p);
       }
       else if constexpr( c == category::float16x8 )
       {
-        if constexpr (has_fp16) return _mm_castsi128_ph(_mm_mask_loadu_epi16(src(that), mask, p));
+        if constexpr (has_fp16) return _mm_castsi128_ph(_mm_mask_loadu_epi16(_mm_castph_si128(src(that)), mask, p));
         else                    return _mm_mask_loadu_epi16(src(that), mask, p);
       }
       else if constexpr( c == category::int64x8 ) return _mm512_mask_loadu_epi64(src(that), mask, p);

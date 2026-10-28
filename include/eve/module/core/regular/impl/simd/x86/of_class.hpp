@@ -51,7 +51,7 @@ namespace eve::_
     }
     else if constexpr( c == category::float16x32) return s_t {_mm512_fpclass_ph_mask(a, I)};
     else if constexpr( c == category::float16x16) return s_t {_mm256_fpclass_ph_mask(a, I)};
-    else if constexpr( c == category::float16x8 ) return s_t {_mm256_fpclass_ph_mask(a, I)};
+    else if constexpr( c == category::float16x8 ) return s_t {_mm_fpclass_ph_mask(a, I)};
   }
 
 
@@ -87,7 +87,7 @@ namespace eve::_
       }
       else if constexpr( c == category::float16x32) return mask32 {_mm512_mask_fpclass_ph_mask(m, v, I)};
       else if constexpr( c == category::float16x16) return mask16 {_mm256_mask_fpclass_ph_mask(m, v, I)};
-      else if constexpr( c == category::float16x8 ) return mask8  {_mm256_mask_fpclass_ph_mask(m, v, I)};
+      else if constexpr( c == category::float16x8 ) return mask8  {_mm_mask_fpclass_ph_mask(m, v, I)};
     }
   }
 }

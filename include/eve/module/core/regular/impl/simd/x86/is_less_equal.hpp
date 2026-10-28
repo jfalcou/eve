@@ -111,8 +111,8 @@ namespace eve::_
       else if constexpr (match(c, category::float16))
       {
         if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32_masked(is_less_equal, mask, a, b);
-        else if constexpr (c == category::float16x8)          return mask8 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
-        else if constexpr (c == category::float16x16)         return mask16 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
+        else if constexpr (c == category::float16x8)          return mask8 {_mm_mask_cmp_ph_mask(m, a, b, f)};
+        else if constexpr (c == category::float16x16)         return mask16 {_mm256_mask_cmp_ph_mask(m, a, b, f)};
         else if constexpr (c == category::float16x32)         return mask32 {_mm512_mask_cmp_ph_mask(m, a, b, f)};
       }
       else if constexpr (c == category::float32x16) return mask16 {_mm512_mask_cmp_ps_mask(m, a, b, f)};

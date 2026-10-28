@@ -47,3 +47,15 @@ TTS_CASE_WITH("Check behavior of of_class on wide",
   TTS_EQUAL(of_class(a0, eve::poszero|eve::negzero), eve::is_eqz(a0));
   TTS_EQUAL(of_class(a0, eve::posinf|eve::neginf), eve::is_infinite(a0));
 };
+
+//==================================================================================================
+// Masked call
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::of_class[mask](wide)", eve::test::simd::ieee_reals_wf16,
+              tts::randoms(eve::valmin, eve::valmax), tts::logicals(0, 3))
+<typename T, typename M>(T const& a0, M const& mask)
+{
+  TTS_EQUAL(eve::of_class[mask](a0, eve::qnan), eve::if_else(mask, eve::is_nan(a0), eve::false_(eve::as(a0))));
+  TTS_EQUAL(eve::of_class[mask](a0, eve::posinf | eve::neginf),
+            eve::if_else(mask, eve::is_infinite(a0), eve::false_(eve::as(a0))));
+};

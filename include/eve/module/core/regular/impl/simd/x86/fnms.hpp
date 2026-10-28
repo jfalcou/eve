@@ -68,9 +68,9 @@ namespace eve::_
       else  if constexpr ( match(cat, category::float16))
       {
         if      constexpr (!_::supports_fp16_vector_ops) return apply_fp16_as_fp32(fnms, a, b, c);
-        else if constexpr (cat == category::float16x32)       return _mm512_fmnsub_ph(a, b, c);
-        else if constexpr (cat == category::float16x16)       return _mm256_fmnsub_ph(a, b, c);
-        else if constexpr (cat == category::float16x8)        return _mm_fmnsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x32)       return _mm512_fnmsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x16)       return _mm256_fnmsub_ph(a, b, c);
+        else if constexpr (cat == category::float16x8)        return _mm_fnmsub_ph(a, b, c);
       }
       else if constexpr( supports_fma3)
       {
