@@ -31,7 +31,7 @@ namespace eve
 # if defined(SPY_OS_IS_MACOS)
     int         val = 0;
     std::size_t len = sizeof(val);
-    return sysctlbyname("hw.optional.AdvSIMD", &val, &len, nullptr, 0) == 0 && val != 0;
+    return sysctlbyname("hw.optional.arm.AdvSIMD", &val, &len, nullptr, 0) == 0 && val != 0;
 # else
     auto hwcaps = getauxval(AT_HWCAP);
     return (hwcaps & (1 << 12)) != 0;
@@ -47,7 +47,7 @@ namespace eve
 # if defined(SPY_OS_IS_MACOS)
     int         val = 0;
     std::size_t len = sizeof(val);
-    return sysctlbyname("hw.optional.AdvSIMD", &val, &len, nullptr, 0) == 0 && val != 0;
+    return sysctlbyname("hw.optional.arm.AdvSIMD", &val, &len, nullptr, 0) == 0 && val != 0;
 # else
     auto hwcaps = getauxval(AT_HWCAP);
     return (hwcaps & HWCAP_ASIMD) != 0;

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
-#include <eve/arch/cpu/base.hpp>
-#include <eve/arch/widths.hpp>
-#include <eve/arch/spec.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/width.hpp>
+#include <eve/traits/as_register.hpp>
+
 #include <eve/concept/combinable.hpp>
 #include <eve/concept/invocable.hpp>
 #include <eve/concept/memory.hpp>
@@ -57,6 +57,12 @@ namespace eve
 {
 #endif
 
+  namespace _
+  {
+    template<typename T, width_type Width>
+    using as_wide_storage_t = wide_storage<as_register_t<T, Width, abi_t<T, Width>>>;
+  }
+
   //================================================================================================
   //! @addtogroup eve_simd_types
   //! @{
@@ -75,9 +81,9 @@ namespace eve
   template<arithmetic_scalar_value Type, width_type Width>
   requires (is_valid_width<Width>)
   struct EVE_MAY_ALIAS EVE_STRUCT_ABI wide
-      : _::wide_storage<as_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>
+      : _::as_wide_storage_t<translate_t<Type>, Width>; 
   {
-    using storage_base = _::wide_storage<as_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>;
+    using storage_base = _::as_wide_storage_t<translate_t<Type>, Width>; 
 
     //! The type stored in the register.
     using value_type = Type;

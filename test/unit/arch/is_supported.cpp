@@ -118,7 +118,7 @@ TTS_CASE("Dynamic detections of API - X86")
   TTS_EXPECT(implies(eve::current_api >= eve::avx2  , eve::is_supported(eve::avx2  )));
   TTS_EXPECT(implies(eve::current_api >= eve::avx512, eve::is_supported(eve::avx512)));
 
-#if defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)
+#if (defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)) && !defined(EVE_NO_SIMD)
   TTS_EXPECT(implies(eve::supports_fma3, eve::is_supported(eve::fma3)));
 #endif
 };

@@ -45,10 +45,10 @@ namespace eve
   //! @}
   //================================================================================================
 #if defined (EVE_DOXYGEN_INVOKED)
-  template<typename Type, std::ptrdiff_t Lanes>
+  template<typename Type, width_type Lanes>
   using abi_t = /* Implementation defined */;
 #else
-  template<typename Type, std::ptrdiff_t Lanes>
+  template<typename Type, width_type Lanes>
   requires( _::arithmetic_<Type> || eve::product_type<Type> || _::is_logical_<Type> )
   using abi_t = decltype(_::software_abi_of<translate_t<Type>, Lanes>);
 #endif
