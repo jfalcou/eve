@@ -60,7 +60,6 @@ jobs:
       matrix:
         cfg:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
-        - { comp: gcc   , arch: x86     , opts: -march=skylake-avx512 }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
@@ -74,11 +73,11 @@ jobs:
         run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
-  ## Host 2 - Sapphire Rapids under SDE, the only build of the AVX512-FP16 branches
+  ## Host 2 - Granite Rapids under SDE, the only build of the AVX512-FP16 branches
   ##################################################################################################
-  spr:
+  gnr:
     needs: native-avx512
-    name: spr (${{ matrix.cfg.comp }}, x86, -march=sapphirerapids, sde64 -spr)
+    name: gnr (${{ matrix.cfg.comp }}, x86, -march=graniterapids, sde64 -gnr)
     runs-on: [self-hosted, avx512]
     container:
       image: ghcr.io/jfalcou/compilers:v10
@@ -87,8 +86,7 @@ jobs:
       fail-fast: false
       matrix:
         cfg:
-        - { comp: clang , arch: x86_spr , opts: -march=sapphirerapids }
-        - { comp: gcc   , arch: x86_spr , opts: -march=sapphirerapids }
+        - { comp: gcc   , arch: x86_gnr , opts: -march=graniterapids }
     steps:
       - name: Fetch current branch
         uses: actions/checkout@v6
