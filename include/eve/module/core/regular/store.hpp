@@ -11,19 +11,29 @@
 #include <eve/traits/overload.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 namespace eve
 {
+  // The pointer, once unaligned, has to write: a const target refuses the store at its signature
+  template<typename T, typename SIMD>
+  concept writable_simd_compatible_ptr = simd_compatible_ptr<T, SIMD>
+                                      && !std::is_const_v<std::remove_pointer_t<unaligned_t<T>>>;
+
+  template<typename T, typename SIMD>
+  concept writable_logical_simd_compatible_ptr = logical_simd_compatible_ptr<T, SIMD>
+                                              && !std::is_const_v<std::remove_pointer_t<unaligned_t<T>>>;
+
   template<typename Options>
   struct store_t : relative_conditional_callable<store_t, Options>
   {
-    template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
+    template<arithmetic_simd_value T, writable_simd_compatible_ptr<T> Ptr>
     EVE_ABI void operator()(T value, Ptr ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(value, ptr);
     }
 
-    template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
+    template<logical_simd_value T, writable_logical_simd_compatible_ptr<T> Ptr>
     EVE_ABI void operator()(T value, Ptr ptr) const noexcept
     {
       return EVE_DISPATCH_CALL(value, ptr);
@@ -51,10 +61,10 @@ namespace eve
   //!   namespace eve
   //!   {
   //!     // Regular overload
-  //!     template<arithmetic_simd_value T, simd_compatible_ptr<T> Ptr>
+  //!     template<arithmetic_simd_value T, writable_simd_compatible_ptr<T> Ptr>
   //!     void store(T value, Ptr ptr) noexcept;                                           // 1
   //!
-  //!     template<logical_simd_value T, logical_simd_compatible_ptr<T> Ptr>
+  //!     template<logical_simd_value T, writable_logical_simd_compatible_ptr<T> Ptr>
   //!     void store(T value, Ptr ptr) noexcept;                                           // 1
   //!
   //!     // Lanes masking
