@@ -7,11 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
-#include <eve/arch/cpu/base.hpp>
+#include <eve/arch.hpp>
+
 #include <eve/types/logical.hpp>
-#include <eve/arch/widths.hpp>
-#include <eve/arch/spec.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
 #include <eve/concept/range.hpp>
@@ -35,6 +33,12 @@
 
 namespace eve
 {
+  namespace _
+  {
+    template<typename T, width_type Width>
+    using as_logical_wide_storage_t = wide_storage<as_logical_register_t<T, Width, abi_t<T, Width>>>;
+  }
+
   //================================================================================================
   //! @addtogroup eve_simd_types
   //! @{
@@ -54,9 +58,9 @@ namespace eve
   template<arithmetic_scalar_value Type, width_type Width>
   requires (is_valid_width<Width>)
   struct  EVE_MAY_ALIAS  logical<wide<Type, Width>>
-      : _::wide_storage<as_logical_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>
+      : _::as_logical_wide_storage_t<translate_t<Type>, Width>
   {
-    using storage_base = _::wide_storage<as_logical_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>;
+    using storage_base = _::as_logical_wide_storage_t<translate_t<Type>, Width>; 
 
     //! The type resulting from translating the current logical's elements type.
     using translated_element_type = logical<translate_t<Type>>;
