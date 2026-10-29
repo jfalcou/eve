@@ -95,7 +95,7 @@ namespace eve
 #if defined (EVE_DOXYGEN_INVOKED)
   template<typename T, regular_abi = eve::current_abi_type>
   inline constexpr width_type expected_width_v = /* Implementation defined */;
-#endif
+#else
   template<typename T, regular_abi ABI = eve::current_abi_type>
   inline constexpr width_type expected_width_v = _::expected_width<T, ABI>;
 
@@ -111,11 +111,8 @@ namespace eve
 
   template<eve::product_type T, regular_abi ABI>
   inline constexpr width_type expected_width_v<T, ABI> = kumi::apply_traits_t<_::expected_width_t<ABI>::template type, T>::value;
-#else
-}
-
-namespace eve
-{
+#endif
+  
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{

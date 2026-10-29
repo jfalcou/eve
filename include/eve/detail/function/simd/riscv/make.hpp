@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>

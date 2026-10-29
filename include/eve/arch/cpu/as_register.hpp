@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/arch/cpu/blob.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/deps/kumi.hpp>

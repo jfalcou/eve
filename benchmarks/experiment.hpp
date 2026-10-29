@@ -12,7 +12,7 @@
 #include "nanobench.h"
 
 #include <eve/module/core/regular/load.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <algorithm>
 #include <iostream>
 #include <numeric>

@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/iota.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 
 #include <bitset>
 
