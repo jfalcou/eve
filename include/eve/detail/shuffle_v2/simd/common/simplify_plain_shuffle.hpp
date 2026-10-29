@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/width.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
