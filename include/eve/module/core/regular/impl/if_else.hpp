@@ -32,11 +32,10 @@
 namespace eve::_
 {
 // Local helper for product_type if_else implementation
-template<typename T, eve::product_type U, eve::product_type V>
- constexpr auto tuple_select(T cond, U const& t, V const& f)
+template<typename R, typename T, eve::product_type U, eve::product_type V>
+ constexpr R tuple_select(as<R>, T cond, U const& t, V const& f)
 {
-  using r_t = _::conditional_t<simd_value<U>, U, V>;
-  return r_t {kumi::map([&](auto const& vv, auto const& fv) { return if_else(cond, vv, fv); }, t, f)};
+  return R {kumi::map([&](auto const& vv, auto const& fv) { return if_else(cond, vv, fv); }, t, f)};
 }
 
 template<scalar_value T, value U, value V, callable_options O>
@@ -57,7 +56,7 @@ template<simd_value T, value U, value V, callable_options O>
     using r_t = as_wide_as_t<common_compatible_t<U, V>,T>;
     using e_t = element_type_t<r_t>;
 
-    if      constexpr(eve::product_type<U> && eve::product_type<V>) return tuple_select(cond, t, f);
+    if      constexpr(eve::product_type<U> && eve::product_type<V>) return tuple_select(as<r_t>{}, cond, t, f);
     else if constexpr(emulated_abi<T>)                          return map(if_else, cond, r_t(t), r_t(f));
     else if constexpr(aggregated_abi<T>)                        return aggregate(if_else, cond, r_t(t), r_t(f));
     else if constexpr(std::same_as<logical<e_t>, element_type_t<T>>)

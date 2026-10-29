@@ -150,3 +150,25 @@ TTS_CASE_WITH("Check behavior of eve::if_else(conditional, a, b)",
     TTS_EQUAL(actual, expected);
   }
 };
+
+//==================================================================================================
+// Product types under a wide mask
+//==================================================================================================
+TTS_CASE_WITH("Check behavior of eve::if_else on product types", eve::test::simd::all_types_wf16,
+              tts::logicals(0, 3))
+<typename M>(M const& m)
+{
+  using w_t = typename M::mask_type;
+  using e_t = eve::element_type_t<w_t>;
+  using s_t = kumi::tuple<e_t, e_t>;
+  using p_t = eve::wide<s_t, w_t::size()>;
+
+  s_t x {e_t(1), e_t(2)};
+  s_t y {e_t(3), e_t(4)};
+  p_t ref {[&](auto i, auto) { return m.get(i) ? x : y; }};
+
+  TTS_EQUAL(eve::if_else(m, x, y), ref);
+  TTS_EQUAL(eve::if_else(m, p_t {x}, y), ref);
+  TTS_EQUAL(eve::if_else(m, x, p_t {y}), ref);
+  TTS_EQUAL(eve::if_else(m, p_t {x}, p_t {y}), ref);
+};
