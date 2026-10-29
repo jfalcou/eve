@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/as_register.hpp>
+
 #include <type_traits>
 #include <utility>
 

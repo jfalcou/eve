@@ -9,6 +9,8 @@
 
 #include <eve/deps/kumi.hpp>
 #include <eve/arch.hpp>
+#include <eve/arch/abi.hpp>
+#include <eve/concept/scalar.hpp>
 
 namespace eve
 {
@@ -18,7 +20,7 @@ namespace eve
   //! @{
   //!   @brief Computes the width of a given type
   //!
-  //!   **Required header:** `#include <eve/traits/widths.hpp>`
+  //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
   //!   For a given type `T`, computes it's associated width.
   //!
@@ -46,7 +48,7 @@ namespace eve
   //! @{
   //!   @brief Computes the fundamental width of a given type
   //!
-  //!   **Required header:** `#include <eve/traits/widths.hpp>`
+  //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
   //!   Computes the width of the smallest register able to store
   //!   values of type `Type` for a given SIMD `ABI` with no uninitialized lanes.
@@ -69,12 +71,12 @@ namespace eve
     struct fundamental_width_t
     {
       template<typename... Ts>
-      using type = std::integral_constant<kumi::_::min(eve::fundamental_width_v<Ts>...)>; 
+      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::fundamental_width_v<Ts>)...)>;
     };
   }
 
   template<eve::product_type Type, regular_abi ABI>
-  constexpr inline width_type fundamental_width_v<Type, ABI> = kumi::apply_traits_t<_::fundamental_width_t<ABI>::template type, T>::value;
+  constexpr inline width_type fundamental_width_v<Type, ABI> = kumi::apply_traits_t<_::fundamental_width_t<ABI>::template type, Type>::value;
 #endif
 
   //================================================================================================
@@ -82,7 +84,7 @@ namespace eve
   //! @{
   //!   @brief Computes the expected width of a given type
   //!
-  //!   **Required header:** `#include <eve/traits/widths.hpp>`
+  //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
   //!   Returns the exact width type of the register able to store
   //!   values of type `Type` for a given SIMD `ABI` as a native register type.
@@ -105,7 +107,7 @@ namespace eve
     struct expected_width_t
     {
       template<typename... Ts>
-      using type = std::integral_constant<kumi::_::min(eve::expected_width_v<Ts>...)>; 
+      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::expected_width_v<Ts>)...)>;
     };
   }
 
@@ -141,8 +143,9 @@ namespace eve
   //! @}
   //================================================================================================
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  constexpr width_type nofs_width_v = expected_width_v<T,ABI>;
+  constexpr width_type nofs_width_v = expected_width_v<T, ABI>;
 
-  template<scalar_value T>
-  constexpr wide nofs_width_v<T,x86_512_> = x86_512_::avx512_default_64_bytes ? expected_width_v<T,x86_512>
+  template <scalar_value T>
+  constexpr width_type nofs_width_v<T, x86_512_> =
+    x86_512_::avx512_default_64_bytes ? expected_width_v<T, x86_512_> : expected_width_v<T, x86_256_>;
 }

@@ -13,7 +13,7 @@ namespace
 constexpr auto perfect_native_shuffler =
     []<std::ptrdiff_t... I>(eve::pattern_t<I...> p, auto g, auto... xs)
 {
-  if constexpr( !eve::supports_simd ) { TTS_FAIL("should not be called: " + tts::as_text(p)); }
+  if constexpr( !eve::platform::supports_simd ) { TTS_FAIL("should not be called: " + tts::as_text(p)); }
   else
   {
     auto shuffled = get<0>(eve::_::shuffle_emulated(p, g, kumi::tuple {xs...}));
@@ -39,7 +39,7 @@ tst_for_shuffler(auto shuffler)
   return [shuffler](auto expected, auto expected_l, auto... args)
   {
     auto [shuffled, l] = shuffler(args...);
-    if constexpr( !eve::supports_simd ) { TTS_EQUAL(0, l()) << expected; }
+    if constexpr( !eve::platform::supports_simd ) { TTS_EQUAL(0, l()) << expected; }
     else { TTS_EQUAL(expected_l, l) << expected; }
     TTS_EQUAL(expected, shuffled);
   };
@@ -76,7 +76,7 @@ TTS_CASE("integrating with fake native shuffle")
 
   // Common l0, l1
   tst(T025 {1}, eve::index<0>, T05 {1, 2}, eve::pattern<0>);
-  tst(T025 {eve::supports_simd ? 1 : 0}, eve::index<0>, T05 {1, 2}, eve::pattern<eve::we_>);
+  tst(T025 {eve::platform::supports_simd ? 1 : 0}, eve::index<0>, T05 {1, 2}, eve::pattern<eve::we_>);
   tst(T025 {0}, eve::index<1>, T05 {1, 2}, eve::pattern<eve::na_>);
   tst(T025 {0}, eve::index<1>, T2 {1, 2, 3, 4, 5, 6, 7, 8}, eve::pattern<eve::na_>);
   tst(T {0, 0, 0, 0},
@@ -140,7 +140,7 @@ TTS_CASE("identites and 0s masking integration tests")
     auto tst = tst_for_shuffler(never_native_shuffler);
     tst(T {1, 2, 3, 4}, eve::index<0>, T {1, 2, 3, 4}, eve::lanes<1>, eve::pattern<0, 1, 2, 3>);
 
-    tst(eve::supports_simd  ? T {1, 2, 3, 4} : T{1, 0, 3, 4},
+    tst(eve::platform::supports_simd  ? T {1, 2, 3, 4} : T{1, 0, 3, 4},
         eve::index<0>,
         T {1, 2, 3, 4},
         eve::lanes<1>,

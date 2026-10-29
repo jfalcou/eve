@@ -486,7 +486,7 @@ shuffle_v2_driver_start(NativeSelector        selector,
                         lanes_t<G>              g,
                         kumi::tuple<T, Ts...> xs)
 {
-  if constexpr( !eve::supports_simd ) return shuffle_emulated(p, g, xs);
+  if constexpr( !eve::platform::supports_simd ) return shuffle_emulated(p, g, xs);
   else return shuffle_v2_driver_bundle {}(selector, p, g, xs);
 }
 

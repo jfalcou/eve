@@ -11,3 +11,4 @@
 #include <eve/arch/width.hpp>
 #include <eve/arch/predef.hpp>
 #include <eve/arch/tags.hpp>
+#include <eve/arch/spec.hpp>

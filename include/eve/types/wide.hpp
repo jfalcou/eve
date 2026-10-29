@@ -10,6 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/width.hpp>
 #include <eve/traits/as_register.hpp>
+#include <eve/types/base.hpp>
 
 #include <eve/concept/combinable.hpp>
 #include <eve/concept/invocable.hpp>
@@ -50,18 +51,18 @@
 #if !defined(EVE_DOXYGEN_INVOKED)
 namespace eve
 {
+  namespace _
+  {
+    template<typename T, width_type Width>
+    using as_wide_storage_t = wide_storage<as_register_t<T, Width, abi_t<T, Width>>>;
+  }
+
 inline namespace EVE_ABI_NAMESPACE
 {
 #else
 namespace eve
 {
 #endif
-
-  namespace _
-  {
-    template<typename T, width_type Width>
-    using as_wide_storage_t = wide_storage<as_register_t<T, Width, abi_t<T, Width>>>;
-  }
 
   //================================================================================================
   //! @addtogroup eve_simd_types
@@ -81,7 +82,7 @@ namespace eve
   template<arithmetic_scalar_value Type, width_type Width>
   requires (is_valid_width<Width>)
   struct EVE_MAY_ALIAS EVE_STRUCT_ABI wide
-      : _::as_wide_storage_t<translate_t<Type>, Width>; 
+      : _::as_wide_storage_t<translate_t<Type>, Width>
   {
     using storage_base = _::as_wide_storage_t<translate_t<Type>, Width>; 
 
@@ -1106,6 +1107,18 @@ namespace eve
 {
   template<typename Type, width_type Width>
   inline constexpr width_type width_v<wide<Type, Width>> = Width;
+
+  //================================================================================================
+  // nofs (no frequency scaling) helpers
+  //================================================================================================
+  template <scalar_value T, regular_abi ABI = eve::current_abi_type>
+  using nofs_width_t = lanes_t<nofs_width_v<T, ABI>>;
+
+  template <scalar_value T>
+  using nofs_wide = wide<T, nofs_width_v<T>>;
+
+  template <plain_scalar_value T>
+  using nofs_logical = logical<nofs_wide<T>>;
 }
 
 #if !defined(EVE_DOXYGEN_INVOKED)

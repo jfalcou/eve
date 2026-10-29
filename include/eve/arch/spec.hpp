@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch/predef.hpp>
+#include <eve/arch/tags.hpp>
 
 #if !defined(EVE_NO_SIMD)
 #  if defined(EVE_INCLUDE_X86_HEADER)

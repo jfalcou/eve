@@ -38,23 +38,23 @@ TTS_CASE("Static detections of API - x86 - AVX512 extensions")
 {
 #if (defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)) && !defined(EVE_NO_SIMD)
   // This shall be replaced by TTS_MAYFAIL in the case but at this point it still flags a fail 
-  TTS_CONSTEXPR_EQUAL(eve::supports_fma3              , eve::supports_fma3);
-  TTS_CONSTEXPR_EQUAL(eve::supports_bmi_well          , eve::supports_bmi_well);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bw          , eve::supports_avx512bw);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512cd          , eve::supports_avx512cd);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512dq          , eve::supports_avx512dq);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512ifma        , eve::supports_avx512ifma);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512pf          , eve::supports_avx512pf);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vl          , eve::supports_avx512vl);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512popcntdq_   , eve::supports_avx512popcntdq_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512_4fmaps_    , eve::supports_avx512_4fmaps_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vnniw_      , eve::supports_avx512vnniw_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vbmi_       , eve::supports_avx512vbmi_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bf16_       , eve::supports_avx512bf16_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512bitalg_     , eve::supports_avx512bitalg_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vbmi2_      , eve::supports_avx512vbmi2_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vnni_       , eve::supports_avx512vnni_);
-  TTS_CONSTEXPR_EQUAL(eve::supports_avx512vpintersect_, eve::supports_avx512vpintersect_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_fma3              , eve::current_abi_type::supports_fma3);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_bmi_well          , eve::current_abi_type::supports_bmi_well);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512bw          , eve::current_abi_type::supports_avx512bw);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512cd          , eve::current_abi_type::supports_avx512cd);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512dq          , eve::current_abi_type::supports_avx512dq);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512ifma        , eve::current_abi_type::supports_avx512ifma);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512pf          , eve::current_abi_type::supports_avx512pf);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vl          , eve::current_abi_type::supports_avx512vl);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512popcntdq_   , eve::current_abi_type::supports_avx512popcntdq_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512_4fmaps_    , eve::current_abi_type::supports_avx512_4fmaps_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vnniw_      , eve::current_abi_type::supports_avx512vnniw_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vbmi_       , eve::current_abi_type::supports_avx512vbmi_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512bf16_       , eve::current_abi_type::supports_avx512bf16_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512bitalg_     , eve::current_abi_type::supports_avx512bitalg_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vbmi2_      , eve::current_abi_type::supports_avx512vbmi2_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vnni_       , eve::current_abi_type::supports_avx512vnni_);
+  TTS_CONSTEXPR_EQUAL(eve::current_abi_type::supports_avx512vpintersect_, eve::current_abi_type::supports_avx512vpintersect_);
 #else
   TTS_EXPECT(true);
 #endif
@@ -119,7 +119,7 @@ TTS_CASE("Dynamic detections of API - X86")
   TTS_EXPECT(implies(eve::current_api >= eve::avx512, eve::is_supported(eve::avx512)));
 
 #if (defined(SPY_ARCH_IS_X86) || defined(SPY_ARCH_IS_AMD64)) && !defined(EVE_NO_SIMD)
-  TTS_EXPECT(implies(eve::supports_fma3, eve::is_supported(eve::fma3)));
+  TTS_EXPECT(implies(eve::current_abi_type::supports_fma3, eve::is_supported(eve::fma3)));
 #endif
 };
 
