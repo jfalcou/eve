@@ -65,6 +65,9 @@ namespace eve
   namespace _
   {
     template<typename T, sve_abi ABI>
+    inline constexpr bool use_complete_storage<T, ABI> = ((T::size() * sizeof(typename T::value_type)) >= ABI::bytes);
+
+    template<typename T, sve_abi ABI>
     inline constexpr width_type fundamental_width<T,ABI> = ABI::bytes / sizeof(T);
 
     template<typename T, sve_abi ABI>
