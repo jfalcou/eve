@@ -16,6 +16,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
+#include <eve/memory/stack_buffer.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/safe.hpp>
@@ -174,10 +175,10 @@ namespace eve::_
       }
       else
       {
-        [[maybe_unused]] Wide that = {};
-        auto                *dst = (e_t *)(&that.storage());
-        std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
-        return that;
+        // Ignored lanes are unspecified, no need to initialize them.
+        stack_buffer<Wide> buf;
+        std::memcpy((void *)(buf.ptr().get() + offset), src + offset, sizeof(e_t) * cx.count(tgt));
+        return Wide(buf.ptr());
       }
     }
   }
