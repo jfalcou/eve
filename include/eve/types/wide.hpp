@@ -1111,14 +1111,8 @@ namespace eve
   //================================================================================================
   // nofs (no frequency scaling) helpers
   //================================================================================================
-  template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  using nofs_width_t = lanes_t<nofs_width_v<T, ABI>>;
-
   template <scalar_value T>
   using nofs_wide = wide<T, nofs_width_v<T>>;
-
-  template <plain_scalar_value T>
-  using nofs_logical = logical<nofs_wide<T>>;
 }
 
 #if !defined(EVE_DOXYGEN_INVOKED)

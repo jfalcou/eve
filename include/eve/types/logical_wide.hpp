@@ -10,6 +10,8 @@
 #include <eve/arch.hpp>
 #include <eve/types/base.hpp>
 
+#include <eve/concept/invocable.hpp>
+#include <eve/types/wide.hpp>
 #include <eve/types/logical.hpp>
 #include <eve/conditional.hpp>
 #include <eve/concept/memory.hpp>
@@ -25,6 +27,8 @@
 #include <eve/detail/function/subscript.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
+#include <eve/module/core/regular/is_equal.hpp>
+#include <eve/module/core/regular/is_not_equal.hpp>
 
 #include <cstring>
 #include <concepts>
@@ -517,6 +521,12 @@ namespace eve
 
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, width_type C1, width_type C2>
   auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
+
+  //================================================================================================
+  // nofs (no frequency scaling) helpers
+  //================================================================================================
+  template <plain_scalar_value T>
+  using nofs_logical = logical<wide<T, nofs_width_v<T>>>;
 
   //================================================================================================
   //! @}

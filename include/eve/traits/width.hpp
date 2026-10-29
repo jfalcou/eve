@@ -71,7 +71,7 @@ namespace eve
     struct fundamental_width_t
     {
       template<typename... Ts>
-      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::fundamental_width_v<Ts>)...)>;
+      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::fundamental_width_v<Ts, ABI>)...)>;
     };
   }
 
@@ -107,7 +107,7 @@ namespace eve
     struct expected_width_t
     {
       template<typename... Ts>
-      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::expected_width_v<Ts>)...)>;
+      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::expected_width_v<Ts, ABI>)...)>;
     };
   }
 
@@ -148,4 +148,7 @@ namespace eve
   template <scalar_value T>
   constexpr width_type nofs_width_v<T, x86_512_> =
     x86_512_::avx512_default_64_bytes ? expected_width_v<T, x86_512_> : expected_width_v<T, x86_256_>;
+
+  template <scalar_value T, regular_abi ABI = eve::current_abi_type>
+  using nofs_width_t = lanes_t<nofs_width_v<T>>;
 }
