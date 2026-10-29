@@ -19,10 +19,10 @@ namespace eve::_
    auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_128_>
   {
-    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm_popcnt_epi8(x);
-    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm_popcnt_epi16(x);
-    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm_popcnt_epi32(x);
-    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm_popcnt_epi64(x);
+    if      constexpr (sizeof(T) == 1 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm_popcnt_epi64(x);
     else if constexpr (current_api >= eve::ssse3)
     {
       __m128i lut  = _mm_setr_epi8(0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4);
@@ -54,10 +54,10 @@ namespace eve::_
    auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_256_>
   {
-    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi8(x);
-    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm256_popcnt_epi16(x);
-    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm256_popcnt_epi32(x);
-    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm256_popcnt_epi64(x);
+    if      constexpr (sizeof(T) == 1 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm256_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm256_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm256_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm256_popcnt_epi64(x);
     else if constexpr (current_api >= eve::avx2)
     {
       // We broadcast the 128bits LUT as it generates better codegen than using _mm256_setr_epi8
@@ -92,10 +92,10 @@ namespace eve::_
    auto popcount_(EVE_REQUIRES(avx_), O const& o, wide<T, N> x) noexcept
   requires std::same_as<abi_t<T, N>, x86_512_>
   {
-    if      constexpr (sizeof(T) == 1 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi8(x);
-    else if constexpr (sizeof(T) == 2 && supports_avx512vl && supports_avx512bitalg_  ) return _mm512_popcnt_epi16(x);
-    else if constexpr (sizeof(T) == 4 && supports_avx512vl && supports_avx512popcntdq_) return _mm512_popcnt_epi32(x);
-    else if constexpr (sizeof(T) == 8 && supports_avx512vl && supports_avx512popcntdq_) return _mm512_popcnt_epi64(x);
+    if      constexpr (sizeof(T) == 1 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm512_popcnt_epi8(x);
+    else if constexpr (sizeof(T) == 2 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512bitalg_  ) return _mm512_popcnt_epi16(x);
+    else if constexpr (sizeof(T) == 4 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm512_popcnt_epi32(x);
+    else if constexpr (sizeof(T) == 8 && eve::current_abi_type::supports_avx512vl && eve::current_abi_type::supports_avx512popcntdq_) return _mm512_popcnt_epi64(x);
     else
     {
       auto[l,h] = x.slice();

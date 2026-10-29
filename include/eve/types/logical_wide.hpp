@@ -8,6 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
+#include <eve/types/base.hpp>
 
 #include <eve/types/logical.hpp>
 #include <eve/conditional.hpp>

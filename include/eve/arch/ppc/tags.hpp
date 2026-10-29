@@ -24,16 +24,19 @@ namespace eve
     static constexpr std::size_t bytes            = 16;
     static constexpr bool        is_wide_logical  = true;
     static constexpr bool        has_defined_logical_tail = true;
-
-    template<typename Type>
-    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= 16);
-
-    template<typename Type>
-    static constexpr std::size_t expected_width = bytes / sizeof(Type);
-
-    template<typename Type>
-    static constexpr std::size_t fundamental_width = 16 / sizeof(Type);
   };
+
+  namespace _
+  {
+    template<typename T>
+    inline constexpr bool use_complete_storage<T, ppc_> = ((T::size() * sizeof(typename T::value_type)) >= 16);
+
+    template<typename T>
+    inline constexpr width_type expected_width<T, ppc_> = ppc_::bytes / sizeof(T);
+
+    template<typename T>
+    inline constexpr width_type fundamental_width<T, ppc_> = 16 / sizeof(T);
+  }
 
   //================================================================================================
   // Dispatching tag for V*X SIMD implementation

@@ -45,7 +45,7 @@ namespace eve::_
   extern emulated_ hardware_abi_of;
 
   template<typename T>
-  using expected_abi_t = decltype(_::hardware_abi_of<T, eve::current_abi_type::template expected_width<T>>);
+  using expected_abi_t = decltype(_::hardware_abi_of<T, _::expected_width<T, eve::current_abi_type>>);
 
   //================================================================================================
   // Checks if a Type is supported on a given architecture or if we should emulate it
@@ -56,7 +56,7 @@ namespace eve::_
 
   template<typename T>
   concept should_emulate = !eve::product_type<T> &&
-  (     !supports_simd
+  (     !eve::platform::supports_simd
     ||  !supported_simd_type<T>
     ||  std::same_as<eve::_::expected_abi_t<T>, emulated_>
     ||  should_emulate_v<T>);
@@ -70,7 +70,7 @@ namespace eve::_
 
   template<typename T, std::ptrdiff_t width>
   concept should_aggregate = !eve::product_type<T> && !should_emulate<T> &&
-  (width > eve::current_abi_type::template expected_width<T>)
+  (width > _::expected_width<T, eve::current_abi_type>)
    && should_aggregate_v<T,width>;
 
   //================================================================================================

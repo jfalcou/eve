@@ -54,18 +54,18 @@ namespace eve
 
   namespace _
   {
-    template<typename T>
+    template<typename T, rvv_abi ABI>
     inline constexpr width_type rvv_vector_size = (ABI::bits / ABI::max_lmul) * sizeof(T) / 8;
   
     // Work in terms of vector intrinsics types
     template<typename T, rvv_abi ABI>
     inline constexpr bool use_complete_storage<T,ABI> = ((T::size() * sizeof(typename T::value_type))
-                                     >= rvv_vector_size<typename T::value_type> / 8);
+                                     >= rvv_vector_size<typename T::value_type, ABI> / 8);
     
     template<typename T, rvv_abi ABI>
-    inline constexpr width_type fundamental_width<T,ABI> = rvv_vector_size<T> / sizeof(T) / 8;
+    inline constexpr width_type fundamental_width<T,ABI> = rvv_vector_size<T, ABI> / sizeof(T) / 8;
   
     template<typename T, rvv_abi ABI>
-    inline constexpr width_type expected_width<T,ABI> = (ABI::bits / ABI::max_lmul) / 8 / sizeof(T) * max_lmul;
+    inline constexpr width_type expected_width<T,ABI> = (ABI::bits / ABI::max_lmul) / 8 / sizeof(T) * ABI::max_lmul;
   }
 }

@@ -122,16 +122,16 @@ namespace eve
     extern width_type fundamental_width;
 
     template<typename T>
-    inline constexpr width_type expected_width<T,emulated_> = bytes / sizeof(T);
+    inline constexpr width_type expected_width<T,emulated_> = emulated_::bytes / sizeof(T);
 
     template<typename T>
-    inline constexpr width_type fundamental_width<T, emulated_> = bytes / sizeof(T);
+    inline constexpr width_type fundamental_width<T, emulated_> = emulated_::bytes / sizeof(T);
   }
 
   //================================================================================================
   // Checks if a type fills all its storage
   template<typename T>
-  inline constexpr bool use_complete_storage = _::use_complete_storage<T, T::abi_type>;
+  inline constexpr bool use_complete_storage = _::use_complete_storage<T, typename T::abi_type>;
 
   //================================================================================================
   // Checks for logical status in ABI
