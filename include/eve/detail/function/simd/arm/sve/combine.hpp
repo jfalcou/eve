@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/constant/iota.hpp>
 

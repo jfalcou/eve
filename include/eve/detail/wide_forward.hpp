@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/abi.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/arch/spec.hpp>
 #include <eve/concept/scalar.hpp>
 

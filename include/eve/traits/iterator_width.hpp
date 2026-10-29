@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/traits/value_type.hpp>
 
 namespace eve

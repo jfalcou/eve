@@ -17,7 +17,7 @@
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/pattern.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/arch/width.hpp>
 
 #include <iosfwd>
 
