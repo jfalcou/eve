@@ -13,7 +13,7 @@ namespace eve::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( spy::simd_instruction_set.width >= 64)
-  inline constexpr auto hardware_abi_of<T,Cardinal> = riscv_{};
+  extern riscv_ hardware_abi_of<T,Cardinal>;
 
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( width_in_bits<T,Cardinal> > riscv_::bits )

@@ -12,7 +12,7 @@
 #include "nanobench.h"
 
 #include <eve/module/core/regular/load.hpp>
-#include <eve/traits/width.hpp>
+#include <eve/arch/width.hpp>
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -83,7 +83,7 @@ namespace eve::bench
   template<typename T>  requires( eve::simd_value<T> )
   struct split<T>
   {
-    using type = as_wide_t<T,typename width_t<T>::split_type>;
+    using type = as_wide_t<T,typename width_t<T>>::template rescale<width_v<T> / 2>;
   };
 
   template<typename... T> struct split<types<T...>>

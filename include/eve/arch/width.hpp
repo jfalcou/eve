@@ -59,16 +59,6 @@ namespace eve
     using combined_type = lanes_t<2>;
   };
 
-  namespace _ {
-
-  template <typename>
-  struct is_wide_width  : std::false_type {};
-
-  template <std::ptrdiff_t N>
-  struct is_wide_width<eve::lanes_t<N>> : std::true_type {};
-
-  }  // namespace _
-
   template<width_type Width>
   inline constexpr lanes_t<Width> const lanes = {};
 
@@ -102,17 +92,4 @@ namespace eve
     template<typename T>
     constexpr width_type cache_line_width = 64 / sizeof(T);
   }
-
-  //================================================================================================
-  //! @ingroup eve_simd_concepts
-  //! @brief concept to determine if this is width type of a wide
-  //!
-  //! @tparam T
-  //!
-  //! only true if T is instance of `eve::lanes_t`.
-  //!
-  //! This concept is needed to define some other concepts, unlikely to be useful on it's own.
-  //================================================================================================
-  template <typename T>
-  concept wide_width = _::is_wide_width<T>::value;
 }

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/arch/riscv/rvv_utils.hpp>
-#include <eve/arch/wide.hpp>
+#include <eve/types/wide.hpp>
 
 namespace eve::_
 {

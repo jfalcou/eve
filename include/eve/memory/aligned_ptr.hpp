@@ -12,6 +12,7 @@
 #include <eve/memory/is_aligned.hpp>
 #include <eve/traits/alignment.hpp>
 #include <eve/traits/element_type.hpp>
+#include <eve/traits/width.hpp>
 
 #include <compare>
 #include <concepts>
@@ -499,4 +500,10 @@ namespace eve
   struct  pointer_alignment<aligned_ptr<Type, Lanes>>
         : std::integral_constant<std::size_t,aligned_ptr<Type, Lanes>::alignment()>
   {};
+
+  //================================================================================================
+  // nofs (no frequency scaling) helpers
+  //================================================================================================
+  template <typename T>
+  using nofs_aligned_ptr = aligned_ptr<T, nofs_width_v<T>>;
 }

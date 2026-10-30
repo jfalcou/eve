@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/logical.hpp>
+#include <eve/types/logical.hpp>
 #include <eve/concept/vectorized.hpp>
 #include <eve/conditional.hpp>
 #include <eve/detail/bits.hpp>

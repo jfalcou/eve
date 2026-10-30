@@ -22,18 +22,17 @@ namespace eve
     template <typename T, typename U>
     struct result;
 
-    template <typename T, typename U>
-    requires( requires{ typename T::combined_type; } )
+    template <simd_value T, typename U>
     struct result<T, U>
     {
-      using type = typename T::combined_type;
+      using type = typename T::template rescale<(width_v<T> * 2)>;
     };
 
-    template <typename T, typename U>
-    requires( !requires{ typename T::combined_type; } && requires{ typename U::combined_type; } )
+    template <typename T, simd_value U>
+    requires( !simd_value<T> )
     struct result<T, U>
     {
-      using type = typename U::combined_type;
+      using type = typename U::template rescale<(width_v<U> * 2)>;
     };
 
     template<eve::value T, eve::value U>

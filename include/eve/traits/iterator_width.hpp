@@ -12,42 +12,29 @@
 
 namespace eve
 {
-  namespace _
-  {
-    template <typename T>
-    constexpr auto iterator_width_impl()
-    {
-      if constexpr ( requires { T::iterator_width(); } ) return decltype(T::iterator_width()){};
-      else                                                  return expected_width_t<value_type_t<T>>{};
-    }
-  }
-
   //================================================================================================
-  //! @addtogroup eve_traits
+  //! @addtogroup eve_traits 
   //! @{
-  //!  @typedef iterator_width_t
+  //!   @brief Computes the fundamental width of a given type
   //!
-  //!  @tparam T Type to process
+  //!   **Required header:** `#include <eve/traits/iteartor_width.hpp>`
   //!
-  //!  @brief A meta-function that returns a width for a relaxed iterator/range.
-  //!         If T defines a nested static function `iterator_width()` (which should return eve::lanes_t)
-  //!         - returns it's return type.
-  //!         Otherwise returns `expected_width_t<value_type_t<T>>`.
+  //!   @note For aligned_ptr we return expected_width.
   //!
-  //!  *NOTE*: for aligned_ptr we return expected_width.
   //!
-  //!  **Required header**: `#include <eve/traits/iterator_width.hpp>`,
-  //!                       `#include <eve/traits.hpp>`
-  //!   @code{.cpp}
-  //!   template<typename T>
-  //!   inline constexpr auto iterator_width_v = iterator_width<T>::value;
-  //!   @endcode
+  //!   Returns a width for a relaxed iterator/range.
+  //!         If T defines a nested static constexpr function `iterator_width()` (which should return a eve::width_type)
+  //!         - returns the value.
+  //!         - returns `expected_width_v<value_type_t<T>>` otherwise.
+  //!
+  //!   @tparam Type  Type of value to assess
+  //!
   //! @}
   //================================================================================================
-
   template <typename T>
-  using iterator_width_t = decltype(_::iterator_width_impl<T>());
+  inline constexpr width_type iterator_width_v = expected_width_v<value_type_t<T>>;
 
-  template <typename T>
-  constexpr width_type iterator_width_v = iterator_width_t<T>::value;
+  template<typename T>
+  requires requires{ typename std::integral_constant<width_type, T::iterator_width()>; }
+  inline constexpr width_type iterator_width_v<T> = T::iterator_width();
 }

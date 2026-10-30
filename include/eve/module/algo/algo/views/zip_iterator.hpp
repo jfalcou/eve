@@ -301,7 +301,7 @@ namespace eve::algo::views
   {
     using base = _::zip_iterator_common<I, Is...>;
 
-    static_assert((std::same_as<iterator_width_t<I>, iterator_width_t<Is>> && ...));
+    static_assert(((iterator_width_v<I> == iterator_width_v<Is>) && ...));
 
     using base::base;
 
@@ -355,7 +355,7 @@ namespace eve::algo::views
       }
     }
 
-    static iterator_width_t<I> iterator_width() { return{}; }
+    static constexpr width_type iterator_width() { return iterator_width_v<I>; }
 
     template <typename _Width>
     EVE_ABI auto width_cast(_Width N) const

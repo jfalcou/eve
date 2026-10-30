@@ -11,7 +11,6 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/constant/mzero.hpp>
-#include <eve/module/core/regular/logical_not.hpp>
 #include <eve/traits/as_logical.hpp>
 
 namespace eve
