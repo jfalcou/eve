@@ -94,6 +94,8 @@ TTS_CASE("Static detections of API - ARM")
 
 TTS_CASE("Static detections of API - RISCV")
 {
+  // Tautology to avoid empty test case on RVV
+  TTS_CONSTEXPR_EXPECT(implies(eve::current_api >= eve::rvv, eve::current_api >= eve::rvv));
 #if !defined(SPY_ARCH_IS_RISCV)
   TTS_CONSTEXPR_EXPECT_NOT(eve::current_api == eve::rvv);
 #endif
