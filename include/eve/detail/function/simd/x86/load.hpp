@@ -182,7 +182,7 @@ namespace eve::_
       {
         if constexpr( c == category::int64x4 )
           that = _mm256_maskload_epi64((long long const int *)p, mask);
-        if constexpr( c == category::uint64x4 )
+        else if constexpr( c == category::uint64x4 )
           that = _mm256_maskload_epi64((long long const int *)p, mask);
         else if constexpr( c == category::int64x2 )
           that = _mm_maskload_epi64((long long const int *)p, mask);
