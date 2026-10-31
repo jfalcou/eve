@@ -83,7 +83,7 @@ namespace eve::bench
   template<typename T>  requires( eve::simd_value<T> )
   struct split<T>
   {
-    using type = as_wide_t<T,typename width_t<T>::split_type>;
+    using type = as_wide_t<T,width_v<T>/2>;
   };
 
   template<typename... T> struct split<types<T...>>
