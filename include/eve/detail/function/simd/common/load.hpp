@@ -227,6 +227,14 @@ namespace eve::_
         return load_cx_(cx, src, tgt);
       }
     }
+    else if constexpr (match(categorize<Wide>(), category::int_))
+    {
+      using wide_uint_t = as_uinteger_t<Wide>;
+      using uint_t      = element_type_t<wide_uint_t>;
+
+      auto r = load_common(api, bit_cast_alternative(cx, as<uint_t>{}), ptr_cast<uint_t const>(src), as<wide_uint_t>{});
+      return bit_cast(r, tgt);
+    }
     else if constexpr (requires { load_impl(api, cx, src, tgt); })
     {
       // If there's a backend that can handle the load along with the condition,

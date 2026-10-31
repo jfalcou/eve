@@ -101,6 +101,7 @@ namespace eve::_
   {
     using r_t = wide<T, N>;
     constexpr bool has_fp16 = _::supports_fp16_vector_ops;
+    constexpr auto c        = categorize<r_t>();
 
     if constexpr (C::is_complete)
     {
@@ -116,8 +117,7 @@ namespace eve::_
         if constexpr( C::has_alternative ) return r_t {cond.alternative};
         else return vs;
       };
-      auto           mask = cond.mask(as<r_t> {}).storage().value;
-      constexpr auto c    = categorize<r_t>();
+      auto mask = cond.mask(as<r_t> {}).storage().value;
 
       if constexpr( c == category::float64x8 ) return _mm512_mask_loadu_pd(src(that), mask, p);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_loadu_pd(src(that), mask, p);
@@ -140,84 +140,42 @@ namespace eve::_
         if constexpr (has_fp16) return _mm_castsi128_ph(_mm_mask_loadu_epi16(_mm_castph_si128(src(that)), mask, p));
         else                    return _mm_mask_loadu_epi16(src(that), mask, p);
       }
-      else if constexpr( c == category::int64x8 ) return _mm512_mask_loadu_epi64(src(that), mask, p);
-      else if constexpr( c == category::int64x4 ) return _mm256_mask_loadu_epi64(src(that), mask, p);
-      else if constexpr( c == category::int64x2 ) return _mm_mask_loadu_epi64(src(that), mask, p);
       else if constexpr( c == category::uint64x8 ) return _mm512_mask_loadu_epi64(src(that), mask, p);
       else if constexpr( c == category::uint64x4 ) return _mm256_mask_loadu_epi64(src(that), mask, p);
       else if constexpr( c == category::uint64x2 ) return _mm_mask_loadu_epi64(src(that), mask, p);
-      else if constexpr( c == category::int32x16 ) return _mm512_mask_loadu_epi32(src(that), mask, p);
-      else if constexpr( c == category::int32x8 ) return _mm256_mask_loadu_epi32(src(that), mask, p);
-      else if constexpr( c == category::int32x4 ) return _mm_mask_loadu_epi32(src(that), mask, p);
-      else if constexpr( c == category::uint32x16 )
-        return _mm512_mask_loadu_epi32(src(that), mask, p);
+      else if constexpr( c == category::uint32x16 ) return _mm512_mask_loadu_epi32(src(that), mask, p);
       else if constexpr( c == category::uint32x8 ) return _mm256_mask_loadu_epi32(src(that), mask, p);
       else if constexpr( c == category::uint32x4 ) return _mm_mask_loadu_epi32(src(that), mask, p);
-      else if constexpr( c == category::int16x32 ) return _mm512_mask_loadu_epi16(src(that), mask, p);
-      else if constexpr( c == category::int16x16 ) return _mm256_mask_loadu_epi16(src(that), mask, p);
-      else if constexpr( c == category::int16x8 ) return _mm_mask_loadu_epi16(src(that), mask, p);
-      else if constexpr( c == category::uint16x32 )
-        return _mm512_mask_loadu_epi16(src(that), mask, p);
-      else if constexpr( c == category::uint16x16 )
-        return _mm256_mask_loadu_epi16(src(that), mask, p);
+      else if constexpr( c == category::uint16x32 ) return _mm512_mask_loadu_epi16(src(that), mask, p);
+      else if constexpr( c == category::uint16x16 ) return _mm256_mask_loadu_epi16(src(that), mask, p);
       else if constexpr( c == category::uint16x8 ) return _mm_mask_loadu_epi16(src(that), mask, p);
-      else if constexpr( c == category::int8x64 ) return _mm512_mask_loadu_epi8(src(that), mask, p);
-      else if constexpr( c == category::int8x32 ) return _mm256_mask_loadu_epi8(src(that), mask, p);
-      else if constexpr( c == category::int8x16 ) return _mm_mask_loadu_epi8(src(that), mask, p);
       else if constexpr( c == category::uint8x64 ) return _mm512_mask_loadu_epi8(src(that), mask, p);
       else if constexpr( c == category::uint8x32 ) return _mm256_mask_loadu_epi8(src(that), mask, p);
       else if constexpr( c == category::uint8x16 ) return _mm_mask_loadu_epi8(src(that), mask, p);
     }
+    else if constexpr( current_api == avx && match(c, category::uint32, category::uint64) )
+    {
+      using f_t = conditional_t<sizeof(T) == 8, double, float>;
+      auto  r   = load_impl(current_api, bit_cast_alternative(cond, as<f_t> {}), (f_t const *)p, as<wide<f_t, N>> {});
+      return bit_cast(r, tgt);
+    }
     else if constexpr( current_api >= avx )
     {
-      r_t            that;
-      constexpr auto c    = categorize<r_t>();
-      auto           mask = cond.mask(as<r_t> {}).bits();
+      r_t  that;
+      auto mask = cond.mask(as<r_t> {}).bits();
 
-      if constexpr( c == category::float64x4 ) that = _mm256_maskload_pd(p, mask);
-      else if constexpr( c == category::float64x2 ) that = _mm_maskload_pd(p, mask);
-      else if constexpr( c == category::float32x8 ) that = _mm256_maskload_ps(p, mask);
-      else if constexpr( c == category::float32x4 ) that = _mm_maskload_ps(p, mask);
-      else if constexpr( current_api >= avx2 )
-      {
-        if constexpr( c == category::int64x4 )
-          that = _mm256_maskload_epi64((long long const int *)p, mask);
-        if constexpr( c == category::uint64x4 )
-          that = _mm256_maskload_epi64((long long const int *)p, mask);
-        else if constexpr( c == category::int64x2 )
-          that = _mm_maskload_epi64((long long const int *)p, mask);
-        else if constexpr( c == category::uint64x2 )
-          that = _mm_maskload_epi64((long long const int *)p, mask);
-        else if constexpr( c == category::int32x8 )
-          that = _mm256_maskload_epi32((std::int32_t const *)p, mask);
-        else if constexpr( c == category::uint32x8 )
-          that = _mm256_maskload_epi32((std::int32_t const *)p, mask);
-        else if constexpr( c == category::int32x4 )
-          that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-        else if constexpr( c == category::uint32x4 )
-          that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-        else return load_common(cpu_{}, cond, p, tgt);
-      }
-      else return load_common(cpu_{}, cond, p, tgt);
+            if constexpr( c == category::float64x4 ) that = _mm256_maskload_pd(p, mask);
+      else  if constexpr( c == category::float64x2 ) that = _mm_maskload_pd(p, mask);
+      else  if constexpr( c == category::float32x8 ) that = _mm256_maskload_ps(p, mask);
+      else  if constexpr( c == category::float32x4 ) that = _mm_maskload_ps(p, mask);
+      else  if constexpr( c == category::uint64x4  ) that = _mm256_maskload_epi64((long long const *)p, mask);
+      else  if constexpr( c == category::uint64x2  ) that = _mm_maskload_epi64((long long const *)p, mask);
+      else  if constexpr( c == category::uint32x8  ) that = _mm256_maskload_epi32((std::int32_t const *)p, mask);
+      else  if constexpr( c == category::uint32x4  ) that = _mm_maskload_epi32((std::int32_t const *)p, mask);
+      else  return load_common(cpu_{}, cond, p, tgt);
 
-      if constexpr( C::has_alternative )
-      {
-        constexpr auto blender = [](auto a, auto b, auto m)
-        {
-          auto mm = typename r_t::storage_type(m.storage());
-          if constexpr( c == category::float64x4 ) return _mm256_blendv_pd(a, b, mm);
-          else if constexpr( c == category::float32x8 ) return _mm256_blendv_ps(a, b, mm);
-          else if constexpr( c == category::float64x2 ) return _mm_blendv_pd(a, b, mm);
-          else if constexpr( c == category::float32x4 ) return _mm_blendv_ps(a, b, mm);
-          else if constexpr( sizeof(a) == 32 ) return _mm256_blendv_epi8(a, b, mm);
-          else if constexpr( sizeof(a) == 16 ) return _mm_blendv_epi8(a, b, mm);
-        };
-
-        r_t alt(cond.alternative);
-        that = blender(alt, that, mask);
-      }
-
-      return that;
+      if constexpr( C::has_alternative ) return replace_ignored(that, cond, cond.alternative);
+      else                               return that;
     }
     else return load_common(cpu_{}, cond, p, tgt);
   }

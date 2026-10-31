@@ -30,20 +30,12 @@ namespace eve::_
 
             if constexpr( c == category::float32x4 )  return vld1q_f32(ptr);
       else  if constexpr( c == category::float32x2 )  return vld1_f32(ptr);
-      else  if constexpr( c == category::int64x2  )   return vld1q_s64(ptr);
-      else  if constexpr( c == category::int64x1  )   return vld1_s64(ptr);
       else  if constexpr( c == category::uint64x2 )   return vld1q_u64(ptr);
       else  if constexpr( c == category::uint64x1 )   return vld1_u64(ptr);
-      else  if constexpr( c == category::int32x4  )   return vld1q_s32(ptr);
-      else  if constexpr( c == category::int32x2  )   return vld1_s32(ptr);
       else  if constexpr( c == category::uint32x4 )   return vld1q_u32(ptr);
       else  if constexpr( c == category::uint32x2 )   return vld1_u32(ptr);
-      else  if constexpr( c == category::int16x8  )   return vld1q_s16(ptr);
-      else  if constexpr( c == category::int16x4  )   return vld1_s16(ptr);
       else  if constexpr( c == category::uint16x8 )   return vld1q_u16(ptr);
       else  if constexpr( c == category::uint16x4 )   return vld1_u16(ptr);
-      else  if constexpr( c == category::int8x16  )   return vld1q_s8(ptr);
-      else  if constexpr( c == category::int8x8   )   return vld1_s8(ptr);
       else  if constexpr( c == category::uint8x16 )   return vld1q_u8(ptr);
       else  if constexpr( c == category::uint8x8  )   return vld1_u8(ptr);
       else  if constexpr (c == category::float16x8)   return vld1q_f16(ptr);
@@ -81,20 +73,12 @@ namespace eve::_
 
               if constexpr( c == category::float32x4 )  return vld1q_f32_ex(ptr,128);
         else  if constexpr( c == category::float32x2 )  return vld1_f32_ex(ptr,64);
-        else  if constexpr( c == category::int64x2  )   return vld1q_s64_ex(ptr,128);
-        else  if constexpr( c == category::int64x1  )   return vld1_s64_ex(ptr,64);
         else  if constexpr( c == category::uint64x2 )   return vld1q_u64_ex(ptr,128);
         else  if constexpr( c == category::uint64x1 )   return vld1_u64_ex(ptr,64);
-        else  if constexpr( c == category::int32x4  )   return vld1q_s32_ex(ptr,128);
-        else  if constexpr( c == category::int32x2  )   return vld1_s32_ex(ptr,64);
         else  if constexpr( c == category::uint32x4 )   return vld1q_u32_ex(ptr,128);
         else  if constexpr( c == category::uint32x2 )   return vld1_u32_ex(ptr,64);
-        else  if constexpr( c == category::int16x8  )   return vld1q_s16_ex(ptr,128);
-        else  if constexpr( c == category::int16x4  )   return vld1_s16_ex(ptr,64);
         else  if constexpr( c == category::uint16x8 )   return vld1q_u16_ex(ptr,128);
         else  if constexpr( c == category::uint16x4 )   return vld1_u16_ex(ptr,64);
-        else  if constexpr( c == category::int8x16  )   return vld1q_s8_ex(ptr,128);
-        else  if constexpr( c == category::int8x8   )   return vld1_s8_ex(ptr,64);
         else  if constexpr( c == category::uint8x16 )   return vld1q_u8_ex(ptr,128);
         else  if constexpr( c == category::uint8x8  )   return vld1_u8_ex(ptr,64);
         else  if constexpr (c == category::float16x8)   return vld1q_f16(ptr);
