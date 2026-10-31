@@ -229,8 +229,8 @@ namespace eve::_
     }
     else if constexpr (match(categorize<Wide>(), category::int_))
     {
-      using uint_t      = std::make_unsigned_t<element_type_t<Wide>>;
-      using wide_uint_t = as_wide_t<uint_t, width_v<Wide>>;
+      using wide_uint_t = as_uinteger_t<Wide>;
+      using uint_t      = element_type_t<wide_uint_t>;
 
       auto r = load_common(api, bit_cast_alternative(cx, as<uint_t>{}), ptr_cast<uint_t const>(src), as<wide_uint_t>{});
       return bit_cast(r, tgt);
