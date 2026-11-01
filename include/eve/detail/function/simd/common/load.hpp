@@ -143,9 +143,14 @@ namespace eve::_
 
       if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {
+        if constexpr (!_::is_never_empty<C>)
+        {
+          if (cx.count(tgt) == 0) return _::alternative(cx, Wide {}, tgt);
+        }
+
         const auto res = eve::load[unsafe](src, tgt);
 
-        if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
+        if constexpr (C::has_alternative) return replace_ignored(res, drop_never_empty(cx), cx.alternative);
         else                              return res;
       }
       else
@@ -205,7 +210,11 @@ namespace eve::_
     constexpr auto aggregated = aggregated_abi<Wide>;
     constexpr auto emulated = emulated_abi<Wide>;
 
-    if constexpr (aggregated || emulated)
+    if constexpr (_::is_never_empty<C> && (C::is_complete || !is_aligned_ptr_v<DS>))
+    {
+      return load_common(api, drop_never_empty(cx), src, tgt);
+    }
+    else if constexpr (aggregated || emulated)
     {
       if constexpr (std::same_as<C, ignore_none_>)
       {
@@ -235,11 +244,11 @@ namespace eve::_
       auto r = load_common(api, bit_cast_alternative(cx, as<uint_t>{}), ptr_cast<uint_t const>(src), as<wide_uint_t>{});
       return bit_cast(r, tgt);
     }
-    else if constexpr (requires { load_impl(api, cx, src, tgt); })
+    else if constexpr (requires { load_impl(api, drop_never_empty(cx), src, tgt); })
     {
       // If there's a backend that can handle the load along with the condition,
       // we use it directly.
-      return load_impl(api, cx, src, tgt);
+      return load_impl(api, drop_never_empty(cx), src, tgt);
     }
     else if constexpr (std::same_as<C, ignore_none_>)
     {
