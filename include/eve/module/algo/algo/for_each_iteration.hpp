@@ -140,7 +140,7 @@ namespace eve::algo
         if (precise_l == l) return;
 
         eve::keep_first ignore{l - precise_l};
-        delegate.step(f, ignore, eve::index<0>);
+        delegate.step(f, eve::never_empty {ignore}, eve::index<0>);
       }
     };
 
@@ -166,7 +166,7 @@ namespace eve::algo
         if( aligned_f != aligned_l )
         {
           // first chunk, maybe partial
-          if( delegate.step(aligned_f, ignore_first, eve::index<0>) )
+          if( delegate.step(aligned_f, eve::never_empty {ignore_first}, eve::index<0>) )
             return;
           ignore_first = eve::ignore_first {0};
           aligned_f += iterator_width_v<I>;
@@ -179,7 +179,7 @@ namespace eve::algo
         }
 
         eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
-        delegate.step(aligned_l, ignore_first && ignore_last, eve::index<0>);
+        delegate.step(aligned_l, eve::never_empty {ignore_first && ignore_last}, eve::index<0>);
       }
     };
   }

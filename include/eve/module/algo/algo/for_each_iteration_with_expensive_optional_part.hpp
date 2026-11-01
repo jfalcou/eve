@@ -145,7 +145,7 @@ namespace _
       if( precise_l == l ) return;
       {
         eve::keep_first ignore {l - precise_l};
-        if( !delegate.step(f, ignore) ) { return; }
+        if( !delegate.step(f, eve::never_empty {ignore}) ) { return; }
 
         // hack to exit after the `expensive_part` without any extra checks.
         l = precise_l;
@@ -181,7 +181,7 @@ namespace _
       if( aligned_f != aligned_l )
       {
         {
-          bool first_step_res = delegate.step(aligned_f, ignore_first);
+          bool first_step_res = delegate.step(aligned_f, eve::never_empty {ignore_first});
           ignore_first        = eve::ignore_first {0};
           if( !first_step_res )
           {
@@ -203,7 +203,7 @@ namespace _
       if( aligned_l == l ) return;
       {
         eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
-        if( !delegate.step(aligned_l, ignore_first && ignore_last) ) return;
+        if( !delegate.step(aligned_l, eve::never_empty {ignore_first && ignore_last}) ) return;
         l = aligned_l; // hack that pevents comming here after the expensive part
         goto expensive_part;
       }
