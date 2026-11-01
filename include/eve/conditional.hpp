@@ -700,6 +700,11 @@ namespace eve
 
     EVE_ABI constexpr explicit never_empty(C const& c) noexcept : C(c) {}
 
+    template<typename V> EVE_ABI constexpr auto else_(V const& v) const
+    {
+      return never_empty<decltype(C::else_(v))> {C::else_(v)};
+    }
+
     template<typename T>
     EVE_ABI constexpr void check_not_empty(eve::as<T> tgt) const
     {
@@ -799,8 +804,9 @@ namespace eve
   template <eve::relative_conditional_expr C, typename Tgt>
   auto bit_cast_alternative(C c, as<Tgt> tgt)
   {
-    if constexpr (!C::has_alternative) return c;
-    else                               return c.bit_cast_alternative(tgt);
+         if constexpr (!C::has_alternative)  return c;
+    else if constexpr (_::is_never_empty<C>) return never_empty{bit_cast_alternative(drop_never_empty(c), tgt)};
+    else                                     return c.bit_cast_alternative(tgt);
   }
 
   //================================================================================================

@@ -250,6 +250,37 @@ namespace eve
   //====================================================================================================================
   //! @addtogroup eve_extensions
   //! @{
+  //!   @struct relative_conditional_advance_option
+  //!   @brief Option specification for decoration via relative conditional value and expressions, keeping
+  //!          eve::never_empty
+  //!
+  //!   **Defined in Header**
+  //!
+  //!   @code
+  //!   #include <eve/module/core.hpp>
+  //!   @endcode
+  //!
+  //!   eve::relative_conditional_advance_option behaves as eve::relative_conditional_option, except that a
+  //!   conditional wrapped in eve::never_empty is passed to the callable as is, so the callable can rely on it
+  //!   keeping at least one lane.
+  //! @}
+  //====================================================================================================================
+  struct relative_conditional_advance_option
+  {
+    EVE_ABI constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
+    {
+      return merge_prefer_first(base, options{condition_key = opt});
+    }
+
+    EVE_ABI constexpr auto default_to(auto const& base) const
+    {
+      return merge_prefer_first(options{condition_key = ignore_none}, base);
+    }
+  };
+
+  //====================================================================================================================
+  //! @addtogroup eve_extensions
+  //! @{
   //!   @struct conditional_option
   //!   @brief Option specification for decoration via conditional value and expressions
   //!
