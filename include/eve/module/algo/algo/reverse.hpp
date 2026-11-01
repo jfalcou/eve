@@ -58,7 +58,7 @@ namespace eve::algo
       // This way we can treat the range as divisible by width
 
       if (left >= width) ++two_register_steps;
-      else
+      else if (left != 0)
       {
         auto f_m      = f  + two_register_steps * width;
         auto rl_m     = rl + two_register_steps * width;
