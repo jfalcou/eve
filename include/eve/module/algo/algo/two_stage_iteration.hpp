@@ -32,6 +32,8 @@ namespace _
         while( --left_space );
       }
 
+      if( !delegate.should_run_step2() ) return true;
+
       while( f != l )
       {
         if( delegate.step_2(f) ) return true;
