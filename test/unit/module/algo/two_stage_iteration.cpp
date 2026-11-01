@@ -16,11 +16,13 @@ template<typename I> struct test_delegate
   I                base;
   std::ptrdiff_t   stop_at;
   std::vector<int> left;
+  bool             run_step2;
 
-  test_delegate(I b, std::ptrdiff_t sa, std::vector<int> l)
+  test_delegate(I b, std::ptrdiff_t sa, std::vector<int> l, bool rs2)
       : base(b)
       , stop_at(sa)
       , left(std::move(l))
+      , run_step2(rs2)
   {}
 
   std::ptrdiff_t left_for_stage1()
@@ -30,6 +32,8 @@ template<typename I> struct test_delegate
     left.erase(left.begin());
     return r;
   }
+
+  bool should_run_step2() const { return run_step2; }
 
   void fill(char *& f, std::ptrdiff_t length, char what) const
   {
@@ -64,7 +68,12 @@ template<typename I> struct test_delegate
 };
 
 std::string
-run_test(auto traits, int offset, int length, std::vector<int> left, int stop_at = -1)
+run_test(auto traits,
+         int              offset,
+         int              length,
+         std::vector<int> left,
+         int              stop_at   = -1,
+         bool             run_step2 = true)
 {
   TTS_EXPECT(length, REQUIRED);
 
@@ -77,7 +86,7 @@ run_test(auto traits, int offset, int length, std::vector<int> left, int stop_at
   auto l = f + length;
 
   auto          iteration = eve::algo::two_stage_iteration(traits, f, l);
-  test_delegate delegate(iteration.base, stop_at, std::move(left));
+  test_delegate delegate(iteration.base, stop_at, std::move(left), run_step2);
   iteration(delegate);
   return std::string(buf.data());
 }
@@ -191,6 +200,27 @@ TTS_CASE("eve.algo two_stage_iteration, main")
             "bbbb"
             "tiii",
             run(1, 16, {5, 3}));
+};
+
+TTS_CASE("eve.algo two_stage_iteration, should not run step 2")
+{
+  auto run = [](auto traits, int offset, int length, std::vector<int> left)
+  { return run_test(traits, offset, length, std::move(left), -1, false); };
+
+  TTS_EQUAL("ittt"
+            "aaaa",
+            run(eve::algo::traits {}, 1, 16, {5, 3}));
+
+  TTS_EQUAL("ittt"
+            "aaaa"
+            "aaaa",
+            run(eve::algo::traits {}, 1, 16, {10, 3}));
+
+  TTS_EQUAL("aaaa",
+            run(eve::algo::traits {eve::algo::no_aligning}, 0, 10, {5, 3}));
+
+  TTS_EQUAL("_",
+            run(eve::algo::traits {eve::algo::no_aligning}, 1, 6, {3}));
 };
 
 } // namespace

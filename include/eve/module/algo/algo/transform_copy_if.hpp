@@ -43,6 +43,11 @@ namespace eve::algo
         }
 
         
+        bool should_run_step2() const
+        {
+          return of != ol;
+        }
+
         bool step_1(auto f)
         {
           auto loaded = eve::load(f);
