@@ -9,7 +9,7 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/arch/abi_traits.hpp>
+#include <eve/arch/abi.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
@@ -133,7 +133,7 @@ namespace eve::_
       else  return fma(a, b, -c);
     }
     // REGULAR ---------------------
-    else if constexpr (supports_hardware_fma && (std::same_as<T, float> || std::same_as<T, double>))
+    else if constexpr (eve::platform::supports_hardware_fma && (std::same_as<T, float> || std::same_as<T, double>))
     {
       return std::fma(a, b, -c);
     }

@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/concept/vectorizable.hpp>
 #include <eve/detail/category.hpp>

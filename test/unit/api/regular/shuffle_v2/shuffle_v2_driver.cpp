@@ -80,7 +80,7 @@ TTS_CASE("shuffle_driver with lambdas")
   shuffle(eve::wide<std::uint16_t> {}, formula);
   shuffle(eve::wide<std::uint8_t> {}, eve::lanes<2>, formula);
 
-  if( !eve::supports_simd )
+  if( !eve::platform::supports_simd )
   {
     TTS_PASS(""); // not calling the callback
   }
@@ -88,7 +88,7 @@ TTS_CASE("shuffle_driver with lambdas")
 
 TTS_CASE("shuffle_driver propagates not found")
 {
-  if( !eve::supports_simd )
+  if( !eve::platform::supports_simd )
   {
     // no such thing as "not found on emulated"
     TTS_PASS("");
@@ -214,7 +214,7 @@ TTS_CASE_TPL("Check shuffle_driver, half", eve::test::simd::all_types)
 TTS_CASE_TPL("Check shuffle_driver, bundle", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
-  if constexpr( !eve::supports_simd || T::size() == 1 )
+  if constexpr( !eve::platform::supports_simd || T::size() == 1 )
   {
     // separate test
     TTS_PASS("");
@@ -258,7 +258,7 @@ TTS_CASE_TPL("Check simplifcation is used", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   // previous tests is enough
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;
@@ -315,7 +315,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   if( T::size() < 4 || eve::aggregated_abi<T> || eve::current_api == eve::neon
-      || !eve::supports_simd )
+      || !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;

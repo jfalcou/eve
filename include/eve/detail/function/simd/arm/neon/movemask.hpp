@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/logical.hpp>
+#include <eve/types/logical.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>

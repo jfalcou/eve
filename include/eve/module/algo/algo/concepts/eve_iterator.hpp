@@ -37,7 +37,8 @@ namespace eve::algo
    template <typename I>
   concept iterator =
     requires(I) {
-      { std::remove_cvref_t<I>::iterator_width() } -> wide_width;
+      { std::remove_cvref_t<I>::iterator_width() } -> std::convertible_to<width_type>;
+      requires is_valid_width<std::remove_cvref_t<I>::iterator_width()>;
       typename std::remove_cvref_t<I>::value_type;
     } &&
     std::totally_ordered_with<I, partially_aligned_t<I>> &&

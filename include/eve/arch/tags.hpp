@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/width.hpp>
+
 #include <eve/arch/cpu/tags.hpp>
 
 #include <eve/arch/x86/tags.hpp>

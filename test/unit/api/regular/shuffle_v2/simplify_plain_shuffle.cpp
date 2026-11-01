@@ -79,7 +79,7 @@ simplify_test()
 
 TTS_CASE("Check simplification, types")
 {
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;
@@ -168,7 +168,7 @@ simplify_test_pad_to_fundamental()
 
 TTS_CASE("Check simplification, pad to fundamental")
 {
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;
@@ -206,7 +206,7 @@ TTS_CASE("Check upscale_pattern")
 
 TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
 {
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;
@@ -226,7 +226,7 @@ TTS_CASE("Check simplification, pad pattern to fundamental and upscale")
 
 TTS_CASE("Check simplification, upscale")
 {
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;
@@ -234,9 +234,9 @@ TTS_CASE("Check simplification, upscale")
   else
   {
     using up_wide =
-        std::conditional_t<eve::supports_simd, eve::wide<std::uint16_t>, eve::wide<std::uint8_t>>;
+        std::conditional_t<eve::platform::supports_simd, eve::wide<std::uint16_t>, eve::wide<std::uint8_t>>;
 
-    simplify_test<eve::wide<std::uint8_t>, 1, up_wide, eve::supports_simd ? 1 : 2>(
+    simplify_test<eve::wide<std::uint8_t>, 1, up_wide, eve::platform::supports_simd ? 1 : 2>(
         [](int i, int size) -> std::ptrdiff_t
         {
           int group_i  = (size - i - 1) / 2;
@@ -250,7 +250,7 @@ TTS_CASE("Check simplification, upscale")
 
 TTS_CASE("Check simplification, 2 register")
 {
-  if constexpr( !eve::supports_simd )
+  if constexpr( !eve::platform::supports_simd )
   {
     TTS_PASS("");
     return;

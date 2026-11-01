@@ -295,7 +295,7 @@ TTS_CASE_TPL("width/type manipulation", algo_test::selected_types)
     eve::algo::traits(eve::algo::force_width<width_n{}()>), v);
 
     using I = decltype(processed.begin());
-    TTS_TYPE_IS(eve::iterator_width_t<I>, width_n);
+    TTS_EQUAL(eve::iterator_width_v<I>, width_n::value);
   }
 
   {

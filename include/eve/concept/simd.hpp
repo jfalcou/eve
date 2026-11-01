@@ -7,20 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/spec.hpp>
+#include <eve/detail/wide_forward.hpp>
 #include <eve/concept/scalar.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/traits/element_type.hpp>
 
 namespace eve
 {
-  inline namespace EVE_ABI_NAMESPACE
-  {
-    template<arithmetic_scalar_value Type, width_type Width>
-    requires (is_valid_width<Width>)
-    struct wide;
-  }
-
   namespace _
   {
     template<typename T>
@@ -44,8 +37,6 @@ namespace eve
 
   template<typename T>
   concept product_simd_value = arithmetic_simd_value<T> && eve::product_type<element_type_t<T>>;
-
-  template<typename Type> struct logical;
 
   //================================================================================================
   //! @ingroup eve_simd_concepts

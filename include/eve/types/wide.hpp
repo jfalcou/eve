@@ -7,10 +7,11 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
-#include <eve/arch/cpu/base.hpp>
-#include <eve/arch/expected_width.hpp>
-#include <eve/arch/spec.hpp>
+#include <eve/arch.hpp>
+#include <eve/traits/width.hpp>
+#include <eve/traits/as_register.hpp>
+#include <eve/types/base.hpp>
+
 #include <eve/concept/combinable.hpp>
 #include <eve/concept/invocable.hpp>
 #include <eve/concept/memory.hpp>
@@ -47,24 +48,15 @@
 
 #include <type_traits>
 
-namespace eve::_
-{
-  template<typename T, width_type N>
-  struct wide_split_type_helper
-  { };
-
-  template<typename T, width_type N>
-  requires(N > 1)
-  struct wide_split_type_helper<T, N>
-  {
-    //! Type representing a wide of the same type but with a width half the size
-    using split_type = wide<T, (N/2)>;
-  };
-}
-
 #if !defined(EVE_DOXYGEN_INVOKED)
 namespace eve
 {
+  namespace _
+  {
+    template<typename T, width_type Width>
+    using as_wide_storage_t = wide_storage<as_register_t<T, Width, abi_t<T, Width>>>;
+  }
+
 inline namespace EVE_ABI_NAMESPACE
 {
 #else
@@ -90,10 +82,9 @@ namespace eve
   template<arithmetic_scalar_value Type, width_type Width>
   requires (is_valid_width<Width>)
   struct EVE_MAY_ALIAS EVE_STRUCT_ABI wide
-      : _::wide_split_type_helper<Type, Width>,
-        _::wide_storage<as_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>
+      : _::as_wide_storage_t<translate_t<Type>, Width>
   {
-    using storage_base = _::wide_storage<as_register_t<translate_t<Type>, Width, abi_t<translate_t<Type>, Width>>>;
+    using storage_base = _::as_wide_storage_t<translate_t<Type>, Width>; 
 
     //! The type stored in the register.
     using value_type = Type;
@@ -110,14 +101,8 @@ namespace eve
     //! The type used for this register storage
     using storage_type = typename storage_base::storage_type;
 
-    //! Type describing the size of the current wide
-    // using width_type = lanes_t<Width>;
-
     //! Opt-in for like concept
     using is_like = value_type;
-
-    //! Type representing a wide of the same element type but twice the size
-    using combined_type = wide<Type, Width * 2>;
 
     //! @brief Generates a eve::wide from a different type `T` and width `N`.
     //! If unspecified, `N` is computed as `expected_width_v<T>`.
@@ -1066,6 +1051,7 @@ namespace eve
       }
     }
   };
+
   //================================================================================================
   //! @}
   //================================================================================================
@@ -1115,6 +1101,19 @@ namespace eve
 #else
 }
 #endif
+
+// The width (number of lanes) of a wide is its compile-time `Width`.
+namespace eve
+{
+  template<typename Type, width_type Width>
+  inline constexpr width_type width_v<wide<Type, Width>> = Width;
+
+  //================================================================================================
+  // nofs (no frequency scaling) helpers
+  //================================================================================================
+  template <scalar_value T>
+  using nofs_wide = wide<T, nofs_width_v<T>>;
+}
 
 #if !defined(EVE_DOXYGEN_INVOKED)
 //================================================================================================

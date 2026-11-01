@@ -21,7 +21,7 @@ T sveindex(eve::element_type_t<T> start, eve::element_type_t<T> step)
 
   if constexpr( aggregated_abi<T> )
   {
-    using half_T = T::split_type;
+    using half_T = typename T::template rescale<(width_v<T> / 2)>;
 
     half_T lo = sveindex<half_T>(start, step);
     half_T hi = sveindex<half_T>(start + step * half_T::size(), step);
