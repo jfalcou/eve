@@ -16,7 +16,7 @@
 namespace eve
 {
   template<typename Options>
-  struct load_t : relative_conditional_callable<load_t, Options, unsafe_option>
+  struct load_t : relative_conditional_advance_callable<load_t, Options, unsafe_option>
   {
     template<_::data_source Ptr>
     EVE_ABI wide_value_type_t<Ptr> operator()(Ptr ptr) const noexcept

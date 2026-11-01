@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
+#include "unit/memory/never_empty_test.hpp"
 #include "unit/memory/page.hpp"
 
 #include <array>
@@ -61,52 +62,52 @@ TTS_CASE_TPL( "Check load to wides from unaligned pointer", eve::test::simd::all
 
     TTS_AND_THEN("load is applied on unaligned pointer for a specific width")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](ptr, lanes)               , full_ref          );
-      TTS_EQUAL((eve::load[il](ptr  , lanes) &  ml.mask() )           , ignore_last_ref   );
-      TTS_EQUAL((eve::load[i1](ptr  , lanes) &  m1.mask() )           , ignore_first_ref  );
-      TTS_EQUAL((eve::load[kf](ptr  , lanes) &  mkf.mask())           , keep_first_ref    );
-      TTS_EQUAL((eve::load[kl](ptr  , lanes) &  mkl.mask())           , keep_last_ref     );
-      TTS_EQUAL((eve::load[kb](ptr  , lanes) &  mkb.mask())           , keep_between_ref  );
-      TTS_EQUAL((eve::load[ie](ptr  , lanes) &  mie.mask())           , ignore_ext_ref    );
-      TTS_EQUAL((eve::load[eve::ignore_all](ptr, lanes) & mia.mask()) , T{0}              );
+      TTS_EQUAL(test_load[eve::ignore_none](ptr, lanes)               , full_ref          );
+      TTS_EQUAL((test_load[il](ptr  , lanes) &  ml.mask() )           , ignore_last_ref   );
+      TTS_EQUAL((test_load[i1](ptr  , lanes) &  m1.mask() )           , ignore_first_ref  );
+      TTS_EQUAL((test_load[kf](ptr  , lanes) &  mkf.mask())           , keep_first_ref    );
+      TTS_EQUAL((test_load[kl](ptr  , lanes) &  mkl.mask())           , keep_last_ref     );
+      TTS_EQUAL((test_load[kb](ptr  , lanes) &  mkb.mask())           , keep_between_ref  );
+      TTS_EQUAL((test_load[ie](ptr  , lanes) &  mie.mask())           , ignore_ext_ref    );
+      TTS_EQUAL((test_load[eve::ignore_all](ptr, lanes) & mia.mask()) , T{0}              );
     }
 
     TTS_AND_THEN("load is applied on unaligned constant pointer for a specific width")
     {
-      TTS_EQUAL(eve::load[eve::ignore_none](const_ptr, lanes)               , full_ref        );
-      TTS_EQUAL((eve::load[il](const_ptr, lanes) & ml.mask() )              , ignore_last_ref );
-      TTS_EQUAL((eve::load[i1](const_ptr, lanes) & m1.mask() )              , ignore_first_ref);
-      TTS_EQUAL((eve::load[kf](const_ptr, lanes) & mkf.mask())              , keep_first_ref  );
-      TTS_EQUAL((eve::load[kl](const_ptr, lanes) & mkl.mask())              , keep_last_ref   );
-      TTS_EQUAL((eve::load[kb](const_ptr, lanes) & mkb.mask())              , keep_between_ref);
-      TTS_EQUAL((eve::load[ie](const_ptr, lanes) & mie.mask())              , ignore_ext_ref  );
-      TTS_EQUAL((eve::load[eve::ignore_all](const_ptr, lanes) & mia.mask()) , T{0}            );
+      TTS_EQUAL(test_load[eve::ignore_none](const_ptr, lanes)               , full_ref        );
+      TTS_EQUAL((test_load[il](const_ptr, lanes) & ml.mask() )              , ignore_last_ref );
+      TTS_EQUAL((test_load[i1](const_ptr, lanes) & m1.mask() )              , ignore_first_ref);
+      TTS_EQUAL((test_load[kf](const_ptr, lanes) & mkf.mask())              , keep_first_ref  );
+      TTS_EQUAL((test_load[kl](const_ptr, lanes) & mkl.mask())              , keep_last_ref   );
+      TTS_EQUAL((test_load[kb](const_ptr, lanes) & mkb.mask())              , keep_between_ref);
+      TTS_EQUAL((test_load[ie](const_ptr, lanes) & mie.mask())              , ignore_ext_ref  );
+      TTS_EQUAL((test_load[eve::ignore_all](const_ptr, lanes) & mia.mask()) , T{0}            );
     }
 
     if constexpr(T::size() == eve::expected_width_v<v_t>)
     {
       TTS_AND_THEN("load is applied on unaligned pointer for default width")
       {
-        TTS_EQUAL(eve::load[eve::ignore_none](ptr)              , full_ref        );
-        TTS_EQUAL((eve::load[il](ptr) & ml.mask() )             , ignore_last_ref );
-        TTS_EQUAL((eve::load[i1](ptr) & m1.mask() )             , ignore_first_ref);
-        TTS_EQUAL((eve::load[kf](ptr) & mkf.mask())             , keep_first_ref  );
-        TTS_EQUAL((eve::load[kl](ptr) & mkl.mask())             , keep_last_ref   );
-        TTS_EQUAL((eve::load[kb](ptr) & mkb.mask())             , keep_between_ref);
-        TTS_EQUAL((eve::load[ie](ptr) & mie.mask())             , ignore_ext_ref  );
-        TTS_EQUAL((eve::load[eve::ignore_all](ptr) & mia.mask()), T{0}            );
+        TTS_EQUAL(test_load[eve::ignore_none](ptr)              , full_ref        );
+        TTS_EQUAL((test_load[il](ptr) & ml.mask() )             , ignore_last_ref );
+        TTS_EQUAL((test_load[i1](ptr) & m1.mask() )             , ignore_first_ref);
+        TTS_EQUAL((test_load[kf](ptr) & mkf.mask())             , keep_first_ref  );
+        TTS_EQUAL((test_load[kl](ptr) & mkl.mask())             , keep_last_ref   );
+        TTS_EQUAL((test_load[kb](ptr) & mkb.mask())             , keep_between_ref);
+        TTS_EQUAL((test_load[ie](ptr) & mie.mask())             , ignore_ext_ref  );
+        TTS_EQUAL((test_load[eve::ignore_all](ptr) & mia.mask()), T{0}            );
       }
 
       TTS_AND_THEN("load is applied on unaligned constant pointer for default width")
       {
-        TTS_EQUAL(eve::load[eve::ignore_none](const_ptr)              , full_ref        );
-        TTS_EQUAL((eve::load[il](const_ptr) & ml.mask() )             , ignore_last_ref );
-        TTS_EQUAL((eve::load[i1](const_ptr) & m1.mask() )             , ignore_first_ref);
-        TTS_EQUAL((eve::load[kf](const_ptr) & mkf.mask())             , keep_first_ref  );
-        TTS_EQUAL((eve::load[kl](const_ptr) & mkl.mask())             , keep_last_ref   );
-        TTS_EQUAL((eve::load[kb](const_ptr) & mkb.mask())             , keep_between_ref);
-        TTS_EQUAL((eve::load[ie](const_ptr) & mie.mask())             , ignore_ext_ref  );
-        TTS_EQUAL((eve::load[eve::ignore_all](const_ptr) & mia.mask()), T{0}            );
+        TTS_EQUAL(test_load[eve::ignore_none](const_ptr)              , full_ref        );
+        TTS_EQUAL((test_load[il](const_ptr) & ml.mask() )             , ignore_last_ref );
+        TTS_EQUAL((test_load[i1](const_ptr) & m1.mask() )             , ignore_first_ref);
+        TTS_EQUAL((test_load[kf](const_ptr) & mkf.mask())             , keep_first_ref  );
+        TTS_EQUAL((test_load[kl](const_ptr) & mkl.mask())             , keep_last_ref   );
+        TTS_EQUAL((test_load[kb](const_ptr) & mkb.mask())             , keep_between_ref);
+        TTS_EQUAL((test_load[ie](const_ptr) & mie.mask())             , ignore_ext_ref  );
+        TTS_EQUAL((test_load[eve::ignore_all](const_ptr) & mia.mask()), T{0}            );
       }
     }
   }
