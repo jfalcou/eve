@@ -48,6 +48,22 @@ void test_scatter(T const& values, M const& cond, auto ptr)
   TTS_EXPECT(std::equal(&ref[0],&ref[0]+2*T::size(),base));
 }
 
+template<typename Index, typename T>
+void test_scatter_backward(T const& values, auto* data)
+{
+  using e_t = eve::element_type_t<T>;
+  constexpr std::ptrdiff_t n = T::size();
+  eve::wide<Index, T::size()> indexes = [](auto i, auto) { return -2*static_cast<int>(i)-1; };
+
+  e_t ref [2*n];
+  std::copy(data,data+2*n,&ref[0]);
+  for( std::ptrdiff_t i = 0; i < n; ++i ) ref[2*n + indexes.get(i)] = values.get(i);
+
+  eve::scatter(values, data+2*n, indexes);
+
+  TTS_EXPECT(std::equal(&ref[0],&ref[0]+2*n,data));
+}
+
 TTS_CASE_TPL("Check eve::scatter behavior with pointer", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -60,6 +76,19 @@ TTS_CASE_TPL("Check eve::scatter behavior with pointer", eve::test::simd::all_ty
   test_scatter<std::uint32_t>(values,&data[0]);
   test_scatter<std::int64_t >(values,&data[0]);
   test_scatter<std::uint64_t>(values,&data[0]);
+};
+
+TTS_CASE_TPL("Check eve::scatter behavior with negative indexes", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  e_t data[2*T::size()];
+  for( std::size_t i = 0; i < 2*T::size(); ++i ) data[i] = e_t(99);
+  T values = [](auto i, auto) { return 2*i+1; };
+
+  test_scatter_backward<std::int16_t>(values,&data[0]);
+  test_scatter_backward<std::int32_t>(values,&data[0]);
+  test_scatter_backward<std::int64_t>(values,&data[0]);
 };
 
 TTS_CASE_TPL("Check eve::scatter behavior with pointer and mask", eve::test::simd::all_types)
