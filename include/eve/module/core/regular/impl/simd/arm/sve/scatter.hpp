@@ -18,7 +18,8 @@
 
 namespace eve::_
 {
-  // The overloaded svunpklo also takes svbool_t, which a fixed-length 8-bit register converts to
+  // Do not fold these calls into the overloaded svunpklo: clang rejects it on a fixed-length
+  // svuint8_t as ambiguous with svunpklo(svbool_t)
   template<bool High, typename T, width_type N>
   auto sve_unpack(wide<T, N> v) noexcept
   {
@@ -38,7 +39,6 @@ namespace eve::_
     }
   }
 
-  // Widen each lane to the size of U, keeping the lane order and the sign of T
   template<typename U, typename T, width_type N>
   wide<U, N> sve_widen(wide<T, N> v) noexcept
   {
@@ -88,7 +88,6 @@ namespace eve::_
     }
   }
 
-  // Store the low sizeof(E) bytes of each active lane of d at p[i]
   template<typename E, typename U, typename I, width_type N>
   void sve_scatter_truncated(E* p, logical<wide<U, N>> m, wide<U, N> d, wide<I, N> i) noexcept
   {
@@ -106,6 +105,7 @@ namespace eve::_
       auto pi = i.storage();
       auto pd = d.storage();
 
+      // svst1b has no index form, and a byte offset is the index of a 1-byte element
       if      constexpr( sizeof(E) == 1 ) svst1b_scatter_offset(pm, p, pi, pd);
       else if constexpr( sizeof(E) == 2 ) svst1h_scatter_index(pm, p, pi, pd);
       else                                svst1w_scatter_index(pm, p, pi, pd);
@@ -119,14 +119,11 @@ namespace eve::_
     using i_t  = element_type_t<Idx>;
     using s_t  = std::conditional_t<std::is_signed_v<i_t>, signed, unsigned>;
 
-    // SVE scatters 32- and 64-bit lanes, as large as the data and the index
+    // SVE scatter instructions store 32- or 64-bit data with index of the same width
     constexpr auto lane = std::max({sizeof(T), sizeof(i_t), std::size_t{4}});
 
-    // Ignore All case : nothing to write
     if      constexpr( match_option<condition_key, O, ignore_all_> ) return;
-    // A relative condition does not slice, so an aggregated wide goes through the generic cases
     else if constexpr( aggregated_abi<wide<T, N>> )          scatter.behavior(cpu_{}, opts, v, ptr, idx);
-    // Smaller data is widened to the lanes and stored truncated
     else if constexpr( sizeof(T) < lane )
     {
       using u_t = make_integer_t<sizeof(T)>;
