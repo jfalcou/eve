@@ -106,7 +106,9 @@ namespace eve::_
       auto pi = i.storage();
       auto pd = d.storage();
 
-      svst1w_scatter_index(pm, p, pi, pd);
+      if      constexpr( sizeof(E) == 1 ) svst1b_scatter_offset(pm, p, pi, pd);
+      else if constexpr( sizeof(E) == 2 ) svst1h_scatter_index(pm, p, pi, pd);
+      else                                svst1w_scatter_index(pm, p, pi, pd);
     }
   }
 
@@ -117,16 +119,14 @@ namespace eve::_
     using i_t  = element_type_t<Idx>;
     using s_t  = std::conditional_t<std::is_signed_v<i_t>, signed, unsigned>;
 
-    // SVE scatters lanes as large as the data and the index
-    constexpr auto lane = std::max(sizeof(T), sizeof(i_t));
+    // SVE scatters 32- and 64-bit lanes, as large as the data and the index
+    constexpr auto lane = std::max({sizeof(T), sizeof(i_t), std::size_t{4}});
 
     // Ignore All case : nothing to write
     if      constexpr( match_option<condition_key, O, ignore_all_> ) return;
-    // SVE scatters 32 and 64-bit lanes only
-    else if constexpr( sizeof(T) < 4 )                       scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // A relative condition does not slice, so an aggregated wide goes through the generic cases
     else if constexpr( aggregated_abi<wide<T, N>> )          scatter.behavior(cpu_{}, opts, v, ptr, idx);
-    // 32-bit data under 64-bit indexes is stored from the low half of 64-bit lanes
+    // Smaller data is widened to the lanes and stored truncated
     else if constexpr( sizeof(T) < lane )
     {
       using u_t = make_integer_t<sizeof(T)>;
