@@ -27,7 +27,7 @@ namespace eve::_
     // Unsupported value types go back to emulation
     if      constexpr(sizeof(T) < 4)                    scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Singular scatter goes  back to emulation
-    if      constexpr(N == 1)                           scatter.behavior(cpu_{}, opts, v, ptr, idx);
+    else if constexpr(N == 1)                           scatter.behavior(cpu_{}, opts, v, ptr, idx);
     // Small indexes are converted to int32
     else if constexpr(sizeof(element_type_t<Idx>) < 4)  scatter[opts](v, ptr, convert(idx, as<std::int32_t>{}));
     // Do we need to aggregate ?
