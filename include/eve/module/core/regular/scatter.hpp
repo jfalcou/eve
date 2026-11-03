@@ -98,3 +98,7 @@ struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternat
 #if defined(EVE_INCLUDE_X86_HEADER)
 #  include <eve/module/core/regular/impl/simd/x86/scatter.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_ARM_SVE_HEADER)
+#  include <eve/module/core/regular/impl/simd/arm/sve/scatter.hpp>
+#endif
