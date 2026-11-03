@@ -335,13 +335,16 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       }
     }
 
+    auto not_found = eve::unalign(haystack.begin()) + haystack_len;
+    if( haystack_main_part_l == haystack_l ) return not_found;
+
     if( auto res = small_tail(
             haystack_main_part_l, haystack_l, processed_needle.begin(), equal_fn, needle_len, nc) )
     {
       return eve::unalign(haystack.begin()) + (*res - haystack_f);
     }
 
-    return eve::unalign(haystack.begin()) + haystack_len;
+    return not_found;
   }
 
   template<relaxed_range R1, relaxed_range R2>
