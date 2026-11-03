@@ -7,5 +7,6 @@ var searchData=
   ['density_5ffor_5fcompress_5fcopy_4',['density_for_compress_copy',['../group__eve__algo__traits__dev.html#gab5c5996b8fd2b04c6fec2973204c2643',1,'eve::algo']]],
   ['drop_5falternative_5',['drop_alternative',['../group__eve__conditional.html#ga8265bd793db77b43d12988c1c297f00b',1,'eve']]],
   ['drop_5fkey_6',['drop_key',['../group__eve__algo__traits__dev.html#ga80f877764d676142f3deaeb933452916',1,'eve::algo']]],
-  ['drop_5fkey_5fif_7',['drop_key_if',['../group__eve__algo__traits__dev.html#ga6868eeae6336704cb5a614cb297acb8b',1,'eve::algo']]]
+  ['drop_5fkey_5fif_7',['drop_key_if',['../group__eve__algo__traits__dev.html#ga6868eeae6336704cb5a614cb297acb8b',1,'eve::algo']]],
+  ['drop_5fnever_5fempty_8',['drop_never_empty',['../group__eve__conditional.html#gad2dc57e39174f9504bd18e91b9053e1d',1,'eve']]]
 ];

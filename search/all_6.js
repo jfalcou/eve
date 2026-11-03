@@ -41,7 +41,8 @@ var searchData=
   ['drop_5falternative_38',['drop_alternative',['../group__eve__conditional.html#ga8265bd793db77b43d12988c1c297f00b',1,'eve']]],
   ['drop_5fkey_39',['drop_key',['../group__eve__algo__traits__dev.html#ga80f877764d676142f3deaeb933452916',1,'eve::algo']]],
   ['drop_5fkey_5fif_40',['drop_key_if',['../group__eve__algo__traits__dev.html#ga6868eeae6336704cb5a614cb297acb8b',1,'eve::algo']]],
-  ['dynamic_20dispatch_41',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
-  ['dynamic_20function_20hub_42',['Writing the dynamic function hub',['../multiarch.html#autotoc_md114',1,'']]],
-  ['dynamic_20kernels_43',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md115',1,'']]]
+  ['drop_5fnever_5fempty_41',['drop_never_empty',['../group__eve__conditional.html#gad2dc57e39174f9504bd18e91b9053e1d',1,'eve']]],
+  ['dynamic_20dispatch_42',['From static to dynamic dispatch',['../multiarch.html#autotoc_md112',1,'']]],
+  ['dynamic_20function_20hub_43',['Writing the dynamic function hub',['../multiarch.html#autotoc_md114',1,'']]],
+  ['dynamic_20kernels_44',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md115',1,'']]]
 ];

@@ -1695,6 +1695,11 @@
     <filename>structmap__store__op.html</filename>
   </compound>
   <compound kind="struct">
+    <name>eve::never_empty</name>
+    <filename>structeve_1_1never__empty.html</filename>
+    <templarg>relative_conditional_expr C</templarg>
+  </compound>
+  <compound kind="struct">
     <name>eve::algo::nothing_t</name>
     <filename>structeve_1_1algo_1_1nothing__t.html</filename>
   </compound>
@@ -4108,6 +4113,7 @@
     <class kind="struct">eve::ignore_first</class>
     <class kind="struct">eve::keep_between</class>
     <class kind="struct">eve::ignore_extrema</class>
+    <class kind="struct">eve::never_empty</class>
     <class kind="struct">eve::aligned_allocator</class>
     <class kind="struct">eve::aligned_ptr</class>
     <class kind="struct">eve::soa_ptr</class>
@@ -4276,6 +4282,13 @@
       <anchorfile>group__eve__simd__types.html</anchorfile>
       <anchor>ga85bb6815a19a31da7c066eff02b0fe51</anchor>
       <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
+    </member>
+    <member kind="function">
+      <type>constexpr C</type>
+      <name>drop_never_empty</name>
+      <anchorfile>group__eve__conditional.html</anchorfile>
+      <anchor>gad2dc57e39174f9504bd18e91b9053e1d</anchor>
+      <arglist>(C c)</arglist>
     </member>
     <member kind="function">
       <type>constexpr auto</type>
@@ -9710,6 +9723,7 @@
     <name>eve_conditional</name>
     <title>Conditional Expressions</title>
     <filename>group__eve__conditional.html</filename>
+    <namespace>eve::_</namespace>
     <class kind="struct">eve::or_</class>
     <class kind="struct">eve::if_</class>
     <class kind="struct">eve::ignore_all_</class>
@@ -9720,6 +9734,14 @@
     <class kind="struct">eve::ignore_first</class>
     <class kind="struct">eve::keep_between</class>
     <class kind="struct">eve::ignore_extrema</class>
+    <class kind="struct">eve::never_empty</class>
+    <member kind="function">
+      <type>constexpr C</type>
+      <name>eve::drop_never_empty</name>
+      <anchorfile>group__eve__conditional.html</anchorfile>
+      <anchor>gad2dc57e39174f9504bd18e91b9053e1d</anchor>
+      <arglist>(C c)</arglist>
+    </member>
     <member kind="function">
       <type>constexpr auto</type>
       <name>eve::drop_alternative</name>
