@@ -177,7 +177,8 @@ namespace _
     template<relative_conditional_expr C>
     EVE_ABI constexpr explicit top_bits(C c)
     {
-      if constexpr( !is_aggregated )
+      if constexpr( _::is_never_empty<C> ) *this = top_bits {drop_never_empty(c)};
+      else if constexpr( !is_aggregated )
         storage = _::cond_to_int<static_size, bits_per_element, storage_type>(c);
       else if constexpr( C::is_complete ) storage[0] = storage[1] = top_bits<half_logical> {c};
       else if constexpr( std::same_as<C, keep_last> )

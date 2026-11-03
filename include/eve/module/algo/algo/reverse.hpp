@@ -60,10 +60,11 @@ namespace eve::algo
       if (left >= width) ++two_register_steps;
       else if (left != 0)
       {
-        auto f_m      = f  + two_register_steps * width;
-        auto rl_m     = rl + two_register_steps * width;
-        auto loaded   = load[keep_first(left)](f_m);
-        eve::store[keep_first(left)](loaded, rl_m);
+        auto f_m       = f  + two_register_steps * width;
+        auto rl_m      = rl + two_register_steps * width;
+        auto keep_tail = never_empty {keep_first(left)};
+        auto loaded    = load[keep_tail](f_m);
+        eve::store[keep_tail](loaded, rl_m);
       }
 
       auto m = f + two_register_steps * width;

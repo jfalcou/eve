@@ -196,6 +196,21 @@ TTS_CASE_TPL("Check top_bits from ignore_*", eve::test::simd::all_types)
   }
 };
 
+TTS_CASE_TPL("Check top_bits from never_empty", eve::test::simd::all_types)
+<typename T>(tts::type<T>)
+{
+  using logical = eve::logical<T>;
+
+  logical m([](auto i, auto) { return i % 2 == 0; });
+
+  for( std::ptrdiff_t i = 1; i <= logical::size(); ++i )
+  {
+    eve::keep_first c {i};
+    TTS_EQUAL(eve::top_bits<logical>(eve::never_empty {c}), eve::top_bits<logical>(c));
+    TTS_EQUAL(eve::top_bits(m, eve::never_empty {c}), eve::top_bits(m, c));
+  }
+};
+
 //==================================================================================================
 // Check the behavior of top_bits bitwise operators
 //==================================================================================================

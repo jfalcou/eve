@@ -237,7 +237,7 @@ namespace eve
   {
     EVE_ABI constexpr auto process(auto const& base, eve::relative_conditional_expr auto opt) const
     {
-      return merge_prefer_first(base, options{condition_key = opt});
+      return merge_prefer_first(base, options{condition_key = drop_never_empty(opt)});
     }
 
     /// Default settings of eve::relative_conditional is eve::ignore_none
@@ -289,7 +289,7 @@ namespace eve
 
     EVE_ABI constexpr auto process(auto const& base, eve::conditional_expr auto opt) const
     {
-      return process(base, condition_key = opt);
+      return process(base, condition_key = drop_never_empty(opt));
     }
 
     /// Default settings of eve::conditional is eve::ignore_none
@@ -305,7 +305,7 @@ namespace eve
     EVE_ABI constexpr auto process(auto const& base, Opt opt) const
     requires( !Opt::has_alternative )
     {
-      return merge_prefer_first(base, options{condition_key = opt});
+      return merge_prefer_first(base, options{condition_key = drop_never_empty(opt)});
     }
 
     EVE_ABI constexpr auto default_to(auto const& base) const

@@ -131,8 +131,8 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
   {
     Equal equal_fn;
 
-    wide_value_type_t<I2> first_wide;
-    eve::keep_first       first_wide_ignore;
+    wide_value_type_t<I2>             first_wide;
+    eve::never_empty<eve::keep_first> first_wide_ignore;
 
     std::ptrdiff_t  long_tail_offset;
     unaligned_t<I2> long_tail_start;
@@ -141,7 +141,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     template<typename S2>
     needle_checker(I2 f, S2 l, Equal _equal)
         : equal_fn(_equal)
-        , first_wide_ignore(iterator_width_v<I2>)
+        , first_wide_ignore(eve::keep_first(iterator_width_v<I2>))
     {
       std::ptrdiff_t needle_len = l - f;
 
@@ -149,7 +149,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       // function
       if( needle_len < iterator_width_v<I2> )
       {
-        first_wide_ignore = eve::keep_first(needle_len);
+        first_wide_ignore = eve::never_empty {eve::keep_first(needle_len)};
         first_wide        = eve::load[first_wide_ignore](f);
         long_tail_start   = eve::unalign(f); // is unused, doesn't matter.
         long_tail_offset  = 0;
@@ -158,7 +158,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       else
       {
         first_wide        = eve::load(f);
-        first_wide_ignore = eve::keep_first(iterator_width_v<I2>);
+        first_wide_ignore = eve::never_empty {eve::keep_first(iterator_width_v<I2>)};
 
         // the unsigned cast removes some negative number checks.
         auto remainder   = static_cast<std::size_t>(needle_len) % iterator_width_v<I2>;
@@ -251,7 +251,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
     if( needle_len > eve::iterator_width_v<UnalignedI1> ) return {};
 
     eve::wide_value_type_t<UnalignedI1> haystack =
-        eve::load[eve::keep_first(haystack_l - small_tail_start)](small_tail_start);
+        eve::load[eve::never_empty {eve::keep_first(haystack_l - small_tail_start)}](small_tail_start);
     eve::wide_value_type_t<I2> needle_front(eve::read(needle_f));
 
     struct verify_t

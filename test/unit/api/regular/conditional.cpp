@@ -508,3 +508,40 @@ TTS_CASE("conditional/else-generator")
 
   TTS_EQUAL(eve::add[eve::if_(mask).else_(eve::zero)](lhs, rhs), ref);
 };
+
+TTS_CASE("conditional/never_empty")
+{
+  using T   = eve::wide<int, 4>;
+  auto  tgt = eve::as<T> {};
+
+  auto check = [&](auto c)
+  {
+    eve::never_empty n {c};
+
+    TTS_EQUAL(n.count(tgt), c.count(tgt));
+    TTS_EQUAL(n.offset(tgt), c.offset(tgt));
+    TTS_EQUAL(n.roffset(tgt), c.roffset(tgt));
+    TTS_EQUAL(n.mask(tgt), c.mask(tgt));
+    TTS_EQUAL(eve::top_bits<eve::logical<T>> {n}, eve::top_bits<eve::logical<T>> {c});
+
+    TTS_TYPE_IS(decltype(eve::drop_never_empty(n)), decltype(c));
+    TTS_EQUAL(eve::drop_never_empty(n), c);
+    TTS_TYPE_IS(decltype(eve::drop_never_empty(c)), decltype(c));
+
+    auto r = eve::reverse_conditional(n, tgt);
+    TTS_TYPE_IS(decltype(r), eve::never_empty<decltype(eve::reverse_conditional(c, tgt))>);
+    TTS_EQUAL(eve::drop_never_empty(r), eve::reverse_conditional(c, tgt));
+
+    TTS_TYPE_IS(decltype(eve::load[n].options()[eve::condition_key]), decltype(c));
+    TTS_TYPE_IS(decltype(eve::first_true[n].options()[eve::condition_key]), decltype(c));
+    TTS_TYPE_IS(decltype(eve::iterate_selected[n].options()[eve::condition_key]), decltype(c));
+  };
+
+  check(eve::ignore_none);
+  check(eve::keep_first(3));
+  check(eve::keep_last(1));
+  check(eve::keep_between(1, 3));
+  check(eve::ignore_first(3));
+  check(eve::ignore_last(0));
+  check(eve::ignore_extrema(1, 2));
+};

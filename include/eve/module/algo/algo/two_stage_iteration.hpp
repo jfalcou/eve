@@ -86,7 +86,7 @@ namespace _
       if( precise_l == l ) return;
 
       eve::keep_first ignore {l - precise_l};
-      delegate.tail(f, ignore);
+      delegate.tail(f, eve::never_empty {ignore});
     }
   };
 
@@ -115,7 +115,7 @@ namespace _
       if( aligned_f != aligned_l )
       {
         // first chunk, maybe partial
-        if( delegate.tail(aligned_f, ignore_first) ) return;
+        if( delegate.tail(aligned_f, eve::never_empty {ignore_first}) ) return;
 
         ignore_first = eve::ignore_first {0};
         aligned_f += iterator_width_v<I>;
@@ -126,7 +126,7 @@ namespace _
       }
 
       eve::ignore_last ignore_last {aligned_l + iterator_width_v<I> - l};
-      delegate.tail(aligned_l, ignore_first && ignore_last);
+      delegate.tail(aligned_l, eve::never_empty {ignore_first && ignore_last});
     }
   };
 

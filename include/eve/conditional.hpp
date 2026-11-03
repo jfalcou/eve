@@ -685,6 +685,70 @@ namespace eve
   }
 
   //================================================================================================
+  //! @brief Conditional wrapper stating that at least one lane is kept
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //! eve::never_empty wraps a eve::relative_conditional_expr that keeps at least one lane.
+  //! Callables that do not use this information receive the unwrapped conditional instead.
+  //!
+  //! @tparam C Type of the wrapped eve::relative_conditional_expr
+  //================================================================================================
+  template<relative_conditional_expr C> struct never_empty : C
+  {
+    static_assert(!std::same_as<C, ignore_all_>, "[eve::never_empty] ignore_all keeps no lane");
+
+    EVE_ABI constexpr explicit never_empty(C const& c) noexcept : C(c) {}
+
+    template<typename T>
+    EVE_ABI constexpr void check_not_empty(eve::as<T> tgt) const
+    {
+      EVE_ASSERT(C::count(tgt) != 0, "[eve::never_empty] No lane is kept");
+    }
+
+    template<typename T> EVE_ABI auto mask(eve::as<T> tgt) const
+    {
+      check_not_empty(tgt);
+      return C::mask(tgt);
+    }
+
+    template<typename T> EVE_ABI constexpr std::ptrdiff_t offset(eve::as<T> tgt) const
+    {
+      check_not_empty(tgt);
+      return C::offset(tgt);
+    }
+
+    template<typename T> EVE_ABI constexpr std::ptrdiff_t roffset(eve::as<T> tgt) const
+    {
+      check_not_empty(tgt);
+      return C::roffset(tgt);
+    }
+
+    template<typename T> EVE_ABI constexpr std::ptrdiff_t count(eve::as<T> tgt) const
+    {
+      check_not_empty(tgt);
+      return C::count(tgt);
+    }
+  };
+
+  //================================================================================================
+  //! @brief Returns the conditional wrapped by eve::never_empty, or `c` itself
+  //!
+  //! **Required header:** `#include <eve/conditional.hpp>`
+  //!
+  //! @param  c   eve::conditional_expr
+  //================================================================================================
+  template<typename C> EVE_ABI constexpr C drop_never_empty(C c) { return c; }
+
+  template<typename C> EVE_ABI constexpr C drop_never_empty(never_empty<C> c) { return c; }
+
+  namespace _
+  {
+    template<typename C> inline constexpr bool is_never_empty = false;
+    template<typename C> inline constexpr bool is_never_empty<never_empty<C>> = true;
+  }
+
+  //================================================================================================
   //! @brief Returns a conditional without an alternative
   //!
   //! **Required header:** `#include <eve/conditional.hpp>`
@@ -759,7 +823,8 @@ namespace eve
   template <eve::relative_conditional_expr C, typename T>
   constexpr auto reverse_conditional(C c, eve::as<T> tgt)
   {
-         if constexpr ( C::is_complete                  ) return c;
+         if constexpr ( _::is_never_empty<C>            ) return never_empty{reverse_conditional(drop_never_empty(c), tgt)};
+    else if constexpr ( C::is_complete                  ) return c;
     else if constexpr ( C::has_alternative              ) return reverse_conditional(c.base(), tgt).else_(c.alternative);
     else if constexpr ( std::same_as<C, keep_first>     ) return keep_last(c.count_);
     else if constexpr ( std::same_as<C, ignore_first>   ) return ignore_last(c.count_);
