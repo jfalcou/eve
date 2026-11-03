@@ -45,6 +45,9 @@ template<typename TraitsSupport> struct copy_if_ : TraitsSupport
     std::ptrdiff_t left_for_stage1() const { return ol - of; }
 
     EVE_ABI
+    bool should_run_step2() const { return of != ol; }
+
+    EVE_ABI
     bool step_1(auto f)
     {
       auto loaded = eve::load(f);
