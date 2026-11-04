@@ -66,7 +66,7 @@ namespace eve
 //!     2. [The operation is performed conditionally](@ref conditional).
 //!
 //!  @groupheader{External references}
-//!   *  [Wikipedia: Lambert W function](//!https://en.wikipedia.org/wiki/Lambert_W_function)
+//!   *  [Wikipedia: Lambert W function](https://en.wikipedia.org/wiki/Lambert_W_function)
 //!   *  [DLMF](https://dlmf.nist.gov/4.13)
 //!
 //!   @groupheader{Example}

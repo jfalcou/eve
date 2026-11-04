@@ -81,7 +81,7 @@ namespace eve
 //!      if you are insterested by by the signed ulp value.
 //!
 //!  @groupheader{External references}
-//!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 //!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)
 //!
 //!  @groupheader{Example}

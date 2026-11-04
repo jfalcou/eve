@@ -92,6 +92,7 @@
       </tab>
       <tab type="usergroup" visible="yes" title="Rationale">
         <tab type="user" url="@ref design_rationale" title="Design Decisions"/>
+        <tab type="user" url="@ref metaprog_rationale" title="Traits Decisions"/>
         <tab type="user" url="@ref algo_rationale" title="SIMD Algorithms"/>
       </tab>
       <tab type="user" url="@ref licence" title="Licence"/>
