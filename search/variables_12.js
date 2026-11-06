@@ -62,13 +62,8 @@ var searchData=
   ['sum_59',['sum',['https://jfalcou.github.io/kumi/group__kumi__reductions_ga3e8b585399de360c3ab55efc2fa0ed8c.html#ga3e8b585399de360c3ab55efc2fa0ed8c',1,'kumi::sum'],['https://jfalcou.github.io/kumi/group__kumi__reductions_ga3e8b585399de360c3ab55efc2fa0ed8c.html#ga3e8b585399de360c3ab55efc2fa0ed8c',1,'kumi::sum']]],
   ['sum_5fof_5fprod_60',['sum_of_prod',['../group__eve__core__accuracy.html#ga36017626c633cde2a07146d49d9ccbe7',1,'eve']]],
   ['sum_5fof_5fsquares_61',['sum_of_squares',['../group__eve__core__arithmetic.html#ga69b984ff64182f743ac046245f284168',1,'eve']]],
-  ['supports_5fdenormals_62',['supports_denormals',['../structeve_1_1platform.html#af3360ddd7198824495702e6af43c32b1',1,'eve::platform']]],
-  ['supports_5finfinites_63',['supports_infinites',['../structeve_1_1platform.html#a00079508a76ddc26da6a37103736efe1',1,'eve::platform']]],
-  ['supports_5finvalids_64',['supports_invalids',['../structeve_1_1platform.html#aa68340aa769d90df23eac41ccace3202',1,'eve::platform']]],
-  ['supports_5fnans_65',['supports_nans',['../structeve_1_1platform.html#a9d25ead24e42a5f986a811c5a80e673f',1,'eve::platform']]],
-  ['supports_5fnegative_5fzero_66',['supports_negative_zero',['../structeve_1_1platform.html#a4a992b4e125de11d8ab63fe5efe67d09',1,'eve::platform']]],
-  ['supports_5foptions_67',['supports_options',['../group__eve__extensions.html#gaf4a87d02fe2157d5848083b4ff725dc4',1,'eve']]],
-  ['swap_5fadjacent_68',['swap_adjacent',['../group__eve__core__named__shuffles.html#gadf4386e52fdcc1b41879ce39ee4a518d',1,'eve']]],
-  ['swap_5fpairs_69',['swap_pairs',['../group__eve__core__bitops.html#ga10b54df6fa2ae24f1f0d6334e2c5be1b',1,'eve']]],
-  ['swap_5franges_70',['swap_ranges',['../group__eve__algos.html#ga32ab3292a3a43722ece241c921a73cad',1,'eve::algo']]]
+  ['supports_5foptions_62',['supports_options',['../group__eve__extensions.html#gaf4a87d02fe2157d5848083b4ff725dc4',1,'eve']]],
+  ['swap_5fadjacent_63',['swap_adjacent',['../group__eve__core__named__shuffles.html#gadf4386e52fdcc1b41879ce39ee4a518d',1,'eve']]],
+  ['swap_5fpairs_64',['swap_pairs',['../group__eve__core__bitops.html#ga10b54df6fa2ae24f1f0d6334e2c5be1b',1,'eve']]],
+  ['swap_5franges_65',['swap_ranges',['../group__eve__algos.html#ga32ab3292a3a43722ece241c921a73cad',1,'eve::algo']]]
 ];

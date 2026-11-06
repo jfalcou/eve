@@ -1,0 +1,287 @@
+<!-- HTML header for doxygen 1.9.5-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>E.V.E: Metaprogramming Guidelines</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="godbolt.js"></script>
+<script type="text/javascript" src="fragment.js"></script>
+<script type="text/javascript" src="paragraph.js"></script>
+<script type="text/javascript" src="copacabana.js"></script>
+<script type="text/javascript">
+  DoxygenAwesomeParagraphLink.init()
+  DoxygenAwesomeFragmentCopyButton.init()
+  SendToGodbolt.init()
+  Copacabana.hideImplementationDefined()
+  Copacabana.labelParagraphs()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/jfalcou/eve" class="github-corner" title="View source on GitHub" target="_blank">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<!-- BEGIN TITLEAREA-->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr  style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
+  <td id="projectalign">
+   <div id="projectname">E.V.E
+   </div>
+   <div id="projectbrief">v2023.02.15</div>
+  </td>
+ </tr>
+   <tr><td colspan="2" style="padding: 20px 0px 0px 0px;">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('metaprog_rationale.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Metaprogramming Guidelines </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="md__2____w_2eve_2eve_2doc_2internals_2metaprogramming"></a></p>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-intro"></a>
+Metaprogramming tool choice</h1>
+<p>There are multiple ways to do metaprogramming in C++20. The choice made by <b>EVE</b> is to pick the tool based on <b>what the result is</b> and not on what is the most familiar to write. Results can be one of the following :</p>
+<ul>
+<li>an existing type, selected by pattern</li>
+<li>a value, selected by pattern</li>
+<li>a yes/no answer used as a constraint</li>
+<li>a value that requires real computation</li>
+<li>a brand new type</li>
+</ul>
+<p>Each case has a single preferred tool, listed below in the order in which they should be considered.</p>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-extern"></a>
+Extern variables for type matching</h1>
+<p>When the question is <em>"given these parameters, which already existing type do I get?"</em>, <b>EVE</b> uses a declared-but-never-defined <span class="tt">extern</span> variable template, specialized for each case, and reads its type with <span class="tt">decltype</span> through an alias:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> Size&gt; <span class="keyword">extern</span> no_register&lt;void&gt; sve_register;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> S&gt;                 <span class="keyword">extern</span> sve_f32_t sve_register&lt;float, S&gt;;</div>
+<div class="line"><span class="keyword">template</span>&lt;std::<span class="keywordtype">signed</span>_<span class="keywordtype">int</span>egral T&gt;        <span class="keyword">extern</span> sve_s32_t sve_register&lt;T, 4&gt;;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> S&gt;</div>
+<div class="line"><span class="keyword">using </span>sve_register_t = <span class="keyword">decltype</span>(sve_register&lt;T, S&gt;);</div>
+</div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd>extern variables can't be fully specialized.</dd></dl>
+<p>This is preferred over a <span class="tt">struct</span> with a nested <span class="tt">::type</span> or over a <span class="tt">constexpr</span>/<span class="tt">conditional_t</span> selection because:</p>
+<ul>
+<li>only the declaration of a variable is instantiated:<ul>
+<li>no class body</li>
+<li>no member lookup</li>
+<li>no definition</li>
+<li>no code generation.</li>
+</ul>
+</li>
+</ul>
+<p>This makes it cheaper to compile on a path hit by nearly every <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a></span>.</p>
+<ul>
+<li>each architecture adds its own specializations from its own header. There is no central switch to edit.</li>
+<li>overlapping specializations are diagnosed by the compiler and ordering does not matter.</li>
+<li>the variable is never defined, so any accidental runtime use is a link error.</li>
+<li>if the result type might be void, wrap it in <span class="tt">std::type_identity</span></li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="rationale-meta-extern_rules"></a>
+Rules</h2>
+<ul>
+<li>The variable is only used in unevaluated contexts (<span class="tt">decltype</span>, <span class="tt">sizeof</span>, <span class="tt">requires</span>...).</li>
+<li>Always hide the <span class="tt">decltype</span> behind an alias. Call sites should read as plain type lookups.</li>
+<li>The primary template is a sentinel (like <span class="tt">no_register&lt;void&gt;</span>), not a <span class="tt">static_assert</span>. "No answer" must stay detectable so it can be used by concepts and SFINAE.</li>
+<li>The variable <b>does not introduce a new type</b>. If the result must be built, use a type (see <a class="el" href="#rationale-meta-type" title="Types when a type is the deliverable">Types when a type is the deliverable</a>).</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-inline"></a>
+Inline variables for trait matching</h1>
+<p>When the question is <em>"given these parameters, which value do I get?"</em> and the answer comes from matching or simple computations, <b>EVE</b> uses an <span class="tt">inline constexpr</span> variable template, specialized in the same way as the extern ones:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_wide_v = <span class="keyword">false</span>;</div>
+<div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> N&gt; <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_wide_v&lt;eve::wide&lt;T, N&gt;&gt; = <span class="keyword">true</span>;</div>
+</div><!-- fragment --><p>This is preferred over a <span class="tt">struct</span> deriving from <span class="tt">std::bool_constant</span> or <span class="tt">std::integral_constant</span> because it removes a class instantiation and the <span class="tt">::value</span> indirection. It also reads as what it is: a fact about a type.</p>
+<p>It is also preferred over a constexpr function when the computation are trivial as these are parsed early by the compiler.</p>
+<h2 class="doxsection"><a class="anchor" id="rationale-meta-inline_rules"></a>
+Rules</h2>
+<ul>
+<li>Use <span class="tt">inline constexpr</span>, never a bare <span class="tt">constexpr</span>, so the variable has no per-TU copy.</li>
+<li>Name them with the <span class="tt">_v</span> suffix, and keep them as the <em>implementation</em> of a trait. Users should consume the concept (see <a class="el" href="#rationale-meta-concept" title="Concepts to expose constraints">Concepts to expose constraints</a>) when a yes/no answer is needed.</li>
+<li>If the value is the result of a real algorithm (loop, arithmetic, table), it is not matching: use a function (see <a class="el" href="#rationale-meta-consteval" title="Consteval functions for pure compile-time computation">Consteval functions for pure compile-time computation</a>).</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-concept"></a>
+Concepts to expose constraints</h1>
+<p>Concepts are how <b>EVE</b> turns a trait into a requirement on an interface. They are used to wrap inline variables, expressions, or other concepts:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">concept </span>simd_value = is_wide_v&lt;T&gt; || is_logical_wide_v&lt;T&gt;;</div>
+</div><!-- fragment --><p>They are preferred over <span class="tt">std::enable_if</span> or <span class="tt">requires</span> spelled in place because:</p>
+<ul>
+<li>they give readable names to requirements and much clearer diagnostics.</li>
+<li>they take part in overload resolution via subsumption, which makes <span class="tt">requires</span>-based specialization of both functions and variable templates possible.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="rationale-meta-concept_rules"></a>
+Rules</h2>
+<ul>
+<li>A concept is a <b>constraint</b>, not a getter: do not use it to retrieve a type or a value.</li>
+<li>Define a concept as a conjunction/disjunction of other concepts when it must be <em>more specialized</em> than them. A concept that simply wraps a boolean variable (<span class="tt">concept c = trait_v&lt;T&gt;</span>) is a single atomic constraint and does not subsume anything.</li>
+<li>Use plain wrapped traits freely when the concept is only a filter (<span class="tt">requires</span>, <span class="tt">static_assert</span>, template parameter constraint) and no ordering is needed.</li>
+<li>Constrain specializations of extern/inline variables with concepts to classify by family (<span class="tt">std::signed_integral</span>, <span class="tt">std::floating_point</span>) instead of listing types.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-consteval"></a>
+Consteval functions for pure compile-time computation</h1>
+<p>When the result is a <b>value that needs real computation</b> and must never exist at runtime, <b>EVE</b> uses a <span class="tt">consteval</span> function:</p>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">consteval</span> std::size_t best_width()</div>
+<div class="line">{</div>
+<div class="line">  <span class="comment">// loops, branches, arithmetic on numbers...</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>This is the right choice when:</p>
+<ul>
+<li>the logic is too involved to be written as a recursive or matching template.</li>
+<li>the result only has a meaning at compile time (sizes, widths, masks, table content).</li>
+<li>we want the <em>guarantee</em> that the computation is evaluated by the compiler and never generates code. A call that cannot be evaluated is a compile-time error.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="rationale-meta-consteval_rules"></a>
+Rules</h2>
+<ul>
+<li>Functions cannot take types as parameters: pass a tag (<span class="tt">as&lt;T&gt;{}</span>) when the computation depends on a type.</li>
+<li>Do not use a <span class="tt">consteval</span> function to <em>return a type</em> through <span class="tt">decltype(f())</span>. Use an extern variable (see <a class="el" href="#rationale-meta-extern" title="Extern variables for type matching">Extern variables for type matching</a>).</li>
+<li>A <span class="tt">consteval</span> function cannot be taken as a runtime function object or address. If the function may also be called with runtime inputs, it is a <span class="tt">constexpr</span> function.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-constexpr"></a>
+Constexpr functions when usable outside of traits</h1>
+<p>When the computation is useful <b>both at compile time and at runtime</b> (for example a helper used to build a constant <em>and</em> to process runtime data), <b>EVE</b> uses a <span class="tt">constexpr</span> function:</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keywordtype">bool</span> is_power_of_2(std::size_t n) { <span class="keywordflow">return</span> n &amp;&amp; !(n &amp; (n - 1)); }</div>
+</div><!-- fragment --><p>It is the difference with the previous section that matters: a <span class="tt">constexpr</span> function is a regular function that <em>may</em> be evaluated at compile time, a <span class="tt">consteval</span> function <em>must</em> be.</p>
+<h2 class="doxsection"><a class="anchor" id="rationale-meta-constexpr_rules"></a>
+Rules</h2>
+<ul>
+<li>Prefer <span class="tt">consteval</span> for anything that is a trait or a metaprogramming helper only.</li>
+<li>Use <span class="tt">constexpr</span> for utilities that are part of the general API and that are legitimately called with runtime values.</li>
+<li>Do not use <span class="tt">constexpr</span> as a way to dodge the other rules: a pattern-matching result is an extern or inline variable, not a function.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-type"></a>
+Types when a type is the deliverable</h1>
+<p>When the result <b>is</b> a type, <b>EVE</b> defines a type. This is the case when:</p>
+<ul>
+<li>several results must be provided together (<span class="tt">type</span>, <span class="tt">value</span>, helpers, names...).</li>
+<li>the result carries members, state, or needs to be inherited from.</li>
+<li>the result is a tag used for dispatch (<span class="tt">as&lt;T&gt;</span>, <span class="tt">ignore_none_</span>, decorators...).</li>
+<li>the result requires ADL or needs its own nested names.</li>
+<li>the result is an extension point for <b>external</b> use</li>
+</ul>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct </span>element_traits</div>
+<div class="line">{</div>
+<div class="line">  <span class="keyword">using </span>type = T;</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">constexpr</span> std::size_t size = <span class="keyword">sizeof</span>(T);</div>
+<div class="line">  <span class="keyword">static</span> <span class="keyword">consteval</span> <span class="keywordtype">bool</span> is_native() { <span class="comment">/* ... */</span> }</div>
+<div class="line">};</div>
+</div><!-- fragment --><p>Types are the heaviest tool: they must be instantiated, completed and looked up. They are used when what they provide cannot be expressed more cheaply, not as a default.</p>
+<h1 class="doxsection"><a class="anchor" id="rationale-meta-summary"></a>
+Summary</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">The result is...  </th><th class="markdownTableHeadNone"><b>EVE</b> uses...  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">an existing type, selected by pattern  </td><td class="markdownTableBodyNone"><span class="tt">extern</span> variable + <span class="tt">decltype</span> alias  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">a value, selected by pattern  </td><td class="markdownTableBodyNone"><span class="tt">inline constexpr</span> variable  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">a yes/no requirement on an interface  </td><td class="markdownTableBodyNone"><span class="tt">concept</span>  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">a value needing computation, compile-time only  </td><td class="markdownTableBodyNone"><span class="tt">consteval</span> function  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">a value needing computation, also at runtime  </td><td class="markdownTableBodyNone"><span class="tt">constexpr</span> function  </td></tr>
+</table>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- HTML footer for doxygen 1.8.20-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+  </ul>
+</div>
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</div> <!-- DOXYSTRAP RELATED -->
+</body>
+</html>

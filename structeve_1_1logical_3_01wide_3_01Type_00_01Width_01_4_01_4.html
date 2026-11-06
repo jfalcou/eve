@@ -161,14 +161,12 @@ using&#160;</td><td class="memItemRight"><b>abi_type</b> = <a class="el" href="g
 <tr class="memitem:adda55c086e787842f413cb78589f9a5c" id="r_adda55c086e787842f413cb78589f9a5c"><td class="memItemLeft"><a id="adda55c086e787842f413cb78589f9a5c" name="adda55c086e787842f413cb78589f9a5c"></a>
 using&#160;</td><td class="memItemRight"><b>storage_type</b> = typename storage_base::storage_type</td></tr>
 <tr class="memdesc:adda55c086e787842f413cb78589f9a5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type used for this register storage. <br /></td></tr>
-<tr class="memitem:a7e332d900d54698c21a7111d3e4c13bc" id="r_a7e332d900d54698c21a7111d3e4c13bc"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a7e332d900d54698c21a7111d3e4c13bc">bits_type</a> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt;_::make_integer_t&lt;sizeof(<a class="el" href="#a14a1a372334fc7d8e3992b57fe6001a6">translated_element_type</a>), unsigned&gt;, Width&gt;</td></tr>
-<tr class="memdesc:a7e332d900d54698c21a7111d3e4c13bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type describing the size of the current wide.  <br /></td></tr>
+<tr class="memitem:a7e332d900d54698c21a7111d3e4c13bc" id="r_a7e332d900d54698c21a7111d3e4c13bc"><td class="memItemLeft"><a id="a7e332d900d54698c21a7111d3e4c13bc" name="a7e332d900d54698c21a7111d3e4c13bc"></a>
+using&#160;</td><td class="memItemRight"><b>bits_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt;_::make_integer_t&lt;sizeof(<a class="el" href="#a14a1a372334fc7d8e3992b57fe6001a6">translated_element_type</a>), unsigned&gt;, Width&gt;</td></tr>
+<tr class="memdesc:a7e332d900d54698c21a7111d3e4c13bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the bits of the logical value. <br /></td></tr>
 <tr class="memitem:add850a104892c22e327ed011a132deac" id="r_add850a104892c22e327ed011a132deac"><td class="memItemLeft"><a id="add850a104892c22e327ed011a132deac" name="add850a104892c22e327ed011a132deac"></a>
 using&#160;</td><td class="memItemRight"><b>mask_type</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt;Type, Width&gt;</td></tr>
 <tr class="memdesc:add850a104892c22e327ed011a132deac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing the numerical value associated to the mask. <br /></td></tr>
-<tr class="memitem:abd380a08791b9d199ef844df75c7058d" id="r_abd380a08791b9d199ef844df75c7058d"><td class="memItemLeft"><a id="abd380a08791b9d199ef844df75c7058d" name="abd380a08791b9d199ef844df75c7058d"></a>
-using&#160;</td><td class="memItemRight"><b>combined_type</b> = <a class="el" href="#a25a0ef5899bdc221cf48102b9c798fef">logical</a>&lt;<a class="el" href="structeve_1_1wide.html">wide</a>&lt;Type, Width * 2&gt;&gt;</td></tr>
-<tr class="memdesc:abd380a08791b9d199ef844df75c7058d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type representing a logical wide of the same type but with a width twice the. <br /></td></tr>
 <tr class="memitem:a631d07482c8a606a1d70452355773cd4" id="r_a631d07482c8a606a1d70452355773cd4"><td class="memTemplParams" colspan="2"><a id="a631d07482c8a606a1d70452355773cd4" name="a631d07482c8a606a1d70452355773cd4"></a>
 template&lt;typename T, width_type N = expected_width_v&lt;T&gt;&gt; </td></tr>
 <tr class="memitem:a631d07482c8a606a1d70452355773cd4 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><b>rebind</b> = <a class="el" href="#a25a0ef5899bdc221cf48102b9c798fef">logical</a>&lt;<a class="el" href="structeve_1_1wide.html">wide</a>&lt;T,N&gt;&gt;</td></tr>
@@ -342,26 +340,6 @@ template&lt;typename C, typename Ct&gt; </td></tr>
 <tr class="memitem:a28c1bda76458566e049f1c9dd20463a6 template"><td class="memItemLeft">auto &amp;&#160;</td><td class="memItemRight"><b>operator&lt;&lt;</b> (std::basic_ostream&lt; C, Ct &gt; &amp;os, <a class="el" href="#a25a0ef5899bdc221cf48102b9c798fef">logical</a> const &amp;p)</td></tr>
 <tr class="memdesc:a28c1bda76458566e049f1c9dd20463a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> into a output stream. <br /></td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
-<a id="a7e332d900d54698c21a7111d3e4c13bc" name="a7e332d900d54698c21a7111d3e4c13bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e332d900d54698c21a7111d3e4c13bc">&#9670;&#160;</a></span>bits_type</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;arithmetic_scalar_value Type, width_type Width&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using eve::logical&lt; <a class="el" href="structeve_1_1wide.html">wide</a>&lt; Type, Width &gt; &gt;::bits_type = <a class="el" href="structeve_1_1wide.html">wide</a>&lt;_::make_integer_t&lt;sizeof(<a class="el" href="#a14a1a372334fc7d8e3992b57fe6001a6">translated_element_type</a>), unsigned&gt;, Width&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type describing the size of the current wide. </p>
-<p>Type representing the bits of the logical value </p>
-
-</div>
-</div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a91473a762e7401868ca8c2e0c2830e50" name="a91473a762e7401868ca8c2e0c2830e50"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a91473a762e7401868ca8c2e0c2830e50">&#9670;&#160;</a></span>logical() <span class="overload">[1/2]</span></h2>
@@ -392,9 +370,8 @@ template&lt;eve::invocable&lt; width_type, width_type &gt; Generator&gt; </div>
 
 <p>Constructs a eve::logical from a <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a>. </p>
 <p>The <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> must satisfy the following prototype:</p>
-<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t <a class="code hl_struct" href="structeve_1_1width.html">width</a>);</div>
+<div class="fragment"><div class="line">T <a class="code hl_concept" href="concepteve_1_1generator.html">generator</a>(std::ptrdiff_t index, std::ptrdiff_t width);</div>
 <div class="ttc" id="aconcepteve_1_1generator_html"><div class="ttname"><a href="concepteve_1_1generator.html">eve::generator</a></div><div class="ttdef"><b>Definition</b> generator.hpp:30</div></div>
-<div class="ttc" id="astructeve_1_1width_html"><div class="ttname"><a href="structeve_1_1width.html">eve::width</a></div><div class="ttdoc">Computes the width of a given type.</div><div class="ttdef"><b>Definition</b> width.hpp:54</div></div>
 </div><!-- fragment --><p> <br  />
 </p>
 <p>and is supposed to return the value computed from the current index and the width to store at said index.</p>

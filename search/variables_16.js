@@ -5,6 +5,7 @@ var searchData=
   ['welford_5fcovariance_2',['welford_covariance',['../group__eve__core__arithmetic.html#ga3fee14a8a396f4ac89e650e0fb0768f7',1,'eve']]],
   ['welford_5fvariance_3',['welford_variance',['../group__eve__core__arithmetic.html#ga6cfd55c36f3ce4f4137aa7b14f74f5ce',1,'eve']]],
   ['widen_4',['widen',['../group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a',1,'eve']]],
-  ['windows_5',['windows',['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
-  ['write_6',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]]
+  ['width_5fv_3c_20logical_3c_20type_20_3e_20_3e_5',['width_v&lt; logical&lt; Type &gt; &gt;',['../group__eve__simd__types.html#ga93a75b9a7e3983b876e94a6d5777271a',1,'eve']]],
+  ['windows_6',['windows',['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
+  ['write_7',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]]
 ];

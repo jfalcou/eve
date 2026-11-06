@@ -114,6 +114,7 @@ var NAVTREE =
       ] ],
       [ "Rationale", "usergroup15.html", [
         [ "Design Decisions", "design_rationale.html", null ],
+        [ "Metaprogramming Decisions", "metaprog_rationale.html", null ],
         [ "SIMD Algorithms", "algo_rationale.html", null ]
       ] ],
       [ "Licence", "licence.html", null ]

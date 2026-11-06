@@ -637,13 +637,6 @@
     <filename>structeve_1_1float16__t.html</filename>
   </compound>
   <compound kind="struct">
-    <name>eve::fundamental_width</name>
-    <filename>structeve_1_1fundamental__width.html</filename>
-    <templarg>typename Type</templarg>
-    <templarg>regular_abi ABI</templarg>
-    <base>eve::lanes_t&lt; eve::current_abi_type::template fundamental_width&lt; Type &gt; &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>eve::if_</name>
     <filename>structeve_1_1if__.html</filename>
     <templarg>typename C</templarg>
@@ -1124,7 +1117,7 @@
     <filename>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</filename>
     <templarg>arithmetic_scalar_value Type</templarg>
     <templarg>width_type Width</templarg>
-    <base>eve::_::wide_storage&lt; as_logical_register_t&lt; translate_t&lt; Type &gt;, Width, abi_t&lt; translate_t&lt; Type &gt;, Width &gt; &gt; &gt;</base>
+    <base>eve::_::wide_storage&lt; as_logical_register_t&lt; T, Width, abi_t&lt; T, Width &gt; &gt; &gt;</base>
     <member kind="typedef">
       <type>logical&lt; translate_t&lt; Type &gt; &gt;</type>
       <name>translated_element_type</name>
@@ -1172,13 +1165,6 @@
       <name>mask_type</name>
       <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
       <anchor>add850a104892c22e327ed011a132deac</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>logical&lt; wide&lt; Type, Width *2 &gt; &gt;</type>
-      <name>combined_type</name>
-      <anchorfile>structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html</anchorfile>
-      <anchor>abd380a08791b9d199ef844df75c7058d</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -1926,45 +1912,6 @@
       <anchorfile>structeve_1_1pattern__t.html</anchorfile>
       <anchor>ad209f6cc99dbfc1a50994908c70159d5</anchor>
       <arglist>(Pattern) noexcept</arglist>
-    </member>
-  </compound>
-  <compound kind="struct">
-    <name>eve::platform</name>
-    <filename>structeve_1_1platform.html</filename>
-    <member kind="variable" static="yes">
-      <type>static constexpr bool</type>
-      <name>supports_nans</name>
-      <anchorfile>structeve_1_1platform.html</anchorfile>
-      <anchor>a9d25ead24e42a5f986a811c5a80e673f</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr bool</type>
-      <name>supports_infinites</name>
-      <anchorfile>structeve_1_1platform.html</anchorfile>
-      <anchor>a00079508a76ddc26da6a37103736efe1</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr bool</type>
-      <name>supports_invalids</name>
-      <anchorfile>structeve_1_1platform.html</anchorfile>
-      <anchor>aa68340aa769d90df23eac41ccace3202</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr bool</type>
-      <name>supports_negative_zero</name>
-      <anchorfile>structeve_1_1platform.html</anchorfile>
-      <anchor>a4a992b4e125de11d8ab63fe5efe67d09</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable" static="yes">
-      <type>static constexpr bool</type>
-      <name>supports_denormals</name>
-      <anchorfile>structeve_1_1platform.html</anchorfile>
-      <anchor>af3360ddd7198824495702e6af43c32b1</anchor>
-      <arglist></arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -2863,7 +2810,6 @@
     <filename>structeve_1_1wide.html</filename>
     <templarg>arithmetic_scalar_value Type</templarg>
     <templarg>width_type Width</templarg>
-    <base>eve::_::wide_storage&lt; as_register_t&lt; translate_t&lt; Type &gt;, Width, abi_t&lt; translate_t&lt; Type &gt;, Width &gt; &gt; &gt;</base>
     <member kind="typedef">
       <type>Type</type>
       <name>value_type</name>
@@ -2907,13 +2853,6 @@
       <arglist></arglist>
     </member>
     <member kind="typedef">
-      <type>wide&lt; Type, Width *2 &gt;</type>
-      <name>combined_type</name>
-      <anchorfile>structeve_1_1wide.html</anchorfile>
-      <anchor>a759d945025b465dc7c7163d5d39e4884</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
       <type>wide&lt; T, N &gt;</type>
       <name>rebind</name>
       <anchorfile>structeve_1_1wide.html</anchorfile>
@@ -2926,48 +2865,6 @@
       <anchorfile>structeve_1_1wide.html</anchorfile>
       <anchor>a5a5d237d787f726cc9a7c6c269a24941</anchor>
       <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>storage_type const &amp;</type>
-      <name>storage</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>ae243fa6aac6a91ab5981865b306bce5d</anchor>
-      <arglist>() const &amp;noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>storage_type &amp;</type>
-      <name>storage</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>a6e5b57453be18b7ab65c76db1f3a69e1</anchor>
-      <arglist>() &amp;noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type>storage_type</type>
-      <name>storage</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>a41a9064f838f216eb9f0c2e41e13a1df</anchor>
-      <arglist>() &amp;&amp;noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>operator storage_type const &amp;</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>a9c3e7c0e98b4e52924e117c51030cbc1</anchor>
-      <arglist>() const &amp;noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>operator storage_type &amp;</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>a1fc129d7b9dd250be0d466b3450cc815</anchor>
-      <arglist>() &amp;noexcept</arglist>
-    </member>
-    <member kind="function">
-      <type></type>
-      <name>operator storage_type</name>
-      <anchorfile>structeve_1_1___1_1wide__storage.html</anchorfile>
-      <anchor>a24c364353e6976cead7dcecebdfa788e</anchor>
-      <arglist>() &amp;&amp;noexcept</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -3830,12 +3727,6 @@
     </member>
   </compound>
   <compound kind="struct">
-    <name>eve::width</name>
-    <filename>structeve_1_1width.html</filename>
-    <templarg>typename Type</templarg>
-    <base>eve::lanes_t&lt; 1 &gt;</base>
-  </compound>
-  <compound kind="struct">
     <name>eve::algo::views::zip_iterator</name>
     <filename>structeve_1_1algo_1_1views_1_1zip__iterator.html</filename>
     <templarg>typename ... Is</templarg>
@@ -4085,21 +3976,11 @@
     <name>eve::value</name>
     <filename>concepteve_1_1value.html</filename>
   </compound>
-  <compound kind="concept">
-    <name>eve::wide_width</name>
-    <filename>concepteve_1_1wide__width.html</filename>
-  </compound>
   <compound kind="namespace">
     <name>eve</name>
     <filename>namespaceeve.html</filename>
     <namespace>eve::_</namespace>
-    <class kind="struct">eve::logical&lt; T &gt;</class>
-    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
     <class kind="struct">eve::top_bits</class>
-    <class kind="struct">eve::wide</class>
-    <class kind="struct">eve::float16_t</class>
-    <class kind="struct">eve::fundamental_width</class>
-    <class kind="struct">eve::platform</class>
     <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::as</class>
     <class kind="struct">eve::as_element</class>
@@ -4136,8 +4017,10 @@
     <class kind="struct">eve::struct_support</class>
     <class kind="struct">eve::translation_of</class>
     <class kind="struct">eve::underlying_type</class>
-    <class kind="struct">eve::width</class>
-    <concept>eve::wide_width</concept>
+    <class kind="struct">eve::float16_t</class>
+    <class kind="struct">eve::logical&lt; T &gt;</class>
+    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
+    <class kind="struct">eve::wide</class>
     <concept>eve::combinable</concept>
     <concept>eve::combinable_to</concept>
     <concept>eve::conditional_expr</concept>
@@ -4193,13 +4076,6 @@
     <concept>eve::translatable</concept>
     <concept>eve::generator_from</concept>
     <member kind="typedef">
-      <type>lanes_t&lt; expected_width_v&lt; Type, ABI &gt; &gt;</type>
-      <name>expected_width_t</name>
-      <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gaca2238da980f8b3f68896597be4188b8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
       <type>decltype(unalign(std::declval&lt; T &gt;()))</type>
       <name>unaligned_t</name>
       <anchorfile>group__eve__memory.html</anchorfile>
@@ -4218,20 +4094,6 @@
       <name>common_value_t</name>
       <anchorfile>namespaceeve.html</anchorfile>
       <anchor>af8149a965ef1e4b8f73ff49e426532d6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>decltype(_::iterator_width_impl&lt; T &gt;())</type>
-      <name>iterator_width_t</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga7ae3e81e8c073ad31b70c384a2774336</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>lanes_t&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
-      <name>max_lanes_t</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga80306f1fa8a7aeb0e0bab1f7a333d976</anchor>
       <arglist></arglist>
     </member>
     <member kind="typedef">
@@ -4268,20 +4130,6 @@
       <anchorfile>group__eve__memory.html</anchorfile>
       <anchor>ga664bc5b316e0dd3be42aa4c2fd818047</anchor>
       <arglist></arglist>
-    </member>
-    <member kind="function">
-      <type>auto</type>
-      <name>operator==</name>
-      <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>ga3ef907b27509bf214214e68e2b220bf7</anchor>
-      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
-    </member>
-    <member kind="function">
-      <type>auto</type>
-      <name>operator!=</name>
-      <anchorfile>group__eve__simd__types.html</anchorfile>
-      <anchor>ga85bb6815a19a31da7c066eff02b0fe51</anchor>
-      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
     </member>
     <member kind="function">
       <type>constexpr C</type>
@@ -4410,6 +4258,20 @@
       <arglist>(Src const &amp;val, as&lt; Dst &gt;)</arglist>
     </member>
     <member kind="function">
+      <type>auto</type>
+      <name>operator==</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>ga3ef907b27509bf214214e68e2b220bf7</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_equal(a, b))</arglist>
+    </member>
+    <member kind="function">
+      <type>auto</type>
+      <name>operator!=</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>ga85bb6815a19a31da7c066eff02b0fe51</anchor>
+      <arglist>(logical&lt; wide&lt; T, Width &gt; &gt; a, logical&lt; wide&lt; U, Width &gt; &gt; b) noexcept -&gt; decltype(is_not_equal(a, b))</arglist>
+    </member>
+    <member kind="function">
       <type></type>
       <name>wide</name>
       <anchorfile>namespaceeve.html</anchorfile>
@@ -4431,10 +4293,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>constexpr width_type</type>
-      <name>nofs_width_v</name>
-      <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
+      <type>typedef</type>
+      <name>as_register_t</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>ga72515f68a5fe143d988a723969bef8f5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>typedef</type>
+      <name>as_logical_register_t</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>ga3904bba3cf182e18929a89d94de08038</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -8197,13 +8066,6 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>constexpr auto</type>
-      <name>max_lanes_v</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>gaa29d8cb3ef4de3080fef8b6277614d92</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
       <type>constexpr std::size_t</type>
       <name>max_scalar_size_v</name>
       <anchorfile>group__eve__traits.html</anchorfile>
@@ -8229,6 +8091,20 @@
       <name>condition_key</name>
       <anchorfile>group__eve__extensions.html</anchorfile>
       <anchor>ga28f160dc16e57390e8d479cc62d89af6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>nofs_width_v</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>width_v&lt; logical&lt; Type &gt; &gt;</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>ga93a75b9a7e3983b876e94a6d5777271a</anchor>
       <arglist></arglist>
     </member>
     <member kind="function">
@@ -8261,6 +8137,10 @@
   <compound kind="namespace">
     <name>literal</name>
     <filename>namespaceliteral.html</filename>
+  </compound>
+  <compound kind="namespace">
+    <name>platform</name>
+    <filename>namespaceplatform.html</filename>
   </compound>
   <compound kind="namespace">
     <name>supports</name>
@@ -8781,22 +8661,7 @@
     <name>eve_arch</name>
     <title>Architecture related Types and Helpers</title>
     <filename>group__eve__arch.html</filename>
-    <class kind="struct">eve::fundamental_width</class>
-    <class kind="struct">eve::platform</class>
-    <member kind="typedef">
-      <type>lanes_t&lt; expected_width_v&lt; Type, ABI &gt; &gt;</type>
-      <name>eve::expected_width_t</name>
-      <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>gaca2238da980f8b3f68896597be4188b8</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>constexpr width_type</type>
-      <name>eve::nofs_width_v</name>
-      <anchorfile>group__eve__arch.html</anchorfile>
-      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
-      <arglist></arglist>
-    </member>
+    <namespace>platform</namespace>
   </compound>
   <compound kind="group">
     <name>eve_core_arithmetic</name>
@@ -12449,7 +12314,6 @@
     <name>eve_simd_concepts</name>
     <title>SIMD Concepts</title>
     <filename>group__eve__simd__concepts.html</filename>
-    <concept>eve::wide_width</concept>
     <concept>eve::combinable</concept>
     <concept>eve::combinable_to</concept>
     <concept>eve::irregular_predicate</concept>
@@ -12575,13 +12439,12 @@
     <name>eve_simd_types</name>
     <title>SIMD related types</title>
     <filename>group__eve__simd__types.html</filename>
-    <namespace>eve::_</namespace>
-    <class kind="struct">eve::logical&lt; T &gt;</class>
-    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
-    <class kind="struct">eve::wide</class>
     <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::pattern_t</class>
+    <class kind="struct">eve::logical&lt; T &gt;</class>
+    <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
+    <class kind="struct">eve::wide</class>
     <class kind="struct">eve::float16_t</class>
     <member kind="function">
       <type>auto</type>
@@ -12623,6 +12486,13 @@
       <name>eve::pattern</name>
       <anchorfile>group__eve__simd__types.html</anchorfile>
       <anchor>ga61c6484edbe5ceb7f92946bc798802dd</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>eve::width_v&lt; logical&lt; Type &gt; &gt;</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>ga93a75b9a7e3983b876e94a6d5777271a</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -12993,26 +12863,11 @@
     <class kind="struct">eve::comparisons</class>
     <class kind="struct">eve::element_type</class>
     <class kind="struct">eve::underlying_type</class>
-    <class kind="struct">eve::width</class>
     <concept>eve::same_lanes_or_scalar</concept>
     <concept>eve::same_lanes_or_scalar_tuple</concept>
     <concept>eve::same_lanes</concept>
     <concept>eve::same_types</concept>
     <concept>eve::same_types_tuple</concept>
-    <member kind="typedef">
-      <type>decltype(_::iterator_width_impl&lt; T &gt;())</type>
-      <name>eve::iterator_width_t</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga7ae3e81e8c073ad31b70c384a2774336</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="typedef">
-      <type>lanes_t&lt; max_lanes_v&lt; Ts... &gt; &gt;</type>
-      <name>eve::max_lanes_t</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga80306f1fa8a7aeb0e0bab1f7a333d976</anchor>
-      <arglist></arglist>
-    </member>
     <member kind="typedef">
       <type>typename decltype(_::value_type_impl&lt; T &gt;())::type</type>
       <name>eve::value_type_t</name>
@@ -13035,10 +12890,17 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>constexpr auto</type>
-      <name>eve::max_lanes_v</name>
+      <type>typedef</type>
+      <name>eve::as_register_t</name>
       <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>gaa29d8cb3ef4de3080fef8b6277614d92</anchor>
+      <anchor>ga72515f68a5fe143d988a723969bef8f5</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>typedef</type>
+      <name>eve::as_logical_register_t</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>ga3904bba3cf182e18929a89d94de08038</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -13046,6 +12908,13 @@
       <name>eve::max_scalar_size_v</name>
       <anchorfile>group__eve__traits.html</anchorfile>
       <anchor>ga6e8aacb30e0e7798a5cf8e30f9ace681</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>constexpr width_type</type>
+      <name>eve::nofs_width_v</name>
+      <anchorfile>group__eve__traits.html</anchorfile>
+      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -13406,6 +13275,25 @@
     <docanchor file="dev_environment.html" title="Docker setup">dev_docker_setup</docanchor>
     <docanchor file="dev_environment.html" title="Running EVE docker">dev_docker_helper</docanchor>
     <docanchor file="dev_environment.html" title="Trying EVE without building it">dev_docker_eve</docanchor>
+  </compound>
+  <compound kind="page">
+    <name>metaprog_rationale</name>
+    <title>Metaprogramming Guidelines</title>
+    <filename>metaprog_rationale.html</filename>
+    <docanchor file="metaprog_rationale.html" title="/__w/eve/eve/doc/internals/metaprogramming.md">md__2____w_2eve_2eve_2doc_2internals_2metaprogramming</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Metaprogramming tool choice">rationale-meta-intro</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Extern variables for type matching">rationale-meta-extern</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Rules">rationale-meta-extern_rules</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Inline variables for trait matching">rationale-meta-inline</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Rules">rationale-meta-inline_rules</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Concepts to expose constraints">rationale-meta-concept</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Rules">rationale-meta-concept_rules</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Consteval functions for pure compile-time computation">rationale-meta-consteval</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Rules">rationale-meta-consteval_rules</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Constexpr functions when usable outside of traits">rationale-meta-constexpr</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Rules">rationale-meta-constexpr_rules</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Types when a type is the deliverable">rationale-meta-type</docanchor>
+    <docanchor file="metaprog_rationale.html" title="Summary">rationale-meta-summary</docanchor>
   </compound>
   <compound kind="page">
     <name>glossary_semantic</name>

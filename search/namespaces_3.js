@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['supports_0',['supports',['../namespacesupports.html',1,'']]]
+  ['platform_0',['platform',['../namespaceplatform.html',1,'']]]
 ];

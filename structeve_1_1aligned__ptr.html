@@ -242,13 +242,13 @@ Related Symbols</h2></td></tr>
 <tr class="memitem:ac2f686e634604536ddbdcfce629887f3 template"><td class="memItemLeft"><a class="el" href="#a243a4819a3e6659e3096adcfb4ed366a">aligned_ptr</a>&lt; Type &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac2f686e634604536ddbdcfce629887f3">as_aligned</a> (Type *ptr) noexcept</td></tr>
 <tr class="memdesc:ac2f686e634604536ddbdcfce629887f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> from a pointer <span class="tt">ptr</span>. Behavior is undefined if <span class="tt">ptr</span> does not satisfy the default alignment constraint.  <br /></td></tr>
 <tr class="memitem:accbf862e285f0cb837598587d2676f77" id="r_accbf862e285f0cb837598587d2676f77"><td class="memTemplParams" colspan="2">template&lt;typename T, width_type Lanes&gt; </td></tr>
-<tr class="memitem:accbf862e285f0cb837598587d2676f77 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#accbf862e285f0cb837598587d2676f77">previous_aligned_address</a> (T *p, <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt; Lanes &gt; <a class="el" href="structeve_1_1width.html">width</a>) noexcept</td></tr>
+<tr class="memitem:accbf862e285f0cb837598587d2676f77 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#accbf862e285f0cb837598587d2676f77">previous_aligned_address</a> (T *p, <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt; Lanes &gt; width) noexcept</td></tr>
 <tr class="memdesc:accbf862e285f0cb837598587d2676f77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address lesser or equal to <span class="tt">p</span> which satisfies the alignment constraint of SIMD registers of size <span class="tt">Lanes</span>.  <br /></td></tr>
 <tr class="memitem:a911aab2fb14b05dcc4625f412282dbe1" id="r_a911aab2fb14b05dcc4625f412282dbe1"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a911aab2fb14b05dcc4625f412282dbe1 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a911aab2fb14b05dcc4625f412282dbe1">previous_aligned_address</a> (T *p) noexcept</td></tr>
 <tr class="memdesc:a911aab2fb14b05dcc4625f412282dbe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address lesser or equal to <span class="tt">p</span> which is satisfy the alignment constraint of current architecture's SIMD register.  <br /></td></tr>
 <tr class="memitem:a0f64619517f37ee3eb1a98d71aee8d8b" id="r_a0f64619517f37ee3eb1a98d71aee8d8b"><td class="memTemplParams" colspan="2">template&lt;typename T, width_type Lanes&gt; </td></tr>
-<tr class="memitem:a0f64619517f37ee3eb1a98d71aee8d8b template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a0f64619517f37ee3eb1a98d71aee8d8b">next_aligned_address</a> (T *p, <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt; Lanes &gt; <a class="el" href="structeve_1_1width.html">width</a>) noexcept</td></tr>
+<tr class="memitem:a0f64619517f37ee3eb1a98d71aee8d8b template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a0f64619517f37ee3eb1a98d71aee8d8b">next_aligned_address</a> (T *p, <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt; Lanes &gt; width) noexcept</td></tr>
 <tr class="memdesc:a0f64619517f37ee3eb1a98d71aee8d8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes an address greater or equal to <span class="tt">p</span> which satisfies the alignment constraint of SIMD registers of size <span class="tt">Lanes</span>.  <br /></td></tr>
 <tr class="memitem:ab3183f3cbe25f5af3b5d3842a76a7cfb" id="r_ab3183f3cbe25f5af3b5d3842a76a7cfb"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ab3183f3cbe25f5af3b5d3842a76a7cfb template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ab3183f3cbe25f5af3b5d3842a76a7cfb">next_aligned_address</a> (T *p) noexcept</td></tr>
@@ -431,7 +431,7 @@ template&lt;typename T, width_type Lanes&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Pointer to realign </td></tr>
-    <tr><td class="paramname"><a class="el" href="structeve_1_1width.html" title="Computes the width of a given type.">width</a></td><td>SIMD width to use as alignment constraint </td></tr>
+    <tr><td class="paramname">width</td><td>SIMD width to use as alignment constraint </td></tr>
   </table>
   </dd>
 </dl>
@@ -510,7 +510,7 @@ template&lt;typename T, width_type Lanes&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p</td><td>Pointer to realign </td></tr>
-    <tr><td class="paramname"><a class="el" href="structeve_1_1width.html" title="Computes the width of a given type.">width</a></td><td>SIMD width to use as alignment constraint </td></tr>
+    <tr><td class="paramname">width</td><td>SIMD width to use as alignment constraint </td></tr>
   </table>
   </dd>
 </dl>

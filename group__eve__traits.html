@@ -131,9 +131,50 @@ $(function(){initNavTree('group__eve__traits.html','',''); });
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type traits for SIMD related types and functions. </p>
+<p>Computes the expected width of a given type.</p>
+<p>Computes the width of a given type.</p>
+<p>Computes the fundamental width of a given type.</p>
 <p>Using <b>EVE</b> types and functions may require information about some properties of the processed types that are accessible through the following traits.</p>
 <p><b>Convenience header:</b> </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/traits.hpp&gt;</span> </div>
-</div><!-- fragment --></div><table class="memberdecls">
+</div><!-- fragment --><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/iteartor_width.hpp&gt;</span></p>
+<dl class="section note"><dt>Note</dt><dd>For <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> we return expected_width.</dd></dl>
+<p>Returns a width for a relaxed iterator/range. If T defines a nested static constexpr function <span class="tt">iterator_width()</span> (which should return a eve::width_type)</p><ul>
+<li>returns the value.</li>
+<li>returns <span class="tt">expected_width_v&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a>&lt;T&gt;&gt;</span> otherwise.</li>
+</ul>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/width.hpp&gt;</span></p>
+<p>For a given type <span class="tt">T</span>, computes it's associated width.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to process</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/width.hpp&gt;</span></p>
+<p>Computes the width of the smallest register able to store values of type <span class="tt">Type</span> for a given SIMD <span class="tt">ABI</span> with no uninitialized lanes.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/width.hpp&gt;</span></p>
+<p>Returns the exact width type of the register able to store values of type <span class="tt">Type</span> for a given SIMD <span class="tt">ABI</span> as a native register type.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi.</td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:eve_3A_3Aas_3C_20T_20_3E" id="r_eve_3A_3Aas_3C_20T_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1as.html">eve::as&lt; T &gt;</a></td></tr>
@@ -150,8 +191,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts the scalar part of a type.  <a href="structeve_1_1element__type.html#details">More...</a><br /></td></tr>
 <tr class="memitem:eve_3A_3Aunderlying_5Ftype_3C_20Ts_20_3E" id="r_eve_3A_3Aunderlying_5Ftype_3C_20Ts_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1underlying__type.html">eve::underlying_type&lt; Ts &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the most scalar type associated with a type.  <a href="structeve_1_1underlying__type.html#details">More...</a><br /></td></tr>
-<tr class="memitem:eve_3A_3Awidth_3C_20Type_20_3E" id="r_eve_3A_3Awidth_3C_20Type_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1width.html">eve::width&lt; Type &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the width of a given type.  <a href="structeve_1_1width.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
@@ -168,12 +207,6 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga7ae3e81e8c073ad31b70c384a2774336" id="r_ga7ae3e81e8c073ad31b70c384a2774336"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ga7ae3e81e8c073ad31b70c384a2774336 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a> = decltype(_::iterator_width_impl&lt;T&gt;())</td></tr>
-<tr class="memdesc:ga7ae3e81e8c073ad31b70c384a2774336"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_width()</span> (which should return <a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">eve::lanes_t</a>).  <br /></td></tr>
-<tr class="memitem:ga80306f1fa8a7aeb0e0bab1f7a333d976" id="r_ga80306f1fa8a7aeb0e0bab1f7a333d976"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:ga80306f1fa8a7aeb0e0bab1f7a333d976 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td></tr>
-<tr class="memdesc:ga80306f1fa8a7aeb0e0bab1f7a333d976"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width type of the maximum lane count of given wide or scalar types.  <br /></td></tr>
 <tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f" id="r_gaae6fbba5b56b9fab940a05b444c15e6f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:gaae6fbba5b56b9fab940a05b444c15e6f template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f">eve::value_type_t</a> = typename decltype(_::value_type_impl&lt;T&gt;())::type</td></tr>
 <tr class="memdesc:gaae6fbba5b56b9fab940a05b444c15e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <br /></td></tr>
@@ -182,71 +215,23 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824" id="r_gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="memTemplParams" colspan="2">template&lt;typename Type, std::ptrdiff_t Lanes&gt; </td></tr>
+<tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824" id="r_gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="memTemplParams" colspan="2">template&lt;typename Type, width_type Lanes&gt; </td></tr>
 <tr class="memitem:gaea6de9e321c4ad0f6ef5224b1aeb3824 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#gaea6de9e321c4ad0f6ef5224b1aeb3824">eve::abi_t</a></td></tr>
 <tr class="memdesc:gaea6de9e321c4ad0f6ef5224b1aeb3824"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find proper ABI type for Type/Lanes pair.  <br /></td></tr>
-<tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92" id="r_gaa29d8cb3ef4de3080fef8b6277614d92"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
-<tr class="memitem:gaa29d8cb3ef4de3080fef8b6277614d92 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">eve::max_lanes_v</a> = _::compute_max_lanes&lt;Ts...&gt;()</td></tr>
-<tr class="memdesc:gaa29d8cb3ef4de3080fef8b6277614d92"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum lane count of given wide or scalar types.  <br /></td></tr>
+<tr class="memitem:ga72515f68a5fe143d988a723969bef8f5" id="r_ga72515f68a5fe143d988a723969bef8f5"><td class="memTemplParams" colspan="2">template&lt;typename Type, width_type N, typename ABI&gt; </td></tr>
+<tr class="memitem:ga72515f68a5fe143d988a723969bef8f5 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga72515f68a5fe143d988a723969bef8f5">eve::as_register_t</a></td></tr>
+<tr class="memdesc:ga72515f68a5fe143d988a723969bef8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find proper register type for Type/Lanes/ABI triplet.  <br /></td></tr>
+<tr class="memitem:ga3904bba3cf182e18929a89d94de08038" id="r_ga3904bba3cf182e18929a89d94de08038"><td class="memTemplParams" colspan="2">template&lt;typename Type, width_type N, typename ABI&gt; </td></tr>
+<tr class="memitem:ga3904bba3cf182e18929a89d94de08038 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ga3904bba3cf182e18929a89d94de08038">eve::as_logical_register_t</a></td></tr>
+<tr class="memdesc:ga3904bba3cf182e18929a89d94de08038"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find proper logical register type for Type/Lanes/ABI triplet.  <br /></td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681" id="r_ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681 template"><td class="memItemLeft">constexpr std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#ga6e8aacb30e0e7798a5cf8e30f9ace681">eve::max_scalar_size_v</a></td></tr>
 <tr class="memdesc:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <br /></td></tr>
+<tr class="memitem:ga222efc5722361bc282954589703bc5a4" id="r_ga222efc5722361bc282954589703bc5a4"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
+<tr class="memitem:ga222efc5722361bc282954589703bc5a4 template"><td class="memItemLeft">constexpr width_type&#160;</td><td class="memItemRight"><a class="el" href="#ga222efc5722361bc282954589703bc5a4">eve::nofs_width_v</a> = expected_width_v&lt;T, ABI&gt;</td></tr>
+<tr class="memdesc:ga222efc5722361bc282954589703bc5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
-<a id="ga7ae3e81e8c073ad31b70c384a2774336" name="ga7ae3e81e8c073ad31b70c384a2774336"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7ae3e81e8c073ad31b70c384a2774336">&#9670;&#160;</a></span>iterator_width_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a> = decltype(_::iterator_width_impl&lt;T&gt;())</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static function <span class="tt">iterator_width()</span> (which should return <a class="el" href="structeve_1_1lanes__t.html" title="SIMD register width type.">eve::lanes_t</a>). </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type to process</td></tr>
-  </table>
-  </dd>
-</dl>
-<ul>
-<li>returns it's return type. Otherwise returns <span class="tt"><a class="el" href="group__eve__arch.html#gaca2238da980f8b3f68896597be4188b8" title="Computes the expected width of a given type.">expected_width_t</a>&lt;<a class="el" href="#gaae6fbba5b56b9fab940a05b444c15e6f" title="A meta function for getting an associated value_type for a relaxed iterator/range.">value_type_t</a>&lt;T&gt;&gt;</span>.</li>
-</ul>
-<p><em>NOTE</em>: for <a class="el" href="structeve_1_1aligned__ptr.html" title="Wrapper for non-owning aligned pointers.">aligned_ptr</a> we return expected_width.</p>
-<p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/iterator_width.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> iterator_width_v = iterator_width&lt;T&gt;::value;</div>
-</div><!-- fragment --> 
-</div>
-</div>
-<a id="ga80306f1fa8a7aeb0e0bab1f7a333d976" name="ga80306f1fa8a7aeb0e0bab1f7a333d976"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">&#9670;&#160;</a></span>max_lanes_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#ga80306f1fa8a7aeb0e0bab1f7a333d976">eve::max_lanes_t</a> = <a class="el" href="structeve_1_1lanes__t.html">lanes_t</a>&lt;<a class="el" href="#gaa29d8cb3ef4de3080fef8b6277614d92">max_lanes_v</a>&lt;Ts...&gt;&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The width type of the maximum lane count of given wide or scalar types. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Ts</td><td>Types to process </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="gaae6fbba5b56b9fab940a05b444c15e6f" name="gaae6fbba5b56b9fab940a05b444c15e6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaae6fbba5b56b9fab940a05b444c15e6f">&#9670;&#160;</a></span>value_type_t</h2>
 
@@ -306,8 +291,7 @@ template&lt;typename T&gt; </div>
   </dd>
 </dl>
 <p><b>Required header</b>: <span class="tt">#include &lt;eve/traits/wide_value_type.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#gac7518d1b6d2c834ae512ff5d91702ee6">wide_value_type_t</a> = as_wide_t&lt;value_type_t&lt;T&gt;, <a class="code hl_typedef" href="#ga7ae3e81e8c073ad31b70c384a2774336">iterator_width_t&lt;T&gt;</a>&gt;</div>
-<div class="ttc" id="agroup__eve__traits_html_ga7ae3e81e8c073ad31b70c384a2774336"><div class="ttname"><a href="#ga7ae3e81e8c073ad31b70c384a2774336">eve::iterator_width_t</a></div><div class="ttdeci">decltype(_::iterator_width_impl&lt; T &gt;()) iterator_width_t</div><div class="ttdoc">A meta-function that returns a width for a relaxed iterator/range. If T defines a nested static funct...</div><div class="ttdef"><b>Definition</b> iterator_width.hpp:49</div></div>
+<div class="line"><span class="keyword">using </span><a class="code hl_typedef" href="#gac7518d1b6d2c834ae512ff5d91702ee6">wide_value_type_t</a> = as_wide_t&lt;value_type_t&lt;T&gt;, iterator_width_v&lt;T&gt;&gt;</div>
 <div class="ttc" id="agroup__eve__traits_html_gac7518d1b6d2c834ae512ff5d91702ee6"><div class="ttname"><a href="#gac7518d1b6d2c834ae512ff5d91702ee6">eve::wide_value_type_t</a></div><div class="ttdeci">as_wide_t&lt; value_type_t&lt; T &gt;, iterator_width_v&lt; T &gt; &gt; wide_value_type_t</div><div class="ttdef"><b>Definition</b> wide_value_type.hpp:33</div></div>
 </div><!-- fragment --> 
 </div>
@@ -319,7 +303,7 @@ template&lt;typename T&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Type, std::ptrdiff_t Lanes&gt; </div>
+template&lt;typename Type, width_type Lanes&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using eve::abi_t</td>
@@ -339,32 +323,54 @@ template&lt;typename Type, std::ptrdiff_t Lanes&gt; </div>
 
 </div>
 </div>
-<a id="gaa29d8cb3ef4de3080fef8b6277614d92" name="gaa29d8cb3ef4de3080fef8b6277614d92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa29d8cb3ef4de3080fef8b6277614d92">&#9670;&#160;</a></span>max_lanes_v</h2>
+<a id="ga3904bba3cf182e18929a89d94de08038" name="ga3904bba3cf182e18929a89d94de08038"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3904bba3cf182e18929a89d94de08038">&#9670;&#160;</a></span>as_logical_register_t</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename... Ts&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
+template&lt;typename Type, width_type N, typename ABI&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">auto eve::max_lanes_v = _::compute_max_lanes&lt;Ts...&gt;()</td>
+          <td class="memname">using eve::as_logical_register_t</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>A meta function for getting a maximum lane count of given wide or scalar types. </p>
+<p>Find proper logical register type for Type/Lanes/ABI triplet. </p>
+<p>Computes the correct logical register to use to efficiently store <span class="tt">Lanes</span> elements of type <span class="tt">Type</span> in the given ABI and returns it's type.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Ts</td><td>Types to process </td></tr>
+    <tr><td class="paramname">Type</td><td>Type of the element to store </td></tr>
+    <tr><td class="paramname">Lanes</td><td>Number of elements to store </td></tr>
+    <tr><td class="paramname">ABI</td><td>Current ABI of the plateform </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga72515f68a5fe143d988a723969bef8f5" name="ga72515f68a5fe143d988a723969bef8f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga72515f68a5fe143d988a723969bef8f5">&#9670;&#160;</a></span>as_register_t</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Type, width_type N, typename ABI&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using eve::as_register_t</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Find proper register type for Type/Lanes/ABI triplet. </p>
+<p>Computes the correct register to use to efficiently store <span class="tt">Lanes</span> elements of type <span class="tt">Type</span> in the given ABI and returns it's type.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of the element to store </td></tr>
+    <tr><td class="paramname">Lanes</td><td>Number of elements to store </td></tr>
+    <tr><td class="paramname">ABI</td><td>Current ABI of the plateform </td></tr>
   </table>
   </dd>
 </dl>
@@ -407,6 +413,43 @@ template&lt;typename T&gt; </div>
 <pre class="fragment">   For a product type returns max size of individual fields.
    Otherwise returns sizeof(T)
 </pre><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/max_scalar_size.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p>
+
+</div>
+</div>
+<a id="ga222efc5722361bc282954589703bc5a4" name="ga222efc5722361bc282954589703bc5a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga222efc5722361bc282954589703bc5a4">&#9670;&#160;</a></span>nofs_width_v</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">width_type eve::nofs_width_v = expected_width_v&lt;T, ABI&gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>nofs stands for "no frequency scaling". </p>
+<p>You can find more explanations in the 'frequency scaling tutorial'. This refers to extreme frequency scaling one encounters when working with 64 byte registers on intel. The processor scales frequency drammatically for a substantial period of time. So even if the algorithm itself will run faster the overall perf will go down. Generally speaking, 64 byte registers on intel make sense only for really big data sets. <span class="tt">nofs_width</span> will produce 32 byte registers on avx512. If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES. This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.</p>
+<dl class="section note"><dt>Note</dt><dd>frequency scaling exists for avx2 as well but is generally considered acceptable. For example popular implementations of libc use avx2, so you are very likely already have it. You can always set the width manually if needed.</dd>
+<dd>
+<span class="tt">eve::algo</span> by default will use <span class="tt">nofs_width</span>. See <span class="tt">allow_frequency_scaling</span> trait.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi. defaults to current. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
