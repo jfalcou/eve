@@ -17,11 +17,11 @@ namespace eve
   struct combine_t : callable<combine_t, Options>
   {
     template<simd_value T>
-    EVE_ABI constexpr typename T::combined_type operator()(T a, T b) const noexcept
+    EVE_ABI constexpr typename T::template rescale<(width_v<T> * 2)> operator()(T a, T b) const noexcept
     {
       return translate_into(
         _::combine(eve::current_api, translate(a), translate(b)),
-        as<typename T::combined_type>{});
+        as<typename T::template rescale<(width_v<T> * 2)>>{});
     }
 
     template<simd_value T0, simd_value T1, simd_value T2, simd_value... Ts>
@@ -53,7 +53,7 @@ namespace eve
   //!   namespace eve
   //!   {
   //!      template<simd_value W>
-  //!      typename W::combined_type combine(W a, W b) noexcept;
+  //!      typename W::template rescale<(width_v<W> * 2)> combine(W a, W b) noexcept;
   //!   }
   //!   @endcode
   //!

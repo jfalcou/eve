@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 
 #include <cmath>
 #include <type_traits>

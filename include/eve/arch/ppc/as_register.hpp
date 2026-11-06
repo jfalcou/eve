@@ -8,103 +8,51 @@
 #pragma once
 
 #include <eve/arch/ppc/predef.hpp>
-#include <type_traits>
+#include <concepts>
+#include <cstddef>
 
-namespace eve
+namespace eve::_
 {
-  template<typename T>
-  struct logical;
-}
+  // ---------------------------------------------------------------------------------------------
+  // PPC
+  template<typename T, std::size_t Size> extern no_register<void> ppc_register;
 
-namespace eve
-{
-  namespace _
-  {
-    template<typename T>
-    using wrap = T;
-  }
+  template<std::size_t S> extern __vector float ppc_register<float, S>;
 
-  template<typename T, width_type N>
-  consteval auto find_register_type(as<T>, lanes_t<N>, eve::ppc_)
-  {
-    using _::wrap;
+  template<std::size_t S> requires(spy::simd_instruction_set >= spy::vsx_)
+  extern __vector double ppc_register<double, S>;
 
-    constexpr auto size_check = [](std::size_t t, std::size_t n)
-    {
-      return (sizeof(T) == t) && (N <= n);
-    };
+  template<std::signed_integral T> extern __vector signed char  ppc_register<T, 1>;
+  template<std::signed_integral T> extern __vector signed short ppc_register<T, 2>;
+  template<std::signed_integral T> extern __vector signed int   ppc_register<T, 4>;
+  template<std::signed_integral T> requires(spy::simd_instruction_set >= spy::vsx_)
+  extern __vector signed long ppc_register<T, 8>;
 
-    if constexpr (std::same_as<T, float> && (N <= 4))
-    {
-      return wrap<__vector float>{};
-    }
-    else if constexpr (std::same_as<T, double> && (N <= 2))
-    {
-      if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector double>{};
-      else                                                  return emulated_{};
-    }
-    else if constexpr (std::signed_integral<T>)
-    {
-      if      constexpr (size_check(1, 16)) return wrap<__vector signed char>{};
-      else if constexpr (size_check(2,  8)) return wrap<__vector signed short>{};
-      else if constexpr (size_check(4,  4)) return wrap<__vector signed int>{};
-      else if constexpr (spy::simd_instruction_set >= spy::vsx_)
-      {
-        if constexpr (size_check(8, 2)) return wrap<__vector signed long>{};
-      }
-      else
-      {
-        if constexpr (size_check(8, 1)) return emulated_{};
-      }
-    }
-    else if constexpr (std::unsigned_integral<T>)
-    {
-      if      constexpr (size_check(1, 16)) return wrap<__vector unsigned char>{};
-      else if constexpr (size_check(2,  8)) return wrap<__vector unsigned short>{};
-      else if constexpr (size_check(4,  4)) return wrap<__vector unsigned int>{};
-      else if constexpr (spy::simd_instruction_set >= spy::vsx_)
-      {
-        if constexpr (size_check(8, 2)) return wrap<__vector unsigned long>{};
-      }
-      else
-      {
-        if constexpr (size_check(8, 1)) return emulated_{};
-      }
-    }
-  }
+  template<std::unsigned_integral T> extern __vector unsigned char  ppc_register<T, 1>;
+  template<std::unsigned_integral T> extern __vector unsigned short ppc_register<T, 2>;
+  template<std::unsigned_integral T> extern __vector unsigned int   ppc_register<T, 4>;
+  template<std::unsigned_integral T> requires(spy::simd_instruction_set >= spy::vsx_)
+  extern __vector unsigned long ppc_register<T, 8>;
 
-  template<typename T, width_type N>
-  consteval auto find_logical_register_type(as<T>, lanes_t<N>, eve::ppc_)
-  {
-    using _::wrap;
+  // ---------------------------------------------------------------------------------------------
+  // PPC
+  template<typename T, std::size_t Size> extern no_register<void> ppc_logical_register;
 
-    constexpr auto size_check = [](std::size_t t, std::size_t n)
-    {
-      return (sizeof(T) == t) && (N <= n);
-    };
+  template<std::size_t S> extern __vector __bool int ppc_logical_register<float, S>;
 
-    if constexpr (std::is_same_v<T, float> && (N <= 4))
-    {
-      return wrap<__vector __bool int>{};
-    }
-    else if constexpr (std::is_same_v<T, double> && (N <= 2))
-    {
-      if constexpr (spy::simd_instruction_set >= spy::vsx_) return wrap<__vector __bool long>{};
-      else                                                  return emulated_{};
-    }
-    else if constexpr (std::integral<T>)
-    {
-      if      constexpr (size_check(1, 16))  return wrap<__vector __bool char>{};
-      else if constexpr (size_check(2, 8 ))  return wrap<__vector __bool short>{};
-      else if constexpr (size_check(4, 4 ))  return wrap<__vector __bool int>{};
-      else if constexpr (spy::simd_instruction_set >= spy::vsx_)
-      {
-        if constexpr (size_check(8,2))  return wrap<__vector __bool long>{};
-      }
-      else
-      {
-        if constexpr (size_check(8, 2)) return emulated_{};
-      }
-    }
-  }
+  template<std::size_t S> requires(spy::simd_instruction_set >= spy::vsx_)
+  extern __vector __bool long ppc_logical_register<double, S>;
+
+  template<std::integral T> extern __vector __bool char  ppc_logical_register<T, 1>;
+  template<std::integral T> extern __vector __bool short ppc_logical_register<T, 2>;
+  template<std::integral T> extern __vector __bool int   ppc_logical_register<T, 4>;
+  template<std::integral T> requires(spy::simd_instruction_set >= spy::vsx_)
+  extern __vector __bool long ppc_logical_register<T, 8>;
+
+  // ---------------------------------------------------------------------------------------------
+  template<typename T, width_type N> requires(N <= 16 / sizeof(T))
+  extern decltype(ppc_register<T, sizeof(T)>) as_register<T, N, eve::ppc_>;
+
+  template<typename T, width_type N> requires(N <= 16 / sizeof(T))
+  extern decltype(ppc_logical_register<T, sizeof(T)>) as_logical_register<T, N, eve::ppc_>;
 }

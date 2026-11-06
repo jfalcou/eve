@@ -188,6 +188,11 @@ namespace eve
     private:
     bits_type value_;
   };
+
+  //! The width of a logical is the width of the type it wraps.
+  template<typename Type>
+  inline constexpr width_type width_v<logical<Type>> = width_v<Type>;
+
   //================================================================================================
   //! @}
   //================================================================================================

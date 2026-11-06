@@ -171,7 +171,7 @@ namespace eve::algo::views
       return reverse(base.previous_partially_aligned());
     }
 
-    static auto iterator_width() requires iterator<I>
+    static constexpr width_type iterator_width() requires iterator<I>
     { return I::iterator_width(); }
 
     template <typename _Width>

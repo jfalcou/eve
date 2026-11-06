@@ -74,7 +74,7 @@ namespace eve
 //!   @note invalid entries return NaN
 //!
 //!  @groupheader{External references}
-//!   *  [wikipedia](//!https://en.wikipedia.org/wiki/Unit_in_the_last_place)
+//!   *  [Wikipedia](https://en.wikipedia.org/wiki/Unit_in_the_last_place)
 //!   *  [HAL: On the definition of ulp(x)](https://hal.science/inria-00070503)
 //!   *  [HAL: On various ways to split a floating-point number]( https://members.loria.fr/PZimmermann/papers/split.pdf)
 //!

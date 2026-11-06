@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/arch/abi_traits.hpp>
+#include <eve/arch/abi.hpp>
 #include <eve/detail/meta.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/concept/combinable.hpp>

@@ -73,7 +73,6 @@ namespace eve
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
       static constexpr bool has_defined_logical_tail = true;
-      template<typename> static constexpr bool is_full = true;
     };
 
     struct bundle_ : cpu_
@@ -81,7 +80,6 @@ namespace eve
       using parent = cpu_;
       static constexpr bool is_wide_logical = true;
       static constexpr bool has_defined_logical_tail = true;
-      template<typename> static constexpr bool is_full = true;
     };
   }
 
@@ -92,7 +90,6 @@ namespace eve
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
       static constexpr bool has_defined_logical_tail = true;
-      template<typename> static constexpr bool is_full = true;
     };
 
     struct bundle_ : cpu_
@@ -100,7 +97,6 @@ namespace eve
       using parent = cpu_;
       static constexpr bool is_wide_logical = false;
       static constexpr bool has_defined_logical_tail = true;
-      template<typename> static constexpr bool is_full = true;
     };
   }
 
@@ -112,24 +108,33 @@ namespace eve
     static constexpr std::size_t bytes            = 16;
     static constexpr bool        is_wide_logical  = true;
     static constexpr bool        has_defined_logical_tail = true;
-
-    template<typename> static constexpr bool is_full = true;
-
-    template<typename Type>
-    static constexpr std::size_t expected_width = bytes / sizeof(Type);
-
-    template<typename Type>
-    static constexpr std::size_t fundamental_width = bytes / sizeof(Type);
   };
+
+  namespace _
+  {
+    template<typename T, typename ABI>
+    inline constexpr bool use_complete_storage = true;
+
+    template<typename T, typename ABI>
+    extern width_type expected_width;
+
+    template<typename T, typename ABI>
+    extern width_type fundamental_width;
+
+    template<typename T>
+    inline constexpr width_type expected_width<T,emulated_> = emulated_::bytes / sizeof(T);
+
+    template<typename T>
+    inline constexpr width_type fundamental_width<T, emulated_> = emulated_::bytes / sizeof(T);
+  }
 
   //================================================================================================
   // Checks if a type fills all its storage
-  template<typename Type>
-  inline constexpr bool use_complete_storage = Type::abi_type::template is_full<Type>;
+  template<typename T>
+  inline constexpr bool use_complete_storage = _::use_complete_storage<T, typename T::abi_type>;
 
   //================================================================================================
   // Checks for logical status in ABI
   template<typename ABI>
-  struct use_is_wide_logical : std::integral_constant<bool, ABI::is_wide_logical>
-  {};
+  inline constexpr bool use_is_wide_logical = ABI::is_wide_logical;
 }

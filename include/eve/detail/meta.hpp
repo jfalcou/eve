@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 #include <eve/deps/kumi.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/as.hpp>
 
 #include <type_traits>
@@ -71,18 +71,6 @@ namespace eve::_
   struct  first_with<Pred,types<T,Ts...>>
     : first_with_impl<Pred<T>::value,Pred,types<T,Ts...>>
   {};
-
-// Check if a type is contained in a types list
-  template<typename T, typename... Ts>
-  constexpr bool is_one_of(types<Ts...> const&) noexcept
-  {
-    bool found[] = { std::is_same_v<T,Ts>... };
-
-    return [&]<std::size_t... I>( std::index_sequence<I...> const&)
-    {
-      return (false || ... || found[I]);
-    }( std::make_index_sequence<sizeof...(Ts)>{} );
-  }
 
   // Type identity
   template<typename T>

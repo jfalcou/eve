@@ -13,11 +13,11 @@ namespace eve::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( width_in_bits<T,Cardinal> <= 64 )
-  inline constexpr auto hardware_abi_of<T,Cardinal> = arm_64_{};
+  extern arm_64_ hardware_abi_of<T,Cardinal>;
 
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( width_in_bits<T,Cardinal> == 128 )
-  inline constexpr auto hardware_abi_of<T,Cardinal> = arm_128_{};
+  extern arm_128_ hardware_abi_of<T,Cardinal>;
 
   template<typename T>
   requires ( spy::simd_instruction_set != spy::asimd_ && (std::same_as<T, double> || std::same_as<T, eve::float16_t>))

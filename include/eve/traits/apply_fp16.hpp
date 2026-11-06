@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/arch/float16.hpp>
+#include <eve/types/float16.hpp>
 #include <eve/traits/element_type.hpp>
 #include <eve/concept/same_lanes.hpp>
 #include <eve/forward.hpp>

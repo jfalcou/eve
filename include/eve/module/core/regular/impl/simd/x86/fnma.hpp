@@ -59,7 +59,7 @@ namespace eve::_
     // PEDANTIC ---
     else if constexpr(O::contains(pedantic) )
     {
-      if constexpr( supports_fma3 ) return fnma(a, b, c);
+      if constexpr( eve::current_abi_type::supports_fma3 ) return fnma(a, b, c);
       else                          return fnma.behavior(cpu_{}, opts, a, b, c);
     }
     // REGULAR ---
@@ -75,7 +75,7 @@ namespace eve::_
         else if constexpr (cat == category::float16x16)       return _mm256_fnmadd_ph(a, b, c);
         else if constexpr (cat == category::float16x8)        return _mm_fnmadd_ph(a, b, c);
       }
-      else if constexpr( supports_fma3)
+      else if constexpr( eve::current_abi_type::supports_fma3)
       {
         if      constexpr( cat == category::float64x4 ) return _mm256_fnmadd_pd(a, b, c);
         else if constexpr( cat == category::float64x2 ) return _mm_fnmadd_pd   (a, b, c);

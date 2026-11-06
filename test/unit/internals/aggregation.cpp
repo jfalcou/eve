@@ -125,7 +125,7 @@ TTS_CASE_TPL("aggregate stress test - upgrade", eve::test::simd::all_types)
 <typename W0>(tts::type<W0>)
 {
 	using T = eve::element_type_t<W0>;
-	using W = typename W0::combined_type;
+	using W = typename W0::template rescale<eve::width_v<W0> * 2>; 
 
 	W a([](auto i, auto){ return T((i + 2) * 3); });
 	auto r = eve::test_upgrade(tts::poison(a));
@@ -140,7 +140,7 @@ TTS_CASE_TPL("aggregate stress test - downgrade", eve::test::simd::all_types)
 <typename W0>(tts::type<W0>)
 {
 	using T = eve::element_type_t<W0>;
-	using W = typename W0::combined_type;
+	using W = typename W0::template rescale<eve::width_v<W0> * 2>;
 
 	W a([](auto i, auto){ return T(i); });
 	TTS_EQUAL(eve::test_downgrade(tts::poison(a)), eve::convert(a, eve::as<eve::downgrade_t<T>>{}));
@@ -150,7 +150,7 @@ TTS_CASE_TPL("aggregate stress test - product type", eve::test::simd::all_types)
 <typename W0>(tts::type<W0>)
 {
 	using T = eve::element_type_t<W0>;
-	using W = typename W0::combined_type;
+	using W = typename W0::template rescale<eve::width_v<W0> * 2>;
 
 	W a([](auto i, auto){ return T(i * 2 + 10); });
 	W b0([](auto i, auto){ return T(i + 1); });

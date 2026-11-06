@@ -57,9 +57,7 @@ namespace eve::_
   {
     using sub_t = typename Pack::storage_type::value_type;
     Pack  that;
-
-    that.storage().for_each( [sub_value = sub_t(v)](auto& s) { s = sub_value; } );
-
+    kumi::for_each([sub_value = sub_t(v)](auto& s) { s = sub_value; }, that.storage()); 
     return that;
   }
 

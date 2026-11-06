@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/as.hpp>
 #include <eve/arch/spec.hpp>
 
+#include <eve/arch/cpu/as_register.hpp>
 
 #if !defined(EVE_NO_SIMD)
 #  if defined(EVE_INCLUDE_X86_HEADER)
@@ -24,36 +24,3 @@
 #    include <eve/arch/riscv/as_register.hpp>
 #  endif
 #endif
-
-#include <eve/arch/cpu/as_register.hpp>
-
-namespace eve
-{
-  template<typename T> consteval auto unpack_register(T)     { return T{}; }
-  template<typename T> consteval auto unpack_register(as<T>) { return T{}; }
-
-  template<typename T, width_type N, typename ABI>
-  consteval auto as_register(as<T> t, lanes_t<N> n, ABI abi)
-  {
-    using found_type = decltype(unpack_register(find_register_type(t, n, abi)));
-    static_assert(!std::same_as<found_type, void>, "[EVE] - Type is not usable in a SIMD register");
-
-    return found_type{};
-  }
-
-  template<typename T, width_type N, typename ABI>
-  using as_register_t = decltype(as_register(as<T>{}, lanes_t<N>{}, ABI{}));
-
-  template<typename T, width_type N, typename ABI>
-  consteval auto as_logical_register(as<T> t, lanes_t<N> n, ABI abi)
-  {
-    using found_type = decltype(find_logical_register_type(t, n, abi));
-    static_assert(!std::same_as<found_type, void>
-                  , "[EVE] - Type is not usable in a SIMD register");
-
-    return found_type{};
-  }
-
-  template<typename T, width_type N, typename ABI>
-  using as_logical_register_t = decltype(as_logical_register(as<T>{}, lanes_t<N>{}, ABI{}));
-}

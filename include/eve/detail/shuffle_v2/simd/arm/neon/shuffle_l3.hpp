@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/wide_forward.hpp>
 #include <eve/concept/scalar.hpp>
-#include <eve/arch/widths.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 

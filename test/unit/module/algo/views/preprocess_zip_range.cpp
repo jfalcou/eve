@@ -177,7 +177,7 @@ TTS_CASE("preprocess zip range, traits")
     auto zipped = eve::views::zip(c, i);
     auto processed = eve::algo::preprocess_range(tr, zipped);
     TTS_TYPE_IS(decltype(processed.traits()), decltype(tr));
-    TTS_TYPE_IS(eve::iterator_width_t<decltype(processed.begin())>, eve::lanes_t<2>);
+    TTS_EQUAL(eve::iterator_width_v<decltype(processed.begin())>, eve::width_type(2));
   }
 
   // divisible by width

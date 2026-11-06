@@ -22,15 +22,6 @@ namespace eve
     static constexpr std::size_t bytes            = Width/8;
     static constexpr bool        is_wide_logical  = false;
     static constexpr bool        has_defined_logical_tail = true;
-
-    template<typename Type>
-    static constexpr bool is_full = ((Type::size() * sizeof(typename Type::value_type)) >= Width/8);
-
-    template<typename Type>
-    static constexpr std::size_t fundamental_width = bytes / sizeof(Type);
-
-    template<typename Type>
-    static constexpr std::size_t expected_width = fundamental_width<Type>;
   };
 
   struct arm_sve_128_ : sve_abi_<128> {};
@@ -68,10 +59,18 @@ namespace eve
   //================================================================================================
   // ARM SVE ABI concept
   //================================================================================================
-  template<typename T> concept sve_abi = _::is_one_of<T> ( _::types < arm_sve_128_
-                                                                              , arm_sve_256_
-                                                                              , arm_sve_512_
-                                                                              > {}
-                                                              );
+  template<typename T> concept sve_abi = _::one_of<T, arm_sve_128_, arm_sve_256_, arm_sve_512_>;
   template<typename T> concept sve_tag = requires(T) { typename T::is_sve; };
+
+  namespace _
+  {
+    template<typename T, sve_abi ABI>
+    inline constexpr bool use_complete_storage<T, ABI> = ((T::size() * sizeof(typename T::value_type)) >= ABI::bytes);
+
+    template<typename T, sve_abi ABI>
+    inline constexpr width_type fundamental_width<T,ABI> = ABI::bytes / sizeof(T);
+
+    template<typename T, sve_abi ABI>
+    inline constexpr width_type expected_width<T,ABI> = ABI::bytes / sizeof(T);
+  }
 }

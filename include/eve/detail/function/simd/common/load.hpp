@@ -95,14 +95,11 @@ namespace eve::_
       else                                  return a_p{p.get()};
     };
 
-    that.storage().apply
-    (
-      [&]<typename... Sub>(Sub&... v)
+    kumi::apply([&]<typename... Sub>(Sub&... v)
       {
         int offset = 0;
         (((v = Sub(cast(ptr, as<Sub>{}) + offset), offset += Sub::size()), ...));
-      }
-    );
+      }, that.storage());
 
     return that;
   }

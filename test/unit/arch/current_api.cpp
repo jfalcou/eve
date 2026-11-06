@@ -12,9 +12,9 @@ TTS_CASE("Check eve::current_api selection")
 {
 # if defined(EVE_NO_SIMD)
   TTS_EQUAL     ( eve::current_api  , eve::undefined_simd );
-  TTS_EXPECT_NOT( eve::supports_simd                      );
+  TTS_EXPECT_NOT( eve::platform::supports_simd            );
 # else
   TTS_NOT_EQUAL ( eve::current_api  , eve::undefined_simd );
-  TTS_EXPECT    ( eve::supports_simd                      );
+  TTS_EXPECT    ( eve::platform::supports_simd            );
 # endif
 };

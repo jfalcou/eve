@@ -82,7 +82,7 @@ namespace eve::algo
       }
     }
 
-    static lanes_t<Width> iterator_width() { return {}; }
+    static constexpr width_type iterator_width() { return Width; }
 
     template <width_type _Width>
     auto width_cast(lanes_t<_Width> c) const

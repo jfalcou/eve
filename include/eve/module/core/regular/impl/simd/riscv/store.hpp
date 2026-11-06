@@ -23,7 +23,7 @@ requires rvv_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr(std::same_as<T, eve::float16_t> && !supports_fp16_vector_conversion)
+  if constexpr(std::same_as<T, eve::float16_t> && !_::supports_fp16_vector_conversion)
   {
     const auto nm = bit_cast(mask, as<logical<wide<uint16_t, N>>>{});
     const auto nv = bit_cast(v, as<wide<uint16_t, N>>{});
@@ -42,7 +42,7 @@ requires rvv_abi<abi_t<T, N>>
 {
   constexpr auto c = categorize<wide<T, N>>();
 
-  if constexpr( std::same_as<T, eve::float16_t> && !supports_fp16_vector_conversion)
+  if constexpr( std::same_as<T, eve::float16_t> && !_::supports_fp16_vector_conversion)
   {
     const auto nv = bit_cast(v, as<wide<uint16_t, N>>{});
     __riscv_vse16(p, nv, N);

@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/deps/spy.hpp>
 #include <eve/detail/function/make.hpp>
-#include <eve/arch/fundamental_width.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/as.hpp>
 
 #if defined(SPY_COMPILER_IS_GCC)

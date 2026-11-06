@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/constant/one.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/arch/simdfloat16.hpp>
+#include <eve/types/simdfloat16.hpp>
 
 namespace eve::_
 {

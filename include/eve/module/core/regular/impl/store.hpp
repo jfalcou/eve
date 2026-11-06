@@ -40,12 +40,11 @@ namespace eve::_
       }
       else if constexpr (aggregated_abi<T>)
       {
-        value.storage().apply(
-          [&]<typename... Sub>(Sub&...v)
+        kumi::apply([&]<typename... Sub>(Sub&...v)
           {
             int k = 0;
             ((store(v, dst + k), k += Sub::size()), ...);
-          });
+          }, value.storage());
       }
     }
     else if constexpr (C::has_alternative) store(replace_ignored(value, cx, cx.alternative), dst);

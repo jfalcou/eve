@@ -8,7 +8,7 @@
 #pragma once
 #if defined(EVE_INCLUDE_RISCV_HEADER)
 
-#  include <eve/arch/widths.hpp>
+#  include <eve/arch/width.hpp>
 #  include <eve/concept/scalar.hpp>
 #  include <eve/detail/wide_forward.hpp>
 

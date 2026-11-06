@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-#include <eve/arch/float16.hpp>
-#include <eve/arch/abi_traits.hpp>
+#include <eve/types/float16.hpp>
+#include <eve/arch/abi.hpp>
 
 #include <cstddef>
 #include <type_traits>

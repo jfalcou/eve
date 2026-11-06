@@ -12,7 +12,7 @@
 
 #include <eve/deps/raberu.hpp>
 
-#include <eve/arch/widths.hpp>
+#include <eve/traits/width.hpp>
 #include <eve/traits.hpp>
 
 #include <type_traits>

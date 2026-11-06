@@ -291,9 +291,9 @@ TTS_CASE_TPL("Check eve::wide insert/set", eve::test::simd::all_types)
 // Split/Combine
 //==================================================================================================
 template<typename T>
-constexpr typename T::split_type test_split(T) { return {}; }
+constexpr typename T::template rescale<eve::width_v<T> / 2> test_split(T) { return {}; }
 
-TTS_CASE_TPL("Check eve::wide split_type/combined_type", eve::test::simd::all_types)
+TTS_CASE_TPL("Check eve::wide rescaling", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using v_t = eve::element_type_t<T>;
@@ -305,8 +305,8 @@ TTS_CASE_TPL("Check eve::wide split_type/combined_type", eve::test::simd::all_ty
   }
   else
   {
-    TTS_EXPR_IS((typename T::split_type){}, (eve::wide<v_t, T::size() / 2>));
+    TTS_EXPR_IS((typename T::template rescale<eve::width_v<T> / 2> ){}, (eve::wide<v_t, T::size() / 2>));
   }
 
-  TTS_EXPR_IS((typename T::combined_type){}, (eve::wide<v_t, T::size() * 2>));
+  TTS_EXPR_IS((typename T::template rescale<eve::width_v<T> * 2>){}, (eve::wide<v_t, T::size() * 2>));
 };

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/logical.hpp>
+#include <eve/types/logical.hpp>
 
 #include <utility>
 

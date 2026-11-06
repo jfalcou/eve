@@ -9,7 +9,7 @@
 
 #include <eve/arch.hpp>
 #include <eve/conditional.hpp>
-#include <eve/arch/fundamental_width.hpp>
+#include <eve/arch/width.hpp>
 
 namespace eve::_
 {

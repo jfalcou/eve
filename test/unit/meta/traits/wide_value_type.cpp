@@ -22,7 +22,7 @@ struct has_iterator_width
 {
   using value_type = int;
 
-  static constexpr eve::lanes_t<2> iterator_width() { return {}; }
+  static constexpr eve::width_type iterator_width() { return 2; }
 };
 
 TTS_CASE( "Check for wide_value_type")

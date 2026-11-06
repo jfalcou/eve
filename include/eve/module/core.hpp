@@ -204,5 +204,4 @@
 #include <eve/module/core/named_shuffles/core.hpp>
 #include <eve/module/core/regular/core.hpp>
 #include <eve/wide.hpp>
-#include <eve/arch/nofs.hpp>
 #include <eve/as_element.hpp>

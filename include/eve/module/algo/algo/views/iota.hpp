@@ -60,7 +60,7 @@ namespace eve::algo::views
     iota_with_step_iterator previous_partially_aligned() const { return *this; }
     iota_with_step_iterator next_partially_aligned()     const { return *this; }
 
-    static lanes_t<N> iterator_width() { return {}; }
+    static constexpr width_type iterator_width() { return N; }
 
     template <width_type _N>
     auto width_cast(lanes_t<_N>) const { return iota_with_step_iterator<T, _N>{base, step, i}; }
