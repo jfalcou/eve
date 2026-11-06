@@ -52,7 +52,7 @@ selection because:
 
   - if the result type might be void, wrap it in `std::type_identity` 
 
-Rules:
+@subsection rationale-meta-extern_rules Rules
 
   - The variable is only used in unevaluated contexts (`decltype`, `sizeof`, `requires`...).
   - Always hide the `decltype` behind an alias. Call sites should read as plain type lookups.
@@ -79,7 +79,7 @@ is: a fact about a type.
 It is also preferred over a constexpr function when the computation are trivial as these are
 parsed early by the compiler.
 
-Rules:
+@subsection rationale-meta-inline_rules Rules
 
   - Use `inline constexpr`, never a bare `constexpr`, so the variable has no per-TU copy.
   - Name them with the `_v` suffix, and keep them as the *implementation* of a trait. Users
@@ -102,7 +102,7 @@ They are preferred over `std::enable_if` or `requires` spelled in place because:
   - they take part in overload resolution via subsumption, which makes `requires`-based
     specialization of both functions and variable templates possible.
 
-Rules:
+@subsection rationale-meta-concept_rules Rules
 
   - A concept is a **constraint**, not a getter: do not use it to retrieve a type or a value.
   - Define a concept as a conjunction/disjunction of other concepts when it must be *more
@@ -132,7 +132,7 @@ This is the right choice when:
   - we want the *guarantee* that the computation is evaluated by the compiler and never
     generates code. A call that cannot be evaluated is a compile-time error.
 
-Rules:
+@subsection rationale-meta-consteval_rules Rules
 
   - Functions cannot take types as parameters: pass a tag (`as<T>{}`) when the computation
     depends on a type.
@@ -153,7 +153,7 @@ constexpr bool is_power_of_2(std::size_t n) { return n && !(n & (n - 1)); }
 It is the difference with the previous section that matters: a `constexpr` function is a
 regular function that *may* be evaluated at compile time, a `consteval` function *must* be.
 
-Rules:
+@subsection rationale-meta-constexpr_rules Rules
 
   - Prefer `consteval` for anything that is a trait or a metaprogramming helper only.
   - Use `constexpr` for utilities that are part of the general API and that are legitimately
