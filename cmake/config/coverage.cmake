@@ -77,7 +77,9 @@ if( NOT eve_cov_major STREQUAL eve_compiler_major )
                       "${CMAKE_CXX_COMPILER_ID} ${eve_compiler_major}, install package ${eve_cov_package}")
 endif()
 
-target_compile_options(eve_test INTERFACE ${eve_coverage_flags})
+## Do not drop -fprofile-update=atomic: the threads of inclusive_scan_par_unseq race on the counters,
+## and gcovr stops on the negative hits gcov then reports.
+target_compile_options(eve_test INTERFACE ${eve_coverage_flags} -fprofile-update=atomic)
 target_link_options(eve_test INTERFACE --coverage)
 
 set(eve_coverage_dir "${PROJECT_BINARY_DIR}/coverage")
