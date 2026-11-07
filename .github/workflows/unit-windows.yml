@@ -19,7 +19,7 @@ jobs:
   ##################################################################################################
   native-windows:
     name: native-windows (${{ matrix.cfg.name }}, ${{ matrix.chunk.name }})
-    runs-on: [self-hosted;Windows]
+    runs-on: [self-hosted, Windows]
     defaults:
       run:
         shell: bash
