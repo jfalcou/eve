@@ -18,7 +18,7 @@ var searchData=
   ['type_20transformations_15',['Product Type Transformations',['https://jfalcou.github.io/kumi/group__kumi__transforms.html',1,'']]],
   ['types_16',['Kumi Types',['https://jfalcou.github.io/kumi/group__kumi__types.html',1,'']]],
   ['types_17',['types',['../group__eve__algo__options__types.html',1,'Lanes and types'],['../group__eve__simd__types.html',1,'SIMD related types']]],
-  ['types_20and_20associated_20functions_18',['Types and associated Functions',['https://jfalcou.github.io/kumi/group__kumi__tuple__related.html',1,'Product Types and associated Functions'],['https://jfalcou.github.io/kumi/group__kumi__record__related.html',1,'Record Types and associated Functions']]],
+  ['types_20and_20associated_20functions_18',['Types and associated Functions',['https://jfalcou.github.io/kumi/group__kumi__array__related.html',1,'Power Types and associated Functions'],['https://jfalcou.github.io/kumi/group__kumi__tuple__related.html',1,'Product Types and associated Functions'],['https://jfalcou.github.io/kumi/group__kumi__record__related.html',1,'Record Types and associated Functions']]],
   ['types_20and_20functions_19',['Types and Functions',['https://jfalcou.github.io/kumi/group__kumi__functional.html',1,'Helper Types and Functions'],['https://jfalcou.github.io/kumi/group__kumi__utility.html',1,'Helper Types and Functions']]],
   ['types_20and_20helpers_20',['Architecture related Types and Helpers',['../group__eve__arch.html',1,'']]],
   ['types_20management_21',['Structured Types Management',['../group__eve__struct.html',1,'']]]
