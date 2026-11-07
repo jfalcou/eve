@@ -8,39 +8,12 @@
 #pragma once
 
 #include "test.hpp"
-#include "unit/memory/never_empty_test.hpp"
+#include "unit/ignores_test.hpp"
 #include <eve/module/core.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
 #include <vector>
-
-//==================================================================================================
-// Calls f(c, first, last) for every relative conditional over n lanes, [first, last) being the
-// kept lanes.
-//==================================================================================================
-template<typename F> void for_each_relative_conditional(std::ptrdiff_t n, F f)
-{
-  f(eve::ignore_none, 0, n);
-  f(eve::ignore_all, 0, 0);
-
-  for( std::ptrdiff_t k = 0; k <= n; ++k )
-  {
-    f(eve::ignore_first(k), k, n);
-    f(eve::keep_last(n - k), k, n);
-    f(eve::ignore_last(k), 0, n - k);
-    f(eve::keep_first(n - k), 0, n - k);
-  }
-
-  for( std::ptrdiff_t first = 0; first <= n; ++first )
-  {
-    for( std::ptrdiff_t last = first; last <= n; ++last )
-    {
-      f(eve::ignore_extrema(first, n - last), first, last);
-      f(eve::keep_between(first, last), first, last);
-    }
-  }
-}
 
 //==================================================================================================
 // Loads from a page, with and without an alternative, from unaligned pointers placing the kept
@@ -64,15 +37,18 @@ template<typename W> void check_conditional_loads(W alt)
   e_t const* begin = page.data();
   e_t const* end   = begin + page_n;
 
-  for_each_relative_conditional(n, [&](auto c, std::ptrdiff_t first, std::ptrdiff_t last)
+  test_ignores_for<n>([&](auto c)
   {
+    std::ptrdiff_t first = c.offset(eve::as<W> {});
+    std::ptrdiff_t last  = first + c.count(eve::as<W> {});
+
     auto check = [&](e_t const* p, auto ptr)
     {
       W expected = [&](auto i, auto) { return (i >= first && i < last) ? p[i] : alt.get(i); };
 
-      TTS_EQUAL(test_load[c.else_(alt)](ptr, eve::as<W> {}), expected);
-      TTS_EQUAL(eve::replace_ignored(test_load[c](ptr, eve::as<W> {}), c, eve::zero),
-                eve::replace_ignored(expected, c, eve::zero));
+      TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), expected) << c;
+      TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
+                eve::replace_ignored(expected, c, eve::zero)) << c;
     };
 
     for( e_t const* p : {begin - first, end - last} ) check(p, p);
@@ -92,17 +68,17 @@ template<typename W> void check_empty_loads_from_nullptr(W alt)
 
   e_t const* p = nullptr;
 
-  for_each_relative_conditional(n, [&](auto c, std::ptrdiff_t first, std::ptrdiff_t last)
+  test_ignores_for<n>([&](auto c)
   {
-    if constexpr( !std::same_as<decltype(c), eve::ignore_all_> )
+    if constexpr( std::same_as<decltype(c), decltype(eve::drop_never_empty(c))> )
     {
-      if( first != last ) return;
+      if( c.count(eve::as<W> {}) != 0 ) return;
 
       auto check = [&](auto ptr)
       {
-        TTS_EQUAL(test_load[c.else_(alt)](ptr, eve::as<W> {}), alt);
-        TTS_EQUAL(eve::replace_ignored(test_load[c](ptr, eve::as<W> {}), c, eve::zero),
-                  eve::replace_ignored(alt, c, eve::zero));
+        TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), alt) << c;
+        TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
+                  eve::replace_ignored(alt, c, eve::zero)) << c;
       };
 
       check(p);
