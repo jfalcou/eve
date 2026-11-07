@@ -1,0 +1,21 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": { "major": 3, "minor": 21, "patch": 0 },
+  "configurePresets": [
+    {
+      "name": "gcc-coverage",
+      "displayName": "Coverage of the unit tests, g++ under AVX2",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "toolchainFile": "${sourceDir}/cmake/toolchain/gcc.x86.cmake",
+      "cacheVariables": {
+        "EVE_ENABLE_COVERAGE": "ON",
+        "EVE_OPTIONS": "-mavx2 -mf16c",
+        "EVE_TEST_LOT": "family"
+      }
+    }
+  ],
+  "buildPresets": [
+    { "name": "gcc-coverage", "configurePreset": "gcc-coverage", "targets": ["unit.exe"] }
+  ]
+}

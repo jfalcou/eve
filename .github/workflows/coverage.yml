@@ -1,0 +1,38 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+name: EVE - Coverage
+on:
+  ## 05:50 UTC, the rung of the fleet's 45 minute ladder after the last nightly.
+  schedule:
+    - cron: '50 5 * * *'
+  workflow_dispatch:
+  ## A pull request runs it only when it changes the coverage setup.
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/coverage.yml
+      - CMakePresets.json
+      - cmake/config/coverage.cmake
+      - cmake/config/coverage-clean.cmake
+
+concurrency:
+  group: coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ##################################################################################################
+  ## The gcc-coverage preset on legend, at -j 8 as every eve job there. No ruleset requires it.
+  ##################################################################################################
+  coverage:
+    name: Coverage
+    uses: jfalcou/copacabana/.github/workflows/coverage.yml@main
+    with:
+      project: eve
+      build-targets: unit.exe
+      image: ghcr.io/jfalcou/compilers:v10
+      runs-on: '["self-hosted", "generic-x86"]'
+      parallel: 8
