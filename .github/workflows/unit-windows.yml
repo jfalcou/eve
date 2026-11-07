@@ -15,11 +15,10 @@ concurrency:
 
 jobs:
   ##################################################################################################
-  ## The native cardinal alone, compiled first on the self-hosted Windows machine, 8 cores and
-  ## 64 GB: the extra lot waits for it.
+  ## The family lot in one job on the self-hosted Windows machine, 8 cores and 64 GB.
   ##################################################################################################
-  native-windows:
-    name: native-windows (${{ matrix.cfg.name }})
+  windows:
+    name: windows (${{ matrix.cfg.name }})
     runs-on: [self-hosted, Windows]
     defaults:
       run:
@@ -45,44 +44,7 @@ jobs:
       ## precompiled header. Keep the dashes: Git Bash rewrites a value starting with / as a path.
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
         run: |
-          cmake -G Ninja -DEVE_TEST_LOT=native -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
-      - name: Compiling Unit Tests
-        run: cmake --build build --target unit.exe --parallel 8
-      - name: Running Unit Tests
-        run: |
-          cd build
-          ctest --output-on-failure --parallel 8 -E ^doc.*.exe
-
-  ##################################################################################################
-  ## The extra lot, on the same machine once the native one passed.
-  ##################################################################################################
-  windows:
-    needs: native-windows
-    name: windows (${{ matrix.cfg.name }})
-    runs-on: [self-hosted, Windows]
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        cfg:
-        - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
-        # - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL -DEVE_USE_PCH=OFF"}
-
-    steps:
-      - name: Enter Git Bash
-        shell: cmd
-        run: echo C:\Program Files\Git\bin>> %GITHUB_PATH%
-      - name: Fetch current branch
-        uses: actions/checkout@v6
-      ## Ninja needs the MSVC environment already loaded, where the Visual Studio generator found it
-      ## on its own.
-      - name: Load the MSVC environment
-        uses: ilammy/msvc-dev-cmd@v1
-      - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
-        run: |
-          cmake -G Ninja -DEVE_TEST_LOT=extra -DEVE_HEAVY_POOL=3 -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
+          cmake -G Ninja -DEVE_TEST_LOT=family -DEVE_HEAVY_POOL=3 -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
       - name: Compiling Unit Tests
         run: cmake --build build --target unit.exe --parallel 8
       - name: Running Unit Tests
