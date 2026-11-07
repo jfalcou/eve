@@ -6,6 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include "unit/ignores_test.hpp"
 #include <eve/arch/top_bits.hpp>
 #include <eve/module/core.hpp>
 #include <array>
@@ -93,16 +94,6 @@ TTS_CASE_TPL("Check top bits from logical", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("Check top bits from logical+ignore", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
-{
-  using logical = eve::logical<T>;
-  logical expected(true);
-  eve::top_bits actual(expected, eve::ignore_first(1));
-  expected.set(0, false);
-  TTS_EQUAL(expected, eve::_::to_logical(actual));
-};
-
 TTS_CASE_TPL("Check top bits to_logical", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
@@ -136,79 +127,20 @@ TTS_CASE_TPL( "Check top_bits::set", eve::test::simd::all_types)
   }
 };
 
-TTS_CASE_TPL("Check top_bits from ignore_*", eve::test::simd::all_types)
-<typename T>(tts::type<T>)
-{
-  using logical = eve::logical<T>;
-
-  // ignore all
-  {
-    eve::top_bits<logical> mmask(eve::ignore_all);
-    TTS_EQUAL(logical(false), eve::_::to_logical(mmask));
-  }
-
-  // ignore none
-  {
-    eve::top_bits<logical> mmask(eve::ignore_none);
-    TTS_EQUAL(logical(true), eve::_::to_logical(mmask));
-  }
-
-  // ignore_extrema / keep_between
-  {
-    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
-    {
-      for (std::ptrdiff_t j = logical::size() - i; j ; --j)
-      {
-        logical expected([&](auto k, auto) { return (k >= i) && (logical::size() - k) > j; });
-        eve::top_bits<logical> actual(eve::ignore_extrema(i, j));
-        TTS_EQUAL(expected, eve::_::to_logical(actual));
-
-        actual = eve::top_bits<logical>(eve::keep_between(i, logical::size() - j));
-        TTS_EQUAL(expected, eve::_::to_logical(actual));
-      }
-    }
-  }
-
-  // ignore first / keep_last
-  {
-    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
-    {
-      logical expected([&](auto j, auto) { return j >= i; });
-      eve::top_bits<logical> actual(eve::ignore_first{i});
-      TTS_EQUAL(expected, eve::_::to_logical(actual));
-
-      actual = eve::top_bits<logical>(eve::keep_last(logical::size() - i));
-      TTS_EQUAL(expected, eve::_::to_logical(actual));
-    }
-  }
-
-  // ignore last / keep_first
-  {
-    for (std::ptrdiff_t i = 0; i < logical::size() + 1; ++i)
-    {
-      logical expected([&](auto j, auto) { return (logical::size() - j) > i; });
-      eve::top_bits<logical> actual(eve::ignore_last{i});
-      TTS_EQUAL(expected, eve::_::to_logical(actual));
-
-      actual = eve::top_bits<logical>(eve::keep_first(logical::size() - i));
-      TTS_EQUAL(expected, eve::_::to_logical(actual));
-    }
-  }
-};
-
-TTS_CASE_TPL("Check top_bits from never_empty", eve::test::simd::all_types)
+TTS_CASE_TPL("Check top_bits from ignores", eve::test::simd::all_types)
 <typename T>(tts::type<T>)
 {
   using logical = eve::logical<T>;
 
   logical m([](auto i, auto) { return i % 2 == 0; });
 
-  for( std::ptrdiff_t i = 1; i <= logical::size(); ++i )
+  test_ignores_for<T::size()>([&](auto ignore)
   {
-    eve::keep_first c {i};
-    TTS_EQUAL(eve::top_bits<logical>(eve::never_empty {c}), eve::top_bits<logical>(c));
-    TTS_EQUAL(eve::top_bits(m, eve::never_empty {c}), eve::top_bits(m, c));
-  }
+    logical expected = ignore.mask(eve::as<T> {});
+
+    TTS_EQUAL(eve::_::to_logical(eve::top_bits<logical>(ignore)), expected) << ignore;
+    TTS_EQUAL(eve::_::to_logical(eve::top_bits(m, ignore)), m && expected) << ignore;
+  });
 };
 
 //==================================================================================================
