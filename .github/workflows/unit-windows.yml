@@ -41,9 +41,11 @@ jobs:
       ## on its own.
       - name: Load the MSVC environment
         uses: ilammy/msvc-dev-cmd@v1
+      ## The Debug flags without /Zi, so CMake copies no compile PDB to every test reusing the
+      ## precompiled header. Keep the dashes: Git Bash rewrites a value starting with / as a path.
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
         run: |
-          cmake -G Ninja -DEVE_TEST_LOT=native -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+          cmake -G Ninja -DEVE_TEST_LOT=native -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
       - name: Compiling Unit Tests
         run: cmake --build build --target unit.exe --parallel 8
       - name: Running Unit Tests
@@ -80,7 +82,7 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
         run: |
-          cmake -G Ninja -DEVE_TEST_LOT=extra -DEVE_HEAVY_POOL=3 -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}"
+          cmake -G Ninja -DEVE_TEST_LOT=extra -DEVE_HEAVY_POOL=3 -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
       - name: Compiling Unit Tests
         run: cmake --build build --target unit.exe --parallel 8
       - name: Running Unit Tests
