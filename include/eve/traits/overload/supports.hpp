@@ -251,8 +251,8 @@ namespace eve
   //! @addtogroup eve_extensions
   //! @{
   //!   @struct relative_conditional_advance_option
-  //!   @brief Option specification for decoration via relative conditional value and expressions, keeping
-  //!          eve::never_empty
+  //!   @brief Option specification for decoration via relative conditional value and expressions, preserving
+  //!          more advanced modifiers
   //!
   //!   **Defined in Header**
   //!
@@ -260,9 +260,8 @@ namespace eve
   //!   #include <eve/module/core.hpp>
   //!   @endcode
   //!
-  //!   eve::relative_conditional_advance_option behaves as eve::relative_conditional_option, except that a
-  //!   conditional wrapped in eve::never_empty is passed to the callable as is, so the callable can rely on it
-  //!   keeping at least one lane.
+  //!   eve::relative_conditional_advance_option behaves as eve::relative_conditional_option, but preserves more
+  //!   advanced modifiers, such as eve::never_empty, so the callable can rely on them.
   //! @}
   //====================================================================================================================
   struct relative_conditional_advance_option

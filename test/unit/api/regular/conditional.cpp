@@ -536,8 +536,20 @@ TTS_CASE("conditional/never_empty")
     TTS_TYPE_IS(decltype(n.else_(T {7})), eve::never_empty<decltype(a)>);
     TTS_EQUAL(eve::drop_never_empty(n.else_(T {7})).mask(tgt), a.mask(tgt));
 
-    auto ba = eve::bit_cast_alternative(eve::never_empty {a}, eve::as<unsigned> {});
+    eve::never_empty na {a};
+
+    auto ba = eve::bit_cast_alternative(na, eve::as<unsigned> {});
     TTS_TYPE_IS(decltype(ba), eve::never_empty<decltype(eve::bit_cast_alternative(a, eve::as<unsigned> {}))>);
+
+    if constexpr( decltype(a)::has_alternative )
+    {
+      auto twice = [](auto v) { return v + v; };
+      TTS_TYPE_IS(decltype(eve::map_alternative(na, twice)), eve::never_empty<decltype(eve::map_alternative(a, twice))>);
+      TTS_EQUAL(eve::map_alternative(na, twice).alternative, T {14});
+
+      TTS_TYPE_IS(decltype(eve::drop_alternative(na)), decltype(n));
+      TTS_TYPE_IS(decltype(na.rebase(1.5)), eve::never_empty<decltype(a.rebase(1.5))>);
+    }
 
     TTS_TYPE_IS(decltype(eve::load[n].options()[eve::condition_key]), decltype(n));
     TTS_TYPE_IS(decltype(eve::first_true[n].options()[eve::condition_key]), decltype(c));
