@@ -18,88 +18,73 @@
 #include <vector>
 
 //==================================================================================================
-// A page of memory to load N lanes from. unaligned(p), aligned(p), iterators() and nulls() are the
-// sources to load from: unaligned(p) and aligned(p) read the same lanes as p, iterators() the ones
-// at begin(), nulls() none.
+// A page is a block of memory aligned on its own size, so that loads near its edges cannot cross into
+// a neighbouring page. It is passed as an aligned_ptr, or as a soa_ptr of aligned_ptrs, to the block
+// start, and its size is the alignment in elements.
 //==================================================================================================
-template<typename T, std::ptrdiff_t N> struct load_page
+template<typename T, std::ptrdiff_t Size>
+using page_storage = std::vector<T, eve::aligned_allocator<T, Size>>;
+
+template<typename T, std::ptrdiff_t Size> page_storage<T, Size> make_page()
 {
-  static constexpr std::ptrdiff_t size = 4096 / sizeof(T);
+  page_storage<T, Size> data(Size);
 
-  std::vector<T, eve::aligned_allocator<T, size>> data;
-  std::list<T>                                    list;
-
-  load_page() : data(size)
+  for( std::ptrdiff_t i = 0; i < Size; ++i )
   {
-    for( std::ptrdiff_t i = 0; i < size; ++i )
-    {
-      if constexpr( eve::logical_value<T> ) data[i] = (i % 3 == 0);
-      else                                  data[i] = T(i % 100 + 1);
-    }
-
-    list.assign(begin(), begin() + N);
+    if constexpr( eve::logical_value<T> ) data[i] = (i % 3 == 0);
+    else                                  data[i] = T(i % 100 + 1);
   }
 
-  T* begin() { return data.data(); }
-  T* end()   { return data.data() + size; }
+  return data;
+}
 
-  auto unaligned(T* p) const { return kumi::tuple {p, static_cast<T const*>(p)}; }
-
-  auto aligned(T* p) const
-  {
-    return kumi::tuple {eve::as_aligned(p, eve::lanes<N>), eve::as_aligned(static_cast<T const*>(p), eve::lanes<N>)};
-  }
-
-  auto iterators() { return kumi::tuple {list.begin()}; }
-
-  auto nulls() const
-  {
-    return kumi::tuple {static_cast<T const*>(nullptr), eve::as_aligned(static_cast<T const*>(nullptr), eve::lanes<N>)};
-  }
-};
-
-//==================================================================================================
-// One load_page per field, loaded through soa_ptr.
-//==================================================================================================
-template<std::ptrdiff_t N, typename... Ts> struct soa_page
+namespace load_test
 {
-  kumi::tuple<load_page<Ts, N>...> fields;
+  template<typename T, std::ptrdiff_t N> constexpr std::ptrdiff_t page_size(eve::aligned_ptr<T, N>) { return N; }
 
-  auto begin() { return kumi::apply([](auto&... f) { return eve::soa_ptr {f.begin()...}; }, fields); }
-  auto end()   { return kumi::apply([](auto&... f) { return eve::soa_ptr {f.end()...}; }, fields); }
-
-  auto unaligned(auto p) const { return kumi::tuple {p}; }
-
-  auto aligned(auto p) const
+  template<typename... Ps> constexpr std::ptrdiff_t page_size(eve::soa_ptr<Ps...> p)
   {
-    auto all   = kumi::apply([](auto... f) { return eve::soa_ptr {eve::as_aligned(f, eve::lanes<N>)...}; }, p.storage);
-    auto first = kumi::apply([](auto f, auto... fs) { return eve::soa_ptr {eve::as_aligned(f, eve::lanes<N>), fs...}; },
-                             p.storage);
-    return kumi::tuple {all, first};
+    return page_size(get<0>(p));
   }
 
-  auto iterators() const { return kumi::tuple {}; }
+  template<std::ptrdiff_t N, typename T> auto aligned(T* p) { return eve::as_aligned(p, eve::lanes<N>); }
 
-  auto nulls()
+  template<std::ptrdiff_t N, typename... Ps> auto aligned(eve::soa_ptr<Ps...> p)
   {
-    return kumi::tuple {kumi::apply([](auto&... f) { return eve::soa_ptr {decltype(f.begin()) {}...}; }, fields)};
+    return kumi::apply([](auto... f) { return eve::soa_ptr {aligned<N>(f)...}; }, p.storage);
   }
-};
 
-template<typename W, typename Page> void check_loads(W alt, Page& page)
+  template<typename T> auto as_const(T* p) { return static_cast<T const*>(p); }
+
+  template<typename T, std::ptrdiff_t N> auto as_const(eve::aligned_ptr<T, N> p)
+  {
+    return eve::aligned_ptr<T const, N> {p};
+  }
+
+  template<typename... Ps> auto as_const(eve::soa_ptr<Ps...> p)
+  {
+    return kumi::apply([](auto... f) { return eve::soa_ptr {as_const(f)...}; }, p.storage);
+  }
+}
+
+template<typename W, typename Page> void check_loads(W alt, Page page)
 {
   constexpr std::ptrdiff_t n = W::size();
 
-  auto begin = page.begin();
-  auto end   = page.end();
+  auto begin = eve::unalign(page);
+  auto end   = begin + load_test::page_size(page);
+
+  using ptr_t = decltype(begin);
 
   test_ignores_for<n>([&](auto c)
   {
     std::ptrdiff_t first = c.offset(eve::as<W> {});
     std::ptrdiff_t last  = first + c.count(eve::as<W> {});
 
-    auto check_one = [&](W const& expected, auto ptr)
+    auto check = [&](auto base, auto ptr)
     {
+      W expected = [&](auto i, auto) { return (i >= first && i < last) ? eve::read(base + i) : alt.get(i); };
+
       TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), expected) << c;
       TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
                 eve::replace_ignored(expected, c, eve::zero)) << c;
@@ -110,24 +95,35 @@ template<typename W, typename Page> void check_loads(W alt, Page& page)
       }
     };
 
-    auto check = [&](auto base, auto ptrs)
+    auto check_const = [&](auto base, auto ptr)
     {
-      W expected = [&](auto i, auto) { return (i >= first && i < last) ? eve::read(base + i) : alt.get(i); };
-      kumi::for_each([&](auto ptr) { check_one(expected, ptr); }, ptrs);
+      check(base, ptr);
+      check(base, load_test::as_const(ptr));
     };
 
-    check(begin - first, page.unaligned(begin - first));
-    check(end - last, page.unaligned(end - last));
-    check(begin, page.aligned(begin));
-    check(end - n, page.aligned(end - n));
-    check(begin, page.iterators());
+    check_const(begin - first, begin - first);
+    check_const(end - last, end - last);
+    check_const(begin, load_test::aligned<n>(begin));
+    check_const(end - n, load_test::aligned<n>(end - n));
 
-    if( first == last ) check(begin, page.nulls());
+    if constexpr( std::is_pointer_v<ptr_t> )
+    {
+      std::list<std::remove_pointer_t<ptr_t>> list(begin, begin + n);
+      check(begin, list.begin());
+    }
+
+    if( first == last )
+    {
+      check(begin, load_test::as_const(ptr_t {}));
+      check(begin, load_test::as_const(load_test::aligned<n>(ptr_t {})));
+    }
   });
 }
 
 template<typename W> void check_loads(W alt)
 {
-  load_page<eve::element_type_t<W>, W::size()> page;
-  check_loads(alt, page);
+  constexpr std::ptrdiff_t size = 4096 / sizeof(eve::element_type_t<W>);
+
+  auto page = make_page<eve::element_type_t<W>, size>();
+  check_loads(alt, eve::as_aligned(page.data(), eve::lanes<size>));
 }

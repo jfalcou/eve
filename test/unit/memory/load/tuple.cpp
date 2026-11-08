@@ -96,8 +96,16 @@ TTS_CASE_TPL( "Check conditional load behavior with soa_ptr", eve::test::scalar:
                                          };
                              };
 
-  soa_page<w_t::size(), std::int8_t, T, double> page;
-  check_loads(alt, page);
+  constexpr std::ptrdiff_t size = 4096 / sizeof(double);
+
+  auto i8s     = make_page<std::int8_t, size>();
+  auto ts      = make_page<T, size>();
+  auto doubles = make_page<double, size>();
+
+  check_loads(alt,
+              eve::soa_ptr {eve::as_aligned(i8s.data(), eve::lanes<size>),
+                            eve::as_aligned(ts.data(), eve::lanes<size>),
+                            eve::as_aligned(doubles.data(), eve::lanes<size>)});
 };
 
 }
