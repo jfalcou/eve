@@ -11,6 +11,7 @@
 #include <eve/module/algo/algo/equal.hpp>
 #include <eve/module/algo/algo/fill.hpp>
 #include <eve/module/algo/algo/mismatch.hpp>
+#include <eve/module/algo/algo/remove.hpp>
 #include <eve/module/algo/algo/views/convert.hpp>
 #include <eve/module/algo/algo/container/detail/soa_storage.hpp>
 #include <eve/memory/aligned_allocator.hpp>
@@ -198,6 +199,19 @@ namespace eve::algo
     iterator erase(const_iterator f, const_iterator l)
     {
       return erase_impl(f - cbegin(),l - cbegin());
+    }
+
+    //! @brief Removes every element for which the predicate holds and returns their number.
+    //!
+    //! The predicate is the one of eve::algo::remove_if: it takes a wide of elements and answers
+    //! a logical.
+    template<typename P>
+    size_type erase_if(P p)
+    {
+      auto kept = eve::algo::remove_if(*this, p);
+      size_type removed = static_cast<size_type>(end() - kept);
+      erase(kept, end());
+      return removed;
     }
 
     //! @brief Appends the given element value to the end of the container.

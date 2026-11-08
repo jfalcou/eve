@@ -653,3 +653,21 @@ TTS_CASE("erase(f, l)")
     TTS_EQUAL(pos, v.begin());
   }
 };
+
+TTS_CASE("erase_if")
+{
+  using s_t = kumi::tuple<std::int32_t, float>;
+  eve::algo::soa_vector<s_t> v;
+  for(std::int32_t i = 0; i < 37; ++i) v.push_back(s_t{i, static_cast<float>(i)});
+
+  auto removed = v.erase_if([](auto x) { return get<0>(x) % 3 == 0; });
+
+  TTS_EQUAL(removed, 13u);
+  TTS_EQUAL(v.size(), 24u);
+  for(std::size_t i = 0; i < v.size(); ++i)
+  {
+    auto e = v.get(i);
+    TTS_NOT_EQUAL(get<0>(e) % 3, 0);
+    TTS_EQUAL(static_cast<float>(get<0>(e)), get<1>(e));
+  }
+};
