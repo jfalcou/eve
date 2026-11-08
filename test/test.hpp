@@ -404,6 +404,29 @@ namespace eve::test::simd
 }
 
 //==================================================================================================
+// While alive, adds its arguments to the context TTS prints with each failure
+//==================================================================================================
+namespace eve::test
+{
+  struct scoped_context
+  {
+    ::tts::text previous;
+
+    template<typename... Ts> explicit scoped_context(Ts const&... ts) : previous(::tts::_::current_type)
+    {
+      std::ostringstream os;
+      (os << ... << ts);
+      ::tts::_::current_type = previous + "; " + os.str().c_str();
+    }
+
+    ~scoped_context() { ::tts::_::current_type = previous; }
+
+    scoped_context(scoped_context const&)            = delete;
+    scoped_context& operator=(scoped_context const&) = delete;
+  };
+}
+
+//==================================================================================================
 // EVE Data generators
 //==================================================================================================
 
