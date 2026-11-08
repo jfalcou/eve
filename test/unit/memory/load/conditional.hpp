@@ -13,12 +13,14 @@
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
+#include <list>
 #include <vector>
 
 //==================================================================================================
 // Loads from a page, with and without an alternative, from unaligned pointers placing the kept
-// lanes at the beginning and at the end of the page, so the ignored lanes are outside of it, and
-// from aligned pointers.
+// lanes at the beginning and at the end of the page, so the ignored lanes are outside of it, from
+// aligned pointers and from a std::list iterator. Pointers are const and not, and the default width
+// is used when it is W.
 //==================================================================================================
 template<typename W> void check_conditional_loads(W alt)
 {
@@ -34,8 +36,10 @@ template<typename W> void check_conditional_loads(W alt)
     else                                    page[i] = e_t(i % 100 + 1);
   }
 
-  e_t const* begin = page.data();
-  e_t const* end   = begin + page_n;
+  e_t* begin = page.data();
+  e_t* end   = begin + page_n;
+
+  std::list<e_t> list(begin, begin + n);
 
   test_ignores_for<n>([&](auto c)
   {
@@ -49,12 +53,24 @@ template<typename W> void check_conditional_loads(W alt)
       TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), expected) << c;
       TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
                 eve::replace_ignored(expected, c, eve::zero)) << c;
+
+      if constexpr( std::same_as<decltype(eve::load(ptr)), W> )
+      {
+        TTS_EQUAL(eve::load[c.else_(alt)](ptr), expected) << c;
+      }
     };
 
-    for( e_t const* p : {begin - first, end - last} ) check(p, p);
+    for( e_t* p : {begin - first, end - last} )
+    {
+      check(p, p);
+      check(p, static_cast<e_t const*>(p));
+    }
 
     check(begin, eve::as_aligned(begin, eve::lanes<n>));
+    check(begin, eve::as_aligned(static_cast<e_t const*>(begin), eve::lanes<n>));
     check(end - n, eve::as_aligned(end - n, eve::lanes<n>));
+
+    check(begin, list.begin());
   });
 }
 
