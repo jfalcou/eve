@@ -726,7 +726,7 @@ namespace eve
     }
 
     template<typename T>
-    EVE_ABI constexpr void check_not_empty(eve::as<T> tgt) const
+    EVE_ABI constexpr void check_not_empty([[maybe_unused]] eve::as<T> tgt) const
     {
       EVE_ASSERT(C::count(tgt) != 0, "[eve::never_empty] No lane is kept");
     }
