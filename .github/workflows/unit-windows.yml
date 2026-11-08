@@ -51,3 +51,32 @@ jobs:
         run: |
           cd build
           ctest --output-on-failure --parallel 8 -E ^doc.*.exe
+
+  ##################################################################################################
+  ## The documentation examples. Keep them in this workflow behind needs: windows, since asgard is
+  ## the only Windows runner and GitHub gives it to the jobs of separate workflows in arrival order.
+  ##################################################################################################
+  doc-windows:
+    needs: windows
+    if: ${{ !cancelled() }}
+    runs-on: [self-hosted, Windows]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Enter Git Bash
+        shell: cmd
+        run: echo C:\Program Files\Git\bin>> %GITHUB_PATH%
+      - name: Fetch current branch
+        uses: actions/checkout@v6
+      - name: Load the MSVC environment
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Prepare EVE with MSVC
+        run: |
+          cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
+      - name: Compile Documentation Tests
+        run: cmake --build build --target doc.exe --parallel 8
+      - name: Run Documentation Tests
+        run: |
+          cd build
+          ctest --output-on-failure --parallel 8 -R ^doc.*.exe
