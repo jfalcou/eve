@@ -35,6 +35,11 @@ namespace eve::algo
       return ptr_iterator<T*, N>{ptr};
     }
 
+    template <typename T> auto add_const_pointee(T* p) { return static_cast<T const*>(p); }
+
+    template <typename T, width_type A>
+    auto add_const_pointee(eve::aligned_ptr<T, A> p) { return eve::aligned_ptr<T const, A>{p}; }
+
     template <typename Traits, typename I>
     auto fix_up_width(Traits, I i)
     {
@@ -55,12 +60,23 @@ namespace eve::algo
     requires _::pointer_iterator_sentinel<I_, S_>
   EVE_ABI auto preprocess_range_::operator()(Traits traits_, I_ f_, S_ l_) const
   {
-    // We have to force width here, because iterators
-    // with different widths don't form a valid range.
-    auto f = _::fix_up_width(traits_, _::ptr_to_iterator(f_));
-    auto l = _::fix_up_width(traits_, _::ptr_to_iterator(l_));
+    using fv_t = std::remove_pointer_t<unaligned_t<I_>>;
+    using lv_t = std::remove_pointer_t<unaligned_t<S_>>;
 
-    return operator()(traits_, f, l);
+    // A pointer to const and a pointer to mutable have no common iterator, so both go const
+    if constexpr( std::is_const_v<fv_t> != std::is_const_v<lv_t> )
+    {
+      return operator()(traits_, _::add_const_pointee(f_), _::add_const_pointee(l_));
+    }
+    else
+    {
+      // We have to force width here, because iterators
+      // with different widths don't form a valid range.
+      auto f = _::fix_up_width(traits_, _::ptr_to_iterator(f_));
+      auto l = _::fix_up_width(traits_, _::ptr_to_iterator(l_));
+
+      return operator()(traits_, f, l);
+    }
   }
 
   template<typename Traits, std::contiguous_iterator I, typename S>

@@ -352,3 +352,29 @@ TTS_CASE_TPL("support for equivlanets", algo_test::selected_types)
                     eve::algo::no_aligning, eve::algo::unroll<1>, eve::algo::single_pass})));
   }
 };
+
+TTS_CASE_TPL("Check preprocess_range for pointers of mixed constness", algo_test::selected_types)
+<typename T>(tts::type<T>)
+{
+  using e_t = eve::element_type_t<T>;
+  constexpr auto N = T::size();
+  alignas(sizeof(T)) std::array<e_t, N> arr{};
+
+  e_t*       f = arr.data();
+  e_t*       l = f + N;
+  e_t const* cf = f;
+  e_t const* cl = l;
+  eve::aligned_ptr<e_t const, N> acf{cf};
+  eve::aligned_ptr<e_t,       N> af{f};
+
+  auto expect_whole = [&](auto processed)
+  {
+    TTS_EQUAL(processed.end() - processed.begin(), static_cast<std::ptrdiff_t>(N));
+    TTS_EQUAL(eve::unalign(processed.begin()).ptr, cf);
+  };
+
+  expect_whole(eve::algo::preprocess_range(eve::algo::traits(), acf, l));
+  expect_whole(eve::algo::preprocess_range(eve::algo::traits(), cf, l));
+  expect_whole(eve::algo::preprocess_range(eve::algo::traits(), f, cl));
+  expect_whole(eve::algo::preprocess_range(eve::algo::traits(), af, cl));
+};
