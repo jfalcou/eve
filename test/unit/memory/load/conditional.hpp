@@ -67,7 +67,7 @@ namespace load_test
   }
 }
 
-template<typename W, typename Page> void check_loads(W alt, Page page)
+template<eve::simd_value W, eve::simd_compatible_ptr<W> Ptr> void check_loads(W alt, Ptr page)
 {
   constexpr std::ptrdiff_t n = W::size();
 
@@ -120,7 +120,7 @@ template<typename W, typename Page> void check_loads(W alt, Page page)
   });
 }
 
-template<typename W> void check_loads(W alt)
+template<eve::simd_value W> void check_loads(W alt)
 {
   constexpr std::ptrdiff_t size = 4096 / sizeof(eve::element_type_t<W>);
 
