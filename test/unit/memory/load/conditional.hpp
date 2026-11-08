@@ -16,13 +16,7 @@
 #include <list>
 #include <vector>
 
-//==================================================================================================
-// Loads from a page, with and without an alternative, from unaligned pointers placing the kept
-// lanes at the beginning and at the end of the page, so the ignored lanes are outside of it, from
-// aligned pointers and from a std::list iterator. Pointers are const and not, and the default width
-// is used when it is W.
-//==================================================================================================
-template<typename W> void check_conditional_loads(W alt)
+template<typename W> void check_loads(W alt)
 {
   using e_t                        = eve::element_type_t<W>;
   constexpr std::ptrdiff_t n      = W::size();
@@ -71,34 +65,11 @@ template<typename W> void check_conditional_loads(W alt)
     check(end - n, eve::as_aligned(end - n, eve::lanes<n>));
 
     check(begin, list.begin());
-  });
-}
 
-//==================================================================================================
-// When no lane is kept at runtime, nothing is read: loading from nullptr is fine.
-//==================================================================================================
-template<typename W> void check_empty_loads_from_nullptr(W alt)
-{
-  using e_t                   = eve::element_type_t<W>;
-  constexpr std::ptrdiff_t n = W::size();
-
-  e_t const* p = nullptr;
-
-  test_ignores_for<n>([&](auto c)
-  {
-    if constexpr( std::same_as<decltype(c), decltype(eve::drop_never_empty(c))> )
+    if( first == last )
     {
-      if( c.count(eve::as<W> {}) != 0 ) return;
-
-      auto check = [&](auto ptr)
-      {
-        TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), alt) << c;
-        TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
-                  eve::replace_ignored(alt, c, eve::zero)) << c;
-      };
-
-      check(p);
-      check(eve::as_aligned(p, eve::lanes<n>));
+      check(nullptr, static_cast<e_t const*>(nullptr));
+      check(nullptr, eve::as_aligned(static_cast<e_t const*>(nullptr), eve::lanes<n>));
     }
   });
 }

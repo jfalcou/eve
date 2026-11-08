@@ -53,17 +53,17 @@ namespace eve
   };
 
   template<typename Options>
-  struct advance_func_t : relative_conditional_advance_callable<advance_func_t, Options>
+  struct relative_advance_func_t : relative_conditional_advance_callable<relative_advance_func_t, Options>
   {
     auto operator()(int a) const { return EVE_DISPATCH_CALL_NT(a); }
-    EVE_CALLABLE_OBJECT(advance_func_t, advance_func_);
+    EVE_CALLABLE_OBJECT(relative_advance_func_t, relative_advance_func_);
   };
 
-  inline constexpr auto relative_func = functor<relative_func_t>;
-  inline constexpr auto  advance_func = functor<advance_func_t>;
-  inline constexpr auto         func = functor<func_t>;
-  inline constexpr auto chained_func = functor<chained_func_t>;
-  inline constexpr auto ew_drop_func = functor<ew_drop_func_t>;
+  inline constexpr auto          relative_func = functor<relative_func_t>;
+  inline constexpr auto relative_advance_func = functor<relative_advance_func_t>;
+  inline constexpr auto                   func = functor<func_t>;
+  inline constexpr auto           chained_func = functor<chained_func_t>;
+  inline constexpr auto           ew_drop_func = functor<ew_drop_func_t>;
 };
 
 namespace eve::_
@@ -85,7 +85,7 @@ namespace eve::_
   }
 
   template<eve::callable_options O>
-  auto advance_func_(EVE_REQUIRES(cpu_), O const& o, int)
+  auto relative_advance_func_(EVE_REQUIRES(cpu_), O const& o, int)
   {
     return o[condition_key];
   }
@@ -171,11 +171,11 @@ TTS_CASE("Check relative conditional callables and never_empty")
   TTS_EXPR_IS(eve::relative_func[n](0), eve::keep_first);
   TTS_EXPR_IS(eve::relative_func[n.else_(1)](0), decltype(c.else_(1)));
 
-  TTS_EXPR_IS(eve::advance_func(0), eve::ignore_none_);
-  TTS_EXPR_IS(eve::advance_func[c](0), eve::keep_first);
-  TTS_EXPR_IS(eve::advance_func[n](0), eve::never_empty<eve::keep_first>);
-  TTS_EXPR_IS(eve::advance_func[n.else_(1)](0), decltype(n.else_(1)));
+  TTS_EXPR_IS(eve::relative_advance_func(0), eve::ignore_none_);
+  TTS_EXPR_IS(eve::relative_advance_func[c](0), eve::keep_first);
+  TTS_EXPR_IS(eve::relative_advance_func[n](0), eve::never_empty<eve::keep_first>);
+  TTS_EXPR_IS(eve::relative_advance_func[n.else_(1)](0), decltype(n.else_(1)));
 
-  TTS_EQUAL(eve::advance_func[n](0).count(eve::as<w_t> {}), 2);
-  TTS_EQUAL(eve::advance_func[n.else_(1)](0).alternative, 1);
+  TTS_EQUAL(eve::relative_advance_func[n](0).count(eve::as<w_t> {}), 2);
+  TTS_EQUAL(eve::relative_advance_func[n.else_(1)](0).alternative, 1);
 };
