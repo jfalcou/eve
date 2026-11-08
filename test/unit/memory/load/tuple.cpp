@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
+#include "unit/ignores_test.hpp"
 #include "unit/memory/page.hpp"
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
@@ -81,6 +82,36 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
     auto loaded_wide_alt = eve::load[il.else_(wide_zeroes)](src);
     TTS_EQUAL(loaded_wide_alt, else_reference);
   }
+};
+
+TTS_CASE_TPL( "Check conditional load behavior with soa_ptr", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using s_t = tuple_t<T>;
+  using w_t = eve::wide<s_t>;
+
+  auto [data0,idx0] = page<std::int8_t  , w_t::size()>();
+  auto [data1,idx1] = page<T            , w_t::size()>();
+  auto [data2,idx2] = page<double       , w_t::size()>();
+
+  auto src = eve::soa_ptr ( eve::as_aligned(&data0[idx0], eve::width_t<w_t>{})
+                          , &data1[idx1] - 1
+                          , eve::as_aligned(&data2[idx2], eve::width_t<w_t>{})
+                          );
+
+  w_t full = eve::load(src);
+  w_t alt  = [](auto i, auto) { return s_t{ static_cast<std::int8_t>(90 + i % 10)
+                                          , static_cast<T>(70 + i % 10)
+                                          , 200. + i
+                                          };
+                              };
+
+  test_ignores_for<w_t::size()>([&](auto c)
+  {
+    TTS_EQUAL(eve::load[c.else_(alt)](src), eve::replace_ignored(full, c, alt)) << c;
+    TTS_EQUAL(eve::replace_ignored(eve::load[c](src), c, eve::zero),
+              eve::replace_ignored(full, c, eve::zero)) << c;
+  });
 };
 
 }
