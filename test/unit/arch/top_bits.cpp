@@ -138,8 +138,8 @@ TTS_CASE_TPL("Check top_bits from ignores", eve::test::simd::all_types)
   {
     logical expected = ignore.mask(eve::as<T> {});
 
-    TTS_EQUAL(eve::_::to_logical(eve::top_bits<logical>(ignore)), expected);
-    TTS_EQUAL(eve::_::to_logical(eve::top_bits(m, ignore)), m && expected);
+    TTS_EQUAL(eve::_::to_logical(eve::top_bits<logical>(ignore)), expected) << ignore;
+    TTS_EQUAL(eve::_::to_logical(eve::top_bits(m, ignore)), m && expected) << ignore;
   });
 };
 

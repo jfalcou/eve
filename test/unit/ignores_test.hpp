@@ -42,41 +42,34 @@ namespace ignores_test
 
     return ks;
   }
-
-  template<typename F, typename C> void run(F& f, C c)
-  {
-    constexpr bool wrapped = !std::same_as<C, decltype(eve::drop_never_empty(c))>;
-    eve::test::scoped_context ctx {"ignore: ", wrapped ? "never_empty " : "", c};
-    f(c);
-  }
 }
 
 // Counts never exceed N: keep_between(a, b) needs a <= b and ignore_extrema(a, b) needs a + b <= N.
 template<std::ptrdiff_t N, typename F> void test_ignores_for(F f)
 {
-  ignores_test::run(f, eve::ignore_none);
-  ignores_test::run(f, eve::never_empty {eve::ignore_none});
-  ignores_test::run(f, eve::ignore_all);
+  f(eve::ignore_none);
+  f(eve::never_empty {eve::ignore_none});
+  f(eve::ignore_all);
 
   auto const ks = ignores_test::counts<N>();
 
   for( auto k : ks )
   {
-    ignores_test::run(f, eve::keep_first(k));
-    ignores_test::run(f, eve::keep_last(k));
-    ignores_test::run(f, eve::ignore_first(k));
-    ignores_test::run(f, eve::ignore_last(k));
+    f(eve::keep_first(k));
+    f(eve::keep_last(k));
+    f(eve::ignore_first(k));
+    f(eve::ignore_last(k));
 
     if( k != 0 )
     {
-      ignores_test::run(f, eve::never_empty {eve::keep_first(k)});
-      ignores_test::run(f, eve::never_empty {eve::keep_last(k)});
+      f(eve::never_empty {eve::keep_first(k)});
+      f(eve::never_empty {eve::keep_last(k)});
     }
 
     if( k != N )
     {
-      ignores_test::run(f, eve::never_empty {eve::ignore_first(k)});
-      ignores_test::run(f, eve::never_empty {eve::ignore_last(k)});
+      f(eve::never_empty {eve::ignore_first(k)});
+      f(eve::never_empty {eve::ignore_last(k)});
     }
   }
 
@@ -84,14 +77,14 @@ template<std::ptrdiff_t N, typename F> void test_ignores_for(F f)
   {
     for( std::size_t j = i; j != ks.size(); ++j )
     {
-      ignores_test::run(f, eve::keep_between(ks[i], ks[j]));
-      if( ks[i] != ks[j] ) ignores_test::run(f, eve::never_empty {eve::keep_between(ks[i], ks[j])});
+      f(eve::keep_between(ks[i], ks[j]));
+      if( ks[i] != ks[j] ) f(eve::never_empty {eve::keep_between(ks[i], ks[j])});
     }
 
     for( std::size_t j = 0; j != ks.size() && ks[i] + ks[j] <= N; ++j )
     {
-      ignores_test::run(f, eve::ignore_extrema(ks[i], ks[j]));
-      if( ks[i] + ks[j] != N ) ignores_test::run(f, eve::never_empty {eve::ignore_extrema(ks[i], ks[j])});
+      f(eve::ignore_extrema(ks[i], ks[j]));
+      if( ks[i] + ks[j] != N ) f(eve::never_empty {eve::ignore_extrema(ks[i], ks[j])});
     }
   }
 }

@@ -100,33 +100,29 @@ template<typename W, typename Page> void check_loads(W alt, Page& page)
 
     auto check_one = [&](W const& expected, auto ptr)
     {
-      eve::test::scoped_context ctx {"pointer: ", ::tts::as_text(::tts::typename_<decltype(ptr)>).data()};
-
-      TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), expected);
+      TTS_EQUAL(eve::load[c.else_(alt)](ptr, eve::as<W> {}), expected) << c;
       TTS_EQUAL(eve::replace_ignored(eve::load[c](ptr, eve::as<W> {}), c, eve::zero),
-                eve::replace_ignored(expected, c, eve::zero));
+                eve::replace_ignored(expected, c, eve::zero)) << c;
 
       if constexpr( std::same_as<decltype(eve::load(ptr)), W> )
       {
-        TTS_EQUAL(eve::load[c.else_(alt)](ptr), expected);
+        TTS_EQUAL(eve::load[c.else_(alt)](ptr), expected) << c;
       }
     };
 
-    auto check = [&](char const* source, auto base, auto ptrs)
+    auto check = [&](auto base, auto ptrs)
     {
-      eve::test::scoped_context ctx {"source: ", source};
-
       W expected = [&](auto i, auto) { return (i >= first && i < last) ? eve::read(base + i) : alt.get(i); };
       kumi::for_each([&](auto ptr) { check_one(expected, ptr); }, ptrs);
     };
 
-    check("kept lanes at the page begin", begin - first, page.unaligned(begin - first));
-    check("kept lanes at the page end", end - last, page.unaligned(end - last));
-    check("aligned at the page begin", begin, page.aligned(begin));
-    check("aligned at the page end", end - n, page.aligned(end - n));
-    check("iterator", begin, page.iterators());
+    check(begin - first, page.unaligned(begin - first));
+    check(end - last, page.unaligned(end - last));
+    check(begin, page.aligned(begin));
+    check(end - n, page.aligned(end - n));
+    check(begin, page.iterators());
 
-    if( first == last ) check("nullptr", begin, page.nulls());
+    if( first == last ) check(begin, page.nulls());
   });
 }
 
