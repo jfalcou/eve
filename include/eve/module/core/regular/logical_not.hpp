@@ -26,7 +26,14 @@ namespace eve
 
     EVE_ABI constexpr bool operator()(bool a) const noexcept
     {
-      return !a;
+      // A scalar takes a bool or a scalar logical as condition, and keeps its input where it is false
+      if constexpr( Options::contains(condition_key) )
+      {
+        using C = rbr::result::fetch_t<condition_key, Options>;
+        if constexpr( C::is_complete ) return C::is_inverted ? !a : a;
+        else return this->options()[condition_key].mask(as<bool>{}).value() ? !a : a;
+      }
+      else return !a;
     }
 
     EVE_CALLABLE_OBJECT(logical_not_t, logical_not_);

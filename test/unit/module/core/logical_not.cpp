@@ -35,6 +35,9 @@ TTS_CASE_WITH("Check behavior of eve::logical_not(simd)",
   TTS_EQUAL(eve::logical_not(a0), tts::map([](auto e) -> v_t { return !e; }, a0));
   TTS_EQUAL(eve::logical_not(true), false);
   TTS_EQUAL(eve::logical_not(false), true);
+  TTS_EQUAL(eve::logical_not[true](false), true);
+  TTS_EQUAL(eve::logical_not[false](false), false);
+  TTS_EQUAL(eve::logical_not[false](true), true);
 
   auto alt = eve::false_(eve::as<T>{});
   auto base = eve::logical_not(a0);
