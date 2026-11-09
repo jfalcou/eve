@@ -61,7 +61,7 @@ jobs:
       ## the analyzer, so the fewer and the more representative, the better.
       - name: Select the translation units to analyze
         run: |
-          jq '[ .[] | select(.file | test("/test/(unit|doc)/")) ]' build/compile_commands.json \
+          jq '[ .[] | select(.file | test("/test/unit/")) ]' build/compile_commands.json \
              > build/sonar_compile_commands.json
           echo "$(jq length build/sonar_compile_commands.json) translation units selected"
 
