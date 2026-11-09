@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 97" width="1200" height="97" role="img" aria-label="eve 3a0cfb078 rerun 1, 40 min"><style>
+.grid { stroke: #e4dbd2; stroke-width: 1; }
+.tick { font-size: 10px; fill: #6f655e; }
+.natives { stroke: #231f1c; stroke-width: 1.2; stroke-dasharray: 4 3; }
+.natives-t { fill: #231f1c; }
+.lbl { font-size: 10px; fill: #231f1c; }
+.lbl.fail { fill: #c42a2a; font-weight: 600; }
+.dur { font-size: 9.5px; fill: #6f655e; }
+.ttl { font-size: 13px; font-weight: 600; fill: #231f1c; }
+.wait { opacity: 0.25; }
+.needs { opacity: 0.5; stroke-width: 2; stroke-dasharray: 2 3; }
+.run.fail { stroke: #c42a2a; stroke-width: 1.5; }
+text { font-family: ui-monospace, "IBM Plex Mono", Menlo, monospace; }
+</style><rect width="100%" height="100%" fill="#fbf8f4"/><text x="340" y="18" class="ttl">eve 3a0cfb078 rerun 1, 40 min</text><rect x="340" y="26" width="10" height="10" fill="#d9772f"/><text x="354" y="35" class="tick">macos-15</text><line x1="340.0" y1="68" x2="340.0" y2="87" class="grid"/><text x="340.0" y="64" text-anchor="middle" class="tick">0</text><line x1="542.4" y1="68" x2="542.4" y2="87" class="grid"/><text x="542.4" y="64" text-anchor="middle" class="tick">10</text><line x1="744.8" y1="68" x2="744.8" y2="87" class="grid"/><text x="744.8" y="64" text-anchor="middle" class="tick">20</text><line x1="947.2" y1="68" x2="947.2" y2="87" class="grid"/><text x="947.2" y="64" text-anchor="middle" class="tick">30</text><line x1="1149.7" y1="68" x2="1149.7" y2="87" class="grid"/><text x="1149.7" y="64" text-anchor="middle" class="tick">40</text><text x="332" y="82.0" text-anchor="end" class="lbl">macosx (clang, -Wno-psabi -march=armv8.7-a+fp16)</text><rect x="340.7" y="74.0" width="148.4" height="9" class="wait" fill="#d9772f" fill-opacity="0.25"/><rect x="489.1" y="74.0" width="654.8" height="9" class="run" fill="#d9772f"/><text x="1147.9" y="82.0" class="dur">32 min</text></svg>
