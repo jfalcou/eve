@@ -67,3 +67,17 @@ TTS_CASE("reverse iterators const/non-const")
 
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
 };
+
+TTS_CASE("reverse iterators refuse a store through a const base")
+{
+  using w_t  = eve::wide<int>;
+  using u_it = eve::views::reverse_iterator<eve::algo::ptr_iterator<int*      , w_t::size()>>;
+  using c_it = eve::views::reverse_iterator<eve::algo::ptr_iterator<int const*, w_t::size()>>;
+
+  [[maybe_unused]] w_t  v   = {};
+  [[maybe_unused]] u_it it  = {};
+  [[maybe_unused]] c_it cit = {};
+
+  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
+  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
+};

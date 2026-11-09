@@ -143,4 +143,23 @@ TTS_CASE_TPL( "Check store behavior with soa_ptr", eve::test::scalar::all_types_
   }
 };
 
+//==================================================================================================
+// A soa_ptr with a pointer to const among its components is refused at the signature
+//==================================================================================================
+TTS_CASE("Check store refuses a soa_ptr with a pointer to const")
+{
+  using w_t  = eve::wide<kumi::tuple<int, float>>;
+  using ac_t = eve::aligned_ptr<int const, w_t::size()>;
+
+  [[maybe_unused]] w_t                               v   = {};
+  [[maybe_unused]] eve::soa_ptr<int*, float*>        p   = {};
+  [[maybe_unused]] eve::soa_ptr<int*, float const*>  cp  = {};
+  [[maybe_unused]] eve::soa_ptr<ac_t, float*>        acp = {};
+
+  TTS_EXPECT_COMPILES    (v, p,   { eve::store(v, p);   });
+  TTS_EXPECT_COMPILES    (v, p,   { eve::store(v, std::as_const(p)); });
+  TTS_EXPECT_NOT_COMPILES(v, cp,  { eve::store(v, cp);  });
+  TTS_EXPECT_NOT_COMPILES(v, acp, { eve::store(v, acp); });
+};
+
 }

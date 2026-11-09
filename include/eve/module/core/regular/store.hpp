@@ -12,13 +12,43 @@
 #include <eve/concept/memory.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/store_equivalent.hpp>
+#include <eve/memory/pointer.hpp>
+
+namespace eve::_
+{
+  template<typename T, typename Ptr>
+  constexpr bool can_be_stored() noexcept
+  {
+    if constexpr (scalar_pointer<Ptr>)
+    {
+      return !std::is_const_v<std::remove_pointer_t<unaligned_t<Ptr>>>;
+    }
+    else if constexpr (has_store_equivalent<T, Ptr>)
+    {
+      using eq_t = decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()));
+      return can_be_stored<kumi::element_t<1, eq_t>, kumi::element_t<2, eq_t>>();
+    }
+    else if constexpr (product_type<T> && kumi::concepts::product_type<Ptr>)
+    {
+      return []<std::size_t... I>(std::index_sequence<I...>)
+      {
+        return (can_be_stored<decltype(get<I>(std::declval<T>())), kumi::element_t<I, Ptr>>()
+               && ...);
+      }(std::make_index_sequence<kumi::size_v<Ptr>>{});
+    }
+    else
+    {
+      return requires(Ptr p, T v) { p.store(options<>{}, v); };
+    }
+  }
+}
 
 namespace eve
 {
-  // The pointer, once unaligned, has to write: a const target refuses the store at its signature
   template<typename T, typename SIMD>
   concept writable_simd_compatible_ptr = simd_compatible_ptr<T, SIMD>
-                                      && !std::is_const_v<std::remove_pointer_t<unaligned_t<T>>>;
+                                      && _::can_be_stored<SIMD, T>();
 
   template<typename T, typename SIMD>
   concept writable_logical_simd_compatible_ptr = logical_simd_compatible_ptr<T, SIMD>

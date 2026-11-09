@@ -62,3 +62,17 @@ TTS_CASE_TPL("Check converting_iterator", algo_test::selected_types)
   run_test(f,l);
   run_test(cf, cl);
 };
+
+TTS_CASE("converting iterators refuse a store through a const base")
+{
+  using w_t  = eve::wide<float>;
+  using u_it = eve::views::converting_iterator<eve::algo::ptr_iterator<int*      , w_t::size()>, float>;
+  using c_it = eve::views::converting_iterator<eve::algo::ptr_iterator<int const*, w_t::size()>, float>;
+
+  [[maybe_unused]] w_t  v   = {};
+  [[maybe_unused]] u_it it  = {};
+  [[maybe_unused]] c_it cit = {};
+
+  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
+  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
+};
