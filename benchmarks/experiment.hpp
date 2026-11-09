@@ -12,7 +12,7 @@
 #include "nanobench.h"
 
 #include <eve/module/core/regular/load.hpp>
-#include <eve/arch/width.hpp>
+#include <eve/traits/width.hpp>
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -91,7 +91,7 @@ namespace eve::bench
     using type = types< typename split<T>::type... >;
   };
 
-  template<typename T> struct max_width : eve::width<T> {};
+  template<typename T> struct max_width : std::integral_constant<int, eve::width_v<T>> {};
 
   template<typename... T>
   struct  max_width<types<T...>>
