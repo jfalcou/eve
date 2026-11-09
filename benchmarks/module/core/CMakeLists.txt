@@ -108,6 +108,7 @@ make_all_benchs(ROOT bench.core NAME is_real               TYPES ${real_types}  
 make_all_benchs(ROOT bench.core NAME is_unordered          TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME lcm                   TYPES ${integral_types})
 make_all_benchs(ROOT bench.core NAME ldexp                 TYPES ${real_types}    )
+make_all_benchs(ROOT bench.core NAME load                  TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME lerp                  TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME lo                    TYPES ${integral_types})
 make_all_benchs(ROOT bench.core NAME logical_not           TYPES ${all_types}     )
