@@ -97,3 +97,15 @@ TTS_CASE("eve.algo map iterator non const to const")
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, u_it> ) );
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, uc_it>) );
 };
+
+TTS_CASE("map iterators refuse a store through a const base")
+{
+  constexpr auto N = eve::wide<int>::size();
+
+  [[maybe_unused]] auto v   = load_op{0}(eve::wide<int>{});
+  [[maybe_unused]] auto it  = eve::views::map_convert(eve::algo::ptr_iterator<int*      , N>{}, load_op{0}, store_op{0});
+  [[maybe_unused]] auto cit = eve::views::map_convert(eve::algo::ptr_iterator<int const*, N>{}, load_op{0}, store_op{0});
+
+  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
+  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
+};

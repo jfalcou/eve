@@ -74,3 +74,20 @@ TTS_CASE("eve.algo non const to const")
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<u_it, uc_it>) );
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<a_it, ac_it>) );
 };
+
+TTS_CASE("ptr_iterator refuses a store through a pointer to const")
+{
+  using w_t   = eve::wide<int>;
+  using u_it  = eve::algo::ptr_iterator<int*, w_t::size()>;
+  using c_it  = eve::algo::ptr_iterator<int const*, w_t::size()>;
+  using ac_it = eve::algo::ptr_iterator<eve::aligned_ptr<int const, w_t::size()>, w_t::size()>;
+
+  [[maybe_unused]] w_t   v    = {};
+  [[maybe_unused]] u_it  it   = {};
+  [[maybe_unused]] c_it  cit  = {};
+  [[maybe_unused]] ac_it acit = {};
+
+  TTS_EXPECT_COMPILES    (v, it  , { eve::store(v, it);   });
+  TTS_EXPECT_NOT_COMPILES(v, cit , { eve::store(v, cit);  });
+  TTS_EXPECT_NOT_COMPILES(v, acit, { eve::store(v, acit); });
+};

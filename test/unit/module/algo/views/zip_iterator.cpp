@@ -235,3 +235,17 @@ TTS_CASE("zip iterators const/non-const")
 
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
 };
+
+TTS_CASE("zip iterators refuse a store through a const component")
+{
+  using w_t  = eve::wide<kumi::tuple<int, float>>;
+  using u_it = eve::views::zip_iterator<int*, float*>;
+  using c_it = eve::views::zip_iterator<int*, float const*>;
+
+  [[maybe_unused]] w_t  v   = {};
+  [[maybe_unused]] u_it it  = {};
+  [[maybe_unused]] c_it cit = {};
+
+  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
+  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
+};
