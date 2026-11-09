@@ -4,7 +4,7 @@
 ##  SPDX-License-Identifier: BSL-1.0
 ####################################################################################################
 ## Once every unit workflow of a commit is complete, one comment on the pull request gives the
-## wall time of the cycle and its chart, an SVG kept on the branch ci-cycle.
+## wall time of the cycle and of each rerun, with their charts, SVGs kept on the branch ci-cycle.
 name: EVE - CI Cycle
 on:
   workflow_run:
@@ -47,57 +47,12 @@ jobs:
     if: github.event.workflow_run.conclusion != 'cancelled'
     ## On a hosted runner, the report waits for the pool the unit workflows fill, for hours.
     runs-on: [self-hosted, avx512]
+    ## Do not drop -u root: the image has no gh, which the action fetches into /usr/local.
     container:
       image: ghcr.io/jfalcou/compilers:v10
       options: -u root
-    ## A container runs the steps under sh, and the measure step reads PIPESTATUS.
-    defaults:
-      run:
-        shell: bash
     steps:
-      ## A checkout here would leave the runner's workspace sparse for the eve job that follows on it.
-      - name: Fetch the tool
-        run: curl -sSfL -o ci_cycle.py "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$GITHUB_SHA/tools/ci_cycle.py"
-      ## The image has no gh, which the tool and the comment call.
-      - name: Fetch gh
-        run: curl -sSL https://github.com/cli/cli/releases/download/v2.102.0/gh_2.102.0_linux_amd64.tar.gz | tar -xz -C /usr/local --strip-components=1
-      ## Exit 3 says a job still runs, and the next completion will report. Exit 4 says a newer push
-      ## cancelled the cycle, which has no report.
-      - name: Measure the cycle of ${{ env.SHA }}
-        id: cycle
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set +e
-          python3 ci_cycle.py "$GITHUB_REPOSITORY" "$SHA" --svg ci-cycle.svg --markdown ci-cycle.md | tee -a "$GITHUB_STEP_SUMMARY"
-          status=${PIPESTATUS[0]}
-          if [ "$status" = "3" ] || [ "$status" = "4" ]; then echo "complete=false" >> "$GITHUB_OUTPUT"; exit 0; fi
-          echo "complete=true" >> "$GITHUB_OUTPUT"
-          exit $status
-      ## The comment embeds the chart by its raw URL, which GitHub serves for a file of a branch.
-      - name: Keep the chart
-        if: steps.cycle.outputs.complete == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          remote="https://x-access-token:$GH_TOKEN@github.com/$GITHUB_REPOSITORY"
-          git init -q chart && cd chart
-          git fetch -q --depth 1 "$remote" ci-cycle && git checkout -q FETCH_HEAD || git checkout -q --orphan ci-cycle
-          cp ../ci-cycle.svg "$SHA.svg"
-          git -c user.name=github-actions -c user.email=github-actions@github.com add "$SHA.svg"
-          ## A run on a cycle already kept stages nothing, and an empty commit fails.
-          git diff --cached --quiet && exit 0
-          git -c user.name=github-actions -c user.email=github-actions@github.com commit -q -m "Cycle of $SHA"
-          git push -q "$remote" HEAD:ci-cycle
-      - name: Comment the pull request
-        if: steps.cycle.outputs.complete == 'true' && env.PR != ''
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          printf '\n![Cycle of %s](https://raw.githubusercontent.com/%s/ci-cycle/%s.svg)\n' "$SHA" "$GITHUB_REPOSITORY" "$SHA" >> ci-cycle.md
-          existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments?per_page=100" --jq '[.[] | select(.body | startswith("<!-- ci-cycle -->"))][0].id')
-          if [ -n "$existing" ] && [ "$existing" != "null" ]; then
-            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$existing" -F body=@ci-cycle.md > /dev/null
-          else
-            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@ci-cycle.md > /dev/null
-          fi
+      - uses: jfalcou/copacabana/.github/actions/ci-cycle@95054d7b00a79414ec717fdf0b770f7c9338b789
+        with:
+          sha: ${{ env.SHA }}
+          pr: ${{ env.PR }}
