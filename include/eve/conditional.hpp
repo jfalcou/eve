@@ -79,7 +79,7 @@ namespace eve
     }
 
     template <typename Tgt>
-    constexpr auto bit_cast_alternative(as<Tgt>)
+    constexpr auto bit_cast_alternative(as<Tgt>) const
     {
       if constexpr (simd_value<V>) return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<wide<Tgt, width_v<V>>>{}); });
       else                         return map_alternative([](auto v) { return _::bit_cast_impl(current_api, v, as<Tgt>{}); });
@@ -700,8 +700,33 @@ namespace eve
 
     EVE_ABI constexpr explicit never_empty(C const& c) noexcept : C(c) {}
 
+    template<typename V> EVE_ABI constexpr auto else_(V const& v) const
+    {
+      return never_empty<decltype(C::else_(v))> {C::else_(v)};
+    }
+
+    template<typename V> EVE_ABI constexpr auto rebase(V v) const
+    {
+      return never_empty<decltype(C::rebase(v))> {C::rebase(v)};
+    }
+
+    EVE_ABI constexpr auto drop_alternative() const
+    {
+      return never_empty<decltype(C::drop_alternative())> {C::drop_alternative()};
+    }
+
+    EVE_ABI constexpr auto map_alternative(auto op) const
+    {
+      return never_empty<decltype(C::map_alternative(op))> {C::map_alternative(op)};
+    }
+
+    template<typename Tgt> EVE_ABI constexpr auto bit_cast_alternative(as<Tgt> tgt) const
+    {
+      return never_empty<decltype(C::bit_cast_alternative(tgt))> {C::bit_cast_alternative(tgt)};
+    }
+
     template<typename T>
-    EVE_ABI constexpr void check_not_empty(eve::as<T> tgt) const
+    EVE_ABI constexpr void check_not_empty([[maybe_unused]] eve::as<T> tgt) const
     {
       EVE_ASSERT(C::count(tgt) != 0, "[eve::never_empty] No lane is kept");
     }

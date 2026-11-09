@@ -7,6 +7,7 @@
 //==================================================================================================
 #include "test.hpp"
 #include <eve/module/core.hpp>
+#include "unit/memory/load/conditional.hpp"
 #include "unit/memory/page.hpp"
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
@@ -81,6 +82,30 @@ TTS_CASE_TPL( "Check load behavior with soa_ptr", eve::test::scalar::all_types)
     auto loaded_wide_alt = eve::load[il.else_(wide_zeroes)](src);
     TTS_EQUAL(loaded_wide_alt, else_reference);
   }
+};
+
+TTS_CASE_TPL( "Check conditional load behavior with soa_ptr", eve::test::scalar::all_types)
+<typename T>(tts::type<T>)
+{
+  using s_t = tuple_t<T>;
+  using w_t = eve::wide<s_t>;
+
+  w_t alt = [](auto i, auto) { return s_t{ static_cast<std::int8_t>(90 + i % 10)
+                                         , static_cast<T>(70 + i % 10)
+                                         , 200. + i
+                                         };
+                             };
+
+  constexpr std::ptrdiff_t size = 4096 / sizeof(double);
+
+  auto i8s     = make_page<std::int8_t, size>();
+  auto ts      = make_page<T, size>();
+  auto doubles = make_page<double, size>();
+
+  check_loads(alt,
+              eve::soa_ptr {eve::as_aligned(i8s.data(), eve::lanes<size>),
+                            eve::as_aligned(ts.data(), eve::lanes<size>),
+                            eve::as_aligned(doubles.data(), eve::lanes<size>)});
 };
 
 }

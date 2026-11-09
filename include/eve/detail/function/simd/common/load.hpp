@@ -140,6 +140,11 @@ namespace eve::_
 
       if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
       {
+        if constexpr (!_::is_never_empty<C>)
+        {
+          if (cx.count(tgt) == 0) return _::alternative(cx, Wide {}, tgt);
+        }
+
         const auto res = eve::load[unsafe](src, tgt);
 
         if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
@@ -204,7 +209,7 @@ namespace eve::_
 
     if constexpr (aggregated || emulated)
     {
-      if constexpr (std::same_as<C, ignore_none_>)
+      if constexpr (C::is_complete && C::is_inverted)
       {
         if constexpr (logical_simd_value<Wide>)
         {
@@ -238,7 +243,7 @@ namespace eve::_
       // we use it directly.
       return load_impl(api, cx, src, tgt);
     }
-    else if constexpr (std::same_as<C, ignore_none_>)
+    else if constexpr (C::is_complete && C::is_inverted)
     {
       return load_impl(api, src, tgt);
     }

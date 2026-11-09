@@ -532,7 +532,26 @@ TTS_CASE("conditional/never_empty")
     TTS_TYPE_IS(decltype(r), eve::never_empty<decltype(eve::reverse_conditional(c, tgt))>);
     TTS_EQUAL(eve::drop_never_empty(r), eve::reverse_conditional(c, tgt));
 
-    TTS_TYPE_IS(decltype(eve::load[n].options()[eve::condition_key]), decltype(c));
+    auto a  = c.else_(T {7});
+    TTS_TYPE_IS(decltype(n.else_(T {7})), eve::never_empty<decltype(a)>);
+    TTS_EQUAL(eve::drop_never_empty(n.else_(T {7})).mask(tgt), a.mask(tgt));
+
+    eve::never_empty na {a};
+
+    auto ba = eve::bit_cast_alternative(na, eve::as<unsigned> {});
+    TTS_TYPE_IS(decltype(ba), eve::never_empty<decltype(eve::bit_cast_alternative(a, eve::as<unsigned> {}))>);
+
+    if constexpr( decltype(a)::has_alternative )
+    {
+      auto twice = [](auto v) { return v + v; };
+      TTS_TYPE_IS(decltype(eve::map_alternative(na, twice)), eve::never_empty<decltype(eve::map_alternative(a, twice))>);
+      TTS_EQUAL(eve::map_alternative(na, twice).alternative, T {14});
+
+      TTS_TYPE_IS(decltype(eve::drop_alternative(na)), decltype(n));
+      TTS_TYPE_IS(decltype(na.rebase(1.5)), eve::never_empty<decltype(a.rebase(1.5))>);
+    }
+
+    TTS_TYPE_IS(decltype(eve::load[n].options()[eve::condition_key]), decltype(n));
     TTS_TYPE_IS(decltype(eve::first_true[n].options()[eve::condition_key]), decltype(c));
     TTS_TYPE_IS(decltype(eve::iterate_selected[n].options()[eve::condition_key]), decltype(c));
   };
