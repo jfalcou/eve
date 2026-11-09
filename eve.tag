@@ -1931,6 +1931,10 @@
     <templarg>typename U</templarg>
   </compound>
   <compound kind="struct">
+    <name>eve::relative_conditional_advance_option</name>
+    <filename>structeve_1_1relative__conditional__advance__option.html</filename>
+  </compound>
+  <compound kind="struct">
     <name>eve::relative_conditional_option</name>
     <filename>structeve_1_1relative__conditional__option.html</filename>
     <member kind="function">
@@ -4011,6 +4015,7 @@
     <class kind="struct">eve::options</class>
     <class kind="struct">eve::decorated_with</class>
     <class kind="struct">eve::relative_conditional_option</class>
+    <class kind="struct">eve::relative_conditional_advance_option</class>
     <class kind="struct">eve::conditional_option</class>
     <class kind="struct">eve::supports_ordering</class>
     <class kind="struct">eve::supports_like</class>
@@ -11021,6 +11026,7 @@
     <class kind="struct">eve::options</class>
     <class kind="struct">eve::decorated_with</class>
     <class kind="struct">eve::relative_conditional_option</class>
+    <class kind="struct">eve::relative_conditional_advance_option</class>
     <class kind="struct">eve::conditional_option</class>
     <member kind="define">
       <type>#define</type>
