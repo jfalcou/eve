@@ -62,4 +62,5 @@ int main()
   std::cout << "-> hypot[pedantic](n, n)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
   std::cout << "-> hypot[pedantic](i, n)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
   std::cout << "-> hypot[pedantic](n, i)           = " << eve::hypot[eve::pedantic](n, n)<< "\n";
+
 }
