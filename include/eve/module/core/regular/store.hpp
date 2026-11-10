@@ -17,44 +17,39 @@
 
 namespace eve::_
 {
-  template<typename T, typename Ptr> constexpr bool can_be_stored() noexcept;
-
-  // Do not fold this into a lambda inside can_be_stored: MSVC 19.51 rejects the lambda, with its
-  // return deduced (C2440) or declared -> bool (C7608)
-  template<typename T, typename Ptr, std::size_t... I>
-  constexpr bool can_be_stored_each(std::index_sequence<I...>) noexcept
-  {
-    return (can_be_stored<decltype(get<I>(std::declval<T>())), kumi::element_t<I, Ptr>>() && ...);
-  }
+  template<typename T, typename Ptr>
+  using store_eq_t = decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()));
 
   template<typename T, typename Ptr>
-  constexpr bool can_be_stored() noexcept
-  {
-    if constexpr (scalar_pointer<Ptr>)
-    {
-      return !std::is_const_v<std::remove_pointer_t<unaligned_t<Ptr>>>;
-    }
-    else if constexpr (has_store_equivalent<T, Ptr>)
-    {
-      using eq_t = decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()));
-      return can_be_stored<kumi::element_t<1, eq_t>, kumi::element_t<2, eq_t>>();
-    }
-    else if constexpr (product_type<T> && kumi::concepts::product_type<Ptr>)
-    {
-      return can_be_stored_each<T, Ptr>(std::make_index_sequence<kumi::size_v<Ptr>>{});
-    }
-    else
-    {
-      return requires(Ptr p, T v) { p.store(options<>{}, v); };
-    }
-  }
+  using store_eq_value_t = kumi::element_t<1, store_eq_t<T,Ptr>>;
+
+  template<typename T, typename Ptr>
+  using store_eq_ptr_t = kumi::element_t<2, store_eq_t<T,Ptr>>;
+
+  template<typename T, typename Ptr>
+  inline constexpr bool can_be_stored_v = requires(Ptr p, T v) { p.store(options<>{}, v); };
+
+  template<typename T, scalar_pointer Ptr>
+  inline constexpr bool can_be_stored_v<T,Ptr> = !std::is_const_v<std::remove_pointer_t<unaligned_t<Ptr>>>;
+
+  template<typename T, typename Ptr>
+  requires( !scalar_pointer<Ptr> && has_store_equivalent<T,Ptr> )
+  inline constexpr bool can_be_stored_v<T,Ptr> = can_be_stored_v<store_eq_value_t<T,Ptr>, store_eq_ptr_t<T,Ptr>>;
+
+  // Product types: all elements must be storable
+  template<typename... Ts>
+  using can_be_stored_t = std::bool_constant<(can_be_stored_v<kumi::element_t<0,Ts>, kumi::element_t<1,Ts>> && ...)>;
+
+  template<eve::product_type T, kumi::concepts::sized_product_type<kumi::size_v<T>> Ptr>
+  requires( !has_store_equivalent<T,Ptr> )
+  inline constexpr bool can_be_stored_v<T,Ptr> = kumi::apply_traits_t<can_be_stored_t, kumi::result::zip_t<T,Ptr>>::value;
 }
 
 namespace eve
 {
   template<typename T, typename SIMD>
   concept writable_simd_compatible_ptr = simd_compatible_ptr<T, SIMD>
-                                      && _::can_be_stored<SIMD, T>();
+                                      && _::can_be_stored_v<SIMD, T>;
 
   template<typename T, typename SIMD>
   concept writable_logical_simd_compatible_ptr = logical_simd_compatible_ptr<T, SIMD>

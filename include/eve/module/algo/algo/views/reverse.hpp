@@ -191,7 +191,7 @@ namespace eve::algo::views
 
     template<callable_options O>
     EVE_ABI void store(O const& opts, wide_value_type_t<I> v) const noexcept
-      requires iterator<I> && (eve::_::can_be_stored<wide_value_type_t<I>, I>())
+      requires iterator<I> && (eve::_::can_be_stored_v<wide_value_type_t<I>, I>)
     {
       auto c = opts[condition_key];
 
