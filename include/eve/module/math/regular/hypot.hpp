@@ -137,7 +137,7 @@ namespace eve
         else
         {
           auto expo = [&](auto x){return if_else(is_nan(x), zero, exponent(r_t(x))); };
-          auto e  = -maxmag(expo(r0), expo(r1), expo(rs)...);
+          auto e  = -max(expo(r0), expo(r1), expo(rs)...);
           auto s2 = sum_of_squares[o](ldexp[o](r_t(r0), e), ldexp[o](r_t(r1), e), ldexp[o](r_t(rs), e)...);
           return ldexp[o](sqrt(s2), -e);
         }
