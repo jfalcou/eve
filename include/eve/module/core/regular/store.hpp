@@ -17,6 +17,16 @@
 
 namespace eve::_
 {
+  template<typename T, typename Ptr> constexpr bool can_be_stored() noexcept;
+
+  // Do not fold this into a lambda inside can_be_stored: MSVC 19.51 rejects the lambda, with its
+  // return deduced (C2440) or declared -> bool (C7608)
+  template<typename T, typename Ptr, std::size_t... I>
+  constexpr bool can_be_stored_each(std::index_sequence<I...>) noexcept
+  {
+    return (can_be_stored<decltype(get<I>(std::declval<T>())), kumi::element_t<I, Ptr>>() && ...);
+  }
+
   template<typename T, typename Ptr>
   constexpr bool can_be_stored() noexcept
   {
@@ -31,11 +41,7 @@ namespace eve::_
     }
     else if constexpr (product_type<T> && kumi::concepts::product_type<Ptr>)
     {
-      return []<std::size_t... I>(std::index_sequence<I...>)
-      {
-        return (can_be_stored<decltype(get<I>(std::declval<T>())), kumi::element_t<I, Ptr>>()
-               && ...);
-      }(std::make_index_sequence<kumi::size_v<Ptr>>{});
+      return can_be_stored_each<T, Ptr>(std::make_index_sequence<kumi::size_v<Ptr>>{});
     }
     else
     {
