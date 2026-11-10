@@ -962,23 +962,23 @@ x_i\right)^{1/n} \). </p>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line"><span class="comment">//   eve::wide pf = {-1.0, 2.0, -3.0, eve::valmax(eve::as&lt;double&gt;())};</span></div>
-<div class="line"><span class="comment">//   eve::wide qf = {-4.0, 3.0, -2.0, eve::inf(eve::as&lt;double&gt;())};</span></div>
-<div class="line"><span class="comment">//   eve::wide rf = {-40.0, 0.03, -2.0, eve::nan(eve::as&lt;double&gt;())};</span></div>
-<div class="line"><span class="comment">//   kumi::tuple wt{pf, qf};</span></div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> pf = {-1.0, 2.0, -3.0, <a class="code hl_variable" href="group__eve__core__constants.html#ga85073f11abb76d43faf07742435ea083">eve::valmax</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> qf = {-4.0, 3.0, -2.0, <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())};</div>
+<div class="line">  <a class="code hl_struct" href="structeve_1_1wide.html">eve::wide</a> rf = {-40.0, 0.03, -2.0, <a class="code hl_variable" href="group__eve__core__constants.html#ga34b67924fa53bec83dfc96b51bd8fe56">eve::nan</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;double&gt;</a>())};</div>
+<div class="line">  <a class="code hl_structRef" href="https://jfalcou.github.io/kumi/structkumi_1_1tuple.html">kumi::tuple</a> wt{pf, qf};</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- pf = &quot; &lt;&lt; pf &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- qf = &quot; &lt;&lt; qf &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- rf = &quot; &lt;&lt; rf &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;&lt;- wt = &quot; &lt;&lt; wt &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- pf = &quot;</span> &lt;&lt; pf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- qf = &quot;</span> &lt;&lt; qf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- rf = &quot;</span> &lt;&lt; rf &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;- wt = &quot;</span> &lt;&lt; wt &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot(pf,qf)                = &quot; &lt;&lt; eve::hypot(pf,qf) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot(wt)                   = &quot; &lt;&lt; eve::hypot(wt) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot[ignore_last(2)](pf,qf)= &quot; &lt;&lt; eve::hypot[eve::ignore_last(2)](pf,qf) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot[pf &gt; 0.0](pf,qf)      = &quot; &lt;&lt; eve::hypot[pf &gt; 0.0](pf,qf) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot[pedantic](pf,qf)      = &quot; &lt;&lt; eve::hypot[eve::pedantic](pf,qf) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot(pf,qf,rf)             = &quot; &lt;&lt; eve::hypot(pf,qf,rf) &lt;&lt; &quot;\n&quot;;</span></div>
-<div class="line"><span class="comment">//    std::cout &lt;&lt; &quot;-&gt; hypot[pedantic](pf,qf,rf)   = &quot; &lt;&lt; eve::hypot[eve::pedantic](pf,qf,rf) &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot(pf,qf)                = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(pf,qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot(wt)                   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(wt) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot[ignore_last(2)](pf,qf)= &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>[<a class="code hl_struct" href="structeve_1_1ignore__last.html">eve::ignore_last</a>(2)](pf,qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot[pf &gt; 0.0](pf,qf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>[pf &gt; 0.0](pf,qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot[pedantic](pf,qf)      = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](pf,qf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot(pf,qf,rf)             = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>(pf,qf,rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">   std::cout &lt;&lt; <span class="stringliteral">&quot;-&gt; hypot[pedantic](pf,qf,rf)   = &quot;</span> &lt;&lt; <a class="code hl_variable" href="#gaae6d8d8a0ad9d41260c0bbf8f642a370">eve::hypot</a>[<a class="code hl_variable" href="group__eve__core__decorators.html#gaf3483e5e000367c812b507ed46399367">eve::pedantic</a>](pf,qf,rf) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordtype">float</span> o = 1.0f;</div>
 <div class="line">  <span class="keywordtype">float</span> i = <a class="code hl_variable" href="group__eve__core__constants.html#ga8a568ccc9a870bc971851209c836bc63">eve::inf</a>(<a class="code hl_struct" href="structeve_1_1as.html">eve::as</a>(o));</div>
