@@ -108,8 +108,7 @@ struct slide_left_impl_t
       auto mask = _::mask_type(tgt);
       return level(mask, g, s) + 4;
     }
-    else if constexpr( current_api >= sve ) return 2;
-    else if constexpr( current_api >= neon )
+    else if constexpr( current_api >= neon || current_api >= sve )
     {
       if( reg_size <= 8 ) return 2;
       return 3;

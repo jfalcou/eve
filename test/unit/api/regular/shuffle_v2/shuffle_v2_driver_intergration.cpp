@@ -162,8 +162,7 @@ TTS_CASE("identites and 0s masking integration tests")
         eve::pattern<eve::na_, eve::na_>);
   }
 
-  constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::sve
-                                || eve::current_api >= eve::rvv;
+  constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv;
 
   if( !free_masking )
   {

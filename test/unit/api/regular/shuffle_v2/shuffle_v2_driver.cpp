@@ -322,8 +322,7 @@ TTS_CASE_TPL("free masking: zeroes", eve::test::simd::all_types)
   }
   else
   {
-    constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::sve
-                                  || eve::current_api >= eve::rvv;
+    constexpr bool free_masking = eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv;
 
     const T               arithmetic_in {[](int i, int) { return i + 1; }};
     const eve::logical<T> logical_in([](int i, int) { return i % 3 == 1; });

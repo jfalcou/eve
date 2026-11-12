@@ -32,7 +32,10 @@ template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
  auto
 shuffle_l3_(EVE_SUPPORTS(sve_), P p, lanes_t<G> g, wide<T, N> x)
 {
-  return shuffle_l3_svetbl(p, g, x);
+  if constexpr( auto r = shuffle_l3_and_0(p, g, x); matched_shuffle<decltype(r)> ) return r;
+  else if constexpr( auto r = shuffle_l3_slide_with_0(p, g, x); matched_shuffle<decltype(r)> )
+    return r;
+  else return shuffle_l3_svetbl(p, g, x);
 }
 
 }

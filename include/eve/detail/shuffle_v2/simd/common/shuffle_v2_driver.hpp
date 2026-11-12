@@ -137,7 +137,7 @@ shuffle_v2_free_masking(NativeSelector        selector,
                         kumi::tuple<T, Ts...> xs)
 {
   constexpr bool free_masking =
-      !logical_value<T> && (current_api >= avx512 || current_api >= sve || current_api >= rvv);
+      !logical_value<T> && (current_api >= avx512 || current_api >= rvv);
   constexpr std::array idxs {I...};
 
   if constexpr( !free_masking || !idxm::has_zeroes(idxs) )

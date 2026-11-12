@@ -95,8 +95,7 @@ auto shift_right = [](int i, int size) -> std::ptrdiff_t
 TTS_CASE("and 0s")
 {
   // masking 0s is free for these arches.
-  if constexpr( eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv
-                || eve::current_api >= eve::sve )
+  if constexpr( eve::current_api >= eve::avx512 || eve::current_api >= eve::rvv )
   {
     TTS_PASS("");
     return;
