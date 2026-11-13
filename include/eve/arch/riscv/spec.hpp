@@ -31,4 +31,3 @@ namespace eve
 
 #define EVE_CURRENT_ABI   ::eve::riscv_
 #define EVE_CURRENT_API   ::eve::rvv_
-#define EVE_ABI_NAMESPACE riscv_abi_namespace

@@ -64,7 +64,6 @@ namespace eve
 # elif defined(SPY_SIMD_IS_PPC_VMX_2_03)
 #   define EVE_CURRENT_API ::eve::vmx_2_03_
 # endif
-# define EVE_ABI_NAMESPACE ppc_abi_v0
 #elif defined(SPY_SIMD_IS_PPC_VSX)
 # define EVE_CURRENT_ABI ::eve::ppc_
 # if defined(SPY_SIMD_IS_PPC_VSX_3_01)
@@ -76,5 +75,4 @@ namespace eve
 # elif defined(SPY_SIMD_IS_PPC_VSX_2_06)
 #   define EVE_CURRENT_API ::eve::vsx_2_06_
 # endif
-# define EVE_ABI_NAMESPACE ppc_abi_v0
 #endif
