@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/detail/assert_utils.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sign_alternate_t : elementwise_callable<sign_alternate_t, Options, upward_option, downward_option,

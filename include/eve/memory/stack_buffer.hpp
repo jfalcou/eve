@@ -13,7 +13,7 @@
 #include <eve/memory/soa_ptr.hpp>
 #include <eve/traits/as_wide.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

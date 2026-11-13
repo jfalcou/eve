@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/traits/bit_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_andnot_t : bit_callable<bit_andnot_t, Options>

@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/detail/generic/atan_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct acot_t : elementwise_callable<acot_t, Options, raw_option, fast_option,

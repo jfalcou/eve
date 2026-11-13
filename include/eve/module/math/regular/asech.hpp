@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/acosh.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct asech_t : elementwise_callable<asech_t, Options>

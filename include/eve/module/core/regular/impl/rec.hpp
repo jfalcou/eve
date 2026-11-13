@@ -21,7 +21,7 @@
 #include <eve/module/core/regular/div.hpp>
 #include <eve/module/core/regular/any.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<callable_options O, typename T>

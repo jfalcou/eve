@@ -16,7 +16,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

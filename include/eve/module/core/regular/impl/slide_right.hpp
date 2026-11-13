@@ -12,7 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<std::ptrdiff_t Shift> struct slide_right_lambda
 {

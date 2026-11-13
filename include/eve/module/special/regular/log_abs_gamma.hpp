@@ -13,7 +13,7 @@
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/special/regular/signgam.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct log_abs_gamma_t : elementwise_callable<log_abs_gamma_t, Options, pedantic_option, raw_option, fast_option>

@@ -12,7 +12,7 @@
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/as_floating_point.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

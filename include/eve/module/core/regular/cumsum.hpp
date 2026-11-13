@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/cumfun.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cumsum_t : callable<cumsum_t, Options, widen_option, saturated_option>

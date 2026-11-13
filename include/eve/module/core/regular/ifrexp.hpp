@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/zip.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct ifrexp_t : strict_elementwise_callable<ifrexp_t, Options, pedantic_option, raw_option>

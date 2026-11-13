@@ -11,7 +11,7 @@
 #include <eve/traits/element_type.hpp>
 #include <bit>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, typename Target>
    constexpr Target bit_cast_impl(cpu_, T const &a, as<Target>) noexcept

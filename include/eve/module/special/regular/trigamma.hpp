@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/special/regular/polygamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct trigamma_t : elementwise_callable<trigamma_t, Options>

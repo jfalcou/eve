@@ -9,7 +9,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct count_true_t : conditional_callable<count_true_t, Options>

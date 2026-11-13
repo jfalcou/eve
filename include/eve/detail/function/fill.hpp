@@ -12,7 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/arch.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Pack, eve::invocable<width_type, width_type> Generator>
    Pack fill(eve::as<Pack>, Generator&& g) noexcept

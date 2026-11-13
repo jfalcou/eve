@@ -15,12 +15,12 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T> struct logical;
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T>
   inline constexpr bool is_logical_ = false;

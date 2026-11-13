@@ -14,7 +14,7 @@
 #include <eve/module/algo/algo/preprocess_range.hpp>
 #include <eve/module/algo/algo/traits.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algos

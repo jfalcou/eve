@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/hi.hpp>
 #include <eve/module/core/regular/lohi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct hi_t : elementwise_callable<hi_t, Options>

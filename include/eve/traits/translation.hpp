@@ -13,7 +13,7 @@
 #include <concepts>
 #include <array>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @brief Notifies EVE that a type is translatable and its translation target.

@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct majorant_t : constant_callable<majorant_t, Options, lower_option, upper_option>

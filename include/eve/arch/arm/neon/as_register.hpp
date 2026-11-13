@@ -12,7 +12,7 @@
 #include <eve/types/float16.hpp>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64

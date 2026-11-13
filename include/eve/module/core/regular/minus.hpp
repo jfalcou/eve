@@ -19,7 +19,7 @@
 #include <eve/module/core/constant/signmask.hpp>
 #include <eve/module/core/detail/modular.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct minus_t : elementwise_callable<minus_t, Options, saturated_option, mod_option>

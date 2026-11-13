@@ -14,7 +14,7 @@
 //
 // This is an implementation of `compress` for sse2 only.
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_using_switch_)
   EVE_DECLARE_CALLABLE(compress_using_switch_, compress_using_switch)

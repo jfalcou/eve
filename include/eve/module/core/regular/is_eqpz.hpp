@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_eqpz_t : elementwise_callable<is_eqpz_t, Options>

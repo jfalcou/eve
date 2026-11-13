@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/any.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <callable_options O, typename T>
    auto none_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept

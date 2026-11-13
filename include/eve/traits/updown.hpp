@@ -10,7 +10,7 @@
 #include <eve/traits/as_wide.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

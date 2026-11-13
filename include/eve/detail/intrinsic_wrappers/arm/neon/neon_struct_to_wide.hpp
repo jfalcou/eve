@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/combine.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename, typename T, std::ptrdiff_t card>
   struct neon_struct_to_wide_type_res

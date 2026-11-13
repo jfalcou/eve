@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/prev.hpp>
 
 #
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct nextafter_t : elementwise_callable<nextafter_t, Options, pedantic_option>

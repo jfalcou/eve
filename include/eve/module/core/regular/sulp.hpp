@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/next.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sulp_t : elementwise_callable<sulp_t, Options, kahan_option, harrisson_option>

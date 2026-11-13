@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/logical_or.hpp>
 #include <eve/concept/invocable.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct has_equal_in_t : callable<has_equal_in_t, Options>

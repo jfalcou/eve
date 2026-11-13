@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/is_pow2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

@@ -10,7 +10,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <cstddef>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Type> struct pointer_alignment : std::integral_constant<std::size_t,0ULL>
   {};

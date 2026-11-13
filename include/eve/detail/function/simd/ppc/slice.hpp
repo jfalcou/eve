@@ -10,7 +10,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/concept/options.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, typename Slice>
    auto slice_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, Slice) noexcept

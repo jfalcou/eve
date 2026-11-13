@@ -9,7 +9,7 @@
 
 #include <eve/detail/shuffle_v2/native_shuffle_helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 // level6 and level7 combine up to 3 instructions

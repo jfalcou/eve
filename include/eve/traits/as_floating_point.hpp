@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/traits/translation.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T>
   struct  as_floating_point

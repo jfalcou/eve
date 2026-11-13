@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/is_finite.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_infinite_t : elementwise_callable<is_not_infinite_t, Options,  pedantic_option>

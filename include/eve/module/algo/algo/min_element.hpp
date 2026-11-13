@@ -12,7 +12,7 @@
 #include <eve/module/algo/algo/for_each_iteration_fixed_overflow.hpp>
 #include <eve/module/algo/algo/min_value.hpp>
 
-namespace eve::algo::_
+EVE_NAMESPACE::algo::_
 {
 
 template<typename TraitsSupport> struct min_element_1_pass_ : TraitsSupport
@@ -166,7 +166,7 @@ inline constexpr auto min_element_2_pass =
 
 } // namespace eve::algo
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
 template<typename TraitsSupport> struct min_element_ : TraitsSupport
 {

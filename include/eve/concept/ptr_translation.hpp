@@ -12,7 +12,7 @@
 
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   //==================================================================================================
   //! @concept translatable_ptr

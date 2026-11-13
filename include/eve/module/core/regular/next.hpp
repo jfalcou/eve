@@ -30,7 +30,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <eve/module/core/regular/none.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct next_t : strict_elementwise_callable<next_t, Options, pedantic_option,  saturated_option, raw_option>

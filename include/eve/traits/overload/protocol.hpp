@@ -22,7 +22,7 @@
 //! @}
 //======================================================================================================================
 
-namespace eve
+EVE_NAMESPACE
 {
   //====================================================================================================================
   //! @addtogroup eve_extensions
@@ -164,7 +164,7 @@ EVE_ABI static constexpr auto deferred_call(auto arch, Args&&...args) noexcept  
 using callable_tag_type     = TYPE                                                                                     \
 /**/
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Callable, typename... Args>
    constexpr auto dispatch_call_impl(Callable const& c, Args&&... args)
@@ -227,9 +227,9 @@ inline constexpr auto adl_helper = adl_helper_t {}                              
 #define EVE_TARGETS(ARCH)   adl_helper_t{}, ARCH{}
 
 // Register eve::_ as the deferred namespace by default
-namespace eve::_ { EVE_CALLABLE_NAMESPACE(); }
+EVE_NAMESPACE::_ { EVE_CALLABLE_NAMESPACE(); }
 
-namespace eve
+EVE_NAMESPACE
 {
   template<auto Func, typename... Ts>
   using result_t = decltype(Func(std::declval<Ts>()...));

@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/is_equal.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_bit_equal_t : strict_elementwise_callable<is_bit_equal_t, Options>

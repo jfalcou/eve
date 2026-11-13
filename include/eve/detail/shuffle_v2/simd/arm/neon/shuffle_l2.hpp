@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_driver_fwd.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 // NOTE: using no_matching_shuffle_t {} because otherwise apple clang crashes.

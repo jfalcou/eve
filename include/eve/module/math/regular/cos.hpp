@@ -9,7 +9,7 @@
 
 #include <eve/module/math/detail/generic/cos_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cos_t : elementwise_callable<cos_t, Options, quarter_circle_option,

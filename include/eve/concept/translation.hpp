@@ -11,7 +11,7 @@
 
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   //==================================================================================================
   //! @concept has_plain_translation

@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/signnz.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct negatenz_t : elementwise_callable<negatenz_t, Options>

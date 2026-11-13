@@ -13,7 +13,7 @@
 #include <eve/traits/overload/impl/conditional.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template< template<typename> class Func
         , typename OptionsValues

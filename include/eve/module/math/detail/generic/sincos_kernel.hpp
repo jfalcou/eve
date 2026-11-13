@@ -23,7 +23,7 @@
 #include <eve/module/math/detail/generic/rem180.hpp>
 #include <eve/module/math/detail/generic/rem2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sincos_kernel_t : elementwise_callable<sincos_kernel_t, Options, quarter_circle_option,
@@ -41,7 +41,7 @@ namespace eve
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_value T, callable_options O> EVE_NOINLINE
   zipped<T,T> sincos_kernel_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept

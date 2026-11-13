@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct fibonacci_t : strict_elementwise_callable<fibonacci_t, Options>

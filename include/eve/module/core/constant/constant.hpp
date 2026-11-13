@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 //================================================================================================
 //! @addtogroup eve_core_constants

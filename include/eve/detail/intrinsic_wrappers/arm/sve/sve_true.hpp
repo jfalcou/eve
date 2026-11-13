@@ -11,7 +11,7 @@
 #include <eve/conditional.hpp>
 #include <eve/arch/width.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // Returns clear sve_true for type
 // Calling svptrue_b8 is OK for most cases, where you OK with

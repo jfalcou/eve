@@ -13,7 +13,7 @@
 #include <concepts>
 #include <cstddef>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // -------------------------------------------------------------------------------------------
   // Fixed-size RVV types

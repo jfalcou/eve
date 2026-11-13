@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<callable_options O, logical_simd_value T, logical_simd_value U>
  constexpr U

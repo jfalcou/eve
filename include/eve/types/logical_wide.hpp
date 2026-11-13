@@ -36,7 +36,7 @@
 #include <iosfwd>
 #include <utility>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

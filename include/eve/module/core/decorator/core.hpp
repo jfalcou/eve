@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/unsafe.hpp>
 #include <cfenv>
 
-namespace eve
+EVE_NAMESPACE
 {
   struct almost_mode          {};
   struct associated_mode      {};
@@ -239,7 +239,7 @@ namespace eve
 }
 
 #if defined(EVE_DOXYGEN_INVOKED)
-namespace eve
+EVE_NAMESPACE
 {
 //======================================================================================================================
 //! @addtogroup eve_core_decorators

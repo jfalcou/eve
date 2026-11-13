@@ -24,7 +24,7 @@
 
 #include <bit>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<value In, scalar_value Out>

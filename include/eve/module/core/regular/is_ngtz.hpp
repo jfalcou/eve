@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_not_greater.hpp>
 #include <eve/module/core/constant/false.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_ngtz_t : elementwise_callable<is_ngtz_t, Options>

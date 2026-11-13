@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/traits.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

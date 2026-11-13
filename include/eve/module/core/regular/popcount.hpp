@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/detail/assert_utils.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct popcount_t : elementwise_callable<popcount_t, Options>

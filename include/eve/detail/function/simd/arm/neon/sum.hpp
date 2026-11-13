@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/remove_garbage.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N>
    wide<T,N> arm_sum_impl(wide<T,N> v) noexcept

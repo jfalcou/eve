@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/concept/same_lanes.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct zip_t : callable<zip_t, Options>
@@ -92,7 +92,7 @@ namespace eve
   using zipped = eve::result_t<zip,Vs...>;
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, scalar_value... Vs>
   auto zip_(EVE_REQUIRES(cpu_), O const&, Vs... vs) noexcept

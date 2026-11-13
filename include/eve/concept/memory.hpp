@@ -10,7 +10,7 @@
 #include <eve/traits/value_type.hpp>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T, typename SIMD>
   concept simd_compatible_ptr = simd_value<SIMD> &&

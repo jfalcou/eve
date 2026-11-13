@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/logical_and.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_notor_t : elementwise_callable<logical_notor_t, Options>

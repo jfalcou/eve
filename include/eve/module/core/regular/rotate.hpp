@@ -15,7 +15,7 @@
 
 #include <array>
 
-namespace eve
+EVE_NAMESPACE
 {
 // TODO DOC is it to be in user interface ?
 // Why is the implementation split ?

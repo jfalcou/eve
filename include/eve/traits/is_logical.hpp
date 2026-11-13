@@ -10,7 +10,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T>
   struct is_logical : std::false_type

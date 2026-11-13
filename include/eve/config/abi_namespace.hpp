@@ -371,7 +371,7 @@
 #  define EVE_NAMESPACE namespace eve::inline EVE_ABI_NAMESPACE
 #endif
 
-namespace eve
+EVE_NAMESPACE
 {
   // Name of the ABI namespace for the current compilation options
 #define EVE_ABI_STRING_(x) #x

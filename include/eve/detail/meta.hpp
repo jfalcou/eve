@@ -17,7 +17,7 @@
 #include <cstdint>
 #include <cstddef>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Values list helper
   template<auto... Values>

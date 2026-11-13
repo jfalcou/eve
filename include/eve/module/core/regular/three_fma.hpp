@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct three_fma_t : elementwise_callable<three_fma_t, Options, pedantic_option>
@@ -82,7 +82,7 @@ namespace eve
 
 #include <eve/module/core/regular/two_prod.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

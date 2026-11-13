@@ -17,7 +17,7 @@
 #include <eve/module/core/constant/mone.hpp>
 #include <eve/module/core/constant/one.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sign_t : elementwise_callable<sign_t, Options>

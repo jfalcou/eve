@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/fnma.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct diff_of_prod_t : elementwise_callable<diff_of_prod_t, Options, raw_option, pedantic_option, lower_option,

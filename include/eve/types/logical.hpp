@@ -15,7 +15,7 @@
 #include <bitset>
 #include <iosfwd>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_simd_types

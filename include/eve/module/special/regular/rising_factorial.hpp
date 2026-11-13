@@ -18,7 +18,7 @@
 #include <eve/module/special/regular/tgamma.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct rising_factorial_t : strict_elementwise_callable<rising_factorial_t, Options, raw_option, pedantic_option>

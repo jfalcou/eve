@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/concept/vectorized.hpp>
 
-namespace eve {
+EVE_NAMESPACE {
 
   //================================================================================================
   //! @addtogroup eve_simd_types

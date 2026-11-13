@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/modular.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sqrt_t : elementwise_callable<sqrt_t, Options, raw_option,

@@ -24,7 +24,7 @@
 //! **Convenience header:** @code{.cpp} #include <eve/traits/product_type.hpp> @endcode
 //==================================================================================================
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_struct

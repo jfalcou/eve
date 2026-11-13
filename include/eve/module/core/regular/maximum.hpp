@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct maximum_t : conditional_callable<maximum_t, Options, splat_option>

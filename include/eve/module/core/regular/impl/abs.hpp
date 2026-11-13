@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/min.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<value T, callable_options O>
   constexpr T  abs_(EVE_REQUIRES(cpu_), O const&, T const& v) noexcept

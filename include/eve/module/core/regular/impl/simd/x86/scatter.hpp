@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N, typename Idx, typename Ptr, callable_options O>
    void

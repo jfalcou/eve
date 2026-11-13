@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/countr_zero.hpp>
 #include <bit>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct countr_one_t : elementwise_callable<countr_one_t, Options>

@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct geommean_t : strict_tuple_callable<geommean_t, Options, pedantic_option, widen_option,
