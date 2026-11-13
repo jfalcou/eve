@@ -12,7 +12,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/traits/as_wide.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<logical_simd_value Logical> struct top_bits;
 
@@ -30,7 +30,7 @@ template<typename O> struct is_less_t;
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // to_logical -----------------------------------------------------------
 template<typename T, width_type N> auto to_logical(wide<T, N> const& v) noexcept;

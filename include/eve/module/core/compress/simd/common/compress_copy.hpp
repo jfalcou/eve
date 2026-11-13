@@ -11,7 +11,7 @@
 #include <eve/module/core/compress/compress_copy_simd.hpp>
 #include <eve/module/core/compress/detail/compress_callable.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 struct compress_copy_core

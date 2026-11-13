@@ -13,7 +13,7 @@
 #include <eve/module/core/detail/flags.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Generate better code on x86 than just comparing to 0
   template<signed_integral_value T, width_type N, callable_options O>

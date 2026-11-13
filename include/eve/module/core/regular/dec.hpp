@@ -19,7 +19,7 @@
 #include <eve/module/core/detail/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct dec_t : elementwise_callable<dec_t, Options, saturated_option, lower_option,

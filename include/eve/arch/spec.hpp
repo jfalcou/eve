@@ -26,7 +26,7 @@
 
 #include <eve/arch/cpu/spec.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Local renaming for spy SIMD detector

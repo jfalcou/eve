@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   // TODO DOC
 //================================================================================================

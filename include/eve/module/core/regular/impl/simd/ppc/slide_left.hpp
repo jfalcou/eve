@@ -12,7 +12,7 @@
 #include <eve/detail/remove_garbage.hpp>
 #include <eve/module/core/regular/lo.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<arithmetic_scalar_value T, width_type N, std::ptrdiff_t Shift>
      wide<T, N>

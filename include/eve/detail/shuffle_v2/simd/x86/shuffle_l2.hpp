@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>

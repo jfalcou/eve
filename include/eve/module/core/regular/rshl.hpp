@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/abs.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct rshl_t : strict_elementwise_callable<rshl_t, Options>

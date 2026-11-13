@@ -12,7 +12,7 @@
 #include <eve/concept/vectorized.hpp>
 #include <eve/concept/same_lanes.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

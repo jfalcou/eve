@@ -13,7 +13,7 @@
 #include <eve/concept/scalar.hpp>
 #include <eve/traits/width.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Type> struct logical;
 

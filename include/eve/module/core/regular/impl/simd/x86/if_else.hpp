@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<scalar_value T, width_type N, callable_options O>
  constexpr

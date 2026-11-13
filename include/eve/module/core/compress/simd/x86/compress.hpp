@@ -10,7 +10,7 @@
 #include <eve/module/core/compress/detail/compress_using_bmi.hpp>
 #include <eve/module/core/compress/detail/compress_using_switch.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<relative_conditional_expr C, typename T, typename U, width_type N>
 auto

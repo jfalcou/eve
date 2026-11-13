@@ -12,7 +12,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _ {
     static constexpr bool is_pow2(std::ptrdiff_t v) { return !v || ( !(v & (v - 1)) ); }

@@ -10,7 +10,7 @@
 #include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/detail/meta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 template<logical_simd_value Logical>

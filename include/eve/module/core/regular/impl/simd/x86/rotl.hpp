@@ -14,7 +14,7 @@
 
 // rotl is only implemented for unsigned integers as per the EVE documentation
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T, typename S, width_type N, callable_options O>
  wide<T,N> rotl_(EVE_REQUIRES(avx512_), O const&, wide<T, N> v, wide<S, N> s) noexcept

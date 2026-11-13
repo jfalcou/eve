@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   constexpr  auto laguerre_successor(auto n, auto l, auto x, auto pl, auto plm1)
   {

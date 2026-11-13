@@ -14,7 +14,7 @@
 #include <eve/traits.hpp>
 #include <bit>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, callable_options O>
    constexpr auto popcount_(EVE_REQUIRES(cpu_), O const&, T x) noexcept

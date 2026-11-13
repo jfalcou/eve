@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_translation.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct combine_t : callable<combine_t, Options>

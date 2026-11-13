@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct kolmmean_t : callable<kolmmean_t, Options, pedantic_option, widen_option,

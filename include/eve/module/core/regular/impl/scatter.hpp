@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/write.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   struct scatter_helper_t
   {

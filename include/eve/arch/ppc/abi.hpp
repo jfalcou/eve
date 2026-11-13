@@ -9,7 +9,7 @@
 
 #include <eve/arch/cpu/abi.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
   requires (  (spy::simd_instruction_set >= spy::vsx_ || spy::simd_instruction_set >= spy::vmx_)

@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/module/core/regular/logical_or.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct reduce_t : conditional_callable<reduce_t, Options, splat_option>

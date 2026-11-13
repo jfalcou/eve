@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct rsqrt_pio_2_t : constant_callable<rsqrt_pio_2_t, Options, lower_option, upper_option>

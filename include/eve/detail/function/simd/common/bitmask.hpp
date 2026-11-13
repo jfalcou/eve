@@ -11,7 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <bitset>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // Logical to Bits

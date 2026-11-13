@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, value U, width_type N, callable_options O>
    wide<T, N> ldexp_(EVE_REQUIRES(avx512_), O const& opts, wide<T, N> a0, U a1)

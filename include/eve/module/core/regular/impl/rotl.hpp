@@ -13,7 +13,7 @@
 #include <eve/arch/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, typename S, callable_options O>
   constexpr  as_wide_as_t<T,S> rotl_(EVE_REQUIRES(cpu_), O const& o, T v, S s)

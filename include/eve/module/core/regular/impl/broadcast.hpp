@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/traits/overload/supports.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, scalar_value T>
    auto broadcast_(EVE_REQUIRES(cpu_), O const&, T v) noexcept

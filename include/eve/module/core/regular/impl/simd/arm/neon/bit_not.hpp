@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N>
    wide<T,N> bit_not_(EVE_REQUIRES(neon128_), O const&, wide<T,N> w) noexcept

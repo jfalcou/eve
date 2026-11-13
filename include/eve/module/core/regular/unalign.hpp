@@ -14,7 +14,7 @@
 #include <eve/memory/soa_ptr.hpp>
 #include <iterator>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct unalign_t : callable<unalign_t, Options>
@@ -112,7 +112,7 @@ namespace eve
 //================================================================================================
   template<typename T> using unaligned_t = decltype(unalign(std::declval<T>()));
 }
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<std::contiguous_iterator I, callable_options O>
   constexpr I unalign_(EVE_REQUIRES(cpu_), O const&, I i) noexcept

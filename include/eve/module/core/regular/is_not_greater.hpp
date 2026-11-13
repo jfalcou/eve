@@ -20,7 +20,7 @@
 #include <eve/traits/as_logical.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_greater_t : strict_elementwise_callable<is_not_greater_t, Options, almost_option>

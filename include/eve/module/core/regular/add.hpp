@@ -15,7 +15,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct add_t : tuple_callable<add_t, Options, saturated_option, lower_option,

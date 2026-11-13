@@ -11,7 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/bessel/detail/csb_k.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

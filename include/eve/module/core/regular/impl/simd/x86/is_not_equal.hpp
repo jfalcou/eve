@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <callable_options O, arithmetic_scalar_value T, width_type N>
    logical<wide<T, N>>

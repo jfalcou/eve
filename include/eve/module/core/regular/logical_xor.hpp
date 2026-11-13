@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_xor_t : elementwise_callable<logical_xor_t, Options>

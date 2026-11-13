@@ -11,7 +11,7 @@
 #include <eve/traits/translation.hpp>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

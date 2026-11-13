@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct pow_abs_t : elementwise_callable<pow_abs_t, Options, raw_option, fast_option, pedantic_option>

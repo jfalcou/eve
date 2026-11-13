@@ -23,7 +23,7 @@
 
 #include <limits>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct saturate_t : strict_elementwise_callable<saturate_t, Options>

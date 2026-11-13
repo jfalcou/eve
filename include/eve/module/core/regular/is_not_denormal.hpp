@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/logical_and.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_denormal_t : elementwise_callable<is_not_denormal_t, Options>

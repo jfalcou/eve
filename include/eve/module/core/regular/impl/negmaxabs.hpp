@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/minus.hpp>
 #include <eve/concept/value.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T0, typename T1, typename... Ts, callable_options O>
    constexpr common_value_t<T0, T1, Ts...>

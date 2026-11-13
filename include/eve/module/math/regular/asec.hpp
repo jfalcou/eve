@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/asin.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct asec_t : elementwise_callable<asec_t, Options, raw_option, fast_option,

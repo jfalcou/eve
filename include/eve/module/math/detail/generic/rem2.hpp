@@ -11,7 +11,7 @@
 #include <eve/module/math/constant/pi.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<value T>
  auto

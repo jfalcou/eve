@@ -79,12 +79,11 @@
 #  define EVE_NAMESPACE namespace eve::inline EVE_ABI_NAMESPACE
 #endif
 
-namespace eve
-{
-  // Name of the ABI namespace for the current compilation options
 #define EVE_ABI_STRING_(x) #x
 #define EVE_ABI_STRING(x)  EVE_ABI_STRING_(x)
+
+EVE_NAMESPACE
+{
+  // Name of the ABI namespace for the current compilation options
   inline constexpr std::string_view current_abi_namespace = EVE_ABI_STRING(EVE_ABI_NAMESPACE);
-#undef EVE_ABI_STRING
-#undef EVE_ABI_STRING_
 }

@@ -13,7 +13,7 @@
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template < typename I,  typename T > constexpr 
   T cb_j(I nu, T x) noexcept

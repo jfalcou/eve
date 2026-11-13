@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<relative_conditional_expr C, scalar_value T,
          width_type N,

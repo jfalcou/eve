@@ -11,7 +11,7 @@
 #include <eve/module/algo/algo/find_last.hpp>
 #include <eve/module/algo/algo/max_value.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
 template<typename TraitsSupport> struct max_element_ : TraitsSupport
 {

@@ -18,7 +18,7 @@
 
 #include <array>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   template <typename TraitsSupport>
   struct remove_if_ : TraitsSupport

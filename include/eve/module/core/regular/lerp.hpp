@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/fnma.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lerp_t : elementwise_callable<lerp_t, Options, pedantic_option>

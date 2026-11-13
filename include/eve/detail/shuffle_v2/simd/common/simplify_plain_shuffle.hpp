@@ -11,7 +11,7 @@
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<std::ptrdiff_t... I>

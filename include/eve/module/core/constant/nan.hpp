@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct nan_t : constant_callable<nan_t, Options, lower_option, upper_option>

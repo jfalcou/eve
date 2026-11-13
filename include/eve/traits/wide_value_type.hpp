@@ -11,7 +11,7 @@
 #include <eve/traits/iterator_width.hpp>
 #include <eve/traits/value_type.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

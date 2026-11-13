@@ -18,7 +18,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, conditional_expr C, typename T, std::ptrdiff_t S>
    constexpr auto bit_shr_(EVE_REQUIRES(cpu_), C const& cx, O const&, T a, index_t<S>) noexcept

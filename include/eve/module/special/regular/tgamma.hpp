@@ -15,7 +15,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/stirling.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct tgamma_t : elementwise_callable<tgamma_t, Options, raw_option, fast_option, pedantic_option>

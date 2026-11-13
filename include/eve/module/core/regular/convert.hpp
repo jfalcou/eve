@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct convert_t: callable<convert_t, Options, saturated_option>

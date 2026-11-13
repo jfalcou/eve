@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 //================================================================================================
 //! @addtogroup eve_core_simd

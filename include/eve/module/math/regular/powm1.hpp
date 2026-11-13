@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/pow.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct powm1_t : elementwise_callable<powm1_t, Options, raw_option, fast_option>

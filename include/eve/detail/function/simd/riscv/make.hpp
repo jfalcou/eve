@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/traits/as_integer.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<arithmetic_scalar_value T, width_type N>

@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/diff.hpp>
 #include <eve/module/core/detail/tuple_array_utils.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cumtrapz_t : callable<cumtrapz_t, Options, widen_option>

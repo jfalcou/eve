@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/function/slice.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 //================================================================================================

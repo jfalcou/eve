@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/fma.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T>
  constexpr auto

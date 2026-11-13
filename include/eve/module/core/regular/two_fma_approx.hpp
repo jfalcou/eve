@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/two_add.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct two_fma_approx_t : elementwise_callable<two_fma_approx_t, Options>
@@ -75,7 +75,7 @@ namespace eve
 
 #include <eve/module/core/regular/two_prod.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

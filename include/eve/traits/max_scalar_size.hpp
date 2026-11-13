@@ -9,7 +9,7 @@
 
 #include <eve/deps/kumi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

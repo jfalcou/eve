@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct am_t : elementwise_callable<am_t, Options, threshold_option, modular_option, eccentric_option>

@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/minf.hpp>
 #include <eve/module/core/constant/valmin.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct minorant_t : constant_callable<minorant_t, Options, lower_option, upper_option>

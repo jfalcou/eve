@@ -13,7 +13,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct scatter_t : callable<scatter_t, Options, relative_conditional_no_alternative_option>

@@ -13,7 +13,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_not_t : strict_elementwise_callable<logical_not_t, Options>

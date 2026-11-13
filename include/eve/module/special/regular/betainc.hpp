@@ -16,7 +16,7 @@
 #include <eve/module/special/regular/signgam.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct betainc_t : elementwise_callable<betainc_t, Options, pedantic_option, raw_option, fast_option>

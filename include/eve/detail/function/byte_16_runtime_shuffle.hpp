@@ -14,7 +14,7 @@
 // shuffle registers of bytes with len <= 16 using runtime idxs
 // Not available well on all platforms ==> declared in detail
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(byte_16_runtime_shuffle_)
   EVE_DECLARE_CALLABLE(byte_16_runtime_shuffle_, byte_16_runtime_shuffle)

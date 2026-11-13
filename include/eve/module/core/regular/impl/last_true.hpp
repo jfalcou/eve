@@ -11,7 +11,7 @@
 
 #include <optional>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // Internal helper
 template<logical_simd_value Logical>

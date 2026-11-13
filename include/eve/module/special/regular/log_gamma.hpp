@@ -14,7 +14,7 @@
 #include <eve/module/special/regular/signgam.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct log_gamma_t : elementwise_callable<log_gamma_t, Options, pedantic_option, raw_option, fast_option>

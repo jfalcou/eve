@@ -14,7 +14,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/types/top_bits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template <callable_options O, logical_simd_value T>
  T any_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept

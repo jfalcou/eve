@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/minorant.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

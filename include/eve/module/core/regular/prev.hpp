@@ -25,7 +25,7 @@
 #include <eve/module/core/detail/next_kernel.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct prev_t : strict_elementwise_callable<prev_t, Options, pedantic_option,  saturated_option, raw_option>

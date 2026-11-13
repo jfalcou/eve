@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/minmax.hpp>
 #include <eve/module/core/regular/average.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sort_t : callable<sort_t, Options>

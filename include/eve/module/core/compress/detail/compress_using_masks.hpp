@@ -14,7 +14,7 @@
 //
 // This is an implementation of compress, using masks
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_using_masks_)
   EVE_DECLARE_CALLABLE(compress_using_masks_, compress_using_masks)
@@ -29,7 +29,7 @@ namespace eve
 
 // compress_using_masks helpers -------------------------------------
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_using_masks_shuffle_)
   EVE_DECLARE_CALLABLE(compress_using_masks_shuffle_, compress_using_masks_shuffle)
@@ -42,7 +42,7 @@ namespace eve
   EVE_CALLABLE_API(compress_using_masks_shuffle_, compress_using_masks_shuffle)
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_using_masks_to_left_)
   EVE_DECLARE_CALLABLE(compress_using_masks_to_left_, compress_using_masks_to_left)
