@@ -32,29 +32,23 @@ struct register_count
 #  if __ARM_FEATURE_SVE_BITS == 128
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_128_
 #    define EVE_CURRENT_API   ::eve::sve2_128_
-#    define EVE_ABI_NAMESPACE arm_sve128_v0
 #  elif __ARM_FEATURE_SVE_BITS == 256
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_256_
 #    define EVE_CURRENT_API   ::eve::sve2_256_
-#    define EVE_ABI_NAMESPACE arm_sve256_v0
 #  elif __ARM_FEATURE_SVE_BITS == 512
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_512_
 #    define EVE_CURRENT_API   ::eve::sve2_512_
-#    define EVE_ABI_NAMESPACE arm_sve512_v0
 #  endif
 #elif defined(SPY_SIMD_IS_ARM_FIXED_SVE)
 #  include <arm_sve.h>
 #  if __ARM_FEATURE_SVE_BITS == 128
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_128_
 #    define EVE_CURRENT_API   ::eve::sve128_
-#    define EVE_ABI_NAMESPACE arm_sve128_v0
 #  elif __ARM_FEATURE_SVE_BITS == 256
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_256_
 #    define EVE_CURRENT_API   ::eve::sve256_
-#    define EVE_ABI_NAMESPACE arm_sve256_v0
 #  elif __ARM_FEATURE_SVE_BITS == 512
 #    define EVE_CURRENT_ABI   ::eve::arm_sve_512_
 #    define EVE_CURRENT_API   ::eve::sve512_
-#    define EVE_ABI_NAMESPACE arm_sve512_v0
 #  endif
 #endif

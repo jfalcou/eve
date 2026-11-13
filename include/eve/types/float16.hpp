@@ -190,7 +190,7 @@ namespace eve
   #endif
 
   #if !defined(EVE_DOXYGEN_INVOKED)
-  #if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16) && !defined(_MSC_VER)
+  #if defined(EVE_NATIVE_FP16)
     namespace _
     {
       static constexpr bool supports_fp16_native_type = spy::supports::fp16::type;

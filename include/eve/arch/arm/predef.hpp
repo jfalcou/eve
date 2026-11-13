@@ -19,5 +19,8 @@
 #  elif defined(SPY_SIMD_IS_ARM)
 #    define EVE_SUPPORTS_NATIVE_SIMD
 #    define EVE_INCLUDE_ARM_NEON_HEADER
+#    if !defined(__aarch64__) && !defined(EVE_NO_DENORMALS)
+#      define EVE_NO_DENORMALS
+#    endif
 #  endif
 #endif
