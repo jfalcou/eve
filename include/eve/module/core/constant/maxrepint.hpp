@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/maxflint.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct maxrepint_t : constant_callable<maxrepint_t, Options, lower_option, upper_option>

@@ -18,7 +18,7 @@
 #include <eve/module/core/detail/force_if_any.hpp>
 #include <eve/module/core/constant/inf.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sum_of_squares_t : tuple_callable<sum_of_squares_t, Options, pedantic_option,

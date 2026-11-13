@@ -13,7 +13,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    logical<wide<T, N>> logical_not_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> a) noexcept

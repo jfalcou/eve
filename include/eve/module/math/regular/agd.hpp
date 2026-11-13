@@ -13,7 +13,7 @@
 #include <eve/module/math/regular/tan.hpp>
 #include <eve/module/math/regular/atan.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct agd_t : elementwise_callable<agd_t, Options, raw_option, fast_option>

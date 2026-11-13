@@ -16,7 +16,7 @@
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/core/detail/modular.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct pow_t : strict_elementwise_callable<pow_t, Options, raw_option, fast_option, mod_option>

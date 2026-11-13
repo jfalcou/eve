@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/is_not_finite.hpp>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T, floating_value U, callable_options O>
 constexpr as_wide_as_t<T, U> ldexp_(EVE_REQUIRES(cpu_), O const& o, T const& a, U const& b)

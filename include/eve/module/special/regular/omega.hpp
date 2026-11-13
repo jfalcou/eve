@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/lambert.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct omega_t : elementwise_callable<omega_t, Options>

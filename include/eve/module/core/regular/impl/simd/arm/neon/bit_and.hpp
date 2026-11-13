@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N>
    wide<T, N> bit_and_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept

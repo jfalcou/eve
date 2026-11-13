@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct two_sub_t : elementwise_callable<two_sub_t, Options, raw_option, pedantic_option>

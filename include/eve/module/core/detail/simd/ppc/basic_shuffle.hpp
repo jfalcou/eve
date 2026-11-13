@@ -12,7 +12,7 @@
 #include <eve/forward.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T, width_type N, shuffle_pattern Pattern>
  auto

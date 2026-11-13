@@ -15,7 +15,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct erf_inv_t : elementwise_callable<erf_inv_t, Options>

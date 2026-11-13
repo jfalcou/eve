@@ -26,7 +26,7 @@
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/sqrt.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct agm_t : elementwise_callable<agm_t, Options>

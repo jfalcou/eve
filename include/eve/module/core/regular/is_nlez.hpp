@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/constant/false.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_nlez_t : elementwise_callable<is_nlez_t, Options>

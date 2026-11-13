@@ -12,7 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/module/core/constant/iota.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N>
    wide<T, N * 2>

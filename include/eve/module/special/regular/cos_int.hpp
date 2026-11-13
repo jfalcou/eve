@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cos_int_t : strict_elementwise_callable<cos_int_t, Options>

@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_nan_t : elementwise_callable<is_not_nan_t, Options>

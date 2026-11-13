@@ -14,7 +14,7 @@
 #include <eve/traits/width.hpp>
 
 //TODO doc
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct interleave_shuffle_t : callable<interleave_shuffle_t, Options>

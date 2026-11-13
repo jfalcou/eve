@@ -15,7 +15,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct exp_int_t : strict_elementwise_callable<exp_int_t, Options, saturated_option, pedantic_option, raw_option, fast_option>

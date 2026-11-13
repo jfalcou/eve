@@ -13,7 +13,7 @@
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/regular/unfold.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

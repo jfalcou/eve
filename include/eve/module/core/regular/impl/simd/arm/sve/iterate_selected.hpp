@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/count_true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<callable_options O, typename L, typename F>

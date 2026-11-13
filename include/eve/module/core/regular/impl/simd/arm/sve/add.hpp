@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<callable_options O, arithmetic_scalar_value T, width_type N, conditional_expr C>

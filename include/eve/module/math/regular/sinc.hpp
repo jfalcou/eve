@@ -14,7 +14,7 @@
 #include <eve/module/math/detail/generic/sinc_kernel.hpp>
 #include <eve/module/math/regular/sin.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sinc_t : elementwise_callable<sinc_t, Options, raw_option, fast_option,

@@ -19,7 +19,7 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/half.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
  template<typename Options>
   struct ulpdist_t : elementwise_callable<ulpdist_t, Options>

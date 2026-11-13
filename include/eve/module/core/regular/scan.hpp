@@ -15,7 +15,7 @@
 #include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/add.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct scan_t : callable<scan_t, Options>

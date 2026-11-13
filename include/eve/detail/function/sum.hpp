@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Options>
   struct sum_t : conditional_callable<sum_t, Options, splat_option>

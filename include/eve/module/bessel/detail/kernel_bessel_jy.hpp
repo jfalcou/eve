@@ -12,7 +12,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<floating_value T>
  constexpr auto

@@ -15,7 +15,7 @@
 
 #include <eve/traits.hpp>
 
-namespace eve::algo::views
+EVE_NAMESPACE::algo::views
 {
   //================================================================================================
   //! @addtogroup eve_views

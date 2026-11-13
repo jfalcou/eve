@@ -15,7 +15,7 @@
 
 #include <concepts>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   template <typename ...Components>
   concept zip_to_range = requires (Components&& ... components) {

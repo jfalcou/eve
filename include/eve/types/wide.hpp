@@ -48,20 +48,14 @@
 
 #include <type_traits>
 
-#if !defined(EVE_DOXYGEN_INVOKED)
-namespace eve
+EVE_NAMESPACE
 {
+#if !defined(EVE_DOXYGEN_INVOKED)
   namespace _
   {
     template<typename T, width_type Width>
     using as_wide_storage_t = wide_storage<as_register_t<T, Width, abi_t<T, Width>>>;
   }
-
-inline namespace EVE_ABI_NAMESPACE
-{
-#else
-namespace eve
-{
 #endif
 
   //================================================================================================
@@ -1095,15 +1089,10 @@ namespace eve
     }
   }
 
-#if !defined(EVE_DOXYGEN_INVOKED)
 }
-}
-#else
-}
-#endif
 
 // The width (number of lanes) of a wide is its compile-time `Width`.
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Type, width_type Width>
   inline constexpr width_type width_v<wide<Type, Width>> = Width;

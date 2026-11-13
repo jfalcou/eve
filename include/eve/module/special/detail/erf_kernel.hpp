@@ -12,7 +12,7 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/core/detail/generic/horn1.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //////////////////////////////////////////////////////////////////
 // kernel1

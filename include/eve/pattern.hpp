@@ -11,7 +11,7 @@
 #include <utility>
 #include <iosfwd>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_simd_types

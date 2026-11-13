@@ -9,7 +9,7 @@
 
 #include <eve/detail/wide_forward.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<scalar_value T0, scalar_value... T>
   auto as_wides(T0 zz, T... vs)

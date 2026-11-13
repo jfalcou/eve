@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<relative_conditional_expr C, typename T, typename U, width_type N>

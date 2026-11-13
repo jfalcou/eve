@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_pinf.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct of_class_t : strict_elementwise_callable<of_class_t, Options>

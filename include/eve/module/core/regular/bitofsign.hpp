@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/signmask.hpp>
 #include <eve/module/core/regular/bit_and.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

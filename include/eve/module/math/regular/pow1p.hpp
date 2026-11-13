@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/pow.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

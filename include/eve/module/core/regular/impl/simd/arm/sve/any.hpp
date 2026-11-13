@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<scalar_value T, width_type N, callable_options O>
  auto

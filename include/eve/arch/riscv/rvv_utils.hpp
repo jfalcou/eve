@@ -19,7 +19,7 @@
 #    error __riscv_v_fixed_vlen must be defined
 #  endif
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // natural lmul if > 0, frac otherwise
 template<plain_scalar_value scalar_type, width_type Width>

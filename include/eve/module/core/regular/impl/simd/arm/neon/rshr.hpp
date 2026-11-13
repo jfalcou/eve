@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/shl.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, integral_scalar_value T, width_type N, integral_scalar_value S>
    wide<T, N> rshr_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> v, wide<S, N> s) noexcept

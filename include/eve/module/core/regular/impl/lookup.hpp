@@ -12,7 +12,7 @@
 #include <eve/detail/function/slice.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, typename I, width_type N>
    logical<wide<T,N>> lookup_(EVE_REQUIRES(cpu_), O const&, logical<wide<T,N>> a, wide<I,N> i) noexcept

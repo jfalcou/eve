@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, scalar_value T, width_type N>
    std::ptrdiff_t count_true_(EVE_REQUIRES(rvv_), O const& opts, logical<wide<T, N>> v) noexcept

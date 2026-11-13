@@ -15,7 +15,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cosine_similarity_t : tuple_callable<cosine_similarity_t, Options, kahan_option, widen_option, unbiased_option>

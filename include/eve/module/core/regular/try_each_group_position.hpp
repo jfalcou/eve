@@ -11,7 +11,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   // TODO DOC is this to be in the use interface ?
   //================================================================================================

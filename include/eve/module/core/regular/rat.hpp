@@ -23,7 +23,7 @@
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/module/core/regular/zip.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct rat_t : elementwise_callable<rat_t, Options>

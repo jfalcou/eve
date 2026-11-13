@@ -17,7 +17,7 @@
 #include <eve/module/core/detail/force_if_any.hpp>
 #include <eve/module/core/constant/inf.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct manhattan_t : tuple_callable<manhattan_t, Options, raw_option, pedantic_option, saturated_option, lower_option,

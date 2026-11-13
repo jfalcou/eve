@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/bit_shr.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_reverse_t : strict_elementwise_callable<bit_reverse_t, Options>

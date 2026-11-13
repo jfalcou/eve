@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/concept/same_lanes.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct broadcast_t : callable<broadcast_t, Options>

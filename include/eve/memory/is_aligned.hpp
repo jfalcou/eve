@@ -11,7 +11,7 @@
 #include <concepts>
 #include <cstdint>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

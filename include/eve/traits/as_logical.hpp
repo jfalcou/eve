@@ -11,7 +11,7 @@
 #include <eve/traits/translation.hpp>
 #include <eve/deps/kumi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   // forward declare common_logical
   template<typename... Ts>

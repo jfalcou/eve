@@ -12,7 +12,7 @@
 #include <eve/traits/as_integer.hpp>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // ---------------------------------------------------------------------------------------------
   // NEON 64

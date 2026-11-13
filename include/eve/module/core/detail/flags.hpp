@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<std::uint8_t I> struct fp_class

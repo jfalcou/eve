@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/bit_swap_adjacent.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

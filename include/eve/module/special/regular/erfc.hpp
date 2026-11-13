@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/detail/erf_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct erfc_t : elementwise_callable<erfc_t, Options, pedantic_option, raw_option, fast_option>

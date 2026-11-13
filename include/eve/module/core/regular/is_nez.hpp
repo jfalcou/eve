@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_nez_t : elementwise_callable<is_nez_t, Options>

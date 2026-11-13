@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<scalar_value T, width_type N, std::ptrdiff_t Shift>
  auto

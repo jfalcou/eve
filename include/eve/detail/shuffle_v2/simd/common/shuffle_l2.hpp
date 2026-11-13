@@ -14,7 +14,7 @@
 
 #include <bit>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 // TODO: this probably should not be here

@@ -14,7 +14,7 @@
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/regular/exp.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cosh_t : elementwise_callable<cosh_t, Options, pedantic_option, raw_option, fast_option>

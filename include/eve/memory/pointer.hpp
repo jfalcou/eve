@@ -13,7 +13,7 @@
 
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T> struct pointer_traits {};
 
@@ -34,7 +34,7 @@ namespace eve
   };
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<typename Ptr>

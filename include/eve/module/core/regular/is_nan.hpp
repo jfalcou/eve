@@ -12,7 +12,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/regular/is_unordered.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_nan_t : elementwise_callable<is_nan_t, Options>

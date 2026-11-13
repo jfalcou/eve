@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/sulp.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct epsilon_t : elementwise_callable<epsilon_t, Options, upward_option, downward_option

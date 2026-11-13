@@ -13,7 +13,7 @@
 #include <concepts>
 #include <compare>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

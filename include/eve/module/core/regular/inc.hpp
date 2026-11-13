@@ -17,7 +17,7 @@
 #include <eve/module/core/detail/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct inc_t : elementwise_callable<inc_t, Options, saturated_option, lower_option,

@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, typename U>
    logical<wide<T, N>>

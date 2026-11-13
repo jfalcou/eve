@@ -11,7 +11,7 @@
 
 #include <utility>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N>
    auto movemask( eve::logical<eve::wide<T, N>> const &v ) noexcept

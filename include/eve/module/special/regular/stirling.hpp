@@ -13,7 +13,7 @@
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct stirling_t : elementwise_callable<stirling_t, Options>

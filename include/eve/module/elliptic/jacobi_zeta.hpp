@@ -18,7 +18,7 @@
 #include <eve/module/elliptic/ellint_1.hpp>
 #include <eve/module/elliptic/jacobi_zeta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct jacobi_zeta_t : elementwise_callable<jacobi_zeta_t, Options>

@@ -20,7 +20,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_greater_equal_t : strict_elementwise_callable<is_not_greater_equal_t, Options, definitely_option>

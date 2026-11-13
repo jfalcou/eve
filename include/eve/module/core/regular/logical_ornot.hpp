@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_ornot_t : elementwise_callable<logical_ornot_t, Options>

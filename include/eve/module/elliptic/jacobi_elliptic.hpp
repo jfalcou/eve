@@ -15,7 +15,7 @@
 #include <eve/traits/common_value.hpp>
 #include <eve/module/elliptic/am.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct jacobi_elliptic_t : elementwise_callable<jacobi_elliptic_t, Options, threshold_option, modular_option, eccentric_option>

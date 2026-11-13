@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/bitofsign.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct signnz_t : elementwise_callable<signnz_t, Options, pedantic_option>

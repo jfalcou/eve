@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N, std::ptrdiff_t M>
    wide<T, N> rotate_(EVE_SUPPORTS(sve_), wide<T, N> x, index_t<M>)

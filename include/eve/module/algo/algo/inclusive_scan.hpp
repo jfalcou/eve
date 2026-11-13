@@ -17,7 +17,7 @@
 #include <eve/module/algo/algo/traits.hpp>
 
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   namespace _
   {

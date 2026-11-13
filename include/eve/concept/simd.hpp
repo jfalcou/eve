@@ -12,7 +12,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/traits/element_type.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

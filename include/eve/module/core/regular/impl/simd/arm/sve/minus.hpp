@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, signed_scalar_value T, width_type N>
    wide<T, N> minus_(EVE_REQUIRES(sve_), O const& o, wide<T, N> v) noexcept

@@ -9,7 +9,7 @@
 
 #include <eve/arch/ppc/tags.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Runtime detection of CPU support

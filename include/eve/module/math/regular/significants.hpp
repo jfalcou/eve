@@ -11,7 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct significants_t : strict_elementwise_callable<significants_t, Options>

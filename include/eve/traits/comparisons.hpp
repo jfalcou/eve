@@ -11,7 +11,7 @@
 #include <eve/traits/overload/supports.hpp>
 #include <eve/concept/simd.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
     //==================================================================================================================
   //! @addtogroup eve_traits

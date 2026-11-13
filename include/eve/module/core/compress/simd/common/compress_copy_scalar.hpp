@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/write.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<typename I, typename O> struct copy_by_one_checking_each_lambda_unsafe
@@ -231,7 +231,7 @@ compress_copy_scalar_impl_(EVE_SUPPORTS(cpu_), Settings settings, I f, L m, O o)
 
 }
 
-namespace eve
+EVE_NAMESPACE
 {
 
 struct compress_copy_scalar_core

@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/sinh.hpp>
 #include <eve/module/math/regular/exp.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sinhc_t : elementwise_callable<sinhc_t, Options, pedantic_option, raw_option, fast_option>

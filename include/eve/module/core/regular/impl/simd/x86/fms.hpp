@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, callable_options O>
    wide<T, N> fms_(EVE_REQUIRES(avx2_),

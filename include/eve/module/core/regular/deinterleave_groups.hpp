@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 //TODO DOC
 //================================================================================================

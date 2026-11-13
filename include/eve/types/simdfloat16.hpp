@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<width_type N>
   EVE_NOINLINE auto emulated_simd_fp16_to_fp32(wide<eve::float16_t, N> v) noexcept

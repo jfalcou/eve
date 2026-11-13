@@ -14,7 +14,7 @@
 #include <concepts>
 #include <iosfwd>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // SPY SIMD API wrapper

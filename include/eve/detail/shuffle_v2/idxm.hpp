@@ -19,7 +19,7 @@
  * Mostly tested through shuffles.
  */
 
-namespace eve::_::idxm
+EVE_NAMESPACE::_::idxm
 {
 
 constexpr bool

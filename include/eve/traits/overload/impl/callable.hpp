@@ -9,7 +9,7 @@
 
 #include <eve/detail/overload.hpp>  // TEMPORARY
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

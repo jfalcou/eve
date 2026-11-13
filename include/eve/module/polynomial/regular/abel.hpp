@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct abel_t : strict_elementwise_callable< abel_t, Options>

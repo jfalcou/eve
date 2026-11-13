@@ -21,7 +21,7 @@
 // n and x ranges values which are not tested on entry.
 // The inspiration is from boost math
 /////////////////////////////////////////////////////////////////////////////////
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<value I, floating_value T>

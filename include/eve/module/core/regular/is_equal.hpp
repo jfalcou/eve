@@ -15,7 +15,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_equal_t : elementwise_callable<is_equal_t, Options, numeric_option, almost_option>

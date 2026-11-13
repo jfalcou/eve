@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/scan.hpp>
 #include <eve/module/core/regular/unfold.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cumfun_t : callable<cumfun_t, Options, widen_option, saturated_option>

@@ -13,7 +13,7 @@
 #include <eve/module/core/detail/modular.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct rec_t : elementwise_callable<rec_t, Options, raw_option, pedantic_option, widen_option,

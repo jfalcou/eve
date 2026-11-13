@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto average_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept

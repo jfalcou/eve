@@ -12,7 +12,7 @@
 #include <eve/module/math/regular/div_180.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<floating_value T>
  auto

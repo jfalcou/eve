@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct write_t : callable<write_t, Options>
@@ -81,7 +81,7 @@ namespace eve
 //================================================================================================
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename Ptr, typename V>
   void write_(EVE_REQUIRES(cpu_), O const&, V v, Ptr p) noexcept

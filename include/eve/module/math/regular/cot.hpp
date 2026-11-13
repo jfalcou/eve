@@ -9,7 +9,7 @@
 
 #include <eve/module/math/detail/generic/cot_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cot_t : elementwise_callable<cot_t, Options, raw_option, fast_option,

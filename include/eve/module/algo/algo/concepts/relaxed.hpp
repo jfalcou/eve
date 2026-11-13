@@ -14,7 +14,7 @@
 
 #include <concepts>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algo_concepts

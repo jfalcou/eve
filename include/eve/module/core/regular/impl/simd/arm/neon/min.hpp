@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N, callable_options O>
    wide<T, N> min_(EVE_REQUIRES(neon128_),

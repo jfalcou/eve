@@ -14,7 +14,7 @@
 
 #include <eve/arch/top_bits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template <typename U, width_type N>

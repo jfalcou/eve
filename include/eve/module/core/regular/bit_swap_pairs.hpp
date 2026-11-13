@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/constant/one.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

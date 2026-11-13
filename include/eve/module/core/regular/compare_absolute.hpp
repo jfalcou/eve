@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct compare_absolute_t : strict_elementwise_callable<compare_absolute_t, Options, saturated_option>
@@ -92,7 +92,7 @@ namespace eve
 
 #include <eve/module/core/regular/abs.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<value T, typename F, callable_options O>
   constexpr logical<T>

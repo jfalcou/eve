@@ -11,7 +11,7 @@
 #include <eve/arch/abi.hpp>
 #include <eve/traits/overload/impl/strict_elementwise.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Target>
   struct local_converter_t
@@ -27,7 +27,7 @@ namespace eve::_
   inline constexpr local_converter_t<Target>  local_converter = {};
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   //====================================================================================================================
   //! @addtogroup eve_extensions

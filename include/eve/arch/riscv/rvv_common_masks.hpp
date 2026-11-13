@@ -9,7 +9,7 @@
 
 #include <eve/arch/riscv/rvv_utils.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<arithmetic_scalar_value T, width_type N>
 logical<wide<T, N>>

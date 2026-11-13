@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, callable_options O>
    auto logical_and_(EVE_REQUIRES(avx512_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept

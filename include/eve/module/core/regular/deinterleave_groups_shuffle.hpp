@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 //TODO DOC
 //================================================================================================

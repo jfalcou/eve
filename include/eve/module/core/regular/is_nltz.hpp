@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_not_less.hpp>
 #include <eve/module/core/constant/false.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_nltz_t : elementwise_callable<is_nltz_t, Options>

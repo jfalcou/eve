@@ -12,7 +12,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

@@ -13,7 +13,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 template <typename Options>

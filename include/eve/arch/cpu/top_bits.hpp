@@ -22,7 +22,7 @@
 #include <optional>
 #include <iosfwd>
 
-namespace eve
+EVE_NAMESPACE
 {
 namespace _
 {
@@ -407,7 +407,7 @@ namespace _
 // to_logical(top_bits)
 //
 
-namespace eve::_ {
+EVE_NAMESPACE::_ {
 
 template <logical_simd_value Logical>
 Logical to_logical(eve::top_bits<Logical> mmask) noexcept

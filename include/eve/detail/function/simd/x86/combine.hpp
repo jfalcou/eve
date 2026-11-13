@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // 2*128-bits regular combine

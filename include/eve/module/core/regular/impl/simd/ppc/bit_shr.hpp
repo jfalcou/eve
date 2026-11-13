@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, integral_scalar_value T, width_type N, integral_scalar_value S>
    auto bit_shr_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, wide<S, N> s) noexcept

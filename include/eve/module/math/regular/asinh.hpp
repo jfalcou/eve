@@ -17,7 +17,7 @@
 #include <eve/module/math/regular/log1p.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct asinh_t : elementwise_callable<asinh_t, Options>

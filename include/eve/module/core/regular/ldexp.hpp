@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/trunc.hpp>
 #include <eve/module/core/regular/is_flint.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct ldexp_t : strict_elementwise_callable<ldexp_t, Options, raw_option, pedantic_option>

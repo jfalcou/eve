@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/cumfun.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct cumprod_t : callable<cumprod_t, Options, widen_option, saturated_option>

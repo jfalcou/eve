@@ -10,7 +10,7 @@
 #include <eve/module/core/compress/compress_store.hpp>
 #include <eve/module/core/regular/load.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 struct compress_copy_simd_core

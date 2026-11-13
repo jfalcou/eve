@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct all_t : conditional_callable<all_t, Options, splat_option>

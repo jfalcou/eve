@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename W>
    as_logical_t<W> is_equal_(EVE_REQUIRES(sve_), O const& opts, W a, W b) noexcept

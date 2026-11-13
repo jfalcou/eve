@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, conditional_expr C, callable_options O>
    wide<T, N> sqrt_(EVE_REQUIRES(sve_),

@@ -16,7 +16,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct digamma_t : elementwise_callable<digamma_t, Options, pedantic_option, raw_option, fast_option>

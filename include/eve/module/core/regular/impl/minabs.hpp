@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/concept/value.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto minabs_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept

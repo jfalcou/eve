@@ -15,7 +15,7 @@
 #include <type_traits>
 #include <eve/traits/updown.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //#######################
 // Saturated conversions

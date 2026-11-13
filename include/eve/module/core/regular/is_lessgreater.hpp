@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/is_ordered.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_lessgreater_t : strict_elementwise_callable<is_lessgreater_t, Options, definitely_option>

@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/generator.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

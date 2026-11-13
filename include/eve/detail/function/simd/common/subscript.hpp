@@ -14,7 +14,7 @@
 #include <eve/as.hpp>
 #include <cstring>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // Extract value

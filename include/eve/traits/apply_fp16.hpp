@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename T>
   concept fp16_should_apply = (std::same_as<T, eve::float16_t> && !_::supports_fp16_native_type)

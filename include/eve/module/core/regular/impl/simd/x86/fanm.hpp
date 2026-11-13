@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/module/core/regular/minus.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N, callable_options O>
    wide<T, N> fanm_(EVE_REQUIRES(sse2_),

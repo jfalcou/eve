@@ -12,7 +12,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, integral_scalar_value S>
    wide<T,N> shl_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> v, S s) noexcept

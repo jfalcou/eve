@@ -9,7 +9,7 @@
 
 #include <eve/arch/cpu/abi.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( width_in_bits<T,Cardinal> <= 64 )

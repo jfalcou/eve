@@ -20,7 +20,7 @@
   #endif
 #endif
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Runtime detection of CPU support

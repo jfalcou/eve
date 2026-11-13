@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/bit_shr.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

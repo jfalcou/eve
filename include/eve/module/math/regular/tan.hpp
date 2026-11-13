@@ -9,7 +9,7 @@
 
 #include <eve/module/math/detail/generic/tan_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct tan_t : elementwise_callable<tan_t, Options, raw_option, fast_option,

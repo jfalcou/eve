@@ -16,7 +16,7 @@
 #include <algorithm>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Do not fold these calls into the overloaded svunpklo: clang rejects it on a fixed-length
   // svuint8_t as ambiguous with svunpklo(svbool_t)

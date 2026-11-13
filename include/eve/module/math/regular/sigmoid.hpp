@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

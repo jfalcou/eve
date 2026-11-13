@@ -60,7 +60,7 @@
 // Returns {num, count} twice for both halves.
 //
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_store_swizzle_mask_num_)
   EVE_DECLARE_CALLABLE(compress_store_swizzle_mask_num_, compress_store_swizzle_mask_num)

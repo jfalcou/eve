@@ -15,7 +15,7 @@
 #include <eve/module/math/constant/pio_2.hpp>
 #include <eve/module/math/constant/pio_4.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct Rempio2_limit_t : elementwise_callable<Rempio2_limit_t, Options, quarter_circle_option, half_circle_option

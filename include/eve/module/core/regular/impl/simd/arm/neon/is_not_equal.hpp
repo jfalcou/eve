@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/is_equal.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    logical<wide<T, N>>

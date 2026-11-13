@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/asinh.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct acsch_t : elementwise_callable<acsch_t, Options>

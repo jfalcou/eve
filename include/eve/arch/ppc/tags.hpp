@@ -12,7 +12,7 @@
 #include <eve/arch/ppc/predef.hpp>
 #include <eve/detail/meta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   // clang-format off
   //================================================================================================

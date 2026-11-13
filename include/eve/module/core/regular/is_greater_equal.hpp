@@ -14,7 +14,7 @@
 #include <eve/module/core/detail/tolerance.hpp>
 #include <eve/module/core/regular/is_less_equal.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_greater_equal_t : elementwise_callable<is_greater_equal_t, Options, almost_option>

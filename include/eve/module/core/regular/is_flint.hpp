@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/frac.hpp>
 #include <eve/module/core/regular/is_eqz.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_flint_t : elementwise_callable<is_flint_t, Options, raw_option, pedantic_option>

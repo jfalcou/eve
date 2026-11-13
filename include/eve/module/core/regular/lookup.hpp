@@ -12,7 +12,7 @@
 #include <eve/concept/same_lanes.hpp>
 
 //DOC TODO
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lookup_t : callable<lookup_t, Options>

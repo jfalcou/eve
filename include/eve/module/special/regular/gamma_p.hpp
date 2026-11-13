@@ -16,7 +16,7 @@
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct gamma_p_t : elementwise_callable<gamma_p_t, Options>

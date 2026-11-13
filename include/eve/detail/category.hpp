@@ -14,7 +14,7 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   enum class category : std::uint32_t
   {

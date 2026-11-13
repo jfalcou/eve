@@ -26,7 +26,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/prev.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto add_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept

@@ -18,7 +18,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //====================================================================================================================
   // Regular is_equal x86

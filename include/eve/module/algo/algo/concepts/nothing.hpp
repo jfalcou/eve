@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algo_concepts

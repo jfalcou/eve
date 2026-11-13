@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/fmx_utils.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct fam_t : strict_elementwise_callable<fam_t, Options, pedantic_option, promote_option,

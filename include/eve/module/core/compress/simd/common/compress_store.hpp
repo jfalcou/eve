@@ -15,7 +15,7 @@
 #include <eve/module/core/compress/compress.hpp>
 #include <eve/module/core/compress/detail/compress_callable.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 struct compress_store_core

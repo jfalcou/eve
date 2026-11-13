@@ -9,7 +9,7 @@
 
 #include <eve/deps/spy.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // alignr_si256 reconstruction

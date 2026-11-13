@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/minus.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, typename U>
    constexpr auto rshr_(EVE_REQUIRES(cpu_), O const &, T a0, U a1) noexcept

@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_ceil_t : elementwise_callable<bit_ceil_t, Options>

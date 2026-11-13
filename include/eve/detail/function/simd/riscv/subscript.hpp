@@ -10,7 +10,7 @@
 #include <eve/arch/riscv/rvv_common_masks.hpp>
 #include <eve/concept/vectorizable.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<callable_options O, typename T, width_type N>
  T

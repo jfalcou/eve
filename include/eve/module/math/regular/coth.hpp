@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct coth_t : elementwise_callable<coth_t, Options>

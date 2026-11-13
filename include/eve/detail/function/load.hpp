@@ -13,7 +13,7 @@
 #include <eve/conditional.hpp>
 #include <eve/memory/pointer.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct load_t : relative_conditional_advance_callable<load_t, Options, unsafe_option>

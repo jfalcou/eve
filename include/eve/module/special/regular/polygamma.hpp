@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct polygamma_t : callable<polygamma_t, Options>

@@ -24,7 +24,7 @@
 #include <eve/module/math/detail/generic/rem2.hpp>
 #include <eve/module/math/regular/deginrad.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _::ab_st //Abramowitz & Stegun
   {
@@ -79,7 +79,7 @@ namespace eve
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_value T, callable_options O>
   EVE_NOINLINE constexpr T cot_kernel_(EVE_REQUIRES(cpu_), O const& o, T const& a0) noexcept

@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/copysign.hpp>
 #include <eve/module/core/regular/next.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto trunc_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept

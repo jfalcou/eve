@@ -19,7 +19,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/types/simdfloat16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, product_type T, product_type U>
    auto convert_(EVE_REQUIRES(cpu_), O const& opts, T const& v0, eve::as<U>)

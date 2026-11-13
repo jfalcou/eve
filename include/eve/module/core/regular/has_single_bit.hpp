@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core/regular/is_pow2.hpp>
-namespace eve
+EVE_NAMESPACE
 {
 
 //================================================================================================

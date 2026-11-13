@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/sign.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, callable_options O>
    constexpr T

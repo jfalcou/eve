@@ -14,7 +14,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N>
  void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept

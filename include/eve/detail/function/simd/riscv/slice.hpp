@@ -14,7 +14,7 @@
 
 // Return first or second part of vector.
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 //================================================================================================

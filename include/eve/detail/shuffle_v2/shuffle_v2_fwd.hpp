@@ -11,7 +11,7 @@
 
 // Forward declaring native_shuffle_lookup
 
-namespace eve
+EVE_NAMESPACE
 {
 
 EVE_REGISTER_CALLABLE(native_shuffle_lookup_)
@@ -31,7 +31,7 @@ EVE_CALLABLE_API(native_shuffle_lookup_, native_shuffle_lookup)
 
 }
 
-namespace eve
+EVE_NAMESPACE
 {
 
 //================================================================================================

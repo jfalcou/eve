@@ -18,7 +18,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T0, typename... Ts, callable_options O>
    constexpr common_value_t<T0, Ts...>

@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/logical_andnot.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, relaxed_logical_value T>
    constexpr T logical_notand_(EVE_REQUIRES(cpu_), O const&, T a, T b) noexcept

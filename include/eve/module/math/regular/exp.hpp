@@ -15,7 +15,7 @@
 #include <eve/module/math/regular/exp2.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

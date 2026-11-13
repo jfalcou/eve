@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<unsigned_scalar_value T, width_type N, callable_options O>
    wide<T, N> bit_reverse_(EVE_REQUIRES(sve_),

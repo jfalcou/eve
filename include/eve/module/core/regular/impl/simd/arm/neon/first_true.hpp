@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    std::optional<std::ptrdiff_t> first_true_(EVE_REQUIRES(neon128_), O const& opts, logical<wide<T, N>> v) noexcept
