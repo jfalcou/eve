@@ -40,3 +40,7 @@ EVE_CALLABLE_API(shuffle_l3_, shuffle_l3)
 #if defined(EVE_INCLUDE_POWERPC_HEADER)
 #  include <eve/detail/shuffle_v2/simd/ppc/shuffle_l3.hpp>
 #endif
+
+#if defined(EVE_INCLUDE_RISCV_HEADER)
+#  include <eve/detail/shuffle_v2/simd/riscv/shuffle_l3.hpp>
+#endif

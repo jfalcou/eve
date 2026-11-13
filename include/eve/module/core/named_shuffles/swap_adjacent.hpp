@@ -84,6 +84,11 @@ struct swap_adjacent_t
         return level(_::mask_type(tgt), g) + 4;
       }
     }
+    if( current_api >= rvv )
+    {
+      if( arithmetic_simd_value<T> ) return 3;
+      return level(_::mask_type(tgt), g) + 4;
+    }
     if( current_api >= vmx ) return 3;
     if( current_api >= neon ) return 2;
 
