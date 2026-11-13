@@ -52,53 +52,28 @@ EVE_NAMESPACE
     using parent  = cpu_;
   };
 
-# if defined(SPY_SIMD_IS_X86_AVX512) || defined(EVE_SIMD_IS_ANY_FIXED_SVE) || defined(SPY_SIMD_IS_RISCV_FIXED_RVV)
-#define EVE_WIDE_LOGICAL_NAMESPACE
-#define EVE_BIT_LOGICAL_NAMESPACE   inline
-#else
-#define EVE_WIDE_LOGICAL_NAMESPACE  inline
-#define EVE_BIT_LOGICAL_NAMESPACE
-#endif
-
   using undefined_simd_ = simd_api<simd_, spy::undefined_simd_>;
   inline constexpr undefined_simd_ undefined_simd   = {};
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation of large register
-  // We use inline namespace to ensure mangling ends up different when using AVX512 like ABI
-  EVE_WIDE_LOGICAL_NAMESPACE namespace internal_wide_logical
+  struct aggregated_ : cpu_
   {
-    struct aggregated_ : cpu_
-    {
-      using parent = cpu_;
-      static constexpr bool is_wide_logical = true;
-      static constexpr bool has_defined_logical_tail = true;
-    };
+    using parent = cpu_;
+#   if defined(SPY_SIMD_IS_X86_AVX512) || defined(EVE_SIMD_IS_ANY_FIXED_SVE) || defined(SPY_SIMD_IS_RISCV_FIXED_RVV)
+    static constexpr bool is_wide_logical = false;
+#   else
+    static constexpr bool is_wide_logical = true;
+#   endif
+    static constexpr bool has_defined_logical_tail = true;
+  };
 
-    struct bundle_ : cpu_
-    {
-      using parent = cpu_;
-      static constexpr bool is_wide_logical = true;
-      static constexpr bool has_defined_logical_tail = true;
-    };
-  }
-
-  EVE_BIT_LOGICAL_NAMESPACE namespace internal_bit_logical
+  struct bundle_ : cpu_
   {
-    struct aggregated_ : cpu_
-    {
-      using parent = cpu_;
-      static constexpr bool is_wide_logical = false;
-      static constexpr bool has_defined_logical_tail = true;
-    };
-
-    struct bundle_ : cpu_
-    {
-      using parent = cpu_;
-      static constexpr bool is_wide_logical = false;
-      static constexpr bool has_defined_logical_tail = true;
-    };
-  }
+    using parent = cpu_;
+    static constexpr bool is_wide_logical = aggregated_::is_wide_logical;
+    static constexpr bool has_defined_logical_tail = true;
+  };
 
   //================================================================================================
   // Dispatching tag for emulated SIMD implementation
