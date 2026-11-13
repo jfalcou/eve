@@ -7,4 +7,6 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config/abi_namespace.hpp>
+#include <eve/config/options.hpp>
 #include <eve/config/target.hpp>
