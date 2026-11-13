@@ -14,7 +14,7 @@
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Obj, value T0, value ... T>
     auto apply_over(Obj f, T0 const & arg0, T const &... args) noexcept

@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, simd_value T, std::ptrdiff_t I0, std::ptrdiff_t I1>
    constexpr T swap_pairs_(EVE_REQUIRES(cpu_), O const&, T x, index_t<I0>, index_t<I1>) noexcept

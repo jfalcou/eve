@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/two_fma_approx.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct variance_t : tuple_callable<variance_t, Options, raw_option, kahan_option,
@@ -114,7 +114,7 @@ namespace eve
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<callable_options O, typename... Ts>

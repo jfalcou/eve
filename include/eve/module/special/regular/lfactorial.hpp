@@ -13,7 +13,7 @@
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/module/special/regular/log_gamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
  template<typename Options>
   struct lfactorial_t : elementwise_callable<lfactorial_t, Options, pedantic_option>

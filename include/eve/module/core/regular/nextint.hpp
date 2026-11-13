@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/constant/nan.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct nextint_t : strict_elementwise_callable<nextint_t, Options, raw_option, saturated_option>

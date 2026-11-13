@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct negmaxabs_t : tuple_callable<negmaxabs_t, Options, numeric_option, pedantic_option, saturated_option>

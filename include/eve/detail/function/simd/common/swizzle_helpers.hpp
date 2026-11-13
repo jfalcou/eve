@@ -12,7 +12,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/pattern.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //----------------------------------------------------------------------------------------------
   // Handle Zeroing

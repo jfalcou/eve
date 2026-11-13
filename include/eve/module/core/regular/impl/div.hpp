@@ -35,7 +35,7 @@
 #include <cfenv>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto div_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept

@@ -18,7 +18,7 @@
 #include <algorithm>
 #include <utility>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Extract ith element of a wide or propagate the value if non SIMD
   template<typename T> 

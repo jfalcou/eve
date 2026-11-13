@@ -14,7 +14,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/deps/kumi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits
@@ -58,7 +58,7 @@ namespace eve
   };
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   struct no_common_type
   {
@@ -141,7 +141,7 @@ namespace eve::_
   };
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   template <> struct common_type<>
   {

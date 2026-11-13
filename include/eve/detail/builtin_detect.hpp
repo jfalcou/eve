@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   constexpr inline bool has_builtin_swap32(){

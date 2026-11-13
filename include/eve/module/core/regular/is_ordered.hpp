@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/is_unordered.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_ordered_t : elementwise_callable<is_ordered_t, Options>

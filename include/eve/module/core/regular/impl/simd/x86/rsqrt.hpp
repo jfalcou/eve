@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/sqr.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //------------------------------------------------------------------------------------------------
   // Generic function for rsqrt on X86

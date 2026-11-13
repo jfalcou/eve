@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/inc.hpp>
 #include <eve/module/core/regular/bit_andnot.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct firstbitset_t : elementwise_callable<firstbitset_t, Options>

@@ -9,7 +9,7 @@
 
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<eve::relative_conditional_expr C, typename T>
   std::pair<int, int>

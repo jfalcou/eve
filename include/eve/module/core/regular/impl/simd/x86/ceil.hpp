@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    wide<T, N> ceil_(EVE_REQUIRES(sse4_1_),

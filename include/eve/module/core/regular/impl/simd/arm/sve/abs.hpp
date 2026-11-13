@@ -13,7 +13,7 @@
 #include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, conditional_expr C, callable_options O>
    wide<T, N> abs_(EVE_REQUIRES(sve_),

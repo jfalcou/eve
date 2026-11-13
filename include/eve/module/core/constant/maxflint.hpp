@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct maxflint_t : constant_callable<maxflint_t, Options, lower_option, upper_option>

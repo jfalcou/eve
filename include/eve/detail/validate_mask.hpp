@@ -18,7 +18,7 @@
 
 #include <concepts>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename C, typename T>
    constexpr bool validate_mask_for() noexcept

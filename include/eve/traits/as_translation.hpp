@@ -16,7 +16,7 @@
 #include <bit>
 #include <new>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @brief Translates a value to its translated type.

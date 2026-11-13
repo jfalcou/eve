@@ -17,7 +17,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    as_logical_t<wide<T, N>> is_less_equal_(EVE_REQUIRES(sse2_), O const& opts, wide<T, N> a, wide<T, N> b) noexcept

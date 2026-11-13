@@ -16,7 +16,7 @@
 
 #include <cmath>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T>
  constexpr T

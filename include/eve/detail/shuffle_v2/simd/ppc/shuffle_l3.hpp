@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 // Have to do the template, otherwise there is some PCH weirdness

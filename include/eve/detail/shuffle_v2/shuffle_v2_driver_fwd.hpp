@@ -11,7 +11,7 @@
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 EVE_REGISTER_CALLABLE(shuffle_v2_driver_impl_)
@@ -41,7 +41,7 @@ template<typename Pattern, typename G, typename... Ts> struct pattern_failed_val
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<typename NativeSelector> struct shuffle_v2_driver

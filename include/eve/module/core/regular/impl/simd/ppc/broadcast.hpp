@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, simd_value W, typename Index>
    auto

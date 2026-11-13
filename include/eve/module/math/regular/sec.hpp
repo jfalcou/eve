@@ -13,7 +13,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/cos.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sec_t : elementwise_callable<sec_t, Options,

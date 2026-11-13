@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct minlog10denormal_t : constant_callable<minlog10denormal_t, Options, lower_option, upper_option>

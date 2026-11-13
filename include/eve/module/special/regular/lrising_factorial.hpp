@@ -15,7 +15,7 @@
 #include <eve/module/special/regular/log_abs_gamma.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lrising_factorial_t : strict_elementwise_callable < lrising_factorial_t, Options

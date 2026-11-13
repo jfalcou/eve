@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/rem.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct fmod_t : elementwise_callable<fmod_t, Options>

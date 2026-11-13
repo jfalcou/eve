@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/module/core/regular/rotate.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, typename Pred>
   constexpr  logical<wide<T, N>> has_equal_in_(EVE_REQUIRES(sve2_), O const& opts, wide<T, N> x, wide<T, N> match_against, Pred op) noexcept

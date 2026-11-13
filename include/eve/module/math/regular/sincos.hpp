@@ -11,7 +11,7 @@
 #include <eve/module/math/detail/generic/sinc_kernel.hpp>
 #include <eve/module/math/detail/generic/cos_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sincos_t : elementwise_callable<sincos_t, Options , quarter_circle_option,

@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 EVE_REGISTER_CALLABLE(compress_copy_scalar_impl_)
 EVE_DECLARE_CALLABLE(compress_copy_scalar_impl_, compress_copy_scalar_impl)

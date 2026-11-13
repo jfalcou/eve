@@ -15,7 +15,7 @@
 #include <eve/module/math.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct ellint_rc_t : elementwise_callable<ellint_rc_t, Options>

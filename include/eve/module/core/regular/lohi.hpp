@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <bit>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lohi_t : elementwise_callable<lohi_t, Options>

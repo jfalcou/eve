@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<auto S, floating_scalar_value T, width_type N, callable_options O>
    wide<T, N> fracscale_(EVE_REQUIRES(avx512_),

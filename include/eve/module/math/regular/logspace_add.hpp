@@ -12,7 +12,7 @@
 #include <eve/module/math/regular/log1p.hpp>
 #include <eve/traits/common_value.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logspace_add_t : tuple_callable<logspace_add_t, Options, pedantic_option, raw_option, fast_option>

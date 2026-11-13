@@ -48,7 +48,7 @@
 
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
 #if !defined(EVE_DOXYGEN_INVOKED)
   namespace _
@@ -1092,7 +1092,7 @@ namespace eve
 }
 
 // The width (number of lanes) of a wide is its compile-time `Width`.
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Type, width_type Width>
   inline constexpr width_type width_v<wide<Type, Width>> = Width;

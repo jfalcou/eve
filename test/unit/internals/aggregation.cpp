@@ -83,7 +83,7 @@ namespace eve
 	inline constexpr auto test_mixed     = functor<test_mixed_t>;
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 	template <callable_options O, typename T, width_type N>
 	wide<upgrade_t<T>, N / 2> test_upgrade_(EVE_REQUIRES(cpu_), O const&, wide<T, N> v)

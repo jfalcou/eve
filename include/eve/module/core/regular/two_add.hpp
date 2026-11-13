@@ -18,7 +18,7 @@
 #include <eve/module/core/regular/maxmag.hpp>
 #include <eve/module/core/regular/minmag.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct two_add_t : elementwise_callable<two_add_t, Options, raw_option, pedantic_option>

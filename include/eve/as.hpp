@@ -9,7 +9,7 @@
 
 #include <eve/config.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

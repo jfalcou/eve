@@ -14,7 +14,7 @@
 #include <eve/module/core.hpp>
 #include <numeric>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct gcd_t : elementwise_callable<gcd_t, Options>

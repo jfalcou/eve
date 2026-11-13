@@ -14,7 +14,7 @@
 #include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/types/float16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<scalar_value U, width_type N>

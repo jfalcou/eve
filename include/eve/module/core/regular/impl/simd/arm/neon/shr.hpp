@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/module/core/regular/shl.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, arithmetic_scalar_value S>
    wide<T, N> shr_(EVE_REQUIRES(neon128_), O const& opts, wide<T, N> w, wide<S, N> s) noexcept

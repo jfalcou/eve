@@ -14,7 +14,7 @@
 #include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/traits/element_type.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<callable_options O, typename T, width_type N>

@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/reduce.hpp>
 #include <eve/module/core/constant/valmax.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    wide<T, N> minimum_(EVE_REQUIRES(cpu_), O const& opts, wide<T, N> v) noexcept

@@ -15,7 +15,7 @@
 #include <eve/detail/function/to_logical.hpp>
 #include <eve/detail/function/simd/common/load.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // Regular loads

@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N>
    logical<wide<T, N>> logical_or_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> a, logical<wide<T, N>> b) noexcept

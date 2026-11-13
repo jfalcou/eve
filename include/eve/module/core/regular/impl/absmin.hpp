@@ -11,7 +11,7 @@
 #include <eve/module/core/regular/min.hpp>
 #include <eve/concept/value.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T0, typename... Ts, callable_options O>
    constexpr auto

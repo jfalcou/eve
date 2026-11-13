@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    wide<T, N> bit_or_(EVE_REQUIRES(sse2_), O const&, wide<T, N> a, wide<T, N> b) noexcept

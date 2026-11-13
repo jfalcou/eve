@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T, width_type N>
  auto

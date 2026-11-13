@@ -41,7 +41,7 @@
 //!
 //! This namespace contains all the elements required to use EVE
 //======================================================================================================================
-namespace eve {}
+EVE_NAMESPACE {}
 
 //======================================================================================================================
 //! @defgroup eve_arch Architecture related Types and Helpers

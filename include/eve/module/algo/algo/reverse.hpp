@@ -14,7 +14,7 @@
 #include <eve/module/algo/algo/swap_ranges.hpp>
 #include <eve/module/algo/algo/views/reverse.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algos

@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //================================================================================================
 // Single slice

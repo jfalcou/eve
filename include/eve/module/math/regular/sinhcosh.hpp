@@ -19,7 +19,7 @@
 #include <eve/module/math/detail/generic/trig_finalize.hpp>
 #include <eve/module/math/regular/rempio2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sinhcosh_t : elementwise_callable< sinhcosh_t, Options, pedantic_option, raw_option, fast_option>

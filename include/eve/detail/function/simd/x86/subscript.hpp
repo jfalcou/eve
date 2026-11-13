@@ -9,7 +9,7 @@
 
 #include <eve/detail/abi.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // Extract value

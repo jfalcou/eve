@@ -14,7 +14,7 @@
 #include <eve/module/core/detail/generic/horn1.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
 
   namespace _

@@ -12,7 +12,7 @@
 #include <eve/concept/memory.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct store_t : relative_conditional_callable<store_t, Options>

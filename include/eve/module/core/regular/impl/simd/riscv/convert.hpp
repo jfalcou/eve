@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/intrinsic_wrappers/riscv/rvv_utils.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<value In, scalar_value Out>

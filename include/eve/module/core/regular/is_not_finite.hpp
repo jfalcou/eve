@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_finite_t : elementwise_callable<is_not_finite_t, Options>

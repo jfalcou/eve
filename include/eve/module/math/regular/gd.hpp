@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/atan.hpp>
 #include <eve/module/math/regular/tanh.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct gd_t : elementwise_callable<gd_t, Options, raw_option, fast_option>

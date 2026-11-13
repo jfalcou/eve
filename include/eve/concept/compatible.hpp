@@ -11,7 +11,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/detail/wide_forward.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T, typename U>
   concept element_compatible_to = scalar_value<T>

@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/countl_zero.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_width_t : elementwise_callable<bit_width_t, Options>

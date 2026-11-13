@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/simd_cast.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, typename U>
    constexpr bit_value_t<T, U> bit_and_(EVE_REQUIRES(cpu_), O const&, T a, U b) noexcept

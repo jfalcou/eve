@@ -32,7 +32,7 @@ namespace eve
   inline constexpr auto other_func = functor<other_func_t>;
 };
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Decorated callable takes a eve::options as first parameter
   auto func_(EVE_REQUIRES(cpu_), eve::callable_options auto const& opts, eve::integral_value auto x)

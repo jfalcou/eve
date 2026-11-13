@@ -11,7 +11,7 @@
 #include <eve/concept/options.hpp>
 #include <eve/conditional.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Left fold of default_to over the option specifications, one instantiation per step
   template<typename Acc> EVE_ABI constexpr auto apply_defaults(Acc acc) { return acc; }
@@ -23,7 +23,7 @@ namespace eve::_
   }
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   //====================================================================================================================
   //! @addtogroup eve_extensions
@@ -98,7 +98,7 @@ namespace eve
 //======================================================================================================================
 // Overload's helpers
 //======================================================================================================================
-namespace eve
+EVE_NAMESPACE
 {
   //====================================================================================================================
   //! @addtogroup eve_extensions
@@ -181,7 +181,7 @@ namespace eve
 //======================================================================================================================
 // Helper options for conditional specs
 //======================================================================================================================
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {
@@ -345,7 +345,7 @@ namespace eve
   };
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Internal helper for decorator setup
   template<auto Decorator> struct exact_option

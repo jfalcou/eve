@@ -15,7 +15,7 @@
 #include <eve/module/math/detail/generic/chunked_reverse_horner.hpp>
 #include <eve/traits/helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct reverse_horner_t : callable<reverse_horner_t, Options, pedantic_option,

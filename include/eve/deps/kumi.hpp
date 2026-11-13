@@ -20,7 +20,7 @@
 # endif
 #endif
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Reinject kumi concept & traits in EVE

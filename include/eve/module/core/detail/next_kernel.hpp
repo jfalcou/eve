@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_gez.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T>
    constexpr as_integer_t<T, signed>

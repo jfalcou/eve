@@ -13,7 +13,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, integral_scalar_value T, width_type N>
    wide<T, N> sign_(EVE_REQUIRES(ssse3_), O const &o, wide<T, N> a) noexcept

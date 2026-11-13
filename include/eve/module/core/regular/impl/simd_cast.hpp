@@ -10,7 +10,7 @@
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/module/core/regular/combine.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<callable_options O, typename T, typename Target>
  constexpr Target

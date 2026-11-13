@@ -15,7 +15,7 @@
 
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct as_value_t : callable<as_value_t, Options>

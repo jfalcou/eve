@@ -12,7 +12,7 @@
 #include <eve/traits/overload/supports.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct abs_t : elementwise_callable<abs_t, Options, saturated_option>

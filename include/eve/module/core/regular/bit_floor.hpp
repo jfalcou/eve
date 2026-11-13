@@ -20,7 +20,7 @@
 #include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/ldexp.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_floor_t : elementwise_callable<bit_floor_t, Options>

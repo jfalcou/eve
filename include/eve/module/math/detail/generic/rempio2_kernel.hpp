@@ -14,7 +14,7 @@
 #include <eve/module/math/detail/generic/workaround.hpp>
 #include <eve/module/math/regular/quadrant.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_value T>
    auto rempio2_quarter_circle(T const &xx) noexcept

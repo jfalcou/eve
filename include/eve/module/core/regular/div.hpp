@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/detail/modular.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct div_t : tuple_callable<div_t, Options, saturated_option, upward_option, downward_option,
