@@ -28,38 +28,26 @@ namespace eve
 
 #if defined(SPY_SIMD_IS_X86_AVX512)
 #  define EVE_CURRENT_ABI ::eve::x86_512_
-#  if defined(EVE_INCOMPLETE_AVX512_SUPPORT)
-#    define EVE_CURRENT_API ::eve::avx2_
-#  else
-#    define EVE_CURRENT_API ::eve::avx512_
-#  endif
-#  define EVE_ABI_NAMESPACE avx512_abi_v0
+#  define EVE_CURRENT_API ::eve::avx512_
 #elif defined(SPY_SIMD_IS_X86_AVX2)
 #  define EVE_CURRENT_ABI ::eve::x86_256_
 #  define EVE_CURRENT_API ::eve::avx2_
-#  define EVE_ABI_NAMESPACE avx_abi_v0
 #elif defined(SPY_SIMD_IS_X86_AVX)
 #  define EVE_CURRENT_ABI ::eve::x86_256_
 #  define EVE_CURRENT_API ::eve::avx_
-#  define EVE_ABI_NAMESPACE avx_abi_v0
 #elif defined(SPY_SIMD_IS_X86_SSE4_2)
 #  define EVE_CURRENT_ABI ::eve::x86_128_
 #  define EVE_CURRENT_API ::eve::sse4_2_
-#  define EVE_ABI_NAMESPACE sse_abi_v0
 #elif defined(SPY_SIMD_IS_X86_SSE4_1)
 #  define EVE_CURRENT_ABI ::eve::x86_128_
 #  define EVE_CURRENT_API ::eve::sse4_1_
-#  define EVE_ABI_NAMESPACE sse_abi_v0
 #elif defined(SPY_SIMD_IS_X86_SSSE3)
 #  define EVE_CURRENT_ABI ::eve::x86_128_
 #  define EVE_CURRENT_API ::eve::ssse3_
-#  define EVE_ABI_NAMESPACE sse_abi_v0
 #elif defined(SPY_SIMD_IS_X86_SSE3)
 #  define EVE_CURRENT_ABI ::eve::x86_128_
 #  define EVE_CURRENT_API ::eve::sse3_
-#  define EVE_ABI_NAMESPACE sse_abi_v0
 #elif defined(SPY_SIMD_IS_X86_SSE2)
 #  define EVE_CURRENT_ABI ::eve::x86_128_
 #  define EVE_CURRENT_API ::eve::sse2_
-#  define EVE_ABI_NAMESPACE sse_abi_v0
 #endif

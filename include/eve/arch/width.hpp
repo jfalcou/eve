@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config.hpp>
+
 #include <cstddef>
 #include <type_traits>
 

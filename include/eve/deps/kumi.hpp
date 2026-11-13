@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config.hpp>
+
 #if __has_include(<kumi/kumi.hpp>)
 # include <kumi/kumi.hpp>
 #else
