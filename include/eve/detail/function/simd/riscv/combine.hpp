@@ -50,6 +50,14 @@ requires rvv_abi<abi_t<T, N>>
     that.storage().assign_parts(l, h);
     return that;
   }
+  else if constexpr( std::same_as<T, eve::float16_t> )
+  {
+    // Do not combine float16 masks as values: without zvfh, to_logical compares them through
+    // float, whose mask converts back to float16 through this combine.
+    using i_t = wide<as_integer_t<T, unsigned>, N>;
+    auto m    = combine(current_api, call_simd_cast(l.mask(), as<i_t> {}), call_simd_cast(h.mask(), as<i_t> {}));
+    return call_simd_cast(to_logical(m), as<that_t> {});
+  }
   else
   {
     // TODO: optimize
