@@ -29,7 +29,7 @@ EVE_NAMESPACE::_
         auto vm = vc.mask( as<as_logical_t<T>>{} );
         if(vm.get(vn)) write(vv.get(vn),base+idx.get(vn));
       }
-    };
+    }
   };
 
   template<typename T, typename Idx, typename Ptr, callable_options O>
