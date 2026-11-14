@@ -84,3 +84,27 @@ EVE_NAMESPACE
 
 #undef EVE_ABI_STRING
 #undef EVE_ABI_STRING_
+
+//==================================================================================================
+//! @addtogroup eve_arch
+//! @{
+//!   @def EVE_ABI_INDEPENDENT_NAMESPACE
+//!   @brief Opens `namespace eve` itself, outside of `eve::EVE_ABI_NAMESPACE`.
+//!
+//!   **Defined in Header**
+//!
+//!   @code
+//!   #include <eve/module/core.hpp>
+//!   @endcode
+//!
+//!   Some parts of **EVE**, such as `eve::aligned_ptr` and `eve::soa_ptr`, are meant to appear in
+//!   interfaces shared by translation units compiled with different options. They are declared
+//!   directly in `namespace eve` and keep the same name everywhere.
+//!
+//!   Everything declared there must mean the same for every set of options: a type keeps the same
+//!   layout and none of its functions whose mangled name doesn't involve `eve::EVE_ABI_NAMESPACE`
+//!   depend on those options. Their trait specializations stay in `EVE_NAMESPACE`, next to the
+//!   primary templates.
+//! @}
+//==================================================================================================
+#define EVE_ABI_INDEPENDENT_NAMESPACE namespace eve

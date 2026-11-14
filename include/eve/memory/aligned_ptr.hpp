@@ -18,7 +18,7 @@
 #include <concepts>
 #include <type_traits>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory
@@ -246,23 +246,8 @@ EVE_NAMESPACE
   aligned_ptr(Type* ) -> aligned_ptr<Type>;
 
   //================================================================================================
-  //! @brief Checks if an aligned_ptr is aligned on a given alignment.
-  //! @param  ptr aligned_ptr to checks
-  //! @tparam A   Alignment constraint to verify
-  //! @return A boolean indicating if `ptr` is compatible with the `Other` alignment.
-  //================================================================================================
-  template<std::size_t A, typename T, width_type Other>
-  constexpr bool is_aligned(aligned_ptr<T, Other> const &ptr) noexcept
-  {
-    return is_aligned<A>(ptr.get());
-  }
-
-  //================================================================================================
   //! @}
   //================================================================================================
-
-  template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
-  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
   template<typename T1, width_type A1, typename T2, width_type A2>
   bool operator==(aligned_ptr<T1, A1> lhs, aligned_ptr<T2, A2> rhs) noexcept
@@ -369,6 +354,31 @@ EVE_NAMESPACE
     auto that = p;
     return that += o;
   }
+}
+
+EVE_NAMESPACE
+{
+  //================================================================================================
+  //! @addtogroup eve_memory
+  //! @{
+  //================================================================================================
+  //! @brief Checks if an aligned_ptr is aligned on a given alignment.
+  //! @param  ptr aligned_ptr to checks
+  //! @tparam A   Alignment constraint to verify
+  //! @return A boolean indicating if `ptr` is compatible with the `Other` alignment.
+  //================================================================================================
+  template<std::size_t A, typename T, width_type Other>
+  constexpr bool is_aligned(aligned_ptr<T, Other> const &ptr) noexcept
+  {
+    return is_aligned<A>(ptr.get());
+  }
+
+  //================================================================================================
+  //! @}
+  //================================================================================================
+
+  template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
+  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
   //================================================================================================
   //! @relates eve::aligned_ptr
