@@ -122,7 +122,7 @@ EVE_NAMESPACE
       else if constexpr(K == 0x0d) return bit_notand(a, bit_ornot(b, c));
       else if constexpr(K == 0x0e) return bit_notand(a, bit_or(b, c));
       else if constexpr(K == 0x0f) return bit_not(a);
-    };
+    }
   
     template<std::uint8_t K, typename T>
     auto bit_ternary_lut_1([[maybe_unused]] T a, [[maybe_unused]] T b, [[maybe_unused]] T c)

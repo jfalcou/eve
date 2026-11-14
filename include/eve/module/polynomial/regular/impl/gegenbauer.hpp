@@ -68,5 +68,5 @@ EVE_NAMESPACE::_
       }
       return if_else(iseqzn, one, yk);
     }
-  };
+  }
 }

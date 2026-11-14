@@ -177,7 +177,7 @@ EVE_NAMESPACE
     if      constexpr(S::contains(eve::upper      )) return upper_mode::value;
     else if constexpr(S::contains(eve::lower      )) return lower_mode::value;
     else                                             return FE_TONEAREST;
-  };
+  }
 
   // New tolerance option that carry a value
   template<typename Value> struct almost_t;

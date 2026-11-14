@@ -20,7 +20,7 @@ namespace eve
 
   // Build the callable object from the function object type
   inline constexpr auto func = functor<func_t>;
-};
+}
 
 // As func_t used EVE_CALLABLE_OBJECT, we should write overloads in eve::_
 EVE_NAMESPACE::_

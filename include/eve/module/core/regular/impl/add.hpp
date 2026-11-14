@@ -126,14 +126,14 @@ EVE_NAMESPACE::_
     {
       if constexpr(O::contains(raw)) return two_add[raw];
       else return two_add[pedantic];
-    };
+    }
 
     static  auto pair_add(auto pair0, auto ri) noexcept
     {
       auto [a0, e0] = pair0;
       auto [s, e1] = get_fn()(a0, ri);
       return zip(s, e0+e1);
-    };
+    }
   };
 
   template<typename T0, typename T1, typename ... Ts, callable_options O>

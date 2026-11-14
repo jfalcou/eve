@@ -295,7 +295,7 @@ namespace eve::test
         case 2048: return {0, 10, 9, 0, 8, 0, 0, 0, 7};
         default : return {};
       };
-    };
+    }
 
     using type_all =
         tts::concatenate<to_wide_t<Ts, std::make_index_sequence<widths()[sizeof(Ts)]>>...>;

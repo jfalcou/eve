@@ -26,7 +26,7 @@ namespace eve
   };
 
   inline constexpr auto some_pi = functor<some_pi_t>;
-};
+}
 
 int main()
 {

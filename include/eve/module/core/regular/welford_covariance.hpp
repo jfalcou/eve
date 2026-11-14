@@ -20,8 +20,8 @@ EVE_NAMESPACE
     template<floating_value T> struct welford_covariance_result
     {
       using type = T;
-      operator T()   const noexcept { return covariance; };
-      auto upgrade() const noexcept { return welford_covariance_result<upgrade_t<T>>(upgrade(count), count); };
+      operator T()   const noexcept { return covariance; }
+      auto upgrade() const noexcept { return welford_covariance_result<upgrade_t<T>>(upgrade(count), count); }
 
       T averagex         = T(0);
       T averagey         = T(0);

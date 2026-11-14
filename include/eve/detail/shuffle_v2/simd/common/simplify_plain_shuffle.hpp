@@ -26,7 +26,7 @@ template<typename U, typename... Ts>
 auto bit_cast_tuple(kumi::tuple<Ts...> xs, eve::as<U>)
 {
   return kumi::map([](auto x) { return eve::bit_cast(x, eve::as<U> {}); }, xs);
-};
+}
 
 template<typename G, typename P, typename... Ts> struct simplified_pattern
 {

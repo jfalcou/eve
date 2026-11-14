@@ -23,4 +23,4 @@ int main()
   std::cout << "wt                                   " << wt                                << std::endl;
   std::cout << "eve::cumsum(wt)                      " << eve::cumsum(wt)                   << std::endl;
 
-};
+}

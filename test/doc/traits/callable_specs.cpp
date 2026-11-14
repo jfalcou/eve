@@ -33,7 +33,7 @@ namespace eve
 
   // Build the callable object from the function object type
   inline constexpr auto func = functor<func_t>;
-};
+}
 
 EVE_NAMESPACE::_
 {
