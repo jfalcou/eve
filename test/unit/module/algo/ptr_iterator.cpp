@@ -52,6 +52,11 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
       algo_test::iterator_supports_compress(a_f, values, replace);
       algo_test::iterator_supports_compress(u_f, values, replace);
     }
+    else
+    {
+      algo_test::read_only_iterator(a_f, values);
+      algo_test::read_only_iterator(u_f, values);
+    }
   };
   
   using type = eve::element_type_t<T>;

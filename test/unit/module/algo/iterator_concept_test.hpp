@@ -182,6 +182,17 @@ namespace algo_test
     }
   }
 
+  template <typename I, typename T>
+  void read_only_iterator(I f, T v)
+  {
+    TTS_EXPECT_NOT_COMPILES(v, f, { eve::store(v, f); });
+
+    if constexpr (!std::same_as<eve::unaligned_t<I>, I>)
+    {
+      read_only_iterator(eve::unalign(f), v);
+    }
+  }
+
   template <typename I, typename T, typename ReplaceIgnored>
   void iterator_supports_compress(I f, T v, ReplaceIgnored replace)
   {

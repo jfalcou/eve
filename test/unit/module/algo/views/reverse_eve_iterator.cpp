@@ -51,6 +51,11 @@ TTS_CASE_TPL("Check reverse_iterator", algo_test::selected_types)
       algo_test::writeable_readable_iterator(eve::views::reverse(a_l), values, replace);
       algo_test::writeable_readable_iterator(eve::views::reverse(u_l), values, replace);
     }
+    else
+    {
+      algo_test::read_only_iterator(eve::views::reverse(a_l), values);
+      algo_test::read_only_iterator(eve::views::reverse(u_l), values);
+    }
   };
   auto *f = data.data();
   auto *l = f + data.size();

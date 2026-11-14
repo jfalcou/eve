@@ -48,3 +48,30 @@ TTS_CASE_WITH ( "Check store behavior with unaligned pointers"
   TTS_ALL_EQUAL(target        , ref         );
   TTS_ALL_EQUAL(logical_target, logical_ref );
 };
+
+//==================================================================================================
+// A pointer to const is refused at the signature
+//==================================================================================================
+TTS_CASE_TPL("Check store refuses a pointer to const", eve::test::simd::all_types_wf16)
+<typename T>(tts::type<T>)
+{
+  using v_t = eve::element_type_t<T>;
+  using l_t = eve::logical<T>;
+  using e_t = eve::logical<v_t>;
+
+  [[maybe_unused]] T   v  = {};
+  [[maybe_unused]] l_t lv = {};
+  [[maybe_unused]] v_t*       p   = nullptr;
+  [[maybe_unused]] v_t const* cp  = nullptr;
+  [[maybe_unused]] e_t*       lp  = nullptr;
+  [[maybe_unused]] e_t const* lcp = nullptr;
+  [[maybe_unused]] eve::aligned_ptr<v_t, T::size()>       ap  = {};
+  [[maybe_unused]] eve::aligned_ptr<v_t const, T::size()> acp = {};
+
+  TTS_EXPECT_COMPILES    (v, p,    { eve::store(v, p);    });
+  TTS_EXPECT_COMPILES    (v, ap,   { eve::store(v, ap);   });
+  TTS_EXPECT_NOT_COMPILES(v, cp,   { eve::store(v, cp);   });
+  TTS_EXPECT_NOT_COMPILES(v, acp,  { eve::store(v, acp);  });
+  TTS_EXPECT_COMPILES    (lv, lp,  { eve::store(lv, lp);  });
+  TTS_EXPECT_NOT_COMPILES(lv, lcp, { eve::store(lv, lcp); });
+};

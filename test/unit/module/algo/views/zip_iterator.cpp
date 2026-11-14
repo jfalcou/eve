@@ -223,6 +223,9 @@ TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
   run_test_one_pair(u_f_1, u_f_2, u_f_3, u_l_1);
   run_test_one_pair(a_f_1, a_f_2, a_f_3, u_l_1);
   run_test_one_pair(u_f_1, a_f_2, u_f_3, u_l_1);
+
+  eve::algo::ptr_iterator<t2 const*, N> c_f_2{data_2.data()};
+  algo_test::read_only_iterator(eve::views::zip_iterator{u_f_1, c_f_2, u_f_3}, values);
 };
 
 TTS_CASE("zip iterators const/non-const")
