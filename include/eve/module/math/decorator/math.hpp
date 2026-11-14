@@ -12,7 +12,7 @@
 //======================================================================================================================
 #include <eve/deps/raberu.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   struct full_circle_mode     {};
   struct quarter_circle_mode  {};

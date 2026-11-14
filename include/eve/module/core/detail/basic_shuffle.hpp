@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 EVE_REGISTER_CALLABLE(basic_shuffle_)
 EVE_DECLARE_CALLABLE(basic_shuffle_, basic_shuffle)

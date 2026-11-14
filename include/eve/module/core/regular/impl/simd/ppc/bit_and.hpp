@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    wide<T, N> bit_and_(EVE_REQUIRES(vmx_), O const&, wide<T, N> a, wide<T, N> b) noexcept

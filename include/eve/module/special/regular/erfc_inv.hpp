@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct erfc_inv_t : elementwise_callable<erfc_inv_t, Options>

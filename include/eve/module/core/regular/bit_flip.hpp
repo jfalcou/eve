@@ -15,7 +15,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/module/core/regular/all.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_flip_t : strict_elementwise_callable<bit_flip_t, Options>

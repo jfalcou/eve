@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/forward.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

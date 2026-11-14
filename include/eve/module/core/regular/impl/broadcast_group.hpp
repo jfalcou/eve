@@ -13,7 +13,7 @@
 #include <eve/pattern.hpp>
 #include <optional>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // Find the proper broadcast group shape. If none is found, returns {-1,-1}
 template<std::size_t Width, std::size_t Size>

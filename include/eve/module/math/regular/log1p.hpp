@@ -11,7 +11,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/math/regular/reverse_horner.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

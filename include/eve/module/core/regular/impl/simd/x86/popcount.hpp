@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
  template<unsigned_scalar_value T, width_type N, callable_options O>
    auto popcount_(EVE_REQUIRES(sse2_), O const& o, wide<T, N> x) noexcept

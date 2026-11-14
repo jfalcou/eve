@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct log_abs_t : elementwise_callable<log_abs_t, Options, raw_option, fast_option, pedantic_option>

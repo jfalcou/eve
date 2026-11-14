@@ -9,7 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 #include <eve/detail/wide_forward.hpp>
-namespace eve
+EVE_NAMESPACE
 {
 
 template<logical_simd_value Logical>

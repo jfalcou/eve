@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/mzero.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_eqz_t : elementwise_callable<is_eqz_t, Options>

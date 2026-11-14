@@ -7,12 +7,14 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/abi_namespace.hpp>
+
 #include <eve/assert.hpp>
 #include <bit>
 #include <concepts>
 #include <cstdint>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, callable_options O>
    wide<T, N> bit_select_(EVE_REQUIRES(neon128_),

@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/regular/fsm.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct veltkamp_t : callable<veltkamp_t, Options>

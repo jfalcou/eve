@@ -16,7 +16,7 @@
 
 #include <array>
 
-namespace eve
+EVE_NAMESPACE
 {
 EVE_MAKE_CALLABLE(slide_right_, slide_right);
 

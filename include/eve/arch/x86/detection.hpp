@@ -11,7 +11,7 @@
 #include <eve/detail/cpuid.hpp>
 #include <eve/deps/spy.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Runtime detection of CPU support

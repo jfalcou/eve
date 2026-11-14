@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/module/core/regular/fms.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

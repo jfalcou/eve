@@ -16,7 +16,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/traits/as_integer.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<callable_options O, arithmetic_scalar_value T, width_type N, typename V0, typename... Vs>

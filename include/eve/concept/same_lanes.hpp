@@ -11,7 +11,7 @@
 #include <eve/traits/width.hpp>
 #include <eve/concept/vectorized.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

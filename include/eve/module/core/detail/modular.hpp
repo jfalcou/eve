@@ -11,7 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/constant/one.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //  ============================================================================================
   // mod

@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/abi_namespace.hpp>
+
 //======================================================================================================================
 //! @defgroup eve_simd      EVE
 //! @brief  This module defines all the types and functions provided by EVE
@@ -39,7 +41,7 @@
 //!
 //! This namespace contains all the elements required to use EVE
 //======================================================================================================================
-namespace eve {}
+EVE_NAMESPACE {}
 
 //======================================================================================================================
 //! @defgroup eve_arch Architecture related Types and Helpers

@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // This is not directly a concept to prevent some compiler bugs about concepts depending
 // on themselves. This should go away at one point in the future.
@@ -30,7 +30,7 @@ constexpr bool is_plain() noexcept
 }
 }
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Type> struct logical;
 
@@ -72,7 +72,7 @@ concept logical_scalar_value = _::instance_of<T, logical>
 //================================================================================================
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T>
 constexpr bool
@@ -91,7 +91,7 @@ scalar_tuple() noexcept
 }
 }
 
-namespace eve
+EVE_NAMESPACE
 {
 //==================================================================================================
 //! @ingroup eve_simd_concepts

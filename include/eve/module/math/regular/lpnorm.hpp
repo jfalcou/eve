@@ -15,7 +15,7 @@
 #include <eve/module/math/regular/pow_abs.hpp>
 #include <eve/module/math/regular/pow.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lpnorm_t : strict_elementwise_callable<lpnorm_t, Options, raw_option, pedantic_option,

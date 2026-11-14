@@ -10,7 +10,7 @@
 #include <iterator>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename R> concept range = requires(R const& r)
   {

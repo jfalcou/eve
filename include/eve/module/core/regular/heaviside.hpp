@@ -16,7 +16,7 @@
 
 #include <eve/forward.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

@@ -9,7 +9,7 @@
 
 #include <eve/detail/meta.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename N>
    constexpr N set_lower_n_bits(std::ptrdiff_t n)

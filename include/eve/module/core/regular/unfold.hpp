@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct unfold_t : callable<unfold_t, Options, widen_option>

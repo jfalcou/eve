@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/constant/one.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
  template<typename Options>
   struct reldist_t : elementwise_callable<reldist_t, Options,  pedantic_option>

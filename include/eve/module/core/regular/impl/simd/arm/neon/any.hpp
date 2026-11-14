@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<arithmetic_scalar_value T, width_type N, callable_options O>
  auto

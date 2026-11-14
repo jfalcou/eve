@@ -12,7 +12,7 @@
 #include <eve/traits/updown.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

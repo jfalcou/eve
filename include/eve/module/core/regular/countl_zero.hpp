@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/countl_zero.hpp>
 #include <bit>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct countl_zero_t : elementwise_callable<countl_zero_t, Options>

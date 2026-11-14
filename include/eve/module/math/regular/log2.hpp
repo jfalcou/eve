@@ -13,7 +13,7 @@
 #include <eve/module/core/detail/generic/horn.hpp>
 #include <eve/module/math/constant/invlog_2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

@@ -19,7 +19,7 @@
 
 #include <bit>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // permutation masks ------------------
 

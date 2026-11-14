@@ -13,7 +13,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/combine.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N, callable_options O>
    wide<T, N> fma_(EVE_REQUIRES(sse2_),

@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct mul_t : tuple_callable<mul_t, Options, saturated_option, lower_option,

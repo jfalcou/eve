@@ -13,7 +13,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_notand_t : elementwise_callable<logical_notand_t, Options>

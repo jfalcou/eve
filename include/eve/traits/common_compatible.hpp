@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_floating_point.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T,int S,int V> struct cmn
   {
@@ -56,7 +56,7 @@ namespace eve::_
   };
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_odd_t : elementwise_callable<is_odd_t, Options>

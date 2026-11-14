@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 #include <eve/conditional.hpp>
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<relative_conditional_expr C, typename T, width_type N, typename U>

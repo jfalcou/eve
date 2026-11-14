@@ -13,7 +13,7 @@
 #include <eve/module/combinatorial/regular/nth_prime.hpp>
 #include <eve/module/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct prime_ceil_t : strict_elementwise_callable<prime_ceil_t, Options>

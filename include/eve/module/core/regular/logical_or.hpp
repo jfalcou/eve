@@ -12,7 +12,7 @@
 #include <eve/traits/as_logical.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_or_t : elementwise_callable<logical_or_t, Options>

@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct exp2_t : strict_elementwise_callable<exp2_t, Options, pedantic_option, raw_option, fast_option, saturated_option>

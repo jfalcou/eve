@@ -12,7 +12,7 @@
 #include <eve/arch/abi.hpp>
 #include <eve/concept/scalar.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   //================================================================================================

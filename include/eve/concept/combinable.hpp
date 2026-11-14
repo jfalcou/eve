@@ -13,7 +13,7 @@
 #include <concepts>
 #include <bit>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

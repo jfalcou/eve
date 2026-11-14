@@ -11,7 +11,7 @@
 #include <eve/detail/shuffle_v2/idxm.hpp>
 #include <eve/detail/shuffle_v2/shuffle_v2_helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 // Part of shuffle_v2 driver that takes a pattern and up to two registers

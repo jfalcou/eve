@@ -18,7 +18,7 @@
 #include <eve/traits/apply_fp16.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct sqr_t : elementwise_callable<sqr_t, Options, saturated_option, lower_option,

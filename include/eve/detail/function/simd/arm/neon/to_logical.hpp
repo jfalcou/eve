@@ -12,7 +12,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // Wide to Logical

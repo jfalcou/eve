@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/log.hpp>
 #include <eve/module/math/regular/log1p.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

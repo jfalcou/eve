@@ -22,7 +22,7 @@
 // the tests can be incompatible or in increasing order when
 // using next interval
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template <typename F, typename L, typename L1, typename R, typename ...Ts>

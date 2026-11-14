@@ -12,7 +12,7 @@
 
 #include <utility>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // There is no usecase for aggregated - use top bits.
   // For emulated, N <= 64 is enforced in top bits.

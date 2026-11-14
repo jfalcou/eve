@@ -66,7 +66,7 @@ namespace eve
   inline constexpr auto           ew_drop_func = functor<ew_drop_func_t>;
 };
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<eve::callable_options O>
   bool func_(EVE_REQUIRES(cpu_), O const&, tests test_id)

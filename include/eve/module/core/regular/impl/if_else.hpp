@@ -29,7 +29,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // Local helper for product_type if_else implementation
 template<typename R, typename T, eve::product_type U, eve::product_type V>

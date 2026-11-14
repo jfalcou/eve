@@ -17,7 +17,7 @@
 #include <eve/module/math/constant/minlog10.hpp>
 #include <eve/module/math/constant/minlog10denormal.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct exp10_t : elementwise_callable<exp10_t, Options, pedantic_option, raw_option, fast_option>

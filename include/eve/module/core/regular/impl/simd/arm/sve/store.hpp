@@ -13,7 +13,7 @@
 #include <eve/arch/arm/arm_utils.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>
    void store_impl(sve_, C const& cx, wide<T, N> v, Ptr p)

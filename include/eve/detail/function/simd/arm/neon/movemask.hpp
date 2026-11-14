@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename T>
    std::uint32_t every_2nd_byte_arm64(T const& v) noexcept

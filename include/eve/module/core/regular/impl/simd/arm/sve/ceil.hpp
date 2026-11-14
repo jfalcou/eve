@@ -11,7 +11,7 @@
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    wide<T, N> ceil_(EVE_REQUIRES(sve_),

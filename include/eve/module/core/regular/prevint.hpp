@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/constant/nan.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct prevint_t : strict_elementwise_callable<prevint_t, Options, raw_option, saturated_option>

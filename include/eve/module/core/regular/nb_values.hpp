@@ -17,7 +17,7 @@
 
 #include <eve/module/core/detail/next_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
  template<typename Options>
   struct nb_values_t : elementwise_callable<nb_values_t, Options>

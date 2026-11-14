@@ -12,7 +12,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

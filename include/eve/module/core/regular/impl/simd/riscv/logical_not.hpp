@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    logical<wide<T, N>> logical_not_(EVE_REQUIRES(rvv_), O const&, logical<wide<T, N>> v) noexcept

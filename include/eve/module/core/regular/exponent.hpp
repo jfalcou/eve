@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/ifrexp.hpp>
 #include <eve/arch/platform.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

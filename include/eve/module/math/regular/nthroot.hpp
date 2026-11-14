@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/pow_abs.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct nthroot_t : strict_elementwise_callable<nthroot_t, Options, raw_option>

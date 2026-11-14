@@ -12,7 +12,7 @@
 #include <eve/module/core/named_shuffles/swap_adjacent.hpp>
 #include <eve/module/core/regular/shuffle_v2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 //================================================================================================

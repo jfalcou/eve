@@ -13,7 +13,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/if_else.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct replace_ignored_t : callable<replace_ignored_t, Options>

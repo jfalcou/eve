@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct minimum_t : conditional_callable<minimum_t, Options, splat_option>

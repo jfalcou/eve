@@ -17,7 +17,7 @@
 #include <cstring>
 #include <array>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Type marking the absence of a register for the given type
   template<typename T>

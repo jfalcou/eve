@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/module/core.hpp>
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   template <typename I, typename S>
   struct as_range

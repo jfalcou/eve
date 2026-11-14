@@ -16,7 +16,7 @@
 #include <eve/as_element.hpp>
 #include <numeric>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct lcm_t : elementwise_callable<lcm_t, Options>

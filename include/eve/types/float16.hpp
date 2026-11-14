@@ -18,7 +18,7 @@
 #include <limits>
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

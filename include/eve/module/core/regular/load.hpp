@@ -9,7 +9,7 @@
 #include <eve/detail/function/load.hpp>
 
 #if defined(EVE_DOXYGEN_INVOKED)
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_simd

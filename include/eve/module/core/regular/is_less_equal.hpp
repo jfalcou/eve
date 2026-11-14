@@ -14,7 +14,7 @@
 #include <eve/module/core/detail/tolerance.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_less_equal_t : elementwise_callable<is_less_equal_t, Options, almost_option>

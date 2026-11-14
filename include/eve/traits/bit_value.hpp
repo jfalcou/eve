@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/traits/as_wide.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

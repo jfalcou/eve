@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/bit_xor.hpp>
 #include <eve/module/core/constant/allbits.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/floor.hpp>
 #include <eve/module/core/regular/prev.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto ceil_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept

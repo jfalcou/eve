@@ -8,7 +8,7 @@
 #pragma once
 #include <eve/module/core.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<scalar_value X,  scalar_value C, scalar_value... Cs, callable_options O>

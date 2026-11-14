@@ -11,7 +11,7 @@
 #include <eve/detail/function/simd/riscv/make.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<callable_options O, scalar_value T, width_type N>
  wide<T, N>

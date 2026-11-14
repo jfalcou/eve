@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/expm1.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct tanh_t : elementwise_callable<tanh_t, Options, pedantic_option, raw_option, fast_option>

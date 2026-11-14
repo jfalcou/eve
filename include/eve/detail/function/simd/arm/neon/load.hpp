@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/memory/aligned_ptr.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>
    wide<T, N> load_impl(neon128_, Ptr p, as<wide<T, N>>)

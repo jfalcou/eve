@@ -14,7 +14,7 @@
 #include <eve/as.hpp>
 #include <eve/arch/arm/sve/sve_true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<callable_options O, typename T, width_type N>

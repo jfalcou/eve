@@ -11,7 +11,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, scalar_value T, integral_scalar_value I, width_type N>
    wide<T,N> lookup_(EVE_REQUIRES(sve_), O const&, wide<T,N> a, wide<I,N> i) noexcept

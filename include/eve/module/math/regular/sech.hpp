@@ -15,7 +15,7 @@
 #include <eve/module/math/constant/log_2.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sech_t : elementwise_callable<sech_t, Options, pedantic_option, raw_option, fast_option>

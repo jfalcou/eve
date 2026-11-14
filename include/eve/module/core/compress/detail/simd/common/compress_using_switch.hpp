@@ -15,7 +15,7 @@
 
 #include <eve/arch/top_bits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<relative_conditional_expr C, typename T, typename U, width_type N>
   auto compress_using_switch_(EVE_SUPPORTS(cpu_),

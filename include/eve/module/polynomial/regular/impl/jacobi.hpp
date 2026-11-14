@@ -9,7 +9,7 @@
 
 #include <eve/module/core.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename I,typename T, typename U,typename V, callable_options O>
   constexpr as_wide_as_t<common_value_t<T, U, V>, I>

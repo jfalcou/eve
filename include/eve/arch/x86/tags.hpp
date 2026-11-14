@@ -12,7 +12,7 @@
 #include <eve/detail/meta.hpp>
 #include <eve/deps/spy.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //==================================================================================================
   // Additional ISA support

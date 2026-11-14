@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_eqpz.hpp>
 #include <eve/module/core/regular/logical_not.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_nepz_t : elementwise_callable<is_nepz_t, Options>

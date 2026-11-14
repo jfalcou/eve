@@ -19,7 +19,7 @@
 #include <eve/module/core/constant/inf.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
  template<typename Options>
   struct dist_t : elementwise_callable<dist_t, Options, saturated_option,  pedantic_option,

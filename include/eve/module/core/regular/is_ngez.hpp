@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_not_greater_equal.hpp>
 #include <eve/module/core/constant/false.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_ngez_t : elementwise_callable<is_ngez_t, Options>

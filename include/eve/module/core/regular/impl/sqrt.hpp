@@ -19,7 +19,7 @@
 
 #include <cmath>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, callable_options O>
    constexpr auto sqrt_(EVE_REQUIRES(emulated_), O const& o, T const& a0) noexcept

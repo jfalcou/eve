@@ -11,7 +11,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<typename T, width_type N>
  wide<T, N * 2> combine(rvv_ const&, wide<T, N> l, wide<T, N> h) noexcept

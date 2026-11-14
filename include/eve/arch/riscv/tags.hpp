@@ -11,7 +11,7 @@
 #include <eve/arch/riscv/predef.hpp>
 #include <eve/detail/meta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // ABI tags for all RISCV bits SIMD registers

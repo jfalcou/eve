@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, typename Op> struct has_equal_lambda
   {

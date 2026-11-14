@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo/algo/concepts/relaxed.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algo_concepts

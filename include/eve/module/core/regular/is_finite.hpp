@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_eqz.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_finite_t : elementwise_callable<is_finite_t, Options>

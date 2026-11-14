@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/regular/shl.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 //================================================================================================
 //! @addtogroup eve_core_bitops

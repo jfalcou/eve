@@ -11,7 +11,7 @@
 #include <eve/pattern.hpp>
 
 // TODO DOC
-namespace eve
+EVE_NAMESPACE
 {
 EVE_MAKE_CALLABLE(slide_left_, slide_left);
 

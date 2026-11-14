@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/rotl.hpp>
 #include <eve/module/core/regular/minus.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct rotr_t : strict_elementwise_callable<rotr_t, Options>
@@ -87,7 +87,7 @@ namespace eve
 }
 
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, typename S, callable_options O>
   constexpr as_wide_as_t<T,S> rotr_(EVE_REQUIRES(cpu_), O const& o, T v, S s)

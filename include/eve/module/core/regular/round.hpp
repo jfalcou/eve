@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/nearest.hpp>
 #include <eve/module/core/regular/trunc.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct round_t : elementwise_callable<round_t, Options, upward_option, downward_option,

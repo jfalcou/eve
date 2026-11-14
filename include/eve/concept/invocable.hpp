@@ -12,7 +12,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
 // Re-implementation of the invoke_result traits to work with incomplete type everywhere
 // This is a direct copy from the possible implementation by cppreference.com

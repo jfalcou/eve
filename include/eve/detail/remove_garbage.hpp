@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/slide_right.hpp>
 #include <utility>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename W> auto remove_garbage(W v) noexcept
   {

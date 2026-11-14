@@ -10,7 +10,7 @@
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   struct default_tolerance
   {

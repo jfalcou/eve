@@ -13,7 +13,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/atanh.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct acoth_t : elementwise_callable<acoth_t, Options>

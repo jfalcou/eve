@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 #include <eve/concept/generator.hpp>
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct if_else_t : callable<if_else_t, Options>

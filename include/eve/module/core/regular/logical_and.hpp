@@ -11,7 +11,7 @@
 #include <eve/module/core/constant/false.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct logical_and_t : elementwise_callable<logical_and_t, Options>

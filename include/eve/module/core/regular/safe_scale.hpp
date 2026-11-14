@@ -20,7 +20,7 @@
 #include <eve/module/core/constant/eps.hpp>
 #include <eve/module/core/constant/smallestposval.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct safe_scale_t : elementwise_callable<safe_scale_t, Options, pedantic_option>

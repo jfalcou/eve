@@ -14,7 +14,7 @@
 #include <eve/module/core/detail/fmx_utils.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct fsm_t : strict_elementwise_callable<fsm_t, Options, pedantic_option, promote_option,

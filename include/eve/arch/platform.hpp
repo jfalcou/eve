@@ -9,7 +9,7 @@
 
 #include <eve/arch/predef.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_arch

@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/arch/platform.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct modf_t : elementwise_callable<modf_t, Options, pedantic_option, raw_option, almost_option>

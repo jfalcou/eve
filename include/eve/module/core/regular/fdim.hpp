@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/constant/zero.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct fdim_t : elementwise_callable<fdim_t, Options>

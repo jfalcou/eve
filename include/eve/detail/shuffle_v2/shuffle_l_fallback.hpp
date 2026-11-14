@@ -9,7 +9,7 @@
 
 #include <eve/detail/shuffle_v2/shuffle_v2_fwd.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 EVE_REGISTER_CALLABLE(shuffle_l_fallback_)
 EVE_DECLARE_CALLABLE(shuffle_l_fallback_, shuffle_l_fallback)

@@ -10,7 +10,7 @@
 #include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/types/wide.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 // Logical-wide conversions.
 // For internal utils for RVV, not expected to be used outside of this file.

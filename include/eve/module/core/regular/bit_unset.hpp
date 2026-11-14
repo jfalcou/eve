@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/bit_shl.hpp>
 #include <eve/module/core/regular/all.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_unset_t : strict_elementwise_callable<bit_unset_t, Options>

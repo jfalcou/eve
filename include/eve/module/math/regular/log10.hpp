@@ -13,7 +13,7 @@
 #include <eve/module/math/regular/horner.hpp>
 #include <eve/module/core/detail/generic/horn.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct log10_t : elementwise_callable<log10_t, Options, raw_option, fast_option>

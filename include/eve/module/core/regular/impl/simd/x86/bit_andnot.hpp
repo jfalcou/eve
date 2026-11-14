@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<arithmetic_scalar_value T, width_type N, callable_options O>
    wide<T, N> bit_andnot_(EVE_REQUIRES(sse2_),

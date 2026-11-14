@@ -15,7 +15,7 @@
 
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

@@ -31,7 +31,7 @@
 #include <eve/traits/updown.hpp>
 #include <eve/traits/as_wides.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto mul_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept

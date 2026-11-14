@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/count_true.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename U, width_type N>
   struct do_compress_sve

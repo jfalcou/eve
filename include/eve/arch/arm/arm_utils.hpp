@@ -9,7 +9,7 @@
 
 #include <eve/traits/pointer.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template <typename Ptr>
   auto arm_ptr_downcast(Ptr ptr) noexcept

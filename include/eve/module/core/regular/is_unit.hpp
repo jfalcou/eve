@@ -14,7 +14,7 @@
 #include <eve/module/core/constant/one.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_unit_t : elementwise_callable<is_unit_t, Options, pedantic_option>

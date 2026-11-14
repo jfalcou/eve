@@ -14,7 +14,7 @@
 #include <eve/module/math/regular/log2.hpp>
 #include <eve/module/math/constant/invsqrt_2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

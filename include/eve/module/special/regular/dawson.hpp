@@ -14,7 +14,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct dawson_t : elementwise_callable<dawson_t, Options>

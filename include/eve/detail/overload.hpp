@@ -149,7 +149,7 @@ namespace tag { struct TAG {}; }                                                
 // Flag a function to support delayed calls on given architecture
 #define EVE_RETARGET(ARCH)  delay_t{}, ARCH {}
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // decorator definition, detection, combination and application to callables

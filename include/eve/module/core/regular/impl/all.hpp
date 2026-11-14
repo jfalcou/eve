@@ -14,7 +14,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template <callable_options O, logical_simd_value T>
  T all_(EVE_REQUIRES(cpu_), O const& opts, T v) noexcept

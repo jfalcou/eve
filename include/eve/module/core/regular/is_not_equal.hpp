@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_equal_t : elementwise_callable<is_not_equal_t, Options, numeric_option, definitely_option>

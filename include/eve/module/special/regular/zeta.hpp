@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct zeta_t : elementwise_callable<zeta_t, Options>

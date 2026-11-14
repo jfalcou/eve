@@ -12,7 +12,7 @@
 #include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/concept/options.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //================================================================================================
 // Single slice

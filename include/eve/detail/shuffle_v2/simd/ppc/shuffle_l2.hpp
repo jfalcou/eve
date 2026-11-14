@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<typename P, typename T, width_type N, std::ptrdiff_t G>

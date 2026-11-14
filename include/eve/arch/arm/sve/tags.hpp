@@ -11,7 +11,7 @@
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/detail/meta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // ABI tags for all ARM bits SIMD registers

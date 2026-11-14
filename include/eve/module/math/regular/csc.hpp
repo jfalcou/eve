@@ -13,7 +13,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/math/regular/sin.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct csc_t : elementwise_callable<csc_t, Options,  raw_option, fast_option,

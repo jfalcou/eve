@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, typename I, width_type N>
    wide<T, N> lookup_(EVE_REQUIRES(neon128_), O const&, wide<T, N> a, wide<I, N> idx) noexcept

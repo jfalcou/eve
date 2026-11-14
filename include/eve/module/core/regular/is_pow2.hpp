@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_pow2_t : elementwise_callable<is_pow2_t, Options>

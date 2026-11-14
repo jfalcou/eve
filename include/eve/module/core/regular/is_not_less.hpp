@@ -17,7 +17,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_less_t : strict_elementwise_callable<is_not_less_t, Options, almost_option>

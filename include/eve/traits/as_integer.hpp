@@ -13,7 +13,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/traits/translation.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

@@ -18,7 +18,7 @@
 #include <array>
 #include <utility>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
 template<typename TraitsSupport> struct any_of_ : TraitsSupport
 {

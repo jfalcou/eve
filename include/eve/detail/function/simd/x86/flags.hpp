@@ -10,7 +10,7 @@
 #include <cstdint>
 #include <eve/detail/abi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

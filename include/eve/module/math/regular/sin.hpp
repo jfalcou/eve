@@ -10,7 +10,7 @@
 #include <eve/module/math/detail/generic/sinc_kernel.hpp>
 #include <eve/module/math/detail/generic/sin_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct sin_t : elementwise_callable<sin_t, Options,  quarter_circle_option,

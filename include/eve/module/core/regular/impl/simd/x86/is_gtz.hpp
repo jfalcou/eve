@@ -12,7 +12,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    logical<wide<T, N>> is_gtz_(EVE_REQUIRES(avx512_),

@@ -17,7 +17,7 @@
 
 #include <array>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   template <typename TraitsSupport>
   struct transform_keep_if_ : TraitsSupport

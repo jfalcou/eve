@@ -14,7 +14,7 @@
 #include <eve/traits/as_logical.hpp>
 #include <eve/traits/width.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, width_type N>
    auto to_logical(wide<T, N> const& v) noexcept

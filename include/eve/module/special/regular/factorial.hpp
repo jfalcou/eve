@@ -10,7 +10,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct factorial_t : elementwise_callable<factorial_t, Options, pedantic_option>

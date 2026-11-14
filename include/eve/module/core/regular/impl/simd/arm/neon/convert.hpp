@@ -16,7 +16,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //================================================================================================
 // convert[saturated]: floating -> U

@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/mul.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct dot_t : tuple_callable<dot_t, Options, kahan_option, widen_option>

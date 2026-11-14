@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/read.hpp>
 #include <eve/module/core/compress/detail/compress_callable.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template <typename I, typename L, typename O>

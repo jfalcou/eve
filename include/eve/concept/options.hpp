@@ -9,7 +9,7 @@
 
 #include <eve/deps/raberu.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename T>
   concept callable_options = rbr::concepts::settings<T>;

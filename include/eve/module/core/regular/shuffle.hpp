@@ -14,7 +14,7 @@
 #endif
 
 //TODO DOC
-namespace eve
+EVE_NAMESPACE
 {
 EVE_MAKE_CALLABLE(shuffle_, shuffle);
 }
@@ -22,7 +22,7 @@ EVE_MAKE_CALLABLE(shuffle_, shuffle);
 #include <eve/module/core/detail/basic_shuffle.hpp>
 #include <eve/module/core/detail/generic/find_optimized_shuffle_pattern.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<simd_value T, std::ptrdiff_t... I>
 EVE_ABI constexpr auto

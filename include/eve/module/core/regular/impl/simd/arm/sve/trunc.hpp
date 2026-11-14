@@ -12,7 +12,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_value T, width_type N, callable_options O>
    wide<T, N> trunc_(EVE_REQUIRES(sve_),

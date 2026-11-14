@@ -18,7 +18,7 @@
 
 #include <utility>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   template <typename TraitsSupport>
   struct reduce_ : TraitsSupport

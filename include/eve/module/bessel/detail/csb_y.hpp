@@ -13,7 +13,7 @@
 #include <eve/module/math.hpp>
 #include <eve/as_element.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // T is always floating
   template < typename I,  typename T > constexpr 

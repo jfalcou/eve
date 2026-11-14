@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct average_t : tuple_callable<average_t, Options, raw_option, upper_option,

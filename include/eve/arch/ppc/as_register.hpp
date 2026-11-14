@@ -11,7 +11,7 @@
 #include <concepts>
 #include <cstddef>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // ---------------------------------------------------------------------------------------------
   // PPC

@@ -15,7 +15,7 @@
 #include <eve/module/math/constant/invlog_2.hpp>
 #include <eve/module/math/constant/maxlog.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct expm1_t : elementwise_callable<expm1_t, Options, raw_option, fast_option, pedantic_option>

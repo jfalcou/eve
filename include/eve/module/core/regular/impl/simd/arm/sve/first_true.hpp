@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // There are some explanations
   // Here: https://lemire.me/blog/2022/12/19/implementing-strlen-using-sve/

@@ -15,7 +15,7 @@
 #include <eve/traits/width.hpp>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T>
   struct find_common_value_reducer;
@@ -69,7 +69,7 @@ namespace eve::_
   };
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   /// Computes the SIMD-compatible common type between all `Ts`.
   template<typename... Ts>
@@ -80,7 +80,7 @@ namespace eve
   {};
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T>
   struct find_common_logical_reducer;
@@ -158,7 +158,7 @@ namespace eve::_
   };
 }
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename... Ts>
   using common_logical_t = typename eve::_::common_logical_impl<void, Ts...>::type;

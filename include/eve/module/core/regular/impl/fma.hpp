@@ -24,7 +24,7 @@
 #include <eve/traits/apply_fp16.hpp>
 #include <cmath>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, simd_value... Ts>
    constexpr auto fma_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept

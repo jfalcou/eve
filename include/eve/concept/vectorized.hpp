@@ -15,7 +15,7 @@
 
 #include <concepts>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

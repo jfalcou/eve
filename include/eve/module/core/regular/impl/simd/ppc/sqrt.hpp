@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/rsqrt.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    wide<T, N> sqrt_(EVE_REQUIRES(vmx_),

@@ -14,7 +14,7 @@
 #include <eve/module/special/regular/factorial.hpp>
 #include <eve/module/special/regular/tgamma.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct double_factorial_t : elementwise_callable<double_factorial_t, Options>

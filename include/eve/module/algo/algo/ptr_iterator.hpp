@@ -12,7 +12,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/traits.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algo_concepts

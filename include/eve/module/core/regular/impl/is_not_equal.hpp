@@ -21,7 +21,7 @@
 #include <eve/module/core/regular/nb_values.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<value T, callable_options O>
    constexpr as_logical_t<T>

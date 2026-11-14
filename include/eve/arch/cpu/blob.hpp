@@ -16,7 +16,7 @@
 #include <cstring>
 #include <array>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
     template<typename Type, width_type Width>
     struct blob

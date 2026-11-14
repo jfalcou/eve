@@ -13,7 +13,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/is_not_equal.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    logical<wide<T, N>> is_lessgreater_(EVE_REQUIRES(sse2_),

@@ -9,7 +9,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_cast_t : callable<bit_cast_t, Options>

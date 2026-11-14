@@ -12,7 +12,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/as.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Type, width_type Width = expected_width_v<Type>>
   struct as_wide

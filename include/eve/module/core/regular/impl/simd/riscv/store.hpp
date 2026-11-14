@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<arithmetic_scalar_value T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>

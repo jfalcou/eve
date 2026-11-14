@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bitofsign.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct copysign_t : elementwise_callable<copysign_t, Options>

@@ -9,7 +9,7 @@
 
 #include <eve/detail/shuffle_v2/native_shuffle_helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 EVE_REGISTER_CALLABLE(shuffle_l2_)
 EVE_DECLARE_CALLABLE(shuffle_l2_, shuffle_l2)

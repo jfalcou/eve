@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch/abi_namespace.hpp>
+
 #if __has_include(<kumi/kumi.hpp>)
 # include <kumi/kumi.hpp>
 #else
@@ -18,7 +20,7 @@
 # endif
 #endif
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   // Reinject kumi concept & traits in EVE

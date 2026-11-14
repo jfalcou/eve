@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct negate_t : elementwise_callable<negate_t, Options>
