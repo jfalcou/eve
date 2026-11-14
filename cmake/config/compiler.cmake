@@ -16,7 +16,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options( eve_test INTERFACE /bigobj /EHsc /W3 /wd4244 /wd4267 /wd4146 /utf-8 /WX )
   else()
     target_compile_options( eve_test INTERFACE -Werror -Wshadow -Wall -Wpedantic -Wextra -fcolor-diagnostics
-        -ftemplate-backtrace-limit=0 -Wno-c2y-extensions
+        -ftemplate-backtrace-limit=0 -Wno-c2y-extensions -Wextra-semi
                           )
   endif()
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
@@ -25,7 +25,7 @@ else()
   target_compile_options( eve_test INTERFACE  -Werror -Wshadow -Wall -Wpedantic -Wextra -fdiagnostics-color=always
                           -ftemplate-backtrace-limit=0 -fconcepts-diagnostics-depth=8
                           -Wno-array-bounds -Wno-stringop-overread -Wno-stringop-overflow
-                          -Wno-maybe-uninitialized
+                          -Wno-maybe-uninitialized -Wextra-semi
                         )
 endif()
 
