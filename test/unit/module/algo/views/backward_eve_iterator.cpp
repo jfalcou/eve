@@ -64,6 +64,11 @@ TTS_CASE_TPL("Check backward_iterator", algo_test::selected_types)
       algo_test::writeable_readable_iterator(eve::views::backward(a_l), values, replace);
       algo_test::writeable_readable_iterator(eve::views::backward(u_l), values, replace);
     }
+    else
+    {
+      algo_test::read_only_iterator(eve::views::backward(a_l), values);
+      algo_test::read_only_iterator(eve::views::backward(u_l), values);
+    }
   };
   auto *f = data.data();
   auto *l = f + data.size();
@@ -79,18 +84,4 @@ TTS_CASE("backward iterators const/non-const")
   using to   = eve::views::backward_iterator<int const*>;
 
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
-};
-
-TTS_CASE("backward iterators refuse a store through a const base")
-{
-  using w_t  = eve::wide<int>;
-  using u_it = eve::views::backward_iterator<eve::algo::ptr_iterator<int*      , w_t::size()>>;
-  using c_it = eve::views::backward_iterator<eve::algo::ptr_iterator<int const*, w_t::size()>>;
-
-  [[maybe_unused]] w_t  v   = {};
-  [[maybe_unused]] u_it it  = {};
-  [[maybe_unused]] c_it cit = {};
-
-  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
-  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
 };
