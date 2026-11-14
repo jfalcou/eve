@@ -17,32 +17,34 @@
 
 namespace eve::_
 {
+  // Iterator with a member store: checked by the constraint of that member
+  template<typename T, typename Ptr>
+  inline constexpr bool can_be_stored_v = requires(Ptr p, T v) { p.store(options<>{}, v); };
+
+  // Raw pointer or aligned_ptr: checked for a pointer to const
+  template<typename T, scalar_pointer Ptr>
+  inline constexpr bool can_be_stored_v<T,Ptr> = !std::is_const_v<std::remove_pointer_t<unaligned_t<Ptr>>>;
+
+  // store_equivalent returns (condition, value, pointer), so elements 1 and 2 of the tuple are the
+  // value and the pointer the store goes to
   template<typename T, typename Ptr>
   using store_eq_t = decltype(store_equivalent(ignore_none, std::declval<T>(), std::declval<Ptr>()));
 
   template<typename T, typename Ptr>
-  using store_eq_value_t = kumi::element_t<1, store_eq_t<T,Ptr>>;
-
-  template<typename T, typename Ptr>
-  using store_eq_ptr_t = kumi::element_t<2, store_eq_t<T,Ptr>>;
-
-  template<typename T, typename Ptr>
-  inline constexpr bool can_be_stored_v = requires(Ptr p, T v) { p.store(options<>{}, v); };
-
-  template<typename T, scalar_pointer Ptr>
-  inline constexpr bool can_be_stored_v<T,Ptr> = !std::is_const_v<std::remove_pointer_t<unaligned_t<Ptr>>>;
-
-  template<typename T, typename Ptr>
   requires( !scalar_pointer<Ptr> && has_store_equivalent<T,Ptr> )
-  inline constexpr bool can_be_stored_v<T,Ptr> = can_be_stored_v<store_eq_value_t<T,Ptr>, store_eq_ptr_t<T,Ptr>>;
+  inline constexpr bool can_be_stored_v<T,Ptr> = can_be_stored_v<kumi::element_t<1, store_eq_t<T,Ptr>>,
+                                                                  kumi::element_t<2, store_eq_t<T,Ptr>>>;
 
-  // Product types: all elements must be storable
+  // Matches the zipped (value, pointer) pairs against kumi::tuple<Ts...> to give the fold its pack
+  template<typename Zipped>
+  inline constexpr bool all_stored_v = false;
+
   template<typename... Ts>
-  using can_be_stored_t = std::bool_constant<(can_be_stored_v<kumi::element_t<0,Ts>, kumi::element_t<1,Ts>> && ...)>;
+  inline constexpr bool all_stored_v<kumi::tuple<Ts...>> = (can_be_stored_v<kumi::element_t<0,Ts>, kumi::element_t<1,Ts>> && ...);
 
   template<eve::product_type T, kumi::concepts::sized_product_type<kumi::size_v<T>> Ptr>
   requires( !has_store_equivalent<T,Ptr> )
-  inline constexpr bool can_be_stored_v<T,Ptr> = kumi::apply_traits_t<can_be_stored_t, kumi::result::zip_t<T,Ptr>>::value;
+  inline constexpr bool can_be_stored_v<T,Ptr> = all_stored_v<kumi::result::zip_t<T,Ptr>>;
 }
 
 namespace eve
