@@ -223,6 +223,9 @@ TTS_CASE_TPL("Check zip_iterator", algo_test::selected_types)
   run_test_one_pair(u_f_1, u_f_2, u_f_3, u_l_1);
   run_test_one_pair(a_f_1, a_f_2, a_f_3, u_l_1);
   run_test_one_pair(u_f_1, a_f_2, u_f_3, u_l_1);
+
+  eve::algo::ptr_iterator<t2 const*, N> c_f_2{data_2.data()};
+  algo_test::read_only_iterator(eve::views::zip_iterator{u_f_1, c_f_2, u_f_3}, values);
 };
 
 TTS_CASE("zip iterators const/non-const")
@@ -234,18 +237,4 @@ TTS_CASE("zip iterators const/non-const")
   using to        = eve::views::zip_iterator<int const*, cvt_const>;
 
   TTS_CONSTEXPR_EXPECT( (std::convertible_to<from, to>) );
-};
-
-TTS_CASE("zip iterators refuse a store through a const component")
-{
-  using w_t  = eve::wide<kumi::tuple<int, float>>;
-  using u_it = eve::views::zip_iterator<int*, float*>;
-  using c_it = eve::views::zip_iterator<int*, float const*>;
-
-  [[maybe_unused]] w_t  v   = {};
-  [[maybe_unused]] u_it it  = {};
-  [[maybe_unused]] c_it cit = {};
-
-  TTS_EXPECT_COMPILES    (v, it , { eve::store(v, it);  });
-  TTS_EXPECT_NOT_COMPILES(v, cit, { eve::store(v, cit); });
 };
