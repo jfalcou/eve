@@ -13,7 +13,7 @@
 #include <concepts>
 #include <compare>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

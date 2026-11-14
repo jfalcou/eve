@@ -34,6 +34,11 @@ if(Python3_Interpreter_FOUND)
           )
 endif()
 
+add_test( NAME unit.arch.abi_independent_namespace.cmake
+          COMMAND ${CMAKE_COMMAND} -DEVE_INCLUDE=${PROJECT_SOURCE_DIR}/include
+                  -P ${unit_root}/arch/abi_independent_namespace.cmake
+        )
+
 ##==================================================================================================
 ## GLOB and process internals unit tests
 ##==================================================================================================
