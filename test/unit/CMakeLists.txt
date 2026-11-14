@@ -41,6 +41,29 @@ add_test( NAME unit.arch.abi_independent_namespace.cmake
                   -P ${unit_root}/arch/abi_independent_namespace.cmake
         )
 
+## Calls code compiled for the current platform from a translation unit compiled without SIMD,
+## passing ABI independent types between them.
+set(abi_independent_link unit.arch.abi_independent_link.exe)
+add_executable( ${abi_independent_link}
+                ${unit_root}/arch/abi_independent/scalar.cpp
+                ${unit_root}/arch/abi_independent/native.cpp
+              )
+set_source_files_properties ( ${unit_root}/arch/abi_independent/scalar.cpp
+                              PROPERTIES COMPILE_DEFINITIONS EVE_NO_SIMD
+                            )
+target_link_libraries(${abi_independent_link} PUBLIC eve_test)
+set_target_properties ( ${abi_independent_link} PROPERTIES
+                        RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+                        EXCLUDE_FROM_DEFAULT_BUILD TRUE
+                        EXCLUDE_FROM_ALL TRUE
+                      )
+add_test( NAME ${abi_independent_link}
+          WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/unit"
+          COMMAND ${CMAKE_CROSSCOMPILING_CMD} $<TARGET_FILE:${abi_independent_link}>
+        )
+add_dependencies(unit ${abi_independent_link})
+add_parent_target(${abi_independent_link})
+
 ##==================================================================================================
 ## GLOB and process internals unit tests
 ##==================================================================================================
