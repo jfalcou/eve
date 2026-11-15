@@ -17,7 +17,7 @@ TTS_CASE("ABI independent types: both translation units use their own ABI namesp
 {
   TTS_EXPECT_NOT(eve::platform::supports_simd);
   if( abi_test::native_supports_simd() )
-    TTS_NOT_EQUAL(abi_test::native_abi_namespace(), std::string_view{EVE_TEST_STRINGIFY(EVE_ABI_NAMESPACE)});
+    TTS_NOT_EQUAL(abi_test::native_abi_namespace(), eve::current_abi_namespace);
 };
 
 TTS_CASE("ABI independent types: aligned_ptr crosses the ABI boundary")

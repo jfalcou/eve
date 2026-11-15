@@ -13,9 +13,6 @@
 #include <cstddef>
 #include <string_view>
 
-#define EVE_TEST_STRINGIFY_(x) #x
-#define EVE_TEST_STRINGIFY(x)  EVE_TEST_STRINGIFY_(x)
-
 namespace abi_test
 {
   inline constexpr std::ptrdiff_t lanes = 16;
