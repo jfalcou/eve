@@ -7,10 +7,13 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch.hpp>
+#include <eve/arch/platform.hpp>
+#include <eve/arch/predef.hpp>
 #include <eve/arch/spec.hpp>
-#include <eve/types/float16.hpp>
+#include <eve/arch/tags.hpp>
+#include <eve/arch/width.hpp>
 #include <eve/deps/kumi.hpp>
+#include <eve/types/float16.hpp>
 
 #include <concepts>
 #include <type_traits>

@@ -7,10 +7,10 @@
 //==================================================================================================
 #include "test.hpp"
 
+#include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/module/core.hpp>
 #include <eve/module/special.hpp>
-#include <eve/arch/platform.hpp>
 
 #include <type_traits>
 #include <cmath>

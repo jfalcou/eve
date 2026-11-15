@@ -9,12 +9,11 @@
 
 #include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
-#include <eve/traits/overload.hpp>
+#include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/trunc.hpp>
-#include <eve/module/core/constant/zero.hpp>
 #include <eve/module/core/regular/zip.hpp>
-#include <eve/arch/platform.hpp>
+#include <eve/traits/overload.hpp>
 
 namespace eve
 {

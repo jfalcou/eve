@@ -6,7 +6,7 @@
 **/
 //==================================================================================================
 #include "test.hpp"
-#include <eve/arch/spec.hpp>
+#include <eve/arch.hpp>
 
 TTS_CASE("Check eve::current_api selection")
 {

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/spec.hpp>
+#include <eve/arch.hpp>
 #include <eve/pattern.hpp>
 
 #include <span>

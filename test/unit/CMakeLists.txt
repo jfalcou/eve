@@ -19,6 +19,7 @@ glob_unit("unit" ${unit_root} "api/*.cpp" RECURSE AGGREGATED)
 add_custom_target(unit.arch.exe         )
 add_dependencies(unit.exe unit.arch.exe )
 glob_unit("unit" ${unit_root} "arch/*.cpp")
+include(${unit_root}/arch/tests.cmake)
 
 ##==================================================================================================
 ## GLOB and process internals unit tests

@@ -6,8 +6,8 @@
 */
 //==================================================================================================
 //! [compute]
+#include <eve/arch.hpp>
 #include <eve/forward.hpp>
-#include <eve/arch/detection.hpp>
 
 #include <dlfcn.h>
 #include <span>

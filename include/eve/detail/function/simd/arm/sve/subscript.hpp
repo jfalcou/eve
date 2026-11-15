@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/abi.hpp>
+#include <eve/arch.hpp>
 #include <eve/as.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>

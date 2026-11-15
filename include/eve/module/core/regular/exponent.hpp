@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/arch.hpp>
-#include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
+#include <eve/traits/overload.hpp>
 
 #include <eve/module/core/constant/mantissamask.hpp>
 #include <eve/module/core/constant/one.hpp>
@@ -25,7 +25,6 @@
 #include <eve/module/core/regular/logical_or.hpp>
 #include <eve/module/core/regular/sub.hpp>
 #include <eve/module/core/regular/ifrexp.hpp>
-#include <eve/arch/platform.hpp>
 
 namespace eve
 {

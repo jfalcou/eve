@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/forward.hpp>
-#include <eve/arch/spec.hpp>
-#include <eve/detail/meta.hpp>
-#include <eve/detail/abi.hpp>
+#include <eve/arch.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
+#include <eve/detail/abi.hpp>
+#include <eve/detail/meta.hpp>
+#include <eve/forward.hpp>
 
 #include <concepts>
 #include <type_traits>

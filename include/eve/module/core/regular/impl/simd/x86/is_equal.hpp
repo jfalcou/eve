@@ -7,7 +7,7 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
+#include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>

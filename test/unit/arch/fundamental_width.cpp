@@ -6,8 +6,8 @@
 **/
 //==================================================================================================
 #include "test.hpp"
+#include <eve/arch.hpp>
 #include <eve/wide.hpp>
-#include <eve/arch/width.hpp>
 
 TTS_CASE("Check for 64 bits ABI fundamental width")
 {

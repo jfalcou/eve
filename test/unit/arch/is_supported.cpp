@@ -6,7 +6,7 @@
 */
 //==================================================================================================
 #include "test.hpp"
-#include <eve/arch/detection.hpp>
+#include <eve/arch.hpp>
 #include <iostream>
 #include <iomanip>
 

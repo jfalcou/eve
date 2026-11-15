@@ -7,21 +7,21 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
-#include <eve/arch/abi.hpp>
 #include <eve/detail/skeleton.hpp>
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/is_gtz.hpp>
+#include <eve/module/core/regular/is_ltz.hpp>
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/regular/prev.hpp>
 #include <eve/module/core/regular/three_fma.hpp>
+#include <eve/traits/apply_fp16.hpp>
 #include <eve/traits/as_integer.hpp>
 #include <eve/traits/common_value.hpp>
-#include <eve/traits/apply_fp16.hpp>
 #include <cmath>
 
 namespace eve::_

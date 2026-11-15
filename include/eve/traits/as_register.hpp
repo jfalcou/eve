@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
+#include <eve/arch.hpp>
 
 #include <type_traits>
 #include <utility>

@@ -7,12 +7,11 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
+#include <eve/as.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
-#include <eve/arch/abi.hpp>
-#include <eve/arch/platform.hpp>
 #include <eve/traits/as_wide.hpp>
-#include <eve/as.hpp>
 
 #include <array>
 #include <cstddef>

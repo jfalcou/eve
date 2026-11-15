@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/as_register.hpp>
+#include <eve/arch.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/traits/as_logical.hpp>
 #include <eve/forward.hpp>
+#include <eve/traits/as_logical.hpp>
 
 namespace eve::_
 {

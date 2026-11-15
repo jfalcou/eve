@@ -8,11 +8,10 @@
 #ifndef BENCHMARKS_GENERATORS_HPP
 #define BENCHMARKS_GENERATORS_HPP
 
+#include <eve/arch.hpp>
 #include <eve/logical.hpp>
 #include <eve/memory/aligned_allocator.hpp>
 #include <eve/traits/element_type.hpp>
-#include <eve/arch.hpp>
-#include <eve/arch/spec.hpp>
 #include <algorithm>
 #include <numeric>
 #include <random>

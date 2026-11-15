@@ -7,24 +7,24 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/arch.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/arch/abi.hpp>
 #include <eve/forward.hpp>
+#include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/maxexponent.hpp>
 #include <eve/module/core/constant/minexponent.hpp>
-#include <eve/module/core/constant/nbmantissabits.hpp>
-#include <eve/module/core/constant/nan.hpp>
-#include <eve/module/core/constant/inf.hpp>
 #include <eve/module/core/constant/minf.hpp>
-#include <eve/module/core/regular/convert.hpp>
-#include <eve/module/core/regular/trunc.hpp>
+#include <eve/module/core/constant/nan.hpp>
+#include <eve/module/core/constant/nbmantissabits.hpp>
 #include <eve/module/core/regular/any.hpp>
-#include <eve/module/core/regular/is_pinf.hpp>
+#include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/is_minf.hpp>
 #include <eve/module/core/regular/is_nan.hpp>
 #include <eve/module/core/regular/is_not_finite.hpp>
+#include <eve/module/core/regular/is_pinf.hpp>
+#include <eve/module/core/regular/trunc.hpp>
 #include <type_traits>
 
 namespace eve::_
