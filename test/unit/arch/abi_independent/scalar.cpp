@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include <array>
+#include <functional>
 #include <numeric>
 
 TTS_CASE("ABI independent types: both translation units use their own ABI namespace")
@@ -33,10 +34,13 @@ TTS_CASE("ABI independent types: aligned_ptr crosses the ABI boundary")
 
 TTS_CASE("ABI independent types: soa_ptr crosses the ABI boundary")
 {
-  std::array<int, 37> a, b;
+  std::array<int, 37> a, b, out = {};
   std::iota(a.begin(), a.end(), 1);
   std::iota(b.begin(), b.end(), -10);
 
-  auto expected = std::inner_product(a.begin(), a.end(), b.begin(), 0);
-  TTS_EQUAL(abi_test::dot(eve::soa_ptr<int const*, int const*>{a.data(), b.data()}, a.size()), expected);
+  std::array<int, 37> expected;
+  std::transform(a.begin(), a.end(), b.begin(), expected.begin(), std::multiplies<>{});
+
+  abi_test::multiply(eve::soa_ptr<int const*, int const*, int*>{a.data(), b.data(), out.data()}, a.size());
+  TTS_EXPECT(out == expected);
 };
