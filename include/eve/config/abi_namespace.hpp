@@ -82,7 +82,11 @@
 #define EVE_ABI_STRING_(x) #x
 #define EVE_ABI_STRING(x)  EVE_ABI_STRING_(x)
 
-namespace eve
+// Just `namespace eve`, spelled out so that it doesn't read as a forgotten EVE_NAMESPACE: what is
+// declared there keeps the same ABI under every set of compilation options.
+#define EVE_ABI_INDEPENDENT_NAMESPACE namespace eve
+
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   // Whether the ABI namespace is spelled with these letters, which no macro can replace
   constexpr bool abi_namespace_matches(std::string_view actual, std::string_view api, auto... digits)
@@ -122,7 +126,3 @@ EVE_NAMESPACE
   // Name of the ABI namespace for the current compilation options
   inline constexpr std::string_view current_abi_namespace = EVE_ABI_STRING(EVE_ABI_NAMESPACE);
 }
-
-// Just `namespace eve`, spelled out so that it doesn't read as a forgotten EVE_NAMESPACE: what is
-// declared there keeps the same ABI under every set of compilation options.
-#define EVE_ABI_INDEPENDENT_NAMESPACE namespace eve
