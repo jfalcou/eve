@@ -21,7 +21,7 @@
 #include <cstddef>
 #include <memory>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   struct no_init_t {};
 

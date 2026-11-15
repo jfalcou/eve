@@ -9,7 +9,7 @@
 
 #include <eve/module/algo/algo/views/backward.hpp>
 
-EVE_NAMESPACE::views
+EVE_VIEWS_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_views

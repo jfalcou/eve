@@ -13,7 +13,7 @@
 
 #include <utility>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   template <typename Op>
   struct apply_to_zip_pair

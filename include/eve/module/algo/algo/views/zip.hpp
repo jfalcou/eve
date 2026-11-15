@@ -23,7 +23,7 @@
 
 #include <eve/deps/kumi.hpp>
 
-EVE_NAMESPACE::algo::views
+EVE_ALGO_VIEWS_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_views
@@ -232,7 +232,7 @@ namespace std
   };
 }
 
-EVE_NAMESPACE::algo::views::_
+EVE_ALGO_VIEWS_NAMESPACE::_
 {
   template<typename Self, typename T>
    auto convert_zipped(Self self, eve::as<T> tgt)

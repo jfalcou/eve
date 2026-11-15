@@ -18,7 +18,7 @@
 #include <type_traits>
 #include <memory>
 
-EVE_NAMESPACE::algo::_
+EVE_ALGO_NAMESPACE::_
 {
   struct memory_helper
   {
