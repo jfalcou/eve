@@ -32,6 +32,8 @@ if(Python3_Interpreter_FOUND)
             COMMAND ${Python3_EXECUTABLE} -B -m unittest test_check
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tools/include_rules
           )
+else()
+  message(WARNING "[eve] Python 3 not found: the source tree checks under tools/ are not run")
 endif()
 
 ##==================================================================================================
