@@ -186,25 +186,25 @@
 #  define EVE_ABI_ASSERTS 1
 #endif
 
-#if defined(__AVX512BW__)
+#if defined(SPY_SIMD_IS_X86_AVX512_BW)
 #  define EVE_ABI_AVX512BW 1
 #else
 #  define EVE_ABI_AVX512BW 0
 #endif
 
-#if defined(__AVX512CD__)
+#if defined(SPY_SIMD_IS_X86_AVX512_CD)
 #  define EVE_ABI_AVX512CD 1
 #else
 #  define EVE_ABI_AVX512CD 0
 #endif
 
-#if defined(__AVX512DQ__)
+#if defined(SPY_SIMD_IS_X86_AVX512_DQ)
 #  define EVE_ABI_AVX512DQ 1
 #else
 #  define EVE_ABI_AVX512DQ 0
 #endif
 
-#if defined(__AVX512VL__)
+#if defined(SPY_SIMD_IS_X86_AVX512_VL)
 #  define EVE_ABI_AVX512VL 1
 #else
 #  define EVE_ABI_AVX512VL 0
