@@ -24,7 +24,7 @@
 //!   @endcode
 //!
 //!   The identifier depends on the instruction sets and **EVE** options used to compile, for example
-//!   `He` for `-mavx2 -mf16c -DNDEBUG`. It is kept short on purpose and is not meant to be read.
+//!   `abi_O` for `-march=haswell -DNDEBUG`. It is kept short on purpose and is not meant to be read.
 //!
 //!   **EVE** uses it as the name of an inline namespace, so that multiple versions of the same code,
 //!   compiled with different configurations, can be linked into one binary without causing ODR
