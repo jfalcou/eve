@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
+#include <eve/types/top_bits.hpp>
 
 #include <optional>
 

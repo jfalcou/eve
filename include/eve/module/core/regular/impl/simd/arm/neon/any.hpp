@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/module/core/decorator/core.hpp>
-#include <eve/arch/top_bits.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

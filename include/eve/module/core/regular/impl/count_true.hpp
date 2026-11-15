@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
 #include <eve/concept/conditional.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/constant/true.hpp>
 #include <eve/module/core/regular/popcount.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

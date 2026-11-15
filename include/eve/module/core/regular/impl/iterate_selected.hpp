@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
 #include <eve/conditional.hpp>
+#include <eve/types/top_bits.hpp>
 
 #include <bit>
 

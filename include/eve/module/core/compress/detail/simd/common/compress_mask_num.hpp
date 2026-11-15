@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
+#include <eve/types/top_bits.hpp>
 
 #include <eve/module/core/regular/convert.hpp>
 #include <eve/module/core/regular/count_true.hpp>
