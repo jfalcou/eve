@@ -8,8 +8,7 @@
 #include "test.hpp"
 #include "interface.hpp"
 
-#include <eve/module/algo.hpp>
-
+#include <algorithm>
 #include <array>
 #include <numeric>
 
@@ -26,7 +25,7 @@ TTS_CASE("ABI independent types: aligned_ptr crosses the ABI boundary")
   std::iota(data.begin(), data.end(), 1.0f);
 
   auto expected = data;
-  eve::algo::transform_inplace(expected, eve::sqr);
+  std::transform(expected.begin(), expected.end(), expected.begin(), [](float x) { return x * x; });
 
   abi_test::square(eve::aligned_ptr<float, abi_test::lanes>{data.data()}, data.size());
   TTS_EXPECT(data == expected);
