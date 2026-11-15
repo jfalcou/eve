@@ -12,7 +12,7 @@
 
 namespace abi_test
 {
-  std::string_view native_abi_namespace() { return EVE_TEST_STRINGIFY(EVE_ABI_NAMESPACE); }
+  std::string_view native_abi_namespace() { return eve::current_abi_namespace; }
 
   bool native_supports_simd() { return eve::platform::supports_simd; }
 
