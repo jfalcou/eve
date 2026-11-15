@@ -24,5 +24,5 @@ namespace abi_test
   std::string_view native_abi_namespace();
   bool             native_supports_simd();
   void             square(eve::aligned_ptr<float, lanes> data, std::ptrdiff_t size);
-  int              dot(eve::soa_ptr<int const*, int const*> data, std::ptrdiff_t size);
+  void             multiply(eve::soa_ptr<int const*, int const*, int*> data, std::ptrdiff_t size);
 }
