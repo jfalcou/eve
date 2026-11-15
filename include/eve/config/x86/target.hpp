@@ -37,9 +37,8 @@
 
 // Don't trigger AVX512 if we don't have at least Skylake support
 #  if defined(SPY_SIMD_IS_X86_AVX512)
-#   if !(   defined(__AVX512BW__) && defined(__AVX512CD__)  \
-        &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  \
-        &&  defined(__AVX512DQ__) && defined(__AVX512VL__)  )
+#   if !(   defined(SPY_SIMD_IS_X86_AVX512_BW) && defined(SPY_SIMD_IS_X86_AVX512_CD)  \
+        &&  defined(SPY_SIMD_IS_X86_AVX512_DQ) && defined(SPY_SIMD_IS_X86_AVX512_VL)  )
 #    undef SPY_SIMD_IS_X86_AVX512
 #    undef SPY_SIMD_DETECTED
 #    define EVE_INCOMPLETE_AVX512_SUPPORT

@@ -36,11 +36,12 @@
 #  define EVE_NO_INFINITIES
 #endif
 
-#if defined(SPY_SIMD_SUPPORTS_FMA) || defined(__ARM_FEATURE_FMA) || defined(__VSX__) || defined(__riscv_f)
+#if defined(SPY_SIMD_SUPPORTS_FMA) || defined(__ARM_FEATURE_FMA) || defined(SPY_SIMD_IS_PPC_VSX) || defined(__riscv_f)
 #  define EVE_HAS_HARDWARE_FMA
 #endif
 
-#if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16) && !defined(_MSC_VER)
+#if defined(SPY_SUPPORTS_FP16_TYPE) && !defined(EVE_NO_NATIVE_FP16) && !defined(SPY_COMPILER_IS_MSVC) \
+    && !defined(SPY_COMPILER_IS_CLANGCL)
 #  define EVE_NATIVE_FP16
 #endif
 
