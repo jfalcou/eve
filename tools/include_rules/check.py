@@ -34,6 +34,7 @@ def check_file(root, file, rules):
     match = include_regex.match(line)
     if not match: continue
     include = match.group(1)
+    if include in rules.EXCEPTIONS.get(name, []): continue
 
     for folder, entry in rules.PRIVATE_FOLDERS.items():
       if include.startswith(folder + '/') and not in_folder(path, folder, rules):

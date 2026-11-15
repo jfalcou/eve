@@ -13,6 +13,7 @@ import check
 rules = types.SimpleNamespace(
   PRIVATE_FOLDERS = { 'eve/config': 'eve/config.hpp' },
   LAYERS          = { 'eve/config': ['eve/deps/spy.hpp'] },
+  EXCEPTIONS      = { 'test/unit/a.hpp': ['eve/config/x86.hpp'] },
 )
 
 class IncludeRules(unittest.TestCase):
@@ -65,6 +66,14 @@ class IncludeRules(unittest.TestCase):
   def test_layer_does_not_apply_outside(self):
     self.write('include/eve/wide.hpp', '#include <eve/arch/tags.hpp>\n')
     self.assertEqual(self.violations(), [])
+
+  def test_exceptions_allow_listed_headers_only(self):
+    self.write('test/unit/a.hpp', '#include <eve/config/x86.hpp>\n#include <eve/config/arm.hpp>\n')
+    self.write('test/unit/b.hpp', '#include <eve/config/x86.hpp>\n')
+    self.assertEqual(self.violations(),
+      [ 'test/unit/a.hpp:2: includes eve/config/arm.hpp, only eve/config.hpp may be included outside of eve/config'
+      , 'test/unit/b.hpp:1: includes eve/config/x86.hpp, only eve/config.hpp may be included outside of eve/config'
+      ])
 
 if __name__ == '__main__':
   unittest.main()
