@@ -15,7 +15,7 @@
 
 #include <optional>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 template<typename TraitsSupport> struct min_value_ : TraitsSupport
 {

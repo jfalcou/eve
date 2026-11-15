@@ -9,7 +9,8 @@ from pathlib import Path
 
 import check
 
-plain = 'opens namespace eve, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
+plain  = 'opens namespace eve, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
+nested = 'opens a namespace inside the ABI namespace, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
 
 class NamespaceMacros(unittest.TestCase):
   def setUp(self):
@@ -28,7 +29,7 @@ class NamespaceMacros(unittest.TestCase):
     return check.check(self.root)
 
   def test_macros_are_allowed(self):
-    self.write('include/eve/wide.hpp', 'EVE_NAMESPACE\n{\n}\nEVE_ABI_INDEPENDENT_NAMESPACE\n{\n}\n')
+    self.write('include/eve/wide.hpp', 'EVE_NAMESPACE\n{\n}\nEVE_ABI_INDEPENDENT_NAMESPACE\n{\n}\nEVE_ALGO_NAMESPACE\n{\n}\n')
     self.assertEqual(self.violations(), [])
 
   def test_plain_namespace_eve_is_rejected(self):
@@ -39,6 +40,17 @@ class NamespaceMacros(unittest.TestCase):
       , 'include/eve/b.hpp:1: ' + plain
       , 'include/eve/b.hpp:3: ' + plain
       ])
+
+  def test_nested_namespace_is_rejected(self):
+    self.write('include/eve/a.hpp', 'EVE_NAMESPACE\n{\n  namespace algo\n  {\n  }\n}\nEVE_NAMESPACE::views {}\n')
+    self.assertEqual(self.violations(),
+      [ 'include/eve/a.hpp:3: ' + nested
+      , 'include/eve/a.hpp:7: ' + nested
+      ])
+
+  def test_underscore_namespace_is_allowed(self):
+    self.write('include/eve/a.hpp', 'EVE_NAMESPACE\n{\n  namespace _\n  {\n  }\n}\nEVE_NAMESPACE::_ {}\n')
+    self.assertEqual(self.violations(), [])
 
   def test_other_namespaces_are_allowed(self):
     self.write('include/eve/a.hpp', 'namespace evex\n{\n}\nnamespace std {}\n')

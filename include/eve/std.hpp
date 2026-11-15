@@ -10,7 +10,7 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 
-EVE_NAMESPACE::experimental
+EVE_EXPERIMENTAL_NAMESPACE
 {
   template<typename T>
   using simd = eve::wide<T, 16 / sizeof(T)>;

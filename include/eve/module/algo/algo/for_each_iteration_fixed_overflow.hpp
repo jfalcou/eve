@@ -9,7 +9,7 @@
 
 #include <eve/module/algo/algo/for_each_iteration.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 namespace _
 {

@@ -13,7 +13,7 @@
 #include <eve/module/algo/algo/views/backward.hpp>
 #include <eve/module/algo/algo/views/zip.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   template <typename TraitsSupport>
   struct copy_ : TraitsSupport

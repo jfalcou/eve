@@ -13,7 +13,7 @@
 #include <concepts>
 #include <type_traits>
 
-EVE_NAMESPACE::algo::_
+EVE_ALGO_NAMESPACE::_
 {
   template <typename R>
   concept has_begin_end = requires (R&& r) {

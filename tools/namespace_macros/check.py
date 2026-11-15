@@ -7,14 +7,18 @@ import re
 import sys
 from pathlib import Path
 
-plain_regex = re.compile(r'^\s*namespace\s+eve([\s{:]|$)')
-macros      = 'use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
+plain_regex  = re.compile(r'^\s*namespace\s+eve([\s{:]|$)')
+nested_regex = re.compile(r'EVE_NAMESPACE::[A-Za-z]|^  namespace\s+[A-Za-z]')
+macros       = 'use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
+
+def violation(line):
+  if plain_regex.match(line):   return f'opens namespace eve, {macros}'
+  if nested_regex.search(line): return f'opens a namespace inside the ABI namespace, {macros}'
 
 def check_file(root, file):
   name = file.relative_to(root).as_posix()
   text = file.read_text(errors='replace')
-  return [ f'{name}:{number}: opens namespace eve, {macros}'
-           for number, line in enumerate(text.splitlines(), 1) if plain_regex.match(line) ]
+  return [ f'{name}:{number}: {v}' for number, line in enumerate(text.splitlines(), 1) if (v := violation(line)) ]
 
 skipped = ('include/eve/deps/', 'include/eve/config/')
 

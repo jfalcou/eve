@@ -13,7 +13,7 @@
 #include <eve/module/algo/algo/views/convert.hpp>
 #include <eve/module/core.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 
 template<typename TraitsSupport> struct copy_if_ : TraitsSupport
