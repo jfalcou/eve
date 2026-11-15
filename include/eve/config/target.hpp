@@ -9,7 +9,7 @@
 
 #include <eve/deps/spy.hpp>
 
-#include <eve/config/arm.hpp>
-#include <eve/config/ppc.hpp>
-#include <eve/config/riscv.hpp>
-#include <eve/config/x86.hpp>
+#include <eve/config/arm/target.hpp>
+#include <eve/config/ppc/target.hpp>
+#include <eve/config/riscv/target.hpp>
+#include <eve/config/x86/target.hpp>

@@ -37,20 +37,20 @@ class IncludeRules(unittest.TestCase):
     self.assertEqual(self.violations(), [])
 
   def test_private_header_cannot_be_included_outside(self):
-    self.write('include/eve/wide.hpp', '#include <eve/config/x86.hpp>\n')
-    self.write('benchmarks/b.cpp'    , '#include <eve/config/arm.hpp>\n')
+    self.write('include/eve/wide.hpp', '#include <eve/config/x86/target.hpp>\n')
+    self.write('benchmarks/b.cpp'    , '#include <eve/config/arm/target.hpp>\n')
     self.assertEqual(self.violations(),
-      [ 'benchmarks/b.cpp:1: includes eve/config/arm.hpp, only eve/config.hpp may be included outside of eve/config'
-      , 'include/eve/wide.hpp:1: includes eve/config/x86.hpp, only eve/config.hpp may be included outside of eve/config'
+      [ 'benchmarks/b.cpp:1: includes eve/config/arm/target.hpp, only eve/config.hpp may be included outside of eve/config'
+      , 'include/eve/wide.hpp:1: includes eve/config/x86/target.hpp, only eve/config.hpp may be included outside of eve/config'
       ])
 
   def test_private_header_can_be_included_inside(self):
-    self.write('include/eve/config.hpp'    , '#include <eve/config/x86.hpp>\n')
-    self.write('include/eve/config/x86.hpp', '#include <eve/config/arm.hpp>\n')
+    self.write('include/eve/config.hpp'    , '#include <eve/config/x86/target.hpp>\n')
+    self.write('include/eve/config/x86/target.hpp', '#include <eve/config/arm/target.hpp>\n')
     self.assertEqual(self.violations(), [])
 
   def test_include_forms(self):
-    self.write('test/a.cpp', '  #  include "eve/config/x86.hpp"\n#include<eve/config/arm.hpp>\n')
+    self.write('test/a.cpp', '  #  include "eve/config/x86/target.hpp"\n#include<eve/config/arm/target.hpp>\n')
     self.assertEqual(len(self.violations()), 2)
 
   def test_layer_allows_listed_headers_only(self):
@@ -59,7 +59,7 @@ class IncludeRules(unittest.TestCase):
       [ 'include/eve/config.hpp:2: includes eve/arch/tags.hpp, eve/config may only include itself and eve/deps/spy.hpp' ])
 
   def test_layer_allows_its_own_folder(self):
-    self.write('include/eve/config/x86.hpp', '#include <eve/config/arm.hpp>\n#include <eve/config.hpp>\n')
+    self.write('include/eve/config/x86/target.hpp', '#include <eve/config/arm/target.hpp>\n#include <eve/config.hpp>\n')
     self.assertEqual(self.violations(), [])
 
   def test_layer_does_not_apply_outside(self):
