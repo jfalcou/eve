@@ -13,8 +13,3 @@ PRIVATE_FOLDERS = {
 LAYERS = {
   'eve/config': ['eve/deps/spy.hpp'],
 }
-
-# Files that may include these headers anyway, whatever the rules above say.
-EXCEPTIONS = {
-  'test/unit/config/abi_namespace_case.hpp': ['eve/config/abi_namespace_impl.hpp'],
-}

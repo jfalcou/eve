@@ -18,6 +18,10 @@ def include_path(root, file):
   try:               return file.relative_to(root / 'include').as_posix()
   except ValueError: return None
 
+# The tests of a folder, under test/unit/, may include its private headers
+def tested_path(name):
+  return 'eve/' + name.removeprefix('test/unit/') if name.startswith('test/unit/') else None
+
 def in_folder(path, folder, rules):
   return path is not None and (path.startswith(folder + '/') or path == rules.PRIVATE_FOLDERS.get(folder))
 
@@ -28,16 +32,16 @@ def check_file(root, file, rules):
   path       = include_path(root, file)
   name       = file.relative_to(root).as_posix()
   text       = file.read_text(errors='replace')
+  tested     = tested_path(name)
   violations = []
 
   for number, line in enumerate(text.splitlines(), 1):
     match = include_regex.match(line)
     if not match: continue
     include = match.group(1)
-    if include in rules.EXCEPTIONS.get(name, []): continue
-
     for folder, entry in rules.PRIVATE_FOLDERS.items():
-      if include.startswith(folder + '/') and not in_folder(path, folder, rules):
+      if include.startswith(folder + '/') and not in_folder(path, folder, rules) \
+                                          and not in_folder(tested, folder, rules):
         violations.append(f'{name}:{number}: includes {include}, only {entry} may be included outside of {folder}')
 
     for folder, patterns in rules.LAYERS.items():
