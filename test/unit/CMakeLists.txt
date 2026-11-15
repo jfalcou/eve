@@ -32,14 +32,16 @@ if(Python3_Interpreter_FOUND)
             COMMAND ${Python3_EXECUTABLE} -B -m unittest test_check
             WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tools/include_rules
           )
+  add_test( NAME unit.internals.namespace_macros
+            COMMAND ${Python3_EXECUTABLE} -B ${PROJECT_SOURCE_DIR}/tools/namespace_macros/check.py ${PROJECT_SOURCE_DIR}
+          )
+  add_test( NAME unit.internals.namespace_macros.unittest
+            COMMAND ${Python3_EXECUTABLE} -B -m unittest test_check
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tools/namespace_macros
+          )
 else()
   message(WARNING "[eve] Python 3 not found: the source tree checks under tools/ are not run")
 endif()
-
-add_test( NAME unit.arch.namespace_macros.cmake
-          COMMAND ${CMAKE_COMMAND} -DEVE_INCLUDE=${PROJECT_SOURCE_DIR}/include
-                  -P ${unit_root}/arch/namespace_macros.cmake
-        )
 
 ## Calls code compiled for the current platform from a translation unit compiled without SIMD,
 ## passing ABI independent types between them.
