@@ -18,6 +18,12 @@ namespace
   constexpr bool has_bmi       = false;
 #endif
 
+#if defined(EVE_INCOMPLETE_AVX512_SUPPORT)
+  constexpr bool incomplete_avx512 = true;
+#else
+  constexpr bool incomplete_avx512 = false;
+#endif
+
 #if defined(EVE_DISABLE_ASSERTS)
   constexpr bool asserts       = false;
 #else
@@ -42,6 +48,11 @@ namespace
                          ? eve::riscv_::bits / eve::riscv_::max_lmul
                          : 0;
 
+  constexpr int avx512_subset_bits =  (spy::supports::avx512::bw_ ? 8 : 0)
+                                   |  (spy::supports::avx512::cd_ ? 4 : 0)
+                                   |  (spy::supports::avx512::dq_ ? 2 : 0)
+                                   |  (spy::supports::avx512::vl_ ? 1 : 0);
+
   constexpr int option_bits =  (!eve::platform::supports_negative_zero ?  8 : 0)
                             |  (!eve::platform::supports_infinites     ?  4 : 0)
                             |  (!eve::platform::supports_nans          ?  2 : 0)
@@ -58,6 +69,8 @@ namespace
     else if constexpr( current_api == sse4_2   && !has_fma && !fp16_cvt                   ) return asserts ? "Fb" : "Fa";
     else if constexpr( current_api == avx      && !has_fma && !fp16_cvt                   ) return asserts ? "Gb" : "Ga";
     else if constexpr( current_api == avx      && !has_fma &&  fp16_cvt                   ) return asserts ? "Gf" : "Ge";
+    else if constexpr( incomplete_avx512 && has_fma && fp16_cvt && has_bmi                ) return asserts ? "Vh" : "Vg";
+    else if constexpr( incomplete_avx512                                                  ) return {};
     else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt && !has_bmi       ) return asserts ? "Hb" : "Ha";
     else if constexpr( current_api == avx2     && !has_fma &&  fp16_cvt && !has_bmi       ) return asserts ? "Hf" : "He";
     else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt &&  has_bmi       ) return asserts ? "Ib" : "Ia";
@@ -94,6 +107,7 @@ TTS_CASE("Check eve ABI namespace for CI configurations")
   else
   {
     std::string expected{ci_namespace()};
+    if( incomplete_avx512 ) expected += "abcdefghijklmnop"[avx512_subset_bits];
     if( option_bits ) expected += "abcdefghijklmnopqrstuvwxyzABCDEF"[option_bits];
     TTS_EQUAL(std::string{eve::current_abi_namespace}, expected);
   }
