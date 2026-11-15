@@ -52,12 +52,12 @@ endif()
 
 ## Calls code compiled for the current platform from a translation unit compiled without SIMD,
 ## passing ABI independent types between them.
-set(abi_independent_link unit.arch.abi_independent_link.exe)
+set(abi_independent_link unit.config.abi_independent_link.exe)
 add_executable( ${abi_independent_link}
-                ${unit_root}/arch/abi_independent/scalar.cpp
-                ${unit_root}/arch/abi_independent/native.cpp
+                ${unit_root}/config/abi_independent/scalar.cpp
+                ${unit_root}/config/abi_independent/native.cpp
               )
-set_source_files_properties ( ${unit_root}/arch/abi_independent/scalar.cpp
+set_source_files_properties ( ${unit_root}/config/abi_independent/scalar.cpp
                               PROPERTIES COMPILE_DEFINITIONS EVE_NO_SIMD
                             )
 target_link_libraries(${abi_independent_link} PUBLIC eve_test)
