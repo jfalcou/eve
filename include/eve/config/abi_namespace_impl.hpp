@@ -5,7 +5,7 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-// No include guard: test/unit/arch/abi_namespace_table.cpp includes it once per configuration.
+// No include guard: test/unit/config/abi_namespace_table.cpp includes it once per configuration.
 
 #undef EVE_ABI_NAMESPACE
 #undef EVE_ABI_API
