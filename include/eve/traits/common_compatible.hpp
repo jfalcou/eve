@@ -56,7 +56,7 @@ EVE_NAMESPACE::_
   };
 }
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

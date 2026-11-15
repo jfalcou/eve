@@ -11,7 +11,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/concept/generator.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

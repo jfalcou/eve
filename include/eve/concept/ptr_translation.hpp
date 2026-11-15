@@ -12,7 +12,7 @@
 
 #include <concepts>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //==================================================================================================
   //! @concept translatable_ptr

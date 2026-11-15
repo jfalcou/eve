@@ -11,7 +11,7 @@
 #include <eve/detail/wide_forward.hpp>
 #include <eve/concept/scalar.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits
@@ -79,5 +79,4 @@ EVE_NAMESPACE
 
   template<typename Ts>
   using underlying_type_t = typename underlying_type<Ts>::type;
-
 }

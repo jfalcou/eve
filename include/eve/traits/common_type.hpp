@@ -14,7 +14,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/deps/kumi.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits
@@ -141,7 +141,7 @@ EVE_NAMESPACE::_
   };
 }
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template <> struct common_type<>
   {

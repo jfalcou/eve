@@ -24,7 +24,7 @@
 //! **Convenience header:** @code{.cpp} #include <eve/traits/product_type.hpp> @endcode
 //==================================================================================================
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_struct
@@ -100,7 +100,10 @@ EVE_NAMESPACE
   template<typename Wrapper, typename Self>
   concept like = std::same_as<std::remove_cvref_t<Wrapper>, Self> ||
                  supports_like<std::remove_cvref_t<Wrapper>, Self>::value;
+}
 
+EVE_NAMESPACE
+{
   //================================================================================================
   //! @brief CRTP base-class to declare operators for user-defined product type
   //!
@@ -131,7 +134,10 @@ EVE_NAMESPACE
   //================================================================================================
   template <typename Self, typename... Fields>
   struct struct_support;
+}
 
+EVE_NAMESPACE
+{
   namespace _
   {
     std::false_type derived_from_struct_support_impl(...);
@@ -142,7 +148,10 @@ EVE_NAMESPACE
     template <typename Type>
     concept derived_from_struct_support = decltype(derived_from_struct_support_impl(std::declval<Type>()))::value;
   }
+}
 
+EVE_NAMESPACE
+{
   template <typename Self, typename ... Fields>
   struct struct_support : kumi::tuple<Fields...>
   {

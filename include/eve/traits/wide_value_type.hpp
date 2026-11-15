@@ -11,7 +11,7 @@
 #include <eve/traits/iterator_width.hpp>
 #include <eve/traits/value_type.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

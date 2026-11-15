@@ -9,7 +9,7 @@
 
 #include <concepts>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T>
   concept simd_allocator = requires(T& t)

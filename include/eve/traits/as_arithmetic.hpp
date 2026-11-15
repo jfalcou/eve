@@ -9,7 +9,7 @@
 
 #include <eve/detail/wide_forward.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T>
   struct as_arithmetic

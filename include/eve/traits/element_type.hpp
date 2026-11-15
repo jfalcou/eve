@@ -11,7 +11,7 @@
 #include <eve/traits/translation.hpp>
 #include <type_traits>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_traits

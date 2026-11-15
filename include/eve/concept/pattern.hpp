@@ -9,7 +9,7 @@
 
 #include <eve/config.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   // Concept for swizzling pattern

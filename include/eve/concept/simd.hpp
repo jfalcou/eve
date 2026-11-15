@@ -28,7 +28,10 @@ EVE_NAMESPACE
     template<arithmetic_scalar_value Type, width_type Width>
     struct is_wide_logical_impl<logical<wide<Type, Width>>> : std::true_type {};
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template<typename T>
   concept arithmetic_simd_value = _::is_wide_impl<std::remove_cvref_t<T>>::value;
 

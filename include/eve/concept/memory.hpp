@@ -10,7 +10,7 @@
 #include <eve/traits/value_type.hpp>
 #include <type_traits>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T, typename SIMD>
   concept simd_compatible_ptr = simd_value<SIMD> &&
@@ -21,5 +21,4 @@ EVE_NAMESPACE
   concept logical_simd_compatible_ptr = simd_value<SIMD> &&
     (!_::range<T>) &&
    sizeof(value_type_t<T>) == sizeof(element_type_t<SIMD>);
-
 }

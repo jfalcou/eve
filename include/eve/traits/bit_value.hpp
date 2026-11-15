@@ -79,7 +79,10 @@ EVE_NAMESPACE
       }
     }
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template<typename... Ts>
   struct bit_value;
 

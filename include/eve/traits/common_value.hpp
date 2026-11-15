@@ -69,7 +69,7 @@ EVE_NAMESPACE::_
   };
 }
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   /// Computes the SIMD-compatible common type between all `Ts`.
   template<typename... Ts>
@@ -158,7 +158,7 @@ EVE_NAMESPACE::_
   };
 }
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename... Ts>
   using common_logical_t = typename eve::_::common_logical_impl<void, Ts...>::type;

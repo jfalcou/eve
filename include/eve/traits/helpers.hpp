@@ -10,7 +10,7 @@
 #include <utility>
 #include <eve/deps/kumi.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<eve::product_type Data>
   struct coefficients : Data

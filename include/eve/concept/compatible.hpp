@@ -11,7 +11,7 @@
 #include <eve/traits/element_type.hpp>
 #include <eve/detail/wide_forward.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T, typename U>
   concept element_compatible_to = scalar_value<T>

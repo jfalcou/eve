@@ -84,12 +84,22 @@ EVE_NAMESPACE
       using type = eve::as_wide_as_t<decltype(ud()), T>;
     };
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template < typename T > using downgrade_t = typename _::down<T>::type;
   template < typename T > using upgrade_t = typename _::up<T>::type;
+}
+
+EVE_NAMESPACE
+{
   template < typename T > downgrade_t<T> downgrade(T const & a){return convert(a, as<element_type_t<downgrade_t<T>>>()); }
   template < typename T >   upgrade_t<T>   upgrade(T const & a){return convert(a, as<element_type_t<upgrade_t  <T>>>()); }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template < typename O, typename T>
   struct upgrade_if;
 
@@ -102,7 +112,10 @@ EVE_NAMESPACE
   };
 
   template< typename O, typename T> using upgrade_if_t = upgrade_if<O, T>::type;
+}
 
+EVE_NAMESPACE
+{
   namespace _
   {
 
@@ -127,7 +140,9 @@ EVE_NAMESPACE
       using type = decltype(spd());
     };
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template < typename T> using split_down_t = typename _::split_down<T>::type;
-
 }

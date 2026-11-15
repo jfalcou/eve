@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/detail/wide_forward.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

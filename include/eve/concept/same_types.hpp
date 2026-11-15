@@ -30,7 +30,10 @@ EVE_NAMESPACE
       else                                         return eve::homogeneous_product_type<kumi::map_traits_t<element_type, T>>;
     }
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{

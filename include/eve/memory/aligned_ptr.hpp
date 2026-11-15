@@ -354,6 +354,17 @@ EVE_ABI_INDEPENDENT_NAMESPACE
     auto that = p;
     return that += o;
   }
+
+  template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
+  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
+
+  //================================================================================================
+  //  Specialisation for pointer_alignment
+  //================================================================================================
+  template<typename Type, width_type Lanes>
+  struct  pointer_alignment<aligned_ptr<Type, Lanes>>
+        : std::integral_constant<std::size_t,aligned_ptr<Type, Lanes>::alignment()>
+  {};
 }
 
 EVE_NAMESPACE
@@ -376,9 +387,6 @@ EVE_NAMESPACE
   //================================================================================================
   //! @}
   //================================================================================================
-
-  template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
-  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
   //================================================================================================
   //! @relates eve::aligned_ptr
@@ -502,14 +510,6 @@ EVE_NAMESPACE
   {
     return next_aligned_address(p, lanes_t<eve::expected_width_v<std::remove_cvref_t<T>>>{});
   }
-
-  //================================================================================================
-  //  Specialisation for pointer_alignment
-  //================================================================================================
-  template<typename Type, width_type Lanes>
-  struct  pointer_alignment<aligned_ptr<Type, Lanes>>
-        : std::integral_constant<std::size_t,aligned_ptr<Type, Lanes>::alignment()>
-  {};
 
   //================================================================================================
   // nofs (no frequency scaling) helpers

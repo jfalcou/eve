@@ -16,7 +16,7 @@
 #include <bit>
 #include <new>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @brief Translates a value to its translated type.

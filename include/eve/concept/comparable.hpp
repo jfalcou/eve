@@ -9,7 +9,7 @@
 
 #include <concepts>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T, typename U>
   concept equality_comparable = requires(T t, U u)

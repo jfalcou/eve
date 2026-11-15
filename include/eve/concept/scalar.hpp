@@ -33,7 +33,10 @@ constexpr bool is_plain() noexcept
 EVE_NAMESPACE
 {
 template<typename Type> struct logical;
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
 //==================================================================================================
 //! @ingroup eve_simd_concepts
 //! @{
@@ -91,7 +94,7 @@ scalar_tuple() noexcept
 }
 }
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
 //==================================================================================================
 //! @ingroup eve_simd_concepts

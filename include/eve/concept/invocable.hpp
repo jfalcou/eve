@@ -79,7 +79,10 @@ namespace _
   struct get_invoke_result : _::invoke_result<void, F, ArgTypes...>
   {};
 }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
 template<typename F, typename... Args>
 concept invocable = requires(F&& f, Args&&...args)
 {

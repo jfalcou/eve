@@ -28,7 +28,10 @@ EVE_NAMESPACE
     template <typename T>
     using default_as_integer_sign_t = typename default_as_integer_sign<T>::type;
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template<typename T, typename Sign = _::default_as_integer_sign_t<T>>
   struct as_integer
   {

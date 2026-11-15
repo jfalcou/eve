@@ -9,7 +9,7 @@
 
 #include <eve/deps/raberu.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename T>
   concept callable_options = rbr::concepts::settings<T>;
@@ -30,5 +30,4 @@ EVE_NAMESPACE
   /// Checks if the type is one of the Choices
   template<typename T, typename... Choices>
   concept only_if = _::one_of<T, Choices...>;
-
 }

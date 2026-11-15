@@ -11,7 +11,7 @@
 #include <eve/traits/overload/supports.hpp>
 #include <eve/concept/simd.hpp>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
     //==================================================================================================================
   //! @addtogroup eve_traits
@@ -45,7 +45,10 @@ EVE_NAMESPACE
   template<simd_value T>
   struct comparisons<T> : comparisons<element_type_t<T>>
   {};
+}
 
+EVE_NAMESPACE
+{
   namespace _
   {
     template <typename T>
@@ -59,7 +62,10 @@ EVE_NAMESPACE
       static constexpr bool value = has_eq && has_ne;
     };
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   template<typename T>
   inline constexpr bool has_equality_support = _::supports_equality<T>::value;
 }

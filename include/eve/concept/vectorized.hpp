@@ -15,7 +15,7 @@
 
 #include <concepts>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @ingroup eve_simd_concepts

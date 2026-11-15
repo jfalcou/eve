@@ -13,7 +13,7 @@
 #include <concepts>
 #include <array>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   //================================================================================================
   //! @brief Notifies EVE that a type is translatable and its translation target.
@@ -73,7 +73,10 @@ EVE_NAMESPACE
   concept translatable = std::same_as<typename translation_of<T>::type, T>
                       || std::is_enum_v<T>
                       || translatable_struct<T>;
+}
 
+EVE_NAMESPACE
+{
   namespace _
   {
     template <typename T>
@@ -97,7 +100,10 @@ EVE_NAMESPACE
       }
     }
   }
+}
 
+EVE_ABI_INDEPENDENT_NAMESPACE
+{
   //================================================================================================
   //! @brief Returns the final translated type of `T`.
   //!

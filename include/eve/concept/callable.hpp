@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <concepts>
 
-EVE_NAMESPACE
+EVE_ABI_INDEPENDENT_NAMESPACE
 {
   template<typename Func, auto Callable>
   concept same_callable = std::same_as<std::remove_cvref_t<Func>, std::remove_cvref_t<decltype(Callable)>>;
