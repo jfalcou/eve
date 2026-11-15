@@ -10,7 +10,7 @@
 #include <eve/arch/as_register.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/function/simd/x86/flags.hpp>
+#include <eve/detail/intrinsic_wrappers/x86/flags.hpp>
 #include <eve/forward.hpp>
 #include <eve/traits/as_logical.hpp>
 

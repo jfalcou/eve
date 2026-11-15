@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/arch/riscv/predef.hpp>
-#include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_utils.hpp>
 #include <concepts>
 #include <cstddef>
 

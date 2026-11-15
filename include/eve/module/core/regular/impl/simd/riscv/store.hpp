@@ -6,12 +6,12 @@
 */
 //==================================================================================================
 #pragma once
-#include <eve/arch/riscv/rvv_common_masks.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/module/core/regular/unalign.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_common_masks.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::_
 {

@@ -7,10 +7,10 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/concept/options.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/arch/arm/sve/sve_true.hpp>
-#include <eve/concept/options.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 
 namespace eve::_
 {

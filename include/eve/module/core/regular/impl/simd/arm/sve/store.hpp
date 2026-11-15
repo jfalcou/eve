@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/arch/arm/arm_utils.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/arm_utils.hpp>
 #include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::_

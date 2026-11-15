@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/sve/sve_true.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve

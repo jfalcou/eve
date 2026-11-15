@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/function/bit_cast.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_utils.hpp>
 
 namespace eve::_
 {

@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/detail/function/simd/x86/specifics.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/remove_garbage.hpp>
 

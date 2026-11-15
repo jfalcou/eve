@@ -7,9 +7,9 @@
 //======================================================================================================================
 #pragma once
 
-#include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/abi.hpp>
 #include <eve/detail/category.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 #include <eve/forward.hpp>
 
 namespace eve::_

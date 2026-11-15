@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/riscv/rvv_utils.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_utils.hpp>
 #include <eve/forward.hpp>
 
 // Return first or second part of vector.

@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/riscv/rvv_common_masks.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_common_masks.hpp>
 
 namespace eve::_
 {
