@@ -10,12 +10,16 @@ from pathlib import Path
 import check
 
 plain  = 'opens namespace eve, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
-nested = 'opens a namespace inside the ABI namespace, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
+nested = 'opens a nested eve namespace by hand, use the EVE_*NAMESPACE macros from eve/config/abi_namespace.hpp'
 
 class NamespaceMacros(unittest.TestCase):
   def setUp(self):
     self.dir  = tempfile.TemporaryDirectory()
     self.root = Path(self.dir.name)
+    self.write('include/eve/config/abi_namespace.hpp',
+               '#  define EVE_ALGO_NAMESPACE       namespace eve::algo::inline EVE_ABI_NAMESPACE\n'
+               '#  define EVE_ALGO_VIEWS_NAMESPACE namespace eve::algo::views::inline EVE_ABI_NAMESPACE\n'
+               '#  define EVE_PLATFORM_NAMESPACE   namespace eve::platform::inline EVE_ABI_NAMESPACE\n')
 
   def tearDown(self):
     self.dir.cleanup()
@@ -43,10 +47,20 @@ class NamespaceMacros(unittest.TestCase):
 
   def test_nested_namespace_is_rejected(self):
     self.write('include/eve/a.hpp', 'EVE_NAMESPACE\n{\n  namespace algo\n  {\n  }\n}\nEVE_NAMESPACE::views {}\n')
+    self.write('include/eve/b.hpp', 'EVE_NAMESPACE\n{\n\tnamespace platform {}\n    namespace algo::views {}\n}\n'
+                                    'EVE_NAMESPACE { namespace views {} }\nEVE_ALGO_NAMESPACE::views {}\n')
     self.assertEqual(self.violations(),
       [ 'include/eve/a.hpp:3: ' + nested
       , 'include/eve/a.hpp:7: ' + nested
+      , 'include/eve/b.hpp:3: ' + nested
+      , 'include/eve/b.hpp:4: ' + nested
+      , 'include/eve/b.hpp:6: ' + nested
+      , 'include/eve/b.hpp:7: ' + nested
       ])
+
+  def test_other_nested_namespaces_and_comments_are_allowed(self):
+    self.write('include/eve/a.hpp', 'EVE_NAMESPACE\n{\n  namespace std {}\n  namespace algorithm {}\n  //! @namespace algo\n}\nEVE_NAMESPACE::_::helpers {}\n')
+    self.assertEqual(self.violations(), [])
 
   def test_underscore_namespace_is_allowed(self):
     self.write('include/eve/a.hpp', 'EVE_NAMESPACE\n{\n  namespace _\n  {\n  }\n}\nEVE_NAMESPACE::_ {}\n')
