@@ -112,3 +112,12 @@ TTS_CASE("Check eve ABI namespace for CI configurations")
     TTS_EQUAL(std::string{eve::current_abi_namespace}, expected);
   }
 };
+
+TTS_CASE("Check that the ABI namespace string helpers don't leak into user code")
+{
+#if defined(EVE_ABI_STRING) || defined(EVE_ABI_STRING_)
+  TTS_FAIL("EVE_ABI_STRING is still defined after including eve");
+#else
+  TTS_PASS("EVE_ABI_STRING is not defined after including eve");
+#endif
+};
