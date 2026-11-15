@@ -61,32 +61,32 @@ namespace
   constexpr std::string_view ci_namespace()
   {
     using namespace eve;
-         if constexpr( current_api == neon && has_fma && no_fp16 && !has_denormals        ) return asserts ? "KB" : "KA";
-    else if constexpr( !ieee                                                              ) return {};
-    else if constexpr( current_api == undefined_simd && !has_fma && !no_fp16 && !fp16_cvt ) return asserts ? "Ab" : "Aa";
-    else if constexpr( current_api == sse2     && !has_fma && !no_fp16 && !fp16_cvt       ) return asserts ? "Bb" : "Ba";
-    else if constexpr( current_api == sse2     && !has_fma &&  no_fp16                    ) return asserts ? "Bz" : "By";
-    else if constexpr( current_api == sse4_2   && !has_fma && !fp16_cvt                   ) return asserts ? "Fb" : "Fa";
-    else if constexpr( current_api == avx      && !has_fma && !fp16_cvt                   ) return asserts ? "Gb" : "Ga";
-    else if constexpr( current_api == avx      && !has_fma &&  fp16_cvt                   ) return asserts ? "Gf" : "Ge";
-    else if constexpr( incomplete_avx512 && has_fma && fp16_cvt && has_bmi                ) return asserts ? "Vh" : "Vg";
-    else if constexpr( incomplete_avx512                                                  ) return {};
-    else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt && !has_bmi       ) return asserts ? "Hb" : "Ha";
-    else if constexpr( current_api == avx2     && !has_fma &&  fp16_cvt && !has_bmi       ) return asserts ? "Hf" : "He";
-    else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt &&  has_bmi       ) return asserts ? "Ib" : "Ia";
-    else if constexpr( current_api == avx2     &&  has_fma &&  fp16_cvt &&  has_bmi       ) return asserts ? "Ih" : "Ig";
-    else if constexpr( current_api == avx512   && !has_vbmi && !fp16_ops                  ) return asserts ? "Jaac" : "Ja";
-    else if constexpr( current_api == avx512   &&  has_vbmi &&  fp16_ops                  ) return asserts ? "JFlc" : "JFl";
-    else if constexpr( current_api == asimd    && !fp16_ops                               ) return asserts ? "Lh" : "Lg";
-    else if constexpr( current_api == asimd    &&  fp16_ops                               ) return asserts ? "Lx" : "Lw";
-    else if constexpr( current_api == sve128   && sve_bits == 128                         ) return asserts ? "Mx" : "Mw";
-    else if constexpr( current_api == sve128   && sve_bits == 256                         ) return asserts ? "Nx" : "Nw";
-    else if constexpr( current_api == sve128   && sve_bits == 512                         ) return asserts ? "Ox" : "Ow";
-    else if constexpr( current_api == sve2_128 && sve_bits == 128                         ) return asserts ? "Px" : "Pw";
-    else if constexpr( current_api == vsx_2_07                                            ) return asserts ? "TbB" : "TbA";
-    else if constexpr( current_api == rvv      && rvv_bits == 128 && !fp16_cvt            ) return asserts ? "Ubd" : "Ubc";
-    else if constexpr( current_api == rvv      && rvv_bits == 128 &&  fp16_cvt            ) return asserts ? "Ubh" : "Ubg";
-    else if constexpr( current_api == rvv      && rvv_bits == 256 &&  fp16_ops            ) return asserts ? "Ucx" : "Ucw";
+         if constexpr( current_api == neon && has_fma && no_fp16 && !has_denormals              ) return asserts ? "KB" : "KA";
+    else if constexpr( !ieee                                                                    ) return {};
+    else if constexpr( current_api == undefined_simd && !has_fma && !no_fp16 && !fp16_cvt       ) return asserts ? "Ab" : "Aa";
+    else if constexpr( current_api == sse2     && !has_fma && !no_fp16 && !fp16_cvt             ) return asserts ? "Bb" : "Ba";
+    else if constexpr( current_api == sse2     && !has_fma &&  no_fp16                          ) return asserts ? "Bz" : "By";
+    else if constexpr( current_api == sse4_2   && !has_fma && !fp16_cvt                         ) return asserts ? "Fb" : "Fa";
+    else if constexpr( current_api == avx      && !has_fma && !fp16_cvt                         ) return asserts ? "Gb" : "Ga";
+    else if constexpr( current_api == avx      && !has_fma &&  fp16_cvt                         ) return asserts ? "Gf" : "Ge";
+    else if constexpr( incomplete_avx512 && has_fma && fp16_cvt && has_bmi                      ) return asserts ? "Vh" : "Vg";
+    else if constexpr( incomplete_avx512                                                        ) return {};
+    else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt && !has_bmi             ) return asserts ? "Hb" : "Ha";
+    else if constexpr( current_api == avx2     && !has_fma &&  fp16_cvt && !has_bmi             ) return asserts ? "Hf" : "He";
+    else if constexpr( current_api == avx2     && !has_fma && !fp16_cvt &&  has_bmi             ) return asserts ? "Ib" : "Ia";
+    else if constexpr( current_api == avx2     &&  has_fma &&  fp16_cvt &&  has_bmi             ) return asserts ? "Ih" : "Ig";
+    else if constexpr( current_api == avx512   && has_fma && fp16_cvt && !has_vbmi && !fp16_ops ) return asserts ? "Jaac" : "Ja";
+    else if constexpr( current_api == avx512   && has_fma && fp16_cvt &&  has_vbmi &&  fp16_ops ) return asserts ? "JFlc" : "JFl";
+    else if constexpr( current_api == asimd    && !fp16_ops                                     ) return asserts ? "Lh" : "Lg";
+    else if constexpr( current_api == asimd    &&  fp16_ops                                     ) return asserts ? "Lx" : "Lw";
+    else if constexpr( current_api == sve128   && sve_bits == 128                               ) return asserts ? "Mx" : "Mw";
+    else if constexpr( current_api == sve128   && sve_bits == 256                               ) return asserts ? "Nx" : "Nw";
+    else if constexpr( current_api == sve128   && sve_bits == 512                               ) return asserts ? "Ox" : "Ow";
+    else if constexpr( current_api == sve2_128 && sve_bits == 128                               ) return asserts ? "Px" : "Pw";
+    else if constexpr( current_api == vsx_2_07                                                  ) return asserts ? "TbB" : "TbA";
+    else if constexpr( current_api == rvv      && rvv_bits == 128 && !fp16_cvt                  ) return asserts ? "Ubd" : "Ubc";
+    else if constexpr( current_api == rvv      && rvv_bits == 128 &&  fp16_cvt                  ) return asserts ? "Ubh" : "Ubg";
+    else if constexpr( current_api == rvv      && rvv_bits == 256 &&  fp16_ops                  ) return asserts ? "Ucx" : "Ucw";
     else                                                                                    return {};
   }
 }

@@ -76,6 +76,29 @@ namespace avx512_skylake
 #define EVE_USE_BMI
 #define EVE_HAS_HARDWARE_FMA
 #define EVE_NATIVE_FP16
+#define SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+#include "abi_namespace_case.hpp"
+}
+
+namespace avx512_no_fma
+{
+#include "abi_namespace_inputs.hpp"
+#define EVE_SUPPORTS_NATIVE_SIMD
+#define SPY_SIMD_IS_X86_AVX512
+#define EVE_USE_BMI
+#define EVE_NATIVE_FP16
+#define SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+#include "abi_namespace_case.hpp"
+}
+
+namespace avx512_no_f16c
+{
+#include "abi_namespace_inputs.hpp"
+#define EVE_SUPPORTS_NATIVE_SIMD
+#define SPY_SIMD_IS_X86_AVX512
+#define EVE_USE_BMI
+#define EVE_HAS_HARDWARE_FMA
+#define EVE_NATIVE_FP16
 #include "abi_namespace_case.hpp"
 }
 
@@ -87,6 +110,7 @@ namespace avx512_skylake_no_asserts
 #define EVE_USE_BMI
 #define EVE_HAS_HARDWARE_FMA
 #define EVE_NATIVE_FP16
+#define SPY_SUPPORTS_FP16_VECTOR_CONVERSION
 #define EVE_DISABLE_ASSERTS
 #include "abi_namespace_case.hpp"
 }
@@ -127,6 +151,8 @@ TTS_CASE("ABI namespace for a given configuration")
   TTS_EQUAL(avx512_knl::tag               , std::string_view{"Vhe"} );
   TTS_EQUAL(avx512_skylake::tag           , std::string_view{"Jaac"});
   TTS_EQUAL(avx512_skylake_no_asserts::tag, std::string_view{"Ja"}  );
+  TTS_EQUAL(avx512_no_fma::tag            , std::string_view{"Jaak"});
+  TTS_EQUAL(avx512_no_f16c::tag           , std::string_view{"Jaag"});
   TTS_EQUAL(sve_256::tag                  , std::string_view{"Nx"}  );
   TTS_EQUAL(rvv_128::tag                  , std::string_view{"Ubd"} );
 };
