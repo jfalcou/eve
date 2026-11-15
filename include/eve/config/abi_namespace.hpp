@@ -76,11 +76,30 @@
 #if defined(EVE_DOXYGEN_INVOKED)
 #  define EVE_NAMESPACE namespace eve
 #else
-#  define EVE_NAMESPACE namespace eve::inline EVE_ABI_NAMESPACE
+#  define EVE_NAMESPACE EVE_ABI_CHECK namespace eve::inline EVE_ABI_NAMESPACE
 #endif
 
 #define EVE_ABI_STRING_(x) #x
 #define EVE_ABI_STRING(x)  EVE_ABI_STRING_(x)
+
+namespace eve
+{
+  // Whether the ABI namespace is spelled with these letters, which no macro can replace
+  constexpr bool abi_namespace_matches(std::string_view actual, std::string_view api, auto... digits)
+  {
+    char const tail[] = { digits... };
+    return actual.starts_with(api) && actual.substr(api.size()) == std::string_view(tail, sizeof...(digits));
+  }
+}
+
+// A macro named like the ABI namespace, or like a part of it, changes the name: stop right there
+#if defined(EVE_ABI_EXPECTED)
+#  define EVE_ABI_CHECK                                                                             \
+  static_assert( ::eve::abi_namespace_matches(EVE_ABI_STRING(EVE_ABI_NAMESPACE), EVE_ABI_EXPECTED)  \
+               , "[EVE] - A macro named like the ABI namespace changes it, see EVE_ABI_NAMESPACE");
+#else
+#  define EVE_ABI_CHECK
+#endif
 
 // Nested namespaces other than eve::_ put the ABI namespace last, so that they can also hold parts
 // that are independent of the compilation options.
@@ -91,11 +110,11 @@
 #  define EVE_PLATFORM_NAMESPACE     namespace eve::platform
 #  define EVE_EXPERIMENTAL_NAMESPACE namespace eve::experimental
 #else
-#  define EVE_ALGO_NAMESPACE         namespace eve::algo::inline EVE_ABI_NAMESPACE
-#  define EVE_ALGO_VIEWS_NAMESPACE   namespace eve::algo::views::inline EVE_ABI_NAMESPACE
-#  define EVE_VIEWS_NAMESPACE        namespace eve::views::inline EVE_ABI_NAMESPACE
-#  define EVE_PLATFORM_NAMESPACE     namespace eve::platform::inline EVE_ABI_NAMESPACE
-#  define EVE_EXPERIMENTAL_NAMESPACE namespace eve::experimental::inline EVE_ABI_NAMESPACE
+#  define EVE_ALGO_NAMESPACE         EVE_ABI_CHECK namespace eve::algo::inline EVE_ABI_NAMESPACE
+#  define EVE_ALGO_VIEWS_NAMESPACE   EVE_ABI_CHECK namespace eve::algo::views::inline EVE_ABI_NAMESPACE
+#  define EVE_VIEWS_NAMESPACE        EVE_ABI_CHECK namespace eve::views::inline EVE_ABI_NAMESPACE
+#  define EVE_PLATFORM_NAMESPACE     EVE_ABI_CHECK namespace eve::platform::inline EVE_ABI_NAMESPACE
+#  define EVE_EXPERIMENTAL_NAMESPACE EVE_ABI_CHECK namespace eve::experimental::inline EVE_ABI_NAMESPACE
 #endif
 
 EVE_NAMESPACE
@@ -103,9 +122,6 @@ EVE_NAMESPACE
   // Name of the ABI namespace for the current compilation options
   inline constexpr std::string_view current_abi_namespace = EVE_ABI_STRING(EVE_ABI_NAMESPACE);
 }
-
-#undef EVE_ABI_STRING
-#undef EVE_ABI_STRING_
 
 // Just `namespace eve`, spelled out so that it doesn't read as a forgotten EVE_NAMESPACE: what is
 // declared there keeps the same ABI under every set of compilation options.
