@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config/x86/assume.hpp>
+
 #include <eve/deps/spy.hpp>
 
 #include <eve/config/arm/target.hpp>
