@@ -58,19 +58,13 @@
 //! @addtogroup eve_arch
 //! @{
 //!   @def EVE_NAMESPACE
-//!   @brief Opens the namespace that holds all of **EVE**, `eve::EVE_ABI_NAMESPACE`, for customization
-//!   purposes.
+//!   @brief `namespace eve::inline EVE_ABI_NAMESPACE`.
 //!
 //!   **Defined in Header**
 //!
 //!   @code
 //!   #include <eve/module/core.hpp>
 //!   @endcode
-//!
-//!   `EVE_NAMESPACE` expands to `namespace eve::inline EVE_ABI_NAMESPACE`. On recent compilers, you can
-//!   simply reopen `namespace eve` or `namespace eve::_`. If your compiler doesn't implement
-//!   [CWG 2061](https://cplusplus.github.io/CWG/issues/2061.html), use `EVE_NAMESPACE` or
-//!   `EVE_NAMESPACE::_` instead as a workaround.
 //! @}
 //==================================================================================================
 #if defined(EVE_DOXYGEN_INVOKED)
