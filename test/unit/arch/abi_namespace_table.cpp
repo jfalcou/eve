@@ -11,14 +11,14 @@
 
 namespace no_simd
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_NATIVE_FP16
 #include "abi_namespace_case.hpp"
 }
 
 namespace avx2_bmi
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_USE_BMI
@@ -30,7 +30,7 @@ namespace avx2_bmi
 
 namespace avx2_bmi_no_nans
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_USE_BMI
@@ -43,7 +43,7 @@ namespace avx2_bmi_no_nans
 
 namespace avx512f_only
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_INCOMPLETE_AVX512_SUPPORT
@@ -56,7 +56,7 @@ namespace avx512f_only
 
 namespace avx512_knl
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_INCOMPLETE_AVX512_SUPPORT
@@ -70,7 +70,7 @@ namespace avx512_knl
 
 namespace avx512_skylake
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX512
 #define EVE_USE_BMI
@@ -82,7 +82,7 @@ namespace avx512_skylake
 
 namespace avx512_no_fma
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX512
 #define EVE_USE_BMI
@@ -93,7 +93,7 @@ namespace avx512_no_fma
 
 namespace avx512_no_f16c
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX512
 #define EVE_USE_BMI
@@ -104,7 +104,7 @@ namespace avx512_no_f16c
 
 namespace avx512_skylake_no_asserts
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX512
 #define EVE_USE_BMI
@@ -117,7 +117,7 @@ namespace avx512_skylake_no_asserts
 
 namespace sve_256
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_ARM_FIXED_SVE
 #define __ARM_FEATURE_SVE_BITS 256
@@ -131,7 +131,7 @@ namespace sve_256
 
 namespace rvv_128
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_RISCV_FIXED_RVV
 #define __riscv_v_fixed_vlen 128
@@ -142,7 +142,7 @@ namespace rvv_128
 
 namespace sse2_no_fp16
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_SSE2
 #include "abi_namespace_case.hpp"
@@ -150,7 +150,7 @@ namespace sse2_no_fp16
 
 namespace avx2_no_fma
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_NATIVE_FP16
@@ -160,7 +160,7 @@ namespace avx2_no_fma
 
 namespace avx2_no_f16c
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_X86_AVX2
 #define EVE_HAS_HARDWARE_FMA
@@ -170,7 +170,7 @@ namespace avx2_no_f16c
 
 namespace asimd_fp16
 {
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_ARM_ASIMD
 #define EVE_HAS_HARDWARE_FMA
@@ -181,7 +181,7 @@ namespace asimd_fp16
 #include "abi_namespace_case.hpp"
 }
 
-#include "abi_namespace_inputs.hpp"
+#include "abi_namespace_clear_inputs.hpp"
 
 TTS_CASE("ABI namespace for a given configuration")
 {
