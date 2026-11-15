@@ -67,12 +67,12 @@ class IncludeRules(unittest.TestCase):
     self.assertEqual(self.violations(), [])
 
   def test_tests_of_a_folder_can_include_its_private_headers(self):
-    self.write('test/unit/config/a.hpp', '#include <eve/config/x86.hpp>\n#include <eve/module/core.hpp>\n')
-    self.write('test/unit/arch/b.cpp'  , '#include <eve/config/x86.hpp>\n')
-    self.write('test/config/c.cpp'     , '#include <eve/config/x86.hpp>\n')
+    self.write('test/unit/config/a.hpp', '#include <eve/config/x86/target.hpp>\n#include <eve/module/core.hpp>\n')
+    self.write('test/unit/arch/b.cpp'  , '#include <eve/config/x86/target.hpp>\n')
+    self.write('test/config/c.cpp'     , '#include <eve/config/x86/target.hpp>\n')
     self.assertEqual(self.violations(),
-      [ 'test/config/c.cpp:1: includes eve/config/x86.hpp, only eve/config.hpp may be included outside of eve/config'
-      , 'test/unit/arch/b.cpp:1: includes eve/config/x86.hpp, only eve/config.hpp may be included outside of eve/config'
+      [ 'test/config/c.cpp:1: includes eve/config/x86/target.hpp, only eve/config.hpp may be included outside of eve/config'
+      , 'test/unit/arch/b.cpp:1: includes eve/config/x86/target.hpp, only eve/config.hpp may be included outside of eve/config'
       ])
 
 if __name__ == '__main__':
