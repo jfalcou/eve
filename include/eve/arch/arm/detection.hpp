@@ -10,7 +10,7 @@
 #include <eve/arch/arm/sve/tags.hpp>
 #include <eve/arch/arm/neon/tags.hpp>
 
-#if defined( SPY_SIMD_IS_ARM )
+#if defined(EVE_SIMD_IS_ARM_ASIMD) || defined(EVE_SIMD_IS_ARM_NEON)
   #if defined(SPY_OS_IS_MACOS)
     #include <sys/types.h>
     #include <sys/sysctl.h>
@@ -27,7 +27,7 @@ EVE_NAMESPACE
   //================================================================================================
   inline bool is_supported(neon128_ const &) noexcept
   {
-#if defined( SPY_SIMD_IS_ARM )
+#if defined(EVE_SIMD_IS_ARM_ASIMD) || defined(EVE_SIMD_IS_ARM_NEON)
 # if defined(SPY_OS_IS_MACOS)
     int         val = 0;
     std::size_t len = sizeof(val);
@@ -43,7 +43,7 @@ EVE_NAMESPACE
 
   inline bool is_supported(asimd_ const &) noexcept
   {
-#if defined( SPY_SIMD_IS_ARM_ASIMD )
+#if defined(EVE_SIMD_IS_ARM_ASIMD)
 # if defined(SPY_OS_IS_MACOS)
     int         val = 0;
     std::size_t len = sizeof(val);

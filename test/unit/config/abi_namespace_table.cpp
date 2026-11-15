@@ -121,6 +121,7 @@ namespace sve_256
 #define EVE_SUPPORTS_NATIVE_SIMD
 #define SPY_SIMD_IS_ARM_FIXED_SVE
 #define __ARM_FEATURE_SVE_BITS 256
+#define EVE_SIMD_IS_ANY_FIXED_SVE
 #define EVE_HAS_HARDWARE_FMA
 #define EVE_NATIVE_FP16
 #define SPY_SUPPORTS_FP16_SCALAR_OPS
@@ -172,7 +173,22 @@ namespace asimd_fp16
 {
 #include "abi_namespace_clear_inputs.hpp"
 #define EVE_SUPPORTS_NATIVE_SIMD
-#define SPY_SIMD_IS_ARM_ASIMD
+#define EVE_SIMD_IS_ARM_ASIMD
+#define EVE_HAS_HARDWARE_FMA
+#define EVE_NATIVE_FP16
+#define SPY_SUPPORTS_FP16_SCALAR_OPS
+#define SPY_SUPPORTS_FP16_VECTOR_OPS
+#define SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+#include "abi_namespace_case.hpp"
+}
+
+namespace sve_1024_as_asimd
+{
+#include "abi_namespace_clear_inputs.hpp"
+#define EVE_SUPPORTS_NATIVE_SIMD
+#define SPY_SIMD_IS_ARM_FIXED_SVE
+#define __ARM_FEATURE_SVE_BITS 1024
+#define EVE_SIMD_IS_ARM_ASIMD
 #define EVE_HAS_HARDWARE_FMA
 #define EVE_NATIVE_FP16
 #define SPY_SUPPORTS_FP16_SCALAR_OPS
@@ -200,4 +216,5 @@ TTS_CASE("ABI namespace for a given configuration")
   TTS_EQUAL(avx2_no_fma::tag              , std::string_view{"abi_PC"}  );
   TTS_EQUAL(avx2_no_f16c::tag             , std::string_view{"abi_PE"}  );
   TTS_EQUAL(asimd_fp16::tag               , std::string_view{"abi_FU"}  );
+  TTS_EQUAL(sve_1024_as_asimd::tag        , std::string_view{"abi_FU"}  );
 };

@@ -29,10 +29,10 @@ struct register_count
 //==================================================================================================
 #include <arm_neon.h>
 
-#if defined(SPY_SIMD_IS_ARM_ASIMD)
+#if defined(EVE_SIMD_IS_ARM_ASIMD)
 #  define EVE_CURRENT_ABI   ::eve::arm_128_
 #  define EVE_CURRENT_API   ::eve::asimd_
-#elif defined(SPY_SIMD_IS_ARM_NEON)
+#elif defined(EVE_SIMD_IS_ARM_NEON)
 #  define EVE_CURRENT_ABI   ::eve::arm_128_
 #  define EVE_CURRENT_API   ::eve::neon128_
 #endif

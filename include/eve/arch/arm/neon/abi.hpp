@@ -20,6 +20,6 @@ EVE_NAMESPACE::_
   extern arm_128_ hardware_abi_of<T,Cardinal>;
 
   template<typename T>
-  requires ( spy::simd_instruction_set != spy::asimd_ && (std::same_as<T, double> || std::same_as<T, eve::float16_t>))
+  requires ( current_api < asimd && (std::same_as<T, double> || std::same_as<T, eve::float16_t>))
   inline constexpr bool should_emulate_v<T> = true;
 }

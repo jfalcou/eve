@@ -87,9 +87,9 @@
 #  define EVE_ABI_API 0, 1, 0, 0
 #elif defined(SPY_SIMD_IS_ARM_FIXED_SVE) && __ARM_FEATURE_SVE_BITS == 128
 #  define EVE_ABI_API 0, 0, 1, 1
-#elif defined(SPY_SIMD_IS_ARM_ASIMD)
+#elif defined(EVE_SIMD_IS_ARM_ASIMD)
 #  define EVE_ABI_API 0, 0, 1, 0
-#elif defined(SPY_SIMD_IS_ARM_NEON)
+#elif defined(EVE_SIMD_IS_ARM_NEON)
 #  define EVE_ABI_API 0, 0, 0, 1
 #elif defined(SPY_SIMD_IS_PPC_VSX_3_01)
 #  define EVE_ABI_API 1, 0, 1, 0
@@ -144,13 +144,13 @@
 #elif defined(SPY_SIMD_IS_X86_AVX2)
 #  define EVE_ABI_USUAL_FMA  1
 #  define EVE_ABI_USUAL_FP16 1
-#elif defined(SPY_SIMD_IS_ARM_FIXED_SVE) || defined(SPY_SIMD_IS_ARM_FIXED_SVE2)
+#elif defined(EVE_SIMD_IS_ANY_FIXED_SVE)
 #  define EVE_ABI_USUAL_FMA  1
 #  define EVE_ABI_USUAL_FP16 5
-#elif defined(SPY_SIMD_IS_ARM_ASIMD)
+#elif defined(EVE_SIMD_IS_ARM_ASIMD)
 #  define EVE_ABI_USUAL_FMA  1
 #  define EVE_ABI_USUAL_FP16 1
-#elif defined(SPY_SIMD_IS_ARM_NEON) || defined(SPY_SIMD_IS_PPC_VMX) || defined(SPY_SIMD_IS_PPC_VSX)
+#elif defined(EVE_SIMD_IS_ARM_NEON) || defined(SPY_SIMD_IS_PPC_VMX) || defined(SPY_SIMD_IS_PPC_VSX)
 #  define EVE_ABI_USUAL_FMA  1
 #  define EVE_ABI_USUAL_FP16 6
 #elif defined(SPY_SIMD_IS_RISCV_FIXED_RVV)

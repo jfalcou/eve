@@ -34,7 +34,7 @@ EVE_NAMESPACE::_
 
   template<width_type N> extern float32x2_t neon64_register<float, N>;
 
-  #if defined(SPY_SIMD_IS_ARM_ASIMD)
+  #if defined(EVE_SIMD_IS_ARM_ASIMD)
     template<width_type N> extern float64x1_t neon64_register<double, N>;
   #endif
 
@@ -64,7 +64,7 @@ EVE_NAMESPACE::_
 
   template<width_type N> extern float32x4_t neon128_register<float, N>;
 
-  #if defined(SPY_SIMD_IS_ARM_ASIMD)
+  #if defined(EVE_SIMD_IS_ARM_ASIMD)
     template<width_type N> extern float64x2_t neon128_register<double, N>;
   #endif
   

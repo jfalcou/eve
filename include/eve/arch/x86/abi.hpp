@@ -24,8 +24,4 @@ EVE_NAMESPACE::_
   template<typename T, std::ptrdiff_t Cardinal>
   requires ( spy::simd_instruction_set >= spy::sse1_ && width_in_bits<T,Cardinal> <= 128 )
   extern x86_128_ hardware_abi_of<T,Cardinal>;
-
-  template<typename T, std::ptrdiff_t Cardinal>
-  requires( spy::simd_instruction_set == spy::avx512_ && std::same_as<eve::current_api_type, eve::avx2_> )
-  inline constexpr bool should_aggregate_v<T,Cardinal> = (width_in_bits<T,Cardinal> > spy::avx2_.width );
 }
