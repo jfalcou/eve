@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/x86/predef.hpp>
+#include <eve/config.hpp>
 #include <cstdint>
 #include <cstddef>
 

@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/x86/predef.hpp>
+#include <eve/config.hpp>
 #include <eve/types/float16.hpp>
 #include <algorithm>
 #include <compare>

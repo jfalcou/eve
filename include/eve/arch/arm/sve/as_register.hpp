@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/predef.hpp>
+#include <eve/config.hpp>
 #include <eve/types/float16.hpp>
 #include <concepts>
 #include <cstddef>

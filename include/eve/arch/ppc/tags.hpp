@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/deps/spy.hpp>
 #include <eve/arch/cpu/tags.hpp>
-#include <eve/arch/ppc/predef.hpp>
+#include <eve/config.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve
