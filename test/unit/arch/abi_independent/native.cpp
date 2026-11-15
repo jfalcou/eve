@@ -21,12 +21,11 @@ namespace abi_test
     eve::algo::transform_inplace(eve::algo::as_range(data, data.get() + size), eve::sqr);
   }
 
-  int dot(eve::soa_ptr<int const*, int const*> data, std::ptrdiff_t size)
+  void multiply(eve::soa_ptr<int const*, int const*, int*> data, std::ptrdiff_t size)
   {
-    auto [a, b] = data.storage;
-    return eve::algo::transform_reduce( eve::algo::views::zip(eve::algo::as_range(a, a + size), b)
-                                      , [](auto x) { return get<0>(x) * get<1>(x); }
-                                      , 0
-                                      );
+    auto [a, b, out] = data.storage;
+    eve::algo::transform_to( eve::algo::views::zip(eve::algo::as_range(a, a + size), b), out
+                           , [](auto x) { return get<0>(x) * get<1>(x); }
+                           );
   }
 }
