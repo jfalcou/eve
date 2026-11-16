@@ -13,7 +13,7 @@
 #include <eve/module/algo/algo/views/convert.hpp>
 
 
-EVE_NAMESPACE::algo::views
+EVE_ALGO_VIEWS_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_views

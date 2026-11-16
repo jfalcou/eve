@@ -14,7 +14,7 @@
 
 #include <utility>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 template<typename TraitsSupport> struct none_of_ : TraitsSupport
 {

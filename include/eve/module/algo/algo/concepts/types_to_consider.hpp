@@ -11,7 +11,7 @@
 #include <eve/traits.hpp>
 #include <eve/deps/kumi.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   template <typename RorI>
   struct types_to_consider_for

@@ -15,7 +15,7 @@
 
 #include <optional>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 template<typename TraitsSupport> struct max_value_ : TraitsSupport
 {

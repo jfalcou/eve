@@ -76,6 +76,22 @@
 #define EVE_ABI_STRING_(x) #x
 #define EVE_ABI_STRING(x)  EVE_ABI_STRING_(x)
 
+// Nested namespaces other than eve::_ put the ABI namespace last, so that they can also hold parts
+// that are independent of the compilation options.
+#if defined(EVE_DOXYGEN_INVOKED)
+#  define EVE_ALGO_NAMESPACE         namespace eve::algo
+#  define EVE_ALGO_VIEWS_NAMESPACE   namespace eve::algo::views
+#  define EVE_VIEWS_NAMESPACE        namespace eve::views
+#  define EVE_PLATFORM_NAMESPACE     namespace eve::platform
+#  define EVE_EXPERIMENTAL_NAMESPACE namespace eve::experimental
+#else
+#  define EVE_ALGO_NAMESPACE         namespace eve::algo::inline EVE_ABI_NAMESPACE
+#  define EVE_ALGO_VIEWS_NAMESPACE   namespace eve::algo::views::inline EVE_ABI_NAMESPACE
+#  define EVE_VIEWS_NAMESPACE        namespace eve::views::inline EVE_ABI_NAMESPACE
+#  define EVE_PLATFORM_NAMESPACE     namespace eve::platform::inline EVE_ABI_NAMESPACE
+#  define EVE_EXPERIMENTAL_NAMESPACE namespace eve::experimental::inline EVE_ABI_NAMESPACE
+#endif
+
 EVE_NAMESPACE
 {
   // Name of the ABI namespace for the current compilation options

@@ -17,7 +17,7 @@
 
 #include <array>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
 namespace _
 {

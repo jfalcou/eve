@@ -22,7 +22,7 @@
 #include <concepts>
 #include <utility>
 
-EVE_NAMESPACE::algo::views
+EVE_ALGO_VIEWS_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_views
@@ -73,7 +73,7 @@ namespace std
   };
 }
 
-EVE_NAMESPACE::algo::views
+EVE_ALGO_VIEWS_NAMESPACE
 {
   namespace _
   {

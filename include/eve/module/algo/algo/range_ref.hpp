@@ -10,7 +10,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo/algo/concepts/relaxed.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_algo_concepts

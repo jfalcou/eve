@@ -14,7 +14,7 @@
 #include <compare>
 #include <memory>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   struct operations_with_distance
   {

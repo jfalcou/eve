@@ -11,7 +11,7 @@
 #include <eve/deps/kumi.hpp>
 #include <eve/traits.hpp>
 
-EVE_NAMESPACE::algo::views
+EVE_ALGO_VIEWS_NAMESPACE
 {
   template <typename ...Is>
   struct zip_iterator;

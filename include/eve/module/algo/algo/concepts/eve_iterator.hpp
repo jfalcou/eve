@@ -14,7 +14,7 @@
 
 #include <eve/module/algo/algo/concepts/detail.hpp>
 
-EVE_NAMESPACE::algo
+EVE_ALGO_NAMESPACE
 {
   template <typename T>
   using partially_aligned_t = decltype(std::declval<T>().previous_partially_aligned());
