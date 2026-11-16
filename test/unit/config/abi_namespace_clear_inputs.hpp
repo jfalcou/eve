@@ -1,0 +1,60 @@
+//==================================================================================================
+/**
+  EVE - Expressive Vector Engine
+  Copyright : EVE Project Contributors
+  SPDX-License-Identifier: BSL-1.0
+**/
+//==================================================================================================
+#undef EVE_AVX512_DEFAULT_64_BYTES
+#undef EVE_DISABLE_ASSERTS
+#undef EVE_HAS_HARDWARE_FMA
+#undef EVE_INCOMPLETE_AVX512_SUPPORT
+#undef EVE_NATIVE_FP16
+#undef EVE_NO_DENORMALS
+#undef EVE_NO_INFINITIES
+#undef EVE_NO_MINUSZERO
+#undef EVE_NO_NANS
+#undef EVE_SUPPORTS_NATIVE_SIMD
+#undef EVE_USE_BMI
+#undef SPY_SIMD_IS_ARM_ASIMD
+#undef SPY_SIMD_IS_ARM_FIXED_SVE
+#undef SPY_SIMD_IS_ARM_FIXED_SVE2
+#undef SPY_SIMD_IS_ARM_NEON
+#undef SPY_SIMD_IS_PPC_VMX
+#undef SPY_SIMD_IS_PPC_VMX_2_03
+#undef SPY_SIMD_IS_PPC_VMX_2_05
+#undef SPY_SIMD_IS_PPC_VMX_2_06
+#undef SPY_SIMD_IS_PPC_VMX_2_07
+#undef SPY_SIMD_IS_PPC_VMX_3_00
+#undef SPY_SIMD_IS_PPC_VMX_3_01
+#undef SPY_SIMD_IS_PPC_VSX
+#undef SPY_SIMD_IS_PPC_VSX_2_06
+#undef SPY_SIMD_IS_PPC_VSX_2_07
+#undef SPY_SIMD_IS_PPC_VSX_3_00
+#undef SPY_SIMD_IS_PPC_VSX_3_01
+#undef SPY_SIMD_IS_RISCV_FIXED_RVV
+#undef SPY_SIMD_IS_X86_AVX
+#undef SPY_SIMD_IS_X86_AVX2
+#undef SPY_SIMD_IS_X86_AVX512
+#undef SPY_SIMD_IS_X86_AVX512_BF16
+#undef SPY_SIMD_IS_X86_AVX512_BITALG
+#undef SPY_SIMD_IS_X86_AVX512_BW
+#undef SPY_SIMD_IS_X86_AVX512_CD
+#undef SPY_SIMD_IS_X86_AVX512_DQ
+#undef SPY_SIMD_IS_X86_AVX512_IFMA
+#undef SPY_SIMD_IS_X86_AVX512_POPCNTDQ
+#undef SPY_SIMD_IS_X86_AVX512_VBMI
+#undef SPY_SIMD_IS_X86_AVX512_VBMI2
+#undef SPY_SIMD_IS_X86_AVX512_VL
+#undef SPY_SIMD_IS_X86_AVX512_VNNI
+#undef SPY_SIMD_IS_X86_AVX512_VP2INTERSECT
+#undef SPY_SIMD_IS_X86_SSE2
+#undef SPY_SIMD_IS_X86_SSE3
+#undef SPY_SIMD_IS_X86_SSE4_1
+#undef SPY_SIMD_IS_X86_SSE4_2
+#undef SPY_SIMD_IS_X86_SSSE3
+#undef SPY_SUPPORTS_FP16_SCALAR_OPS
+#undef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
+#undef SPY_SUPPORTS_FP16_VECTOR_OPS
+#undef __ARM_FEATURE_SVE_BITS
+#undef __riscv_v_fixed_vlen

@@ -21,6 +21,13 @@ add_dependencies(unit.exe unit.arch.exe )
 glob_unit("unit" ${unit_root} "arch/*.cpp")
 
 ##==================================================================================================
+## GLOB and process config unit tests
+##==================================================================================================
+add_custom_target(unit.config.exe         )
+add_dependencies(unit.exe unit.config.exe )
+glob_unit("unit" ${unit_root} "config/*.cpp")
+
+##==================================================================================================
 ## Checks of the source tree, written in Python under tools/
 ##==================================================================================================
 find_package(Python3 COMPONENTS Interpreter)

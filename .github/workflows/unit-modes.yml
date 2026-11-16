@@ -107,11 +107,11 @@ jobs:
       - name: "Chunk 3: Compile"
         run:  |
           cd build
-          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+          ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## Check External dependencies
@@ -193,11 +193,11 @@ jobs:
       - name: "Chunk 3: Compile"
         run:  |
           cd build
-          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+          ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## Full emulation tests
@@ -255,11 +255,11 @@ jobs:
       - name: "Chunk 3: Compile"
         run:  |
           cd build
-          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+          ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
 
   ##################################################################################################
   ## C++26 preemptive test
@@ -312,8 +312,8 @@ jobs:
       - name: "Chunk 3: Compile"
         run:  |
           cd build
-          ninja unit.arch.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
+          ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
         run:  |
           cd build
-          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
+          ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."

@@ -615,7 +615,7 @@ int main(int argc, char const **argv)
 {
   ::tts::initialize(argc,argv);
   auto seed = ::tts::random_seed(18102008);
-#ifdef NDEBUG
+#if defined(EVE_DISABLE_ASSERTS)
   constexpr auto assert_status = "Disabled";
 #else
   constexpr auto assert_status = "Enabled";
@@ -625,6 +625,7 @@ int main(int argc, char const **argv)
                               (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
 
   std::cout << "[EVE] - Target: " << eve::current_api
+            << " - ABI: "         << eve::current_abi_namespace
             << " - Assertions: "  << assert_status
             << " - FP16: "        << fp16_status
             << " - PRNG Seed: "   << seed

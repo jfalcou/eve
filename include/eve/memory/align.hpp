@@ -7,6 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config.hpp>
+
 #include <eve/assert.hpp>
 #include <bit>
 #include <concepts>

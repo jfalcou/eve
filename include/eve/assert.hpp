@@ -5,10 +5,11 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#undef EVE_ASSERT
-#undef EVE_VERIFY
+#pragma once
 
-#if defined(EVE_DISABLE_ASSERTS) || defined(NDEBUG)
+#include <eve/config.hpp>
+
+#if defined(EVE_DISABLE_ASSERTS)
 
 #  define EVE_ASSERT(cond, ...) ((void)0)
 #  define EVE_VERIFY(cond, ...) ((void)(cond))
