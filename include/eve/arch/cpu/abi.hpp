@@ -66,7 +66,7 @@ EVE_NAMESPACE::_
 
   // Specializable trait for architectures supporting native aggregation like riscv
   template<typename T, std::ptrdiff_t width>
-  inline constexpr bool should_aggregate_v = (width_in_bits<T,width> > spy::simd_instruction_set.width );
+  inline constexpr bool should_aggregate_v = (width_in_bits<T,width> > current_api.value().width );
 
   template<typename T, std::ptrdiff_t width>
   concept should_aggregate = !eve::product_type<T> && !should_emulate<T> &&

@@ -10,7 +10,7 @@
 #include <eve/detail/abi.hpp>
 #include <eve/detail/alias.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 #include <eve/detail/function/make.hpp>
 #include <eve/traits/width.hpp>
 #include <eve/as.hpp>

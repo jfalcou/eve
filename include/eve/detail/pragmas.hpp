@@ -7,7 +7,7 @@
 //======================================================================================================================
 #ifndef PRAGMAS_PRAGMA_HPP_INCLUDED
 #define PRAGMAS_PRAGMA_HPP_INCLUDED
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 
 #if defined(SPY_COMPILER_IS_GCC)
 

@@ -9,7 +9,7 @@
 
 #include <eve/arch/x86/tags.hpp>
 #include <eve/detail/cpuid.hpp>
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 
 EVE_NAMESPACE
 {

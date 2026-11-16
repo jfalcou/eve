@@ -13,3 +13,8 @@ PRIVATE_FOLDERS = {
 LAYERS = {
   'eve/config': ['eve/deps/spy.hpp'],
 }
+
+# These headers may only be included from files of the folder.
+INCLUDED_ONLY_FROM = {
+  'eve/deps/spy.hpp': 'eve/config',
+}

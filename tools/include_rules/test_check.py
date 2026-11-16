@@ -11,8 +11,9 @@ from pathlib import Path
 import check
 
 rules = types.SimpleNamespace(
-  PRIVATE_FOLDERS = { 'eve/config': 'eve/config.hpp' },
-  LAYERS          = { 'eve/config': ['eve/deps/spy.hpp'] },
+  PRIVATE_FOLDERS    = { 'eve/config': 'eve/config.hpp' },
+  LAYERS             = { 'eve/config': ['eve/deps/spy.hpp'] },
+  INCLUDED_ONLY_FROM = { 'eve/deps/spy.hpp': 'eve/config' },
 )
 
 class IncludeRules(unittest.TestCase):
@@ -73,6 +74,16 @@ class IncludeRules(unittest.TestCase):
     self.assertEqual(self.violations(),
       [ 'test/config/c.cpp:1: includes eve/config/x86/target.hpp, only eve/config.hpp may be included outside of eve/config'
       , 'test/unit/arch/b.cpp:1: includes eve/config/x86/target.hpp, only eve/config.hpp may be included outside of eve/config'
+      ])
+
+  def test_header_included_only_from_its_folder(self):
+    self.write('include/eve/config/target.hpp', '#include <eve/deps/spy.hpp>\n')
+    self.write('include/eve/wide.hpp'         , '#include <eve/deps/spy.hpp>\n')
+    self.write('test/unit/config/a.cpp'       , '#include <eve/deps/spy.hpp>\n')
+    self.write('examples/b.cpp'               , '#include <eve/deps/spy.hpp>\n')
+    self.assertEqual(self.violations(),
+      [ 'examples/b.cpp:1: includes eve/deps/spy.hpp, only eve/config may include it'
+      , 'include/eve/wide.hpp:1: includes eve/deps/spy.hpp, only eve/config may include it'
       ])
 
 if __name__ == '__main__':

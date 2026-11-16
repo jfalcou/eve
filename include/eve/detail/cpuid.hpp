@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 
 
 #if defined(SPY_ARCH_IS_AMD64)

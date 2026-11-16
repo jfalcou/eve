@@ -44,6 +44,10 @@ def check_file(root, file, rules):
                                           and not in_folder(tested, folder, rules):
         violations.append(f'{name}:{number}: includes {include}, only {entry} may be included outside of {folder}')
 
+    for header, folder in rules.INCLUDED_ONLY_FROM.items():
+      if include == header and not in_folder(path, folder, rules) and not in_folder(tested, folder, rules):
+        violations.append(f'{name}:{number}: includes {include}, only {folder} may include it')
+
     for folder, patterns in rules.LAYERS.items():
       if include.startswith('eve/') and in_folder(path, folder, rules) and not in_folder(include, folder, rules) \
                                     and not allowed(include, patterns):

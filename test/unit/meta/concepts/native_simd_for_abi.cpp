@@ -91,7 +91,7 @@ TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM S
     TTS_EXPECT((eve::native_simd_for_abi<logical<wide<T>> , eve::arm_sve_512_> ));
   }
 };
-#elif defined(SPY_SIMD_IS_ARM)
+#elif defined(EVE_SIMD_IS_ARM_ASIMD) || defined(EVE_SIMD_IS_ARM_NEON)
 TTS_CASE_TPL( "Check that wide<T,N> satisfies native_simd_for_abi with any ARM ABI"
             , ::tts::arithmetic_types
             )

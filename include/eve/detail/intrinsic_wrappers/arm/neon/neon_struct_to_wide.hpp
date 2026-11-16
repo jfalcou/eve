@@ -41,7 +41,7 @@ EVE_NAMESPACE::_
     else if constexpr ( std::same_as<Struct, int8x16x2_t>   ) return neon_struct_to_wide_type_res<Struct, std::int8_t  , 16>{};
     else if constexpr ( std::same_as<Struct, uint8x16x2_t>  ) return neon_struct_to_wide_type_res<Struct, std::uint8_t , 16>{};
     // doubles
-#if defined(SPY_SIMD_IS_ARM_ASIMD)
+#if defined(EVE_SIMD_IS_ARM_ASIMD)
     else if constexpr ( std::same_as<Struct, float64x1x2_t> ) return neon_struct_to_wide_type_res<Struct, double, 1>{};
     else if constexpr ( std::same_as<Struct, float64x2x2_t> ) return neon_struct_to_wide_type_res<Struct, double, 2>{};
 #endif
@@ -71,7 +71,7 @@ EVE_NAMESPACE::_
     else if constexpr ( std::same_as<T, std::int8_t>   ) return int8x16x2_t{};
     else if constexpr ( std::same_as<T, std::uint8_t>  ) return uint8x16x2_t{};
     // doubles
-#if defined(SPY_SIMD_IS_ARM_ASIMD)
+#if defined(EVE_SIMD_IS_ARM_ASIMD)
     else if constexpr ( std::same_as<T, double> && N == 1 ) return float64x1x2_t{};
     else if constexpr ( std::same_as<T, double>           ) return float64x2x2_t{};
 #endif
