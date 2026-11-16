@@ -18,6 +18,11 @@ jobs:
   ## The family lot in one job on the self-hosted Windows machine, 8 cores and 64 GB.
   ##################################################################################################
   windows:
+    if: >-
+      github.event_name != 'pull_request'
+      || !github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size
     name: windows (${{ matrix.cfg.name }})
     runs-on: [self-hosted, Windows]
     defaults:
@@ -58,7 +63,7 @@ jobs:
   ##################################################################################################
   doc-windows:
     needs: windows
-    if: ${{ !cancelled() }}
+    if: ${{ !cancelled() && needs.windows.result != 'skipped' }}
     runs-on: [self-hosted, Windows]
     defaults:
       run:

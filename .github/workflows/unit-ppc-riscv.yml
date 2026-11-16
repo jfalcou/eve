@@ -18,6 +18,11 @@ jobs:
   ## PPC Tests, under qemu
   ##################################################################################################
   other-arch:
+    if: >-
+      github.event_name != 'pull_request'
+      || !github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size
     name: other-arch (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.chunk.name }})
     runs-on: ubuntu-latest
     container:
@@ -59,6 +64,11 @@ jobs:
   ## RISC-V Targets
   ##################################################################################################
   riscv:
+    if: >-
+      github.event_name != 'pull_request'
+      || !github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10

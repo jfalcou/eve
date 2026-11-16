@@ -18,6 +18,11 @@ jobs:
   ## The native cardinal alone, compiled first: every other job of this file waits for it.
   ##################################################################################################
   native-x86:
+    if: >-
+      github.event_name != 'pull_request'
+      || !github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size
     runs-on: [self-hosted, generic-x86]
     container:
       image: ghcr.io/jfalcou/compilers:v10
