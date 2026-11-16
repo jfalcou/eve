@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/unalign.hpp>
 #include <eve/module/core/regular/shuffle.hpp>
 
-#include <eve/arch/top_bits.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

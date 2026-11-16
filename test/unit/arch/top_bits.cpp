@@ -7,8 +7,8 @@
 //==================================================================================================
 #include "test.hpp"
 #include "unit/ignores_test.hpp"
-#include <eve/arch/top_bits.hpp>
 #include <eve/module/core.hpp>
+#include <eve/types/top_bits.hpp>
 #include <array>
 
 template <typename T, typename Test> void test_over_top_bits(Test test)

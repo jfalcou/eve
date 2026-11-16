@@ -30,16 +30,16 @@ namespace eve {
   struct top_bits;
 }
 
-#include <eve/arch/cpu/top_bits.hpp>
+#include <eve/types/top_bits/cpu.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)
-#  include <eve/arch/x86/top_bits.hpp>
+#  include <eve/types/top_bits/x86.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_ARM_SVE_HEADER)
-#  include <eve/arch/arm/sve/top_bits.hpp>
+#  include <eve/types/top_bits/arm/sve.hpp>
 #endif
 
 #if defined(EVE_INCLUDE_RISCV_HEADER)
-#  include <eve/arch/riscv/top_bits.hpp>
+#  include <eve/types/top_bits/riscv.hpp>
 #endif

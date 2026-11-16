@@ -7,7 +7,6 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
 #include <eve/concept/compatible.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/implementation.hpp>
@@ -23,9 +22,10 @@
 #include <eve/module/core/regular/bit_or.hpp>
 #include <eve/module/core/regular/bit_ornot.hpp>
 #include <eve/module/core/regular/bit_select.hpp>
-#include <eve/module/core/regular/minus.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/module/core/regular/minus.hpp>
 #include <eve/traits/common_compatible.hpp>
+#include <eve/types/top_bits.hpp>
 
 #include <type_traits>
 

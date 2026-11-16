@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
 #include <eve/module/core/regular/any.hpp>
 #include <eve/module/core/regular/convert.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

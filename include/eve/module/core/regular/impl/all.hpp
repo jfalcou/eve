@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
+#include <eve/arch/abi.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/function/to_logical.hpp>
-#include <eve/arch/abi.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/logical_and.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

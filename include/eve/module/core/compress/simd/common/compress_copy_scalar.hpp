@@ -7,12 +7,12 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/top_bits.hpp>
 #include <eve/module/core/compress/detail/compress_callable.hpp>
 #include <eve/module/core/regular/none.hpp>
 #include <eve/module/core/regular/read.hpp>
-#include <eve/module/core/regular/write.hpp>
 #include <eve/module/core/regular/unalign.hpp>
+#include <eve/module/core/regular/write.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {

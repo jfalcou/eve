@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/if_else.hpp>
 #include <eve/module/core/regular/slide_left.hpp>
 
-#include <eve/arch/top_bits.hpp>
+#include <eve/types/top_bits.hpp>
 
 namespace eve::_
 {
