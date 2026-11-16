@@ -84,3 +84,7 @@ EVE_NAMESPACE
 
 #undef EVE_ABI_STRING
 #undef EVE_ABI_STRING_
+
+// Just `namespace eve`, spelled out so that it doesn't read as a forgotten EVE_NAMESPACE: what is
+// declared there keeps the same ABI under every set of compilation options.
+#define EVE_ABI_INDEPENDENT_NAMESPACE namespace eve
