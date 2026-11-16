@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/all.hpp>
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename A0, callable_options O, eve::value A1>
   constexpr  bool assert_shift(O const& opts, A1 t) noexcept

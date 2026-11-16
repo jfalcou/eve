@@ -12,7 +12,7 @@
 #include <eve/detail/implementation.hpp>
 #include <eve/module/core/regular/fma.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 template<arithmetic_scalar_value T, width_type N, callable_options O>
  wide<T, N>

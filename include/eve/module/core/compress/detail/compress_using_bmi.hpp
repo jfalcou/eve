@@ -16,7 +16,7 @@
 //
 // Credit for the idea goes to @PeterCordes
 
-namespace eve
+EVE_NAMESPACE
 {
   EVE_REGISTER_CALLABLE(compress_using_bmi_)
   EVE_DECLARE_CALLABLE(compress_using_bmi_, compress_using_bmi)

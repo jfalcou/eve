@@ -16,7 +16,7 @@
 #include <eve/module/math/regular/radindeg.hpp>
 #include <eve/module/math/regular/radinpi.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct acos_t : elementwise_callable<acos_t, Options, raw_option, fast_option,

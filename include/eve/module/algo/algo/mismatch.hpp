@@ -15,7 +15,7 @@
 
 #include <utility>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
 template<typename TraitsSupport> struct mismatch_ : TraitsSupport
 {

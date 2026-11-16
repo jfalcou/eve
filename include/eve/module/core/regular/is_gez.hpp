@@ -13,7 +13,7 @@
 #include <eve/module/core/constant/true.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_gez_t : elementwise_callable<is_gez_t, Options>

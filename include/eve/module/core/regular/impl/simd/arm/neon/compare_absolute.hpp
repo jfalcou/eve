@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/is_less_equal.hpp>
 #include <eve/module/core/regular/is_less.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, floating_scalar_value T, width_type N, typename F>
    logical<wide<T, N>> compare_absolute_(EVE_REQUIRES(neon128_), O const& o,

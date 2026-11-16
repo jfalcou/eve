@@ -12,7 +12,7 @@
 #include <eve/traits/bit_value.hpp>
 #include <eve/conditional.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template< template<typename> class Func
           , typename OptionsValues

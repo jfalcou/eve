@@ -18,7 +18,7 @@
 #include <eve/traits/as_floating_point.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //====================================================================================================================
   // Regular is_equal x86

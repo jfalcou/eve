@@ -18,7 +18,7 @@
 #include <eve/module/elliptic/ellint_1.hpp>
 #include <eve/module/elliptic/jacobi_zeta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct heuman_lambda_t : elementwise_callable<heuman_lambda_t, Options>

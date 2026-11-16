@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct expx2_t : elementwise_callable<expx2_t, Options, raw_option, pedantic_option, fast_option>

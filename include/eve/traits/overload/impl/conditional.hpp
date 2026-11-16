@@ -10,7 +10,7 @@
 #include <eve/traits/overload/impl/callable.hpp>
 #include <eve/detail/validate_mask.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {

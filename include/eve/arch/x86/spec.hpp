@@ -13,7 +13,7 @@
 
 //==================================================================================================
 // X86 hardware info
-namespace eve
+EVE_NAMESPACE
 {
   struct register_count
   {

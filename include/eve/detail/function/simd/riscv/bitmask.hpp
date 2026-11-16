@@ -8,7 +8,7 @@
 #pragma once
 
 #include <eve/detail/abi.hpp>
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //================================================================================================
 // Logical to Bits

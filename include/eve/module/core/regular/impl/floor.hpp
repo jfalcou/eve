@@ -27,7 +27,7 @@
 #include <eve/module/core/regular/next.hpp>
 #include <eve/module/core/detail/tolerance.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
    constexpr auto floor_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept

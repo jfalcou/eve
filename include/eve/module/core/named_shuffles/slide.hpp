@@ -10,7 +10,7 @@
 #include <eve/module/core/named_shuffles/named_shuffle_utils.hpp>
 #include <eve/module/core/regular/shuffle_v2.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 //================================================================================================

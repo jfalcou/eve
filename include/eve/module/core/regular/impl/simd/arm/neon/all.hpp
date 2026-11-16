@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/logical_ornot.hpp>
 #include <eve/types/top_bits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<callable_options O, arithmetic_scalar_value T, width_type N>

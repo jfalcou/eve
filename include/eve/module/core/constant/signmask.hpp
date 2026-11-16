@@ -12,7 +12,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct signmask_t : constant_callable<signmask_t, Options, lower_option, upper_option>

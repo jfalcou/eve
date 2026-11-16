@@ -16,7 +16,7 @@
 #include <eve/traits/as_wide.hpp>
 
 
-namespace eve::algo::views
+EVE_NAMESPACE::algo::views
 {
   namespace _
   {

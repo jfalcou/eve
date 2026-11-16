@@ -19,7 +19,7 @@
 #include <eve/module/core/regular/is_not_equal.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_even_t : elementwise_callable<is_even_t, Options>

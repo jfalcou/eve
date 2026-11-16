@@ -10,7 +10,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct last_true_t : conditional_callable<last_true_t, Options>

@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N, integral_scalar_value S>
    wide<T, N> shl_(EVE_REQUIRES(vmx_), O const&, wide<T, N> v, wide<S, N> s) noexcept

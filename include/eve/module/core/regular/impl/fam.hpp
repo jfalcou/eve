@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/fma.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, simd_value... Ts>
    constexpr auto fam_(EVE_REQUIRES(emulated_), O const& o, Ts const&... ts) noexcept

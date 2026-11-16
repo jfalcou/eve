@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct maxexponent_t : constant_callable<maxexponent_t, Options, lower_option, upper_option>

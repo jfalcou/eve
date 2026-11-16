@@ -16,7 +16,7 @@
 #include <malloc.h>
 #endif
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

@@ -11,7 +11,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct two_pi_t : constant_callable<two_pi_t, Options, lower_option, upper_option>

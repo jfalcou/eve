@@ -10,7 +10,7 @@
 #include <eve/module/core/regular/safe.hpp>
 #include <eve/module/core/regular/unsafe.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
 // hack
@@ -23,7 +23,7 @@ struct sparse_type
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
 template<typename Safety, typename Density, typename CondIn, typename CondOut>

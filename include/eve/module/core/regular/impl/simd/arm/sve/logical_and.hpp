@@ -11,7 +11,7 @@
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N>
    logical<wide<T, N>> logical_and_(EVE_REQUIRES(sve_), O const&, logical<wide<T, N>> v, logical<wide<T, N>> w) noexcept

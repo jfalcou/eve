@@ -17,7 +17,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   namespace _
   {

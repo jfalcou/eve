@@ -14,7 +14,7 @@
 #include <eve/module/math.hpp>
 #include <eve/module/special/regular/zeta.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 template<typename Options>
 struct hurwitz_t : callable<hurwitz_t, Options, pedantic_option, raw_option, fast_option>

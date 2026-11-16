@@ -11,7 +11,7 @@
 #include <eve/traits/product_type.hpp>
 #include <eve/traits/updown.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   //================================================================================================
   // N-ary interleave

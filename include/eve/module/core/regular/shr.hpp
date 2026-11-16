@@ -10,7 +10,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct shr_t : strict_elementwise_callable<shr_t, Options>

@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/popcount.hpp>
 #include <eve/types/top_bits.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O>
    std::ptrdiff_t count_true_(EVE_REQUIRES(cpu_), O const& opts, bool v) noexcept

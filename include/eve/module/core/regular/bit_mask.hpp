@@ -11,7 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/is_nez.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_mask_t : elementwise_callable<bit_mask_t, Options>

@@ -10,7 +10,7 @@
 #include <eve/concept/value.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct byte_swap_pairs_t : strict_elementwise_callable<byte_swap_pairs_t, Options>

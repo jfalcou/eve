@@ -15,7 +15,7 @@
 #include <eve/module/elliptic/ellint_rd.hpp>
 #include <eve/module/math.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct ellint_d_t : elementwise_callable<ellint_d_t, Options>

@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <array>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct nth_prime_t : strict_elementwise_callable<nth_prime_t, Options>

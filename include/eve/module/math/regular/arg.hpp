@@ -12,7 +12,7 @@
 #include <eve/module/math/constant/pi.hpp>
 
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

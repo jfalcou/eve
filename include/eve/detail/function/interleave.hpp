@@ -11,7 +11,7 @@
 #include <eve/arch.hpp>
 #include <eve/traits/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct interleave_t : callable<interleave_t, Options>

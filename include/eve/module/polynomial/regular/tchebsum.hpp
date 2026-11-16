@@ -14,7 +14,7 @@
 #include <eve/module/core.hpp>
 #include <eve/traits/helpers.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct tchebsum_t : callable<tchebsum_t, Options, pedantic_option, increasing_option,
@@ -123,7 +123,7 @@ namespace eve
 //================================================================================================
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename... Ts>
   constexpr auto tchebsum_(EVE_REQUIRES(emulated_), O const & o, Ts... ts) noexcept

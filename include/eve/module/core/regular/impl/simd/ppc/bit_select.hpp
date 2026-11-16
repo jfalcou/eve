@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename T, typename U, width_type N, callable_options O>
    wide<T, N> bit_select_(EVE_REQUIRES(vmx_),

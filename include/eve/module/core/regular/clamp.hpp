@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/max.hpp>
 #include <eve/module/core/regular/all.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   template<typename Options>

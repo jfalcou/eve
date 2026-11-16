@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/is_nez.hpp>
 #include <eve/module/core/regular/frac.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_not_flint_t : elementwise_callable<is_not_flint_t, Options, raw_option, pedantic_option>

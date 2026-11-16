@@ -12,7 +12,7 @@
 #include <eve/module/core/regular/dot.hpp>
 #include <eve/module/core/decorator/core.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
 
   namespace _

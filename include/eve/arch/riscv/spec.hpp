@@ -15,7 +15,7 @@
 // Register count
 //==================================================================================================
 
-namespace eve
+EVE_NAMESPACE
 {
   struct register_count
   {

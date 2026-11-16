@@ -11,7 +11,7 @@
 #include <eve/module/algo/algo/copy.hpp>
 #include <eve/module/algo/algo/views/iota.hpp>
 
-namespace eve::algo
+EVE_NAMESPACE::algo
 {
   //================================================================================================
   //! @addtogroup eve_algos

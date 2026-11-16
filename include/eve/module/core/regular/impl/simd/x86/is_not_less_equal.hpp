@@ -16,7 +16,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    as_logical_t<wide<T, N>> is_not_less_equal_(EVE_REQUIRES(sse2_),

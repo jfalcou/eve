@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/zip.hpp>
 #include <eve/module/core/regular/fms.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct two_prod_t : elementwise_callable<two_prod_t, Options>

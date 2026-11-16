@@ -14,7 +14,7 @@
 #include <eve/module/core/regular/abs.hpp>
 #include <eve/traits/as_logical.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_infinite_t : elementwise_callable<is_infinite_t, Options>

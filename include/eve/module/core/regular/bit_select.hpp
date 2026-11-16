@@ -12,7 +12,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/bit_shl.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct bit_select_t : strict_elementwise_callable<bit_select_t, Options>

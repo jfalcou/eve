@@ -14,7 +14,7 @@
 #include <eve/forward.hpp>
 #include <eve/module/core/regular/simd_cast.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, arithmetic_scalar_value T, width_type N>
    upgrade_t<wide<T, N>> add_(EVE_REQUIRES(neon128_), O const& opts,

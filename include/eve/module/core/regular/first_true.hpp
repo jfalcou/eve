@@ -9,7 +9,7 @@
 
 #include <eve/detail/overload.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct first_true_t : conditional_callable<first_true_t, Options>

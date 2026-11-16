@@ -14,7 +14,7 @@
 #include <eve/module/math/detail/constant/rempio2_limits.hpp>
 #include <eve/module/math/detail/generic/rempio2_kernel.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct rempio2_t : elementwise_callable < rempio2_t, Options

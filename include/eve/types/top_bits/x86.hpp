@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-namespace eve
+EVE_NAMESPACE
 {
 template<logical_simd_value Logical>
 requires(current_api >= avx512 && !aggregated_abi<Logical>) struct top_bits<Logical>

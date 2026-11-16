@@ -18,7 +18,7 @@
 
 #include <type_traits>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<floating_scalar_value T, width_type N, callable_options O>
    as_integer_t<wide<T, N>> ilogb_(EVE_REQUIRES(avx512_),

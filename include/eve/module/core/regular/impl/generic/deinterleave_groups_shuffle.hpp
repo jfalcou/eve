@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/combine.hpp>
 #include <eve/traits/product_type.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 //==============================================================================================
 // Classify a pattern as a deinterleave_groups

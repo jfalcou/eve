@@ -13,7 +13,7 @@
 #include <eve/module/core/regular/is_not_nan.hpp>
 #include <eve/module/core/constant/false.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_negative_t : elementwise_callable<is_negative_t, Options, pedantic_option>

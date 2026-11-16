@@ -9,7 +9,7 @@
 
 #include <eve/traits/overload/impl/callable.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   //====================================================================================================================
   //! @addtogroup eve_extensions

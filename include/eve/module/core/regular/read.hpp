@@ -12,7 +12,7 @@
 #include <eve/traits/overload.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct read_t : callable<read_t, Options>
@@ -76,7 +76,7 @@ namespace eve
 //!  @}
 //================================================================================================
 }
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<typename Ptr, callable_options O>
   auto read_(EVE_REQUIRES(cpu_), O const&, Ptr ptr) noexcept

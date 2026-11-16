@@ -13,7 +13,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/math/regular/sinh.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct csch_t : elementwise_callable<csch_t, Options, pedantic_option, raw_option, fast_option>

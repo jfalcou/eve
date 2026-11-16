@@ -18,7 +18,7 @@
 #include <concepts>
 #include <type_traits>
 
-namespace eve
+EVE_NAMESPACE
 {
   //================================================================================================
   //! @addtogroup eve_memory

@@ -11,7 +11,7 @@
 #include <eve/module/core/decorator/core.hpp>
 #include <eve/module/core/regular/is_equal.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   template<typename Options>
   struct is_eqmz_t : elementwise_callable<is_eqmz_t, Options>

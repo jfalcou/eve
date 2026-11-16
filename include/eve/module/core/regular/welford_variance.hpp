@@ -17,7 +17,7 @@
 #include <eve/module/core/regular/dec.hpp>
 #include <eve/module/core/regular/sqr.hpp>
 
-namespace eve
+EVE_NAMESPACE
 {
   namespace _
   {
@@ -145,7 +145,7 @@ namespace eve
 
 }
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
 
   template<callable_options O, typename... Ts>

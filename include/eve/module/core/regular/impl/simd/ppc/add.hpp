@@ -12,7 +12,7 @@
 #include <eve/detail/overload.hpp>
 #include <eve/forward.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   template<callable_options O, typename T, width_type N>
    auto add_(EVE_REQUIRES(vmx_), O const& opts,
