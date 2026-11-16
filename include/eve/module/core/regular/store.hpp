@@ -55,7 +55,7 @@ EVE_NAMESPACE
 
   template<typename T, typename SIMD>
   concept writable_logical_simd_compatible_ptr = logical_simd_compatible_ptr<T, SIMD>
-                                              && !std::is_const_v<std::remove_pointer_t<unaligned_t<T>>>;
+                                              && _::can_be_stored_v<SIMD, T>;
 
   template<typename Options>
   struct store_t : relative_conditional_callable<store_t, Options>
