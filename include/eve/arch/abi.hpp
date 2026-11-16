@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 #include <eve/arch/cpu/abi.hpp>
 
 #include <eve/deps/kumi.hpp>

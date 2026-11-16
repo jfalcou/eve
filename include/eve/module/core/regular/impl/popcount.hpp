@@ -10,7 +10,7 @@
 #include <eve/as.hpp>
 #include <eve/concept/value.hpp>
 #include <eve/detail/apply_over.hpp>
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 #include <eve/traits.hpp>
 #include <bit>
 

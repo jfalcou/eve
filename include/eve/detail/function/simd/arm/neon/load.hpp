@@ -9,7 +9,7 @@
 
 #include <eve/as.hpp>
 #include <eve/concept/vectorizable.hpp>
-#include <eve/deps/spy.hpp>
+#include <eve/config.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
 #include <eve/detail/intrinsic_wrappers/arm/arm_utils.hpp>

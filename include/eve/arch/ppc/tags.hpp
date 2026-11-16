@@ -9,7 +9,6 @@
 
 #include <eve/arch/cpu/tags.hpp>
 #include <eve/config.hpp>
-#include <eve/deps/spy.hpp>
 #include <eve/detail/meta.hpp>
 
 EVE_NAMESPACE
