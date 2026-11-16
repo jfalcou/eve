@@ -10,8 +10,8 @@ var searchData=
   ['underlying_5ftype_7',['underlying_type',['../structeve_1_1underlying__type.html',1,'eve']]],
   ['unfold_8',['unfold',['../group__eve__core__arithmetic.html#gab00b0403241b47b4e0a7f3e2d8be4cfd',1,'eve']]],
   ['uniform_5fproduct_5ftypes_9',['uniform_product_types',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1uniform__product__types.html',1,'kumi::concepts']]],
-  ['unique_10',['unique',['https://jfalcou.github.io/kumi/group__kumi__generators_ga6479cba59ee95d4a0779e94993ab55a9.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga6479cba59ee95d4a0779e94993ab55a9.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique']]],
-  ['unique_5findex_5fsequence_11',['unique_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__functional_ga41fc6fa7af3a69b712e76929faa994d5.html#ga41fc6fa7af3a69b712e76929faa994d5',1,'kumi::function']]],
+  ['unique_10',['unique',['https://jfalcou.github.io/kumi/group__kumi__unique.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique'],['https://jfalcou.github.io/kumi/group__kumi__unique.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique']]],
+  ['unique_5findex_5fsequence_11',['unique_index_sequence',['https://jfalcou.github.io/kumi/group__kumi__function__unique__index__sequence.html#ga41fc6fa7af3a69b712e76929faa994d5',1,'kumi::function']]],
   ['uniquely_5flabeled_12',['uniquely_labeled',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1uniquely__labeled.html',1,'kumi::concepts']]],
   ['uniquely_5fnamed_13',['uniquely_named',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1uniquely__named.html',1,'kumi::concepts']]],
   ['uniquely_5ftyped_14',['uniquely_typed',['https://jfalcou.github.io/kumi/conceptkumi_1_1concepts_1_1uniquely__typed.html',1,'kumi::concepts']]],
@@ -31,5 +31,6 @@ var searchData=
   ['use_20with_20cmake_28',['Use with CMake',['../setup.html#autotoc_md79',1,'']]],
   ['using_20dynamic_20kernels_29',['Compiling and Using Dynamic Kernels',['../multiarch.html#autotoc_md109',1,'']]],
   ['using_20eve_3a_3awide_30',['From scalar to SIMD using eve::wide',['../intro-01.html#autotoc_md89',1,'']]],
-  ['using_20the_20library_31',['Using the library',['../setup.html#autotoc_md75',1,'']]]
+  ['using_20the_20library_31',['Using the library',['../setup.html#autotoc_md75',1,'']]],
+  ['utility_20types_20and_20functions_32',['Utility Types and Functions',['https://jfalcou.github.io/kumi/group__kumi__utility.html',1,'']]]
 ];

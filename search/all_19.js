@@ -30,13 +30,15 @@ var searchData=
   ['widen_27',['widen',['../group__eve__core__decorators.html#ga41df7824f33624e9f1febcb4c72bdd6a',1,'eve']]],
   ['width_28',['Width',['../design_rationale.html#rationale-simd',1,'SIMD registers as Type x Width'],['../glossary_semantic.html#autotoc_md58',1,'Width']]],
   ['width_5fv_3c_20logical_3c_20type_20_3e_20_3e_29',['width_v&lt; logical&lt; Type &gt; &gt;',['../group__eve__simd__types.html#ga93a75b9a7e3983b876e94a6d5777271a',1,'eve']]],
-  ['windows_30',['windows',['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__generators_gade96292292ae11da69415a778ef45ad0.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
+  ['windows_30',['windows',['https://jfalcou.github.io/kumi/group__kumi__windows.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows'],['https://jfalcou.github.io/kumi/group__kumi__windows.html#gade96292292ae11da69415a778ef45ad0',1,'kumi::windows']]],
   ['wise_20operations_31',['Element-wise Operations',['../glossary_semantic.html#glossary_elementwise',1,'']]],
-  ['with_20alternative_32',['Mask with alternative',['../conditional.html#autotoc_md84',1,'']]],
-  ['with_20cmake_33',['Use with CMake',['../setup.html#autotoc_md79',1,'']]],
-  ['with_20native_20code_34',['Interaction with native code.',['../inter-with-native.html',1,'']]],
-  ['without_20building_20it_35',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
-  ['write_36',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]],
-  ['writing_20the_20dynamic_20function_20hub_37',['Writing the dynamic function hub',['../multiarch.html#autotoc_md108',1,'']]],
-  ['writing_20the_20kernel_38',['Writing the kernel',['../multiarch.html#autotoc_md107',1,'']]]
+  ['wise_20projections_32',['wise Projections',['https://jfalcou.github.io/kumi/group__kumi__index__projections.html',1,'Index-wise Projections'],['https://jfalcou.github.io/kumi/group__kumi__type__projections.html',1,'Type-wise Projections']]],
+  ['wise_20transformations_33',['wise Transformations',['https://jfalcou.github.io/kumi/group__kumi__generic__transforms.html',1,'Element-wise Transformations'],['https://jfalcou.github.io/kumi/group__kumi__record__transforms.html',1,'Field-wise Transformations'],['https://jfalcou.github.io/kumi/group__kumi__tuple__transforms.html',1,'Index-wise Transformations']]],
+  ['with_20alternative_34',['Mask with alternative',['../conditional.html#autotoc_md84',1,'']]],
+  ['with_20cmake_35',['Use with CMake',['../setup.html#autotoc_md79',1,'']]],
+  ['with_20native_20code_36',['Interaction with native code.',['../inter-with-native.html',1,'']]],
+  ['without_20building_20it_37',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
+  ['write_38',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]],
+  ['writing_20the_20dynamic_20function_20hub_39',['Writing the dynamic function hub',['../multiarch.html#autotoc_md108',1,'']]],
+  ['writing_20the_20kernel_40',['Writing the kernel',['../multiarch.html#autotoc_md107',1,'']]]
 ];

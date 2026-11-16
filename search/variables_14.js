@@ -3,7 +3,7 @@ var searchData=
   ['ulpdist_0',['ulpdist',['../group__eve__core__internal.html#ga5b73df953d6c6313eeae28925eb8f19c',1,'eve']]],
   ['unalign_1',['unalign',['../group__eve__memory.html#ga62462e7b23d8d092781d5561a9d4c90f',1,'eve']]],
   ['unfold_2',['unfold',['../group__eve__core__arithmetic.html#gab00b0403241b47b4e0a7f3e2d8be4cfd',1,'eve']]],
-  ['unique_3',['unique',['https://jfalcou.github.io/kumi/group__kumi__generators_ga6479cba59ee95d4a0779e94993ab55a9.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga6479cba59ee95d4a0779e94993ab55a9.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique']]],
+  ['unique_3',['unique',['https://jfalcou.github.io/kumi/group__kumi__unique.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique'],['https://jfalcou.github.io/kumi/group__kumi__unique.html#ga6479cba59ee95d4a0779e94993ab55a9',1,'kumi::unique']]],
   ['unroll_4',['unroll',['../group__eve__algo__unroll.html#gaa0edcdf11a934c3303c8dbac175f5340',1,'eve::algo']]],
   ['upper_5',['upper',['../group__eve__core__decorators.html#ga8a4dcc5af0e5fab8cb537e8cbd4601f3',1,'eve']]],
   ['upward_6',['upward',['../group__eve__core__decorators.html#gadc91b5f931296ee665ed345a84f1f629',1,'eve']]]

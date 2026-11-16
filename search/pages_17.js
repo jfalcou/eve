@@ -12,5 +12,6 @@ var searchData=
   ['version_202023_2002_2015_9',['Version 2023.02.15',['../changelog.html#autotoc_md24',1,'']]],
   ['version_20beta_202020_2009_10',['Version beta.2020.09',['../changelog.html#autotoc_md41',1,'']]],
   ['via_20higher_20order_20decorator_11',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
-  ['video_20materials_12',['Video materials',['../index.html#autotoc_md42',1,'']]]
+  ['video_20materials_12',['Video materials',['../index.html#autotoc_md42',1,'']]],
+  ['vocabulary_13',['C++ Vocabulary',['https://jfalcou.github.io/kumi/kumi_cpp_vocabulary.html',1,'kumi_glossary']]]
 ];

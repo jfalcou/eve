@@ -7,7 +7,7 @@ var searchData=
   ['value_5ftype_4',['value_type',['../structeve_1_1aligned__allocator.html#a1172a3003ffee8879d69bc92082ba045',1,'eve::aligned_allocator::value_type'],['../structeve_1_1aligned__ptr.html#aed55f842914bf195c481887441623ca4',1,'eve::aligned_ptr::value_type'],['../structeve_1_1algo_1_1soa__vector.html#afa565773f9b92a3d9e6352686dd0caec',1,'eve::algo::soa_vector::value_type'],['../structeve_1_1logical_3_01T_01_4.html#a4ca253e53d508bd86a04e37251298986',1,'eve::logical&lt; T &gt;::value_type'],['../structeve_1_1logical_3_01wide_3_01Type_00_01Width_01_4_01_4.html#a2f2580305dae47b708f8c22172ec02cc',1,'eve::logical&lt; wide&lt; Type, Width &gt; &gt;::value_type'],['../structeve_1_1wide.html#a2740dd8299a097b7ebe8ed830a1e3ee7',1,'eve::wide::value_type']]],
   ['value_5ftype_5ft_5',['value_type_t',['../group__eve__traits.html#gaae6fbba5b56b9fab940a05b444c15e6f',1,'eve']]],
   ['values_6',['values',['../group__eve__core__compress.html#autotoc_md9',1,'Preloaded values'],['https://jfalcou.github.io/kumi/structkumi_1_1record.html#a9b9b96d4aae04575e8c2ff5ab515b594',1,'kumi::record::values() noexcept'],['https://jfalcou.github.io/kumi/structkumi_1_1record.html#aed4f570ae92586a34d7f03b4bc584ebc',1,'kumi::record::values() const noexcept']]],
-  ['values_5fof_7',['values_of',['https://jfalcou.github.io/kumi/group__kumi__utility_gaa217e07b135cc3295e25689ac4ac2933.html#gaa217e07b135cc3295e25689ac4ac2933',1,'kumi::values_of'],['https://jfalcou.github.io/kumi/group__kumi__utility_gaa217e07b135cc3295e25689ac4ac2933.html#gaa217e07b135cc3295e25689ac4ac2933',1,'kumi::values_of'],['https://jfalcou.github.io/kumi/group__kumi__utility_gaa217e07b135cc3295e25689ac4ac2933.html#gaa217e07b135cc3295e25689ac4ac2933',1,'kumi::values_of']]],
+  ['values_5fof_7',['values_of',['https://jfalcou.github.io/kumi/group__kumi__values__of.html#gaa217e07b135cc3295e25689ac4ac2933',1,'kumi::values_of'],['https://jfalcou.github.io/kumi/group__kumi__values__of.html#gaa217e07b135cc3295e25689ac4ac2933',1,'kumi::values_of']]],
   ['variable_20template_8',['Helper variable template',['../structeve_1_1supports__ordering.html#autotoc_md22',1,'']]],
   ['variables_20for_20trait_20matching_9',['Inline variables for trait matching',['../metaprog_rationale.html#rationale-meta-inline',1,'']]],
   ['variables_20for_20type_20matching_10',['Extern variables for type matching',['../metaprog_rationale.html#rationale-meta-extern',1,'']]],
@@ -22,5 +22,6 @@ var searchData=
   ['version_20beta_202020_2009_19',['Version beta.2020.09',['../changelog.html#autotoc_md41',1,'']]],
   ['via_20higher_20order_20decorator_20',['Function customization via higher-order decorator',['../design_rationale.html#rationale-decorator',1,'']]],
   ['video_20materials_21',['Video materials',['../index.html#autotoc_md42',1,'']]],
-  ['views_22',['Views',['../group__eve__algorithms.html',1,'Algorithms and Views'],['../group__eve__views.html',1,'Views']]]
+  ['views_22',['Views',['../group__eve__algorithms.html',1,'Algorithms and Views'],['../group__eve__views.html',1,'Views']]],
+  ['vocabulary_23',['C++ Vocabulary',['https://jfalcou.github.io/kumi/kumi_cpp_vocabulary.html',1,'kumi_glossary']]]
 ];

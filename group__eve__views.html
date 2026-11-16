@@ -233,7 +233,7 @@ Variables</h2></td></tr>
 <p>Takes an iterator or a range and returns an adapter that has a provided value type. </p>
 <div class="fragment"><div class="line"><a class="code hl_variable" href="#ga1d67fe0e91df8539083585c6e096789a">eve::algo::views::convert</a>(it_or_r, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;int&gt;</a>{}); </div>
 <div class="ttc" id="agroup__eve__views_html_ga1d67fe0e91df8539083585c6e096789a"><div class="ttname"><a href="#ga1d67fe0e91df8539083585c6e096789a">eve::algo::views::convert</a></div><div class="ttdeci">struct eve::algo::views::convert_ convert</div><div class="ttdoc">Takes an iterator or a range and returns an adapter that has a provided value type.</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:31</div></div>
 </div><!-- fragment --><p>Behaviour for a specific iterator/range can be customized via tagged dispatch:</p>
 <div class="fragment"><div class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line">EVE_FORCEINLINE <span class="keyword">friend</span> <span class="keyword">auto</span> tagged_dispatch(eve::algo::views::convert_, my_rng self, <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;T&gt;</a> tgt);</div>

@@ -146,8 +146,6 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:top_5Fbits" id="r_top_5Fbits"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1top__bits.html">top_bits</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cheapest to get bitset for simd logical.  <a href="structeve_1_1top__bits.html#details">More...</a><br /></td></tr>
 <tr class="memitem:lanes_5Ft" id="r_lanes_5Ft"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1lanes__t.html">lanes_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SIMD register width type.  <a href="structeve_1_1lanes__t.html#details">More...</a><br /></td></tr>
 <tr class="memitem:as" id="r_as"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1as.html">as</a></td></tr>
@@ -176,6 +174,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional expression ignoring lanes at both extrema of a <a class="el" href="concepteve_1_1simd__value.html" title="Specifies that a type is a SIMD type. The concept simd_value&lt;T&gt; is satisfied if and only if T satisfi...">eve::simd_value</a>.  <a href="structeve_1_1ignore__extrema.html#details">More...</a><br /></td></tr>
 <tr class="memitem:never_5Fempty" id="r_never_5Fempty"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1never__empty.html">never_empty</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conditional wrapper stating that at least one lane is kept.  <a href="structeve_1_1never__empty.html#details">More...</a><br /></td></tr>
+<tr class="memitem:top_5Fbits" id="r_top_5Fbits"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1top__bits.html">top_bits</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The cheapest to get bitset for simd logical.  <a href="structeve_1_1top__bits.html#details">More...</a><br /></td></tr>
 <tr class="memitem:aligned_5Fallocator" id="r_aligned_5Fallocator"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1aligned__allocator.html">aligned_allocator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard-compliant allocator handling the allocation and deallocation of segment of aligned memory.  <a href="structeve_1_1aligned__allocator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:aligned_5Fptr" id="r_aligned_5Fptr"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structeve_1_1aligned__ptr.html">aligned_ptr</a></td></tr>
@@ -1673,7 +1673,7 @@ template&lt;typename V&gt; </div>
 <div class="line"><a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;E&gt;</a> tag;</div>
 <div class="line"><span class="keyword">static_assert</span>(std::same_as&lt;<span class="keyword">decltype</span>(<a class="code hl_function" href="#a2ca18720b2c0736de236fbbd8b003ab8">eve::translate</a>(tag)), <a class="code hl_struct" href="structeve_1_1as.html">eve::as&lt;int&gt;</a>&gt;);</div>
 <div class="ttc" id="anamespaceeve_html_a2ca18720b2c0736de236fbbd8b003ab8"><div class="ttname"><a href="#a2ca18720b2c0736de236fbbd8b003ab8">eve::translate</a></div><div class="ttdeci">constexpr translate_t&lt; V &gt; translate(V const &amp;val)</div><div class="ttdoc">Translates a value to its translated type.</div><div class="ttdef"><b>Definition</b> as_translation.hpp:28</div></div>
-<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:29</div></div>
+<div class="ttc" id="astructeve_1_1as_html"><div class="ttname"><a href="structeve_1_1as.html">eve::as</a></div><div class="ttdoc">Lightweight type-wrapper.</div><div class="ttdef"><b>Definition</b> as.hpp:31</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

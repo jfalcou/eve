@@ -122,7 +122,8 @@ $(function(){initNavTree('group__eve__arch.html','',''); });
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">Architecture related Types and Helpers </div></div>
 </div><!--header-->
 <div class="contents">
@@ -134,7 +135,60 @@ $(function(){initNavTree('group__eve__arch.html','',''); });
 Namespaces</h2></td></tr>
 <tr class="memitem:platform" id="r_platform"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespaceplatform.html">platform</a></td></tr>
 <tr class="memdesc:namespaceplatform"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform specific constexpr information. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga7463b3fcb9efe7a3e7dbd651eebfedd1" id="r_ga7463b3fcb9efe7a3e7dbd651eebfedd1"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1">EVE_ABI_NAMESPACE</a></td></tr>
+<tr class="memdesc:ga7463b3fcb9efe7a3e7dbd651eebfedd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Expands to an identifier that is unique to the current compilation configuration.  <br /></td></tr>
+<tr class="memitem:ga6482c9ce6c4934207e333bb33b2daf3f" id="r_ga6482c9ce6c4934207e333bb33b2daf3f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ga6482c9ce6c4934207e333bb33b2daf3f">EVE_NAMESPACE</a>&#160;&#160;&#160;namespace <a class="el" href="namespaceeve.html">eve</a></td></tr>
+<tr class="memdesc:ga6482c9ce6c4934207e333bb33b2daf3f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><span class="tt">namespace eve::inline <a class="el" href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1" title="Expands to an identifier that is unique to the current compilation configuration.">EVE_ABI_NAMESPACE</a></span>.  <br /></td></tr>
 </table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="ga7463b3fcb9efe7a3e7dbd651eebfedd1" name="ga7463b3fcb9efe7a3e7dbd651eebfedd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1">&#9670;&#160;</a></span>EVE_ABI_NAMESPACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EVE_ABI_NAMESPACE</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Expands to an identifier that is unique to the current compilation configuration. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --><p>The identifier depends on the instruction sets and <b>EVE</b> options used to compile, for example <span class="tt">abi_O</span> for <span class="tt">-march=haswell -DNDEBUG</span>. It is kept short on purpose and is not meant to be read.</p>
+<p><b>EVE</b> uses it as the name of an inline namespace, so that multiple versions of the same code, compiled with different configurations, can be linked into one binary without causing ODR violations. ODR violations can still come from other namespaces, but <b>EVE</b>'s own symbols mostly shouldn't cause them.</p>
+<p>You can choose the name yourself by defining <span class="tt"><a class="el" href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1" title="Expands to an identifier that is unique to the current compilation configuration.">EVE_ABI_NAMESPACE</a></span> before including <b>EVE</b>. If you give the same name to translation units compiled with different options, keeping them apart is then up to you.</p>
+<p>To protect your own code that depends on compilation options in the same way, put it in an inline namespace named after the same macro:</p>
+<div class="fragment"><div class="line"><span class="keyword">namespace </span>mylib::inline <a class="code hl_define" href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1">EVE_ABI_NAMESPACE</a></div>
+<div class="line">{</div>
+<div class="line">  <span class="keywordtype">float</span> sum(<span class="keywordtype">float</span> <span class="keyword">const</span>* data, std::size_t size);</div>
+<div class="line">}</div>
+<div class="ttc" id="agroup__eve__arch_html_ga7463b3fcb9efe7a3e7dbd651eebfedd1"><div class="ttname"><a href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1">EVE_ABI_NAMESPACE</a></div><div class="ttdeci">#define EVE_ABI_NAMESPACE</div><div class="ttdoc">Expands to an identifier that is unique to the current compilation configuration.</div><div class="ttdef"><b>Definition</b> abi_namespace.hpp:50</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ga6482c9ce6c4934207e333bb33b2daf3f" name="ga6482c9ce6c4934207e333bb33b2daf3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6482c9ce6c4934207e333bb33b2daf3f">&#9670;&#160;</a></span>EVE_NAMESPACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EVE_NAMESPACE&#160;&#160;&#160;namespace <a class="el" href="namespaceeve.html">eve</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><span class="tt">namespace eve::inline <a class="el" href="#ga7463b3fcb9efe7a3e7dbd651eebfedd1" title="Expands to an identifier that is unique to the current compilation configuration.">EVE_ABI_NAMESPACE</a></span>. </p>
+<p><b>Defined in Header</b></p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;eve/module/core.hpp&gt;</span></div>
+</div><!-- fragment --> 
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

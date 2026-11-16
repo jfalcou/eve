@@ -1,7 +1,7 @@
 var searchData=
 [
   ['i_20know_20there_20is_20a_20match_0',['I know there is a match',['../group__eve__core__reduction.html#autotoc_md12',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md14',1,'What if I know there is a match?']]],
-  ['identity_20elements_20the_200_20and_201_20of_20types_1',['The Identity Elements (The &quot;0&quot; and &quot;1&quot; of Types)',['https://jfalcou.github.io/kumi/kumi_identity.html',1,'kumi_glossary']]],
+  ['identity_20elements_1',['Identity Elements',['https://jfalcou.github.io/kumi/kumi_identity.html',1,'kumi_glossary']]],
   ['if_20i_20know_20there_20is_20a_20match_2',['if I know there is a match',['../group__eve__core__reduction.html#autotoc_md12',1,'What if I know there is a match?'],['../group__eve__core__reduction.html#autotoc_md14',1,'What if I know there is a match?']]],
   ['initial_20problem_3',['Initial problem',['../intro-01.html#autotoc_md88',1,'Initial problem'],['../intro-02.html#autotoc_md93',1,'Initial problem']]],
   ['inline_20variables_20for_20trait_20matching_4',['Inline variables for trait matching',['../metaprog_rationale.html#rationale-meta-inline',1,'']]],

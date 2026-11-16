@@ -3984,7 +3984,6 @@
     <name>eve</name>
     <filename>namespaceeve.html</filename>
     <namespace>eve::_</namespace>
-    <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::as</class>
     <class kind="struct">eve::as_element</class>
@@ -3999,6 +3998,7 @@
     <class kind="struct">eve::keep_between</class>
     <class kind="struct">eve::ignore_extrema</class>
     <class kind="struct">eve::never_empty</class>
+    <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::aligned_allocator</class>
     <class kind="struct">eve::aligned_ptr</class>
     <class kind="struct">eve::soa_ptr</class>
@@ -8667,6 +8667,20 @@
     <title>Architecture related Types and Helpers</title>
     <filename>group__eve__arch.html</filename>
     <namespace>platform</namespace>
+    <member kind="define">
+      <type>#define</type>
+      <name>EVE_ABI_NAMESPACE</name>
+      <anchorfile>group__eve__arch.html</anchorfile>
+      <anchor>ga7463b3fcb9efe7a3e7dbd651eebfedd1</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="define">
+      <type>#define</type>
+      <name>EVE_NAMESPACE</name>
+      <anchorfile>group__eve__arch.html</anchorfile>
+      <anchor>ga6482c9ce6c4934207e333bb33b2daf3f</anchor>
+      <arglist></arglist>
+    </member>
   </compound>
   <compound kind="group">
     <name>eve_core_arithmetic</name>
@@ -12445,11 +12459,11 @@
     <name>eve_simd_types</name>
     <title>SIMD related types</title>
     <filename>group__eve__simd__types.html</filename>
-    <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::lanes_t</class>
     <class kind="struct">eve::pattern_t</class>
     <class kind="struct">eve::logical&lt; T &gt;</class>
     <class kind="struct">eve::logical&lt; wide&lt; Type, Width &gt; &gt;</class>
+    <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::wide</class>
     <class kind="struct">eve::float16_t</class>
     <member kind="function">

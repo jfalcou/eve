@@ -4,7 +4,7 @@ var searchData=
   ['ranges_20or_20iterators_1',['Ranges or Iterators',['../algo_rationale.html#autotoc_md47',1,'']]],
   ['reductions_2',['Reductions',['../glossary_semantic.html#glossary_reduction',1,'']]],
   ['reference_20documentation_3',['Reference Documentation',['https://jfalcou.github.io/kumi/kumi_reference.html',1,'']]],
-  ['references_4',['References',['../index.html#autotoc_md43',1,'Bibliographic References'],['https://jfalcou.github.io/kumi/kumi_references.html',1,'References']]],
+  ['references_4',['Bibliographic References',['../index.html#autotoc_md43',1,'']]],
   ['register_20of_20tuples_5',['SIMD register of tuples',['../intro-03.html#autotoc_md98',1,'']]],
   ['registers_6',['Tuple of SIMD registers',['../intro-03.html#autotoc_md97',1,'']]],
   ['registers_20as_20type_20x_20width_7',['SIMD registers as Type x Width',['../design_rationale.html#rationale-simd',1,'']]],

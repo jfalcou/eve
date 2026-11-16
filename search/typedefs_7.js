@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['indexes_5ffor_0',['indexes_for',['https://jfalcou.github.io/kumi/group__kumi__functional_ga31ec47f07956e9676243754c7ccd6227.html#ga31ec47f07956e9676243754c7ccd6227',1,'kumi::function']]],
+  ['indexes_5ffor_0',['indexes_for',['https://jfalcou.github.io/kumi/group__kumi__function__indexes__for.html#ga31ec47f07956e9676243754c7ccd6227',1,'kumi::function']]],
   ['is_5flike_1',['is_like',['../structeve_1_1wide.html#afe1d75da19900fb06c9cfb0a4c89348a',1,'eve::wide']]],
   ['iterator_2',['iterator',['../structeve_1_1algo_1_1soa__vector.html#a63371337208b1895b475884645b7aff3',1,'eve::algo::soa_vector']]],
   ['iterator_5faligned_3',['iterator_aligned',['../structeve_1_1algo_1_1soa__vector.html#a1cebd79982e022f940660bf05183ff6e',1,'eve::algo::soa_vector']]],

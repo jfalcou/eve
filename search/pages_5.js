@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['c_20specific_20terms_0',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
+  ['c_20vocabulary_0',['C++ Vocabulary',['https://jfalcou.github.io/kumi/kumi_cpp_vocabulary.html',1,'kumi_glossary']]],
   ['callable_20function_20objects_20as_20main_20api_1',['Callable Function Objects as main API',['../design_rationale.html#rationale-callable',1,'']]],
   ['calls_2',['Masked Calls',['../group__eve__core__compress.html#autotoc_md10',1,'']]],
   ['change_20log_3',['Change Log',['https://jfalcou.github.io/kumi/kumi_changelog.html',1,'Change Log'],['../changelog.html',1,'Change Log']]],

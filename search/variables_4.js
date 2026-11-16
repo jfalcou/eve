@@ -21,8 +21,8 @@ var searchData=
   ['erfc_5finv_18',['erfc_inv',['../group__eve__special.html#gae47d192b5a13d6a35516de4ae2da273d',1,'eve']]],
   ['erfcx_19',['erfcx',['../group__eve__special.html#ga39a32ff65020290d5c0d8975c648a901',1,'eve']]],
   ['euler_20',['euler',['../group__eve__math__constants.html#ga7c4605cd6be76809b63a68a1d909a00c',1,'eve']]],
-  ['exclusive_5fscan_5fleft_21',['exclusive_scan_left',['https://jfalcou.github.io/kumi/group__kumi__reductions_ga529950ddf6573473b2f9b7ec886c61f9.html#ga529950ddf6573473b2f9b7ec886c61f9',1,'kumi::exclusive_scan_left'],['https://jfalcou.github.io/kumi/group__kumi__reductions_ga529950ddf6573473b2f9b7ec886c61f9.html#ga529950ddf6573473b2f9b7ec886c61f9',1,'kumi::exclusive_scan_left']]],
-  ['exclusive_5fscan_5fright_22',['exclusive_scan_right',['https://jfalcou.github.io/kumi/group__kumi__reductions_gaa66bb36d76db2d7854196bc156fb35c2.html#gaa66bb36d76db2d7854196bc156fb35c2',1,'kumi::exclusive_scan_right'],['https://jfalcou.github.io/kumi/group__kumi__reductions_gaa66bb36d76db2d7854196bc156fb35c2.html#gaa66bb36d76db2d7854196bc156fb35c2',1,'kumi::exclusive_scan_right']]],
+  ['exclusive_5fscan_5fleft_21',['exclusive_scan_left',['https://jfalcou.github.io/kumi/group__kumi__exclusive__scan__left.html#ga529950ddf6573473b2f9b7ec886c61f9',1,'kumi::exclusive_scan_left'],['https://jfalcou.github.io/kumi/group__kumi__exclusive__scan__left.html#ga529950ddf6573473b2f9b7ec886c61f9',1,'kumi::exclusive_scan_left']]],
+  ['exclusive_5fscan_5fright_22',['exclusive_scan_right',['https://jfalcou.github.io/kumi/group__kumi__exclusive__scan__right.html#gaa66bb36d76db2d7854196bc156fb35c2',1,'kumi::exclusive_scan_right'],['https://jfalcou.github.io/kumi/group__kumi__exclusive__scan__right.html#gaa66bb36d76db2d7854196bc156fb35c2',1,'kumi::exclusive_scan_right']]],
   ['exp_23',['exp',['../group__eve__math__exp.html#ga01387edd49b1ff23f210c7105d65839e',1,'eve']]],
   ['exp10_24',['exp10',['../group__eve__math__exp.html#gad36941c942d7f200e996734a9b62a092',1,'eve']]],
   ['exp2_25',['exp2',['../group__eve__math__exp.html#ga0a3642b91604e578b8d4ef6314d39495',1,'eve']]],
@@ -35,6 +35,6 @@ var searchData=
   ['exponent_32',['exponent',['../group__eve__core__internal.html#ga0c0d48cc3ee880fde5b8ec3e874933d0',1,'eve']]],
   ['exponentmask_33',['exponentmask',['../group__eve__core__constants.html#ga15630d42e0187a51aa629ecc00dbe7e7',1,'eve']]],
   ['expx2_34',['expx2',['../group__eve__math__exp.html#ga9166af39f3533cb7dd7471a25989f636',1,'eve']]],
-  ['extract_35',['extract',['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract'],['https://jfalcou.github.io/kumi/group__kumi__generators_ga1a7617bafd6f8598cca8e7e6a5c6f383.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract']]],
+  ['extract_35',['extract',['https://jfalcou.github.io/kumi/group__kumi__extract.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract'],['https://jfalcou.github.io/kumi/group__kumi__extract.html#ga1a7617bafd6f8598cca8e7e6a5c6f383',1,'kumi::extract']]],
   ['extreme_5fvalue_5fskewness_36',['extreme_value_skewness',['../group__eve__math__constants.html#ga8ba551f79aa6782d07eab6c3d7e0a9db',1,'eve']]]
 ];

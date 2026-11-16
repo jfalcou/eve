@@ -23,14 +23,13 @@ var searchData=
   ['source_20',['Installation from Source',['../setup.html#autotoc_md72',1,'']]],
   ['source_21',['Retrieving the source',['../setup.html#autotoc_md67',1,'']]],
   ['spack_22',['SPACK',['../setup.html#autotoc_md70',1,'']]],
-  ['specific_20terms_23',['C++ Specific Terms',['https://jfalcou.github.io/kumi/kumi_cpp_spec.html',1,'kumi_glossary']]],
-  ['start_24',['Installation &amp;amp; Quick Start',['../setup.html',1,'']]],
-  ['static_20to_20dynamic_20dispatch_25',['From static to dynamic dispatch',['../multiarch.html#autotoc_md106',1,'']]],
-  ['storage_20and_20processing_26',['Storage and Processing',['../intro-04.html#autotoc_md102',1,'']]],
-  ['structures_27',['Data Structures',['../intro-04.html',1,'']]],
-  ['summary_28',['Summary',['../metaprog_rationale.html#rationale-meta-summary',1,'']]],
-  ['support_29',['Masked operations support',['../design_rationale.html#rationale-mask',1,'']]],
-  ['support_20fixes_30',['Architectures/Compilers Support &amp;amp; Fixes',['../changelog.html#autotoc_md27',1,'']]],
-  ['sve_31',['The One Big News for this release: SVE',['../changelog.html#autotoc_md28',1,'']]],
-  ['syntax_32',['Conditional Function Syntax',['../conditional.html#autotoc_md82',1,'']]]
+  ['start_23',['Installation &amp;amp; Quick Start',['../setup.html',1,'']]],
+  ['static_20to_20dynamic_20dispatch_24',['From static to dynamic dispatch',['../multiarch.html#autotoc_md106',1,'']]],
+  ['storage_20and_20processing_25',['Storage and Processing',['../intro-04.html#autotoc_md102',1,'']]],
+  ['structures_26',['Data Structures',['../intro-04.html',1,'']]],
+  ['summary_27',['Summary',['../metaprog_rationale.html#rationale-meta-summary',1,'']]],
+  ['support_28',['Masked operations support',['../design_rationale.html#rationale-mask',1,'']]],
+  ['support_20fixes_29',['Architectures/Compilers Support &amp;amp; Fixes',['../changelog.html#autotoc_md27',1,'']]],
+  ['sve_30',['The One Big News for this release: SVE',['../changelog.html#autotoc_md28',1,'']]],
+  ['syntax_31',['Conditional Function Syntax',['../conditional.html#autotoc_md82',1,'']]]
 ];
