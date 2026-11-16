@@ -233,7 +233,8 @@ EVE_ALGO_VIEWS_NAMESPACE
       // it should be fine, zip<pointer...> -> perfectly reasonable to store to.
 
       template <callable_options O, width_type N>
-       auto store(O const& opts, wide<value_type, N> v) const noexcept
+        requires (writable_simd_compatible_ptr<Is, wide<value_type_t<Is>, N>> && ...)
+       void store(O const& opts, wide<value_type, N> v) const noexcept
       {
         using C = rbr::result::fetch_t<condition_key, O>;
         auto cx = opts[condition_key];
