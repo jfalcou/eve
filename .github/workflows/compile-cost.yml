@@ -22,9 +22,8 @@ run-name: compile-cost
 ## against a different compiler would be describing the upgrade.
 ####################################################################################################
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
   push:
     branches:
       - main

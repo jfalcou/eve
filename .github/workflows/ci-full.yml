@@ -1,0 +1,34 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+## {CI|FULL} on a lower stack layer: dispatch the full suite now.
+## Not `labeled` in pr.yml: any label would cancel its run.
+####################################################################################################
+name: EVE - Full CI on demand
+on:
+  pull_request:
+    types: [labeled]
+    branches:
+      - main
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    if: >-
+      github.event.label.name == '{CI|FULL}'
+      && github.event.pull_request.head.repo.full_name == github.repository
+      && github.event.pull_request.stack != null
+      && github.event.pull_request.stack.position != github.event.pull_request.stack.size
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch pr.yml on ${{ github.event.pull_request.head.ref }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.event.pull_request.head.ref }}
+        run: gh workflow run pr.yml --repo "$REPO" --ref "$REF"

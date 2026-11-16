@@ -5,9 +5,8 @@
 ####################################################################################################
 name: EVE - Randomized Precision Tests
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
 
 concurrency:
   group: random-${{ github.ref }}

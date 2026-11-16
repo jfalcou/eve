@@ -1,0 +1,82 @@
+####################################################################################################
+##  EVE - Expressive Vector Engine
+##  Copyright : EVE Project Contributors
+##  SPDX-License-Identifier: BSL-1.0
+####################################################################################################
+## Full suite unless this is a lower layer of a stacked pull request.
+## Override with the {CI|FULL} label or: gh workflow run "EVE - Pull Request" --ref <branch>
+####################################################################################################
+name: EVE - Pull Request
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      full: ${{ steps.decide.outputs.full }}
+    steps:
+      - id: decide
+        env:
+          EVENT: ${{ github.event_name }}
+          IN_STACK: ${{ github.event.pull_request.stack != null }}
+          POSITION: ${{ github.event.pull_request.stack.position }}
+          SIZE: ${{ github.event.pull_request.stack.size }}
+          FORCED: ${{ contains(github.event.pull_request.labels.*.name, '{CI|FULL}') }}
+        run: |
+          if   [ "$EVENT" != pull_request ]; then full=true;  why="event is $EVENT"
+          elif [ "$IN_STACK" != true ];      then full=true;  why="not part of a stack"
+          elif [ "$POSITION" = "$SIZE" ];    then full=true;  why="top of its stack"
+          elif [ "$FORCED" = true ];         then full=true;  why="labelled {CI|FULL}"
+          else                                    full=false; why="layer $POSITION of $SIZE, add {CI|FULL} to run everything"
+          fi
+          echo "full=$full" >> "$GITHUB_OUTPUT"
+          echo "Full suite: $full ($why)" | tee -a "$GITHUB_STEP_SUMMARY"
+
+  x86:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-x86.yml
+  arm:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-arm.yml
+  avx512:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-avx512.yml
+  macos:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-macos.yml
+  modes:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-modes.yml
+  ppc-riscv:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-ppc-riscv.yml
+  windows:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/unit-windows.yml
+  random:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/random.yml
+  compile-cost:
+    needs: gate
+    if: needs.gate.outputs.full == 'true'
+    uses: ./.github/workflows/compile-cost.yml
+    permissions:
+      actions: read
+      contents: read

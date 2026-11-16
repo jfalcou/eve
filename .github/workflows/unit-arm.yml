@@ -5,9 +5,8 @@
 ####################################################################################################
 name: EVE - Unit Tests ARM
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
 
 concurrency:
   group: unit-arm-${{ github.ref }}

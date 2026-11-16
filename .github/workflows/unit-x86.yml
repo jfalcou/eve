@@ -5,9 +5,8 @@
 ####################################################################################################
 name: EVE - Unit Tests x86
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
 
 concurrency:
   group: unit-x86-${{ github.ref }}

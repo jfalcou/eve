@@ -5,9 +5,8 @@
 ####################################################################################################
 name: EVE - Unit Tests PowerPC and RISC-V
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
 
 concurrency:
   group: unit-ppc-riscv-${{ github.ref }}

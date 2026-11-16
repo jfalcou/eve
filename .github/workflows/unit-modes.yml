@@ -5,9 +5,8 @@
 ####################################################################################################
 name: EVE - Unit Tests Build Modes
 on:
-  pull_request:
-    branches:
-      - main
+  ## Called by pr.yml.
+  workflow_call:
 
 concurrency:
   group: unit-modes-${{ github.ref }}
