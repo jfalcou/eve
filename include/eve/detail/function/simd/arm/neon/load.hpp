@@ -8,13 +8,13 @@
 #pragma once
 
 #include <eve/as.hpp>
-#include <eve/arch/arm/arm_utils.hpp>
 #include <eve/concept/vectorizable.hpp>
+#include <eve/deps/spy.hpp>
 #include <eve/detail/category.hpp>
 #include <eve/detail/implementation.hpp>
-#include <eve/deps/spy.hpp>
-#include <eve/module/core/regular/unalign.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/arm_utils.hpp>
 #include <eve/memory/aligned_ptr.hpp>
+#include <eve/module/core/regular/unalign.hpp>
 
 namespace eve::_
 {

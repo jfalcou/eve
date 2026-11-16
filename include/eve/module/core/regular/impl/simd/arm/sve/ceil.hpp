@@ -8,8 +8,8 @@
 #pragma once
 
 #include <eve/concept/value.hpp>
-#include <eve/arch/arm/sve/sve_true.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/intrinsic_wrappers/arm/sve/sve_true.hpp>
 
 namespace eve::_
 {

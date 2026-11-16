@@ -7,7 +7,7 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/riscv/rvv_utils.hpp>
+#include <eve/detail/intrinsic_wrappers/riscv/rvv_utils.hpp>
 
 namespace eve::_
 {

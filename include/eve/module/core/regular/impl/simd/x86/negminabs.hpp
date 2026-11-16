@@ -9,8 +9,8 @@
 
 #include <eve/concept/value.hpp>
 #include <eve/detail/category.hpp>
-#include <eve/detail/function/simd/x86/flags.hpp>
 #include <eve/detail/implementation.hpp>
+#include <eve/detail/intrinsic_wrappers/x86/flags.hpp>
 #include <eve/traits/apply_fp16.hpp>
 
 namespace eve::_
