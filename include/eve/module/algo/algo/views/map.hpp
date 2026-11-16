@@ -343,16 +343,6 @@ EVE_ALGO_VIEWS_NAMESPACE
       return loaded;
     }
 
-    template<callable_options O>
-    EVE_ABI void store(O const& opts, auto v) const noexcept
-      requires iterator<I> && (!std::same_as<StoreOp, nothing_t>)
-    {
-      auto c = opts[condition_key];
-      auto bound_store = _::bind_store_op<I>(store_op);
-      auto c1 = map_alternative( c, bound_store );
-      eve::store[c1](bound_store(v), base);
-    }
-
     EVE_ABI friend auto tagged_dispatch(eve::tag::store_equivalent_,
                                                 relative_conditional_expr auto c,
                                                 auto v,
