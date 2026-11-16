@@ -13,6 +13,14 @@ concurrency:
   group: unit-x86-${{ github.ref }}
   cancel-in-progress: true
 
+## Do not move this gate to a job-level if: a matrix job skipped there reports under its
+## unexpanded name, and the required checks of main never report.
+env:
+  EVE_RUN_SUITE: >-
+    ${{ !github.event.pull_request.stack
+    || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+    || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
+
 jobs:
   ##################################################################################################
   ## The native cardinal alone, compiled first: every other job of this file waits for it.
@@ -32,18 +40,22 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: "-mavx2 -mf16c"          }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ninja unit.exe -j 8
       - name: Run
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
@@ -68,14 +80,18 @@ jobs:
 
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=${{ matrix.cfg.lot }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
@@ -98,14 +114,18 @@ jobs:
 
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=${{ matrix.cfg.lot }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
@@ -125,12 +145,16 @@ jobs:
         - { comp: gcc   , arch: x86     , opts: "-mavx2 -mbmi2 -DEVE_USE_BMI_ON_AVX2" }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run: cd build && ctest --output-on-failure -j 8 --timeout 3600 -E ^doc.*.exe

@@ -13,6 +13,14 @@ concurrency:
   group: unit-arm-${{ github.ref }}
   cancel-in-progress: true
 
+## Do not move this gate to a job-level if: a matrix job skipped there reports under its
+## unexpanded name, and the required checks of main never report.
+env:
+  EVE_RUN_SUITE: >-
+    ${{ !github.event.pull_request.stack
+    || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+    || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
+
 jobs:
   ##################################################################################################
   ## ARM SVE256/512 Tests, under qemu
@@ -52,18 +60,22 @@ jobs:
         - { cfg: { comp: gcc, arch: sve2 , opts: -Wno-psabi }, chunk: { name: rest-c, targets: "unit.algo.exe examples.exe", tests: "^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." } }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile ${{ matrix.chunk.name }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ninja ${{ matrix.chunk.targets }} -j ${{ matrix.chunk.jobs || 4 }}
       - name: Run ${{ matrix.chunk.name }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "${{ matrix.chunk.tests }}"
@@ -89,18 +101,22 @@ jobs:
         - { name: rest, targets: "unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe", tests: "^unit\\.arch\\.|^unit\\.config\\.|^unit\\.meta\\.|^unit\\.internals\\.|^unit\\.polynomial\\.|^unit\\.combinatorial\\.|^unit\\.bessel\\.|^unit\\.elliptic\\.|^unit\\.memory\\.|^unit\\.special\\.|^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile ${{ matrix.chunk.name }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ninja ${{ matrix.chunk.targets }} -j 4
       - name: Run ${{ matrix.chunk.name }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "${{ matrix.chunk.tests }}"
