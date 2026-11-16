@@ -15,7 +15,7 @@
 #include <eve/module/core/regular/store_equivalent.hpp>
 #include <eve/memory/pointer.hpp>
 
-namespace eve::_
+EVE_NAMESPACE::_
 {
   // Iterator with a member store: checked by the constraint of that member
   template<typename T, typename Ptr>
