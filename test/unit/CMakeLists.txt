@@ -21,6 +21,22 @@ add_dependencies(unit.exe unit.arch.exe )
 glob_unit("unit" ${unit_root} "arch/*.cpp")
 
 ##==================================================================================================
+## Checks of the source tree, written in Python under tools/
+##==================================================================================================
+find_package(Python3 COMPONENTS Interpreter)
+if(Python3_Interpreter_FOUND)
+  add_test( NAME unit.internals.include_rules
+            COMMAND ${Python3_EXECUTABLE} -B ${PROJECT_SOURCE_DIR}/tools/include_rules/check.py ${PROJECT_SOURCE_DIR}
+          )
+  add_test( NAME unit.internals.include_rules.unittest
+            COMMAND ${Python3_EXECUTABLE} -B -m unittest test_check
+            WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/tools/include_rules
+          )
+else()
+  message(WARNING "[eve] Python 3 not found: the source tree checks under tools/ are not run")
+endif()
+
+##==================================================================================================
 ## GLOB and process internals unit tests
 ##==================================================================================================
 add_custom_target(unit.internals.exe         )

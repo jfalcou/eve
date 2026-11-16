@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
+#include <eve/config.hpp>
 #include <eve/deps/spy.hpp>
-#include <eve/arch/predef.hpp>
 
 #include <cstddef>
 #include <concepts>

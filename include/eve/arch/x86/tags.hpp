@@ -8,9 +8,9 @@
 #pragma once
 
 #include <eve/arch/cpu/tags.hpp>
-#include <eve/arch/x86/predef.hpp>
-#include <eve/detail/meta.hpp>
+#include <eve/config.hpp>
 #include <eve/deps/spy.hpp>
+#include <eve/detail/meta.hpp>
 
 namespace eve
 {

@@ -7,9 +7,9 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/predef.hpp>
-#include <eve/types/float16.hpp>
+#include <eve/config.hpp>
 #include <eve/traits/as_integer.hpp>
+#include <eve/types/float16.hpp>
 #include <type_traits>
 
 namespace eve::_

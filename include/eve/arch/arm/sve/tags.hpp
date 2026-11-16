@@ -7,8 +7,8 @@
 //==================================================================================================
 #pragma once
 
-#include <eve/arch/arm/predef.hpp>
 #include <eve/arch/cpu/tags.hpp>
+#include <eve/config.hpp>
 #include <eve/detail/meta.hpp>
 
 namespace eve
