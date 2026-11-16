@@ -49,13 +49,44 @@ namespace eve::_
 
 EVE_NAMESPACE
 {
+  //================================================================================================
+  //! @ingroup eve_memory
+  //! @{
+  //! @concept writable_simd_compatible_ptr
+  //! @brief   Specifies that `eve::store` can write a value of type `SIMD` through a `T`.
+  //! The concept `writable_simd_compatible_ptr<T, SIMD>` is satisfied if and only if `T` satisfies
+  //! `simd_compatible_ptr<T, SIMD>` and none of the pointers that `T` holds, directly or through
+  //! iterators, points to const data.
+  //!
+  //! @groupheader{Examples}
+  //!   - `float*` and `eve::aligned_ptr<float>` with `eve::wide<float>`
+  //!   - `eve::soa_ptr<int*, float*>` with `eve::wide<kumi::tuple<int, float>>`
+  //================================================================================================
   template<typename T, typename SIMD>
   concept writable_simd_compatible_ptr = simd_compatible_ptr<T, SIMD>
                                       && _::can_be_stored_v<SIMD, T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
+  //================================================================================================
+  //! @ingroup eve_memory
+  //! @{
+  //! @concept writable_logical_simd_compatible_ptr
+  //! @brief   Specifies that `eve::store` can write a logical value of type `SIMD` through a `T`.
+  //! The concept `writable_logical_simd_compatible_ptr<T, SIMD>` is satisfied if and only if `T`
+  //! satisfies `logical_simd_compatible_ptr<T, SIMD>` and does not point to const data.
+  //!
+  //! @groupheader{Examples}
+  //!   - `eve::logical<float>*` and `eve::aligned_ptr<eve::logical<float>>` with
+  //!     `eve::logical<eve::wide<float>>`
+  //================================================================================================
   template<typename T, typename SIMD>
   concept writable_logical_simd_compatible_ptr = logical_simd_compatible_ptr<T, SIMD>
                                               && _::can_be_stored_v<SIMD, T>;
+  //================================================================================================
+  //! @}
+  //================================================================================================
 
   template<typename Options>
   struct store_t : relative_conditional_callable<store_t, Options>
