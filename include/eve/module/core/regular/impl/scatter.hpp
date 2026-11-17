@@ -37,15 +37,14 @@ EVE_NAMESPACE::_
   {
     // Aggregate can be optimised if there is no mask
     // Mask would require slice on ignore_*** which we don't do atm
-    if constexpr(aggregated_abi<T> && !O::contains(condition_key))
+    if constexpr(aggregated_abi<T> && match_option<condition_key, O, ignore_none_>)
     {
       // slice and scatter both parts;
       auto[lv,hv] = v.slice();
       auto[li,hi] = idx.slice();
 
-      // Unalign is required as the alignment of p (if any) is on the total size not the small one
-      scatter[o](hv,unalign(p) + lv.size(),hi);
-      scatter[o](lv,p                     ,li);
+      scatter[o](lv,p,li);
+      scatter[o](hv,p,hi);
     }
     else
     {
