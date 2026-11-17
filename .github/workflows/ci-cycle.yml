@@ -50,7 +50,7 @@ jobs:
     outputs:
       report: ${{ steps.stack.outputs.report }}
     steps:
-      ## Do not drop this test: a middle layer of a stack runs its jobs with every step skipped.
+      ## Do not drop this test: below the top of a stack, every job runs with its steps skipped.
       - id: stack
         env:
           GH_TOKEN: ${{ github.token }}
@@ -59,7 +59,7 @@ jobs:
             echo report=true
           else
             gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.stack as $s
-              | "report=\($s == null or .base.ref == $s.base.ref or $s.position == $s.size)"'
+              | "report=\($s == null or $s.position == $s.size)"'
           fi >> "$GITHUB_OUTPUT"
 
   cycle:

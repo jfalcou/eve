@@ -18,7 +18,6 @@ concurrency:
 env:
   EVE_RUN_SUITE: >-
     ${{ !github.event.pull_request.stack
-    || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
     || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
 
 jobs:
