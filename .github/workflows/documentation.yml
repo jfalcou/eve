@@ -15,12 +15,25 @@ concurrency:
   group: doc-${{ github.ref }}
   cancel-in-progress: true
 
+## Do not move this gate to a job-level if: a matrix job skipped there reports under its
+## unexpanded name, and the required checks of main never report.
+env:
+  EVE_RUN_SUITE: >-
+    ${{ !github.event.pull_request.stack
+    || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+    || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
+
 jobs:
   #################################################################################################
   # DOCUMENTATION TESTS
   #################################################################################################
   doc-macos:
-    runs-on: [macos-15]
+    ## Do not send a middle layer to macos-15: its steps skip, and the hosted macOS pool is short.
+    runs-on: >-
+      ${{ (!github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size)
+      && 'macos-15' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
@@ -29,14 +42,18 @@ jobs:
         - { comp: 'gcc'   }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
+        if: env.EVE_RUN_SUITE == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compile Documentation Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  cd build && ninja doc.exe -j 2
       - name: Run Documentation Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
 
   doc-linux:
@@ -54,16 +71,20 @@ jobs:
         - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
     steps:
       - name: Fetch current branch
+        if: env.EVE_RUN_SUITE == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           mkdir build && cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake"
       - name: Compile Documentation Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build && ninja doc.exe
       - name: Run Documentation Tests
+        if: env.EVE_RUN_SUITE == 'true'
         run:  |
           cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
 
@@ -74,6 +95,10 @@ jobs:
   # generated documentation lost something on the way.
   #################################################################################################
   doc-doxygen:
+    if: >-
+      !github.event.pull_request.stack
+      || github.event.pull_request.base.ref == github.event.pull_request.stack.base.ref
+      || github.event.pull_request.stack.position == github.event.pull_request.stack.size
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10
