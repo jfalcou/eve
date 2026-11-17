@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Unit Tests Build Modes
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -13,22 +14,29 @@ concurrency:
   group: unit-modes-${{ github.ref }}
   cancel-in-progress: true
 
-## Do not move this gate to a job-level if: a matrix job skipped there reports under its
-## unexpanded name, and the required checks of main never report.
-env:
-  EVE_RUN_SUITE: >-
-    ${{ !github.event.pull_request.stack
-    || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
-
 jobs:
+  ##################################################################################################
+  ## Below the top of a stack, every job starts bare on ubuntu-latest and skips its steps. Do not
+  ## skip a job by its if instead: a matrix job skipped there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}" >> "$GITHUB_OUTPUT"
+
   ##################################################################################################
   ## Special non-arch-specific tests
   ##################################################################################################
   special:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -36,28 +44,28 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: "-march=native -O3 -DEVE_SPECIAL_TESTS" }
     steps:
       - name: Print Runner Info
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile Unit Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja -j 4 unit.internals.float16.exe
       - name: Running Unit Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R unit.internals.float16.exe
@@ -66,10 +74,9 @@ jobs:
   ## Check no PCH mode
   ##################################################################################################
   no_pch:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -78,60 +85,60 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: "-msse2" }
     steps:
       - name: Print Runner Info
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_USE_PCH=0 \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.core.exe -j 4
       - name: "Chunk 1: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
       - name: "Chunk 1: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 2: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.api.exe unit.math.exe -j 4
       - name: "Chunk 2: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
       - name: "Chunk 2: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 3: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
@@ -140,10 +147,9 @@ jobs:
   ## Check External dependencies
   ##################################################################################################
   externals:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -152,13 +158,13 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: "-msse2"        }
     steps:
       - name: Print Runner Info
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Install KUMI
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir 3rdparty
           cd 3rdparty
@@ -167,7 +173,7 @@ jobs:
           cmake -B build -G Ninja -DKUMI_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Install RABERU
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd 3rdparty
           git clone https://github.com/jfalcou/raberu.git
@@ -175,7 +181,7 @@ jobs:
           cmake -B build -G Ninja -DRABERU_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Install SPY 
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd 3rdparty
           git clone https://github.com/jfalcou/spy.git
@@ -183,10 +189,10 @@ jobs:
           cmake -B build -G Ninja -DSPY_BUILD_TEST=OFF
           cmake --install build --prefix /usr
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
@@ -194,44 +200,44 @@ jobs:
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
 
       - name: "Chunk 1: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.core.exe -j 4
       - name: "Chunk 1: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
       - name: "Chunk 1: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 2: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.api.exe unit.math.exe -j 4
       - name: "Chunk 2: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
       - name: "Chunk 2: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 3: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
@@ -240,10 +246,9 @@ jobs:
   ## Full emulation tests
   ##################################################################################################
   nosimd:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -253,58 +258,58 @@ jobs:
 
     steps:
       - name: Print Runner Info
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.core.exe -j 4
       - name: "Chunk 1: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
       - name: "Chunk 1: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 2: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.api.exe unit.math.exe -j 4
       - name: "Chunk 2: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
       - name: "Chunk 2: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 3: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."
@@ -313,10 +318,9 @@ jobs:
   ## C++26 preemptive test
   ##################################################################################################
   preemptive:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -326,52 +330,52 @@ jobs:
         - { comp: gcc    , arch: x86    , opts: "-std=c++26"  }
     steps:
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: "Chunk 1: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.core.exe -j 4
       - name: "Chunk 1: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.core\."
       - name: "Chunk 1: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
 
       - name: "Chunk 2: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.api.exe unit.math.exe -j 4
       - name: "Chunk 2: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.api\.|^unit\.math\."
       - name: "Chunk 2: Cleanup"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja clean
       - name: "Chunk 3: Compile"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.arch.exe unit.config.exe unit.meta.exe unit.internals.exe unit.polynomial.exe unit.combinatorial.exe unit.bessel.exe unit.elliptic.exe unit.memory.exe unit.special.exe unit.algo.exe examples.exe -j 4
       - name: "Chunk 3: Run"
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit\.arch\.|^unit\.config\.|^unit\.meta\.|^unit\.internals\.|^unit\.polynomial\.|^unit\.combinatorial\.|^unit\.bessel\.|^unit\.elliptic\.|^unit\.memory\.|^unit\.special\.|^unit\.algo\.|^examples\."

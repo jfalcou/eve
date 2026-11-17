@@ -22,6 +22,7 @@ run-name: compile-cost
 ## against a different compiler would be describing the upgrade.
 ####################################################################################################
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main

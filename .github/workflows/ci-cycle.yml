@@ -51,6 +51,7 @@ jobs:
       report: ${{ steps.stack.outputs.report }}
     steps:
       ## Do not drop this test: below the top of a stack, every job runs with its steps skipped.
+      ## It reads the stack at report time, so a reshape after the run only changes the report.
       - id: stack
         env:
           GH_TOKEN: ${{ github.token }}

@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Unit Tests Windows
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -13,20 +14,29 @@ concurrency:
   group: unit-windows-${{ github.ref }}
   cancel-in-progress: true
 
-## Do not move this gate to a job-level if: a matrix job skipped there reports under its
-## unexpanded name, and the required checks of main never report.
-env:
-  EVE_RUN_SUITE: >-
-    ${{ !github.event.pull_request.stack
-    || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}
-
 jobs:
+  ##################################################################################################
+  ## Below the top of a stack, every job starts bare on ubuntu-latest and skips its steps. Do not
+  ## skip a job by its if instead: a matrix job skipped there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}" >> "$GITHUB_OUTPUT"
+
   ##################################################################################################
   ## The family lot in one job on the self-hosted Windows machine, 8 cores and 64 GB.
   ##################################################################################################
   windows:
+    needs: gate
     name: windows (${{ matrix.cfg.name }})
-    runs-on: [self-hosted, Windows]
+    runs-on: ${{ needs.gate.outputs.run == 'true' && fromJSON('["self-hosted","Windows"]') || 'ubuntu-latest' }}
     defaults:
       run:
         shell: bash
@@ -39,28 +49,28 @@ jobs:
 
     steps:
       - name: Enter Git Bash
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         shell: cmd
         run: echo C:\Program Files\Git\bin>> %GITHUB_PATH%
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       ## Ninja needs the MSVC environment already loaded, where the Visual Studio generator found it
       ## on its own.
       - name: Load the MSVC environment
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: ilammy/msvc-dev-cmd@v1
       ## The Debug flags without /Zi, so CMake copies no compile PDB to every test reusing the
       ## precompiled header. Keep the dashes: Git Bash rewrites a value starting with / as a path.
       - name: Running CMake for ${{ matrix.cfg.name }} with ${{ matrix.cfg.options }}
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cmake -G Ninja -DEVE_TEST_LOT=family -DEVE_HEAVY_POOL=3 -B build -DCMAKE_BUILD_TYPE=${{ matrix.cfg.mode }} ${{ matrix.cfg.toolchain }} -DCMAKE_CXX_FLAGS="${{ matrix.cfg.options }}" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
       - name: Compiling Unit Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: cmake --build build --target unit.exe --parallel 8
       - name: Running Unit Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd build
           ctest --output-on-failure --parallel 8 -E ^doc.*.exe
@@ -70,32 +80,32 @@ jobs:
   ## the only Windows runner and GitHub gives it to the jobs of separate workflows in arrival order.
   ##################################################################################################
   doc-windows:
-    needs: windows
+    needs: [gate, windows]
     if: ${{ !cancelled() }}
-    runs-on: [self-hosted, Windows]
+    runs-on: ${{ needs.gate.outputs.run == 'true' && fromJSON('["self-hosted","Windows"]') || 'ubuntu-latest' }}
     defaults:
       run:
         shell: bash
     steps:
       - name: Enter Git Bash
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         shell: cmd
         run: echo C:\Program Files\Git\bin>> %GITHUB_PATH%
       - name: Fetch current branch
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Load the MSVC environment
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         uses: ilammy/msvc-dev-cmd@v1
       - name: Prepare EVE with MSVC
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS="-DEVE_NO_FORCEINLINE" -DCMAKE_CXX_FLAGS_DEBUG="-Ob0 -Od -RTC1"
       - name: Compile Documentation Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: cmake --build build --target doc.exe --parallel 8
       - name: Run Documentation Tests
-        if: env.EVE_RUN_SUITE == 'true'
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd build
           ctest --output-on-failure --parallel 8 -R ^doc.*.exe
