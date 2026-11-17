@@ -42,6 +42,7 @@ jobs:
     if: >-
       !github.event.pull_request.stack
       || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+      || contains(github.event.pull_request.labels.*.name, 'ci:full')
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10

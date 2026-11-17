@@ -16,8 +16,9 @@ concurrency:
 
 jobs:
   ##################################################################################################
-  ## Below the top of a stack, every job starts bare on ubuntu-latest and skips its steps. Do not
-  ## skip a job by its if instead: a matrix job skipped there reports under its unexpanded name.
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
   ##################################################################################################
   gate:
     runs-on: ubuntu-latest
@@ -28,7 +29,8 @@ jobs:
       - id: stack
         run: >-
           echo "run=${{ !github.event.pull_request.stack
-          || github.event.pull_request.stack.position == github.event.pull_request.stack.size }}" >> "$GITHUB_OUTPUT"
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
 
   ##################################################################################################
   ## Special non-arch-specific tests

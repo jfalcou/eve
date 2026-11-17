@@ -50,7 +50,8 @@ jobs:
     outputs:
       report: ${{ steps.stack.outputs.report }}
     steps:
-      ## Do not drop this test: below the top of a stack, every job runs with its steps skipped.
+      ## Do not drop this test: below the top of a stack, on a PR without the ci:full label, every
+      ## job runs with its steps skipped.
       ## It reads the stack at report time, so a reshape after the run only changes the report.
       - id: stack
         env:
@@ -60,7 +61,8 @@ jobs:
             echo report=true
           else
             gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.stack as $s
-              | "report=\($s == null or $s.position == $s.size)"'
+              | ($s == null or $s.position == $s.size or any(.labels[]; .name == "ci:full"))
+              | "report=\(.)"'
           fi >> "$GITHUB_OUTPUT"
 
   cycle:
