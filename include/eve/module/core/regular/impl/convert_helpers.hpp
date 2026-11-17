@@ -209,7 +209,7 @@ struct pieces_t
       if constexpr( std::is_signed_v<T> ) return eve::interleave((w < 0).mask(), w);
       else return eve::interleave(zero(as(w)), w);
     }
-  };
+  }
 };
 
 // Convert integer from 2^n -> 2^n+1

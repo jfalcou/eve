@@ -63,14 +63,14 @@ EVE_NAMESPACE::_
   {
     T z = valmax(as<T>{}) / maxi;
     return (z < mini) ? valmax(as<T>{}) : mini * maxi;
-  };
+  }
 
   template<typename T,  typename UT>
   static  auto aux2_mul(const auto sgn, const T mini, const T maxi, const UT amini, const UT amaxi) noexcept
   {
     UT z = valmax(as<T>{}) / amaxi;
     return (z < amini) ? (sgn ? valmin(as<T>{}) : valmax(as<T>{})) : mini * maxi;
-  };
+  }
 
   template<callable_options O, typename T, typename U>
    constexpr auto mul_(EVE_REQUIRES(cpu_), O const& opts, T a, U b) noexcept

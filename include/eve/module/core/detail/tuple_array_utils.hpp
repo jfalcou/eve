@@ -21,5 +21,5 @@ EVE_NAMESPACE::_
       using r_t = kumi::apply_traits_t<eve::common_value, PT>;
       return kumi::map([](auto m){return upgrade(r_t(m)); }, t);
     }
-  };
+  }
 }

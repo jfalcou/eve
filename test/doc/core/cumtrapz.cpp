@@ -19,4 +19,4 @@ int main()
   kumi::tuple wt{wf_t(e), 12.0f, 13.0f, 100.0f};
   std::cout << "wt                                       " << wt  << std::endl;
   std::cout << "eve::cumtrapz(wt)                        " << eve::cumtrapz(wt) << std::endl;
-};
+}

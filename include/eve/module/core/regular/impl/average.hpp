@@ -37,14 +37,14 @@ EVE_NAMESPACE::_
     {
       if constexpr(O::contains(raw)) return two_add[raw];
       else return two_add[pedantic];
-    };
+    }
 
     static  auto pair_add(auto pair0, auto r1, auto invn) noexcept
     {
       auto [r, e0] = pair0;
       auto [s, e1] = eve::two_fma_approx(r1, invn, r);
       return zip(s, e0+e1);
-    };
+    }
   };
 
   template<value T0, value ... Ts, callable_options O>

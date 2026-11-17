@@ -19,7 +19,7 @@ for_each_group_size(auto op)
   constexpr auto ssz = std::bit_width(std::size_t(T::size()));
   [&]<std::size_t... I>(std::index_sequence<I...>) { (op(eve::lanes<1 << I>), ...); }
   (std::make_index_sequence<ssz> {});
-};
+}
 
 template<typename... Ts>
 auto

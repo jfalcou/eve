@@ -12,7 +12,7 @@ template <class U>
 struct obj_const_fraction
 {
   U z;
-  obj_const_fraction(U v) : z(v){};
+  obj_const_fraction(U v) : z(v){}
   auto operator()() { return z;  }
 };
 

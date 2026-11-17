@@ -39,7 +39,7 @@ template < typename T> T std_pow_abs(T a,  T b)
     auto pb = [](auto e, auto f) { return std::pow(std::abs(e), f); };
     return tts::map(pb, a, b);
   }
-};
+}
 
 //==================================================================================================
 // pow_abs  tests

@@ -22,4 +22,4 @@ int main()
   std::cout << t << std::endl;
   std::cout << eve::unfold(t) << std::endl;
 
-};
+}

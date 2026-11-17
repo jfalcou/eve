@@ -64,7 +64,7 @@ namespace eve
   inline constexpr auto                   func = functor<func_t>;
   inline constexpr auto           chained_func = functor<chained_func_t>;
   inline constexpr auto           ew_drop_func = functor<ew_drop_func_t>;
-};
+}
 
 EVE_NAMESPACE::_
 {

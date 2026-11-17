@@ -22,8 +22,8 @@ EVE_NAMESPACE
     template<floating_value T> struct welford_result
     {
       using type = T;
-      operator T()   const noexcept { return average; };
-      auto upgrade() const noexcept { return welford_result<upgrade_t<T>>(upgrade(count), count); };
+      operator T()   const noexcept { return average; }
+      auto upgrade() const noexcept { return welford_result<upgrade_t<T>>(upgrade(count), count); }
 
       T average = 0;
       std::size_t count = 1;

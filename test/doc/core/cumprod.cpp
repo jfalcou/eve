@@ -23,4 +23,4 @@ int main()
   std::cout << "eve::cumprod(wt)                     " << eve::cumprod(wt)                    << std::endl;
 
 
-};
+}

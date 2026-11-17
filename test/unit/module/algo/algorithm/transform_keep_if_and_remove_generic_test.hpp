@@ -46,7 +46,7 @@ void transform_keep_if_generic_test_aligned_ptr(eve::as<T>, Algo alg, Op op)
   std::vector<e_t> actual{data.data(), alg(rng, func)};
 
   TTS_EQUAL(expected, actual);
-};
+}
 
 template <typename T, typename Algo>
 void remove_generic_test_page_ends(eve::as<T>, Algo alg)

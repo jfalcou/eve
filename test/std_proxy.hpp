@@ -19,8 +19,7 @@
 */
 
 #define MAKE_STD_PROXY(NAME)                                            \
-  template <typename T>                                                 \
-  constexpr T std_##NAME(T x)                                           \
+  inline constexpr auto std_##NAME = []<typename T>(T x) -> T           \
   {                                                                     \
     if constexpr (std::same_as<T, eve::float16_t>)                      \
       return static_cast<eve::float16_t>(std::NAME(static_cast<float>(x)));\
