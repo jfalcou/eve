@@ -64,11 +64,9 @@ struct polar_coords : eve::struct_support<polar_coords,float,float>
 TTS_CASE("Check eve::max_native_width works for tuples")
 {
   using T = kumi::tuple<eve::logical<std::uint32_t>, double>;
-  using bundle = eve::wide<T>;
-
   constexpr auto ecl = eve::max_native_width_v<eve::logical<std::uint32_t>>;
   constexpr auto ecd = eve::max_native_width_v<double>;
 
-  TTS_EQUAL(bundle::size(), std::min(ecl, ecd));
-  TTS_EQUAL(eve::wide<polar_coords>::size(), eve::max_native_width_v<float>);
+  TTS_EQUAL(eve::max_native_width_v<T>, std::min(ecl, ecd));
+  TTS_EQUAL(eve::max_native_width_v<polar_coords>, eve::max_native_width_v<float>);
 };

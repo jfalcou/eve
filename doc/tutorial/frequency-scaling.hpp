@@ -13,23 +13,16 @@ sure you might speed up the strlen somewhat but then all the code after will be
 slower.
 
 For big datasets the price of lower frequency is often outweighed by processing
-more numbers in open operation and seed ups of 15% are not unheard of.
+more numbers in one operation, and speed-ups of 15% are not unheard of.
 
-For us, This lead to a dilemma in the API design: if the user is on the AVX512 system,
-most likely they expect the register to be 64 bytes. But we suspect this is not what
-they actually want. So we decided that `eve::wide` on avx512 is by default 64 bytes
-but algorithms by default use 32 bytes. If you want to get an algorithm to use 64 byte
-you can pass `eve::algo::allow_frequency_scaling` trait.
-There are also typedefs `nofs_wide`, `nofs_logical` where `nofs` stands for
-"no frequency scaling".
+This was a sticking point in the API design, but we decided to go with 32 byte
+registers by default on AVX512. You can override that default with the
+`EVE_AVX512_DEFAULT_64_BYTES` define. The wider registers are always available through
+the `eve::max_native_wide` and `eve::max_native_logical` typedefs.
+For algorithms, there is the `eve::algo::allow_frequency_scaling` trait.
 
-If you would like the default register size to be 64 bytes on AVX512, for example
-because you are on AMD where this problem does not exist, or you just have a domain
-where that makes sense - you can define EVE_AVX512_DEFAULT_64_BYTES in your compiler
-options.
-
-@note Other than on avx512 on intel we always use the maximum width of the register,
-since we expect the compiler to do it anyways and it is usually accepted.
+@note Other than on intel avx512 we always use the maximum register width, since we
+expect the compiler to do so anyway and it is generally accepted.
 If you want to set a specific width for an algorithm, you can always use
 `eve::algo::force_width`.
 

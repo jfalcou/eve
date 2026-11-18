@@ -22,7 +22,7 @@ EVE_EXPERIMENTAL_NAMESPACE
   using native_simd = typename _::conditional_t
                       < (std::integral<T> && current_api == avx )
                       , eve::wide<T, 16 / sizeof(T)>
-                      , eve::wide<T, eve::wide<T>::abi_type::bytes / sizeof(T)>
+                      , eve::max_native_wide<T>
                       >;
 
   template<typename T>

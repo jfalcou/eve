@@ -57,10 +57,10 @@ TTS_CASE("eve::views::map, preprocess")
   std::vector<int> v;
 
   using up = int*;
-  using ap = eve::nofs_aligned_ptr<int>;
+  using ap = eve::aligned_ptr<int>;
 
   // double because the map operation returns double
-  constexpr auto N = eve::nofs_width_v<double>;
+  constexpr auto N = eve::expected_width_v<double>;
 
   using ui     = eve::algo::ptr_iterator<int*, N>;
   using ai     = eve::algo::ptr_iterator<eve::aligned_ptr<int, N>, N>;
@@ -79,5 +79,5 @@ TTS_CASE("eve::views::map, preprocess")
 
   TTS_TYPE_IS(decltype(processed.begin()), map_ai);
   TTS_TYPE_IS(decltype(processed.end()), map_ui);
-  TTS_TYPE_IS(decltype(eve::load(processed.begin())), eve::nofs_wide<double>);
+  TTS_TYPE_IS(decltype(eve::load(processed.begin())), eve::wide<double>);
 };

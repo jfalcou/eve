@@ -21,7 +21,7 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
   using v_i = std::vector<int>::iterator;
   using zip_vi = eve::views::zip_iterator<v_i, v_i>;
 
-  using ui_it = eve::algo::ptr_iterator<int*, eve::nofs_width_v<int>>;
+  using ui_it = eve::algo::ptr_iterator<int*, eve::expected_width_v<int>>;
   using zip_ui = eve::views::zip_iterator<ui_it, ui_it>;
 
   zip_vi zf{v1.begin(), v2.begin()};
@@ -37,11 +37,11 @@ TTS_CASE("zip_iterator, preprocess range, scalar end")
 TTS_CASE("zip_iterator, preprocess range, zip end")
 {
   using u      = int const*;
-  using a      = eve::nofs_aligned_ptr<int const>;
+  using a      = eve::aligned_ptr<int const>;
   using zip_au = eve::views::zip_iterator<a, u>;
   using zip_uu = eve::views::zip_iterator<u, u>;
 
-  constexpr auto N = eve::nofs_width_v<int>;
+  constexpr auto N = eve::expected_width_v<int>;
   using a_it = eve::algo::ptr_iterator<a, N>;
   using u_it = eve::algo::ptr_iterator<u, N>;
   using zip_au_it = eve::views::zip_iterator<a_it, u_it>;
@@ -94,11 +94,11 @@ TTS_CASE("zip_iterator, preprocess range, zip end")
 
 TTS_CASE("preprocess zip range, traits")
 {
-  constexpr auto N = eve::nofs_width_v<std::uint32_t>;
+  constexpr auto N = eve::expected_width_v<std::uint32_t>;
   using uc = std::int8_t*;
   using ac = eve::aligned_ptr<std::int8_t, N>;
   using ui = std::uint32_t*;
-  using ai = eve::nofs_aligned_ptr<std::uint32_t>;
+  using ai = eve::aligned_ptr<std::uint32_t>;
 
   using uc_it = eve::algo::ptr_iterator<uc, N>;
   using ui_it = eve::algo::ptr_iterator<ui, N>;
@@ -200,7 +200,7 @@ TTS_CASE("preprocess zip range, common_type")
   std::array<std::uint32_t, 64> i;
 
   {
-    constexpr auto N = eve::nofs_width_v<std::uint32_t>;
+    constexpr auto N = eve::expected_width_v<std::uint32_t>;
     using uc_it       = eve::algo::ptr_iterator<std::int8_t*, N>;
     using ui_it       = eve::algo::ptr_iterator<std::uint32_t*, N>;
     using conv_uc_it  = eve::views::converting_iterator<uc_it, std::uint32_t>;

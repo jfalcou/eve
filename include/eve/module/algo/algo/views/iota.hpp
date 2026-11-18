@@ -139,7 +139,7 @@ EVE_ALGO_VIEWS_NAMESPACE
     template <typename T>
     EVE_ABI auto operator()(T base, T step) const
     {
-      constexpr auto N = eve::nofs_width_v<T>;
+      constexpr auto N = eve::expected_width_v<T>;
       return iota_with_step_iterator<T, N>{base, step, 0};
     }
 

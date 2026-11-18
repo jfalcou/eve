@@ -118,37 +118,27 @@ EVE_NAMESPACE
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!   @var nofs_width_v
-  //!   @brief nofs stands for "no frequency scaling".
+  //!   @brief Computes the expected width of a given type
   //!
-  //!   You can find more explanations in the 'frequency scaling tutorial'.
-  //!   This refers to extreme frequency scaling one encounters when working with 64 byte
-  //!   registers on intel. The processor scales frequency drammatically for a substantial
-  //!   period of time. So even if the algorithm itself will run faster the overall perf
-  //!   will go down. Generally speaking, 64 byte registers on intel make sense only
-  //!   for really big data sets. `nofs_width` will produce 32 byte registers on avx512.
-  //!   If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES.
-  //!   This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.
+  //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
-  //!   @note frequency scaling exists for avx2 as well but is generally considered
-  //!   acceptable. For example popular implementations of libc use avx2, so you are very
-  //!   likely already have it. You can always set the width manually if needed.
-  //!
-  //!   @note `eve::algo` by default will use `nofs_width`. See `allow_frequency_scaling`
-  //!   trait.
+  //!   Default register width for a type. Sometimes is smaller than max_native_width.
+  //!   @see [Frequency Scaling](@ref freqscale) for an explanation.
   //!
   //!   @tparam Type  Type of value to assess
-  //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi. defaults to current.
+  //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi.
   //!
   //! @}
   //================================================================================================
-  template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  constexpr width_type nofs_width_v = max_native_width_v<T, ABI>;
+#if defined (EVE_DOXYGEN_INVOKED)
+  template<typename T, regular_abi = eve::current_abi_type>
+  inline constexpr width_type expected_width_v = /* Implementation defined */;
+#else
+  template<typename T, regular_abi ABI = eve::current_abi_type>
+  inline constexpr width_type expected_width_v = max_native_width_v<T, ABI>;
 
-  template <scalar_value T>
-  constexpr width_type nofs_width_v<T, x86_512_> =
+  template<typename T>
+  inline constexpr width_type expected_width_v<T, x86_512_> =
     x86_512_::avx512_default_64_bytes ? max_native_width_v<T, x86_512_> : max_native_width_v<T, x86_256_>;
-
-  template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  using nofs_width_t = lanes_t<nofs_width_v<T>>;
+#endif
 }

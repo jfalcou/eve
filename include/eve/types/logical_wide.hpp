@@ -89,8 +89,8 @@ EVE_NAMESPACE
     using mask_type = wide<Type, Width>;
 
     //! @brief Generates a eve::wide from a different type `T` and width `N`.
-    //! If unspecified, `N` is computed as `max_native_width_v<T>`.
-    template<typename T, width_type N = max_native_width_v<T>> using rebind = logical<wide<T,N>>;
+    //! If unspecified, `N` is computed as `expected_width_v<T>`.
+    template<typename T, width_type N = expected_width_v<T>> using rebind = logical<wide<T,N>>;
 
     //! Generates a eve::wide type from a different width `N`.
     template<width_type N> using rescale = logical<wide<Type,N>>;
@@ -522,11 +522,10 @@ EVE_NAMESPACE
   template<arithmetic_scalar_value T, arithmetic_scalar_value U, width_type C1, width_type C2>
   auto operator!=(logical<wide<T,C1>> a, logical<wide<U,C2>> b) = delete;
 
-  //================================================================================================
-  // nofs (no frequency scaling) helpers
-  //================================================================================================
-  template <plain_scalar_value T>
-  using nofs_logical = logical<wide<T, nofs_width_v<T>>>;
+  //! @brief The widest eve::logical of `T` that fits in a single native register.
+  //! Can be wider than `eve::logical<eve::wide<T>>`, see [Frequency Scaling](@ref freqscale).
+  template<plain_scalar_value T>
+  using max_native_logical = logical<wide<T, max_native_width_v<T>>>;
 
   //================================================================================================
   //! @}

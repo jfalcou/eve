@@ -31,7 +31,7 @@ TTS_CASE_TPL( "Check for experimental::native_simd compliance", ::tts::arithmeti
   }
   else
   {
-    TTS_EQUAL(sizeof(eve_type)     , sizeof(eve::wide<T>));
-    TTS_EQUAL(sizeof(eve_mask_type), sizeof(eve::logical<eve::wide<T>>));
+    TTS_EQUAL(sizeof(eve_type)     , sizeof(eve::max_native_wide<T>));
+    TTS_EQUAL(sizeof(eve_mask_type), sizeof(eve::max_native_logical<T>));
   }
 };
