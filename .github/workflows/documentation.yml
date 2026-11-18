@@ -7,6 +7,7 @@ name: EVE - Documentation Tests
 run-name: documentation
 
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -16,11 +17,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  ##################################################################################################
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
+
   #################################################################################################
   # DOCUMENTATION TESTS
   #################################################################################################
   doc-macos:
-    runs-on: [macos-15]
+    needs: gate
+    runs-on: ${{ needs.gate.outputs.run == 'true' && 'macos-15' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
@@ -29,20 +48,24 @@ jobs:
         - { comp: 'gcc'   }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compile Documentation Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ninja doc.exe -j 2
       - name: Run Documentation Tests
+        if: needs.gate.outputs.run == 'true'
         run: cd build && ctest --output-on-failure -j 3 -R ^doc.*.exe
 
   doc-linux:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
+    container: ${{ needs.gate.outputs.run == 'true' && 'ghcr.io/jfalcou/compilers:v10' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -54,16 +77,20 @@ jobs:
         - { comp: gcc  , arch: ppc64  , opts: -Wno-psabi }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build && cd build
           cmake ..  -G Ninja -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake"
       - name: Compile Documentation Tests
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build && ninja doc.exe
       - name: Run Documentation Tests
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build && ctest --output-on-failure -j 4 -R ^doc.*.exe
 
@@ -74,6 +101,8 @@ jobs:
   # generated documentation lost something on the way.
   #################################################################################################
   doc-doxygen:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jfalcou/compilers:v10

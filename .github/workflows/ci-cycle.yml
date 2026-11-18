@@ -42,9 +42,32 @@ permissions:
   pull-requests: write
 
 jobs:
-  cycle:
-    ## A cancelled run leaves its cycle without a report, and a skipped job waits for no runner.
+  ## A cancelled run leaves its cycle without a report, and a skipped job waits for no runner.
+  layer:
     if: github.event.workflow_run.conclusion != 'cancelled'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      report: ${{ steps.stack.outputs.report }}
+    steps:
+      ## Do not drop this test: below the top of a stack, on a PR without the ci:full label, every
+      ## job runs with its steps skipped.
+      ## It reads the stack at report time, so a reshape after the run only changes the report.
+      - id: stack
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = workflow_dispatch ] || [ -z "$PR" ]; then
+            echo report=true
+          else
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.stack as $s
+              | ($s == null or $s.position == $s.size or any(.labels[]; .name == "ci:full"))
+              | "report=\(.)"'
+          fi >> "$GITHUB_OUTPUT"
+
+  cycle:
+    needs: layer
+    if: needs.layer.outputs.report == 'true'
     ## On a hosted runner, the report waits for the pool the unit workflows fill, for hours.
     runs-on: [self-hosted, avx512]
     ## Do not drop -u root: the image has no gh, which the action fetches into /usr/local.

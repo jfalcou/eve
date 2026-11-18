@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Randomized Precision Tests
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -15,12 +16,29 @@ concurrency:
 
 jobs:
   ##################################################################################################
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
+
+  ##################################################################################################
   ## Randomized precision tests
   ##################################################################################################
   random:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
+    container: ${{ needs.gate.outputs.run == 'true' && 'ghcr.io/jfalcou/compilers:v10' || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -30,9 +48,11 @@ jobs:
         - { comp: clang, arch: aarch64, opts: -Wno-psabi}
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
 
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
@@ -41,11 +61,13 @@ jobs:
                     -DEVE_BUILD_RANDOM=ON
 
       - name: Compile Random Sampling Tests
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja random.exe -j 4
 
       - name: Running Random Sampling Tests
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 -R ^random.*.exe

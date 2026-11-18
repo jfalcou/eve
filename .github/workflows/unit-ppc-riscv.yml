@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Unit Tests PowerPC and RISC-V
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -15,14 +16,30 @@ concurrency:
 
 jobs:
   ##################################################################################################
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
+
+  ##################################################################################################
   ## PPC Tests, under qemu
   ##################################################################################################
   other-arch:
+    needs: gate
     name: other-arch (${{ matrix.cfg.comp }}, ${{ matrix.cfg.arch }}, ${{ matrix.chunk.name }})
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -39,18 +56,22 @@ jobs:
         - { cfg: { comp: gcc, arch: ppc64, opts: -Wno-psabi }, chunk: { name: rest-c, targets: "unit.algo.exe examples.exe", tests: "^unit\\.algo\\.[b-z]|^unit\\.algo\\.array|^examples\\." } }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_HEAVY_POOL=2 -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile ${{ matrix.chunk.name }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja ${{ matrix.chunk.targets }} -j 4
       - name: Run ${{ matrix.chunk.name }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -R "${{ matrix.chunk.tests }}"
@@ -59,10 +80,9 @@ jobs:
   ## RISC-V Targets
   ##################################################################################################
   riscv:
+    needs: gate
     runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -72,23 +92,28 @@ jobs:
         - { comp: clang , arch: riscv, runner: "run_rvv256",       opts: "-mrvv-vector-bits=256 -march=rv64gcv_zfh_zvfh -O3" }
     steps:
       - name: Print Runner Info
+        if: needs.gate.outputs.run == 'true'
         run: |
           echo "CPU cores: $(nproc)"
           echo "Memory: $(free -h | grep '^Mem:' | awk '{print $2}')"
           echo "Available disk space: $(df -h / | tail -1 | awk '{print $4 "/" $2}')"
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=family -DEVE_RUNNER_SCRIPT=${{ matrix.cfg.runner }} -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd build
           ninja unit.meta.exe unit.arch.exe unit.config.exe unit.core.bit_cast.exe unit.api.regular.wide.exe unit.core.simd_cast.exe unit.core.count_true.exe unit.memory.store.exe unit.memory.store_equivalent.exe -j 4
           ctest --output-on-failure -j 4 --timeout 3600 -R "^unit.meta.*.exe|^unit.arch.*.exe|^unit.config.*.exe|unit.core.bit_cast.exe|unit.api.regular.wide.exe|unit.core.simd_cast.exe|unit.core.count_true.exe|unit.memory.store.*"
           ninja clean
       - name: Compiling Big Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run: |
           cd build
           ninja unit.api.compress.exe -j 2

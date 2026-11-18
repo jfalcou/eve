@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Unit Tests macOS
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -15,10 +16,28 @@ concurrency:
 
 jobs:
   ##################################################################################################
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
+
+  ##################################################################################################
   ## The native cardinal alone, compiled first: every other job of this file waits for it.
   ##################################################################################################
   native-macos:
-    runs-on: [macos-15]
+    needs: gate
+    runs-on: ${{ needs.gate.outputs.run == 'true' && 'macos-15' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
@@ -26,22 +45,26 @@ jobs:
         - { comp: 'clang', opts: "-Wno-psabi -march=armv8.7-a+fp16" }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compiling Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run: cd build && ctest --output-on-failure -j 2 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Mac OS X Targets
   ##################################################################################################
   macosx:
-    needs: native-macos
-    runs-on: [macos-15]
+    needs: [gate, native-macos]
+    runs-on: ${{ needs.gate.outputs.run == 'true' && 'macos-15' || 'ubuntu-latest' }}
     strategy:
       fail-fast: false
       matrix:
@@ -49,16 +72,21 @@ jobs:
         - { comp: 'clang', opts: "-Wno-psabi -march=armv8.7-a+fp16" }
     steps:
       - name: Print Runner Info
+        if: needs.gate.outputs.run == 'true'
         run: |
           system_profiler SPHardwareDataType | grep -E "(Memory|Cores)"
           df -h /System/Volumes/Data
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=extra -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DCMAKE_TOOLCHAIN_FILE="../cmake/toolchain/${{ matrix.cfg.comp }}.osx.cmake"
       - name: Compiling Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ninja unit.exe -j 2
       - name: Running Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run: cd build && ctest --output-on-failure -j 2 --timeout 3600 -E ^doc.*.exe

@@ -5,6 +5,7 @@
 ####################################################################################################
 name: EVE - Unit Tests AVX512
 on:
+  ## A stacked PR matches through the base of its stack: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/optimizing-ci-for-stacked-pull-requests
   pull_request:
     branches:
       - main
@@ -15,13 +16,29 @@ concurrency:
 
 jobs:
   ##################################################################################################
+  ## Below the top of a stack, on a PR without the ci:full label, every job starts bare on
+  ## ubuntu-latest and skips its steps. Do not skip a job by its if instead: a matrix job skipped
+  ## there reports under its unexpanded name.
+  ##################################################################################################
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.stack.outputs.run }}
+    steps:
+      - id: stack
+        run: >-
+          echo "run=${{ !github.event.pull_request.stack
+          || github.event.pull_request.stack.position == github.event.pull_request.stack.size
+          || contains(github.event.pull_request.labels.*.name, 'ci:full') }}" >> "$GITHUB_OUTPUT"
+
+  ##################################################################################################
   ## The native cardinal alone, compiled first: every other job of this file waits for it.
   ##################################################################################################
   native-avx512:
-    runs-on: [self-hosted, avx512]
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    needs: gate
+    runs-on: ${{ needs.gate.outputs.run == 'true' && fromJSON('["self-hosted","avx512"]') || 'ubuntu-latest' }}
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -30,18 +47,22 @@ jobs:
         - { comp: gcc  , arch: x86    , opts: "-march=skylake-avx512"  }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Prepare EVE with ${{ matrix.cfg.comp }} @ ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run:  |
           mkdir build
           cd build
           cmake ..  -G Ninja -DEVE_TEST_LOT=native -DEVE_OPTIONS="${{ matrix.cfg.opts }}" \
                     -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compile
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ninja unit.exe -j 8
       - name: Run
+        if: needs.gate.outputs.run == 'true'
         run:  |
           cd build
           ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
@@ -50,11 +71,9 @@ jobs:
   ## Host 2 - Post-Skylake SIMD ISA
   ##################################################################################################
   avx512:
-    needs: native-avx512
-    runs-on: [self-hosted, avx512]
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root
+    needs: [gate, native-avx512]
+    runs-on: ${{ needs.gate.outputs.run == 'true' && fromJSON('["self-hosted","avx512"]') || 'ubuntu-latest' }}
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -62,26 +81,28 @@ jobs:
         - { comp: clang , arch: x86     , opts: -march=skylake-avx512 }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=extra -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ctest --output-on-failure -j 4 --timeout 3600 -E ^doc.*.exe
 
   ##################################################################################################
   ## Host 2 - Granite Rapids under SDE, the only build of the AVX512-FP16 branches
   ##################################################################################################
   gnr:
-    needs: native-avx512
+    needs: [gate, native-avx512]
     name: gnr (${{ matrix.cfg.comp }}, x86, -march=graniterapids, sde64 -gnr)
-    runs-on: [self-hosted, avx512]
-    container:
-      image: ghcr.io/jfalcou/compilers:v10
-      options: -u root -v /home/falcou/sde:/opt/sde:ro
+    runs-on: ${{ needs.gate.outputs.run == 'true' && fromJSON('["self-hosted","avx512"]') || 'ubuntu-latest' }}
+    container: ${{ needs.gate.outputs.run == 'true' && fromJSON('{"image":"ghcr.io/jfalcou/compilers:v10","options":"-u root -v /home/falcou/sde:/opt/sde:ro"}') || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -89,12 +110,16 @@ jobs:
         - { comp: gcc   , arch: x86_gnr , opts: -march=graniterapids }
     steps:
       - name: Fetch current branch
+        if: needs.gate.outputs.run == 'true'
         uses: actions/checkout@v6
       - name: Running CMake for ${{ matrix.cfg.comp }} on ${{ matrix.cfg.arch }} with ${{ matrix.cfg.opts }}
+        if: needs.gate.outputs.run == 'true'
         run: |
           mkdir build && cd build
           cmake .. -G Ninja -DEVE_TEST_LOT=family -DEVE_OPTIONS="${{ matrix.cfg.opts }}" -DEVE_HEAVY_POOL=3 -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchain/${{ matrix.cfg.comp }}.${{ matrix.cfg.arch }}.cmake
       - name: Compiling Unit Tests
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && ninja unit.exe -j 8
       - name: Running Unit Tests under SDE
+        if: needs.gate.outputs.run == 'true'
         run:  cd build && PATH=/opt/sde:$PATH ctest --output-on-failure -j 4 --timeout 7200 -E ^doc.*.exe
