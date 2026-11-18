@@ -21,7 +21,7 @@ EVE_NAMESPACE::_
   {
     using that_t = wide<T, N * 2>;
 
-    if constexpr( N == expected_width_v<T> )
+    if constexpr( N == max_native_width_v<T> )
     {
       that_t that;
       that.storage().assign_parts(l,h);
@@ -41,7 +41,7 @@ EVE_NAMESPACE::_
   {
    using that_t = logical<wide<T, N * 2>>;
 
-    if constexpr( N == expected_width_v<T> )
+    if constexpr( N == max_native_width_v<T> )
     {
       that_t that;
       that.storage().assign_parts(l,h);

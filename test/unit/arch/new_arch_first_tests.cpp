@@ -134,7 +134,7 @@ TTS_CASE_TPL("Slice all wides", eve::test::simd::all_types)
 
 TTS_CASE("Make aggregated logical")
 {
-  constexpr auto N = eve::expected_width_v<double> * 2;
+  constexpr auto N = eve::max_native_width_v<double> * 2;
   eve::logical<eve::wide<double, N>> l {[](int i, int) { return i % 2 == 0; }};
 
   for( int i = 0; i != l.size(); ++i )

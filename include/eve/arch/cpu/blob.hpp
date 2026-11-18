@@ -21,9 +21,9 @@ EVE_NAMESPACE::_
     template<typename Type, width_type Width>
     struct blob
     {
-      static constexpr auto replication = Width / expected_width_v<Type>;
+      static constexpr auto replication = Width / max_native_width_v<Type>;
 
-      using value_type                  = as_wide_t<Type, expected_width_v<Type>>;
+      using value_type                  = as_wide_t<Type, max_native_width_v<Type>>;
       using subvalue_type               = as_wide_t<Type, Width / 2>;
       using storage_type                = kumi::result::fill_t<replication, value_type>;
 

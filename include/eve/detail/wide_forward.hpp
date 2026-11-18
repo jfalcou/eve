@@ -17,7 +17,7 @@ EVE_NAMESPACE
 {
   template<typename Type> struct logical;
 
-  template<arithmetic_scalar_value Type, width_type Width = expected_width_v<Type>>
+  template<arithmetic_scalar_value Type, width_type Width = max_native_width_v<Type>>
   requires (is_valid_width<Width>)
   struct wide;
 }

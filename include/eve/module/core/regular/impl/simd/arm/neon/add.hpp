@@ -27,7 +27,7 @@ EVE_NAMESPACE::_
     {
       using u_t  = upgrade_t<T>;
       using uw_t = upgrade_t<wide<T, N>>;
-      if constexpr(N == expected_width_v<u_t>) return uw_t{r};
+      if constexpr(N == max_native_width_v<u_t>) return uw_t{r};
       else                                        return simd_cast(wide<u_t>{r}, as<uw_t>{});
     };
 

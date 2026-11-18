@@ -10,7 +10,7 @@
 #include <eve/wide.hpp>
 #include <eve/logical.hpp>
 
-template<typename T> using extra_wide = eve::wide<T, 2 * eve::expected_width_v<T>>;
+template<typename T> using extra_wide = eve::wide<T, 2 * eve::max_native_width_v<T>>;
 template<typename T> using tiny_wide  = eve::wide<T, 1>;
 
 #if !defined(EVE_NO_SIMD)

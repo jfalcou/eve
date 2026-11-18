@@ -82,12 +82,12 @@ EVE_NAMESPACE
   //================================================================================================
   //! @addtogroup eve_traits
   //! @{
-  //!   @brief Computes the expected width of a given type
+  //!   @brief Computes the maximum native width of a given type
   //!
   //!   **Required header:** `#include <eve/traits/width.hpp>`
   //!
-  //!   Returns the exact width type of the register able to store
-  //!   values of type `Type` for a given SIMD `ABI` as a native register type.
+  //!   Returns the width of the largest native register able to store
+  //!   values of type `Type` for a given SIMD `ABI`.
   //!
   //!   @tparam Type  Type of value to assess
   //!   @tparam ABI   SIMD ABI to use as reference. Must models eve::regular_abi.
@@ -96,23 +96,23 @@ EVE_NAMESPACE
   //================================================================================================
 #if defined (EVE_DOXYGEN_INVOKED)
   template<typename T, regular_abi = eve::current_abi_type>
-  inline constexpr width_type expected_width_v = /* Implementation defined */;
+  inline constexpr width_type max_native_width_v = /* Implementation defined */;
 #else
   template<typename T, regular_abi ABI = eve::current_abi_type>
-  inline constexpr width_type expected_width_v = _::expected_width<T, ABI>;
+  inline constexpr width_type max_native_width_v = _::max_native_width<T, ABI>;
 
   namespace _
   {
     template<typename ABI>
-    struct expected_width_t
+    struct max_native_width_t
     {
       template<typename... Ts>
-      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::expected_width_v<Ts, ABI>)...)>;
+      using type = std::integral_constant<width_type, kumi::_::min(static_cast<std::size_t>(eve::max_native_width_v<Ts, ABI>)...)>;
     };
   }
 
   template<eve::product_type T, regular_abi ABI>
-  inline constexpr width_type expected_width_v<T, ABI> = kumi::apply_traits_t<_::expected_width_t<ABI>::template type, T>::value;
+  inline constexpr width_type max_native_width_v<T, ABI> = kumi::apply_traits_t<_::max_native_width_t<ABI>::template type, T>::value;
 #endif
   
   //================================================================================================
@@ -143,11 +143,11 @@ EVE_NAMESPACE
   //! @}
   //================================================================================================
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
-  constexpr width_type nofs_width_v = expected_width_v<T, ABI>;
+  constexpr width_type nofs_width_v = max_native_width_v<T, ABI>;
 
   template <scalar_value T>
   constexpr width_type nofs_width_v<T, x86_512_> =
-    x86_512_::avx512_default_64_bytes ? expected_width_v<T, x86_512_> : expected_width_v<T, x86_256_>;
+    x86_512_::avx512_default_64_bytes ? max_native_width_v<T, x86_512_> : max_native_width_v<T, x86_256_>;
 
   template <scalar_value T, regular_abi ABI = eve::current_abi_type>
   using nofs_width_t = lanes_t<nofs_width_v<T>>;

@@ -153,10 +153,10 @@ TTS_CASE_TPL("aggregate stress test - product type", eve::test::simd::all_types)
 TTS_CASE_TPL("aggregate stress test - mixed type", tts::cartesian<eve::test::scalar::all_types, eve::test::scalar::all_types>)
 <typename T0, typename T1>(tts::type<kumi::tuple<T0, T1>>)
 {
-	using W0 = eve::wide<T0, eve::expected_width_v<T0> * 2>;
+	using W0 = eve::wide<T0, eve::max_native_width_v<T0> * 2>;
 
 	// T0's exepected width to ensure the same lane count
-	using W1 = eve::wide<T1, eve::expected_width_v<T0> * 2>;
+	using W1 = eve::wide<T1, eve::max_native_width_v<T0> * 2>;
 
 	W0 a{ [](auto i, auto){ return T0(i * 3 + 7); } };
 	W1 b{ [](auto i, auto){ return T1(i + 1); } };

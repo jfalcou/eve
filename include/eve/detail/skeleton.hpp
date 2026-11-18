@@ -217,7 +217,7 @@ EVE_NAMESPACE::_
         {
           using current_wide = kumi::element_t<0, decltype(inner)>;
           constexpr std::ptrdiff_t current_card = current_wide::size();
-          constexpr std::ptrdiff_t expected_card = expected_width_v<typename current_wide::value_type>;
+          constexpr std::ptrdiff_t expected_card = max_native_width_v<typename current_wide::value_type>;
           using expected_wide = typename current_wide::template rescale<expected_card>;
 
           if constexpr (current_card < expected_card)

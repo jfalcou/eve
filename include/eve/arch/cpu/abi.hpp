@@ -45,7 +45,7 @@ EVE_NAMESPACE::_
   extern emulated_ hardware_abi_of;
 
   template<typename T>
-  using expected_abi_t = decltype(_::hardware_abi_of<T, _::expected_width<T, eve::current_abi_type>>);
+  using expected_abi_t = decltype(_::hardware_abi_of<T, _::max_native_width<T, eve::current_abi_type>>);
 
   //================================================================================================
   // Checks if a Type is supported on a given architecture or if we should emulate it
@@ -70,7 +70,7 @@ EVE_NAMESPACE::_
 
   template<typename T, std::ptrdiff_t width>
   concept should_aggregate = !eve::product_type<T> && !should_emulate<T> &&
-  (width > _::expected_width<T, eve::current_abi_type>)
+  (width > _::max_native_width<T, eve::current_abi_type>)
    && should_aggregate_v<T,width>;
 
   //================================================================================================

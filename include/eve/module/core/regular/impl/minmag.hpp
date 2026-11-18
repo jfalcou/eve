@@ -56,7 +56,7 @@ EVE_NAMESPACE::_
     }
     else // N > 2 parameters
     {
-      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= expected_width_v<element_type_t<r_t>>))
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+1 >= max_native_width_v<element_type_t<r_t>>))
       {
         auto head = eve::as_wides(eve::majorant(eve::as<r_t>()), a0, cs...);
         auto s = eve::minmag[o](head);

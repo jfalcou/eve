@@ -31,7 +31,7 @@ EVE_NAMESPACE
     inline constexpr bool use_complete_storage<T, ppc_> = ((T::size() * sizeof(typename T::value_type)) >= 16);
 
     template<typename T>
-    inline constexpr width_type expected_width<T, ppc_> = ppc_::bytes / sizeof(T);
+    inline constexpr width_type max_native_width<T, ppc_> = ppc_::bytes / sizeof(T);
 
     template<typename T>
     inline constexpr width_type fundamental_width<T, ppc_> = 16 / sizeof(T);
