@@ -623,11 +623,11 @@ Variables</h2></td></tr>
 </div><!-- fragment --><h2 class="groupheader">Callable Signatures </h2>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
-<div class="line">  <span class="keyword">template</span>&lt;simd_value T, <span class="keywordtype">int</span>egral_simd_value Idx, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt;simd_value T, <span class="keywordtype">int</span>egral_simd_value Idx, writable_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
 <div class="line">  <span class="keyword">requires</span>(T::size() == Idx::size())</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gaa6b4303cb1ae3c602c51414ba1963161">scatter</a>(T <span class="keyword">const</span>&amp; v, Ptr ptr, Idx <span class="keyword">const</span>&amp; idx) <span class="keyword">noexcept</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="agroup__eve__core__simd_html_gaa6b4303cb1ae3c602c51414ba1963161"><div class="ttname"><a href="#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a></div><div class="ttdeci">constexpr auto scatter</div><div class="ttdoc">Store a SIMD register to memory using scattered indexes.</div><div class="ttdef"><b>Definition</b> scatter.hpp:90</div></div>
+<div class="ttc" id="agroup__eve__core__simd_html_gaa6b4303cb1ae3c602c51414ba1963161"><div class="ttname"><a href="#gaa6b4303cb1ae3c602c51414ba1963161">eve::scatter</a></div><div class="ttdeci">constexpr auto scatter</div><div class="ttdoc">Store a SIMD register to memory using scattered indexes.</div><div class="ttdef"><b>Definition</b> scatter.hpp:91</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>
 <li><span class="tt">v</span>: <a class="el" href="concepteve_1_1simd__value.html" title="eve::simd_value">simd value</a> to scatter</li>
