@@ -19,11 +19,10 @@ var searchData=
   ['no_5faligning_16',['no_aligning',['../group__eve__algo__no__aligning.html#ga07dd1178b2904dc377069bc34452a84e',1,'eve::algo']]],
   ['no_5ftraits_17',['no_traits',['../group__eve__algo__no__traits.html#ga77a2e8162b8d11c1940d9af7febe6b05',1,'eve::algo']]],
   ['no_5funrolling_18',['no_unrolling',['../group__eve__algo__no__unrolling.html#ga0d4b9be2485537d9328218378c918107',1,'eve::algo']]],
-  ['nofs_5fwidth_5fv_19',['nofs_width_v',['../group__eve__traits.html#ga222efc5722361bc282954589703bc5a4',1,'eve']]],
-  ['none_20',['none',['../group__eve__core__reduction.html#ga6c3f7d70fe96da70a69c2139a7c325ea',1,'eve']]],
-  ['none_5fof_21',['none_of',['https://jfalcou.github.io/kumi/group__kumi__none__of.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['https://jfalcou.github.io/kumi/group__kumi__none__of.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['../group__eve__algos.html#ga0bd36eeeef22153e10757aae05e6a032',1,'eve::algo::none_of']]],
-  ['npos_22',['npos',['https://jfalcou.github.io/kumi/namespacekumi.html#a864eeb606afbe8cb4df27a765e0411c9',1,'kumi']]],
-  ['nth_5fprime_23',['nth_prime',['../group__eve__combinatorial.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
-  ['nthroot_24',['nthroot',['../group__eve__math__exp.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]],
-  ['numeric_25',['numeric',['../group__eve__core__decorators.html#ga493e4e10b2fd953a22f9e08305820ab3',1,'eve']]]
+  ['none_19',['none',['../group__eve__core__reduction.html#ga6c3f7d70fe96da70a69c2139a7c325ea',1,'eve']]],
+  ['none_5fof_20',['none_of',['https://jfalcou.github.io/kumi/group__kumi__none__of.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['https://jfalcou.github.io/kumi/group__kumi__none__of.html#ga26e030c97733248f67dd2c8fbf527602',1,'kumi::none_of'],['../group__eve__algos.html#ga0bd36eeeef22153e10757aae05e6a032',1,'eve::algo::none_of']]],
+  ['npos_21',['npos',['https://jfalcou.github.io/kumi/namespacekumi.html#a864eeb606afbe8cb4df27a765e0411c9',1,'kumi']]],
+  ['nth_5fprime_22',['nth_prime',['../group__eve__combinatorial.html#ga07a4c4bd17dd7be0c16010a39d9d9d93',1,'eve']]],
+  ['nthroot_23',['nthroot',['../group__eve__math__exp.html#ga9cf7e798d0bd35ae16a3588021c871e7',1,'eve']]],
+  ['numeric_24',['numeric',['../group__eve__core__decorators.html#ga493e4e10b2fd953a22f9e08305820ab3',1,'eve']]]
 ];

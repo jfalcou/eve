@@ -4132,6 +4132,20 @@
       <anchor>gac7518d1b6d2c834ae512ff5d91702ee6</anchor>
       <arglist></arglist>
     </member>
+    <member kind="typedef">
+      <type>logical&lt; wide&lt; T, max_native_width_v&lt; T &gt; &gt; &gt;</type>
+      <name>max_native_logical</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>gac5136bc5e82492ae3d998e2270162c8c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="typedef">
+      <type>wide&lt; T, max_native_width_v&lt; T &gt; &gt;</type>
+      <name>max_native_wide</name>
+      <anchorfile>namespaceeve.html</anchorfile>
+      <anchor>aa41c6c6cd566162718533d659ed69775</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="enumeration">
       <type></type>
       <name>over</name>
@@ -8106,13 +8120,6 @@
       <name>condition_key</name>
       <anchorfile>group__eve__extensions.html</anchorfile>
       <anchor>ga28f160dc16e57390e8d479cc62d89af6</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>constexpr width_type</type>
-      <name>nofs_width_v</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -12478,6 +12485,13 @@
     <class kind="struct">eve::top_bits</class>
     <class kind="struct">eve::wide</class>
     <class kind="struct">eve::float16_t</class>
+    <member kind="typedef">
+      <type>logical&lt; wide&lt; T, max_native_width_v&lt; T &gt; &gt; &gt;</type>
+      <name>eve::max_native_logical</name>
+      <anchorfile>group__eve__simd__types.html</anchorfile>
+      <anchor>gac5136bc5e82492ae3d998e2270162c8c</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type>auto</type>
       <name>eve::operator==</name>
@@ -12940,13 +12954,6 @@
       <name>eve::max_scalar_size_v</name>
       <anchorfile>group__eve__traits.html</anchorfile>
       <anchor>ga6e8aacb30e0e7798a5cf8e30f9ace681</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>constexpr width_type</type>
-      <name>eve::nofs_width_v</name>
-      <anchorfile>group__eve__traits.html</anchorfile>
-      <anchor>ga222efc5722361bc282954589703bc5a4</anchor>
       <arglist></arglist>
     </member>
   </compound>

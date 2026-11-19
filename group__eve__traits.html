@@ -132,6 +132,7 @@ $(function(){initNavTree('group__eve__traits.html','',''); });
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Type traits for SIMD related types and functions. </p>
 <p>Computes the expected width of a given type.</p>
+<p>Computes the maximum native width of a given type.</p>
 <p>Computes the width of a given type.</p>
 <p>Computes the fundamental width of a given type.</p>
 <p>Using <b>EVE</b> types and functions may require information about some properties of the processed types that are accessible through the following traits.</p>
@@ -166,11 +167,20 @@ $(function(){initNavTree('group__eve__traits.html','',''); });
   </dd>
 </dl>
 <p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/width.hpp&gt;</span></p>
-<p>Returns the exact width type of the register able to store values of type <span class="tt">Type</span> for a given SIMD <span class="tt">ABI</span> as a native register type.</p>
+<p>Returns the width of the largest native register able to store values of type <span class="tt">Type</span> for a given SIMD <span class="tt">ABI</span>.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
     <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/width.hpp&gt;</span></p>
+<p>Default register width for a type. Sometimes is smaller than max_native_width. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="freqscale.html" title="Frequency Scaling.">Frequency Scaling</a> for an explanation.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
+    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi. </td></tr>
   </table>
   </dd>
 </dl>
@@ -227,9 +237,6 @@ Variables</h2></td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681" id="r_ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:ga6e8aacb30e0e7798a5cf8e30f9ace681 template"><td class="memItemLeft">constexpr std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#ga6e8aacb30e0e7798a5cf8e30f9ace681">eve::max_scalar_size_v</a></td></tr>
 <tr class="memdesc:ga6e8aacb30e0e7798a5cf8e30f9ace681"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting a maximum size of scalar.  <br /></td></tr>
-<tr class="memitem:ga222efc5722361bc282954589703bc5a4" id="r_ga222efc5722361bc282954589703bc5a4"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:ga222efc5722361bc282954589703bc5a4 template"><td class="memItemLeft">constexpr width_type&#160;</td><td class="memItemRight"><a class="el" href="#ga222efc5722361bc282954589703bc5a4">eve::nofs_width_v</a> = expected_width_v&lt;T, ABI&gt;</td></tr>
-<tr class="memdesc:ga222efc5722361bc282954589703bc5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="gaae6fbba5b56b9fab940a05b444c15e6f" name="gaae6fbba5b56b9fab940a05b444c15e6f"></a>
@@ -413,43 +420,6 @@ template&lt;typename T&gt; </div>
 <pre class="fragment">   For a product type returns max size of individual fields.
    Otherwise returns sizeof(T)
 </pre><p><b>Required header:</b> <span class="tt">#include &lt;eve/traits/max_scalar_size.hpp&gt;</span>, <span class="tt">#include &lt;eve/traits.hpp&gt;</span> </p>
-
-</div>
-</div>
-<a id="ga222efc5722361bc282954589703bc5a4" name="ga222efc5722361bc282954589703bc5a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga222efc5722361bc282954589703bc5a4">&#9670;&#160;</a></span>nofs_width_v</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">width_type eve::nofs_width_v = expected_width_v&lt;T, ABI&gt;</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>nofs stands for "no frequency scaling". </p>
-<p>You can find more explanations in the 'frequency scaling tutorial'. This refers to extreme frequency scaling one encounters when working with 64 byte registers on intel. The processor scales frequency drammatically for a substantial period of time. So even if the algorithm itself will run faster the overall perf will go down. Generally speaking, 64 byte registers on intel make sense only for really big data sets. <span class="tt">nofs_width</span> will produce 32 byte registers on avx512. If you would like to default to 64 byte registers, you can build with DEVE_AVX512_DEFAULT_64_BYTES. This is probably a good idea on AMD-ZEN4 but we do not detect that at the moment.</p>
-<dl class="section note"><dt>Note</dt><dd>frequency scaling exists for avx2 as well but is generally considered acceptable. For example popular implementations of libc use avx2, so you are very likely already have it. You can always set the width manually if needed.</dd>
-<dd>
-<span class="tt">eve::algo</span> by default will use <span class="tt">nofs_width</span>. See <span class="tt">allow_frequency_scaling</span> trait.</dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Type</td><td>Type of value to assess </td></tr>
-    <tr><td class="paramname">ABI</td><td>SIMD ABI to use as reference. Must models eve::regular_abi. defaults to current. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

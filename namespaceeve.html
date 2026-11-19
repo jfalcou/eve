@@ -365,6 +365,14 @@ template&lt;typename... Ts&gt; </td></tr>
 <tr class="memdesc:gaae6fbba5b56b9fab940a05b444c15e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">A meta function for getting an associated value_type for a relaxed iterator/range.  <br /></td></tr>
 <tr class="memitem:gac7518d1b6d2c834ae512ff5d91702ee6" id="r_gac7518d1b6d2c834ae512ff5d91702ee6"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:gac7518d1b6d2c834ae512ff5d91702ee6 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits.html#gac7518d1b6d2c834ae512ff5d91702ee6">wide_value_type_t</a> = as_wide_t&lt;<a class="el" href="group__eve__traits.html#gaae6fbba5b56b9fab940a05b444c15e6f">value_type_t</a>&lt;T&gt;, iterator_width_v&lt;T&gt;&gt;</td></tr>
+<tr class="memitem:gac5136bc5e82492ae3d998e2270162c8c" id="r_gac5136bc5e82492ae3d998e2270162c8c"><td class="memTemplParams" colspan="2">
+template&lt;plain_scalar_value T&gt; </td></tr>
+<tr class="memitem:gac5136bc5e82492ae3d998e2270162c8c template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><b>max_native_logical</b> = logical&lt;<a class="el" href="structeve_1_1wide.html">wide</a>&lt;T, max_native_width_v&lt;T&gt;&gt;&gt;</td></tr>
+<tr class="memdesc:gac5136bc5e82492ae3d998e2270162c8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The widest eve::logical of <span class="tt">T</span> that fits in a single native register. Can be wider than <span class="tt">eve::logical&lt;<a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T&gt;&gt;</span>, see <a class="el" href="freqscale.html" title="Frequency Scaling.">Frequency Scaling</a>. <br /></td></tr>
+<tr class="memitem:aa41c6c6cd566162718533d659ed69775" id="r_aa41c6c6cd566162718533d659ed69775"><td class="memTemplParams" colspan="2"><a id="aa41c6c6cd566162718533d659ed69775" name="aa41c6c6cd566162718533d659ed69775"></a>
+template&lt;scalar_value T&gt; </td></tr>
+<tr class="memitem:aa41c6c6cd566162718533d659ed69775 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><b>max_native_wide</b> = <a class="el" href="structeve_1_1wide.html">wide</a>&lt;T, max_native_width_v&lt;T&gt;&gt;</td></tr>
+<tr class="memdesc:aa41c6c6cd566162718533d659ed69775"><td class="mdescLeft">&#160;</td><td class="mdescRight">The widest <a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a> of <span class="tt">T</span> that fits in a single native register. Can be wider than <span class="tt"><a class="el" href="structeve_1_1wide.html" title="Wrapper for SIMD registers.">eve::wide</a>&lt;T&gt;</span>, see <a class="el" href="freqscale.html" title="Frequency Scaling.">Frequency Scaling</a>. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -1611,9 +1619,6 @@ template&lt;template&lt; typename &gt; class Func&gt; </td></tr>
 <tr class="memdesc:ga406269d77123b31f9bc18b38b78c8e25"><td class="mdescLeft">&#160;</td><td class="mdescRight">EVE's <a href="https://en.cppreference.com/w/cpp/named_req/Callable">Callable Object</a> generator. <br /></td></tr>
 <tr class="memitem:ga28f160dc16e57390e8d479cc62d89af6" id="r_ga28f160dc16e57390e8d479cc62d89af6"><td class="memItemLeft">constexpr _::condition_key_t&#160;</td><td class="memItemRight"><a class="el" href="group__eve__extensions.html#ga28f160dc16e57390e8d479cc62d89af6">condition_key</a> = {}</td></tr>
 <tr class="memdesc:ga28f160dc16e57390e8d479cc62d89af6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Keyword for retrieving conditionals decorator.  <br /></td></tr>
-<tr class="memitem:ga222efc5722361bc282954589703bc5a4" id="r_ga222efc5722361bc282954589703bc5a4"><td class="memTemplParams" colspan="2">template&lt;scalar_value T, regular_abi ABI = eve::current_abi_type&gt; </td></tr>
-<tr class="memitem:ga222efc5722361bc282954589703bc5a4 template"><td class="memItemLeft">constexpr width_type&#160;</td><td class="memItemRight"><a class="el" href="group__eve__traits.html#ga222efc5722361bc282954589703bc5a4">nofs_width_v</a> = expected_width_v&lt;T, ABI&gt;</td></tr>
-<tr class="memdesc:ga222efc5722361bc282954589703bc5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">nofs stands for "no frequency scaling".  <br /></td></tr>
 <tr class="memitem:ga93a75b9a7e3983b876e94a6d5777271a" id="r_ga93a75b9a7e3983b876e94a6d5777271a"><td class="memTemplParams" colspan="2">
 template&lt;typename Type&gt; </td></tr>
 <tr class="memitem:ga93a75b9a7e3983b876e94a6d5777271a template"><td class="memItemLeft">constexpr width_type&#160;</td><td class="memItemRight"><b>width_v&lt; logical&lt; Type &gt; &gt;</b> = width_v&lt;Type&gt;</td></tr>
