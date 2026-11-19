@@ -207,7 +207,7 @@ TTS_CASE_TPL("Check eve::wide deduction guides", eve::test::scalar::all_types)
 {
   // Construct from a scalar
   eve::wide  w0( T{7} );
-  TTS_EQUAL(w0.size(), eve::max_native_width_v<T>);
+  TTS_EQUAL(w0.size(), eve::expected_width_v<T>);
   TTS_TYPE_IS(typename decltype(w0)::value_type, T);
   TTS_TYPE_IS(typename decltype(w0)::value_type, T);
 

@@ -27,8 +27,8 @@ struct has_iterator_width
 
 TTS_CASE( "Check for wide_value_type")
 {
-  using half_aligned  = eve::aligned_ptr<int, eve::max_native_width_v<int> / 2>;
-  using twice_aligned = eve::aligned_ptr<int, eve::max_native_width_v<int> * 2>;
+  using half_aligned  = eve::aligned_ptr<int, eve::expected_width_v<int> / 2>;
+  using twice_aligned = eve::aligned_ptr<int, eve::expected_width_v<int> * 2>;
 
   TTS_TYPE_IS(eve::wide_value_type_t<int*>,                       eve::wide<int>);
   TTS_TYPE_IS(eve::wide_value_type_t<int const*>,                 eve::wide<int>);

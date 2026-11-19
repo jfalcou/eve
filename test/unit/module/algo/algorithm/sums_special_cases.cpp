@@ -98,17 +98,17 @@ TTS_CASE("eve.algo.transform_reduce_types")
 
   {
     auto r = eve::algo::transform_reduce(
-        v, [](eve::nofs_wide<std::int8_t> x) { return x + x; }, std::int8_t {0});
+        v, [](eve::wide<std::int8_t> x) { return x + x; }, std::int8_t {0});
     TTS_TYPE_IS(decltype(r), std::int8_t);
   }
   {
-    constexpr auto N = eve::nofs_width_v<std::int16_t>;
+    constexpr auto N = eve::expected_width_v<std::int16_t>;
     auto r  = eve::algo::transform_reduce(
         v, [](eve::wide<std::int8_t, N> x) { return x + x; }, std::int16_t {0});
     TTS_TYPE_IS(decltype(r), std::int16_t);
   }
   {
-    constexpr auto N = eve::nofs_width_v<std::int16_t>;
+    constexpr auto N = eve::expected_width_v<std::int16_t>;
     // return type of map does not matter
     auto r = eve::algo::transform_reduce(
         v,

@@ -110,8 +110,7 @@ namespace udt
   {
     eve::algo::soa_vector<polar_coords> outs(xs.size());
 
-    eve::algo::transform_to[eve::algo::allow_frequency_scaling]
-                           ( eve::views::zip(xs, ys), outs
+    eve::algo::transform_to( eve::views::zip(xs, ys), outs
                             , [](auto in) { return to_polar( get<0>(in), get<1>(in) ); }
                             );
 

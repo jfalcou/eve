@@ -48,11 +48,7 @@ void inclusive_scan_complex(std::vector<float>& re, std::vector<float>& im, cmpl
                                         // _inplace and _to. The _to one is like std.
                                         // the _inplace is the same as passing first as the output
                                         // and is slightly more efficient
-                                        // ---
-  [eve::algo::allow_frequency_scaling]( // When using maximum width registers some CPUs (intel avx512)
-                                        // will very noticeably reduce frequecny. In this example we assume
-                                        // the input arrays to be very large and this being acceptable.
-                                        // ---
+  (                                     // ---
     zipped,                             // we iterate over both vectors as one range
                                         // ---
     std::pair{plus, eve::zero},         // In eve we need not only the operation but also

@@ -38,7 +38,7 @@ run(auto pattern)
 
 template<auto api, typename T, std::ptrdiff_t G = 1>
 void
-run_expected_width(auto pattern)
+run_max_native_width(auto pattern)
 {
   run<api, T, eve::max_native_width_v<T>, G>(pattern);
 }
@@ -742,59 +742,59 @@ TTS_CASE("vext(x, y)")
 
 TTS_CASE("svdup_lane")
 {
-  run_expected_width<eve::sve, std::uint8_t>([](int, int) { return 3; });
-  run_expected_width<eve::sve, std::uint8_t>([](int, int size) { return size - 5; });
+  run_max_native_width<eve::sve, std::uint8_t>([](int, int) { return 3; });
+  run_max_native_width<eve::sve, std::uint8_t>([](int, int size) { return size - 5; });
 
-  run_expected_width<eve::sve, std::uint16_t>([](int, int) { return 2; });
-  run_expected_width<eve::sve, std::uint16_t>([](int, int size) { return size - 1; });
+  run_max_native_width<eve::sve, std::uint16_t>([](int, int) { return 2; });
+  run_max_native_width<eve::sve, std::uint16_t>([](int, int size) { return size - 1; });
 
-  run_expected_width<eve::sve, std::uint32_t>([](int, int) { return 0; });
-  run_expected_width<eve::sve, std::uint32_t>([](int, int size) { return size - 4; });
+  run_max_native_width<eve::sve, std::uint32_t>([](int, int) { return 0; });
+  run_max_native_width<eve::sve, std::uint32_t>([](int, int size) { return size - 4; });
 
-  run_expected_width<eve::sve, std::uint64_t>([](int, int) { return 1; });
-  run_expected_width<eve::sve, std::uint64_t>([](int, int size) { return size - 1; });
+  run_max_native_width<eve::sve, std::uint64_t>([](int, int) { return 1; });
+  run_max_native_width<eve::sve, std::uint64_t>([](int, int size) { return size - 1; });
 };
 
 TTS_CASE("svrev/svrev_b")
 {
-  run_expected_width<eve::sve, std::uint8_t>(reverse_everithing);
-  run_expected_width<eve::sve, eve::logical<std::uint8_t>>(reverse_everithing);
+  run_max_native_width<eve::sve, std::uint8_t>(reverse_everithing);
+  run_max_native_width<eve::sve, eve::logical<std::uint8_t>>(reverse_everithing);
 
-  run_expected_width<eve::sve, std::uint16_t>(reverse_everithing);
-  run_expected_width<eve::sve, eve::logical<std::uint16_t>>(reverse_everithing);
+  run_max_native_width<eve::sve, std::uint16_t>(reverse_everithing);
+  run_max_native_width<eve::sve, eve::logical<std::uint16_t>>(reverse_everithing);
 
-  run_expected_width<eve::sve, std::uint32_t>(reverse_everithing);
-  run_expected_width<eve::sve, eve::logical<std::uint32_t>>(reverse_everithing);
+  run_max_native_width<eve::sve, std::uint32_t>(reverse_everithing);
+  run_max_native_width<eve::sve, eve::logical<std::uint32_t>>(reverse_everithing);
 
-  run_expected_width<eve::sve, std::uint64_t>(reverse_everithing);
-  run_expected_width<eve::sve, eve::logical<std::uint64_t>>(reverse_everithing);
+  run_max_native_width<eve::sve, std::uint64_t>(reverse_everithing);
+  run_max_native_width<eve::sve, eve::logical<std::uint64_t>>(reverse_everithing);
 };
 
 TTS_CASE("svrevb/svrevh/svrevw")
 {
-  run_expected_width<eve::sve, std::uint8_t>(reverse_in_group<8>);
-  run_expected_width<eve::sve, std::uint8_t>(reverse_in_group<4>);
-  run_expected_width<eve::sve, std::uint8_t>(reverse_in_group<2>);
+  run_max_native_width<eve::sve, std::uint8_t>(reverse_in_group<8>);
+  run_max_native_width<eve::sve, std::uint8_t>(reverse_in_group<4>);
+  run_max_native_width<eve::sve, std::uint8_t>(reverse_in_group<2>);
 
-  run_expected_width<eve::sve, std::uint16_t>(reverse_in_group<4>);
-  run_expected_width<eve::sve, std::uint16_t>(reverse_in_group<2>);
+  run_max_native_width<eve::sve, std::uint16_t>(reverse_in_group<4>);
+  run_max_native_width<eve::sve, std::uint16_t>(reverse_in_group<2>);
 
-  run_expected_width<eve::sve, std::uint32_t>(reverse_in_group<2>);
+  run_max_native_width<eve::sve, std::uint32_t>(reverse_in_group<2>);
 };
 
 TTS_CASE("svext(x, x)")
 {
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<1>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<2>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<3>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<4>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<7>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<8>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<1>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<2>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<3>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<4>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<7>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<8>);
 
   constexpr int size = eve::max_native_width_v<std::uint8_t>;
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size - 3>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size / 2>);
-  run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size - size / 4>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<size - 3>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<size / 2>);
+  run_max_native_width<eve::sve, std::uint8_t>(rotate_pattern<size - size / 4>);
 };
 
 TTS_CASE("svsel")

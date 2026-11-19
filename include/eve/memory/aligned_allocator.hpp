@@ -39,7 +39,7 @@ EVE_NAMESPACE
   //!               current SIMD ABI requirements.
   //================================================================================================
   template< typename T
-          , std::ptrdiff_t Lanes = max_native_width_v<T>
+          , std::ptrdiff_t Lanes = expected_width_v<T>
           >
   struct aligned_allocator
   {

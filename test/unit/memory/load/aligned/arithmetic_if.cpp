@@ -19,7 +19,7 @@ TTS_CASE_TPL( "Check conditional load to wide from realigned pointer", eve::test
   using v_t = eve::element_type_t<T>;
   v_t const x = 123;
 
-  if constexpr(T::size() == eve::max_native_width_v<v_t>)
+  if constexpr(T::size() == eve::expected_width_v<v_t>)
   {
     auto ptr = eve::previous_aligned_address(&x);
 

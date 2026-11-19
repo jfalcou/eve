@@ -19,20 +19,20 @@ EVE_NAMESPACE
   //!
   //!   **Required header:** `#include <eve/traits/iteartor_width.hpp>`
   //!
-  //!   @note For aligned_ptr we return max_native_width.
+  //!   @note For aligned_ptr we return expected_width.
   //!
   //!
   //!   Returns a width for a relaxed iterator/range.
   //!         If T defines a nested static constexpr function `iterator_width()` (which should return a eve::width_type)
   //!         - returns the value.
-  //!         - returns `max_native_width_v<value_type_t<T>>` otherwise.
+  //!         - returns `expected_width_v<value_type_t<T>>` otherwise.
   //!
   //!   @tparam Type  Type of value to assess
   //!
   //! @}
   //================================================================================================
   template <typename T>
-  inline constexpr width_type iterator_width_v = max_native_width_v<value_type_t<T>>;
+  inline constexpr width_type iterator_width_v = expected_width_v<value_type_t<T>>;
 
   template<typename T>
   requires requires{ typename std::integral_constant<width_type, T::iterator_width()>; }

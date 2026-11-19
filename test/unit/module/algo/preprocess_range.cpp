@@ -18,7 +18,7 @@ TTS_CASE_TPL("Check preprocess_range for contiguous iterators", algo_test::selec
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  constexpr auto N = eve::nofs_width_v<e_t>;
+  constexpr auto N = eve::expected_width_v<e_t>;
 
   using u_it  = eve::algo::ptr_iterator<e_t*, N>;
   using uc_it = eve::algo::ptr_iterator<e_t const*, N>;
@@ -163,7 +163,7 @@ TTS_CASE_TPL("Check preprocess_range for eve ptr iterators", algo_test::selected
 {
   using e_t = eve::element_type_t<T>;
   constexpr auto N = T::size();
-  using expected_N = eve::lanes_t<eve::nofs_width_v<e_t>>;
+  using expected_N = eve::lanes_t<eve::expected_width_v<e_t>>;
 
   alignas(sizeof(T)) std::array<e_t, T::size()> arr;
 
@@ -215,7 +215,7 @@ TTS_CASE_TPL("contiguous ranges", algo_test::selected_types)
 <typename T>(tts::type<T>)
 {
   using e_t = eve::element_type_t<T>;
-  constexpr auto N = eve::nofs_width_v<e_t>;
+  constexpr auto N = eve::expected_width_v<e_t>;
 
   // empty vector
   {
@@ -305,7 +305,7 @@ TTS_CASE_TPL("width/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(typename I::value_type, double);
-    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::nofs_wide<double>);
+    TTS_TYPE_IS(eve::wide_value_type_t<I>, eve::wide<double>);
   }
 
   {
@@ -324,7 +324,7 @@ TTS_CASE_TPL("width/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(eve::wide_value_type_t<I>,
-                (eve::wide<e_t, eve::nofs_width_v<double>>));
+                (eve::wide<e_t, eve::expected_width_v<double>>));
   }
 
   {
@@ -333,7 +333,7 @@ TTS_CASE_TPL("width/type manipulation", algo_test::selected_types)
 
     using I = decltype(processed.begin());
     TTS_TYPE_IS(eve::wide_value_type_t<I>,
-                (eve::wide<e_t, eve::nofs_width_v<double>>));
+                (eve::wide<e_t, eve::expected_width_v<double>>));
   }
 };
 

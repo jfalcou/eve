@@ -99,8 +99,8 @@ EVE_NAMESPACE
     using is_like = value_type;
 
     //! @brief Generates a eve::wide from a different type `T` and width `N`.
-    //! If unspecified, `N` is computed as `max_native_width_v<T>`.
-    template<typename T, width_type N = max_native_width_v<T>> using rebind = wide<T, N>;
+    //! If unspecified, `N` is computed as `expected_width_v<T>`.
+    template<typename T, width_type N = expected_width_v<T>> using rebind = wide<T, N>;
 
     //! Generates a eve::wide type from a different size `S`.
     template<width_type S> using rescale = wide<Type, S>;
@@ -1056,7 +1056,7 @@ EVE_NAMESPACE
   //====================================================================================================================
 
   /// Allows deduction from a single eve::scalar_value
-  template<scalar_value S> wide(S const&) -> wide<S, max_native_width_v<S>>;
+  template<scalar_value S> wide(S const&) -> wide<S, expected_width_v<S>>;
 
   /// Allows deduction from variadic pack of eve::scalar_value
   template<scalar_value S, std::same_as<S>... Ss>
@@ -1097,11 +1097,10 @@ EVE_NAMESPACE
   template<typename Type, width_type Width>
   inline constexpr width_type width_v<wide<Type, Width>> = Width;
 
-  //================================================================================================
-  // nofs (no frequency scaling) helpers
-  //================================================================================================
-  template <scalar_value T>
-  using nofs_wide = wide<T, nofs_width_v<T>>;
+  //! @brief The widest eve::wide of `T` that fits in a single native register.
+  //! Can be wider than `eve::wide<T>`, see [Frequency Scaling](@ref freqscale).
+  template<scalar_value T>
+  using max_native_wide = wide<T, max_native_width_v<T>>;
 }
 
 #if !defined(EVE_DOXYGEN_INVOKED)

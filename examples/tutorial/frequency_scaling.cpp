@@ -14,21 +14,21 @@
 #include <span>
 
 #ifndef EVE_AVX512_DEFAULT_64_BYTES
-static_assert(eve::current_api != eve::avx512 || eve::nofs_width_v<std::int8_t> == 32);
+static_assert(eve::current_api != eve::avx512 || eve::expected_width_v<std::int8_t> == 32);
 static_assert(eve::current_api != eve::avx512 || eve::max_native_width_v<std::int8_t> == 64);
 #endif // EVE_AVX512_DEFAULT_64_BYTES
 
 auto find_small_array(std::span<const int> a)
   -> std::span<const int>::iterator
 {
-  return eve::algo::find_if(a, [](eve::nofs_wide<int> x) { return x < 0; });
+  return eve::algo::find_if(a, [](eve::wide<int> x) { return x < 0; });
 }
 
 auto find_large_array(std::span<const int> a)
   -> std::span<const int>::iterator
 {
   return eve::algo::find_if[eve::algo::allow_frequency_scaling](a,
-    [](eve::wide<int> x) { return x < 0; });
+    [](eve::max_native_wide<int> x) { return x < 0; });
 }
 
 auto find_use_4_ints(std::span<const int> a)

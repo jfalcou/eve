@@ -27,7 +27,7 @@ TTS_CASE( "Check prebuilt ABI match expected concepts")
 
 TTS_CASE( "Check for detection of native ABI")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
 
   TTS_EXPECT_NOT(( eve::native_abi<eve::wide<float, 2*native>>              ));
   TTS_EXPECT_NOT(( eve::native_abi<eve::logical<eve::wide<float, 2*native>>>));
@@ -61,7 +61,7 @@ TTS_CASE( "Check for detection of native ABI")
 
 TTS_CASE( "Check for detection of aggregated ABI")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
@@ -83,7 +83,7 @@ TTS_CASE( "Check for detection of aggregated ABI")
 
 TTS_CASE( "Check for detection of regular ABI")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
@@ -105,7 +105,7 @@ TTS_CASE( "Check for detection of regular ABI")
 
 TTS_CASE( "Check for detection of emulated ABI")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
 
   if constexpr(eve::current_api == eve::undefined_simd)
   {
@@ -130,7 +130,7 @@ TTS_CASE( "Check for detection of emulated ABI")
 
 TTS_CASE( "Check for detection of bundle ABI")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
   using tuple_t = kumi::tuple<double, float, std::int8_t>;
   using layer_t = kumi::tuple<int, tuple_t, std::int8_t>;
 
@@ -145,7 +145,7 @@ TTS_CASE( "Check for detection of bundle ABI")
 
 TTS_CASE( "Check for detection of aggregated ABI in product type")
 {
-  constexpr auto native = eve::wide<float>::size();
+  constexpr auto native = eve::max_native_width_v<float>;
 
   using tuple_t = kumi::tuple<double, float, std::int16_t>;
   using layer_t = kumi::tuple<int, tuple_t, std::int8_t>;

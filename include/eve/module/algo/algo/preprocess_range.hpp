@@ -31,7 +31,7 @@ EVE_ALGO_NAMESPACE
     template <typename T>
     auto ptr_to_iterator(T* ptr)
     {
-      constexpr auto N = eve::nofs_width_v<std::remove_const_t<T>>;
+      constexpr auto N = eve::expected_width_v<std::remove_const_t<T>>;
       return ptr_iterator<T*, N>{ptr};
     }
 

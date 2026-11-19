@@ -93,7 +93,7 @@ TTS_CASE("eve.algo.traits, type and width")
 {
   {
     eve::algo::traits tr;
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::nofs_width_v<int>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::expected_width_v<int>>);
     eve::algo::traits tr1{eve::algo::allow_frequency_scaling};
     TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::lanes_t<eve::max_native_width_v<int>>);
   }
@@ -105,7 +105,7 @@ TTS_CASE("eve.algo.traits, type and width")
   }
   {
     eve::algo::traits tr{eve::algo::consider_types<double>};
-    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::nofs_width_v<double>>);
+    TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr), int*>), eve::lanes_t<eve::expected_width_v<double>>);
     eve::algo::traits tr1{eve::algo::consider_types<double>, eve::algo::allow_frequency_scaling};
     TTS_TYPE_IS((eve::algo::iteration_width_t<decltype(tr1), int*>), eve::lanes_t<eve::max_native_width_v<double>>);
   }
