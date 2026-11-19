@@ -132,3 +132,22 @@ TTS_CASE_TPL("Check eve::scatter behavior with aligned_ptr and mask", eve::test:
   test_scatter<std::int64_t >(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
   test_scatter<std::uint64_t>(values,eve::ignore_first(1),eve::as_aligned(&data[0], eve::width_t<T>{}));
 };
+
+TTS_CASE_TPL("Check eve::scatter refuses a pointer to const", eve::test::simd::all_types_wf16)
+<typename T>(tts::type<T>)
+{
+  using e_t = eve::element_type_t<T>;
+
+  [[maybe_unused]] T                                        v   = {};
+  [[maybe_unused]] eve::wide<std::int32_t, T::size()>       i   = {};
+  [[maybe_unused]] e_t*                                     p   = nullptr;
+  [[maybe_unused]] e_t const*                               cp  = nullptr;
+  [[maybe_unused]] eve::aligned_ptr<e_t, T::size()>         ap  = {};
+  [[maybe_unused]] eve::aligned_ptr<e_t const, T::size()>   acp = {};
+
+  TTS_EXPECT_COMPILES    (v, p,   i, { eve::scatter(v, p, i);   });
+  TTS_EXPECT_COMPILES    (v, ap,  i, { eve::scatter(v, ap, i);  });
+  TTS_EXPECT_NOT_COMPILES(v, cp,  i, { eve::scatter(v, cp, i);  });
+  TTS_EXPECT_NOT_COMPILES(v, acp, i, { eve::scatter(v, acp, i); });
+  TTS_EXPECT_NOT_COMPILES(v, cp,  i, { eve::scatter[eve::ignore_first(1)](v, cp, i); });
+};
