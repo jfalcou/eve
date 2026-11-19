@@ -54,6 +54,11 @@ TTS_CASE_TPL("Check converting_iterator", algo_test::selected_types)
       run_test_writeable(a_f);
       run_test_writeable(u_f);
     }
+    else
+    {
+      algo_test::read_only_iterator(eve::views::convert(a_f, eve::as<std::int8_t>{}), char_values);
+      algo_test::read_only_iterator(eve::views::convert(u_f, eve::as<std::int8_t>{}), char_values);
+    }
   };
   auto *f = data.data();
   auto *l = f + data.size();

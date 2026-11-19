@@ -71,6 +71,11 @@ TTS_CASE_TPL("Check ptr_iterator", algo_test::selected_types)
       algo_test::iterator_supports_compress(map_a_f, values, replace);
       algo_test::iterator_supports_compress(map_u_f, values, replace);
     }
+    else
+    {
+      algo_test::read_only_iterator(eve::views::map_convert(a_f, load_op{0}, store_op{0}), values);
+      algo_test::read_only_iterator(eve::views::map_convert(u_f, load_op{0}, store_op{0}), values);
+    }
   };
   auto *f = data.data();
   auto *l = f + data.size();
