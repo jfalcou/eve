@@ -66,6 +66,6 @@ EVE_NAMESPACE
     inline constexpr width_type fundamental_width<T,ABI> = rvv_vector_size<T, ABI> / sizeof(T) / 8;
   
     template<typename T, rvv_abi ABI>
-    inline constexpr width_type expected_width<T,ABI> = (ABI::bits / ABI::max_lmul) / 8 / sizeof(T) * ABI::max_lmul;
+    inline constexpr width_type max_native_width<T,ABI> = (ABI::bits / ABI::max_lmul) / 8 / sizeof(T) * ABI::max_lmul;
   }
 }

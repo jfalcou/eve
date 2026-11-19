@@ -28,7 +28,7 @@ EVE_NAMESPACE::_
       return eve::replace_ignored(res, cx, cx.alternative);
     }
     else if constexpr (C::is_complete && !C::is_inverted) return {};
-    else if constexpr (C::is_complete && C::is_inverted && N == expected_width_v<T>)
+    else if constexpr (C::is_complete && C::is_inverted && N == max_native_width_v<T>)
     {
       return svld1(sve_true<T>(), ptr);
     }

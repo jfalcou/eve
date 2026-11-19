@@ -147,7 +147,7 @@ EVE_NAMESPACE::_
       return add[o.drop(widen)](upgrade(r0), upgrade(r1), upgrade(rs)...);
     else
     {
-      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= expected_width_v<element_type_t<r_t>>) && !O::contains(saturated))
+      if constexpr(scalar_value<r_t> && (sizeof...(Ts)+2 >= max_native_width_v<element_type_t<r_t>>) && !O::contains(saturated))
       {
         auto head = eve::as_wides(eve::zero(eve::as<r_t>()), r0, r1, rs...);
         auto s = eve::add[o](head);

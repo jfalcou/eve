@@ -24,7 +24,7 @@ template<typename T, width_type N, std::ptrdiff_t Shift>
   // The previous comment, that I didn't understand was:
   //   The actual shift uses the expected width so it has enough
   //   to push through the unused space.
-  constexpr auto shf = expected_width_v<T, abi_t<T, N>> - Shift;
+  constexpr auto shf = max_native_width_v<T, abi_t<T, N>> - Shift;
 
   if constexpr( c == category::int64x2 ) return vextq_s64(x, y, shf);
   else if constexpr( c == category::uint64x2 ) return vextq_u64(x, y, shf);

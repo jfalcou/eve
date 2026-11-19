@@ -14,7 +14,7 @@
 
 EVE_NAMESPACE
 {
-  template<typename Type, width_type Width = expected_width_v<Type>>
+  template<typename Type, width_type Width = max_native_width_v<Type>>
   struct as_wide
   {
     // This case should never be picked up but clang++ insists on trying to
@@ -48,7 +48,7 @@ EVE_NAMESPACE
     using type = eve::logical<eve::wide<Type,Width>>;
   };
 
-  template<typename Type, width_type Width = expected_width_v<Type> >
+  template<typename Type, width_type Width = max_native_width_v<Type> >
   using as_wide_t = typename as_wide<Type, Width>::type;
 
   template<typename T, typename U>

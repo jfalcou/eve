@@ -42,7 +42,7 @@ EVE_ABI_INDEPENDENT_NAMESPACE
   //!               current SIMD ABI requirements.
   //================================================================================================
   template< typename Type
-          , width_type Lanes = expected_width_v<Type>
+          , width_type Lanes = max_native_width_v<Type>
           >
 #if !defined(EVE_DOXYGEN_INVOKED)
   requires (!std::same_as<Type, void>)
@@ -463,7 +463,7 @@ EVE_NAMESPACE
   template <typename T>
   EVE_ABI auto previous_aligned_address(T* p) noexcept
   {
-    return previous_aligned_address(p, lanes_t<eve::expected_width_v<std::remove_cvref_t<T>>>{});
+    return previous_aligned_address(p, lanes_t<eve::max_native_width_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================
@@ -500,7 +500,7 @@ EVE_NAMESPACE
   template <typename T>
   EVE_ABI auto next_aligned_address(T* p) noexcept
   {
-    return next_aligned_address(p, lanes_t<eve::expected_width_v<std::remove_cvref_t<T>>>{});
+    return next_aligned_address(p, lanes_t<eve::max_native_width_v<std::remove_cvref_t<T>>>{});
   }
 
   //================================================================================================

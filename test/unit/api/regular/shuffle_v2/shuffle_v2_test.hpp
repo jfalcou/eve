@@ -64,7 +64,7 @@ run_one_case(std::ptrdiff_t expected_level, T input, auto g, eve::pattern_t<I...
 
     std::array idxs {I...};
 
-    if( g() >= T::size() || g() >= eve::expected_width_v<e_t> || idxs.size() == 1 )
+    if( g() >= T::size() || g() >= eve::max_native_width_v<e_t> || idxs.size() == 1 )
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }
@@ -93,7 +93,7 @@ run2_one_case(std::ptrdiff_t expected_level, T x, T y, auto g, eve::pattern_t<I.
 
     std::array idxs {I...};
 
-    if( g() >= T::size() || g() >= eve::expected_width_v<e_t> || idxs.size() == 1 )
+    if( g() >= T::size() || g() >= eve::max_native_width_v<e_t> || idxs.size() == 1 )
     {
       expected_level = eve::_::idxm::has_zeroes(idxs);
     }

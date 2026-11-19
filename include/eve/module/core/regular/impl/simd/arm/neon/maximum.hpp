@@ -51,7 +51,7 @@ EVE_NAMESPACE::_
         else if constexpr( N == 2 ) return type(eve::max(v.get(0), v.get(1)));
         else if constexpr( std::same_as<abi_t<T, N>, arm_64_> )
         {
-          if( N == expected_width_v<T, abi_t<T, N>> )
+          if( N == max_native_width_v<T, abi_t<T, N>> )
           {
             wide<T, N> s = pairwise_max(v, v);
             if constexpr( N >= 2 ) s = pairwise_max(s, s);
@@ -77,7 +77,7 @@ EVE_NAMESPACE::_
     {
       if constexpr( eve::current_api >= eve::asimd )
       {
-        constexpr auto ec = expected_width_v<T, abi_t<T, N>>;
+        constexpr auto ec = max_native_width_v<T, abi_t<T, N>>;
         constexpr auto fp16v = _::supports_fp16_vector_ops;
 
         if constexpr( N == 1 ) return v.get(0);

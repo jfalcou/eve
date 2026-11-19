@@ -15,7 +15,7 @@
 
 #ifndef EVE_AVX512_DEFAULT_64_BYTES
 static_assert(eve::current_api != eve::avx512 || eve::nofs_width_v<std::int8_t> == 32);
-static_assert(eve::current_api != eve::avx512 || eve::expected_width_v<std::int8_t> == 64);
+static_assert(eve::current_api != eve::avx512 || eve::max_native_width_v<std::int8_t> == 64);
 #endif // EVE_AVX512_DEFAULT_64_BYTES
 
 auto find_small_array(std::span<const int> a)

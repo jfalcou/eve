@@ -250,7 +250,7 @@ namespace eve::test
   {
     using e_t = element_type_t<W>;
     static constexpr std::ptrdiff_t n      = width_v<W>;
-    static constexpr std::ptrdiff_t native = expected_width_v<e_t>;
+    static constexpr std::ptrdiff_t native = max_native_width_v<e_t>;
     // Under AVX2 a 128-bit wide takes the SSE paths, except float16 through F16C. Under AVX512
     // every width down to 128 bits has its own k-masks and VL forms, and float16 below 128 bits
     // its own slice forms.
@@ -317,13 +317,13 @@ namespace eve::test
         if( sizeof(Type) <= bit_size / 8 ) return true;
         using scalar_t                   = typename Type::value_type;
         constexpr auto width          = eve::width_v<Type>;
-        constexpr auto expected_width = eve::expected_width_v<scalar_t>;
+        constexpr auto max_native_width = eve::max_native_width_v<scalar_t>;
         // and double, int64, uint64
         if( sizeof(scalar_t) != 8 ) return false;
         // for expected width (lmul==8)
-        if( expected_width == width ) return true;
+        if( max_native_width == width ) return true;
         // for combined type
-        if( 2 * expected_width == width ) return true;
+        if( 2 * max_native_width == width ) return true;
         return false;
       }
 

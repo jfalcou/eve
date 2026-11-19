@@ -19,7 +19,7 @@ EVE_NAMESPACE::_
     using v_t   = element_type_t<W>;
 
     constexpr auto c  = width_v<W>;
-    constexpr auto ec = expected_width_v<v_t, typename W::abi_type>;
+    constexpr auto ec = max_native_width_v<v_t, typename W::abi_type>;
 
     if constexpr(c < ec)
     {
@@ -41,7 +41,7 @@ EVE_NAMESPACE::_
   {
     using v_t   = element_type_t<W>;
     constexpr auto c  = width_v<W>;
-    constexpr auto ec = expected_width_v<v_t, typename W::abi_type>;
+    constexpr auto ec = max_native_width_v<v_t, typename W::abi_type>;
 
     if constexpr(c < ec)
     {

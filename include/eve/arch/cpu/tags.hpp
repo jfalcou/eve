@@ -90,13 +90,13 @@ EVE_NAMESPACE
     inline constexpr bool use_complete_storage = true;
 
     template<typename T, typename ABI>
-    extern width_type expected_width;
+    extern width_type max_native_width;
 
     template<typename T, typename ABI>
     extern width_type fundamental_width;
 
     template<typename T>
-    inline constexpr width_type expected_width<T,emulated_> = emulated_::bytes / sizeof(T);
+    inline constexpr width_type max_native_width<T,emulated_> = emulated_::bytes / sizeof(T);
 
     template<typename T>
     inline constexpr width_type fundamental_width<T, emulated_> = emulated_::bytes / sizeof(T);

@@ -261,7 +261,7 @@ EVE_NAMESPACE::_
     }
     else
     {
-      if constexpr(scalar_value<r_t> && (sizeof...(Vs)+1 >= expected_width_v<element_type_t<r_t>>))
+      if constexpr(scalar_value<r_t> && (sizeof...(Vs)+1 >= max_native_width_v<element_type_t<r_t>>))
       {
         auto head = eve::as_wides(eve::one(eve::as<r_t>()), rs...);
         auto s = eve::mul[o](head);

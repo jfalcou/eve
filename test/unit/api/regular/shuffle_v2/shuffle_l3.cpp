@@ -33,7 +33,7 @@ template<typename T, std::ptrdiff_t G = 1>
 void
 run_any_api_expected_width(auto pattern)
 {
-  run_any_api<T, eve::expected_width_v<T>, G>(pattern);
+  run_any_api<T, eve::max_native_width_v<T>, G>(pattern);
 }
 
 template<auto api, typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1>

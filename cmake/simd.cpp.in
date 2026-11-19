@@ -10,15 +10,15 @@
 #include <eve/traits/element_type.hpp>
 
 template<typename T>
-using extra_wide = eve::wide<T, 2 * eve::expected_width_v<T>>;
+using extra_wide = eve::wide<T, 2 * eve::max_native_width_v<T>>;
 
 template<typename T>
-inline constexpr auto small_size  = (eve::expected_width_v<T>/2 !=0 )
-                                  ? eve::expected_width_v<T>/2 : 1;
+inline constexpr auto small_size  = (eve::max_native_width_v<T>/2 !=0 )
+                                  ? eve::max_native_width_v<T>/2 : 1;
 
 template<typename T>
-inline constexpr auto smaller_size  = (eve::expected_width_v<T>/4 !=0 )
-                                    ? eve::expected_width_v<T>/4 : 1;
+inline constexpr auto smaller_size  = (eve::max_native_width_v<T>/4 !=0 )
+                                    ? eve::max_native_width_v<T>/4 : 1;
 
 template<typename T>
 using small_wide = eve::wide<T, small_size<T>>;

@@ -113,7 +113,7 @@ EVE_NAMESPACE
     inline constexpr bool use_complete_storage<T, ABI> = ((T::size() * sizeof(typename T::value_type)) >= 16);
 
     template<typename T, x86_abi ABI>
-    inline constexpr width_type expected_width<T, ABI> = ABI::bytes / sizeof(T);
+    inline constexpr width_type max_native_width<T, ABI> = ABI::bytes / sizeof(T);
 
     template<typename T, x86_abi ABI>
     inline constexpr width_type fundamental_width<T,ABI> = 16 / sizeof(T);

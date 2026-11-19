@@ -40,7 +40,7 @@ template<auto api, typename T, std::ptrdiff_t G = 1>
 void
 run_expected_width(auto pattern)
 {
-  run<api, T, eve::expected_width_v<T>, G>(pattern);
+  run<api, T, eve::max_native_width_v<T>, G>(pattern);
 }
 
 template<typename T, std::ptrdiff_t N, std::ptrdiff_t G = 1, std::ptrdiff_t... I>
@@ -69,7 +69,7 @@ template<auto api, typename T, std::ptrdiff_t G = 1>
 void
 run2_expected_width(auto pattern)
 {
-  run2<api, T, eve::expected_width_v<T>, G>(pattern);
+  run2<api, T, eve::max_native_width_v<T>, G>(pattern);
 }
 
 // named common patterns ------------------------------
@@ -791,7 +791,7 @@ TTS_CASE("svext(x, x)")
   run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<7>);
   run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<8>);
 
-  constexpr int size = eve::expected_width_v<std::uint8_t>;
+  constexpr int size = eve::max_native_width_v<std::uint8_t>;
   run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size - 3>);
   run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size / 2>);
   run_expected_width<eve::sve, std::uint8_t>(rotate_pattern<size - size / 4>);
@@ -814,7 +814,7 @@ TTS_CASE("svext(x, y)")
   run2_expected_width<eve::sve, std::uint8_t>(shift_2_pattern<8>);
   run2_expected_width<eve::sve, std::uint8_t>(shift_2_pattern<9>);
 
-  constexpr int size = eve::expected_width_v<std::uint8_t>;
+  constexpr int size = eve::max_native_width_v<std::uint8_t>;
   run2_expected_width<eve::sve, std::uint8_t>(shift_2_pattern<size - 3>);
   run2_expected_width<eve::sve, std::uint8_t>(shift_2_pattern<size / 2>);
   run2_expected_width<eve::sve, std::uint8_t>(shift_2_pattern<size - size / 4>);

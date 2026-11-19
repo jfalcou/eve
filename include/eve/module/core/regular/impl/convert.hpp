@@ -50,7 +50,7 @@ EVE_NAMESPACE::_
     // proper cardinality to keep the code size of `emulated_simd_fp16_to_fp32` under control.
     if constexpr( aggregated_abi<abi_t<float, N>> )
     {
-      constexpr auto card = expected_width_v<float>;
+      constexpr auto card = max_native_width_v<float>;
       using base   = typename wide<eve::float16_t, N>::template rescale<card>;
       auto parts   = kumi::map([](auto m) { return std::bit_cast<base>(m); }, kumi::chunks<card>(v.storage()));
       auto cvt     = kumi::map([](auto p) { return convert(p, as<U>{}); }, parts);

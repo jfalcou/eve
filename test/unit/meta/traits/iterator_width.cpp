@@ -27,14 +27,14 @@ struct has_iterator_width
 
 TTS_CASE( "Check for iterator_width")
 {
-  using half_aligned  = eve::aligned_ptr<int, eve::expected_width_v<int> / 2>;
-  using twice_aligned = eve::aligned_ptr<int, eve::expected_width_v<int> * 2>;
+  using half_aligned  = eve::aligned_ptr<int, eve::max_native_width_v<int> / 2>;
+  using twice_aligned = eve::aligned_ptr<int, eve::max_native_width_v<int> * 2>;
 
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<int*>,                        eve::expected_width_v<int>);
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<int const*>,                  eve::expected_width_v<int>);
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<half_aligned>,                eve::expected_width_v<int>);
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<twice_aligned>,               eve::expected_width_v<int>);
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<std::vector<int>::iterator>,  eve::expected_width_v<int>);
-  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<no_iterator_width>,           eve::expected_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<int*>,                        eve::max_native_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<int const*>,                  eve::max_native_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<half_aligned>,                eve::max_native_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<twice_aligned>,               eve::max_native_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<std::vector<int>::iterator>,  eve::max_native_width_v<int>);
+  TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<no_iterator_width>,           eve::max_native_width_v<int>);
   TTS_CONSTEXPR_EQUAL(eve::iterator_width_v<has_iterator_width>,          2);
 };

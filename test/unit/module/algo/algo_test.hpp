@@ -38,7 +38,7 @@ namespace algo_test
     , eve::nofs_wide<kumi::tuple<std::int32_t, std::uint16_t>>
     , eve::wide<kumi::tuple<float, double>, 2>
     , eve::wide<kumi::tuple<float, double>>
-    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>, eve::expected_width_v<std::uint32_t> * 2>
+    , eve::wide<kumi::tuple<std::uint32_t, std::int64_t>, eve::max_native_width_v<std::uint32_t> * 2>
     > ;
 
 

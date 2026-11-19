@@ -919,7 +919,7 @@ EVE_ALGO_NAMESPACE
     template <typename Traits, typename RorI>
     using default_width_to_use_t = eve::lanes_t<
       Traits::contains(allow_frequency_scaling) ?
-        expected_width_v<get_types_to_consider_for<Traits, RorI>> :
+        max_native_width_v<get_types_to_consider_for<Traits, RorI>> :
         nofs_width_v    <get_types_to_consider_for<Traits, RorI>>
     >;
   }
