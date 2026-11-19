@@ -206,6 +206,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
+<tr class="memitem:eve_3A_3Awritable_5Fsimd_5Fcompatible_5Fptr" id="r_eve_3A_3Awritable_5Fsimd_5Fcompatible_5Fptr"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1writable__simd__compatible__ptr.html">eve::writable_simd_compatible_ptr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that <span class="tt"><a class="el" href="#gad748180639cb9a4e2dbf82e48d986615" title="Store the elements of a SIMD value into the given memory location.">eve::store</a></span> can write a value of type <span class="tt">SIMD</span> through a <span class="tt">T</span>. The concept <span class="tt">writable_simd_compatible_ptr&lt;T, SIMD&gt;</span> is satisfied if and only if <span class="tt">T</span> satisfies <span class="tt">simd_compatible_ptr&lt;T, SIMD&gt;</span> and none of the pointers that <span class="tt">T</span> holds, directly or through iterators, points to const data. <br /></td></tr>
+<tr class="memitem:eve_3A_3Awritable_5Flogical_5Fsimd_5Fcompatible_5Fptr" id="r_eve_3A_3Awritable_5Flogical_5Fsimd_5Fcompatible_5Fptr"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1writable__logical__simd__compatible__ptr.html">eve::writable_logical_simd_compatible_ptr</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies that <span class="tt"><a class="el" href="#gad748180639cb9a4e2dbf82e48d986615" title="Store the elements of a SIMD value into the given memory location.">eve::store</a></span> can write a logical value of type <span class="tt">SIMD</span> through a <span class="tt">T</span>. The concept <span class="tt">writable_logical_simd_compatible_ptr&lt;T, SIMD&gt;</span> is satisfied if and only if <span class="tt">T</span> satisfies <span class="tt">logical_simd_compatible_ptr&lt;T, SIMD&gt;</span> and does not point to const data. <br /></td></tr>
 <tr class="memitem:eve_3A_3Ahas_5Fstore_5Fequivalent" id="r_eve_3A_3Ahas_5Fstore_5Fequivalent"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepteve_1_1has__store__equivalent.html">eve::has_store_equivalent</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">tests if <span class="tt">store_equivalent</span> has a non-default definition for a value and a pointer. <br /></td></tr>
 </table><table class="memberdecls">
@@ -585,10 +589,10 @@ Members Functions</h4>
 <div class="fragment"><div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceeve.html">eve</a></div>
 <div class="line">{</div>
 <div class="line">  <span class="comment">// Regular overload</span></div>
-<div class="line">  <span class="keyword">template</span>&lt;arithmetic_simd_value T, simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt;arithmetic_simd_value T, writable_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                           <span class="comment">// 1</span></div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">template</span>&lt;logical_simd_value T, logical_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
+<div class="line">  <span class="keyword">template</span>&lt;logical_simd_value T, writable_logical_simd_compatible_ptr&lt;T&gt; Ptr&gt;</div>
 <div class="line">  <span class="keywordtype">void</span> <a class="code hl_variable" href="#gad748180639cb9a4e2dbf82e48d986615">store</a>(T <a class="code hl_concept" href="concepteve_1_1value.html">value</a>, Ptr ptr) <span class="keyword">noexcept</span>;                                           <span class="comment">// 1</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Lanes masking</span></div>
@@ -596,7 +600,7 @@ Members Functions</h4>
 <div class="line">}</div>
 <div class="ttc" id="aconcepteve_1_1conditional__expr_html"><div class="ttname"><a href="concepteve_1_1conditional__expr.html">eve::conditional_expr</a></div><div class="ttdoc">Specifies that a type is a Conditional Expression.</div><div class="ttdef"><b>Definition</b> conditional.hpp:28</div></div>
 <div class="ttc" id="aconcepteve_1_1value_html"><div class="ttname"><a href="concepteve_1_1value.html">eve::value</a></div><div class="ttdoc">The concept value&lt;T&gt; is satisfied if and only if T satisfies either eve::scalar_value or eve::simd_va...</div><div class="ttdef"><b>Definition</b> value.hpp:34</div></div>
-<div class="ttc" id="agroup__eve__memory_html_gad748180639cb9a4e2dbf82e48d986615"><div class="ttname"><a href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:80</div></div>
+<div class="ttc" id="agroup__eve__memory_html_gad748180639cb9a4e2dbf82e48d986615"><div class="ttname"><a href="#gad748180639cb9a4e2dbf82e48d986615">eve::store</a></div><div class="ttdeci">constexpr auto store</div><div class="ttdoc">Store the elements of a SIMD value into the given memory location.</div><div class="ttdef"><b>Definition</b> store.hpp:154</div></div>
 <div class="ttc" id="anamespaceeve_html"><div class="ttname"><a href="namespaceeve.html">eve</a></div><div class="ttdoc">EVE Main Namespace.</div><div class="ttdef"><b>Definition</b> abi.hpp:31</div></div>
 </div><!-- fragment --><p><b>Parameters</b></p>
 <ul>

@@ -51,6 +51,8 @@ var concepts =
       [ "unsigned_simd_value", "concepteve_1_1unsigned__simd__value.html", null ],
       [ "signed_integral_simd_value", "concepteve_1_1signed__integral__simd__value.html", null ],
       [ "floating_simd_value", "concepteve_1_1floating__simd__value.html", null ],
+      [ "writable_simd_compatible_ptr", "concepteve_1_1writable__simd__compatible__ptr.html", null ],
+      [ "writable_logical_simd_compatible_ptr", "concepteve_1_1writable__logical__simd__compatible__ptr.html", null ],
       [ "has_store_equivalent", "concepteve_1_1has__store__equivalent.html", null ],
       [ "pattern_formula", "concepteve_1_1pattern__formula.html", null ],
       [ "callable_object", "concepteve_1_1callable__object.html", null ],

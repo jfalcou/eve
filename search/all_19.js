@@ -38,7 +38,9 @@ var searchData=
   ['with_20cmake_35',['Use with CMake',['../setup.html#autotoc_md79',1,'']]],
   ['with_20native_20code_36',['Interaction with native code.',['../inter-with-native.html',1,'']]],
   ['without_20building_20it_37',['Trying EVE without building it',['../dev_environment.html#dev_docker_eve',1,'']]],
-  ['write_38',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]],
-  ['writing_20the_20dynamic_20function_20hub_39',['Writing the dynamic function hub',['../multiarch.html#autotoc_md108',1,'']]],
-  ['writing_20the_20kernel_40',['Writing the kernel',['../multiarch.html#autotoc_md107',1,'']]]
+  ['writable_5flogical_5fsimd_5fcompatible_5fptr_38',['writable_logical_simd_compatible_ptr',['../concepteve_1_1writable__logical__simd__compatible__ptr.html',1,'eve']]],
+  ['writable_5fsimd_5fcompatible_5fptr_39',['writable_simd_compatible_ptr',['../concepteve_1_1writable__simd__compatible__ptr.html',1,'eve']]],
+  ['write_40',['write',['../group__eve__memory.html#gad32771ddeb3886065ba659298a50e125',1,'eve']]],
+  ['writing_20the_20dynamic_20function_20hub_41',['Writing the dynamic function hub',['../multiarch.html#autotoc_md108',1,'']]],
+  ['writing_20the_20kernel_42',['Writing the kernel',['../multiarch.html#autotoc_md107',1,'']]]
 ];

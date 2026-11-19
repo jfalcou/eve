@@ -3980,6 +3980,14 @@
     <name>eve::value</name>
     <filename>concepteve_1_1value.html</filename>
   </compound>
+  <compound kind="concept">
+    <name>eve::writable_logical_simd_compatible_ptr</name>
+    <filename>concepteve_1_1writable__logical__simd__compatible__ptr.html</filename>
+  </compound>
+  <compound kind="concept">
+    <name>eve::writable_simd_compatible_ptr</name>
+    <filename>concepteve_1_1writable__simd__compatible__ptr.html</filename>
+  </compound>
   <compound kind="namespace">
     <name>eve</name>
     <filename>namespaceeve.html</filename>
@@ -4073,6 +4081,8 @@
     <concept>eve::unsigned_simd_value</concept>
     <concept>eve::signed_integral_simd_value</concept>
     <concept>eve::floating_simd_value</concept>
+    <concept>eve::writable_simd_compatible_ptr</concept>
+    <concept>eve::writable_logical_simd_compatible_ptr</concept>
     <concept>eve::has_store_equivalent</concept>
     <concept>eve::pattern_formula</concept>
     <concept>eve::callable_object</concept>
@@ -11709,6 +11719,8 @@
     <class kind="struct">eve::stack_buffer</class>
     <class kind="struct">eve::soa_ptr</class>
     <class kind="class">eve::algo::soa_vector</class>
+    <concept>eve::writable_simd_compatible_ptr</concept>
+    <concept>eve::writable_logical_simd_compatible_ptr</concept>
     <concept>eve::has_store_equivalent</concept>
     <member kind="typedef">
       <type>decltype(unalign(std::declval&lt; T &gt;()))</type>
