@@ -153,6 +153,18 @@ TTS_CASE_WITH("Check behavior of div on signed types",
       0.5);
 };
 
+TTS_CASE_WITH("Check behavior of div with a mask and an alternative",
+              eve::test::simd::all_types_wf16,
+              tts::randoms(1, 100),
+              tts::randoms(1, 100),
+              tts::logicals(0, 3))
+<typename T, typename M>(T a0, T a1, M mask)
+{
+  using eve::div;
+  using eve::if_;
+  TTS_ULP_EQUAL(div[if_(mask).else_(42)](a0, a1), eve::if_else(mask, div(a0, a1), T(42)), 0.5);
+};
+
 //==================================================================================================
 //==  div modular tests
 //==================================================================================================
