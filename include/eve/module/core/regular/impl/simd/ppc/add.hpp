@@ -19,7 +19,8 @@ EVE_NAMESPACE::_
                             wide<T, N> a, wide<T, N> b)
     requires (ppc_abi<abi_t<T, N>> && !O::contains(mod))
   {
-    if constexpr( O::contains_any(lower, upper, widen) || (O::contains(saturated) && std::integral<T>))
+    if constexpr( O::contains_any(lower, upper, widen) || (O::contains(to_nearest_odd) && floating_value<T>)
+               || (O::contains(saturated) && std::integral<T>))
       return add.behavior(cpu_{}, opts, a, b);
     else
       return wide<T, N>(vec_add(a.storage(), b.storage()));

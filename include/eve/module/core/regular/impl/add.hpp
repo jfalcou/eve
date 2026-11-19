@@ -32,9 +32,10 @@ EVE_NAMESPACE::_
    constexpr auto add_(EVE_REQUIRES(emulated_), O const& o, Ts... ts) noexcept
     requires (_::fp16_should_apply<common_value_t<Ts...>>)
   {
-    if      constexpr (O::contains(widen))                       return add[o.drop(widen)](upgrade(ts)...);
-    else if constexpr (O::contains(upper) || O::contains(lower)) return _::map(add[o], ts...);
-    else                                                         return apply_fp16_as_fp32(add[o], ts...);
+    // Do not round to odd in float: the conversion back to float16 rounds a second time.
+    if      constexpr (O::contains(widen))                            return add[o.drop(widen)](upgrade(ts)...);
+    else if constexpr (O::contains_any(upper, lower, to_nearest_odd)) return _::map(add[o], ts...);
+    else                                                              return apply_fp16_as_fp32(add[o], ts...);
   }
 
   template<callable_options O, typename T>
