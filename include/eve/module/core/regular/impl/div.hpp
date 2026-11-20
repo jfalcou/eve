@@ -259,6 +259,6 @@ EVE_NAMESPACE::_
   requires(integral_value<T>)
   {
     auto g = if_else(cond, f, one);
-    return if_else(cond, eve::div[o](t, g), t);
+    return if_else(cond, eve::div[o](t, g), alternative(cond, t, as(t)));
   }
 }
