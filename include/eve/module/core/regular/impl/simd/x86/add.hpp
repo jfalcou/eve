@@ -28,7 +28,11 @@ EVE_NAMESPACE::_
   requires (x86_abi<abi_t<T, N>> && !O::contains(mod)&& !O::contains(widen))
   {
     constexpr auto c = categorize<wide<T, N>>();
-    if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
+    if constexpr(floating_value<T> && O::contains(to_nearest_odd))
+    {
+      return add.behavior(cpu_{}, opts, v, w);
+    }
+    else if constexpr(floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr (O::contains(strict) || (current_api < avx512))
       {
@@ -134,7 +138,11 @@ EVE_NAMESPACE::_
     auto src = alternative(cx, v, as<wide<T, N>> {});
     auto m   = expand_mask(cx, as<wide<T, N>> {}).storage().value;
 
-    if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
+    if constexpr (floating_value<T> && O::contains(to_nearest_odd))
+    {
+      return add[opts][cx].retarget(cpu_{}, v, w);
+    }
+    else if constexpr (floating_value<T> && (O::contains(lower) || O::contains(upper)))
     {
       if constexpr (O::contains(strict))
       {

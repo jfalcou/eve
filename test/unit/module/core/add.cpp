@@ -111,6 +111,9 @@ TTS_CASE_WITH("Check behavior of add on wide",
     TTS_EXPECT(eve::all(add[strict][lower](w0, -w1) <= add[lower](w0, -w1)));
     TTS_EXPECT(eve::all(add[lower](w0, w1) <= add[eve::to_nearest_odd](w0, w1)));
     TTS_EXPECT(eve::all(add[upper](w0, w1) >= add[eve::to_nearest_odd](w0, w1)));
+    T h(eve::eps(eve::as<T>()) / 4);
+    TTS_EQUAL(add[eve::to_nearest_odd](w0, h), eve::next(w0));
+    TTS_EQUAL(add[eve::to_nearest_odd](w0, -h), eve::prev(w0));
 
     using v_t = eve::element_type_t<T>;
     auto t = [](auto p){ return v_t(p+1); };
@@ -227,6 +230,10 @@ TTS_CASE_WITH("Check behavior of eve::add[mask](eve::wide)",
     TTS_IEEE_EQUAL(eve::add[if_(mask).else_(100)][lower](a0, a1), eve::if_else(mask, eve::add[lower](a0, a1), 100));
     TTS_IEEE_EQUAL(eve::add[eve::ignore_all][lower](a0, a1), a0);
     TTS_IEEE_EQUAL(eve::add[eve::ignore_all.else_(42)][lower](a0, a1), T{42});
+
+    T w0(1);
+    T h(eve::eps(eve::as<T>()) / 4);
+    TTS_IEEE_EQUAL(eve::add[mask][eve::to_nearest_odd](w0, h), eve::if_else(mask, eve::next(w0), w0));
 
 };
 

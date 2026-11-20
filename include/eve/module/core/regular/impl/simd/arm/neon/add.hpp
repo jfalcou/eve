@@ -47,7 +47,7 @@ EVE_NAMESPACE::_
   {
     constexpr auto c = categorize<wide<T, N>>();
 
-    if constexpr ((O::contains_any(lower, upper) && floating_value<T>))
+    if constexpr ((O::contains_any(lower, upper, to_nearest_odd) && floating_value<T>))
     {
       return add.behavior(cpu_{}, opts, v, w);
     }

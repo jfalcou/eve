@@ -30,7 +30,7 @@ EVE_NAMESPACE::_
       // ignore all just return alternative
       if constexpr( C::is_complete ) return alt;
 
-      if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) ||
+      if constexpr(((O::contains_any(lower, upper, to_nearest_odd)) && floating_value<T>) ||
                    (O::contains(saturated) && std::integral<T>))
       {
         return add[opts][mask].retarget(cpu_{}, v, w);
@@ -67,7 +67,7 @@ EVE_NAMESPACE::_
     else
     {
       // We call the saturated add if required or we just go to the common case of doing v+w
-      if constexpr(((O::contains_any(lower, upper)) && floating_value<T>) )
+      if constexpr(((O::contains_any(lower, upper, to_nearest_odd)) && floating_value<T>) )
       {
         return add.behavior(cpu_{}, opts, v, w);
       }
