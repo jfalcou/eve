@@ -11,26 +11,99 @@
 //! @namespace spy
 //! @brief Main SPY namespace
 //======================================================================================================================
-namespace spy
-{
-  //====================================================================================================================
-  //! @defgroup eve_api Main API
-  //====================================================================================================================
-  //====================================================================================================================
-  //! @namespace supports
-  //! @brief Support detection SPY namespace
-  //====================================================================================================================
-  namespace supports
-  {
-  }
-  //====================================================================================================================
-  //! @namespace literal
-  //! @brief SPY User-defined literal namespace
-  //====================================================================================================================
-  namespace literal
-  {
-  }
-}
+//======================================================================================================================
+//! @defgroup api Main API
+//! @brief Everything spy reports about the target, the toolchain and the flags it was given
+//!
+//! Every axis spy detects is a `constexpr` object living in namespace `spy`, so a question the
+//! preprocessor used to answer becomes a value any `constexpr` context can read. The six groups
+//! below sort those values by the question they answer.
+//!
+//! A value is read in three ways, shown here on the compiler:
+//!
+//! @code{.cpp}
+//! // compared to a named value
+//! if constexpr(spy::compiler == spy::gcc_) { }
+//!
+//! // or the named value itself, which converts to bool
+//! if constexpr(spy::gcc_) { }
+//!
+//! // and any of them prints
+//! std::cout << spy::compiler;
+//! @endcode
+//!
+//! Versions are named by a user-defined literal per vendor, gathered in `spy::literal`, and the
+//! ordering operators compare against them:
+//!
+//! @code{.cpp}
+//! using namespace spy::literal;
+//! if constexpr(spy::compiler >= 15'0_clang) { } // clang 15 or later
+//! @endcode
+//!
+//! Two different vendors compare as `std::partial_ordering::unordered` rather than as `false`, so
+//! `spy::gcc_ < spy::clang_` has no answer instead of a wrong one.
+//!
+//! Capabilities that are not an axis of their own live in `spy::supports`, each a plain
+//! `constexpr inline bool`.
+//!
+//! @{
+//!   @defgroup spy_platform Target Platforms
+//!   @brief The system, the processor and the data model the code is compiled for
+//!
+//!   Where the code will run. `spy::operating_system` names the system and
+//!   `spy::supports::posix_` says whether it offers a POSIX interface, `spy::architecture` names
+//!   the processor family, and `spy::data_model` gives the sizes the ABI hands the fundamental
+//!   types, which the system and the architecture decide together.
+//!
+//!   @defgroup spy_compiler Compilers
+//!   @brief The compiler processing the code, and the literals naming its versions
+//!
+//!   `spy::compiler` reports the toolchain as itself: a compiler that imitates another still
+//!   answers with its own name. The literals gathered here name a version to compare it against.
+//!
+//!   @defgroup spy_standards Language Standards
+//!   @brief The C++ standard in force, and the C and C++ standard library implementations
+//!
+//!   What the code is allowed to say and what it can call: the standard the compiler was told to
+//!   follow, and the two library implementations behind the headers it includes.
+//!
+//!   @defgroup spy_isa Instruction Sets
+//!   @brief The SIMD extensions the flags turn on, and what they can compute
+//!
+//!   `spy::simd_instruction_set` names the extension the flags enabled and the width of its
+//!   registers, and the `spy::supports::fp16` indicators say what that unit does with
+//!   half-precision, which the same architecture macros decide.
+//!   @{
+//!     @defgroup spy_isa_supplemental Supplemental Instruction Sets
+//!     @brief The instructions some extensions add on top of an existing set
+//!
+//!     One indicator per supplemental set, `true` when the flags turned it on. The AVX family
+//!     adds FMA3, FMA4, XOP and F16C, and the AVX-512 subsets live in their own namespace.
+//!   @}
+//!
+//!   @defgroup spy_accelerator Accelerators
+//!   @brief The accelerator programming models the code is compiled with
+//!
+//!   These report how the current translation unit is being compiled, not what the machine
+//!   holds: they are true when the compiler was asked for CUDA or for SYCL, whatever device is
+//!   present.
+//!
+//!   @defgroup spy_sanitizers Sanitizers
+//!   @brief The sanitizers the code is compiled with
+//!
+//!   Whether the current translation unit carries the instrumentation of the address or the
+//!   thread sanitizer, so that code which the instrumentation would slow down or trip can step
+//!   aside at compile time.
+//! @}
+//======================================================================================================================
+//======================================================================================================================
+//! @namespace spy::supports
+//! @brief Support detection SPY namespace
+//======================================================================================================================
+//======================================================================================================================
+//! @namespace spy::literal
+//! @brief SPY User-defined literal namespace
+//======================================================================================================================
 #if defined(_MSC_VER)
 #if _MSVC_LANG < 202002L
 #error "SPY C++ version error"
@@ -67,9 +140,12 @@ namespace spy::_
   }
   template<template<int, int, int> class Wrapper, char... c> constexpr auto literal_wrap()
   {
-    constexpr int b0 = 0, e0 = find<c...>(0);
-    constexpr int b1 = e0 + 1, e1 = find<c...>(b1);
-    constexpr int b2 = e1 + 1, e2 = sizeof...(c);
+    constexpr int b0 = 0;
+    constexpr int e0 = find<c...>(0);
+    constexpr int b1 = e0 + 1;
+    constexpr int e1 = find<c...>(b1);
+    constexpr int b2 = e1 + 1;
+    constexpr int e2 = sizeof...(c);
     return Wrapper<parse<c...>(b0, e0), parse<c...>(b1, e1), parse<c...>(b2, e2)> {};
   }
   template<int M, int N, int P> struct version_id
@@ -77,31 +153,26 @@ namespace spy::_
     static constexpr int major = M;
     static constexpr int minor = N;
     static constexpr int patch = P;
+    template<int M2, int N2, int P2>
+    friend constexpr bool operator==(version_id, version_id<M2, N2, P2>) noexcept
+    {
+      return (M == M2) && (N == N2) && (P == P2);
+    }
+    template<int M2, int N2, int P2>
+    friend constexpr std::strong_ordering operator<=>(version_id, version_id<M2, N2, P2>) noexcept
+    {
+      if constexpr(constexpr auto cmp0 = M <=> M2; cmp0 != 0) return cmp0;
+      else if constexpr(constexpr auto cmp1 = N <=> N2; cmp1 != 0) return cmp1;
+      else return P <=> P2;
+    }
+    template<_::stream OS> friend auto& operator<<(OS& os, version_id const&)
+    {
+      if constexpr(M == -1 && N == 0 && P == 0) return os << "(unspecified)";
+      else return os << "v" << M << "." << N << "." << P;
+    }
   };
-  template<int M1, int N1, int P1, int M2, int N2, int P2>
-  constexpr bool operator==(version_id<M1, N1, P1>, version_id<M2, N2, P2>) noexcept
-  {
-    return (M1 == M2) && (N1 == N2) && (P1 == P2);
-  }
-  template<int M1, int N1, int P1, int M2, int N2, int P2>
-  constexpr std::strong_ordering operator<=>(version_id<M1, N1, P1>,
-                                             version_id<M2, N2, P2>) noexcept
-  {
-    if constexpr(constexpr auto cmp0 = M1 <=> M2; cmp0 != 0) return cmp0;
-    else if constexpr(constexpr auto cmp1 = N1 <=> N2; cmp1 != 0) return cmp1;
-    else return P1 <=> P2;
-  }
-  template<int M = 1, int N = 0, int P = 0> constexpr inline version_id<M, N, P> version = {};
-  using unspecified_version_t                                           = version_id<-1, 0, 0>;
-  constexpr inline unspecified_version_t            unspecified_version = {};
-  template<_::stream OS, int M, int N, int P> auto& operator<<(OS& os, version_id<M, N, P> const&)
-  {
-    return os << "v" << M << "." << N << "." << P;
-  }
-  template<_::stream OS> auto& operator<<(OS& os, unspecified_version_t const&)
-  {
-    return os << "(unspecified)";
-  }
+  using unspecified_version_t                                = version_id<-1, 0, 0>;
+  constexpr inline unspecified_version_t unspecified_version = {};
 }
 namespace spy::supports
 {
@@ -115,7 +186,7 @@ namespace spy::supports
       return os;
     }
     template<int M1, int N1, int P1>
-    constexpr inline bool operator==(sycl_t<M1, N1, P1> const&) const noexcept
+    constexpr bool operator==(sycl_t<M1, N1, P1> const&) const noexcept
     {
       return M == M1 && N == N1 && P == P1;
     }
@@ -124,7 +195,7 @@ namespace spy::supports
   {
     explicit constexpr operator bool() const noexcept { return M > 0 && N > 0; }
     template<int M1, int N1, int P1>
-    constexpr inline bool operator==(cuda_t<M1, N1, P1> const&) const noexcept
+    constexpr bool operator==(cuda_t<M1, N1, P1> const&) const noexcept
     {
       return M == M1 && N == N1 && P == P1;
     }
@@ -145,7 +216,7 @@ namespace spy::supports
   constexpr inline auto sycl =
       sycl_t<SYCL_LANGUAGE_VERSION / 100, SYCL_LANGUAGE_VERSION % 100, 0> {};
 #elif defined(SPY_DOXYGEN_INVOKED)
-  constexpr inline auto sycl = **implementation - defined * *;
+  constexpr inline auto sycl = _::implementation_defined {};
 #else
   constexpr inline auto sycl = sycl_t<-1, -1, -1> {};
 #endif
@@ -159,7 +230,7 @@ namespace spy::supports
       cuda_t<CUDA_VERSION / 1000, (CUDA_VERSION % 1000) / 10, CUDA_VERSION % 10> {};
 #endif
 #elif defined(SPY_DOXYGEN_INVOKED)
-  constexpr inline auto cuda = **implementation - defined * *;
+  constexpr inline auto cuda = _::implementation_defined {};
 #else
   constexpr inline auto cuda = cuda_t<-1, -1, -1> {};
 #endif
@@ -179,19 +250,20 @@ namespace spy::_
   template<archs Arch> struct arch_info
   {
     static constexpr archs            vendor = Arch;
-    inline constexpr explicit         operator bool() const noexcept;
+    constexpr explicit                operator bool() const noexcept;
     template<archs A2> constexpr bool operator==(arch_info<A2> const&) const noexcept
     {
       return A2 == vendor;
     }
     template<_::stream OS> friend auto& operator<<(OS& os, arch_info const&)
     {
-      if(Arch == archs::x86_) return os << "X86";
-      if(Arch == archs::amd64_) return os << "AMD64";
-      if(Arch == archs::ppc_) return os << "PowerPC";
-      if(Arch == archs::arm_) return os << "ARM";
-      if(Arch == archs::wasm_) return os << "WebAssembly";
-      if(Arch == archs::riscv_) return os << "RISC-V";
+      using enum archs;
+      if(Arch == x86_) return os << "X86";
+      if(Arch == amd64_) return os << "AMD64";
+      if(Arch == ppc_) return os << "PowerPC";
+      if(Arch == arm_) return os << "ARM";
+      if(Arch == wasm_) return os << "WebAssembly";
+      if(Arch == riscv_) return os << "RISC-V";
       return os << "Undefined Architecture";
     }
   };
@@ -230,7 +302,7 @@ namespace spy
 }
 namespace spy::_
 {
-  template<archs Arch> inline constexpr arch_info<Arch>::operator bool() const noexcept
+  template<archs Arch> constexpr arch_info<Arch>::operator bool() const noexcept
   {
     return spy::architecture == *this;
   }
@@ -262,13 +334,15 @@ namespace spy::_
     emscripten_,
     dpcpp_,
     nvcc_,
-    clangcl_
+    clangcl_,
+    mingw32_,
+    mingw64_
   };
   template<compilers Compiler, int M, int N, int P> struct compilers_info
   {
     static constexpr compilers           vendor  = Compiler;
     static constexpr version_id<M, N, P> version = {};
-    inline constexpr explicit            operator bool() const noexcept;
+    constexpr explicit                   operator bool() const noexcept;
     template<compilers C2>
     constexpr bool operator==(compilers_info<C2, -1, 0, 0> const&) const noexcept
     {
@@ -286,20 +360,22 @@ namespace spy::_
       if constexpr(vendor == C2) return version <=> c2.version;
       else return std::partial_ordering::unordered;
     }
+    template<_::stream OS> friend auto& operator<<(OS& os, compilers_info const&)
+    {
+      using enum compilers;
+      if(Compiler == nvcc_) return os << "NVIDIA CUDA Compiler " << version;
+      if(Compiler == msvc_) return os << "Microsoft Visual Studio " << version;
+      if(Compiler == intel_) return os << "Intel(R) C++ Compiler " << version;
+      if(Compiler == dpcpp_) return os << "Intel(R) oneAPI DPC++/C++ Compiler " << version;
+      if(Compiler == clang_) return os << "clang " << version;
+      if(Compiler == gcc_) return os << "g++ " << version;
+      if(Compiler == emscripten_) return os << "Emscripten " << version;
+      if(Compiler == clangcl_) return os << "Clang with MSVC-like command-line" << version;
+      if(Compiler == mingw32_) return os << "MINGW32 g++ " << version;
+      if(Compiler == mingw64_) return os << "MINGW64 g++ " << version;
+      return os << "Undefined " << version;
+    }
   };
-  template<_::stream OS, compilers C, int M, int N, int P>
-  auto& operator<<(OS& os, compilers_info<C, M, N, P> const& c)
-  {
-    if(C == compilers::nvcc_) return os << "NVIDIA CUDA Compiler " << c.version;
-    if(C == compilers::msvc_) return os << "Microsoft Visual Studio " << c.version;
-    if(C == compilers::intel_) return os << "Intel(R) C++ Compiler " << c.version;
-    if(C == compilers::dpcpp_) return os << "Intel(R) oneAPI DPC++/C++ Compiler " << c.version;
-    if(C == compilers::clang_) return os << "clang " << c.version;
-    if(C == compilers::gcc_) return os << "g++ " << c.version;
-    if(C == compilers::emscripten_) return os << "Emscripten " << c.version;
-    if(C == compilers::clangcl_) return os << "Clang with MSVC-like command-line" << c.version;
-    return os << "Undefined " << c.version;
-  }
   template<int M, int N, int P> using msvc_t    = compilers_info<compilers::msvc_, M, N, P>;
   template<int M, int N, int P> using intel_t   = compilers_info<compilers::intel_, M, N, P>;
   template<int M, int N, int P> using dpcpp_t   = compilers_info<compilers::dpcpp_, M, N, P>;
@@ -307,6 +383,8 @@ namespace spy::_
   template<int M, int N, int P> using clang_t   = compilers_info<compilers::clang_, M, N, P>;
   template<int M, int N, int P> using gcc_t     = compilers_info<compilers::gcc_, M, N, P>;
   template<int M, int N, int P> using clangcl_t = compilers_info<compilers::clangcl_, M, N, P>;
+  template<int M, int N, int P> using mingw32_t = compilers_info<compilers::mingw32_, M, N, P>;
+  template<int M, int N, int P> using mingw64_t = compilers_info<compilers::mingw64_, M, N, P>;
   template<int M, int N, int P>
   using emscripten_t = compilers_info<compilers::emscripten_, M, N, P>;
 }
@@ -318,6 +396,12 @@ namespace spy
 #elif defined(_MSC_VER) && !defined(__clang__)
 #define SPY_COMPILER_IS_MSVC
   using compiler_type = _::msvc_t<_MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000>;
+#elif defined(__MINGW32__) && !defined(__MINGW64__)
+#define SPY_COMPILER_IS_MINGW32
+  using compiler_type = _::mingw32_t<__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__>;
+#elif defined(__MINGW32__) && defined(__MINGW64__)
+#define SPY_COMPILER_IS_MINGW64
+  using compiler_type = _::mingw64_t<__GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__>;
 #elif defined(_MSC_VER) && defined(__clang__)
 #define SPY_COMPILER_IS_CLANGCL
   using compiler_type = _::clangcl_t<__clang_major__, __clang_minor__, __clang_patchlevel__>;
@@ -333,8 +417,13 @@ namespace spy
 #undef SPY0
 #elif defined(__EMSCRIPTEN__)
 #define SPY_COMPILER_IS_CLANG
+#if defined(__EMSCRIPTEN_MAJOR__)
+  using compiler_type =
+      _::emscripten_t<__EMSCRIPTEN_MAJOR__, __EMSCRIPTEN_MINOR__, __EMSCRIPTEN_TINY__>;
+#else
   using compiler_type =
       _::emscripten_t<__EMSCRIPTEN_major__, __EMSCRIPTEN_minor__, __EMSCRIPTEN_tiny__>;
+#endif
 #undef SPY0
 #elif defined(__clang__)
 #define SPY_COMPILER_IS_CLANG
@@ -351,7 +440,7 @@ namespace spy
 namespace spy::_
 {
   template<compilers C, int M, int N, int P>
-  inline constexpr compilers_info<C, M, N, P>::operator bool() const noexcept
+  constexpr compilers_info<C, M, N, P>::operator bool() const noexcept
   {
     return spy::compiler == *this;
   }
@@ -366,35 +455,45 @@ namespace spy
   constexpr inline auto gcc_        = _::gcc_t<-1, 0, 0> {};
   constexpr inline auto emscripten_ = _::emscripten_t<-1, 0, 0> {};
   constexpr inline auto clangcl_    = _::clangcl_t<-1, 0, 0> {};
+  constexpr inline auto mingw32_    = _::mingw32_t<-1, 0, 0> {};
+  constexpr inline auto mingw64_    = _::mingw64_t<-1, 0, 0> {};
 }
 namespace spy::literal
 {
-  template<char... c> constexpr auto operator""_nvcc()
+  template<char... c> consteval auto operator""_nvcc()
   {
     return _::literal_wrap<_::nvcc_t, c...>();
   }
-  template<char... c> constexpr auto operator""_msvc()
+  template<char... c> consteval auto operator""_msvc()
   {
     return _::literal_wrap<_::msvc_t, c...>();
   }
-  template<char... c> constexpr auto operator""_intel()
+  template<char... c> consteval auto operator""_mingw32()
+  {
+    return _::literal_wrap<_::mingw32_t, c...>();
+  }
+  template<char... c> consteval auto operator""_mingw64()
+  {
+    return _::literal_wrap<_::mingw64_t, c...>();
+  }
+  template<char... c> consteval auto operator""_intel()
   {
     return _::literal_wrap<_::intel_t, c...>();
   }
-  template<char... c> constexpr auto operator""_dpcpp()
+  template<char... c> consteval auto operator""_dpcpp()
   {
     return _::literal_wrap<_::dpcpp_t, c...>();
   }
-  template<char... c> constexpr auto operator""_clang()
+  template<char... c> consteval auto operator""_clang()
   {
     return _::literal_wrap<_::clang_t, c...>();
   }
-  template<char... c> constexpr auto operator""_gcc() { return _::literal_wrap<_::gcc_t, c...>(); }
-  template<char... c> constexpr auto operator""_em()
+  template<char... c> consteval auto operator""_gcc() { return _::literal_wrap<_::gcc_t, c...>(); }
+  template<char... c> consteval auto operator""_em()
   {
     return _::literal_wrap<_::emscripten_t, c...>();
   }
-  template<char... c> constexpr auto operator""_clangcl()
+  template<char... c> consteval auto operator""_clangcl()
   {
     return _::literal_wrap<_::clangcl_t, c...>();
   }
@@ -403,27 +502,28 @@ namespace spy::_
 {
   template<int Short, int Integer, int Long, int Pointer> struct data_model_info
   {
-    inline constexpr explicit operator bool() const noexcept;
+    constexpr explicit operator bool() const noexcept;
     template<int Short2, int Integer2, int Long2, int Pointer2>
     constexpr bool
     operator==(data_model_info<Short2, Integer2, Long2, Pointer2> const&) const noexcept
     {
       return (Short == Short2) && (Integer == Integer2) && (Long == Long2) && (Pointer == Pointer2);
     }
+    template<_::stream OS> friend auto& operator<<(OS& os, data_model_info const&)
+    {
+      if constexpr(Pointer == 4 && Integer == 4) return os << "ILP32";
+      else if constexpr(Pointer == 4 && Integer == 2) return os << "LP32";
+      else if constexpr(Pointer == 8 && Long == 8 && Integer == 8 && Short == 8)
+        return os << "IntegerLP64";
+      else if constexpr(Pointer == 8 && Short == 8 && Integer == 8 && Short == 2)
+        return os << "ILP64";
+      else if constexpr(Pointer == 8 && Long == 4 && Integer == 8 && Short == 2)
+        return os << "LLP64";
+      else if constexpr(Pointer == 8 && Long == 8 && Integer == 4 && Short == 2)
+        return os << "LP64";
+      else return os << "Unknown data model";
+    }
   };
-  template<_::stream OS, int Short, int Integer, int Long, int Pointer>
-  auto& operator<<(OS& os, data_model_info<Short, Integer, Long, Pointer> const&)
-  {
-    if constexpr(Pointer == 4 && Integer == 4) return os << "ILP32";
-    else if constexpr(Pointer == 4 && Integer == 2) return os << "LP32";
-    else if constexpr(Pointer == 8 && Long == 8 && Integer == 8 && Short == 8)
-      return os << "IntegerLP64";
-    else if constexpr(Pointer == 8 && Short == 8 && Integer == 8 && Short == 2)
-      return os << "ILP64";
-    else if constexpr(Pointer == 8 && Long == 4 && Integer == 8 && Short == 2) return os << "LLP64";
-    else if constexpr(Pointer == 8 && Long == 8 && Integer == 4 && Short == 2) return os << "LP64";
-    else return os << "Unknown data model";
-  }
 }
 namespace spy
 {
@@ -434,7 +534,7 @@ namespace spy
 namespace spy::_
 {
   template<int Short, int Integer, int Long, int Pointer>
-  inline constexpr data_model_info<Short, Integer, Long, Pointer>::operator bool() const noexcept
+  constexpr data_model_info<Short, Integer, Long, Pointer>::operator bool() const noexcept
   {
     return spy::data_model == *this;
   }
@@ -465,7 +565,7 @@ namespace spy::_
   {
     static constexpr libC                vendor  = Lib;
     static constexpr version_id<M, N, P> version = {};
-    inline constexpr explicit            operator bool() const noexcept;
+    constexpr explicit                   operator bool() const noexcept;
     template<libC C2> constexpr bool     operator==(libc_info<C2, -1, 0, 0> const&) const noexcept
     {
       return C2 == vendor;
@@ -481,17 +581,17 @@ namespace spy::_
       if constexpr(vendor == C2) return version <=> c2.version;
       else return vendor <=> C2;
     }
+    template<_::stream OS> friend auto& operator<<(OS& os, libc_info const&)
+    {
+      using enum libC;
+      if(vendor == cloudabi_) return os << "CloudABI Standard C Library " << version;
+      if(vendor == uc_) return os << "uClibc Standard C Library " << version;
+      if(vendor == vms_) return os << "VMS Standard C Library " << version;
+      if(vendor == zos_) return os << "z/OS Standard C Library " << version;
+      if(vendor == gnu_) return os << "GNU Standard C Library " << version;
+      return os << "Undefined Standard C Library";
+    }
   };
-  template<_::stream OS, libC C, int M, int N, int P>
-  auto& operator<<(OS& os, libc_info<C, M, N, P> const& c)
-  {
-    if(c.vendor == libC::cloudabi_) return os << "CloudABI Standard C Library " << c.version;
-    if(c.vendor == libC::uc_) return os << "uClibc Standard C Library " << c.version;
-    if(c.vendor == libC::vms_) return os << "VMS Standard C Library " << c.version;
-    if(c.vendor == libC::zos_) return os << "z/OS Standard C Library " << c.version;
-    if(c.vendor == libC::gnu_) return os << "GNU Standard C Library " << c.version;
-    return os << "Undefined Standard C Library";
-  }
   template<int M, int N, int P> using cloudabi_t = libc_info<libC::cloudabi_, M, N, P>;
   template<int M, int N, int P> using uc_t       = libc_info<libC::uc_, M, N, P>;
   template<int M, int N, int P> using vms_t      = libc_info<libC::vms_, M, N, P>;
@@ -530,7 +630,7 @@ namespace spy
 namespace spy::_
 {
   template<libC C, int M, int N, int P>
-  inline constexpr libc_info<C, M, N, P>::operator bool() const noexcept
+  constexpr libc_info<C, M, N, P>::operator bool() const noexcept
   {
     return spy::libc == *this;
   }
@@ -545,14 +645,14 @@ namespace spy
 }
 namespace spy::literal
 {
-  template<char... c> constexpr auto operator""_cloud()
+  template<char... c> consteval auto operator""_cloud()
   {
     return _::literal_wrap<_::cloudabi_t, c...>();
   }
-  template<char... c> constexpr auto operator""_uc() { return _::literal_wrap<_::uc_t, c...>(); }
-  template<char... c> constexpr auto operator""_vms() { return _::literal_wrap<_::vms_t, c...>(); }
-  template<char... c> constexpr auto operator""_zos() { return _::literal_wrap<_::zos_t, c...>(); }
-  template<char... c> constexpr auto operator""_gnu() { return _::literal_wrap<_::gnu_t, c...>(); }
+  template<char... c> consteval auto operator""_uc() { return _::literal_wrap<_::uc_t, c...>(); }
+  template<char... c> consteval auto operator""_vms() { return _::literal_wrap<_::vms_t, c...>(); }
+  template<char... c> consteval auto operator""_zos() { return _::literal_wrap<_::zos_t, c...>(); }
+  template<char... c> consteval auto operator""_gnu() { return _::literal_wrap<_::gnu_t, c...>(); }
 }
 #if defined(__APPLE__) || defined(__APPLE_CC__) || defined(macintosh)
 #include <AvailabilityMacros.h>
@@ -574,24 +674,25 @@ namespace spy::_
   template<systems OpSys> struct os_info
   {
     static constexpr systems            vendor = OpSys;
-    inline constexpr explicit           operator bool() const noexcept;
+    constexpr explicit                  operator bool() const noexcept;
     template<systems C2> constexpr bool operator==(os_info<C2> const&) const noexcept
     {
       return C2 == vendor;
     }
+    template<_::stream OS> friend auto& operator<<(OS& os, os_info const&)
+    {
+      using enum systems;
+      if(OpSys == android_) return os << "Android";
+      if(OpSys == bsd_) return os << "BSD";
+      if(OpSys == cygwin_) return os << "Cygwin";
+      if(OpSys == ios_) return os << "iOs";
+      if(OpSys == linux_) return os << "Linux";
+      if(OpSys == macos_) return os << "MacOs";
+      if(OpSys == unix_) return os << "UNIX";
+      if(OpSys == windows_) return os << "Windows";
+      return os << "Undefined Operating System";
+    }
   };
-  template<_::stream OS, systems OpSys> auto& operator<<(OS& os, os_info<OpSys> const&)
-  {
-    if(OpSys == systems::android_) return os << "Android";
-    if(OpSys == systems::bsd_) return os << "BSD";
-    if(OpSys == systems::cygwin_) return os << "Cygwin";
-    if(OpSys == systems::ios_) return os << "iOs";
-    if(OpSys == systems::linux_) return os << "Linux";
-    if(OpSys == systems::macos_) return os << "MacOs";
-    if(OpSys == systems::unix_) return os << "UNIX";
-    if(OpSys == systems::windows_) return os << "Windows";
-    return os << "Undefined Operating System";
-  }
 }
 namespace spy
 {
@@ -629,7 +730,7 @@ namespace spy
 }
 namespace spy::_
 {
-  template<systems OS> inline constexpr os_info<OS>::operator bool() const noexcept
+  template<systems OS> constexpr os_info<OS>::operator bool() const noexcept
   {
     return spy::operating_system == *this;
   }
@@ -648,7 +749,7 @@ namespace spy
 namespace spy::supports
 {
 #if defined(SPY_DOXYGEN_INVOKED)
-  constexpr inline auto posix_ = **implementation specified * *;
+  constexpr inline auto posix_ = _::implementation_defined {};
 #else
 #if (MAC_OS_X_VERSION_MIN_REQUIRED >= 1090) || (_POSIX_C_SOURCE >= 200112L) ||                     \
     (_XOPEN_SOURCE >= 600)
@@ -680,33 +781,51 @@ namespace spy::supports
 namespace spy::supports
 {
 #if defined(SPY_ADDRESS_SANITIZERS_ENABLED)
-  constexpr bool address_sanitizers_status = true;
+  constexpr inline bool address_sanitizers_status = true;
 #elif defined(SPY_DOXYGEN_INVOKED)
-  constexpr bool address_sanitizers_status = **implementation - specified * *;
+  constexpr inline bool address_sanitizers_status = _::implementation_defined {};
 #else
-  constexpr bool address_sanitizers_status = false;
+  constexpr inline bool address_sanitizers_status = false;
 #endif
 #if defined(SPY_THREAD_SANITIZERS_ENABLED)
-  constexpr bool thread_sanitizers_status = true;
+  constexpr inline bool thread_sanitizers_status = true;
 #elif defined(SPY_DOXYGEN_INVOKED)
-  constexpr bool thread_sanitizers_status = **implementation - specified * *;
+  constexpr inline bool thread_sanitizers_status = _::implementation_defined {};
 #else
-  constexpr bool thread_sanitizers_status = false;
+  constexpr inline bool thread_sanitizers_status = false;
 #endif
-  constexpr bool sanitizers_status = address_sanitizers_status || thread_sanitizers_status;
+  constexpr inline bool sanitizers_status = address_sanitizers_status || thread_sanitizers_status;
 }
-#if defined(SPY_COMPILER_IS_CLANG) || defined(SPY_COMPILER_IS_GCC) ||                              \
-    defined(SPY_COMPILER_IS_CLANGCL)
-#define SPY_DISABLE_ADDRESS_SANITIZERS __attribute__((no_sanitize_address))
-#define SPY_DISABLE_THREAD_SANITIZERS  __attribute__((no_sanitize_thread))
-#elif defined(SPY_COMPILER_IS_MSVC)
+#if defined(SPY_COMPILER_IS_MSVC)
 #define SPY_DISABLE_ADDRESS_SANITIZERS __declspec(no_sanitize_address)
 #define SPY_DISABLE_THREAD_SANITIZERS
+#define SPY_DISABLE_SANITIZERS __declspec(no_sanitize_address)
+#elif defined(SPY_DOXYGEN_INVOKED)
+#define SPY_DISABLE_ADDRESS_SANITIZERS _::implementation_defined
+#define SPY_DISABLE_THREAD_SANITIZERS  _::implementation_defined
+#define SPY_DISABLE_SANITIZERS         _::implementation_defined
 #else
+#if defined(__has_attribute)
+#if __has_attribute(no_sanitize_address)
+#define SPY_DISABLE_ADDRESS_SANITIZERS __attribute__((no_sanitize_address))
+#endif
+#if __has_attribute(no_sanitize_thread)
+#define SPY_DISABLE_THREAD_SANITIZERS __attribute__((no_sanitize_thread))
+#endif
+#if __has_attribute(no_sanitize)
+#define SPY_DISABLE_SANITIZERS __attribute__((no_sanitize("address", "thread")))
+#endif
+#endif
+#if !defined(SPY_DISABLE_ADDRESS_SANITIZERS)
 #define SPY_DISABLE_ADDRESS_SANITIZERS
+#endif
+#if !defined(SPY_DISABLE_THREAD_SANITIZERS)
 #define SPY_DISABLE_THREAD_SANITIZERS
 #endif
+#if !defined(SPY_DISABLE_SANITIZERS)
 #define SPY_DISABLE_SANITIZERS SPY_DISABLE_ADDRESS_SANITIZERS SPY_DISABLE_THREAD_SANITIZERS
+#endif
+#endif
 #if defined(__ARM_FEATURE_SVE2)
 #if !defined(__ARM_FEATURE_SVE_BITS) || (__ARM_FEATURE_SVE_BITS == 0)
 #define SPY_SIMD_IS_ARM_FLEXIBLE_SVE2
@@ -926,125 +1045,165 @@ namespace spy::supports
 {
 #if defined(__FMA__)
 #define SPY_SIMD_SUPPORTS_FMA
-  constexpr inline auto fma_ = true;
+  constexpr inline bool fma_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool fma_ = _::implementation_defined {};
 #else
-  constexpr inline auto fma_ = false;
+  constexpr inline bool fma_ = false;
 #endif
 #if defined(__FMA4__)
 #define SPY_SIMD_SUPPORTS_FMA4
-  constexpr inline auto fma4_ = true;
+  constexpr inline bool fma4_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool fma4_ = _::implementation_defined {};
 #else
-  constexpr inline auto fma4_ = false;
+  constexpr inline bool fma4_ = false;
 #endif
 #if defined(__XOP__)
 #define SPY_SIMD_SUPPORTS_XOP
-  constexpr inline auto xop_ = true;
+  constexpr inline bool xop_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool xop_ = _::implementation_defined {};
 #else
-  constexpr inline auto xop_ = false;
+  constexpr inline bool xop_ = false;
 #endif
 #if defined(__F16C__)
 #define SPY_SIMD_SUPPORTS_F16C
-  constexpr inline auto f16c_ = true;
+  constexpr inline bool f16c_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool f16c_ = _::implementation_defined {};
 #else
-  constexpr inline auto f16c_ = false;
+  constexpr inline bool f16c_ = false;
 #endif
   namespace avx512
   {
 #if defined(__AVX512BW__)
 #define SPY_SIMD_IS_X86_AVX512_BW
-    constexpr inline auto bw_ = true;
+    constexpr inline bool bw_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool bw_ = _::implementation_defined {};
 #else
-    constexpr inline auto bw_ = false;
+    constexpr inline bool bw_ = false;
 #endif
 #if defined(__AVX512CD__)
 #define SPY_SIMD_IS_X86_AVX512_CD
-    constexpr inline auto cd_ = true;
+    constexpr inline bool cd_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool cd_ = _::implementation_defined {};
 #else
-    constexpr inline auto cd_ = false;
+    constexpr inline bool cd_ = false;
 #endif
 #if defined(__AVX512DQ__)
 #define SPY_SIMD_IS_X86_AVX512_DQ
-    constexpr inline auto dq_ = true;
+    constexpr inline bool dq_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool dq_ = _::implementation_defined {};
 #else
-    constexpr inline auto dq_ = false;
+    constexpr inline bool dq_ = false;
 #endif
 #if defined(__AVX512ER__)
 #define SPY_SIMD_IS_X86_AVX512_ER
-    constexpr inline auto er_ = true;
+    constexpr inline bool er_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool er_ = _::implementation_defined {};
 #else
-    constexpr inline auto er_ = false;
+    constexpr inline bool er_ = false;
 #endif
 #if defined(__AVX512IFMA__)
 #define SPY_SIMD_IS_X86_AVX512_IFMA
-    constexpr inline auto ifma_ = true;
+    constexpr inline bool ifma_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool ifma_ = _::implementation_defined {};
 #else
-    constexpr inline auto ifma_ = false;
+    constexpr inline bool ifma_ = false;
 #endif
 #if defined(__AVX512PF__)
 #define SPY_SIMD_IS_X86_AVX512_PF
-    constexpr inline auto pf_ = true;
+    constexpr inline bool pf_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool pf_ = _::implementation_defined {};
 #else
-    constexpr inline auto pf_ = false;
+    constexpr inline bool pf_ = false;
 #endif
 #if defined(__AVX512VL__)
 #define SPY_SIMD_IS_X86_AVX512_VL
-    constexpr inline auto vl_ = true;
+    constexpr inline bool vl_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vl_ = _::implementation_defined {};
 #else
-    constexpr inline auto vl_ = false;
+    constexpr inline bool vl_ = false;
 #endif
 #if defined(__AVX512VPOPCNTDQ__)
 #define SPY_SIMD_IS_X86_AVX512_POPCNTDQ
-    constexpr inline auto popcntdq_ = true;
+    constexpr inline bool popcntdq_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool popcntdq_ = _::implementation_defined {};
 #else
-    constexpr inline auto popcntdq_ = false;
+    constexpr inline bool popcntdq_ = false;
 #endif
 #if defined(__AVX5124FMAPS__)
 #define SPY_SIMD_IS_X86_AVX512_4FMAPS
-    constexpr inline auto _4fmaps_ = true;
+    constexpr inline bool _4fmaps_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool _4fmaps_ = _::implementation_defined {};
 #else
-    constexpr inline auto _4fmaps_ = false;
+    constexpr inline bool _4fmaps_ = false;
 #endif
 #if defined(__AVX5124VNNIW__)
 #define SPY_SIMD_IS_X86_AVX512_VNNIW
-    constexpr inline auto vnniw_ = true;
+    constexpr inline bool vnniw_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vnniw_ = _::implementation_defined {};
 #else
-    constexpr inline auto vnniw_ = false;
+    constexpr inline bool vnniw_ = false;
 #endif
 #if defined(__AVX512VBMI__)
 #define SPY_SIMD_IS_X86_AVX512_VBMI
-    constexpr inline auto vbmi_ = true;
+    constexpr inline bool vbmi_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vbmi_ = _::implementation_defined {};
 #else
-    constexpr inline auto vbmi_ = false;
+    constexpr inline bool vbmi_ = false;
 #endif
 #if defined(__AVX512BF16__)
 #define SPY_SIMD_IS_X86_AVX512_BF16
-    constexpr inline auto bf16_ = true;
+    constexpr inline bool bf16_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool bf16_ = _::implementation_defined {};
 #else
-    constexpr inline auto bf16_ = false;
+    constexpr inline bool bf16_ = false;
 #endif
 #if defined(__AVX512BITALG__)
 #define SPY_SIMD_IS_X86_AVX512_BITALG
-    constexpr inline auto bitalg_ = true;
+    constexpr inline bool bitalg_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool bitalg_ = _::implementation_defined {};
 #else
-    constexpr inline auto bitalg_ = false;
+    constexpr inline bool bitalg_ = false;
 #endif
 #if defined(__AVX512VBMI2__)
 #define SPY_SIMD_IS_X86_AVX512_VBMI2
-    constexpr inline auto vbmi2_ = true;
+    constexpr inline bool vbmi2_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vbmi2_ = _::implementation_defined {};
 #else
-    constexpr inline auto vbmi2_ = false;
+    constexpr inline bool vbmi2_ = false;
 #endif
 #if defined(__AVX512VNNI__)
 #define SPY_SIMD_IS_X86_AVX512_VNNI
-    constexpr inline auto vnni_ = true;
+    constexpr inline bool vnni_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vnni_ = _::implementation_defined {};
 #else
-    constexpr inline auto vnni_ = false;
+    constexpr inline bool vnni_ = false;
 #endif
 #if defined(__AVX512VP2INTERSECT__)
 #define SPY_SIMD_IS_X86_AVX512_VP2INTERSECT
-    constexpr inline auto vpintersect_ = true;
+    constexpr inline bool vpintersect_ = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+    constexpr inline bool vpintersect_ = _::implementation_defined {};
 #else
-    constexpr inline auto vpintersect_ = false;
+    constexpr inline bool vpintersect_ = false;
 #endif
   }
 }
@@ -1094,104 +1253,107 @@ namespace spy::_
     rvv_        = 7000,
     fixed_rvv_  = 7500
   };
+  template<simd_version Version> constexpr int simd_width()
+  {
+    using enum simd_version;
+    if constexpr(Version == simd128_ || (Version >= sse1_ && Version <= sse42_) ||
+                 Version == neon_ || Version == asimd_ ||
+                 (Version >= vmx_2_03_ && Version <= vsx_3_01_))
+      return 128;
+    else if constexpr(Version == avx_ || Version == avx2_) return 256;
+    else if constexpr(Version == avx512_) return 512;
+    else if constexpr(Version == rvv_) return -1;
+    else if constexpr(Version == fixed_rvv_)
+    {
+#if defined(__riscv_v_fixed_vlen)
+      return __riscv_v_fixed_vlen;
+#else
+      return -1;
+#endif
+    }
+    else if constexpr(Version == sve_ || Version == sve2_)
+    {
+      return -1;
+    }
+    else if constexpr(Version == fixed_sve_ || Version == fixed_sve2_)
+    {
+#if defined(__ARM_FEATURE_SVE_BITS)
+      return __ARM_FEATURE_SVE_BITS;
+#else
+      return -1;
+#endif
+    }
+    else return -1;
+  }
+  template<_::stream OS> void print_supplemental_sets(OS& os)
+  {
+    if constexpr(spy::supports::fma_) os << " (with FMA3 support)";
+    if constexpr(spy::supports::fma4_) os << " (with FMA4 support)";
+    if constexpr(spy::supports::xop_) os << " (with XOP support)";
+  }
   template<simd_isa     InsSetArch = simd_isa::undefined_,
            simd_version Version    = simd_version::undefined_>
   struct simd_info
   {
     static constexpr auto isa     = InsSetArch;
     static constexpr auto version = Version;
-    static constexpr int  width   = []()
+    static constexpr int  width   = simd_width<Version>();
+    static constexpr bool has_fixed_cardinal() { return width != -1; }
+    template<simd_isa I2, simd_version V2>
+    friend constexpr bool operator==(simd_info, simd_info<I2, V2>) noexcept
     {
-      if constexpr(Version == simd_version::simd128_ ||
-                   (Version >= simd_version::sse1_ && Version <= simd_version::sse42_) ||
-                   Version == simd_version::neon_ || Version == simd_version::asimd_ ||
-                   (Version >= simd_version::vmx_2_03_ && Version <= simd_version::vsx_3_01_))
-        return 128;
-      else if constexpr(Version == simd_version::avx_ || Version == simd_version::avx2_) return 256;
-      else if constexpr(Version == simd_version::avx512_) return 512;
-      else if constexpr(Version == simd_version::rvv_) return -1;
-      else if constexpr(Version == simd_version::fixed_rvv_)
-      {
-#if defined(__riscv_v_fixed_vlen)
-        return __riscv_v_fixed_vlen;
-#else
-        return -1;
-#endif
-      }
-      else if constexpr(Version == simd_version::sve_ || Version == simd_version::sve2_)
-      {
-        return -1;
-      }
-      else if constexpr(Version == simd_version::fixed_sve_ || Version == simd_version::fixed_sve2_)
-      {
-#if defined(__ARM_FEATURE_SVE_BITS)
-        return __ARM_FEATURE_SVE_BITS;
-#else
-        return -1;
-#endif
-      }
-      else return -1;
-    }();
-    static constexpr bool               has_fixed_cardinal() { return width != -1; }
+      if constexpr(Version != simd_version::undefined_ && V2 != simd_version::undefined_)
+        return (InsSetArch == I2) && (Version == V2);
+      else return InsSetArch == I2;
+    }
+    template<simd_isa I2, simd_version V2>
+    friend constexpr std::partial_ordering operator<=>(simd_info, simd_info<I2, V2>) noexcept
+    {
+      if constexpr(InsSetArch != I2) return std::partial_ordering::unordered;
+      else return Version <=> V2;
+    }
     template<_::stream OS> friend auto& operator<<(OS& os, simd_info const&)
     {
-      if constexpr(Version == simd_version::simd128_) os << "WASM SIMD128";
-      else if constexpr(Version == simd_version::sse1_) os << "X86 SSE";
-      else if constexpr(Version == simd_version::sse2_) os << "X86 SSE2";
-      else if constexpr(Version == simd_version::sse3_) os << "X86 SSE3";
-      else if constexpr(Version == simd_version::ssse3_) os << "X86 SSSE3";
-      else if constexpr(Version == simd_version::sse41_) os << "X86 SSE4.1";
-      else if constexpr(Version == simd_version::sse42_) os << "X86 SSE4.2";
-      else if constexpr(Version == simd_version::avx_) os << "X86 AVX";
-      else if constexpr(Version == simd_version::avx2_) os << "X86 AVX2";
-      else if constexpr(Version == simd_version::avx512_) os << "X86 AVX512";
-      else if constexpr(Version >= simd_version::vmx_2_03_ && Version <= simd_version::vmx_3_01_)
+      using enum simd_version;
+      if constexpr(Version == simd128_) os << "WASM SIMD128";
+      else if constexpr(Version == sse1_) os << "X86 SSE";
+      else if constexpr(Version == sse2_) os << "X86 SSE2";
+      else if constexpr(Version == sse3_) os << "X86 SSE3";
+      else if constexpr(Version == ssse3_) os << "X86 SSSE3";
+      else if constexpr(Version == sse41_) os << "X86 SSE4.1";
+      else if constexpr(Version == sse42_) os << "X86 SSE4.2";
+      else if constexpr(Version == avx_) os << "X86 AVX";
+      else if constexpr(Version == avx2_) os << "X86 AVX2";
+      else if constexpr(Version == avx512_) os << "X86 AVX512";
+      else if constexpr(Version >= vmx_2_03_ && Version <= vmx_3_01_)
       {
         constexpr auto v = static_cast<int>(Version);
         os << "PPC VMX with ISA v" << ((v - 2000) / 100.);
       }
-      else if constexpr(Version >= simd_version::vsx_2_06_ && Version <= simd_version::vsx_3_01_)
+      else if constexpr(Version >= vsx_2_06_ && Version <= vsx_3_01_)
       {
         constexpr auto v = static_cast<int>(Version);
         os << "PPC VSX with ISA v" << ((v - 3000) / 100.);
       }
-      else if constexpr(Version == simd_version::neon_) os << "ARM NEON";
-      else if constexpr(Version == simd_version::asimd_) os << "ARM ASIMD";
-      else if constexpr(Version == simd_version::sve_) os << "ARM SVE (dyn.)";
-      else if constexpr(Version == simd_version::fixed_sve_)
-        os << "ARM SVE (" << simd_info::width << " bits)";
-      else if constexpr(Version == simd_version::sve2_) os << "ARM SVE2 (dyn.)";
-      else if constexpr(Version == simd_version::fixed_sve2_)
-        os << "ARM SVE2 (" << simd_info::width << " bits)";
-      else if constexpr(Version == simd_version::rvv_) os << "RISC-V RVV (dyn.)";
-      else if constexpr(Version == simd_version::fixed_rvv_)
-        os << "RISC-V RVV (" << simd_info::width << " bits)";
+      else if constexpr(Version == neon_) os << "ARM NEON";
+      else if constexpr(Version == asimd_) os << "ARM ASIMD";
+      else if constexpr(Version == sve_) os << "ARM SVE (dyn.)";
+      else if constexpr(Version == fixed_sve_) os << "ARM SVE (" << simd_info::width << " bits)";
+      else if constexpr(Version == sve2_) os << "ARM SVE2 (dyn.)";
+      else if constexpr(Version == fixed_sve2_) os << "ARM SVE2 (" << simd_info::width << " bits)";
+      else if constexpr(Version == rvv_) os << "RISC-V RVV (dyn.)";
+      else if constexpr(Version == fixed_rvv_) os << "RISC-V RVV (" << simd_info::width << " bits)";
       else return os << "Undefined SIMD instructions set";
-      if constexpr(spy::supports::fma_) os << " (with FMA3 support)";
-      if constexpr(spy::supports::fma4_) os << " (with FMA4 support)";
-      if constexpr(spy::supports::xop_) os << " (with XOP support)";
+      _::print_supplemental_sets(os);
       return os;
     }
   };
-  template<simd_isa I1, simd_version V1, simd_isa I2, simd_version V2>
-  constexpr bool operator==(simd_info<I1, V1>, simd_info<I2, V2>) noexcept
-  {
-    if constexpr(V1 != simd_version::undefined_ && V2 != simd_version::undefined_)
-      return (I1 == I2) && (V1 == V2);
-    else return I1 == I2;
-  }
-  template<simd_isa I1, simd_version V1, simd_isa I2, simd_version V2>
-  constexpr std::partial_ordering operator<=>(simd_info<I1, V1>, simd_info<I2, V2>) noexcept
-  {
-    if constexpr(I1 != I2) return std::partial_ordering::unordered;
-    else return static_cast<int>(V1) <=> static_cast<int>(V2);
-  }
 }
 namespace spy
 {
 #if defined(SPY_SIMD_DETECTED)
   constexpr inline auto simd_instruction_set = _::simd_info<SPY_SIMD_VENDOR, SPY_SIMD_DETECTED> {};
-#else
+  #else
   constexpr inline auto simd_instruction_set = _::simd_info<> {};
 #endif
   constexpr inline auto undefined_simd_ = _::simd_info<> {};
@@ -1243,6 +1405,57 @@ namespace spy
   constexpr inline auto rvv_        = riscv_simd_info<_::simd_version::rvv_> {};
   constexpr inline auto fixed_rvv_  = riscv_simd_info<_::simd_version::fixed_rvv_> {};
 }
+#include <compare>
+#include <cstddef>
+namespace spy::_
+{
+  template<int Year> struct cpp_standard_t
+  {
+    static constexpr int                   year = Year;
+    template<int OtherYear> constexpr auto operator<=>(cpp_standard_t<OtherYear>) const
+    {
+      return year <=> OtherYear;
+    }
+    template<int OtherYear> constexpr bool operator==(cpp_standard_t<OtherYear>) const
+    {
+      return year == OtherYear;
+    }
+    constexpr auto operator<=>(int other_year) const { return year <=> other_year; }
+    constexpr bool operator==(int other_year) const { return year == other_year; }
+    template<_::stream OS> friend auto& operator<<(OS& os, cpp_standard_t const&)
+    {
+      if constexpr(Year != 0) return os << "C++" << Year;
+      else return os << "Unknown C++ standard version";
+    }
+  };
+}
+namespace spy
+{
+#if defined(_MSVC_LANG)
+#define SPY_RAW_CXX_STANDARD _MSVC_LANG
+#else
+#define SPY_RAW_CXX_STANDARD __cplusplus
+#endif
+#if SPY_RAW_CXX_STANDARD > 202302L
+#define SPY_CXX_VERSION 26
+#elif SPY_RAW_CXX_STANDARD >= 202302L
+#define SPY_CXX_VERSION 23
+#elif SPY_RAW_CXX_STANDARD >= 202002L
+#define SPY_CXX_VERSION 20
+#else
+#define SPY_CXX_VERSION 0
+#endif
+  inline constexpr _::cpp_standard_t<SPY_CXX_VERSION> cpp_standard {};
+}
+namespace spy::literal
+{
+  template<char... c>
+    requires(sizeof...(c) == 2)
+  consteval auto operator""_cpp()
+  {
+    return _::cpp_standard_t<_::parse<c...>(0, 2)> {};
+  }
+}
 #include <cstddef>
 namespace spy::_
 {
@@ -1256,7 +1469,7 @@ namespace spy::_
   {
     static constexpr stdlib              vendor  = Lib;
     static constexpr version_id<M, N, P> version = {};
-    inline constexpr explicit            operator bool() const noexcept;
+    constexpr explicit                   operator bool() const noexcept;
     template<stdlib C2> constexpr bool   operator==(stdlib_info<C2, -1, 0, 0> const&) const noexcept
     {
       return C2 == vendor;
@@ -1273,14 +1486,13 @@ namespace spy::_
       if constexpr(vendor == C2) return version <=> c2.version;
       else return std::partial_ordering::unordered;
     }
+    template<_::stream OS> friend auto& operator<<(OS& os, stdlib_info const&)
+    {
+      if(Lib == stdlib::libcpp_) return os << "libc++ Standard C++ Library " << version;
+      if(Lib == stdlib::gnucpp_) return os << "GNU Standard C++ Library " << version;
+      return os << "Undefined Standard C++ Library";
+    }
   };
-  template<_::stream OS, stdlib SLib, int M, int N, int P>
-  auto& operator<<(OS& os, stdlib_info<SLib, M, N, P> const& p)
-  {
-    if(SLib == stdlib::libcpp_) return os << "libc++ Standard C++ Library " << p.version;
-    if(SLib == stdlib::gnucpp_) return os << "GNU Standard C++ Library " << p.version;
-    return os << "Undefined Standard C++ Library";
-  }
   template<int M, int N, int P> using libcpp_t = stdlib_info<stdlib::libcpp_, M, N, P>;
   template<int M, int N, int P> using gnucpp_t = stdlib_info<stdlib::gnucpp_, M, N, P>;
 }
@@ -1303,7 +1515,7 @@ namespace spy
 namespace spy::_
 {
   template<stdlib SLib, int M, int N, int P>
-  inline constexpr stdlib_info<SLib, M, N, P>::operator bool() const noexcept
+  constexpr stdlib_info<SLib, M, N, P>::operator bool() const noexcept
   {
     return spy::stdlib == *this;
   }
@@ -1315,11 +1527,11 @@ namespace spy
 }
 namespace spy::literal
 {
-  template<char... c> constexpr auto operator""_libcpp()
+  template<char... c> consteval auto operator""_libcpp()
   {
     return _::literal_wrap<_::libcpp_t, c...>();
   }
-  template<char... c> constexpr auto operator""_gnucpp()
+  template<char... c> consteval auto operator""_gnucpp()
   {
     return _::literal_wrap<_::gnucpp_t, c...>();
   }
@@ -1363,25 +1575,33 @@ namespace spy::literal
 #endif
 namespace spy::supports::fp16
 {
-#ifdef SPY_SUPPORTS_FP16_TYPE
-  static constexpr bool type = true;
+#if defined(SPY_SUPPORTS_FP16_TYPE)
+  constexpr inline bool type = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool type = _::implementation_defined {};
 #else
-  static constexpr bool type = false;
+  constexpr inline bool type = false;
 #endif
-#ifdef SPY_SUPPORTS_FP16_SCALAR_OPS
-  static constexpr bool scalar_ops = true;
+#if defined(SPY_SUPPORTS_FP16_SCALAR_OPS)
+  constexpr inline bool scalar_ops = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool scalar_ops = _::implementation_defined {};
 #else
-  static constexpr bool scalar_ops = false;
+  constexpr inline bool scalar_ops = false;
 #endif
-#ifdef SPY_SUPPORTS_FP16_VECTOR_CONVERSION
-  static constexpr bool vector_conversion = true;
+#if defined(SPY_SUPPORTS_FP16_VECTOR_CONVERSION)
+  constexpr inline bool vector_conversion = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool vector_conversion = _::implementation_defined {};
 #else
-  static constexpr bool vector_conversion = false;
+  constexpr inline bool vector_conversion = false;
 #endif
-#ifdef SPY_SUPPORTS_FP16_VECTOR_OPS
-  static constexpr bool vector_ops = true;
+#if defined(SPY_SUPPORTS_FP16_VECTOR_OPS)
+  constexpr inline bool vector_ops = true;
+#elif defined(SPY_DOXYGEN_INVOKED)
+  constexpr inline bool vector_ops = _::implementation_defined {};
 #else
-  static constexpr bool vector_ops = false;
+  constexpr inline bool vector_ops = false;
 #endif
 }
 #endif
