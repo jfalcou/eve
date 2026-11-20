@@ -1,6 +1,7 @@
 #include <eve/module/core.hpp>
 #include <eve/module/algo.hpp>
 #include <tts/tts.hpp>  // as_text
+#include <iostream>
 #include <vector>
 
 int main()
