@@ -79,7 +79,7 @@ requires rvv_abi<abi_t<T, N>>
   else if constexpr( ratio == 16 ) v = __riscv_vlm_v_b16(ptr, N);
   else if constexpr( ratio == 32 ) v = __riscv_vlm_v_b32(ptr, N);
   else if constexpr( ratio == 64 ) v = __riscv_vlm_v_b64(ptr, N);
-  else static_assert("[eve riscv] -- unexpected ratio for logical");
+  else static_assert(ratio == 64, "[eve riscv] -- unexpected ratio for logical");
 }
 
 }
