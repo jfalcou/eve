@@ -366,6 +366,58 @@ shuffle_l2_x86_broadcast_0(P, lanes_t<G>, wide<T, N> x)
   }
 }
 
+// _mm_insert_ps(x, x): zero any subset + move one element.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_insert_ps_self(P, lanes_t<G>, wide<T, N> x)
+{
+  if constexpr( current_api < sse4_1 || P::reg_size != 16 || P::g_size != 4 )
+  {
+    return no_matching_shuffle;
+  }
+  else if constexpr( constexpr auto imm = idxm::x86_insert_ps_imm(P::idxs, 0, 0); !imm )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    auto xf = bit_cast(x, as<wide<float, 4>> {});
+    return _mm_insert_ps(xf, xf, *imm);
+  }
+}
+
+// _mm_rol_epi32 / _mm_rol_epi64: rotating smaller elements within 4 or 8 bytes.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_rotate_within_element(P, lanes_t<G>, wide<T, N> x)
+{
+  constexpr std::ptrdiff_t element = P::g_size * std::ssize(P::most_repeated);
+
+  if constexpr( current_api < avx512 || P::has_zeroes ) return no_matching_shuffle;
+  else if constexpr( element != 4 && element != 8 ) return no_matching_shuffle;
+  else if constexpr( constexpr auto r = idxm::is_rotate(P::most_repeated); !r || *r == 0 )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    constexpr int bits = *r * P::g_size * 8;
+
+    if constexpr( element == 4 )
+    {
+      if constexpr( P::reg_size == 16 ) return _mm_rol_epi32(x, bits);
+      else if constexpr( P::reg_size == 32 ) return _mm256_rol_epi32(x, bits);
+      else return _mm512_rol_epi32(x, bits);
+    }
+    else
+    {
+      if constexpr( P::reg_size == 16 ) return _mm_rol_epi64(x, bits);
+      else if constexpr( P::reg_size == 32 ) return _mm256_rol_epi64(x, bits);
+      else return _mm512_rol_epi64(x, bits);
+    }
+  }
+}
+
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
  auto
 shuffle_l2_x86_independent_permute2x64(P, lanes_t<G>, wide<T, N> x)
@@ -480,6 +532,15 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
+  else if constexpr( auto r = shuffle_l2_x86_insert_ps_self(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_rotate_within_element(p, g, x);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
   else if constexpr( auto r = shuffle_l2_x86_independent_permute2x64(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
@@ -498,6 +559,83 @@ requires(P::out_reg_size == P::reg_size)
     return r;
   }
   else if constexpr( auto r = shuffle_l2_x86_broadcast_0(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else return no_matching_shuffle;
+}
+
+// smaller output -------------------------------------------------------------
+
+// _mm256_extracti128_si256 and friends: a 16/32 byte part, that is not the lowest one.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_extract(P, lanes_t<G>, wide<T, N> x)
+{
+  constexpr auto start = idxm::is_in_order(P::idxs);
+
+  if constexpr( !start || *start <= 0 ) return no_matching_shuffle;
+  else if constexpr( P::out_reg_size < 16 || (*start * P::g_size) % P::out_reg_size )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    constexpr int part = *start * P::g_size / P::out_reg_size;
+
+    if constexpr( P::reg_size == 32 )
+    {
+      if constexpr( current_api == avx ) return _mm256_extractf128_si256(x, part);
+      else return _mm256_extracti128_si256(x, part);
+    }
+    else if constexpr( P::out_reg_size == 32 ) return _mm512_extracti64x4_epi64(x, part);
+    else return _mm512_extracti32x4_epi32(x, part);
+  }
+}
+
+template<std::ptrdiff_t reg_size, std::ptrdiff_t from, std::ptrdiff_t to>
+ auto
+x86_cvtepi_truncate(auto x)
+{
+#define EVE_X86_TRUNCATE(F, T)                                                                     \
+  if constexpr( reg_size == 16 ) return _mm_cvtepi##F##_epi##T(x);                                 \
+  else if constexpr( reg_size == 32 ) return _mm256_cvtepi##F##_epi##T(x);                         \
+  else return _mm512_cvtepi##F##_epi##T(x)
+
+  if constexpr( from == 2 ) { EVE_X86_TRUNCATE(16, 8); }
+  else if constexpr( from == 4 && to == 1 ) { EVE_X86_TRUNCATE(32, 8); }
+  else if constexpr( from == 4 ) { EVE_X86_TRUNCATE(32, 16); }
+  else if constexpr( to == 1 ) { EVE_X86_TRUNCATE(64, 8); }
+  else if constexpr( to == 2 ) { EVE_X86_TRUNCATE(64, 16); }
+  else { EVE_X86_TRUNCATE(64, 32); }
+
+#undef EVE_X86_TRUNCATE
+}
+
+// _mm_cvtepi64_epi32 and friends (avx512)
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_truncate(P, lanes_t<G>, wide<T, N> x)
+{
+  if constexpr( current_api < avx512 || P::g_size > 4 ) return no_matching_shuffle;
+  else if constexpr( constexpr auto ratio = idxm::x86_is_truncation(P::idxs, P::reg_groups);
+                     !ratio || P::g_size * *ratio > 8 )
+  {
+    return no_matching_shuffle;
+  }
+  else return x86_cvtepi_truncate<P::reg_size, P::g_size * *ratio, P::g_size>(x);
+}
+
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_(EVE_SUPPORTS(sse2_), P p, lanes_t<G> g, wide<T, N> x)
+requires(P::out_reg_size < P::reg_size)
+{
+  if constexpr( auto r = shuffle_l2_x86_extract(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_truncate(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -536,8 +674,24 @@ shuffle_l2_x86_blend(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
       if constexpr( P::reg_size == 16 ) return _mm_blend_ps(x_f32, y_f32, m);
       else return _mm256_blend_ps(x_f32, y_f32, m);
     }
-    // FIX-1617 - enable `_mm_blend_epi16`
     else return no_matching_shuffle;
+  }
+  else if constexpr( P::g_size == 2 && current_api >= sse4_1 && current_api < avx512
+                     && P::reg_size == 16 )
+  {
+    constexpr int m = idxm::x86_blend_epi16_mask(P::idxs, P::reg_groups);
+    return _mm_blend_epi16(x, y, m);
+  }
+  else if constexpr( P::g_size == 2 && current_api >= avx2 && current_api < avx512
+                     && P::reg_size == 32 )
+  {
+    // the immediate is shared between the 16 byte lanes
+    if constexpr( !P::repeated_16 ) return no_matching_shuffle;
+    else
+    {
+      constexpr int m = idxm::x86_blend_epi16_mask(*P::repeated_16, P::reg_groups);
+      return _mm256_blend_epi16(x, y, m);
+    }
   }
   else if constexpr( eve::current_api >= avx512 )
   {
@@ -546,6 +700,29 @@ shuffle_l2_x86_blend(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
     return eve::if_else(m, y, x);
   }
   else return no_matching_shuffle;
+}
+
+// _mm_insert_ps(x, y) / _mm_insert_ps(y, x): one element from the other register + zeroing.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_insert_ps(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( current_api < sse4_1 || P::reg_size != 16 || P::g_size != 4 )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    constexpr auto x_base = idxm::x86_insert_ps_imm(P::idxs, 0, 4);
+    constexpr auto y_base = idxm::x86_insert_ps_imm(P::idxs, 4, 0);
+
+    auto xf = bit_cast(x, as<wide<float, 4>> {});
+    auto yf = bit_cast(y, as<wide<float, 4>> {});
+
+    if constexpr( x_base ) return _mm_insert_ps(xf, yf, *x_base);
+    else if constexpr( y_base ) return _mm_insert_ps(yf, xf, *y_base);
+    else return no_matching_shuffle;
+  }
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
@@ -768,6 +945,10 @@ requires(P::out_reg_size == P::reg_size)
   }
   else if constexpr( auto r = shuffle_l2_x86_alignr_epi32(p, g, x, y);
                      matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_insert_ps(p, g, x, y); matched_shuffle<decltype(r)> )
   {
     return r;
   }

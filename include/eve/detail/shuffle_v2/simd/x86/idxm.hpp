@@ -288,4 +288,77 @@ x86_is_zero_extend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t max_rati
   return std::nullopt;
 }
 
+// _mm_insert_ps(base, other, imm) on 4 x 32 bits.
+// Elements of `base` start from `base_offset`, elements of `other` from `other_offset`.
+// Every element is either: in place in `base`, zero, or (at most one) any element of `other`.
+// For one register pass `base_offset == other_offset == 0`.
+constexpr std::optional<int>
+x86_insert_ps_imm(std::span<const std::ptrdiff_t, 4> idxs,
+                  std::ptrdiff_t                     base_offset,
+                  std::ptrdiff_t                     other_offset)
+{
+  int  zmask = 0;
+  int  src   = 0;
+  int  dst   = 0;
+  bool moved = false;
+
+  for( std::ptrdiff_t i = 0; i != 4; ++i )
+  {
+    std::ptrdiff_t v = idxs[i];
+    if( v == we_ || v == base_offset + i ) continue;
+    if( v == na_ )
+    {
+      zmask |= 1 << i;
+      continue;
+    }
+    if( moved || v < other_offset || v >= other_offset + 4 ) return std::nullopt;
+    moved = true;
+    src   = (int)(v - other_offset);
+    dst   = (int)i;
+  }
+
+  // if nothing moved, insert the element on itself.
+  if( !moved && base_offset != other_offset ) return std::nullopt;
+
+  return src << 6 | dst << 4 | zmask;
+}
+
+// _mm_blend_epi16 immediate for one 16 byte lane, `lane` uses 2 byte elements.
+constexpr int
+x86_blend_epi16_mask(std::span<const std::ptrdiff_t> lane, std::ptrdiff_t reg_groups)
+{
+  int r = 0;
+  for( std::ptrdiff_t i = 0; i != std::ssize(lane); ++i )
+  {
+    if( lane[i] >= reg_groups ) r |= 1 << i;
+  }
+  return r;
+}
+
+// _mm_cvtepi64_epi32 and friends: every `ratio` element.
+// The instruction zeroes the rest of the output, so trailing we_ are fine.
+constexpr std::optional<std::ptrdiff_t>
+x86_is_truncation(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
+{
+  std::ptrdiff_t n = std::ssize(idxs);
+
+  std::ptrdiff_t ratio = 0;
+  for( std::ptrdiff_t i = 1; i != n; ++i )
+  {
+    if( idxs[i] == we_ ) continue;
+    if( idxs[i] < 0 || idxs[i] % i ) return std::nullopt;
+    ratio = idxs[i] / i;
+    break;
+  }
+
+  if( ratio < 2 || (ratio & (ratio - 1)) ) return std::nullopt;
+
+  for( std::ptrdiff_t i = 0; i != n; ++i )
+  {
+    if( idxs[i] == we_ ) continue;
+    if( idxs[i] != i * ratio || idxs[i] >= reg_groups ) return std::nullopt;
+  }
+  return ratio;
+}
+
 }
