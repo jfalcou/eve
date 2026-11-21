@@ -160,7 +160,8 @@ struct slide_left_impl_t
     if( is_shift_by_16 && reg_size == 32 ) return 2;
     if( current_api >= avx2 && reg_size == 32 ) return 4;
 
-    if( current_api >= sse4_2 ) return 2;
+    // _mm_alignr_epi8
+    if( current_api >= ssse3 ) return 2;
     // sse2
     return is_shift_by_8 ? 2 : 6;
   }
