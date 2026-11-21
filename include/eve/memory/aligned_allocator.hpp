@@ -12,8 +12,8 @@
 #include <cstddef>
 #include <bit>
 
-// The Windows C runtimes (MSVC's UCRT, also used by clang-cl and MinGW) do not provide
-// std::aligned_alloc: memory from _aligned_malloc must be released by _aligned_free.
+// clang-cl: ~110 unit tests (e.g. unit.algo.*) failed to compile: no std::aligned_alloc in the
+// Windows CRT, and the _aligned_malloc branch was only taken for SPY_COMPILER_IS_MSVC.
 #if defined(_WIN32)
 #include <malloc.h>
 #else

@@ -5,15 +5,13 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-// No #pragma once: the body below is guarded, but the main() at the end must be seen again by a
-// test that reuses the precompiled header (test_pch.hpp) built without it.
+// clang-cl with EVE_USE_PCH: test_pch.exe and every test failed to link, main and eve_entry_point
+// defined twice: a /Yc PCH object holds them and clang-cl's /Yu TUs emit them again (cl's don't).
+// The driver is inline, main() is after this guard and out of the PCH (test_pch.hpp).
 #ifndef EVE_TEST_HPP_INCLUDED
 #define EVE_TEST_HPP_INCLUDED
 
 #define TTS_MAIN
-// inline: a precompiled header made with clang-cl's /Yc puts the definitions it contains in its own
-// object as well as in every test using it (cl.exe only in the former), so a non inline driver
-// would be defined twice at link time.
 #define TTS_CUSTOM_DRIVER_FUNCTION inline eve_entry_point
 
 //==================================================================================================
@@ -647,13 +645,10 @@ namespace tts
 
 #include <iostream>
 
-#endif // EVE_TEST_HPP_INCLUDED
+#endif
 
 //==================================================================================================
 // EVE TTS Entrypoint
-//
-// main() is not part of the precompiled header (see test_pch.hpp): it can't be inline, and with
-// clang-cl it would be defined both in the precompiled header object and in the test.
 //==================================================================================================
 #if !defined(EVE_TEST_BUILDING_PCH) && !defined(EVE_TEST_HPP_MAIN_DEFINED)
 #define EVE_TEST_HPP_MAIN_DEFINED
@@ -682,4 +677,4 @@ int main(int argc, char const **argv)
   return tts::report(0,0);
 }
 
-#endif // main()
+#endif

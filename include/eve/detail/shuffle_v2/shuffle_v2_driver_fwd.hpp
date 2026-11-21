@@ -95,10 +95,9 @@ template<typename Internal> struct shuffle_reverse_arguments
     return kumi::apply(internal, kumi::reverse(kumi::tuple {args...}));
   }
 
-  // The constraints name the object type instead of calling impl through the implicit this:
-  // clang 22 caches the satisfaction of a constraint like matched_shuffle<decltype(impl(args...))>
-  // without telling apart the shuffle_reverse_arguments<Internal> specializations, so the first
-  // answer computed leaks to every other Internal with the same argument types.
+  // clang-cl 22: unit.api.regular.shuffle_v2.shuffle_v2_driver failed: clang caches the satisfaction
+  // of requires(C<decltype(impl(args...))>) without telling apart the shuffle_reverse_arguments
+  // specializations. Naming the object type instead of the implicit this avoids it.
    auto operator()(auto... args) const noexcept
   requires(matched_shuffle<decltype(get<0>(std::declval<shuffle_reverse_arguments const&>().impl(args...)))>)
   {

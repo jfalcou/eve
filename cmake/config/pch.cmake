@@ -8,7 +8,7 @@
 ## Setup PCH
 ##==================================================================================================
 file(WRITE "${PROJECT_BINARY_DIR}/doc_pch.cpp" "int main() {}\n" )
-## test_pch.hpp leaves main() out (each test gets it from test.hpp), so the carrier needs its own.
+## clang-cl with EVE_USE_PCH: main() is no longer in the precompiled header (see test/test.hpp)
 file(WRITE "${PROJECT_BINARY_DIR}/test_pch.cpp" "int main() {}\n" )
 
 ## Let warnings come out even when PCH is setup

@@ -24,11 +24,9 @@ EVE_NAMESPACE::_
   //!
   //! @tparam Storage Architecture-specific SIMD register type to store
   //================================================================================================
-  // The explicit alignas does not change the alignment, it makes it a required one. Without it,
-  // clang-cl lets an enclosing #pragma pack lower it, unlike MSVC where the __declspec(align) of
-  // __m128 & co. propagates. The MS STL declares std::array, std::pair, ... under
-  // #pragma pack(_CRT_PACKING), so a std::array<wide,N> ends up 8-aligned and aligned SSE/AVX
-  // accesses to its elements crash.
+  // clang-cl: 53 unit tests crashed (e.g. unit.core.logical_and, movaps access violation): the MS
+  // STL declares std::array under #pragma pack(8) and clang-cl, unlike cl, lets it lower the
+  // alignment of a template wrapping __m128. The explicit alignas can't be lowered.
   template<typename Storage> struct alignas(alignof(Storage)) wide_storage
   {
     using storage_type = Storage;

@@ -40,6 +40,8 @@ TTS_CASE_WITH("Check behavior of eve::exponent(simd)",
                 [](auto e) -> vi_t
                 {
                   int ee;
+                  // clang-cl and cl 19.52: unit.core.exponent failed to compile (/WX): the MS STL's
+                  // std::frexp is [[nodiscard]].
                   (void)std::frexp(e, &ee);
                   return ee - 1;
                 },

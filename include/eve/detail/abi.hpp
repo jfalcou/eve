@@ -30,7 +30,8 @@
 #endif
 
 // Force a function to be inline
-// clang-cl defines _MSC_VER but ignores the msvc:: inlining attributes, so test __clang__ first.
+// clang-cl without EVE_NO_FORCEINLINE: every test failed to compile (/WX): clang-cl defines _MSC_VER
+// but ignores [[msvc::forceinline, flatten]] (-Wunknown-attributes), so __clang__ is tested first.
 #if defined(EVE_NO_FORCEINLINE)
 #  define EVE_ABI inline
 #else
