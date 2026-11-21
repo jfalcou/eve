@@ -377,8 +377,10 @@ EVE_NAMESPACE
   //! @}
   //================================================================================================
 
+  // cl 19.52: 214 unit/doc/example objects (e.g. examples.tutorial.frequency_scaling) failed with
+  // C2752: a second element_type<aligned_ptr<T>> specialization (default lanes) was ambiguous with
+  // this one, which already covers it.
   template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
-  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
   //================================================================================================
   //! @relates eve::aligned_ptr
