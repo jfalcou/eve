@@ -12,8 +12,12 @@
 #include <cstddef>
 #include <bit>
 
-#if defined(SPY_COMPILER_IS_MSVC)
+// The Windows C runtimes (MSVC's UCRT, also used by clang-cl and MinGW) do not provide
+// std::aligned_alloc: memory from _aligned_malloc must be released by _aligned_free.
+#if defined(_WIN32)
 #include <malloc.h>
+#else
+#include <cstdlib>
 #endif
 
 EVE_NAMESPACE
@@ -75,7 +79,7 @@ EVE_NAMESPACE
       if (a < 8U) a = 8U;
       auto sz = align(n, over{a});
 
-      #if defined(SPY_COMPILER_IS_MSVC)
+      #if defined(_WIN32)
       return  _aligned_malloc(sz,a);
       #else
 
@@ -93,7 +97,7 @@ EVE_NAMESPACE
     {
       if(!ptr) return;
 
-      #if defined(SPY_COMPILER_IS_MSVC)
+      #if defined(_WIN32)
       _aligned_free(ptr);
       #else
       std::free(ptr);
