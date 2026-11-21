@@ -12,6 +12,103 @@
 EVE_NAMESPACE::_
 {
 
+template<std::ptrdiff_t g_size, bool hi, arithmetic_scalar_value T, width_type N>
+ auto
+x86_unpack(wide<T, N> x, wide<T, N> y)
+{
+  constexpr std::ptrdiff_t reg_size = sizeof(T) * wide<T, N>::size();
+
+  if constexpr( reg_size == 16 )
+  {
+    if constexpr( g_size == 1 ) return hi ? _mm_unpackhi_epi8(x, y) : _mm_unpacklo_epi8(x, y);
+    else if constexpr( g_size == 2 ) return hi ? _mm_unpackhi_epi16(x, y) : _mm_unpacklo_epi16(x, y);
+    else if constexpr( g_size == 4 ) return hi ? _mm_unpackhi_epi32(x, y) : _mm_unpacklo_epi32(x, y);
+    else return hi ? _mm_unpackhi_epi64(x, y) : _mm_unpacklo_epi64(x, y);
+  }
+  else if constexpr( reg_size == 32 && current_api == avx )
+  {
+    // avx only has floating point unpacks
+    static_assert(g_size >= 4, "verifying assumptions");
+
+    if constexpr( g_size == 4 )
+    {
+      using f32 = wide<float, 8>;
+      auto xf   = bit_cast(x, as<f32> {});
+      auto yf   = bit_cast(y, as<f32> {});
+      return hi ? _mm256_unpackhi_ps(xf, yf) : _mm256_unpacklo_ps(xf, yf);
+    }
+    else
+    {
+      using f64 = wide<double, 4>;
+      auto xf   = bit_cast(x, as<f64> {});
+      auto yf   = bit_cast(y, as<f64> {});
+      return hi ? _mm256_unpackhi_pd(xf, yf) : _mm256_unpacklo_pd(xf, yf);
+    }
+  }
+  else if constexpr( reg_size == 32 )
+  {
+    if constexpr( g_size == 1 ) return hi ? _mm256_unpackhi_epi8(x, y) : _mm256_unpacklo_epi8(x, y);
+    else if constexpr( g_size == 2 )
+      return hi ? _mm256_unpackhi_epi16(x, y) : _mm256_unpacklo_epi16(x, y);
+    else if constexpr( g_size == 4 )
+      return hi ? _mm256_unpackhi_epi32(x, y) : _mm256_unpacklo_epi32(x, y);
+    else return hi ? _mm256_unpackhi_epi64(x, y) : _mm256_unpacklo_epi64(x, y);
+  }
+  else
+  {
+    if constexpr( g_size == 1 ) return hi ? _mm512_unpackhi_epi8(x, y) : _mm512_unpacklo_epi8(x, y);
+    else if constexpr( g_size == 2 )
+      return hi ? _mm512_unpackhi_epi16(x, y) : _mm512_unpacklo_epi16(x, y);
+    else if constexpr( g_size == 4 )
+      return hi ? _mm512_unpackhi_epi32(x, y) : _mm512_unpacklo_epi32(x, y);
+    else return hi ? _mm512_unpackhi_epi64(x, y) : _mm512_unpacklo_epi64(x, y);
+  }
+}
+
+// Low 16 bytes of a register.
+template<arithmetic_scalar_value T, width_type N>
+ __m128i
+x86_low_128(wide<T, N> x)
+{
+  constexpr std::ptrdiff_t reg_size = sizeof(T) * wide<T, N>::size();
+  if constexpr( reg_size == 16 ) return x;
+  else if constexpr( reg_size == 32 ) return _mm256_castsi256_si128(x);
+  else return _mm512_castsi512_si128(x);
+}
+
+template<std::ptrdiff_t reg_size, std::ptrdiff_t from, std::ptrdiff_t to>
+ auto
+x86_cvtepu(auto src)
+{
+  if constexpr( reg_size == 16 )
+  {
+    if constexpr( from == 1 && to == 2 ) return _mm_cvtepu8_epi16(src);
+    else if constexpr( from == 1 && to == 4 ) return _mm_cvtepu8_epi32(src);
+    else if constexpr( from == 1 && to == 8 ) return _mm_cvtepu8_epi64(src);
+    else if constexpr( from == 2 && to == 4 ) return _mm_cvtepu16_epi32(src);
+    else if constexpr( from == 2 && to == 8 ) return _mm_cvtepu16_epi64(src);
+    else return _mm_cvtepu32_epi64(src);
+  }
+  else if constexpr( reg_size == 32 )
+  {
+    if constexpr( from == 1 && to == 2 ) return _mm256_cvtepu8_epi16(src);
+    else if constexpr( from == 1 && to == 4 ) return _mm256_cvtepu8_epi32(src);
+    else if constexpr( from == 1 && to == 8 ) return _mm256_cvtepu8_epi64(src);
+    else if constexpr( from == 2 && to == 4 ) return _mm256_cvtepu16_epi32(src);
+    else if constexpr( from == 2 && to == 8 ) return _mm256_cvtepu16_epi64(src);
+    else return _mm256_cvtepu32_epi64(src);
+  }
+  else
+  {
+    if constexpr( from == 1 && to == 2 ) return _mm512_cvtepu8_epi16(src);
+    else if constexpr( from == 1 && to == 4 ) return _mm512_cvtepu8_epi32(src);
+    else if constexpr( from == 1 && to == 8 ) return _mm512_cvtepu8_epi64(src);
+    else if constexpr( from == 2 && to == 4 ) return _mm512_cvtepu16_epi32(src);
+    else if constexpr( from == 2 && to == 8 ) return _mm512_cvtepu16_epi64(src);
+    else return _mm512_cvtepu32_epi64(src);
+  }
+}
+
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
  auto
 shuffle_l2_x86_repeated_128_shifts_and_slides(P p, lanes_t<G> g, wide<T, N> x)
@@ -55,16 +152,29 @@ shuffle_l2_x86_repeated_128_4_shorts(P, lanes_t<G>, wide<T, N> x)
       constexpr auto lo   = lohi[0];
       constexpr auto hi   = lohi[1];
 
-      if constexpr( idxm::is_in_order_from(lo, 0) )
+      // shufflelo/shufflehi can't move elements between the halves
+      constexpr auto within = [](auto half, std::ptrdiff_t from)
       {
-        constexpr std::array hi_adjusted {hi[0] - 4, hi[1] - 4, hi[2] - 4, hi[3] - 4};
+        for( auto i : half )
+        {
+          if( i != we_ && (i < from || i >= from + 4) ) return false;
+        }
+        return true;
+      };
+
+      constexpr auto minus_4 = [](std::ptrdiff_t i) { return i == we_ ? we_ : i - 4; };
+
+      if constexpr( idxm::is_in_order_from(lo, 0) && within(hi, 4) )
+      {
+        constexpr std::array hi_adjusted {
+            minus_4(hi[0]), minus_4(hi[1]), minus_4(hi[2]), minus_4(hi[3])};
         constexpr int        m = idxm::x86_mm_shuffle_4(hi_adjusted);
 
         if constexpr( P::reg_size == 16 ) return _mm_shufflehi_epi16(x, m);
         else if constexpr( P::reg_size == 32 ) return _mm256_shufflehi_epi16(x, m);
         else if constexpr( P::reg_size == 64 ) return _mm512_shufflehi_epi16(x, m);
       }
-      else if constexpr( idxm::is_in_order_from(hi, 4) )
+      else if constexpr( idxm::is_in_order_from(hi, 4) && within(lo, 0) )
       {
         constexpr int m = idxm::x86_mm_shuffle_4(lo);
 
@@ -119,6 +229,21 @@ shuffle_l2_x86_repeated_128_alignr(P, lanes_t<G>, wide<T, N> x)
   }
 }
 
+// _mm_unpacklo_epi8(x, x) and friends.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_repeated_128_unpack_self(P, lanes_t<G>, wide<T, N> x)
+{
+  // 4 and 8 byte elements are covered by _mm_shuffle_epi32
+  if constexpr( P::g_size > 2 || P::has_zeroes ) return no_matching_shuffle;
+  else if constexpr( P::reg_size == 32 && current_api < avx2 ) return no_matching_shuffle;
+  else if constexpr( constexpr auto hi = idxm::x86_is_unpack(*P::repeated_16, 0); !hi )
+  {
+    return no_matching_shuffle;
+  }
+  else return x86_unpack<P::g_size, *hi>(x, x);
+}
+
 /*
  * 16 byte shuffles that were duplicated in next arches between multiple lanes.
  */
@@ -147,6 +272,11 @@ shuffle_l2_x86_repeated_128(P p, lanes_t<G> g, wide<T, N> x)
   {
     return r;
   }
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128_unpack_self(p, g, x);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
   else return no_matching_shuffle;
 }
 
@@ -170,6 +300,70 @@ shuffle_l2_x86_128_insert_one_zero(P, lanes_t<G>, wide<T, N> x)
   }
   // avx versions seems to be sequence - better mask
   else return no_matching_shuffle;
+}
+
+// _mm_cvtepu8_epi16 and friends
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_zero_extend(P, lanes_t<G>, wide<T, N> x)
+{
+  if constexpr( current_api < sse4_1 || P::g_size > 4 ) return no_matching_shuffle;
+  else if constexpr( P::reg_size == 32 && current_api < avx2 ) return no_matching_shuffle;
+  else if constexpr( constexpr auto ratio = idxm::x86_is_zero_extend(P::idxs, 8 / P::g_size);
+                     !ratio )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    constexpr std::ptrdiff_t from = P::g_size;
+    constexpr std::ptrdiff_t to   = P::g_size * *ratio;
+
+    // zmm from ymm is the only case that needs more than 16 bytes
+    if constexpr( P::reg_size == 64 && *ratio == 2 )
+    {
+      return x86_cvtepu<P::reg_size, from, to>(_mm512_castsi512_si256(x));
+    }
+    else return x86_cvtepu<P::reg_size, from, to>(x86_low_128(x));
+  }
+}
+
+// _mm_broadcastb_epi8 and friends.
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
+shuffle_l2_x86_broadcast_0(P, lanes_t<G>, wide<T, N> x)
+{
+  if constexpr( current_api < avx2 || P::g_size > 8 || P::has_zeroes ) return no_matching_shuffle;
+  else if constexpr( constexpr auto lane = idxm::is_lane_broadcast(P::idxs); !lane || *lane != 0 )
+  {
+    return no_matching_shuffle;
+  }
+  else
+  {
+    __m128i lo = x86_low_128(x);
+
+    if constexpr( P::reg_size == 16 )
+    {
+      if constexpr( P::g_size == 1 ) return _mm_broadcastb_epi8(lo);
+      else if constexpr( P::g_size == 2 ) return _mm_broadcastw_epi16(lo);
+      else if constexpr( P::g_size == 4 ) return _mm_broadcastd_epi32(lo);
+      else return _mm_broadcastq_epi64(lo);
+    }
+    else if constexpr( P::reg_size == 32 )
+    {
+      if constexpr( P::g_size == 1 ) return _mm256_broadcastb_epi8(lo);
+      else if constexpr( P::g_size == 2 ) return _mm256_broadcastw_epi16(lo);
+      else if constexpr( P::g_size == 4 ) return _mm256_broadcastd_epi32(lo);
+      else return _mm256_broadcastq_epi64(lo);
+    }
+    else
+    {
+      if constexpr( P::g_size == 1 ) return _mm512_broadcastb_epi8(lo);
+      else if constexpr( P::g_size == 2 ) return _mm512_broadcastw_epi16(lo);
+      else if constexpr( P::g_size == 4 ) return _mm512_broadcastd_epi32(lo);
+      else return _mm512_broadcastq_epi64(lo);
+    }
+  }
 }
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
@@ -282,6 +476,10 @@ requires(P::out_reg_size == P::reg_size)
   {
     return r;
   }
+  else if constexpr( auto r = shuffle_l2_x86_zero_extend(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
   else if constexpr( auto r = shuffle_l2_x86_independent_permute2x64(p, g, x);
                      matched_shuffle<decltype(r)> )
   {
@@ -296,6 +494,10 @@ requires(P::out_reg_size == P::reg_size)
     return r;
   }
   else if constexpr( auto r = shuffle_l2_alignr_epi32_self(p, g, x); matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_broadcast_0(p, g, x); matched_shuffle<decltype(r)> )
   {
     return r;
   }
@@ -393,6 +595,22 @@ shuffle_l2_x86_repeated_128x2_shuffle_ps(P, lanes_t<G>, wide<T, N> x, wide<T, N>
 
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
  auto
+shuffle_l2_x86_repeated_128x2_unpack(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
+{
+  if constexpr( P::g_size > 8 || P::has_zeroes ) return no_matching_shuffle;
+  else if constexpr( P::reg_size == 32 && current_api == avx && P::g_size < 4 )
+  {
+    return no_matching_shuffle;
+  }
+  else if constexpr( constexpr auto hi = idxm::x86_is_unpack(*P::repeated_16, P::reg_groups); !hi )
+  {
+    return no_matching_shuffle;
+  }
+  else return x86_unpack<P::g_size, *hi>(x, y);
+}
+
+template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
+ auto
 shuffle_l2_x86_repeated_128x2(P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
 {
   if constexpr( !P::repeated_16 ) return no_matching_shuffle;
@@ -402,6 +620,11 @@ shuffle_l2_x86_repeated_128x2(P p, lanes_t<G> g, wide<T, N> x, wide<T, N> y)
     return r;
   }
   else if constexpr( auto r = shuffle_l2_x86_repeated_128x2_shuffle_ps(p, g, x, y);
+                     matched_shuffle<decltype(r)> )
+  {
+    return r;
+  }
+  else if constexpr( auto r = shuffle_l2_x86_repeated_128x2_unpack(p, g, x, y);
                      matched_shuffle<decltype(r)> )
   {
     return r;

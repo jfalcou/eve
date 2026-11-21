@@ -238,4 +238,54 @@ x86_shuffle_pd_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups
   return res;
 }
 
+// _mm_unpacklo / _mm_unpackhi within one 16 byte lane.
+// `lane` is the pattern for one 16 byte lane, the elements of the second register
+// start from `reg_groups`.
+// For a one register shuffle pass `reg_groups == 0`, then both operands are the same register.
+//
+// Returns `false` for unpacklo, `true` for unpackhi.
+constexpr std::optional<bool>
+x86_is_unpack(std::span<const std::ptrdiff_t> lane, std::ptrdiff_t reg_groups)
+{
+  std::ptrdiff_t n = std::ssize(lane);
+  if( n < 2 ) return std::nullopt;
+
+  auto matches = [&](bool hi)
+  {
+    for( std::ptrdiff_t i = 0; i != n; ++i )
+    {
+      std::ptrdiff_t expected = i / 2 + (hi ? n / 2 : 0) + (i % 2 ? reg_groups : 0);
+      if( lane[i] != we_ && lane[i] != expected ) return false;
+    }
+    return true;
+  };
+
+  if( matches(false) ) return false;
+  if( matches(true) ) return true;
+  return std::nullopt;
+}
+
+// _mm_cvtepu8_epi16 and friends: element `i` goes to `i * ratio`,
+// everything in between is 0.
+//
+// Returns the smallest ratio that fits.
+constexpr std::optional<std::ptrdiff_t>
+x86_is_zero_extend(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t max_ratio)
+{
+  for( std::ptrdiff_t ratio = 2; ratio <= max_ratio; ratio *= 2 )
+  {
+    if( std::ssize(idxs) % ratio ) break;
+
+    bool ok = true;
+    for( std::ptrdiff_t i = 0; ok && i != std::ssize(idxs); ++i )
+    {
+      if( i % ratio ) ok = idxs[i] == na_ || idxs[i] == we_;
+      else ok = idxs[i] == we_ || idxs[i] == i / ratio;
+    }
+
+    if( ok ) return ratio;
+  }
+  return std::nullopt;
+}
+
 }
