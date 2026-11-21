@@ -771,6 +771,12 @@ TTS_CASE("_mm_insert_ps(x, y)")
   run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<4, 5, 6, 0>);
 };
 
+TTS_CASE("_mm256_insertf128_si256(x, y) / (x, x)")
+{
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1, 4, 5>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1, 0, 1>);
+};
+
 TTS_CASE("_mm_permute2f128_si256(x, y) / _mm_shuffle_i64x2(x, y)")
 {
   // [0, 1] [2, 3]

@@ -76,6 +76,15 @@ x86_low_128(wide<T, N> x)
   else return _mm512_castsi512_si128(x);
 }
 
+// Low 16 bytes of `lo` + low 16 bytes of `hi`
+template<arithmetic_scalar_value T, width_type N>
+ auto
+x86_insert_hi_128(wide<T, N> lo, wide<T, N> hi)
+{
+  if constexpr( current_api == avx ) return _mm256_insertf128_si256(lo, x86_low_128(hi), 1);
+  else return _mm256_inserti128_si256(lo, x86_low_128(hi), 1);
+}
+
 template<std::ptrdiff_t reg_size, std::ptrdiff_t from, std::ptrdiff_t to>
  auto
 x86_cvtepu(auto src)
@@ -472,6 +481,10 @@ template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
 shuffle_l2_x86_u64x2(P, lanes_t<G>, wide<T, N> x)
 {
   if constexpr( P::g_size < 16 ) return no_matching_shuffle;
+  else if constexpr( P::reg_size == 32 && P::idxs[0] == 0 && P::idxs[1] == 0 )
+  {
+    return x86_insert_hi_128(x, x);
+  }
   else if constexpr( P::reg_size == 32 )
   {
     constexpr int mm = idxm::x86_permute2f128_mask(P::idxs);
@@ -658,7 +671,15 @@ shuffle_l2_x86_blend(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
   {
     constexpr int m = idxm::x86_blend_immediate_mask(P::idxs, G);
 
-    if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 8 )
+    if constexpr( eve::current_api >= eve::avx2 )
+    {
+      // integer blend, no int/float domain crossing
+      constexpr int m32 = idxm::x86_blend_epi32_mask(P::idxs, P::reg_groups, P::g_size / 4);
+
+      if constexpr( P::reg_size == 16 ) return _mm_blend_epi32(x, y, m32);
+      else return _mm256_blend_epi32(x, y, m32);
+    }
+    else if constexpr( eve::current_api >= eve::sse4_1 && P::g_size >= 8 )
     {
       auto x_f64 = bit_cast(x, eve::as<eve::wide<double, N>> {});
       auto y_f64 = bit_cast(y, eve::as<eve::wide<double, N>> {});
@@ -852,8 +873,15 @@ shuffle_l2_x86_permute2f128(P, lanes_t<G>, wide<T, N> x, wide<T, N> y)
   else
   {
     static_assert(!P::has_zeroes, "sanity check, no 0s/we or it's not two register");
-    constexpr int m = idxm::x86_permute2f128_mask(P::idxs);
-    return _mm256_permute2f128_si256(x, y, m);
+
+    // insert is cheaper than permute2f128 (1 cycle latency and better on AMD)
+    if constexpr( P::idxs[0] == 0 && P::idxs[1] == 2 ) return x86_insert_hi_128(x, y);
+    else if constexpr( P::idxs[0] == 2 && P::idxs[1] == 0 ) return x86_insert_hi_128(y, x);
+    else
+    {
+      constexpr int m = idxm::x86_permute2f128_mask(P::idxs);
+      return _mm256_permute2f128_si256(x, y, m);
+    }
   }
 }
 

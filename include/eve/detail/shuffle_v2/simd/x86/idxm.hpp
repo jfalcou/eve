@@ -361,4 +361,17 @@ x86_is_truncation(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_group
   return ratio;
 }
 
+// _mm_blend_epi32 / _mm256_blend_epi32 immediate. `per` is how many 4 byte chunks a group has.
+constexpr int
+x86_blend_epi32_mask(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups, std::ptrdiff_t per)
+{
+  int r = 0;
+  for( std::ptrdiff_t i = 0; i != std::ssize(idxs); ++i )
+  {
+    if( idxs[i] < reg_groups ) continue;
+    for( std::ptrdiff_t j = 0; j != per; ++j ) r |= 1 << (i * per + j);
+  }
+  return r;
+}
+
 }
