@@ -203,19 +203,18 @@ EVE_NAMESPACE
         }
         else if (n < 100)
         {
-          auto siz = [](auto i){
-            //size of the nth polynomial coefficients
-            return std::size_t(eve::floor(0.5*(i+1))+1);
-          };
-          auto beg = [](int i){
-            // \f$\sum_(i=0)^(n - 1)(floor((i + 1)/2) + 1)\f$
-            // index of the first element of the ith polynomial coefficients
-            auto h = 0.5;
-            auto c =  eve::ceil(h*(3-i));
-            auto d =  eve::floor(h*i);
-            return int(h*(c*c -3*c +d*d + d + 2*i))+1;
-          };
-          auto ps =  std::span(&coefs[beg(n)], siz(n));
+          // cl 19.52: doc.special.polygamma, doc.special.trigamma, unit.special.trigamma failed with
+          // C2011/C7746 (and C2664 in hz_device.hpp after it): the two lambdas nested here got the same
+          // closure name as another one. Their bodies are inlined.
+          //size of the nth polynomial coefficients
+          auto siz = std::size_t(eve::floor(0.5*(n+1))+1);
+          // \f$\sum_(i=0)^(n - 1)(floor((i + 1)/2) + 1)\f$
+          // index of the first element of the ith polynomial coefficients
+          auto h = 0.5;
+          auto c =  eve::ceil(h*(3-n));
+          auto d =  eve::floor(h*n);
+          auto beg = int(h*(c*c -3*c +d*d + d + 2*n))+1;
+          auto ps =  std::span(&coefs[beg], siz);
           auto cx = eve::cotpi(x);
           auto val = eve::reverse_horner(cx*cx, ps);
           return (eve::is_odd(n) ? val : val*cx)*eve::pow(pi, n+1);
