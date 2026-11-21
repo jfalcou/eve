@@ -580,14 +580,21 @@ requires(P::out_reg_size == P::reg_size)
 
 // smaller output -------------------------------------------------------------
 
-// _mm256_extracti128_si256 and friends: a 16/32 byte part, that is not the lowest one.
+// _mm256_extracti128_si256 and friends: a 16/32 byte part.
+// The lowest part is _mm256_castsi256_si128 and friends.
 template<typename P, arithmetic_scalar_value T, width_type N, std::ptrdiff_t G>
  auto
 shuffle_l2_x86_extract(P, lanes_t<G>, wide<T, N> x)
 {
   constexpr auto start = idxm::is_in_order(P::idxs);
 
-  if constexpr( !start || *start <= 0 ) return no_matching_shuffle;
+  if constexpr( !start ) return no_matching_shuffle;
+  // we_ means all we_
+  else if constexpr( *start == 0 || *start == we_ )
+  {
+    if constexpr( P::out_reg_size == 32 ) return _mm512_castsi512_si256(x);
+    else return x86_low_128(x);
+  }
   else if constexpr( P::out_reg_size < 16 || (*start * P::g_size) % P::out_reg_size )
   {
     return no_matching_shuffle;

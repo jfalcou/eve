@@ -540,6 +540,19 @@ TTS_CASE("_mm_rol_epi32 / _mm_rol_epi64 (rotations within an element)")
       [](int i, int) { return i / 8 * 8 + (i + 3) % 8; });
 };
 
+TTS_CASE("_mm256_castsi256_si128 / _mm512_castsi512_si256 / _mm512_castsi512_si128 (low part)")
+{
+  // Less than 16 bytes out of 16 bytes is the same register, l0 in the driver.
+
+  run<eve::avx, std::uint32_t, 8>(eve::pattern<0, 1, 2, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1>);
+  run<eve::avx2, std::uint8_t, 32>(stride_pattern<16, 1>);
+
+  run<eve::avx512, std::uint32_t, 16>(stride_pattern<8, 1>);
+  run<eve::avx512, std::uint32_t, 16>(stride_pattern<4, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 1>);
+};
+
 TTS_CASE("_mm256_extracti128_si256 / _mm512_extracti64x4_epi64 / _mm512_extracti32x4_epi32")
 {
   run<eve::avx, std::uint32_t, 8>(eve::pattern<4, 5, 6, 7>);
