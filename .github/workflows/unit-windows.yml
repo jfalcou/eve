@@ -47,7 +47,9 @@ jobs:
       matrix:
         cfg:
         - {name: "MSVC"   , mode: Debug   , options: "-DEVE_NO_FORCEINLINE"}
-        # - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-T ClangCL -DEVE_USE_PCH=OFF"}
+        ## Needs the "C++ Clang tools for Windows" Visual Studio component: the MSVC environment then
+        ## puts its clang-cl in the PATH.
+        - {name: "ClangCL", mode: Debug   , options: "-DEVE_NO_FORCEINLINE", toolchain: "-DCMAKE_CXX_COMPILER=clang-cl"}
 
     steps:
       - name: Enter Git Bash
