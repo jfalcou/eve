@@ -5,9 +5,16 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#pragma once
+// No #pragma once: the body below is guarded, but the main() at the end must be seen again by a
+// test that reuses the precompiled header (test_pch.hpp) built without it.
+#ifndef EVE_TEST_HPP_INCLUDED
+#define EVE_TEST_HPP_INCLUDED
+
 #define TTS_MAIN
-#define TTS_CUSTOM_DRIVER_FUNCTION eve_entry_point
+// inline: a precompiled header made with clang-cl's /Yc puts the definitions it contains in its own
+// object as well as in every test using it (cl.exe only in the former), so a non inline driver
+// would be defined twice at link time.
+#define TTS_CUSTOM_DRIVER_FUNCTION inline eve_entry_point
 
 //==================================================================================================
 // EVE Specific testing overloads
@@ -606,35 +613,6 @@ namespace tts
   };
 }
 
-//==================================================================================================
-// EVE TTS Entrypoint
-//==================================================================================================
-#include <iostream>
-
-int main(int argc, char const **argv)
-{
-  ::tts::initialize(argc,argv);
-  auto seed = ::tts::random_seed(18102008);
-#if defined(EVE_DISABLE_ASSERTS)
-  constexpr auto assert_status = "Disabled";
-#else
-  constexpr auto assert_status = "Enabled";
-#endif
-
-  constexpr auto fp16_status = eve::_::supports_fp16_vector_ops ? "Full" :
-                              (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
-
-  std::cout << "[EVE] - Target: " << eve::current_api
-            << " - ABI: "         << eve::current_abi_namespace
-            << " - Assertions: "  << assert_status
-            << " - FP16: "        << fp16_status
-            << " - PRNG Seed: "   << seed
-            << std::endl;
-
-  eve_entry_point(argc, argv);
-  return tts::report(0,0);
-}
-
 namespace tts
 {
 
@@ -666,3 +644,42 @@ namespace tts
       return d;
   }
 }
+
+#include <iostream>
+
+#endif // EVE_TEST_HPP_INCLUDED
+
+//==================================================================================================
+// EVE TTS Entrypoint
+//
+// main() is not part of the precompiled header (see test_pch.hpp): it can't be inline, and with
+// clang-cl it would be defined both in the precompiled header object and in the test.
+//==================================================================================================
+#if !defined(EVE_TEST_BUILDING_PCH) && !defined(EVE_TEST_HPP_MAIN_DEFINED)
+#define EVE_TEST_HPP_MAIN_DEFINED
+
+int main(int argc, char const **argv)
+{
+  ::tts::initialize(argc,argv);
+  auto seed = ::tts::random_seed(18102008);
+#if defined(EVE_DISABLE_ASSERTS)
+  constexpr auto assert_status = "Disabled";
+#else
+  constexpr auto assert_status = "Enabled";
+#endif
+
+  constexpr auto fp16_status = eve::_::supports_fp16_vector_ops ? "Full" :
+                              (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
+
+  std::cout << "[EVE] - Target: " << eve::current_api
+            << " - ABI: "         << eve::current_abi_namespace
+            << " - Assertions: "  << assert_status
+            << " - FP16: "        << fp16_status
+            << " - PRNG Seed: "   << seed
+            << std::endl;
+
+  eve_entry_point(argc, argv);
+  return tts::report(0,0);
+}
+
+#endif // main()

@@ -40,7 +40,7 @@ TTS_CASE_WITH("Check behavior of eve::exponent(simd)",
                 [](auto e) -> vi_t
                 {
                   int ee;
-                  std::frexp(e, &ee);
+                  (void)std::frexp(e, &ee);
                   return ee - 1;
                 },
                 a0));
