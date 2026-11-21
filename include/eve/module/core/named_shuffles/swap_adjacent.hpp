@@ -105,6 +105,8 @@ struct swap_adjacent_t
     {
       if( g_size >= 4 ) return 2;
       if( g_size == 2 && reg_size <= 8 ) return 2;
+      // _mm_rol_epi32(x, 16)
+      if( g_size == 2 && current_api >= avx512 ) return 2;
       if( current_api >= ssse3 ) return 3;
       if( g_size == 2 ) return 4;
       return 6;
