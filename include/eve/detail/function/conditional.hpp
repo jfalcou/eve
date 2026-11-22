@@ -47,7 +47,13 @@ EVE_NAMESPACE::_
    auto expand_mask(C const& c, as<Target> const&)
   {
     auto msk = c.mask( as<Target>{} );
-    return as_logical_t<Target>(msk);
+    // clang-cl -march=skylake-avx512: unit.core.bit_and/bit_or/..., frexp, next failed to compile: a
+    // logical<wide<float16_t>> mask with an emulated _Float16 doesn't share the storage of
+    // logical<wide<uint16_t>> as it does natively, so there is no direct conversion: convert it.
+    if constexpr( std::constructible_from<as_logical_t<Target>, decltype(msk)> )
+      return as_logical_t<Target>(msk);
+    else
+      return convert(msk, as_element<as_logical_t<Target>>());
   }
 
   //================================================================================================
