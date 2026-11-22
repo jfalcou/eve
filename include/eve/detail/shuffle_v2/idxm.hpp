@@ -10,8 +10,9 @@
 #include <eve/arch/spec.hpp>
 #include <eve/pattern.hpp>
 
+#include <limits>
 #include <span>
-#include <optional>
+#include <eve/detail/optional.hpp>
 
 /*
  * idxm => index math
@@ -21,6 +22,28 @@
 
 EVE_NAMESPACE::_::idxm
 {
+
+inline constexpr std::ptrdiff_t no_index_ = std::numeric_limits<std::ptrdiff_t>::min();
+
+struct index_tombstone
+{
+  static constexpr std::ptrdiff_t value = no_index_;
+};
+
+template<std::size_t N> struct indexes_tombstone
+{
+  static_assert(N != 0);
+  static constexpr std::array<std::ptrdiff_t, N> value = []
+  {
+    std::array<std::ptrdiff_t, N> r {};
+    for( auto& x : r ) x = no_index_;
+    return r;
+  }();
+};
+
+using maybe_index = optional<std::ptrdiff_t, index_tombstone>;
+
+template<std::size_t N> using maybe_indexes = optional<std::array<std::ptrdiff_t, N>, indexes_tombstone<N>>;
 
 constexpr bool
 are_below_ignoring_specials(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t ub)
@@ -90,7 +113,7 @@ is_just_zeroes_replaced(std::span<const std::ptrdiff_t> idxs)
   return true;
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_just_setting_one_zero(std::span<const std::ptrdiff_t> idxs)
 {
   const auto *f = idxs.data();
@@ -103,18 +126,18 @@ is_just_setting_one_zero(std::span<const std::ptrdiff_t> idxs)
     if( *i == we_ || *i == (i - f) ) continue;
     if( *i == na_ )
     {
-      if( pos ) return std::nullopt;
+      if( pos ) return none;
       pos = i;
       continue;
     }
-    return std::nullopt;
+    return none;
   }
 
-  if( !pos ) return std::nullopt;
+  if( !pos ) return none;
   return pos - f;
 }
 
-constexpr std::optional<std::array<std::ptrdiff_t, 2>>
+constexpr maybe_indexes<2>
 is_just_setting_one_lane(std::span<const std::ptrdiff_t> idxs)
 {
   const auto *f = idxs.data();
@@ -125,12 +148,12 @@ is_just_setting_one_lane(std::span<const std::ptrdiff_t> idxs)
   for( const auto *i = f; i != l; ++i )
   {
     if( *i == we_ || *i == (i - f) ) continue;
-    if( *i == na_ ) return std::nullopt;
-    if( pos ) return std::nullopt;
+    if( *i == na_ ) return none;
+    if( pos ) return none;
     pos = i;
   }
 
-  if( !pos ) return std::nullopt;
+  if( !pos ) return none;
   return std::array {pos - f, *pos};
 }
 
@@ -138,10 +161,10 @@ template<std::size_t N>
 constexpr auto
 upscale_pattern(std::span<const std::ptrdiff_t, N> idxs)
 {
-  if constexpr( N == 1 ) return std::optional<std::array<std::ptrdiff_t, 1>> {};
+  if constexpr( N == 1 ) return maybe_indexes<1> {};
   else
   {
-    using res_t = std::optional<std::array<std::ptrdiff_t, N / 2>>;
+    using res_t = maybe_indexes<N / 2>;
     std::array<std::ptrdiff_t, N / 2> res {};
 
     for( int i = 0; i != N / 2; i += 1 )
@@ -296,15 +319,15 @@ shuffle_halves_independetly(const std::array<std::ptrdiff_t, N>& p)
 }
 
 // works for 2 registers too
-constexpr std::optional<std::array<std::ptrdiff_t, 1>>
+constexpr maybe_indexes<1>
 is_repeating_pattern(const std::array<std::ptrdiff_t, 1>)
 {
-  return std::nullopt;
+  return none;
 }
 
 template<std::size_t N>
 requires(N > 1)
-constexpr std::optional<std::array<std::ptrdiff_t, N / 2>>
+constexpr maybe_indexes<N / 2>
 is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
 {
   std::array<std::ptrdiff_t, N / 2> res = {};
@@ -316,8 +339,8 @@ is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
     std::ptrdiff_t y = p[i + (std::size_t)half];
 
     // even havles for x, odd for y
-    if( 0 <= x && (x / half) % 2 ) return std::nullopt;
-    if( 0 <= y && (y / half) % 2 == 0 ) return std::nullopt;
+    if( 0 <= x && (x / half) % 2 ) return none;
+    if( 0 <= y && (y / half) % 2 == 0 ) return none;
 
     if( y > 0 ) y -= half;
 
@@ -333,7 +356,7 @@ is_repeating_pattern(const std::array<std::ptrdiff_t, N>& p)
       continue;
     }
 
-    return std::nullopt;
+    return none;
   }
 
   return res;
@@ -374,10 +397,10 @@ constexpr auto reduce_repeated_pattern_until =
 template<std::size_t target, std::ptrdiff_t... I>
 constexpr auto repeated_pattern_of_size = []
 {
-  if constexpr( target == 0 ) return std::optional<std::array<std::ptrdiff_t, 1>> {};
+  if constexpr( target == 0 ) return maybe_indexes<1> {};
   else
   {
-    std::optional<std::array<std::ptrdiff_t, target>> res;
+    maybe_indexes<target> res;
     constexpr auto repeated = idxm::reduce_repeated_pattern_until_impl< target
                                                                       , std::array<std::ptrdiff_t,sizeof...(I)>{I...}
                                                                       >();
@@ -422,7 +445,7 @@ repeat(const std::array<std::ptrdiff_t, N>& in)
 }
 
 // returns the starting index
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_in_order(std::span<const std::ptrdiff_t> idxs)
 {
   std::size_t i = 0, s = idxs.size();
@@ -434,13 +457,13 @@ is_in_order(std::span<const std::ptrdiff_t> idxs)
     if( idxs[i] != we_ ) break;
     ++i;
   }
-  if( idxs[i] == na_ ) return std::nullopt;
+  if( idxs[i] == na_ ) return none;
 
   std::ptrdiff_t expected = idxs[i];
   std::ptrdiff_t from     = expected - (std::ptrdiff_t)i;
 
   // [we_, we_, 1] is not in order, for any we_.
-  if( from < 0 ) return std::nullopt;
+  if( from < 0 ) return none;
 
   while( true )
   {
@@ -448,7 +471,7 @@ is_in_order(std::span<const std::ptrdiff_t> idxs)
     ++expected;
     if( i == s ) return from;
     if( idxs[i] == we_ ) continue;
-    if( idxs[i] != expected ) return std::nullopt;
+    if( idxs[i] != expected ) return none;
   }
 }
 
@@ -467,7 +490,7 @@ is_in_order_from(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t from)
   return true;
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_rotate(std::span<const std::ptrdiff_t> idxs)
 {
   if( idxs.empty() ) { return 0; }
@@ -500,16 +523,16 @@ is_rotate(std::span<const std::ptrdiff_t> idxs)
 
   // these filter out na_
   auto rhs_start = is_in_order({point, idxs.end()});
-  if( rhs_start != 0 && rhs_start != we_ ) return std::nullopt;
+  if( rhs_start != 0 && rhs_start != we_ ) return none;
 
   auto lhs_start = is_in_order({idxs.begin(), point});
-  if( lhs_start != (idxs.size() - rotation) && lhs_start != we_ ) return std::nullopt;
+  if( lhs_start != (std::ssize(idxs) - rotation) && lhs_start != we_ ) return none;
 
   return rotation;
 }
 
 template<std::size_t N>
-constexpr std::optional<std::array<std::array<std::ptrdiff_t, N>, 2>>
+constexpr optional<std::array<std::array<std::ptrdiff_t, N>, 2>>
 rotate_as_two_shifts_and_or(std::array<std::ptrdiff_t, N> idxs)
 {
   if constexpr( N != 1 )
@@ -518,14 +541,14 @@ rotate_as_two_shifts_and_or(std::array<std::ptrdiff_t, N> idxs)
     if( halve )
     {
       auto r = rotate_as_two_shifts_and_or(*halve);
-      if( !r ) return std::nullopt;
+      if( !r ) return none;
       auto [lo, hi] = *r;
       return std::array {repeat<2>(lo), repeat<2>(hi)};
     }
   }
 
-  std::optional pos = is_rotate(idxs);
-  if( !pos ) return std::nullopt;
+  optional pos = is_rotate(idxs);
+  if( !pos ) return none;
 
   std::array<std::ptrdiff_t, N> shift_left  = idxs;
   std::array<std::ptrdiff_t, N> shift_right = idxs;
@@ -886,7 +909,7 @@ trim_trailing_we(std::span<const std::ptrdiff_t> idxs)
   return {f, l};
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_slide_left(std::span<const std::ptrdiff_t> idxs)
 {
   // find(idxs, na_)
@@ -899,18 +922,18 @@ is_slide_left(std::span<const std::ptrdiff_t> idxs)
     ++f;
   }
 
-  if( !is_all_zeroes(std::span(f, l)) ) return std::nullopt;
+  if( !is_all_zeroes(std::span(f, l)) ) return none;
 
   std::span<const std::ptrdiff_t> remaining   = std::span(idxs.data(), f);
   auto                            first_index = is_in_order(remaining);
-  if( !first_index ) return std::nullopt;
+  if( !first_index ) return none;
 
   // Can be bigger that std::ssize(idxs) if ordered chunk ends in we_
-  if( *first_index + std::ssize(remaining) < std::ssize(idxs) ) return std::nullopt;
+  if( *first_index + std::ssize(remaining) < std::ssize(idxs) ) return none;
   return *first_index;
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_slide_right(std::span<const std::ptrdiff_t> idxs)
 {
   // find(reverse(idxs), na_)
@@ -926,7 +949,7 @@ is_slide_right(std::span<const std::ptrdiff_t> idxs)
     if( *m == na_ ) break;
   }
 
-  if( !is_all_zeroes(std::span {f, m}) ) return std::nullopt;
+  if( !is_all_zeroes(std::span {f, m}) ) return none;
   // unclear if this is correct but it doesn't matter
   if( m == l ) return std::ssize(idxs);
 
@@ -943,18 +966,18 @@ is_slide_right(std::span<const std::ptrdiff_t> idxs)
     ++m;
   }
 
-  if( !is_in_order_from(std::span {m, l}, *m) ) return std::nullopt;
+  if( !is_in_order_from(std::span {m, l}, *m) ) return none;
 
   // [na_, na_, we_, 2]
-  if( *m > (m - f) ) return std::nullopt;
+  if( *m > (m - f) ) return none;
 
   return (m - idxs.data()) - *m;
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_slide_left_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
 {
-  if( idxs.empty() ) return std::nullopt;
+  if( idxs.empty() ) return none;
   const auto *f      = idxs.data();
   const auto *l      = idxs.data() + idxs.size();
   const auto *start2 = l;
@@ -973,13 +996,13 @@ is_slide_left_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups)
 
   start2 = l - slide;
 
-  if( !is_in_order_from({start2, l}, reg_groups) ) return std::nullopt;
-  if( !is_in_order_from({f, start2}, slide) ) return std::nullopt;
+  if( !is_in_order_from({start2, l}, reg_groups) ) return none;
+  if( !is_in_order_from({f, start2}, slide) ) return none;
   return slide;
 }
 
 template<std::size_t N>
-constexpr std::optional<std::array<std::ptrdiff_t, N>>
+constexpr maybe_indexes<N>
 slide_as_slide2_with_0(std::span<const std::ptrdiff_t, N> idxs)
 {
   if( const auto s = is_slide_left(idxs) )
@@ -1001,7 +1024,7 @@ slide_as_slide2_with_0(std::span<const std::ptrdiff_t, N> idxs)
     return res;
   }
 
-  return std::nullopt;
+  return none;
 }
 
 template<std::size_t N>
@@ -1029,7 +1052,7 @@ is_reverse(std::span<const std::ptrdiff_t> idxs)
   return true;
 }
 
-constexpr std::optional<std::ptrdiff_t>
+constexpr maybe_index
 is_lane_broadcast(std::span<const std::ptrdiff_t> idxs)
 {
   const auto *f = idxs.data();
@@ -1041,14 +1064,14 @@ is_lane_broadcast(std::span<const std::ptrdiff_t> idxs)
     ++f;
   }
 
-  if( f == l ) return std::nullopt;
+  if( f == l ) return none;
 
   std::ptrdiff_t r = *f;
   ++f;
 
   while( f != l )
   {
-    if( *f != we_ && *f != r ) return std::nullopt;
+    if( *f != we_ && *f != r ) return none;
     ++f;
   }
   return r;
@@ -1092,7 +1115,7 @@ first_groups_then_in_groups(std::span<const std::ptrdiff_t, N> idxs)
 {
   if constexpr( G == 0 || G > N )
   {
-    return std::optional<
+    return optional<
         kumi::tuple<std::array<std::ptrdiff_t, 1>, std::array<std::ptrdiff_t, N>>> {};
   }
   else
@@ -1102,7 +1125,7 @@ first_groups_then_in_groups(std::span<const std::ptrdiff_t, N> idxs)
     using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
     using withing_pattern_t = std::array<std::ptrdiff_t, N>;
 
-    std::optional<kumi::tuple<group_pattern_t, withing_pattern_t>> res;
+    optional<kumi::tuple<group_pattern_t, withing_pattern_t>> res;
 
     group_pattern_t   groups_pattern        = {};
     withing_pattern_t within_groups_pattern = {};
@@ -1166,7 +1189,7 @@ first_in_groups_then_groups(std::span<const std::ptrdiff_t, N> idxs)
   using group_pattern_t   = std::array<std::ptrdiff_t, group_count>;
   using withing_pattern_t = std::array<std::ptrdiff_t, N>;
 
-  std::optional<kumi::tuple<withing_pattern_t, group_pattern_t>> res;
+  optional<kumi::tuple<withing_pattern_t, group_pattern_t>> res;
 
   group_pattern_t groups_pattern = {};
 
@@ -1233,7 +1256,7 @@ constexpr auto
 group_within_group(std::span<const std::ptrdiff_t, N> idxs)
 {
   using shuff_t = std::array<std::ptrdiff_t, N>;
-  using res_t   = std::optional<kumi::tuple<shuff_t, shuff_t>>;
+  using res_t   = optional<kumi::tuple<shuff_t, shuff_t>>;
   if constexpr( G == 0 || G > N ) return res_t {};
   else
   {
