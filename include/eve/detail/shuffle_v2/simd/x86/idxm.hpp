@@ -86,7 +86,7 @@ x86_pshuvb_pattern(std::span<const std::ptrdiff_t, N> idxs)
   {
     static_assert(N == 16 || N == 32 || N == 64);
     using arr_t = std::array<std::ptrdiff_t, N>;
-    using res_t = maybe_indexes<N>;
+    using res_t = optional_idxs<N>;
 
     if( !shuffle_within_n(idxs, 16) ) return res_t {};
 
@@ -124,12 +124,12 @@ mm512_shuffle_i64x2_idx(std::array<std::ptrdiff_t, N> idxs)
   {
     auto upscaled = upscale_pattern(idxs);
     if( upscaled ) return mm512_shuffle_i64x2_idx(*upscaled);
-    else return nullopt;
+    else return std::nullopt;
   }
   else
   {
-    if( idxs[0] >= 4 || idxs[1] >= 4 ) return nullopt;
-    if( idxs[2] < 4 || idxs[3] < 4 ) return nullopt;
+    if( idxs[0] >= 4 || idxs[1] >= 4 ) return std::nullopt;
+    if( idxs[2] < 4 || idxs[3] < 4 ) return std::nullopt;
     idxs[2] -= 4;
     idxs[3] -= 4;
     return idxs[0] | (idxs[1] << 2) | (idxs[2] << 4) | (idxs[3] << 6);
@@ -169,7 +169,7 @@ x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> repeated_part, std::ptrdiff_
   }
   else
   {
-    if( std::ssize(repeated_part) != 4 ) return nullopt;
+    if( std::ssize(repeated_part) != 4 ) return std::nullopt;
 
     int res = 0;
 
@@ -181,11 +181,11 @@ x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> repeated_part, std::ptrdiff_
 
       if( i < 2 )
       {
-        if( idx >= reg_groups ) return nullopt;
+        if( idx >= reg_groups ) return std::nullopt;
       }
       else
       {
-        if( idx < reg_groups ) return nullopt;
+        if( idx < reg_groups ) return std::nullopt;
         idx -= reg_groups;
       }
 
@@ -228,12 +228,12 @@ x86_shuffle_pd_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups
     std::ptrdiff_t a_pos = i;
     if( idxs[i] == a_pos ) { /*put 0 that's there*/ }
     else if ( idxs[i] == a_pos + 1 ) res = res | (1 << i);
-    else return nullopt;
+    else return std::nullopt;
 
     std::ptrdiff_t b_pos = reg_groups + i;
     if (idxs[i + 1] == b_pos) { /*put 0 that's there*/ }
     else if (idxs[i + 1] == b_pos + 1 ) res = res | (1 << (i + 1));
-    else return nullopt;
+    else return std::nullopt;
   }
   return res;
 }

@@ -24,15 +24,6 @@
 
 EVE_NAMESPACE::_
 {
-  struct nullopt_t
-  {
-    struct tag
-    {};
-    constexpr explicit nullopt_t(tag) noexcept {}
-  };
-
-  inline constexpr nullopt_t nullopt {nullopt_t::tag {}};
-
   template<typename T> struct optional_tombstone
   {};
 
@@ -42,9 +33,6 @@ EVE_NAMESPACE::_
 
   template<typename T, typename Tombstone>
   inline constexpr bool is_optional_v<optional<T, Tombstone>> = true;
-
-  template<typename N>
-  concept optional_empty_tag = std::same_as<N, nullopt_t> || std::same_as<N, std::nullopt_t>;
 
   struct optional_invoke_tag
   {};
@@ -327,14 +315,14 @@ EVE_NAMESPACE::_
     static_assert(std::is_destructible_v<T>, "eve::_::optional: T must be destructible");
     static_assert(!std::same_as<std::remove_cv_t<T>, std::in_place_t>,
                   "eve::_::optional: T can not be in_place_t");
-    static_assert(!optional_empty_tag<std::remove_cv_t<T>>,
-                  "eve::_::optional: T can not be a nullopt tag");
+    static_assert(!std::same_as<std::remove_cv_t<T>, std::nullopt_t>,
+                  "eve::_::optional: T can not be std::nullopt_t");
 
     template<typename U>
     static constexpr bool from_value =
         std::is_constructible_v<T, U> && !std::same_as<std::remove_cvref_t<U>, std::in_place_t>
         && !std::same_as<std::remove_cvref_t<U>, optional>
-        && !optional_empty_tag<std::remove_cvref_t<U>>
+        && !std::same_as<std::remove_cvref_t<U>, std::nullopt_t>
         && !(std::same_as<std::remove_cv_t<T>, bool> && is_optional_v<std::remove_cvref_t<U>>);
 
     template<typename U, typename B, typename QualU>
@@ -393,7 +381,7 @@ EVE_NAMESPACE::_
     constexpr optional(optional const&) = default;
     constexpr optional(optional&&)      = default;
 
-    template<optional_empty_tag N> constexpr optional(N) noexcept {}
+    constexpr optional(std::nullopt_t) noexcept {}
 
     template<typename... Args>
     requires std::is_constructible_v<T, Args...>
@@ -433,7 +421,7 @@ EVE_NAMESPACE::_
         : storage(optional_invoke_tag {}, std::forward<F>(f), std::forward<Args>(args)...)
     {}
 
-    template<optional_empty_tag N> constexpr optional& operator=(N) noexcept
+    constexpr optional& operator=(std::nullopt_t) noexcept
     {
       reset();
       return *this;
@@ -444,7 +432,7 @@ EVE_NAMESPACE::_
 
     template<typename U = std::remove_cv_t<T>>
     requires(!std::same_as<std::remove_cvref_t<U>, optional>
-             && !optional_empty_tag<std::remove_cvref_t<U>>
+             && !std::same_as<std::remove_cvref_t<U>, std::nullopt_t>
              && (!std::same_as<std::remove_cvref_t<U>, T> || !std::is_scalar_v<T>)
              && std::is_constructible_v<T, U> && std::is_assignable_v<T&, U>)
     constexpr optional& operator=(U&& v)
@@ -685,20 +673,20 @@ EVE_NAMESPACE::_
     return x.has_value() <=> y.has_value();
   }
 
-  template<typename T, typename A, optional_empty_tag N>
-  constexpr bool operator==(optional<T, A> const& x, N) noexcept
+  template<typename T, typename A>
+  constexpr bool operator==(optional<T, A> const& x, std::nullopt_t) noexcept
   {
     return !x.has_value();
   }
 
-  template<typename T, typename A, optional_empty_tag N>
-  constexpr std::strong_ordering operator<=>(optional<T, A> const& x, N) noexcept
+  template<typename T, typename A>
+  constexpr std::strong_ordering operator<=>(optional<T, A> const& x, std::nullopt_t) noexcept
   {
     return x.has_value() <=> false;
   }
 
   template<typename U>
-  concept optional_compared_value = !is_optional_v<U> && !optional_empty_tag<U>;
+  concept optional_compared_value = !is_optional_v<U> && !std::same_as<U, std::nullopt_t>;
 
   template<typename T, typename A, optional_compared_value U>
   requires requires(T const& t, U const& u) {

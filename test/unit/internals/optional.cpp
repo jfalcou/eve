@@ -23,7 +23,6 @@
 
 namespace
 {
-using eve::_::nullopt;
 using eve::_::optional;
 
 inline void
@@ -169,7 +168,6 @@ types()
   expect(noexcept(std::declval<O&>().reset()));
   expect(noexcept(std::declval<O&>().has_value()));
   expect(std::is_nothrow_constructible_v<O>);
-  expect(std::is_nothrow_constructible_v<O, eve::_::nullopt_t>);
   expect(std::is_nothrow_constructible_v<O, std::nullopt_t>);
   expect(!std::is_convertible_v<O, bool>);
   expect(std::is_constructible_v<bool, O>);
@@ -185,10 +183,6 @@ default_and_none_ctor()
     opt_t<C> o;
     expect(!o.has_value());
     expect(!static_cast<bool>(o));
-  }
-  {
-    opt_t<C> o {nullopt};
-    expect(!o.has_value());
   }
   {
     opt_t<C> o {std::nullopt};
@@ -296,7 +290,7 @@ assign_none()
   checks expect;
   {
     opt_t<C> o(C::value(1));
-    o = nullopt;
+    o = std::nullopt;
     expect(!o.has_value());
   }
   {
@@ -306,7 +300,7 @@ assign_none()
   }
   {
     opt_t<C> o;
-    o = nullopt;
+    o = std::nullopt;
     expect(!o.has_value());
   }
   {
@@ -607,7 +601,6 @@ nullops()
     expect((one <=> n) > 0);
     expect((n <=> one) < 0);
   };
-  check(nullopt);
   check(std::nullopt);
   return expect.ok;
 }
@@ -668,14 +661,14 @@ monadic()
   auto const twice = [](val_t<C> const& v) { return optional<int>(v == C::value(1) ? 2 : 0); };
   auto const nope  = [](val_t<C> const&) { return optional<int> {}; };
 
-  expect(e.and_then(twice) == nullopt);
+  expect(e.and_then(twice) == std::nullopt);
   expect(one.and_then(twice) == 2);
-  expect(one.and_then(nope) == nullopt);
+  expect(one.and_then(nope) == std::nullopt);
   expect(opt_t<C>(one).and_then(twice) == 2);
 
   auto const tag = [](val_t<C> const& v) { return v == C::value(1) ? 'a' : 'b'; };
   expect(std::is_same_v<decltype(one.transform(tag)), optional<char>>);
-  expect(e.transform(tag) == nullopt);
+  expect(e.transform(tag) == std::nullopt);
   expect(one.transform(tag) == 'a');
   expect(opt_t<C>(one).transform(tag) == 'a');
 
@@ -776,7 +769,7 @@ destruction()
     o.reset();
     expect(n == 2);
     o.emplace(&n);
-    o = nullopt;
+    o = std::nullopt;
     expect(n == 3);
     o.emplace(&n);
     o.emplace(&n);
@@ -866,11 +859,11 @@ nullopt_is_below_every_value()
   checks                             expect;
   optional<int, int_tombstone> const lowest(std::numeric_limits<int>::min() + 1);
   expect(optional<int, int_tombstone> {} < lowest);
-  expect(nullopt < lowest);
+  expect(std::nullopt < lowest);
   return expect.ok;
 }
 
-TTS_CASE("eve::_::optional - nullopt is below every value, whatever the tombstone")
+TTS_CASE("eve::_::optional - std::nullopt is below every value, whatever the tombstone")
 {
   TTS_CONSTEXPR_EXPECT(nullopt_is_below_every_value());
   TTS_EXPECT(nullopt_is_below_every_value());
