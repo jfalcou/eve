@@ -2679,6 +2679,7 @@
     <name>eve::stack_buffer</name>
     <filename>structeve_1_1stack__buffer.html</filename>
     <templarg>simd_value T</templarg>
+    <templarg>std::ptrdiff_t N</templarg>
   </compound>
   <compound kind="struct">
     <name>eve::struct_support</name>
