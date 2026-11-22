@@ -14,6 +14,8 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/soa_ptr.hpp>
 
+#include "unit/memory/page.hpp"
+
 #include <list>
 #include <vector>
 
@@ -22,14 +24,11 @@
 // a neighbouring page. It is passed as an aligned_ptr, or as a soa_ptr of aligned_ptrs, to the block
 // start, and its size is the alignment in elements.
 //==================================================================================================
-template<typename T, std::ptrdiff_t Size>
-using page_storage = std::vector<T, eve::aligned_allocator<T, Size>>;
-
-template<typename T, std::ptrdiff_t Size> page_storage<T, Size> make_page()
+template<typename T> guarded_test_page<T> make_test_page()
 {
-  page_storage<T, Size> data(Size);
+  guarded_test_page<T> data;
 
-  for( std::ptrdiff_t i = 0; i < Size; ++i )
+  for( std::ptrdiff_t i = 0; i < data.size(); ++i )
   {
     if constexpr( eve::logical_value<T> ) data[i] = (i % 3 == 0);
     else                                  data[i] = T(i % 100 + 1);
@@ -122,8 +121,9 @@ template<eve::simd_value W, eve::simd_compatible_ptr<W> Ptr> void check_loads(W 
 
 template<eve::simd_value W> void check_loads(W alt)
 {
-  constexpr std::ptrdiff_t size = 4096 / sizeof(eve::element_type_t<W>);
+  using e_t = eve::element_type_t<W>;
+  constexpr std::ptrdiff_t size = guarded_test_page<e_t>::size();
 
-  auto page = make_page<eve::element_type_t<W>, size>();
+  auto page = make_test_page<e_t>();
   check_loads(alt, eve::as_aligned(page.data(), eve::lanes<size>));
 }

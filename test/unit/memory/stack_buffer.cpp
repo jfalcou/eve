@@ -24,6 +24,7 @@ TTS_CASE("stack_buffer types")
 
     TTS_TYPE_IS(decltype(buf.ptr()),  (eve::aligned_ptr<int, N>));
     TTS_TYPE_IS(decltype(cbuf.ptr()), (eve::aligned_ptr<int const, N>));
+    TTS_TYPE_IS(decltype(eve::stack_buffer<T, 3>{}.ptr()), (eve::aligned_ptr<int, N>));
   }
   {
     using T = eve::logical<eve::wide<int, N>>;
@@ -62,24 +63,30 @@ void stack_buffer_load_store_test(T x)
   int volatile bla{}; (void) bla;
   eve::stack_buffer<T> buf2;
   char volatile bla1{}; (void) bla1;
-  eve::stack_buffer<T> buf3;
+  eve::stack_buffer<T, 3> buf3;
   char volatile bla3{}; (void) bla3;
   eve::stack_buffer<T> buf4;
 
   eve::store(x, buf1.ptr());
   eve::store(x, buf2.ptr());
   eve::store(x, buf3.ptr());
+  eve::store(x, buf3.ptr() + T::size());
+  eve::store(x, buf3.ptr() + 2 * T::size());
   eve::store(x, buf4.ptr());
 
   TTS_EQUAL(x, eve::load(buf1.ptr(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(buf2.ptr(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(buf3.ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(buf3.ptr() + T::size(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(buf3.ptr() + 2 * T::size(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(buf4.ptr(), eve::lanes<T::size()>));
 
 
   TTS_EQUAL(x, eve::load(std::as_const(buf1).ptr(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(std::as_const(buf2).ptr(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(std::as_const(buf3).ptr(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf3).ptr() + T::size(), eve::lanes<T::size()>));
+  TTS_EQUAL(x, eve::load(std::as_const(buf3).ptr() + 2 * T::size(), eve::lanes<T::size()>));
   TTS_EQUAL(x, eve::load(std::as_const(buf4).ptr(), eve::lanes<T::size()>));
 }
 
