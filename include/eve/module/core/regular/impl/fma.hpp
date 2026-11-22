@@ -135,6 +135,13 @@ EVE_NAMESPACE::_
     {
       return std::fma(a, b, c);
     }
+    // clang-cl -mavx2 (and any MSVC/clang-cl build, by luck of the random inputs): unit.core.fma,
+    // fnms, fnma, fanm failed by 1 ULP: a float16_t without native _Float16 got a * b + c below,
+    // rounded twice. Mixed fma[promote](int, f16, f16) maps lanes onto this scalar path.
+    else if constexpr (fp16_should_apply<T>)
+    {
+      return apply_fp16_as_fp32(fma[o], a, b, c);
+    }
     else if constexpr (simd_value<T> || floating_scalar_value<T>)
     {
       return a * b + c;
