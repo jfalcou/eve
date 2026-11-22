@@ -653,8 +653,24 @@ namespace tts
 #if !defined(EVE_TEST_BUILDING_PCH) && !defined(EVE_TEST_HPP_MAIN_DEFINED)
 #define EVE_TEST_HPP_MAIN_DEFINED
 
+#if defined(_MSC_VER)
+#include <crtdbg.h>
+#include <stdlib.h>
+#endif
+
 int main(int argc, char const **argv)
 {
+#if defined(_MSC_VER)
+  // cl/clang-cl Debug: a test hitting abort(), an assert or an /RTC check popped a modal CRT dialog
+  // and hung until clicked, with the message only in the dialog. Report on stderr instead.
+  _set_abort_behavior(0, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);
+  _CrtSetReportMode(_CRT_WARN,   _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_WARN,   _CRTDBG_FILE_STDERR);
+  _CrtSetReportMode(_CRT_ERROR,  _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_ERROR,  _CRTDBG_FILE_STDERR);
+  _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+#endif
   ::tts::initialize(argc,argv);
   auto seed = ::tts::random_seed(18102008);
 #if defined(EVE_DISABLE_ASSERTS)
