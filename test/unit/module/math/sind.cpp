@@ -27,25 +27,24 @@ TTS_CASE_TPL("Check return types of sind", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sind  tests
 //==================================================================================================
-// unit.math.sind fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); passes with cl 19.51 and clang-cl 22
-// TTS_CASE_WITH("Check behavior of sind on wide",
-//               eve::test::simd::ieee_reals,
-//               tts::randoms(-45, 45),
-//                             tts::randoms(-90, 90),
-//                             tts::randoms(-5000, 5000))
-// <typename T>(T const& a0, T const& a1, T const& a2)
-// {
-//   using eve::sind;
-//
-//   using eve::deginrad;
-//   using v_t = eve::element_type_t<T>;
-//   auto ref  = [](auto e) -> v_t { return eve::sinpi(double(e / 180.0l)); };
-//
-//   TTS_ULP_EQUAL(sind[eve::quarter_circle](a0), tts::map(ref, a0), 2);
-//   TTS_ULP_EQUAL(sind(a0), tts::map(ref, a0), 2);
-//   TTS_ULP_EQUAL(sind(a1), tts::map(ref, a1), 30);
-//   TTS_ULP_EQUAL(sind(a2), tts::map(ref, a2), 1024);
-// };
+TTS_CASE_WITH("Check behavior of sind on wide",
+              eve::test::simd::ieee_reals,
+              tts::randoms(-45, 45),
+                            tts::randoms(-90, 90),
+                            tts::randoms(-5000, 5000))
+<typename T>(T const& a0, T const& a1, T const& a2)
+{
+  using eve::sind;
+
+  using eve::deginrad;
+  using v_t = eve::element_type_t<T>;
+  auto ref  = [](auto e) -> v_t { return eve::sinpi(double(e / 180.0l)); };
+
+  TTS_ULP_EQUAL(sind[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sind(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(sind(a1), tts::map(ref, a1), 30);
+  TTS_ULP_EQUAL(sind(a2), tts::map(ref, a2), 1024);
+};
 
 TTS_CASE_TPL("Check return types of sind", eve::test::simd::ieee_reals)
 <typename T>(tts::type<T>)

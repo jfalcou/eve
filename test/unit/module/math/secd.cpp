@@ -27,28 +27,27 @@ TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals_wf16)
 //==================================================================================================
 // secd  tests
 //==================================================================================================
-// unit.math.secd fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); passes with cl 19.51 and clang-cl 22
-// TTS_CASE_WITH("Check behavior of secd on wide",
-//               eve::test::simd::ieee_reals_wf16,
-//               tts::randoms(-45, 45),
-//                             tts::randoms(-90, 90))
-// <typename T>(T const& a0, T const& a1)
-// {
-//   using eve::secd;
-//
-//   using eve::deginrad;
-//   using v_t = eve::element_type_t<T>;
-//   auto ref = [](auto e) -> v_t {
-//     if constexpr(sizeof(v_t) == 2)
-//       return eve::convert(1 / eve::cosd(eve::convert(e, eve::as<float>())), eve::as<eve::float16_t>());
-//     else
-//       return (1 / eve::cosd(e));
-//   };
-//
-//   TTS_ULP_EQUAL(secd[eve::quarter_circle](a0), tts::map(ref, a0), 4);
-//   TTS_ULP_EQUAL(secd(a0), tts::map(ref, a0), 4);
-//   TTS_ULP_EQUAL(secd(a1), tts::map(ref, a1), 4);
-// };
+TTS_CASE_WITH("Check behavior of secd on wide",
+              eve::test::simd::ieee_reals_wf16,
+              tts::randoms(-45, 45),
+                            tts::randoms(-90, 90))
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::secd;
+
+  using eve::deginrad;
+  using v_t = eve::element_type_t<T>;
+  auto ref = [](auto e) -> v_t {
+    if constexpr(sizeof(v_t) == 2)
+      return eve::convert(1 / eve::cosd(eve::convert(e, eve::as<float>())), eve::as<eve::float16_t>());
+    else
+      return (1 / eve::cosd(e));
+  };
+
+  TTS_ULP_EQUAL(secd[eve::quarter_circle](a0), tts::map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd(a0), tts::map(ref, a0), 4);
+  TTS_ULP_EQUAL(secd(a1), tts::map(ref, a1), 4);
+};
 
 TTS_CASE_TPL("Check return types of secd", eve::test::simd::ieee_reals_wf16)
 <typename T>(tts::type<T>)

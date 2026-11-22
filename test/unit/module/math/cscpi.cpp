@@ -27,39 +27,36 @@ TTS_CASE_TPL("Check return types of cscpi", eve::test::simd::ieee_reals)
 //==================================================================================================
 // cscpi  tests
 //==================================================================================================
-// unit.math.cscpi fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); only used by the test case commented out below
-// constexpr auto mmed = []<typename T>(eve::as<T> const& tgt)
-// { return -eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
-// unit.math.cscpi fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); only used by the test case commented out below
-// constexpr auto med = []<typename T>(eve::as<T> const& tgt)
-// { return eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
+constexpr auto mmed = []<typename T>(eve::as<T> const& tgt)
+{ return -eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
+constexpr auto med = []<typename T>(eve::as<T> const& tgt)
+{ return eve::Rempio2_limit[eve::medium](tgt) * eve::inv_pi(tgt); };
 
-// unit.math.cscpi fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); passes with cl 19.51 and clang-cl 22
-// TTS_CASE_WITH("Check behavior of cscpi on wide",
-//               eve::test::simd::ieee_reals,
-//               tts::randoms(-0.25, 0.25),
-//                             tts::randoms(-0.5, 0.5),
-//                             tts::randoms(tts::constant(mmed), tts::constant(med)),
-//                             tts::randoms(eve::valmin, eve::valmax))
-// <typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
-// {
-//   using eve::cscpi;
-//   using v_t = eve::element_type_t<T>;
-//   auto ref  = [](auto e) -> v_t
-//   {
-//     auto d = eve::sinpi(double(e));
-//     return d ? 1.0 / d : eve::nan(eve::as(e));
-//   };
-//
-//   using eve::deginrad;
-//   using eve::pi;
-//   using v_t = eve::element_type_t<T>;
-//   TTS_ULP_EQUAL(cscpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
-//   TTS_ULP_EQUAL(cscpi(a0), tts::map(ref, a0), 2);
-//   TTS_ULP_EQUAL(cscpi(a1), tts::map(ref, a1), 2);
-//   TTS_ULP_EQUAL(cscpi(a2), tts::map(ref, a2), 2);
-//   TTS_ULP_EQUAL(cscpi(a3), tts::map(ref, a3), 2);
-// };
+TTS_CASE_WITH("Check behavior of cscpi on wide",
+              eve::test::simd::ieee_reals,
+              tts::randoms(-0.25, 0.25),
+                            tts::randoms(-0.5, 0.5),
+                            tts::randoms(tts::constant(mmed), tts::constant(med)),
+                            tts::randoms(eve::valmin, eve::valmax))
+<typename T>(T const& a0, T const& a1, T const& a2, T const& a3)
+{
+  using eve::cscpi;
+  using v_t = eve::element_type_t<T>;
+  auto ref  = [](auto e) -> v_t
+  {
+    auto d = eve::sinpi(double(e));
+    return d ? 1.0 / d : eve::nan(eve::as(e));
+  };
+
+  using eve::deginrad;
+  using eve::pi;
+  using v_t = eve::element_type_t<T>;
+  TTS_ULP_EQUAL(cscpi[eve::quarter_circle](a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cscpi(a0), tts::map(ref, a0), 2);
+  TTS_ULP_EQUAL(cscpi(a1), tts::map(ref, a1), 2);
+  TTS_ULP_EQUAL(cscpi(a2), tts::map(ref, a2), 2);
+  TTS_ULP_EQUAL(cscpi(a3), tts::map(ref, a3), 2);
+};
 
 
 //==================================================================================================

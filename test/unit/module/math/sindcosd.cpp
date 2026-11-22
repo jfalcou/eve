@@ -27,31 +27,30 @@ TTS_CASE_TPL("Check return types of sindcosd", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sindcosd  tests
 //==================================================================================================
-// unit.math.sindcosd fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); passes with cl 19.51 and clang-cl 22
-// TTS_CASE_WITH("Check behavior of sindcosd on wide",
-//               eve::test::simd::ieee_reals,
-//               tts::randoms(-45, 45), tts::randoms(-90, 90), tts::randoms(-360, 360))
-// <typename T>(T const& a0, T const& a1, T const& a2)
-// {
-//   using eve::sindcosd;
-//
-//   using v_t = eve::element_type_t<T>;
-//   auto refc = [](auto e) -> v_t { return eve::cosd(e); };
-//   auto refs = [](auto e) -> v_t { return eve::sind(e); };
-//   {
-//     auto [s, c] = sindcosd[eve::quarter_circle](a0);
-//     TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
-//     TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
-//   }
-//   {
-//     auto [s, c] = sindcosd(a0);
-//     TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
-//     TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
-//     auto [s1, c1] = sindcosd(a1);
-//     TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
-//     TTS_ULP_EQUAL(c1, tts::map(refc, a1), 30);
-//     auto [s2, c2] = sindcosd(a2);
-//     TTS_ULP_EQUAL(s2, tts::map(refs, a2), 51);
-//     TTS_ULP_EQUAL(c2, tts::map(refc, a2), 51);
-//   }
-// };
+TTS_CASE_WITH("Check behavior of sindcosd on wide",
+              eve::test::simd::ieee_reals,
+              tts::randoms(-45, 45), tts::randoms(-90, 90), tts::randoms(-360, 360))
+<typename T>(T const& a0, T const& a1, T const& a2)
+{
+  using eve::sindcosd;
+
+  using v_t = eve::element_type_t<T>;
+  auto refc = [](auto e) -> v_t { return eve::cosd(e); };
+  auto refs = [](auto e) -> v_t { return eve::sind(e); };
+  {
+    auto [s, c] = sindcosd[eve::quarter_circle](a0);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
+  }
+  {
+    auto [s, c] = sindcosd(a0);
+    TTS_ULP_EQUAL(s, tts::map(refs, a0), 2);
+    TTS_ULP_EQUAL(c, tts::map(refc, a0), 2);
+    auto [s1, c1] = sindcosd(a1);
+    TTS_ULP_EQUAL(s1, tts::map(refs, a1), 2);
+    TTS_ULP_EQUAL(c1, tts::map(refc, a1), 30);
+    auto [s2, c2] = sindcosd(a2);
+    TTS_ULP_EQUAL(s2, tts::map(refs, a2), 51);
+    TTS_ULP_EQUAL(c2, tts::map(refc, a2), 51);
+  }
+};

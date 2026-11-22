@@ -27,25 +27,22 @@ TTS_CASE_TPL("Check return types of sinpic", eve::test::simd::ieee_reals)
 //==================================================================================================
 // sinpic  tests
 //==================================================================================================
-// unit.math.sinpic fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); only used by the test case commented out below
-// constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::valmin(tgt) / 4; });
-// unit.math.sinpic fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); only used by the test case commented out below
-// constexpr auto maxi = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::valmax(tgt) / 4; });
+constexpr auto mini = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::valmin(tgt) / 4; });
+constexpr auto maxi = tts::constant([]<typename T>(eve::as<T> const& tgt) { return eve::valmax(tgt) / 4; });
 
-// unit.math.sinpic fails with cl 19.52.37029 x64 /std:c++20 /Od /Ob0 /RTC1 /MDd /EHsc /W3 /WX /Zc:preprocessor -DEVE_NO_FORCEINLINE (x86 SSE2); passes with cl 19.51 and clang-cl 22
-// TTS_CASE_WITH("Check behavior of sinpic on wide",
-//               eve::test::simd::ieee_reals,
-//               tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0))
-// <typename T>(T const& a0, T const& a1)
-// {
-//   using eve::sinpic;
-//
-//   using v_t = eve::element_type_t<T>;
-//   v_t  dpi  = 3.1415926535897932384626433832795028841971693993751;
-//   auto ref  = [dpi](auto e) -> v_t { return e ? eve::sinpi(e) / (dpi * e) : v_t(1); };
-//   TTS_ULP_EQUAL(sinpic(a0), tts::map(ref, a0), 3);
-//   TTS_ULP_EQUAL(sinpic(a1), tts::map(ref, a1), 3);
-// };
+TTS_CASE_WITH("Check behavior of sinpic on wide",
+              eve::test::simd::ieee_reals,
+              tts::randoms(mini, maxi), tts::randoms(-10.0, 10.0))
+<typename T>(T const& a0, T const& a1)
+{
+  using eve::sinpic;
+
+  using v_t = eve::element_type_t<T>;
+  v_t  dpi  = 3.1415926535897932384626433832795028841971693993751;
+  auto ref  = [dpi](auto e) -> v_t { return e ? eve::sinpi(e) / (dpi * e) : v_t(1); };
+  TTS_ULP_EQUAL(sinpic(a0), tts::map(ref, a0), 3);
+  TTS_ULP_EQUAL(sinpic(a1), tts::map(ref, a1), 3);
+};
 
 
 //==================================================================================================
