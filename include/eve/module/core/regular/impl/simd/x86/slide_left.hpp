@@ -130,7 +130,9 @@ template<simd_value Wide, std::ptrdiff_t Shift>
     mask >>= Shift;
 
     using s_t = typename logical<Wide>::storage_type;
-    return s_t {static_cast<typename s_t::type>(mask.to_ulong())};
+    // clang-cl -march=skylake-avx512: unit.api.regular.swizzle.slide_left, unit.core.scan, ... aborted:
+    // to_ulong throws std::overflow_error above 32 bits on Windows (unsigned long is 32 bits there).
+    return s_t {static_cast<typename s_t::type>(mask.to_ullong())};
   }
 }
 }
