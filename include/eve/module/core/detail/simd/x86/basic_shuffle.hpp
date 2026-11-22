@@ -81,12 +81,15 @@ basic_shuffle_(EVE_SUPPORTS(sse2_),
   }
   else if constexpr( current_api >= ssse3 )
   {
-    using st_t    = typename that_t::storage_type;
     using bytes_t = typename that_t::template rebind<std::uint8_t, 16>;
     using i_t     = as_integer_t<wide<T, N>>;
 
-    return that_t((st_t)_mm_shuffle_epi8(bit_cast(v, as<i_t> {}).storage(),
-                                         as_bytes<that_t>(q, as<bytes_t>())));
+    // cl /arch:AVX512: unit.api.regular.swizzle.deinterleave_groups_shuffle and unit.core.swap_pairs
+    // failed to compile (C2440): a C cast from __m128i to __m128 is a bit cast for clang/gcc vector
+    // types, but no conversion at all between cl's __m128 and __m128i unions.
+    return bit_cast(as_integer_t<that_t>(_mm_shuffle_epi8(bit_cast(v, as<i_t> {}).storage(),
+                                                          as_bytes<that_t>(q, as<bytes_t>()))),
+                    as<that_t> {});
   }
   else
   {
