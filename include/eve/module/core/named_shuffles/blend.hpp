@@ -123,7 +123,38 @@ struct blend_t
         auto l1       = level(as<half_t> {}, as<half_t> {}, g, p1);
         return _::idxm::add_shuffle_levels(l0, l1, 4);
       }
-      if( current_api >= sse4_1 ) return g_size >= 4 ? 2 : 3;
+      if( current_api >= sse4_1 )
+      {
+        // the driver merges neighbours coming from the same register into bigger groups
+        constexpr std::array    from {I...};
+        constexpr std::ptrdiff_t merged_g_size = [&]
+        {
+          std::ptrdiff_t merged = 1;
+          for( std::size_t step = 1; step < from.size(); step *= 2 )
+          {
+            for( std::size_t i = 0; i < from.size(); i += 2 * step )
+            {
+              if( from[i] != from[i + step] ) return merged;
+            }
+            merged *= 2;
+          }
+          return merged;
+        }() * sizeof(element_type_t<T>) * G;
+
+        if( merged_g_size >= 4 ) return 2;
+        if( merged_g_size < 2 ) return 3;
+
+        // _mm_blend_epi16, smaller registers are padded to 16 bytes
+        if( reg_size <= 16 ) return 2;
+
+        // _mm256_blend_epi16 shares the immediate between 16 byte lanes
+        constexpr std::size_t half = sizeof...(I) / 2;
+        for( std::size_t i = 0; i != half; ++i )
+        {
+          if( from[i] != from[i + half] ) return 3;
+        }
+        return 2;
+      }
 
       if( g_size >= 8 ) return 2;
       if( g_size == 2 && reg_size == 4 ) return 6;

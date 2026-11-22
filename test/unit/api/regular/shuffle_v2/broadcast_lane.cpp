@@ -18,7 +18,7 @@ test_indexes()
   if constexpr ( eve::current_api >= eve::sve ) return kumi::tuple{eve::index<0>};
   else if constexpr ( NumIdxs == 1) return kumi::tuple{eve::index<0>};
   else if constexpr ( NumIdxs == 2 ) return kumi::tuple{eve::index<0>, eve::index<1>};
-  else return kumi::tuple{eve::index<1>, eve::index<NumIdxs - 1>};
+  else return kumi::tuple{eve::index<0>, eve::index<1>, eve::index<NumIdxs - 1>};
 }
 
 TTS_CASE_TPL("Check broadcast lane, generic", eve::test::simd::all_types)

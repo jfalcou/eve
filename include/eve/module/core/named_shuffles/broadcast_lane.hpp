@@ -100,6 +100,12 @@ struct broadcast_lane_t
       return level(_::mask_type(tgt), g, i) + 4;
     }
 
+    // _mm_broadcastb_epi8 and friends
+    if (I == 0 && current_api >= avx2 && g_size <= 8) return 2;
+
+    // _mm_unpacklo_epi8(x, x)
+    if (I == 0 && g_size == 1 && reg_size == 2) return 2;
+
     if (reg_size == 64)
     {
       if (g_size >= 16) return 2;

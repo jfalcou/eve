@@ -258,7 +258,8 @@ TTS_CASE("_mm_permutex2var")
         return (i * 3 + 7) % (2 * size);
       });
 
-  run2<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 5, we_, 7>);
+  // <3, 5, we_, 7> is _mm_insert_ps(y, x)
+  run2<eve::avx512, std::uint32_t, 4>(eve::pattern<3, 5, we_, 6>);
   run2<eve::avx512, std::uint32_t, 8>(eve::pattern<3, 11, 5, 13, 2, 10, we_, 15>);
   run2<eve::avx512, std::uint32_t, 16>(
       [](int i, int size) -> std::ptrdiff_t

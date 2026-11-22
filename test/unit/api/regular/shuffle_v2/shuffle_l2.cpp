@@ -11,6 +11,7 @@ namespace
 {
 
 using eve::na_;
+using eve::we_;
 
 auto return2 = [](auto...) { return 2; };
 
@@ -93,6 +94,33 @@ auto blend_every_other = [](int i, int size)
   if( i % 2 ) return i + size;
   return i;
 };
+
+// x86 unpacklo/unpackhi: interleave the low (or high) halves of each 16 byte lane.
+// `two_regs == false` means the second operand is the same register.
+template<typename T, bool hi, bool two_regs>
+constexpr auto unpack_pattern = [](int i, int size)
+{
+  constexpr int lane_size = 16 / sizeof(T);
+  int           lane      = i / lane_size;
+  int           offset    = i % lane_size;
+  int           res       = lane * lane_size + offset / 2 + (hi ? lane_size / 2 : 0);
+  if( two_regs && offset % 2 ) res += size;
+  return res;
+};
+
+template<int ratio>
+constexpr auto zero_extend_pattern = [](int i, int) -> std::ptrdiff_t
+{
+  if( i % ratio ) return na_;
+  return i / ratio;
+};
+
+constexpr auto broadcast_0 = [](int, int) { return 0; };
+
+// every `stride` element, `n` of them
+template<int n, int stride>
+constexpr auto stride_pattern = []<std::size_t... i>(std::index_sequence<i...>)
+{ return eve::pattern<static_cast<std::ptrdiff_t>(i * stride)...>; }(std::make_index_sequence<n> {});
 
 // any api --------------------------------------------
 
@@ -228,6 +256,10 @@ TTS_CASE("_mm_shufflelo_epi16/_mm_shufflehi_epi16")
   run<eve::sse2, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, /**/ 4, 5, 5, 4>);
   run<eve::sse2, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, /**/ 4, 6, 6, 5>);
   run<eve::sse2, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, /**/ 7, 6, 7, 6>);
+
+  // we_ in the moving half
+  run<eve::sse2, std::uint16_t, 8>(eve::pattern<we_, 2, 3, 1, /**/ 4, 5, 6, 7>);
+  run<eve::sse2, std::uint16_t, 8>(eve::pattern<0, 1, 2, 3, /**/ we_, 6, 7, 4>);
 
   run<eve::avx2, std::uint16_t, 16>(eve::pattern<
                                     // clang-format off
@@ -413,6 +445,141 @@ TTS_CASE("_mm_alignr_epi32(x, x) / _mm_alignr_epi64(x, x)")
   run<eve::avx512, std::uint32_t, 16>([](int i, int size) { return (i + 11) % size; });
 };
 
+TTS_CASE("_mm_unpacklo_epi8(x, x) / _mm_unpackhi_epi8(x, x) / epi16")
+{
+  run<eve::sse2, std::uint8_t, 16>(unpack_pattern<std::uint8_t, false, false>);
+  run<eve::sse2, std::uint8_t, 16>(unpack_pattern<std::uint8_t, true, false>);
+  run<eve::sse2, std::uint16_t, 8>(unpack_pattern<std::uint16_t, false, false>);
+  run<eve::sse2, std::uint16_t, 8>(unpack_pattern<std::uint16_t, true, false>);
+
+  run<eve::avx2, std::uint8_t, 32>(unpack_pattern<std::uint8_t, false, false>);
+  run<eve::avx2, std::uint8_t, 32>(unpack_pattern<std::uint8_t, true, false>);
+  run<eve::avx2, std::uint16_t, 16>(unpack_pattern<std::uint16_t, false, false>);
+  run<eve::avx2, std::uint16_t, 16>(unpack_pattern<std::uint16_t, true, false>);
+
+  run<eve::avx512, std::uint8_t, 64>(unpack_pattern<std::uint8_t, false, false>);
+  run<eve::avx512, std::uint8_t, 64>(unpack_pattern<std::uint8_t, true, false>);
+  run<eve::avx512, std::uint16_t, 32>(unpack_pattern<std::uint16_t, false, false>);
+  run<eve::avx512, std::uint16_t, 32>(unpack_pattern<std::uint16_t, true, false>);
+};
+
+TTS_CASE("_mm_broadcastb_epi8 / w / d / q")
+{
+  // 32 and 64 bits in 16 bytes are _mm_shuffle_epi32
+  run<eve::avx2, std::uint8_t, 16>(broadcast_0);
+  run<eve::avx2, std::uint16_t, 8>(broadcast_0);
+
+  run<eve::avx2, std::uint8_t, 32>(broadcast_0);
+  run<eve::avx2, std::uint16_t, 16>(broadcast_0);
+  run<eve::avx2, std::uint32_t, 8>(broadcast_0);
+  run<eve::avx2, std::uint64_t, 4>(broadcast_0);
+
+  run<eve::avx512, std::uint8_t, 64>(broadcast_0);
+  run<eve::avx512, std::uint16_t, 32>(broadcast_0);
+  run<eve::avx512, std::uint32_t, 16>(broadcast_0);
+  run<eve::avx512, std::uint64_t, 8>(broadcast_0);
+};
+
+TTS_CASE("_mm_cvtepu8_epi16 / _mm_cvtepu8_epi32 / ... (zero extension)")
+{
+  run<eve::sse4_1, std::uint8_t, 16>(zero_extend_pattern<2>);
+  run<eve::sse4_1, std::uint8_t, 16>(zero_extend_pattern<4>);
+  run<eve::sse4_1, std::uint8_t, 16>(zero_extend_pattern<8>);
+  run<eve::sse4_1, std::uint16_t, 8>(zero_extend_pattern<2>);
+  run<eve::sse4_1, std::uint16_t, 8>(zero_extend_pattern<4>);
+  run<eve::sse4_1, std::uint32_t, 4>(zero_extend_pattern<2>);
+
+  // used to be picked up by _mm_shufflehi_epi16, moving element across halves.
+  run<eve::sse4_1, std::uint16_t, 8>(eve::pattern<0, we_, we_, we_, 1, we_, we_, we_>);
+
+  run<eve::avx2, std::uint8_t, 32>(zero_extend_pattern<2>);
+  run<eve::avx2, std::uint8_t, 32>(zero_extend_pattern<4>);
+  run<eve::avx2, std::uint8_t, 32>(zero_extend_pattern<8>);
+  run<eve::avx2, std::uint16_t, 16>(zero_extend_pattern<2>);
+  run<eve::avx2, std::uint16_t, 16>(zero_extend_pattern<4>);
+  run<eve::avx2, std::uint32_t, 8>(zero_extend_pattern<2>);
+
+  run<eve::avx512, std::uint8_t, 64>(zero_extend_pattern<2>);
+  run<eve::avx512, std::uint8_t, 64>(zero_extend_pattern<4>);
+  run<eve::avx512, std::uint8_t, 64>(zero_extend_pattern<8>);
+  run<eve::avx512, std::uint16_t, 32>(zero_extend_pattern<2>);
+  run<eve::avx512, std::uint16_t, 32>(zero_extend_pattern<4>);
+  run<eve::avx512, std::uint32_t, 16>(zero_extend_pattern<2>);
+};
+
+TTS_CASE("_mm_insert_ps(x, x)")
+{
+  // zeroing any subset, plus moving one element
+  run<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, na_, na_, 3>);
+  run<eve::sse4_1, std::uint32_t, 4>(eve::pattern<na_, 1, na_, na_>);
+  run<eve::sse4_1, std::uint32_t, 4>(eve::pattern<na_, na_, 2, 3>);
+  run<eve::sse4_1, std::uint32_t, 4>(eve::pattern<na_, 1, na_, 2>);
+  run<eve::sse4_1, std::uint32_t, 4>(eve::pattern<3, na_, 2, na_>);
+};
+
+TTS_CASE("_mm_rol_epi32 / _mm_rol_epi64 (rotations within an element)")
+{
+  // swap adjacent shorts
+  run<eve::avx512, std::uint16_t, 8>(eve::pattern<1, 0, 3, 2, 5, 4, 7, 6>);
+  run<eve::avx512, std::uint16_t, 16>(reverse_in_group<2>);
+  run<eve::avx512, std::uint16_t, 32>(reverse_in_group<2>);
+
+  // bytes within 4 bytes
+  run<eve::avx512, std::uint8_t, 16>(
+      [](int i, int) { return i / 4 * 4 + (i + 1) % 4; });
+  run<eve::avx512, std::uint8_t, 32>(
+      [](int i, int) { return i / 4 * 4 + (i + 3) % 4; });
+  run<eve::avx512, std::uint8_t, 64>(
+      [](int i, int) { return i / 4 * 4 + (i + 2) % 4; });
+
+  // shorts / bytes within 8 bytes
+  run<eve::avx512, std::uint16_t, 8>(eve::pattern<1, 2, 3, 0, 5, 6, 7, 4>);
+  run<eve::avx512, std::uint16_t, 32>(
+      [](int i, int) { return i / 4 * 4 + (i + 3) % 4; });
+  run<eve::avx512, std::uint8_t, 16>(
+      [](int i, int) { return i / 8 * 8 + (i + 3) % 8; });
+};
+
+TTS_CASE("_mm256_castsi256_si128 / _mm512_castsi512_si256 / _mm512_castsi512_si128 (low part)")
+{
+  // Less than 16 bytes out of 16 bytes is the same register, l0 in the driver.
+
+  run<eve::avx, std::uint32_t, 8>(eve::pattern<0, 1, 2, 3>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1>);
+  run<eve::avx2, std::uint8_t, 32>(stride_pattern<16, 1>);
+
+  run<eve::avx512, std::uint32_t, 16>(stride_pattern<8, 1>);
+  run<eve::avx512, std::uint32_t, 16>(stride_pattern<4, 1>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 1>);
+};
+
+TTS_CASE("_mm256_extracti128_si256 / _mm512_extracti64x4_epi64 / _mm512_extracti32x4_epi32")
+{
+  run<eve::avx, std::uint32_t, 8>(eve::pattern<4, 5, 6, 7>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<2, 3>);
+
+  run<eve::avx512, std::uint32_t, 16>(eve::pattern<8, 9, 10, 11, 12, 13, 14, 15>);
+  run<eve::avx512, std::uint32_t, 16>(eve::pattern<4, 5, 6, 7>);
+  run<eve::avx512, std::uint32_t, 16>(eve::pattern<12, 13, 14, 15>);
+  run<eve::avx512, std::uint64_t, 8>(eve::pattern<6, 7>);
+};
+
+TTS_CASE("_mm256_cvtepi64_epi32 and friends (truncation)")
+{
+  run<eve::avx512, std::uint32_t, 4>(stride_pattern<2, 2>);
+  run<eve::avx512, std::uint32_t, 8>(stride_pattern<4, 2>);
+  run<eve::avx512, std::uint32_t, 16>(stride_pattern<8, 2>);
+
+  run<eve::avx512, std::uint16_t, 16>(stride_pattern<8, 2>);
+  run<eve::avx512, std::uint16_t, 32>(stride_pattern<16, 2>);
+  run<eve::avx512, std::uint16_t, 32>(stride_pattern<8, 4>);
+
+  run<eve::avx512, std::uint8_t, 32>(stride_pattern<16, 2>);
+  run<eve::avx512, std::uint8_t, 64>(stride_pattern<32, 2>);
+  run<eve::avx512, std::uint8_t, 64>(stride_pattern<16, 4>);
+  run<eve::avx512, std::uint8_t, 64>(stride_pattern<8, 8>);
+};
+
 TTS_CASE("_mm_blend_ps / _mm_blend_pd / _mm_mask_blend")
 {
   run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 1, 2, 7>);
@@ -421,6 +588,15 @@ TTS_CASE("_mm_blend_ps / _mm_blend_pd / _mm_mask_blend")
 
   run2<eve::avx512, std::uint8_t, 16>(blend_every_other);
   run2<eve::avx512, std::uint16_t, 8>(blend_every_other);
+
+  // _mm_blend_epi16
+  run2<eve::sse4_1, std::uint16_t, 8>(blend_every_other);
+  run2<eve::sse4_1, std::uint16_t, 8>(eve::pattern<8, 1, 2, 11, 12, 5, 14, 7>);
+  run2<eve::sse4_1, std::uint8_t, 16>(
+      [](int i, int size) { return (i / 2) % 2 ? i + size : i; });
+  run2<eve::avx2, std::uint16_t, 16>(blend_every_other);
+  run2<eve::avx2, std::uint16_t, 16>(
+      [](int i, int size) { return (i % 8 == 1 || i % 8 == 6) ? i + size : i; });
   run2<eve::sse4_1, std::uint32_t, 4>(blend_every_other);
   run2<eve::sse4_1, std::uint64_t, 2>(blend_every_other);
 
@@ -560,6 +736,58 @@ TTS_CASE("_mm_shuffle_pd(x, y)")
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<1, 8, 2, 11, 4, 12, 6, 15>);
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 9, 2, 10, 5, 13, 6, 15>);
   run2<eve::avx512, std::uint64_t, 8>(eve::pattern<0, 8, 3, 10, 4, 13, 7, 14>);
+};
+
+TTS_CASE("_mm_unpacklo_epi8(x, y) / _mm_unpackhi_epi8(x, y) / epi16 / epi32 / epi64")
+{
+  run2<eve::sse2, std::uint8_t, 16>(unpack_pattern<std::uint8_t, false, true>);
+  run2<eve::sse2, std::uint8_t, 16>(unpack_pattern<std::uint8_t, true, true>);
+  run2<eve::sse2, std::uint16_t, 8>(unpack_pattern<std::uint16_t, false, true>);
+  run2<eve::sse2, std::uint16_t, 8>(unpack_pattern<std::uint16_t, true, true>);
+  run2<eve::sse2, std::uint32_t, 4>(unpack_pattern<std::uint32_t, false, true>);
+  run2<eve::sse2, std::uint32_t, 4>(unpack_pattern<std::uint32_t, true, true>);
+  run2<eve::sse2, std::uint64_t, 2>(unpack_pattern<std::uint64_t, false, true>);
+  run2<eve::sse2, std::uint64_t, 2>(unpack_pattern<std::uint64_t, true, true>);
+
+  // avx has _mm256_unpacklo_ps / _mm256_unpacklo_pd
+  run2<eve::avx, std::uint32_t, 8>(unpack_pattern<std::uint32_t, false, true>);
+  run2<eve::avx, std::uint32_t, 8>(unpack_pattern<std::uint32_t, true, true>);
+  run2<eve::avx, std::uint64_t, 4>(unpack_pattern<std::uint64_t, false, true>);
+  run2<eve::avx, std::uint64_t, 4>(unpack_pattern<std::uint64_t, true, true>);
+
+  run2<eve::avx2, std::uint8_t, 32>(unpack_pattern<std::uint8_t, false, true>);
+  run2<eve::avx2, std::uint8_t, 32>(unpack_pattern<std::uint8_t, true, true>);
+  run2<eve::avx2, std::uint16_t, 16>(unpack_pattern<std::uint16_t, false, true>);
+  run2<eve::avx2, std::uint16_t, 16>(unpack_pattern<std::uint16_t, true, true>);
+
+  run2<eve::avx512, std::uint8_t, 64>(unpack_pattern<std::uint8_t, false, true>);
+  run2<eve::avx512, std::uint8_t, 64>(unpack_pattern<std::uint8_t, true, true>);
+  run2<eve::avx512, std::uint16_t, 32>(unpack_pattern<std::uint16_t, false, true>);
+  run2<eve::avx512, std::uint16_t, 32>(unpack_pattern<std::uint16_t, true, true>);
+  run2<eve::avx512, std::uint32_t, 16>(unpack_pattern<std::uint32_t, false, true>);
+  run2<eve::avx512, std::uint32_t, 16>(unpack_pattern<std::uint32_t, true, true>);
+  run2<eve::avx512, std::uint64_t, 8>(unpack_pattern<std::uint64_t, false, true>);
+  run2<eve::avx512, std::uint64_t, 8>(unpack_pattern<std::uint64_t, true, true>);
+};
+
+TTS_CASE("_mm_insert_ps(x, y)")
+{
+  // one element from y into x, plus zeroing
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 7, 2, 3>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<6, 1, 2, 3>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 1, 2, 4>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<0, 5, na_, 3>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<na_, 1, 4, na_>);
+
+  // one element from x into y
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<4, 2, 6, 7>);
+  run2<eve::sse4_1, std::uint32_t, 4>(eve::pattern<4, 5, 6, 0>);
+};
+
+TTS_CASE("_mm256_insertf128_si256(x, y) / (x, x)")
+{
+  run2<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1, 4, 5>);
+  run<eve::avx, std::uint64_t, 4>(eve::pattern<0, 1, 0, 1>);
 };
 
 TTS_CASE("_mm_permute2f128_si256(x, y) / _mm_shuffle_i64x2(x, y)")
