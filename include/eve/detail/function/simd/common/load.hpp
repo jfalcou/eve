@@ -16,6 +16,7 @@
 #include <eve/memory/aligned_ptr.hpp>
 #include <eve/memory/pointer.hpp>
 #include <eve/memory/soa_ptr.hpp>
+#include <eve/memory/stack_buffer.hpp>
 #include <eve/module/core/regular/bit_cast.hpp>
 #include <eve/module/core/regular/replace.hpp>
 #include <eve/module/core/regular/safe.hpp>
@@ -123,6 +124,50 @@ EVE_NAMESPACE::_
     }
   }
 
+  // Implementation of load[ignore](ptr): [f, l) is the loaded subpart. f != l.
+  // Idea from Robert Clausecker (@clausecker).
+  template<std::ptrdiff_t B>
+  wide<std::uint8_t, B> load_windowed(std::uint8_t const* ptr,
+                                      std::uint8_t const* f,
+                                      std::uint8_t const* l,
+                                      lanes_t<B>) noexcept
+  {
+    using bytes = wide<std::uint8_t, B>;
+    constexpr as<bytes> tgt {};
+
+    auto aligned_f = previous_aligned_address(f, lanes<B>);
+    auto aligned_l = previous_aligned_address(l - 1, lanes<B>);
+
+    // Unconditionally copying to the stack.
+    // ptr can be before aligned_f so keeping an extra register of buffer
+    stack_buffer<bytes, 3> buf;
+    call_store(eve::load[unsafe](aligned_f, tgt), buf.ptr() + B);
+    call_store(eve::load[unsafe](aligned_l, tgt), buf.ptr() + 2 * B);
+    std::uint8_t const* on_stack = buf.ptr().get() + B + (ptr - aligned_f.get());
+
+    // Loading from the page directly is much cheaper compared to waiting for stores to finish.
+    // If the result of stores isn't used, the cost of them seems negligible.
+    constexpr auto page = platform::min_page_size;
+    auto page_offset = ptr - previous_aligned_address(ptr, lanes<page>).get();
+    std::uint8_t const* load_from = (page_offset <= page - B) ? ptr : on_stack;
+
+    return eve::load[unsafe](load_from, tgt);
+  }
+
+
+
+  template<relative_conditional_expr C, _::data_source DS, typename Wide>
+  Wide load_ignore_memcpy(C const& cx, DS src, as<Wide> tgt) noexcept
+  {
+    using e_t = typename pointer_traits<Wide>::value_type;
+
+    Wide that   = _::alternative(cx, Wide {}, tgt);
+    auto offset = cx.offset(tgt);
+    auto *dst   = (e_t *)(&that.storage());
+    std::memcpy((void *)(dst + offset), unalign(src) + offset, sizeof(e_t) * cx.count(tgt));
+    return that;
+  }
+
   template<relative_conditional_expr C, _::data_source DS, typename Wide>
    Wide load_cx_(C const& cx, DS src, as<Wide> tgt) noexcept
   {
@@ -134,27 +179,6 @@ EVE_NAMESPACE::_
       if constexpr (C::has_alternative) return Wide {cx.alternative};
       else                              return Wide {};
     }
-    else if constexpr (is_aligned_ptr_v<DS>)
-    {
-      constexpr bool is_aligned_enough = width_v<Wide> * sizeof(e_t) >= DS::alignment();
-
-      if constexpr (!spy::supports::sanitizers_status && is_aligned_enough)
-      {
-        if constexpr (!_::is_never_empty<C>)
-        {
-          if (cx.count(tgt) == 0) return _::alternative(cx, Wide {}, tgt);
-        }
-
-        const auto res = eve::load[unsafe](src, tgt);
-
-        if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
-        else                              return res;
-      }
-      else
-      {
-        return eve::load[cx](src.get(), tgt);
-      }
-    }
     else if constexpr (logical_simd_value<Wide> && !Wide::abi_type::is_wide_logical)
     {
       using W = as_arithmetic_t<Wide>;
@@ -163,26 +187,49 @@ EVE_NAMESPACE::_
       auto const mcx = map_alternative(cx, [](auto alt) { return alt.mask(); });
       return to_logical(load[mcx](ptr_cast<T const>(src), as<W>{}));
     }
+    else if constexpr (spy::supports::sanitizers_status || emulated_abi<Wide>)
+    {
+      return load_ignore_memcpy(cx, src, tgt);
+    }
     else
     {
-      auto offset = cx.offset(tgt);
-
-      if constexpr (C::has_alternative)
+      if constexpr (!_::is_never_empty<C>)
       {
-        [[maybe_unused]] Wide that(cx.alternative);
-        auto                *dst = (e_t *)(&that.storage());
-        std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
-        return that;
+        if (cx.count(tgt) == 0) return _::alternative(cx, Wide {}, tgt);
+      }
+
+      if constexpr (is_aligned_ptr_v<DS>)
+      {
+        constexpr bool is_aligned_enough = width_v<Wide> * sizeof(e_t) >= DS::alignment();
+
+        if constexpr (is_aligned_enough)
+        {
+          const auto res = eve::load[unsafe](src, tgt);
+
+          if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
+          else                              return res;
+        }
+        else
+        {
+          return eve::load[cx](src.get(), tgt);
+        }
       }
       else
       {
-        [[maybe_unused]] Wide that = {};
-        auto                *dst = (e_t *)(&that.storage());
-        std::memcpy((void *)(dst + offset), src + offset, sizeof(e_t) * cx.count(tgt));
-        return that;
+        constexpr std::ptrdiff_t bytes = sizeof(e_t) * Wide::size();
+
+        auto const* ptr = (std::uint8_t const*)src;
+        auto const* f   = ptr + sizeof(e_t) * cx.offset(tgt);
+        auto const* l   = f + sizeof(e_t) * cx.count(tgt);
+
+        auto res = bit_cast(load_windowed(ptr, f, l, lanes<bytes>), tgt);
+
+        if constexpr (C::has_alternative) return replace_ignored(res, cx, cx.alternative);
+        else                              return res;
       }
     }
   }
+
 
   template<callable_options O, std::input_iterator It, typename Wide>
    Wide load_iterator_(O const& opts, It src, as<Wide> tgt) noexcept

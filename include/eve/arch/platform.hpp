@@ -9,6 +9,7 @@
 
 #include <eve/config.hpp>
 
+
 EVE_PLATFORM_NAMESPACE
 {
   //================================================================================================
@@ -39,6 +40,10 @@ EVE_PLATFORM_NAMESPACE
 # else
   inline constexpr bool supports_simd = true;
 #endif
+
+  inline constexpr std::ptrdiff_t min_page_size =
+    ((spy::operating_system == spy::macos_ || spy::operating_system == spy::ios_) &&
+     spy::architecture == spy::arm_) ? 16384 : 4096;
 
   //! @brief Indicates if current platform supports NaN values
   //! If this value evaluates to `true`, implementation of functions will not take any special

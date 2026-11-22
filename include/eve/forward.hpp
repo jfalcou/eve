@@ -74,6 +74,9 @@ auto call_add(T, U);
 template <typename T, typename U>
 auto call_sub(T, U);
 
+template <typename T, typename Ptr>
+void call_store(T, Ptr);
+
 
 
 }

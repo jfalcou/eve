@@ -157,6 +157,14 @@ EVE_NAMESPACE
   //================================================================================================
 }
 
+EVE_NAMESPACE::_
+{
+  template<typename T, typename Ptr> void call_store(T v, Ptr p)
+  {
+    eve::store(v, p);
+  }
+}
+
 #include <eve/module/core/regular/impl/store.hpp>
 
 #if defined(EVE_INCLUDE_X86_HEADER)

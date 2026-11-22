@@ -260,8 +260,7 @@ template<typename TraitsSupport> struct search_ : TraitsSupport
       UnalignedI1                small_tail_start;
 
       // store small haystack in the stack buffer.
-      stack_buffer<wide<value_type_t<UnalignedI1>, 2 * iterator_width_v<UnalignedI1>>>
-          buf;
+      stack_buffer<wide_value_type_t<UnalignedI1>, 2> buf;
 
       Checker checker;
 
