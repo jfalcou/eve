@@ -24,14 +24,14 @@
 
 EVE_NAMESPACE::_
 {
-  struct none_t
+  struct nullopt_t
   {
     struct tag
     {};
-    constexpr explicit none_t(tag) noexcept {}
+    constexpr explicit nullopt_t(tag) noexcept {}
   };
 
-  inline constexpr none_t none {none_t::tag {}};
+  inline constexpr nullopt_t nullopt {nullopt_t::tag {}};
 
   template<typename T> struct optional_tombstone
   {};
@@ -44,7 +44,7 @@ EVE_NAMESPACE::_
   inline constexpr bool is_optional_v<optional<T, Tombstone>> = true;
 
   template<typename N>
-  concept optional_none_tag = std::same_as<N, none_t> || std::same_as<N, std::nullopt_t>;
+  concept optional_empty_tag = std::same_as<N, nullopt_t> || std::same_as<N, std::nullopt_t>;
 
   struct optional_invoke_tag
   {};
@@ -68,12 +68,21 @@ EVE_NAMESPACE::_
     template<typename... Args>
     constexpr explicit optional_tombstone_storage(std::in_place_t, Args&&...args)
         : val_(std::forward<Args>(args)...)
-    {}
+    {
+      check();
+    }
 
     template<typename F, typename... Args>
     constexpr optional_tombstone_storage(optional_invoke_tag, F&& f, Args&&...args)
         : val_(std::invoke(std::forward<F>(f), std::forward<Args>(args)...))
-    {}
+    {
+      check();
+    }
+
+    constexpr void check() const noexcept
+    {
+      EVE_ASSERT(has_value(), "eve::_::optional: the tombstone can not be stored as a value");
+    }
 
     constexpr bool has_value() const noexcept
     {
@@ -86,6 +95,13 @@ EVE_NAMESPACE::_
     template<typename... Args> constexpr void construct(Args&&...args)
     {
       std::construct_at(std::addressof(val_), std::forward<Args>(args)...);
+      check();
+    }
+
+    template<typename V> constexpr void assign(V&& v)
+    {
+      val_ = std::forward<V>(v);
+      check();
     }
 
     constexpr void reset() noexcept { std::construct_at(std::addressof(val_), Tombstone::value); }
@@ -121,6 +137,8 @@ EVE_NAMESPACE::_
       engaged_ = true;
     }
 
+    template<typename V> constexpr void assign(V&& v) { val_ = std::forward<V>(v); }
+
     constexpr void reset() noexcept { engaged_ = false; }
   };
 
@@ -129,7 +147,7 @@ EVE_NAMESPACE::_
   {
     if( self.has_value() == engaged )
     {
-      if( engaged ) self.get() = value();
+      if( engaged ) self.assign(value());
     }
     else if( engaged ) self.construct(value());
     else self.reset();
@@ -248,6 +266,8 @@ EVE_NAMESPACE::_
       engaged_ = true;
     }
 
+    template<typename V> constexpr void assign(V&& v) { val_ = std::forward<V>(v); }
+
     constexpr void reset() noexcept
     {
       if( engaged_ )
@@ -307,14 +327,14 @@ EVE_NAMESPACE::_
     static_assert(std::is_destructible_v<T>, "eve::_::optional: T must be destructible");
     static_assert(!std::same_as<std::remove_cv_t<T>, std::in_place_t>,
                   "eve::_::optional: T can not be in_place_t");
-    static_assert(!optional_none_tag<std::remove_cv_t<T>>,
-                  "eve::_::optional: T can not be a none tag");
+    static_assert(!optional_empty_tag<std::remove_cv_t<T>>,
+                  "eve::_::optional: T can not be a nullopt tag");
 
     template<typename U>
     static constexpr bool from_value =
         std::is_constructible_v<T, U> && !std::same_as<std::remove_cvref_t<U>, std::in_place_t>
         && !std::same_as<std::remove_cvref_t<U>, optional>
-        && !optional_none_tag<std::remove_cvref_t<U>>
+        && !optional_empty_tag<std::remove_cvref_t<U>>
         && !(std::same_as<std::remove_cv_t<T>, bool> && is_optional_v<std::remove_cvref_t<U>>);
 
     template<typename U, typename B, typename QualU>
@@ -373,7 +393,7 @@ EVE_NAMESPACE::_
     constexpr optional(optional const&) = default;
     constexpr optional(optional&&)      = default;
 
-    template<optional_none_tag N> constexpr optional(N) noexcept {}
+    template<optional_empty_tag N> constexpr optional(N) noexcept {}
 
     template<typename... Args>
     requires std::is_constructible_v<T, Args...>
@@ -413,7 +433,7 @@ EVE_NAMESPACE::_
         : storage(optional_invoke_tag {}, std::forward<F>(f), std::forward<Args>(args)...)
     {}
 
-    template<optional_none_tag N> constexpr optional& operator=(N) noexcept
+    template<optional_empty_tag N> constexpr optional& operator=(N) noexcept
     {
       reset();
       return *this;
@@ -424,12 +444,12 @@ EVE_NAMESPACE::_
 
     template<typename U = std::remove_cv_t<T>>
     requires(!std::same_as<std::remove_cvref_t<U>, optional>
-             && !optional_none_tag<std::remove_cvref_t<U>>
+             && !optional_empty_tag<std::remove_cvref_t<U>>
              && (!std::same_as<std::remove_cvref_t<U>, T> || !std::is_scalar_v<T>)
              && std::is_constructible_v<T, U> && std::is_assignable_v<T&, U>)
     constexpr optional& operator=(U&& v)
     {
-      if( has_value() ) this->get() = std::forward<U>(v);
+      if( has_value() ) this->assign(std::forward<U>(v));
       else this->construct(std::forward<U>(v));
       return *this;
     }
@@ -665,20 +685,20 @@ EVE_NAMESPACE::_
     return x.has_value() <=> y.has_value();
   }
 
-  template<typename T, typename A, optional_none_tag N>
+  template<typename T, typename A, optional_empty_tag N>
   constexpr bool operator==(optional<T, A> const& x, N) noexcept
   {
     return !x.has_value();
   }
 
-  template<typename T, typename A, optional_none_tag N>
+  template<typename T, typename A, optional_empty_tag N>
   constexpr std::strong_ordering operator<=>(optional<T, A> const& x, N) noexcept
   {
     return x.has_value() <=> false;
   }
 
   template<typename U>
-  concept optional_compared_value = !is_optional_v<U> && !optional_none_tag<U>;
+  concept optional_compared_value = !is_optional_v<U> && !optional_empty_tag<U>;
 
   template<typename T, typename A, optional_compared_value U>
   requires requires(T const& t, U const& u) {

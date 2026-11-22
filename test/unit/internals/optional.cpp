@@ -23,7 +23,7 @@
 
 namespace
 {
-using eve::_::none;
+using eve::_::nullopt;
 using eve::_::optional;
 
 inline void
@@ -169,7 +169,7 @@ types()
   expect(noexcept(std::declval<O&>().reset()));
   expect(noexcept(std::declval<O&>().has_value()));
   expect(std::is_nothrow_constructible_v<O>);
-  expect(std::is_nothrow_constructible_v<O, eve::_::none_t>);
+  expect(std::is_nothrow_constructible_v<O, eve::_::nullopt_t>);
   expect(std::is_nothrow_constructible_v<O, std::nullopt_t>);
   expect(!std::is_convertible_v<O, bool>);
   expect(std::is_constructible_v<bool, O>);
@@ -187,7 +187,7 @@ default_and_none_ctor()
     expect(!static_cast<bool>(o));
   }
   {
-    opt_t<C> o {none};
+    opt_t<C> o {nullopt};
     expect(!o.has_value());
   }
   {
@@ -296,7 +296,7 @@ assign_none()
   checks expect;
   {
     opt_t<C> o(C::value(1));
-    o = none;
+    o = nullopt;
     expect(!o.has_value());
   }
   {
@@ -306,7 +306,7 @@ assign_none()
   }
   {
     opt_t<C> o;
-    o = none;
+    o = nullopt;
     expect(!o.has_value());
   }
   {
@@ -607,7 +607,7 @@ nullops()
     expect((one <=> n) > 0);
     expect((n <=> one) < 0);
   };
-  check(none);
+  check(nullopt);
   check(std::nullopt);
   return expect.ok;
 }
@@ -668,14 +668,14 @@ monadic()
   auto const twice = [](val_t<C> const& v) { return optional<int>(v == C::value(1) ? 2 : 0); };
   auto const nope  = [](val_t<C> const&) { return optional<int> {}; };
 
-  expect(e.and_then(twice) == none);
+  expect(e.and_then(twice) == nullopt);
   expect(one.and_then(twice) == 2);
-  expect(one.and_then(nope) == none);
+  expect(one.and_then(nope) == nullopt);
   expect(opt_t<C>(one).and_then(twice) == 2);
 
   auto const tag = [](val_t<C> const& v) { return v == C::value(1) ? 'a' : 'b'; };
   expect(std::is_same_v<decltype(one.transform(tag)), optional<char>>);
-  expect(e.transform(tag) == none);
+  expect(e.transform(tag) == nullopt);
   expect(one.transform(tag) == 'a');
   expect(opt_t<C>(one).transform(tag) == 'a');
 
@@ -776,7 +776,7 @@ destruction()
     o.reset();
     expect(n == 2);
     o.emplace(&n);
-    o = none;
+    o = nullopt;
     expect(n == 3);
     o.emplace(&n);
     o.emplace(&n);
@@ -861,23 +861,76 @@ TTS_CASE("eve::_::optional - a tombstone takes no extra space")
 };
 
 constexpr bool
-tombstone_is_none()
+nullopt_is_below_every_value()
 {
-  checks                       expect;
-  optional<int, int_tombstone> o(5);
-  *o = int_tombstone::value;
-  expect(!o.has_value());
-
+  checks                             expect;
   optional<int, int_tombstone> const lowest(std::numeric_limits<int>::min() + 1);
   expect(optional<int, int_tombstone> {} < lowest);
-  expect(none < lowest);
+  expect(nullopt < lowest);
   return expect.ok;
 }
 
-TTS_CASE("eve::_::optional - writing the tombstone disengages, none is below every value")
+TTS_CASE("eve::_::optional - nullopt is below every value, whatever the tombstone")
 {
-  TTS_CONSTEXPR_EXPECT(tombstone_is_none());
-  TTS_EXPECT(tombstone_is_none());
+  TTS_CONSTEXPR_EXPECT(nullopt_is_below_every_value());
+  TTS_EXPECT(nullopt_is_below_every_value());
+};
+
+template<typename F>
+concept constant_evaluates = requires { typename std::bool_constant<(F {}(), true)>; };
+
+struct store_value
+{
+  constexpr void operator()() const
+  {
+    optional<int, int_tombstone> o(5);
+    o = 6;
+    o.emplace(7);
+  }
+};
+
+struct construct_tombstone
+{
+  constexpr void operator()() const { optional<int, int_tombstone> o(int_tombstone::value); }
+};
+
+struct assign_tombstone
+{
+  constexpr void operator()() const
+  {
+    optional<int, int_tombstone> o(5);
+    o = int_tombstone::value;
+  }
+};
+
+struct emplace_tombstone
+{
+  constexpr void operator()() const
+  {
+    optional<int, int_tombstone> o;
+    o.emplace(int_tombstone::value);
+  }
+};
+
+struct convert_tombstone
+{
+  constexpr void operator()() const
+  {
+    optional<int> const          p(int_tombstone::value);
+    optional<int, int_tombstone> o(5);
+    o = p;
+  }
+};
+
+TTS_CASE("eve::_::optional - storing the tombstone asserts")
+{
+  TTS_CONSTEXPR_EXPECT(constant_evaluates<store_value>);
+#if !defined(EVE_DISABLE_ASSERTS)
+  TTS_CONSTEXPR_EXPECT_NOT(constant_evaluates<construct_tombstone>);
+  TTS_CONSTEXPR_EXPECT_NOT(constant_evaluates<assign_tombstone>);
+  TTS_CONSTEXPR_EXPECT_NOT(constant_evaluates<emplace_tombstone>);
+  TTS_CONSTEXPR_EXPECT_NOT(constant_evaluates<convert_tombstone>);
+#endif
 };
 
 struct explicit_from_int

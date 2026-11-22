@@ -124,12 +124,12 @@ mm512_shuffle_i64x2_idx(std::array<std::ptrdiff_t, N> idxs)
   {
     auto upscaled = upscale_pattern(idxs);
     if( upscaled ) return mm512_shuffle_i64x2_idx(*upscaled);
-    else return none;
+    else return nullopt;
   }
   else
   {
-    if( idxs[0] >= 4 || idxs[1] >= 4 ) return none;
-    if( idxs[2] < 4 || idxs[3] < 4 ) return none;
+    if( idxs[0] >= 4 || idxs[1] >= 4 ) return nullopt;
+    if( idxs[2] < 4 || idxs[3] < 4 ) return nullopt;
     idxs[2] -= 4;
     idxs[3] -= 4;
     return idxs[0] | (idxs[1] << 2) | (idxs[2] << 4) | (idxs[3] << 6);
@@ -169,7 +169,7 @@ x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> repeated_part, std::ptrdiff_
   }
   else
   {
-    if( std::ssize(repeated_part) != 4 ) return none;
+    if( std::ssize(repeated_part) != 4 ) return nullopt;
 
     int res = 0;
 
@@ -181,11 +181,11 @@ x86_shuffle_ps_2(std::span<const std::ptrdiff_t, N> repeated_part, std::ptrdiff_
 
       if( i < 2 )
       {
-        if( idx >= reg_groups ) return none;
+        if( idx >= reg_groups ) return nullopt;
       }
       else
       {
-        if( idx < reg_groups ) return none;
+        if( idx < reg_groups ) return nullopt;
         idx -= reg_groups;
       }
 
@@ -228,12 +228,12 @@ x86_shuffle_pd_2(std::span<const std::ptrdiff_t> idxs, std::ptrdiff_t reg_groups
     std::ptrdiff_t a_pos = i;
     if( idxs[i] == a_pos ) { /*put 0 that's there*/ }
     else if ( idxs[i] == a_pos + 1 ) res = res | (1 << i);
-    else return none;
+    else return nullopt;
 
     std::ptrdiff_t b_pos = reg_groups + i;
     if (idxs[i + 1] == b_pos) { /*put 0 that's there*/ }
     else if (idxs[i + 1] == b_pos + 1 ) res = res | (1 << (i + 1));
-    else return none;
+    else return nullopt;
   }
   return res;
 }
