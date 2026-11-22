@@ -10,8 +10,8 @@
 #include <eve/arch/abi.hpp>
 #include <eve/module/core/regular/broadcast.hpp>
 #include <eve/module/core/regular/min.hpp>
+#include <eve/detail/optional.hpp>
 #include <eve/pattern.hpp>
-#include <optional>
 
 EVE_NAMESPACE::_
 {
@@ -51,8 +51,8 @@ inline constexpr auto is_broadcast_group = []()
   constexpr auto                                      result = _::find_broadcast_group<Sz>(p);
 
   if constexpr( result.group != -1 )
-    return std::optional {std::pair {lanes<result.group>, index<result.index>}};
-  else return std::optional<int> {};
+    return optional {std::pair {lanes<result.group>, index<result.index>}};
+  else return optional<int> {};
 }();
 
 template<simd_value Wide, std::ptrdiff_t Group, std::ptrdiff_t Index, std::ptrdiff_t Width>
