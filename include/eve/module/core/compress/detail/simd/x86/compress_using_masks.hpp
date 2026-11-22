@@ -42,13 +42,14 @@ EVE_NAMESPACE::_
     return res;
   }();
 
+  // cl /arch:AVX2: see compress_aligned_table, cl ignores alignas on variable templates.
   template <std::unsigned_integral T>
-  constexpr auto pattern_4_elements_dwords_v alignas(sizeof(T) * 4) =
-    pattern_4_elements(idxs_dwords<T>);
+  constexpr compress_aligned_table<decltype(pattern_4_elements(idxs_dwords<T>)), sizeof(T) * 4>
+    pattern_4_elements_dwords_v{pattern_4_elements(idxs_dwords<T>)};
 
   template <std::unsigned_integral T>
-  constexpr auto pattern_8_elements_dwords_v alignas(sizeof(T) * 8) =
-    pattern_8_elements(idxs_dwords<T>);
+  constexpr compress_aligned_table<decltype(pattern_8_elements(idxs_dwords<T>)), sizeof(T) * 8>
+    pattern_8_elements_dwords_v{pattern_8_elements(idxs_dwords<T>)};
 
   template <typename T, width_type N>
    wide<T, N> permvar8(wide<T, N> v, __m256i pattern)
