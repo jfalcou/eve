@@ -52,7 +52,6 @@ namespace eve::bench
     T* begin = buffer.data();
     T* end   = begin + size;
 
-    // Past what the branch predictor learns.
     constexpr std::size_t cases = 1 << 20;
 
     std::vector<T*> inside;
