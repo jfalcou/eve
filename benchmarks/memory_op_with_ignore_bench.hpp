@@ -9,10 +9,10 @@
 #define BENCHMARKS_MEMORY_OP_WITH_IGNORE_BENCH_HPP
 
 #include "nanobench.h"
+#include "unit/memory/page.hpp"
 
 #include <eve/as.hpp>
 #include <eve/conditional.hpp>
-#include <eve/memory/aligned_allocator.hpp>
 #include <eve/traits/element_type.hpp>
 #include <cstddef>
 #include <random>
@@ -100,11 +100,10 @@ namespace eve::bench
   {
     using T = eve::element_type_t<W>;
 
-    constexpr std::ptrdiff_t size = 4096 / sizeof(T);
-    std::vector<T, eve::aligned_allocator<T, size>> buffer(size, T{1});
+    guarded_test_page<T> page;
 
-    T* begin = buffer.data();
-    T* end   = begin + size;
+    T* begin = page.data();
+    T* end   = begin + page.size();
 
     constexpr std::size_t cases = 1 << 20;
 
