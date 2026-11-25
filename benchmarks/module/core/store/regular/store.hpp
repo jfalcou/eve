@@ -16,11 +16,12 @@ int main()
   w_t v{T{2}};
   ankerl::nanobench::doNotOptimizeAway(v);
 
-  eve::bench::memory_op_with_ignore_bench<T, w_t::size()>(
+  eve::bench::memory_op_with_ignore_bench(
     "store",
-    [v](auto const* c)
+    eve::as<w_t>{},
+    [v](T* ptr, eve::relative_conditional_expr auto ignore)
     {
-      eve::store[c->ignore](v, c->ptr);
-      ankerl::nanobench::doNotOptimizeAway(c->ptr);
+      eve::store[ignore](v, ptr);
+      ankerl::nanobench::doNotOptimizeAway(ptr);
     });
 }

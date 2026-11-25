@@ -10,8 +10,10 @@
 
 #include "nanobench.h"
 
+#include <eve/as.hpp>
 #include <eve/conditional.hpp>
 #include <eve/memory/aligned_allocator.hpp>
+#include <eve/traits/element_type.hpp>
 #include <cstddef>
 #include <random>
 #include <string>
@@ -45,9 +47,11 @@ namespace eve::bench
     return res;
   }
 
-  template<std::ptrdiff_t N, typename T>
-  auto ignore_case_groups(T* begin, T* end)
+  template<typename T, typename W>
+  auto ignore_case_groups(T* begin, T* end, eve::as<W>)
   {
+    constexpr std::ptrdiff_t N = W::size();
+
     std::vector<T*> inside;
     for( std::ptrdiff_t i = 0; i < N; ++i )
     {
@@ -91,9 +95,11 @@ namespace eve::bench
     return std::tuple{std::move(firsts), std::move(lasts), std::move(extremas)};
   }
 
-  template<typename T, std::ptrdiff_t N, typename Op>
-  void memory_op_with_ignore_bench(std::string const& name, Op op)
+  template<typename W, typename Op>
+  void memory_op_with_ignore_bench(std::string const& name, eve::as<W> tgt, Op op)
   {
+    using T = eve::element_type_t<W>;
+
     constexpr std::ptrdiff_t size = 4096 / sizeof(T);
     std::vector<T, eve::aligned_allocator<T, size>> buffer(size, T{1});
 
@@ -102,18 +108,23 @@ namespace eve::bench
 
     constexpr std::size_t cases = 1 << 20;
 
-    auto [firsts, lasts, extremas] = ignore_case_groups<N>(begin, end);
+    auto [firsts, lasts, extremas] = ignore_case_groups(begin, end, tgt);
 
     std::mt19937 g{42};
     auto fc = sample(firsts, cases, g);
     auto lc = sample(lasts, cases, g);
     auto ec = sample(extremas, cases, g);
 
+    // NOTE: we were considering benchmarking latency instead of
+    // throughput for these ops but most of the time CPU can execute
+    // the following code while load/store is happening, so that idea
+    // was dismissed.
+
     auto one = [&](auto const& list)
     {
       return [&, p = list.data()]
       {
-        for( std::size_t i = 0; i < cases; ++i ) op(p + i);
+        for( std::size_t i = 0; i < cases; ++i ) op(p[i].ptr, p[i].ignore);
       };
     };
 
@@ -121,9 +132,9 @@ namespace eve::bench
     {
       for( std::size_t i = 0; i < cases; ++i )
       {
-        op(f + i);
-        op(l + i);
-        op(e + i);
+        op(f[i].ptr, f[i].ignore);
+        op(l[i].ptr, l[i].ignore);
+        op(e[i].ptr, e[i].ignore);
       }
     };
 

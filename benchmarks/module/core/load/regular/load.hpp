@@ -15,10 +15,11 @@ int main()
   using T   = EVE_VALUE;
   using w_t = eve::wide<T>;
 
-  eve::bench::memory_op_with_ignore_bench<T, w_t::size()>(
+  eve::bench::memory_op_with_ignore_bench(
     "load",
-    [](auto const* c)
+    eve::as<w_t>{},
+    [](T* ptr, eve::relative_conditional_expr auto ignore)
     {
-      ankerl::nanobench::doNotOptimizeAway(eve::load[c->ignore](c->ptr, eve::as<w_t>{}));
+      ankerl::nanobench::doNotOptimizeAway(eve::load[ignore](ptr, eve::as<w_t>{}));
     });
 }
