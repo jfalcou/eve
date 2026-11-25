@@ -15,6 +15,8 @@
 #include <cstddef>
 #include <random>
 #include <string>
+#include <tuple>
+#include <utility>
 #include <vector>
 
 // Benchmarks a memory op on ptr + ignore, with pointers both inside a page and across its ends.
@@ -43,17 +45,9 @@ namespace eve::bench
     return res;
   }
 
-  template<typename T, std::ptrdiff_t N, typename Op>
-  void memory_op_with_ignore_bench(std::string const& name, Op op)
+  template<std::ptrdiff_t N, typename T>
+  auto ignore_case_groups(T* begin, T* end)
   {
-    constexpr std::ptrdiff_t size = 4096 / sizeof(T);
-    std::vector<T, eve::aligned_allocator<T, size>> buffer(size, T{1});
-
-    T* begin = buffer.data();
-    T* end   = begin + size;
-
-    constexpr std::size_t cases = 1 << 20;
-
     std::vector<T*> inside;
     for( std::ptrdiff_t i = 0; i < N; ++i )
     {
@@ -93,6 +87,22 @@ namespace eve::bench
         for( std::ptrdiff_t j = 1; j <= l; ++j ) e.push_back({end - N + j, eve::ignore_extrema(f, l)});
       }
     }
+
+    return std::tuple{std::move(firsts), std::move(lasts), std::move(extremas)};
+  }
+
+  template<typename T, std::ptrdiff_t N, typename Op>
+  void memory_op_with_ignore_bench(std::string const& name, Op op)
+  {
+    constexpr std::ptrdiff_t size = 4096 / sizeof(T);
+    std::vector<T, eve::aligned_allocator<T, size>> buffer(size, T{1});
+
+    T* begin = buffer.data();
+    T* end   = begin + size;
+
+    constexpr std::size_t cases = 1 << 20;
+
+    auto [firsts, lasts, extremas] = ignore_case_groups<N>(begin, end);
 
     std::mt19937 g{42};
     auto fc = sample(firsts, cases, g);
