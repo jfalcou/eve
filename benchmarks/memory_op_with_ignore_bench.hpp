@@ -5,139 +5,137 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#include <eve/module/core.hpp>
+#ifndef BENCHMARKS_MEMORY_OP_WITH_IGNORE_BENCH_HPP
+#define BENCHMARKS_MEMORY_OP_WITH_IGNORE_BENCH_HPP
+
+#include "nanobench.h"
+
+#include <eve/conditional.hpp>
 #include <eve/memory/aligned_allocator.hpp>
+#include <cstddef>
 #include <random>
+#include <string>
+#include <type_traits>
 #include <vector>
 
-// The cost of a partial load of a native register.
-// Loads come from pre-computed lists of {ptr, ignore} cases, one per kind of ignore. Every case is
-// drawn independently: first the ignore (uniformly), then a pointer valid for it (uniformly).
-// Pointers land at the beginning and the end of a 4kb page aligned buffer, or straddle it with the
-// out-of-page lanes ignored.
+// Operations run over pre-computed lists of {ptr, ignore} cases, one per kind of ignore. Every case
+// is drawn independently: first the ignore (uniformly), then a pointer valid for it (uniformly).
 // The lists are long enough for the branch predictor not to learn them.
 //
-// load[ignore]         : the overall number, one load of each kind per step
-// load[ignore_first]...: each kind on its own
-
-using T   = EVE_VALUE;
-using w_t = eve::wide<T>;
-
-template<typename C> struct load_case
+// op[ignore]         : the overall number, one operation of each kind per step
+// op[ignore_first]...: each kind on its own
+namespace eve::bench
 {
-  T const*  ptr;
-  C         ignore;
-};
-
-// This is not std::sample, because we want to select more elements out than there were on the input.
-// And repeating elements are fine.
-template<typename C>
-auto sample(std::vector<std::vector<load_case<C>>> const& groups, std::size_t n, std::mt19937& g)
-{
-  std::uniform_int_distribution<std::size_t> pick_group(0, groups.size() - 1);
-
-  std::vector<load_case<C>> res;
-  res.reserve(n);
-  while( res.size() < n )
+  template<typename T, typename C> struct ignore_case
   {
-    auto const& group = groups[pick_group(g)];
-    res.push_back(group[std::uniform_int_distribution<std::size_t>(0, group.size() - 1)(g)]);
-  }
-  return res;
-}
+    T*  ptr;
+    C   ignore;
+  };
 
-void run(ankerl::nanobench::Bench& b, T const* begin, T const* end, std::size_t cases)
-{
-  constexpr std::ptrdiff_t N = w_t::size();
-
-  // In page addresses: the first and the last N loadable positions.
-  std::vector<T const*> in_page;
-  for( std::ptrdiff_t i = 0; i < N; ++i )
+  // This is not std::sample, because we want to select more elements out than there were on the
+  // input. And repeating elements are fine.
+  template<typename T, typename C>
+  auto sample(std::vector<std::vector<ignore_case<T, C>>> const& groups, std::size_t n, std::mt19937& g)
   {
-    in_page.push_back(begin + i);
-    in_page.push_back(end - N - i);
-  }
+    std::uniform_int_distribution<std::size_t> pick_group(0, groups.size() - 1);
 
-  std::vector<std::vector<load_case<eve::ignore_first>>>   firsts;
-  std::vector<std::vector<load_case<eve::ignore_last>>>    lasts;
-  std::vector<std::vector<load_case<eve::ignore_extrema>>> extremas;
-
-  for( std::ptrdiff_t k = 0; k < N; ++k )
-  {
-    auto& f = firsts.emplace_back();
-    auto& l = lasts.emplace_back();
-
-    for( auto p : in_page )
+    std::vector<ignore_case<T, C>> res;
+    res.reserve(n);
+    while( res.size() < n )
     {
-      f.push_back({p, eve::ignore_first(k)});
-      l.push_back({p, eve::ignore_last(k)});
+      auto const& group = groups[pick_group(g)];
+      res.push_back(group[std::uniform_int_distribution<std::size_t>(0, group.size() - 1)(g)]);
+    }
+    return res;
+  }
+
+  template<typename T, std::ptrdiff_t N, typename Op>
+  void memory_op_with_ignore_bench(std::string const& name, Op op)
+  {
+    using V = std::remove_const_t<T>;
+
+    constexpr std::ptrdiff_t size = 4096 / sizeof(V);
+    std::vector<V, eve::aligned_allocator<V, size>> buffer(size, V{1});
+
+    T* begin = buffer.data();
+    T* end   = begin + size;
+
+    // Past what the branch predictor learns.
+    constexpr std::size_t cases = 1 << 20;
+
+    std::vector<T*> inside;
+    for( std::ptrdiff_t i = 0; i < N; ++i )
+    {
+      inside.push_back(begin + i);
+      inside.push_back(end - N - i);
     }
 
-    // Before the page / after the page, out of page lanes are ignored.
-    for( std::ptrdiff_t j = 1; j <= k; ++j )
+    std::vector<std::vector<ignore_case<T, eve::ignore_first>>>   firsts;
+    std::vector<std::vector<ignore_case<T, eve::ignore_last>>>    lasts;
+    std::vector<std::vector<ignore_case<T, eve::ignore_extrema>>> extremas;
+
+    for( std::ptrdiff_t k = 0; k < N; ++k )
     {
-      f.push_back({begin - j, eve::ignore_first(k)});
-      l.push_back({end - N + j, eve::ignore_last(k)});
+      auto& f = firsts.emplace_back();
+      auto& l = lasts.emplace_back();
+
+      for( auto p : inside )
+      {
+        f.push_back({p, eve::ignore_first(k)});
+        l.push_back({p, eve::ignore_last(k)});
+      }
+
+      for( std::ptrdiff_t j = 1; j <= k; ++j )
+      {
+        f.push_back({begin - j, eve::ignore_first(k)});
+        l.push_back({end - N + j, eve::ignore_last(k)});
+      }
     }
-  }
 
-  for( std::ptrdiff_t f = 0; f < N; ++f )
-  {
-    for( std::ptrdiff_t l = 0; f + l < N; ++l )
+    for( std::ptrdiff_t f = 0; f < N; ++f )
     {
-      auto& e = extremas.emplace_back();
-      for( auto p : in_page ) e.push_back({p, eve::ignore_extrema(f, l)});
-      for( std::ptrdiff_t j = 1; j <= f; ++j ) e.push_back({begin - j, eve::ignore_extrema(f, l)});
-      for( std::ptrdiff_t j = 1; j <= l; ++j ) e.push_back({end - N + j, eve::ignore_extrema(f, l)});
+      for( std::ptrdiff_t l = 0; f + l < N; ++l )
+      {
+        auto& e = extremas.emplace_back();
+        for( auto p : inside ) e.push_back({p, eve::ignore_extrema(f, l)});
+        for( std::ptrdiff_t j = 1; j <= f; ++j ) e.push_back({begin - j, eve::ignore_extrema(f, l)});
+        for( std::ptrdiff_t j = 1; j <= l; ++j ) e.push_back({end - N + j, eve::ignore_extrema(f, l)});
+      }
     }
-  }
 
-  std::mt19937 g{42};
-  auto fc = sample(firsts, cases, g);
-  auto lc = sample(lasts, cases, g);
-  auto ec = sample(extremas, cases, g);
+    std::mt19937 g{42};
+    auto fc = sample(firsts, cases, g);
+    auto lc = sample(lasts, cases, g);
+    auto ec = sample(extremas, cases, g);
 
-  // Raw pointers captured by copy: doNotOptimizeAway clobbers memory, going through the vectors
-  // would reload their data pointers on every load.
-  auto load = [](auto const* c) { return eve::load[c->ignore](c->ptr, eve::as<w_t>{}); };
-
-  auto one = [&](auto const& list)
-  {
-    return [&, p = list.data()]
+    // Raw pointers captured by copy: doNotOptimizeAway clobbers memory, going through the vectors
+    // would reload their data pointers on every operation.
+    auto one = [&](auto const& list)
     {
-      for( std::size_t i = 0; i < cases; ++i ) ankerl::nanobench::doNotOptimizeAway(load(p + i));
+      return [&, p = list.data()]
+      {
+        for( std::size_t i = 0; i < cases; ++i ) op(p + i);
+      };
     };
-  };
 
-  auto all = [&, f = fc.data(), l = lc.data(), e = ec.data()]
-  {
-    for( std::size_t i = 0; i < cases; ++i )
+    auto all = [&, f = fc.data(), l = lc.data(), e = ec.data()]
     {
-      ankerl::nanobench::doNotOptimizeAway(load(f + i));
-      ankerl::nanobench::doNotOptimizeAway(load(l + i));
-      ankerl::nanobench::doNotOptimizeAway(load(e + i));
-    }
-  };
+      for( std::size_t i = 0; i < cases; ++i )
+      {
+        op(f + i);
+        op(l + i);
+        op(e + i);
+      }
+    };
 
-  b.batch(3 * cases).run("load[ignore]", all);
-  b.batch(cases).run("load[ignore_first]", one(fc));
-  b.batch(cases).run("load[ignore_last]", one(lc));
-  b.batch(cases).run("load[ignore_extrema]", one(ec));
+    ankerl::nanobench::Bench b;
+    b.unit(name).minEpochIterations(10).performanceCounters(true);
+
+    b.batch(3 * cases).run(name + "[ignore]", all);
+    b.batch(cases).run(name + "[ignore_first]", one(fc));
+    b.batch(cases).run(name + "[ignore_last]", one(lc));
+    b.batch(cases).run(name + "[ignore_extrema]", one(ec));
+  }
 }
 
-int main()
-{
-  constexpr std::ptrdiff_t page_n = 4096 / sizeof(T);
-  std::vector<T, eve::aligned_allocator<T, page_n>> page(page_n, T{1});
-
-  T const* begin = page.data();
-  T const* end   = page.data() + page_n;
-
-  // Past what the branch predictor learns.
-  constexpr std::size_t cases = 1 << 20;
-
-  ankerl::nanobench::Bench b;
-  b.unit("load").minEpochIterations(10).performanceCounters(true);
-
-  run(b, begin, end, cases);
-}
+#endif

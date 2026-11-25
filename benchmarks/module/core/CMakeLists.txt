@@ -146,6 +146,7 @@ make_all_benchs(ROOT bench.core NAME shr                   TYPES ${integral_type
 make_all_benchs(ROOT bench.core NAME sqr                   TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME sqr_abs               TYPES ${real_types}    )
 make_all_benchs(ROOT bench.core NAME sqrt                  TYPES ${real_types}    )
+make_all_benchs(ROOT bench.core NAME store                 TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME sub                   TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME trunc                 TYPES ${all_types}     )
 make_all_benchs(ROOT bench.core NAME ulpdist               TYPES ${all_types}     )
