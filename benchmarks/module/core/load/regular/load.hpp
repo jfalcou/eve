@@ -15,7 +15,7 @@ int main()
   using T   = EVE_VALUE;
   using w_t = eve::wide<T>;
 
-  eve::bench::memory_op_with_ignore_bench<T const, w_t::size()>(
+  eve::bench::memory_op_with_ignore_bench<T, w_t::size()>(
     "load",
     [](auto const* c)
     {

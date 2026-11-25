@@ -15,7 +15,6 @@
 #include <cstddef>
 #include <random>
 #include <string>
-#include <type_traits>
 #include <vector>
 
 // Benchmarks a memory op on ptr + ignore, with pointers both inside a page and across its ends.
@@ -47,10 +46,8 @@ namespace eve::bench
   template<typename T, std::ptrdiff_t N, typename Op>
   void memory_op_with_ignore_bench(std::string const& name, Op op)
   {
-    using V = std::remove_const_t<T>;
-
-    constexpr std::ptrdiff_t size = 4096 / sizeof(V);
-    std::vector<V, eve::aligned_allocator<V, size>> buffer(size, V{1});
+    constexpr std::ptrdiff_t size = 4096 / sizeof(T);
+    std::vector<T, eve::aligned_allocator<T, size>> buffer(size, T{1});
 
     T* begin = buffer.data();
     T* end   = begin + size;
