@@ -41,10 +41,10 @@ EVE_NAMESPACE::_
     {
       std::array<element_type_t<Wide>, Wide::size()> values;
 
-      values[0] = translate(*ptr);
+      values[0] = *ptr;
       for(std::size_t i = 1; i < Wide::size(); ++i)
       {
-        values[i] = translate(*(ptr = std::next(ptr)));
+        values[i] = *(ptr = std::next(ptr));
       }
 
       return Wide(values[I]...);
@@ -75,7 +75,7 @@ EVE_NAMESPACE::_
         for (std::ptrdiff_t i = begin + 1; i < end; ++i)
         {
           ++ptr;
-          res.set(i, translate(*ptr));
+          res.set(i, *ptr);
         }
       }
 
@@ -323,19 +323,86 @@ EVE_NAMESPACE::_
     }
   }
 
+  /*
+   * # All the considerations for load distribution.
+   *
+   * ## Always empty
+   * ignore_all
+   *
+   * ## Custom loads.
+   * Calling the custom overloads for a data source.
+   *
+   * ## non ptr data sources
+   * contiguous iterators - becomes ptr
+   * non contiguous iterators - piecewise_load
+   *
+   * ## Translation.
+   * The types that have equivalents (like enums or custom types)
+   * are translated immediately.
+   *
+   * ## Bundles.
+   * Distributing bundles we consider always optimal.
+   * Ofc there are some checks on ignore but we assume the compiler can
+   * merge those in an optimal way.
+   *
+   * ## Logicals.
+   * The wide logicals are immediately casted to the relevant bits types.
+   * The non wide logicals: do the alternative mapping themselves
+   *                        (we believe that's reasonable).
+   *                        Then we load the bits without alternatives.
+   *
+   * ## Type casting
+   * Casting everything to unsigned numbers.
+   *
+   * ## Asan with unsafe mode
+   * Custom loop with disable sanitizers
+   *
+   * ## Asan without unsafe mode or emulated
+   * memcpy
+   *
+   * ## Aligned pointer, with ignore
+   * for non-empty - just unsafe load.
+   * otherwise cmov for pointer + unsafe load
+   *
+   * ## wide, len = 1, never empty
+   * just load
+   *
+   * ## Aggregate, no ignore
+   * split
+   *
+   * ## wide, len = 1
+   * cmov pointer, load
+   *
+   * ## ignore, mask load supported
+   * in the platform specific code - convert ignore to logical.
+   * aggregate over the resulting mask if necessary.
+   *
+   * ## ignore, mask load not supported
+   * Do the load windowed.
+   *
+   * ## no ignore
+   * platform load
+   */
   template<callable_options O, _::data_source DS, typename Wide>
-   Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
+  Wide load_(EVE_REQUIRES(cpu_), O const& opts, DS src, as<Wide> tgt) noexcept
   {
     using C = rbr::result::fetch_t<condition_key, O>;
     [[maybe_unused]] auto cx = opts[condition_key];
 
-    if constexpr (translatable_ptr<DS>)
-    {
-      return load.behavior(cpu_{}, opts, translate_ptr(src), tgt);
-    }
-    else if constexpr (requires { src.load(opts, tgt); })
+    if constexpr (requires { src.load(opts, tgt); })
     {
       return src.load(opts, tgt);
+    }
+    else if constexpr (translatable_ptr<DS>)
+    {
+      auto const new_c = map_alternative(cx, [](auto alt) { return translate(alt); });
+      return bit_cast(load[opts][new_c](translate_ptr(src), translate(tgt)), tgt);
+    }
+    else if constexpr (Wide::size() == 1 && !C::is_complete)
+    {
+      if constexpr (_::is_never_empty<C>) cx.check_not_empty(tgt);
+      else if (cx.count(tgt) == 0) return _::alternative(cx, Wide {}, tgt);
+      return load(src, tgt);
     }
     else if constexpr (std::input_iterator<DS> && !_::scalar_pointer<DS>)
     {
