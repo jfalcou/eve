@@ -32,7 +32,7 @@ EVE_NAMESPACE::_
     {
       store[cx](value, dst.get());
     }
-    else if constexpr (std::same_as<C, ignore_none_>)
+    else if constexpr (C::is_complete && C::is_inverted)
     {
       if constexpr (emulated_abi<T>)
       {
@@ -91,7 +91,7 @@ EVE_NAMESPACE::_
     }
     else if constexpr (eve::product_type<T>)
     {
-      if constexpr (std::same_as<C, ignore_none_>)
+      if constexpr (C::is_complete && C::is_inverted)
       {
         kumi::for_each([](auto v, auto p) { store(v, p); }, value, dst);
       }

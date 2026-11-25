@@ -20,7 +20,7 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N>
  void store_impl(neon128_, C const& cx, wide<T, N> value, T *ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (!std::same_as<C, ignore_none_>)
+  if constexpr (!(C::is_complete && C::is_inverted))
   {
     store_common(cpu_{}, cx, value, ptr);
   }
@@ -64,7 +64,7 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N, t
  void store_impl(neon128_, C const& cx, wide<T, N> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, N>>
 {
-  if constexpr (!std::same_as<C, ignore_none_>)
+  if constexpr (!(C::is_complete && C::is_inverted))
   {
     store_common(cpu_{}, cx, value, ptr);
   }
@@ -107,8 +107,8 @@ template<relative_conditional_expr C, arithmetic_scalar_value T, width_type S, w
  void store_impl(neon128_, C const& cx, wide<T, S> value, aligned_ptr<T, Lanes> ptr) noexcept
   requires arm_abi<abi_t<T, S>>
 {
-  if constexpr (std::same_as<C, ignore_none_>) store[cx](value, ptr.get());
-  else                                         store_common(cpu_{}, cx, value, ptr);
+  if constexpr (C::is_complete && C::is_inverted) store[cx](value, ptr.get());
+  else                                              store_common(cpu_{}, cx, value, ptr);
 }
 #endif
 }
