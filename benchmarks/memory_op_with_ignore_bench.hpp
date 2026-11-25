@@ -18,12 +18,7 @@
 #include <type_traits>
 #include <vector>
 
-// Operations run over pre-computed lists of {ptr, ignore} cases, one per kind of ignore. Every case
-// is drawn independently: first the ignore (uniformly), then a pointer valid for it (uniformly).
-// The lists are long enough for the branch predictor not to learn them.
-//
-// op[ignore]         : the overall number, one operation of each kind per step
-// op[ignore_first]...: each kind on its own
+// Benchmarks a memory op on ptr + ignore, with pointers both inside a page and across its ends.
 namespace eve::bench
 {
   template<typename T, typename C> struct ignore_case
