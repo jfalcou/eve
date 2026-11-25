@@ -99,8 +99,6 @@ namespace eve::bench
     auto lc = sample(lasts, cases, g);
     auto ec = sample(extremas, cases, g);
 
-    // Raw pointers captured by copy: doNotOptimizeAway clobbers memory, going through the vectors
-    // would reload their data pointers on every operation.
     auto one = [&](auto const& list)
     {
       return [&, p = list.data()]
