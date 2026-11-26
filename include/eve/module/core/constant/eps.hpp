@@ -58,13 +58,13 @@ EVE_NAMESPACE
 //!
 //!   **Return value**
 //!
-//!   The call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise), the smallest
-//!   positive value `x` of the type such that `1+x !=  x`.
+//!   The call `eve::eps(as<T>())` returns [elementwise](@ref glossary_elementwise) the difference
+//!   between 1 and the least value greater than 1 of the type.
 //!
 //!   * If T is an [integral value](@ref eve::integral_value) the elements returned are equal to one.
 //!   * If T is a  [floating value](@ref eve::floating_value) the elements returned are equal to:
-//!     * 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is `float`.
-//!     * 1.1920929e-07f        if the [elements type](@ref eve::element_type) is `double`.
+//!     * 1.1920929e-07f        if the [elements type](@ref eve::element_type) is `float`.
+//!     * 2.220446049250313e-16 if the [elements type](@ref eve::element_type) is `double`.
 //!
 //!   @groupheader{Example}
 //!
