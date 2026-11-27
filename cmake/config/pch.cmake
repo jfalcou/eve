@@ -8,7 +8,8 @@
 ## Setup PCH
 ##==================================================================================================
 file(WRITE "${PROJECT_BINARY_DIR}/doc_pch.cpp" "int main() {}\n" )
-file(TOUCH "${PROJECT_BINARY_DIR}/test_pch.cpp" )
+## clang-cl with EVE_USE_PCH: main() is no longer in the precompiled header (see test/test.hpp)
+file(WRITE "${PROJECT_BINARY_DIR}/test_pch.cpp" "int main() {}\n" )
 
 ## Let warnings come out even when PCH is setup
 set(CMAKE_PCH_PROLOGUE "")
@@ -53,8 +54,8 @@ set_target_properties ( test_pch_aggregated PROPERTIES
                         ${MAKE_UNIT_TARGET_PROPERTIES}
                       )
 
-target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/test/test.hpp")
-target_precompile_headers(test_pch_aggregated PRIVATE "${PROJECT_SOURCE_DIR}/test/test.hpp")
+target_precompile_headers(test_pch PRIVATE "${PROJECT_SOURCE_DIR}/test/test_pch.hpp")
+target_precompile_headers(test_pch_aggregated PRIVATE "${PROJECT_SOURCE_DIR}/test/test_pch.hpp")
 
 target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/wide.hpp")
 target_precompile_headers(doc_pch PRIVATE "${PROJECT_SOURCE_DIR}/include/eve/logical.hpp")

@@ -12,8 +12,12 @@
 #include <cstddef>
 #include <bit>
 
-#if defined(SPY_COMPILER_IS_MSVC)
+// clang-cl: ~110 unit tests (e.g. unit.algo.*) failed to compile: no std::aligned_alloc in the
+// Windows CRT, and the _aligned_malloc branch was only taken for SPY_COMPILER_IS_MSVC.
+#if defined(_WIN32)
 #include <malloc.h>
+#else
+#include <cstdlib>
 #endif
 
 EVE_NAMESPACE
@@ -75,7 +79,7 @@ EVE_NAMESPACE
       if (a < 8U) a = 8U;
       auto sz = align(n, over{a});
 
-      #if defined(SPY_COMPILER_IS_MSVC)
+      #if defined(_WIN32)
       return  _aligned_malloc(sz,a);
       #else
 
@@ -93,7 +97,7 @@ EVE_NAMESPACE
     {
       if(!ptr) return;
 
-      #if defined(SPY_COMPILER_IS_MSVC)
+      #if defined(_WIN32)
       _aligned_free(ptr);
       #else
       std::free(ptr);

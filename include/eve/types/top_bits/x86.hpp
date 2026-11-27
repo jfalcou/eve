@@ -9,8 +9,11 @@
 
 EVE_NAMESPACE
 {
+// clang-cl -march=skylake-avx512: unit.core.any/all/none, unit.memory.load.aligned.logical_if, ...
+// failed to compile: logical<wide<float16_t>> with an emulated _Float16 (always on MSVC/clang-cl) is
+// no mask register but took this specialization. The generic top_bits handles emulated logicals.
 template<logical_simd_value Logical>
-requires(current_api >= avx512 && !aggregated_abi<Logical>) struct top_bits<Logical>
+requires(current_api >= avx512 && !aggregated_abi<Logical> && !emulated_abi<Logical>) struct top_bits<Logical>
 {
   using logical_type = Logical;
   using scalar_type  = typename as_arithmetic_t<logical_type>::value_type;
@@ -134,7 +137,7 @@ requires(current_api >= avx512 && !aggregated_abi<Logical>) struct top_bits<Logi
 
   EVE_ABI friend std::ostream&
   operator<<(std::ostream& o,
-             top_bits      x) requires(current_api >= avx512 && !aggregated_abi<Logical>)
+             top_bits      x) requires(current_api >= avx512 && !aggregated_abi<Logical> && !emulated_abi<Logical>)
   {
     return o << x.storage.storage();
   }

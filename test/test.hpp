@@ -5,9 +5,14 @@
   SPDX-License-Identifier: BSL-1.0
 */
 //==================================================================================================
-#pragma once
+// clang-cl with EVE_USE_PCH: test_pch.exe and every test failed to link, main and eve_entry_point
+// defined twice: a /Yc PCH object holds them and clang-cl's /Yu TUs emit them again (cl's don't).
+// The driver is inline, main() is after this guard and out of the PCH (test_pch.hpp).
+#ifndef EVE_TEST_HPP_INCLUDED
+#define EVE_TEST_HPP_INCLUDED
+
 #define TTS_MAIN
-#define TTS_CUSTOM_DRIVER_FUNCTION eve_entry_point
+#define TTS_CUSTOM_DRIVER_FUNCTION inline eve_entry_point
 
 //==================================================================================================
 // EVE Specific testing overloads
@@ -606,35 +611,6 @@ namespace tts
   };
 }
 
-//==================================================================================================
-// EVE TTS Entrypoint
-//==================================================================================================
-#include <iostream>
-
-int main(int argc, char const **argv)
-{
-  ::tts::initialize(argc,argv);
-  auto seed = ::tts::random_seed(18102008);
-#if defined(EVE_DISABLE_ASSERTS)
-  constexpr auto assert_status = "Disabled";
-#else
-  constexpr auto assert_status = "Enabled";
-#endif
-
-  constexpr auto fp16_status = eve::_::supports_fp16_vector_ops ? "Full" :
-                              (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
-
-  std::cout << "[EVE] - Target: " << eve::current_api
-            << " - ABI: "         << eve::current_abi_namespace
-            << " - Assertions: "  << assert_status
-            << " - FP16: "        << fp16_status
-            << " - PRNG Seed: "   << seed
-            << std::endl;
-
-  eve_entry_point(argc, argv);
-  return tts::report(0,0);
-}
-
 namespace tts
 {
 
@@ -666,3 +642,55 @@ namespace tts
       return d;
   }
 }
+
+#include <iostream>
+
+#endif
+
+//==================================================================================================
+// EVE TTS Entrypoint
+//==================================================================================================
+#if !defined(EVE_TEST_BUILDING_PCH) && !defined(EVE_TEST_HPP_MAIN_DEFINED)
+#define EVE_TEST_HPP_MAIN_DEFINED
+
+#if defined(_MSC_VER)
+#include <crtdbg.h>
+#include <stdlib.h>
+#endif
+
+int main(int argc, char const **argv)
+{
+#if defined(_MSC_VER)
+  // cl/clang-cl Debug: a test hitting abort(), an assert or an /RTC check popped a modal CRT dialog
+  // and hung until clicked, with the message only in the dialog. Report on stderr instead.
+  _set_abort_behavior(0, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);
+  _CrtSetReportMode(_CRT_WARN,   _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_WARN,   _CRTDBG_FILE_STDERR);
+  _CrtSetReportMode(_CRT_ERROR,  _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_ERROR,  _CRTDBG_FILE_STDERR);
+  _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+  _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+#endif
+  ::tts::initialize(argc,argv);
+  auto seed = ::tts::random_seed(18102008);
+#if defined(EVE_DISABLE_ASSERTS)
+  constexpr auto assert_status = "Disabled";
+#else
+  constexpr auto assert_status = "Enabled";
+#endif
+
+  constexpr auto fp16_status = eve::_::supports_fp16_vector_ops ? "Full" :
+                              (eve::_::supports_fp16_vector_conversion ? "Conversion" : "Emulated");
+
+  std::cout << "[EVE] - Target: " << eve::current_api
+            << " - ABI: "         << eve::current_abi_namespace
+            << " - Assertions: "  << assert_status
+            << " - FP16: "        << fp16_status
+            << " - PRNG Seed: "   << seed
+            << std::endl;
+
+  eve_entry_point(argc, argv);
+  return tts::report(0,0);
+}
+
+#endif

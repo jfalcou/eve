@@ -137,6 +137,11 @@ EVE_NAMESPACE::_
     {
       return std::fma(a, b, -c);
     }
+    // clang-cl -mavx -mf16c: unit.core.fsm failed by 1 ULP: same double rounding as in fma.
+    else if constexpr (fp16_should_apply<T>)
+    {
+      return apply_fp16_as_fp32(fms[o], a, b, c);
+    }
     else if constexpr (simd_value<T> || floating_scalar_value<T>)
     {
       return a * b - c;

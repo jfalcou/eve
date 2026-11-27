@@ -82,7 +82,8 @@ EVE_NAMESPACE::_
           case 0b101: { count = 2; v = shuffle(v,pattern<0, 2, 3, 0>); break; }
           case 0b110: { count = 2; v = shuffle(v,pattern<1, 2, 3, 0>); break; }
           case 0b111: { count = 3;                                     break; }
-          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
+          // clang-cl: nothing failed, but SPY_COMPILER_IS_CLANG is not defined for it (same below).
+          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_CLANGCL) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
           #endif
         }
@@ -110,7 +111,7 @@ EVE_NAMESPACE::_
           case 0b101: { count1 = 2; v = shuffle(v,pattern<0, 2, 3, 0, 4, 5, 6, 7>); break; }
           case 0b110: { count1 = 2; v = shuffle(v,pattern<1, 2, 3, 0, 4, 5, 6, 7>); break; }
           case 0b111: { count1 = 3;                                         break; }
-          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
+          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_CLANGCL) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
           #endif
         }
@@ -123,7 +124,7 @@ EVE_NAMESPACE::_
           case 0b101'0000: { count2 = 2; v = shuffle(v,pattern<0, 1, 2, 3, 4, 6, 7, 7>); break; }
           case 0b110'0000: { count2 = 2; v = shuffle(v,pattern<0, 1, 2, 3, 5, 6, 7, 7>); break; }
           case 0b111'0000: { count2 = 3;                                         break; }
-          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_GCC)
+          #if defined(SPY_COMPILER_IS_CLANG) or defined(SPY_COMPILER_IS_CLANGCL) or defined(SPY_COMPILER_IS_GCC)
           default: __builtin_unreachable();
           #endif
         }

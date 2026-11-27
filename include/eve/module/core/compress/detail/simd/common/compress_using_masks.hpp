@@ -104,13 +104,19 @@ EVE_NAMESPACE::_
     return res;
   }();
 
-  template <std::unsigned_integral T>
-  constexpr auto pattern_4_elements_bytes_v alignas(sizeof(T) * 4) =
-    pattern_4_elements(idxs_bytes<T>);
+  // cl /arch:AVX2: unit.api.compress.*, unit.algo.algorithm.copy_if/remove/..., doc.core.compress
+  // aborted on is_aligned in as_aligned: cl ignores alignas on a variable template, the tables were
+  // only 16-byte aligned. The alignment is carried by the table's type instead.
+  template <typename Table, std::size_t Align>
+  struct alignas(Align) compress_aligned_table : Table {};
 
   template <std::unsigned_integral T>
-  constexpr auto pattern_8_elements_bytes_v alignas(sizeof(T) * 8) =
-    pattern_8_elements(idxs_bytes<T>);
+  constexpr compress_aligned_table<decltype(pattern_4_elements(idxs_bytes<T>)), sizeof(T) * 4>
+    pattern_4_elements_bytes_v{pattern_4_elements(idxs_bytes<T>)};
+
+  template <std::unsigned_integral T>
+  constexpr compress_aligned_table<decltype(pattern_8_elements(idxs_bytes<T>)), sizeof(T) * 8>
+    pattern_8_elements_bytes_v{pattern_8_elements(idxs_bytes<T>)};
 
   struct compress_using_masks_shuffle_recurse
   {

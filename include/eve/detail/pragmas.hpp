@@ -17,7 +17,8 @@
 
 #  define EVE_RESTORE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA _Pragma("GCC diagnostic pop")
 
-#elif defined(SPY_COMPILER_IS_CLANG)
+// clang-cl: nothing failed, but SPY_COMPILER_IS_CLANG is not defined for it, so it got no pragmas.
+#elif defined(SPY_COMPILER_IS_CLANG) || defined(SPY_COMPILER_IS_CLANGCL)
 
 #  define EVE_ALLOW_UNINITIALIZED_VARIABLES_PRAGMA                                                 \
     _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wuninitialized\"")

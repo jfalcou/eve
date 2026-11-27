@@ -24,6 +24,12 @@ namespace
   constexpr bool incomplete_avx512 = false;
 #endif
 
+#if defined(SPY_SIMD_IS_X86)
+  constexpr bool is_x86        = true;
+#else
+  constexpr bool is_x86        = false;
+#endif
+
 #if defined(EVE_DISABLE_ASSERTS)
   constexpr bool asserts       = false;
 #else
@@ -66,6 +72,9 @@ namespace
     else if constexpr( current_api == undefined_simd && !has_fma && !no_fp16 && !fp16_cvt       ) return asserts ? "BA" : "AA";
     else if constexpr( current_api == sse2     && !has_fma && !no_fp16 && !fp16_cvt             ) return asserts ? "DA" : "CA";
     else if constexpr( current_api == sse2     && !has_fma &&  no_fp16                          ) return asserts ? "DY" : "CY";
+    // clang-cl -msse4.2/-mavx/-mavx2/-march=skylake-avx512: unit.config.abi_namespace failed (abi_LY
+    // vs abi_L): no native _Float16 on MSVC/clang-cl, and the rows below assume one.
+    else if constexpr( is_x86 && no_fp16                                                     ) return {};
     else if constexpr( current_api == sse4_2   && !has_fma && !fp16_cvt                         ) return asserts ? "LA" : "KA";
     else if constexpr( current_api == avx      && !has_fma && !fp16_cvt                         ) return asserts ? "NA" : "MA";
     else if constexpr( current_api == avx      && !has_fma &&  fp16_cvt                         ) return asserts ? "NE" : "ME";

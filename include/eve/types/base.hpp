@@ -24,7 +24,10 @@ EVE_NAMESPACE::_
   //!
   //! @tparam Storage Architecture-specific SIMD register type to store
   //================================================================================================
-  template<typename Storage> struct wide_storage
+  // clang-cl: 53 unit tests crashed (e.g. unit.core.logical_and, movaps access violation): the MS
+  // STL declares std::array under #pragma pack(8) and clang-cl, unlike cl, lets it lower the
+  // alignment of a template wrapping __m128. The explicit alignas can't be lowered.
+  template<typename Storage> struct alignas(alignof(Storage)) wide_storage
   {
     using storage_type = Storage;
 

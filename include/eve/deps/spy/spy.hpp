@@ -924,7 +924,9 @@ namespace spy::supports
 #endif
 namespace spy::supports
 {
-#if defined(__FMA__)
+// cl /arch:AVX512: unit.core.fma/fms/fnms/fam/fsm/fsnm failed by 1 ULP: cl never defines __FMA__ although
+// /arch:AVX2 and above enable FMA3, so eve's plain fma wasn't fused while the AVX-512 masked one was.
+#if defined(__FMA__) || (defined(_MSC_VER) && !defined(__clang__) && defined(__AVX2__))
 #define SPY_SIMD_SUPPORTS_FMA
   constexpr inline auto fma_ = true;
 #else

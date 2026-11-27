@@ -434,8 +434,17 @@ namespace kumi::_
     }
     KUMI_HIDDEN_ABI constexpr T const& operator()(inner_type) const& noexcept { return value; }
   };
+  // cl 19.52: unit.math.sind, unit.special.dawson, unit.bessel.*, ... gave wrong values: cl puts an
+  // empty base inside the last byte of the element before it, and initializing it from a temporary
+  // (kumi::tuple{w, kumi::tuple<>{}} in chunked_reverse_horner) stores that byte. With cl, empty
+  // elements are stored as members instead.
+#if defined(KUMI_FRONTEND_MSVC)
+  inline constexpr bool empty_as_base = false;
+#else
+  inline constexpr bool empty_as_base = true;
+#endif
   template<std::size_t N, typename T>
-  requires(std::is_empty_v<T> && (!std::is_final_v<T>) && (!kumi::_::field<T>))
+  requires(empty_as_base && std::is_empty_v<T> && (!std::is_final_v<T>) && (!kumi::_::field<T>))
   struct leaf<N, T> : std::remove_cvref_t<T>
   {
     using base = std::remove_cvref_t<T>;
