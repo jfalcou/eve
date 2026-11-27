@@ -7,7 +7,7 @@ var searchData=
   ['deallocate_4',['deallocate',['../structeve_1_1aligned__allocator.html#af60ee2a91559c5158a13ab8b81f3b2f9',1,'eve::aligned_allocator']]],
   ['dec_5',['dec',['../group__eve__core__arithmetic.html#ga44e2186aecde5f17445b39043094d85d',1,'eve']]],
   ['decisions_6',['Design Decisions',['../design_rationale.html',1,'']]],
-  ['declval_7',['declval',['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga0ed1f5a6ee3ac66decf465ae8112b3d8',1,'kumi::declval'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga0ed1f5a6ee3ac66decf465ae8112b3d8',1,'kumi::declval']]],
+  ['declval_7',['declval',['https://jfalcou.github.io/kumi/group__kumi__utility.html#gaeb8631f5a745442b660b4b3776773e69',1,'kumi::declval'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#gaeb8631f5a745442b660b4b3776773e69',1,'kumi::declval']]],
   ['decorated_5fwith_8',['decorated_with',['../structeve_1_1decorated__with.html',1,'eve']]],
   ['decorated_5fwith_3c_20options_2c_20options_2e_2e_2e_20_3e_9',['decorated_with&lt; Options, Options... &gt;',['../structeve_1_1decorated__with.html',1,'eve']]],
   ['decorated_5fwith_3c_20optionsvalues_2c_20options_2e_2e_2e_20_3e_10',['decorated_with&lt; OptionsValues, Options... &gt;',['../structeve_1_1decorated__with.html',1,'eve']]],

@@ -456,12 +456,12 @@ Variables</h2></td></tr>
 <li><span class="tt">x</span> : <a class="el" href="structeve_1_1as.html" title="eve::as">Type wrapper</a> instance embedding the type of the constant.</li>
 </ul>
 <p><b>Return value</b></p>
-<p>The call <span class="tt"><a class="el" href="#ga3a08ea3bf1e679ed4ef0576ddffff08a" title="Computes a constant to the machine epsilon.">eve::eps</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;())</span> returns <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a>, the smallest positive value <span class="tt">x</span> of the type such that <span class="tt">1+x !=  x</span>.</p>
+<p>The call <span class="tt"><a class="el" href="#ga3a08ea3bf1e679ed4ef0576ddffff08a" title="Computes a constant to the machine epsilon.">eve::eps</a>(<a class="el" href="structeve_1_1as.html" title="Lightweight type-wrapper.">as</a>&lt;T&gt;())</span> returns <a class="el" href="glossary_semantic.html#glossary_elementwise" title="Element-wise Operations">elementwise</a> the difference between 1 and the least value greater than 1 of the type.</p>
 <ul>
 <li>If T is an <a class="el" href="concepteve_1_1integral__value.html" title="eve::integral_value">integral value</a> the elements returned are equal to one.</li>
 <li>If T is a <a class="el" href="concepteve_1_1floating__value.html" title="eve::floating_value">floating value</a> the elements returned are equal to:<ul>
-<li>2.220446049250313e-16 if the <a class="el" href="structeve_1_1element__type.html" title="eve::element_type">elements type</a> is <span class="tt">float</span>.</li>
-<li>1.1920929e-07f if the <a class="el" href="structeve_1_1element__type.html" title="eve::element_type">elements type</a> is <span class="tt">double</span>.</li>
+<li>1.1920929e-07f if the <a class="el" href="structeve_1_1element__type.html" title="eve::element_type">elements type</a> is <span class="tt">float</span>.</li>
+<li>2.220446049250313e-16 if the <a class="el" href="structeve_1_1element__type.html" title="eve::element_type">elements type</a> is <span class="tt">double</span>.</li>
 </ul>
 </li>
 </ul>

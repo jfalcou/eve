@@ -2,7 +2,7 @@ var searchData=
 [
   ['dawson_0',['dawson',['../group__eve__special.html#ga984ab215f62e9bed040c35776a18eeac',1,'eve']]],
   ['dec_1',['dec',['../group__eve__core__arithmetic.html#ga44e2186aecde5f17445b39043094d85d',1,'eve']]],
-  ['declval_2',['declval',['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga0ed1f5a6ee3ac66decf465ae8112b3d8',1,'kumi::declval'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#ga0ed1f5a6ee3ac66decf465ae8112b3d8',1,'kumi::declval']]],
+  ['declval_2',['declval',['https://jfalcou.github.io/kumi/group__kumi__utility.html#gaeb8631f5a745442b660b4b3776773e69',1,'kumi::declval'],['https://jfalcou.github.io/kumi/group__kumi__utility.html#gaeb8631f5a745442b660b4b3776773e69',1,'kumi::declval']]],
   ['default_5fsimple_5falgo_5ftraits_3',['default_simple_algo_traits',['../group__eve__algo__default__simple__algo__traits.html#ga2eb997889def73db09be52b0d1017e6f',1,'eve::algo']]],
   ['default_5fto_4',['default_to',['../group__eve__algo__traits__dev.html#gace8bf101c25120711e9c36550ae00536',1,'eve::algo']]],
   ['definitely_5',['definitely',['../group__eve__core__decorators.html#ga97e01b7ed09173dbb06a6dcab0033177',1,'eve']]],
