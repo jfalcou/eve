@@ -89,7 +89,7 @@ EVE_NAMESPACE
   //================================================================================================
 
   template<typename Options>
-  struct store_t : relative_conditional_callable<store_t, Options>
+  struct store_t : relative_conditional_advance_callable<store_t, Options>
   {
     template<arithmetic_simd_value T, writable_simd_compatible_ptr<T> Ptr>
     EVE_ABI void operator()(T value, Ptr ptr) const noexcept

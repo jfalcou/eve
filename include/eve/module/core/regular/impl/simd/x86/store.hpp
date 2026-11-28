@@ -37,7 +37,7 @@ template<relative_conditional_expr C, scalar_value T,
       store[newcond](b, np { (std::uint16_t*) ptr.get() });
     }
   }
-  else if constexpr (std::same_as<C, ignore_none_>)
+  else if constexpr (C::is_complete && C::is_inverted)
   {
     if constexpr( !std::is_pointer_v<Ptr> )
     {

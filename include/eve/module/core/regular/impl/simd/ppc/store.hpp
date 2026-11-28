@@ -16,7 +16,7 @@ template<relative_conditional_expr C, scalar_value T, width_type N, simd_compati
  void store_impl(vmx_, C const& cx, wide<T, N> const& value, Ptr ptr) noexcept
   requires ppc_abi<abi_t<T, N>> && (!has_store_equivalent<wide<T, N>, Ptr>)
 {
-  if constexpr (!std::same_as<C, ignore_none_>)
+  if constexpr (!(C::is_complete && C::is_inverted))
   {
     store_common(cpu_{}, cx, value, ptr);
   }
