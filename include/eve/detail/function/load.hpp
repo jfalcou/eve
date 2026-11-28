@@ -21,27 +21,27 @@ EVE_NAMESPACE
     template<_::data_source Ptr>
     EVE_ABI wide_value_type_t<Ptr> operator()(Ptr ptr) const noexcept
     {
-      return EVE_DISPATCH_CALL(ptr, as<wide_value_type_t<Ptr>>{});
+      return EVE_DISPATCH_CALL_NT(ptr, as<wide_value_type_t<Ptr>>{});
     }
 
     template<_::data_source Ptr, width_type N>
     EVE_ABI as_wide_t<value_type_t<Ptr>, N> operator()(Ptr ptr, lanes_t<N>) const noexcept
     {
-      return EVE_DISPATCH_CALL(ptr, as<as_wide_t<value_type_t<Ptr>, N>>{});
+      return EVE_DISPATCH_CALL_NT(ptr, as<as_wide_t<value_type_t<Ptr>, N>>{});
     }
 
     template<_::data_source Ptr, arithmetic_simd_value Wide>
     EVE_ABI Wide operator()(Ptr ptr, as<Wide> tgt) const noexcept
       requires std::same_as<value_type_t<Ptr>, element_type_t<Wide>>
     {
-      return EVE_DISPATCH_CALL(ptr, tgt);
+      return EVE_DISPATCH_CALL_NT(ptr, tgt);
     }
 
     template<_::data_source Ptr, logical_simd_value Wide>
     EVE_ABI Wide operator()(Ptr ptr, as<Wide> tgt) const noexcept
       requires (sizeof(value_type_t<Ptr>) == sizeof(element_type_t<Wide>))
     {
-      return EVE_DISPATCH_CALL(ptr, tgt);
+      return EVE_DISPATCH_CALL_NT(ptr, tgt);
     }
 
     EVE_CALLABLE_OBJECT(load_t, load_);
