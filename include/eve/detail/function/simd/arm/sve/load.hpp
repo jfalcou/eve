@@ -16,22 +16,20 @@
 
 EVE_NAMESPACE::_
 {
-  template<relative_conditional_expr C, arithmetic_scalar_value T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>
-   wide<T, N> load_impl(sve_, C const& cx, Ptr p, as<wide<T, N>> tgt) noexcept
+  template<typename T, width_type N, simd_compatible_ptr<wide<T, N>> Ptr>
+  wide<T, N> load_impl(sve_, Ptr p, as<wide<T, N>> tgt) noexcept
     requires sve_abi<abi_t<T, N>>
   {
-    auto ptr = arm_ptr_downcast(unalign(p));
+    return svld1(ignore_none.mask(tgt), arm_ptr_downcast(unalign(p)));
+  }
 
-    if constexpr (C::has_alternative)
-    {
-      auto res = load[drop_alternative(cx)](p, tgt);
-      return eve::replace_ignored(res, cx, cx.alternative);
-    }
-    else if constexpr (C::is_complete && !C::is_inverted) return {};
-    else if constexpr (C::is_complete && C::is_inverted && N == max_native_width_v<T>)
-    {
-      return svld1(sve_true<T>(), ptr);
-    }
-    else return svld1(expand_mask(cx, tgt), ptr);
+  template<typename T, width_type N, typename Alt>
+  wide<T, N> load_masked_impl(sve_, logical<wide<T, N>> m, Alt alt, T const* p, as<wide<T, N>>) noexcept
+    requires sve_abi<abi_t<T, N>>
+  {
+    wide<T, N> res = svld1(m, arm_ptr_downcast(p));
+
+    if constexpr (std::same_as<Alt, wide<T, N>>) return if_else(m, res, alt);
+    else                                         return res;
   }
 }
