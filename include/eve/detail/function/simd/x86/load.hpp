@@ -93,31 +93,26 @@ EVE_NAMESPACE::_
   }
 
   //================================================================================================
-  // Conditional loads
+  // Masked loads
   //================================================================================================
-  template<relative_conditional_expr C, typename Ptr, typename T, width_type N>
-   wide<T, N> load_impl(sse2_, C const& cond, Ptr p, as<wide<T, N>> tgt) noexcept
-    requires (x86_abi<abi_t<T, N>> && simd_compatible_ptr<Ptr, wide<T, N>> && std::is_pointer_v<Ptr>)
+  template<typename T, width_type N, typename Alt>
+  wide<T, N> load_masked_impl(sse2_, logical<wide<T, N>> m, Alt alt, T const* p, as<wide<T, N>> tgt) noexcept
+    requires (x86_abi<abi_t<T, N>> && (current_api >= avx512 || (current_api >= avx && sizeof(T) >= 4)))
   {
     using r_t = wide<T, N>;
-    constexpr bool has_fp16 = _::supports_fp16_vector_ops;
-    constexpr auto c        = categorize<r_t>();
+    constexpr bool has_alternative = std::same_as<Alt, r_t>;
+    constexpr bool has_fp16        = _::supports_fp16_vector_ops;
+    constexpr auto c               = categorize<r_t>();
 
-    if constexpr (C::is_complete)
-    {
-      if      constexpr (C::is_inverted)     return load_impl(current_api, p, tgt);
-      else if constexpr (C::has_alternative) return r_t { cond.alternative };
-      else                                   return r_t { };
-    }
-    else if constexpr( current_api >= avx512 )
+    if constexpr( current_api >= avx512 )
     {
       r_t  that;
       auto src = [&](auto const& vs)
       {
-        if constexpr( C::has_alternative ) return r_t {cond.alternative};
+        if constexpr( has_alternative ) return alt;
         else return vs;
       };
-      auto mask = cond.mask(as<r_t> {}).storage().value;
+      auto mask = m.storage().value;
 
       if constexpr( c == category::float64x8 ) return _mm512_mask_loadu_pd(src(that), mask, p);
       else if constexpr( c == category::float64x4 ) return _mm256_mask_loadu_pd(src(that), mask, p);
@@ -156,13 +151,21 @@ EVE_NAMESPACE::_
     else if constexpr( current_api == avx && match(c, category::uint32, category::uint64) )
     {
       using f_t = conditional_t<sizeof(T) == 8, double, float>;
-      auto  r   = load_impl(current_api, bit_cast_alternative(cond, as<f_t> {}), (f_t const *)p, as<wide<f_t, N>> {});
+      using f_w = wide<f_t, N>;
+
+      auto f_alt = [&]
+      {
+        if constexpr( has_alternative ) return bit_cast(alt, as<f_w> {});
+        else                            return alt;
+      };
+
+      auto r = load_masked_impl(current_api, bit_cast(m, as<logical<f_w>> {}), f_alt(), (f_t const *)p, as<f_w> {});
       return bit_cast(r, tgt);
     }
-    else if constexpr( current_api >= avx )
+    else
     {
       r_t  that;
-      auto mask = cond.mask(as<r_t> {}).bits();
+      auto mask = m.bits();
 
             if constexpr( c == category::float64x4 ) that = _mm256_maskload_pd(p, mask);
       else  if constexpr( c == category::float64x2 ) that = _mm_maskload_pd(p, mask);
@@ -172,11 +175,9 @@ EVE_NAMESPACE::_
       else  if constexpr( c == category::uint64x2  ) that = _mm_maskload_epi64((long long const *)p, mask);
       else  if constexpr( c == category::uint32x8  ) that = _mm256_maskload_epi32((std::int32_t const *)p, mask);
       else  if constexpr( c == category::uint32x4  ) that = _mm_maskload_epi32((std::int32_t const *)p, mask);
-      else  return load_common(cpu_{}, cond, p, tgt);
 
-      if constexpr( C::has_alternative ) return replace_ignored(that, cond, cond.alternative);
-      else                               return that;
+      if constexpr( has_alternative ) return if_else(m, that, alt);
+      else                            return that;
     }
-    else return load_common(cpu_{}, cond, p, tgt);
   }
 }
