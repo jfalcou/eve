@@ -378,7 +378,6 @@ EVE_NAMESPACE
   //================================================================================================
 
   template<typename T, width_type A>  struct element_type<aligned_ptr<T,A>> { using type = T; };
-  template<typename T>          struct element_type<aligned_ptr<T>>   { using type = T; };
 
   //================================================================================================
   //! @relates eve::aligned_ptr
